@@ -1,0 +1,11 @@
+{
+  "data_uid": "a4328ba99679e0d1", 
+  "data_name": "ck-auto-tuning", 
+  "dict": {
+    "url": "https://github.com/ctuning/ck-auto-tuning.git", 
+    "shared": "git", 
+    "sync": "yes"
+  }, 
+  "data_alias": "ck-auto-tuning", 
+  "data_uoa": "ck-auto-tuning"
+}
