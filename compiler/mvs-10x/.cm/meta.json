@@ -1,0 +1,44 @@
+{
+  "all_compiler_flags_desc": {
+    "##base_flag": {
+      "default_value": "/Ot", 
+      "field_size": "7", 
+      "skip_form_refresh": "yes", 
+      "forbid_disable_at_random": "yes", 
+      "choice": [
+        "/O1", 
+        "/O2", 
+        "/Os", 
+        "/Ot", 
+        "/Od"
+      ], 
+      "desc_text": "compiler flag: /Ot", 
+      "sort_index": "10000", 
+      "explorable": "yes", 
+      "explore_type": "fixed", 
+      "has_choice": "yes", 
+      "explore_level": "1", 
+      "type": "text", 
+      "no_sorting": "yes"
+    }
+  }, 
+  "cm_classes_uoa": [
+    "72f81bd39f84ed89", 
+    "4720bab77a4160ee", 
+    "394aba9de393576d"
+  ], 
+  "##openmp_flag": {
+    "default_value": "", 
+    "field_size": "10", 
+    "skip_form_refresh": "yes", 
+    "explorable": "no", 
+    "choice": [
+      "/openmp", 
+      ""
+    ], 
+    "desc_text": "compiler flag: openmp", 
+    "has_choice": "yes", 
+    "sort_index": "10001", 
+    "type": "text"
+  }
+}

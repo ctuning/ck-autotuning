@@ -1,0 +1,22 @@
+{
+  "control": {
+    "engine": "CM", 
+    "version": [], 
+    "iso_datetime": "2012-07-29T04:51:42.270000", 
+    "author_uoa": "74c2480dcec9e85d"
+  }, 
+  "description": "", 
+  "backup_module_uid": "36ebc331048475bb", 
+  "cm_outdated": {
+    "powered_by": {
+      "version": "1.0.1977.beta", 
+      "name": "Collective Mind Engine"
+    }, 
+    "cm_access_control": {
+      "read_groups": "all", 
+      "write_groups": "owner"
+    }
+  }, 
+  "data_name": "llvm-35x", 
+  "backup_module_uoa": "compiler"
+}
