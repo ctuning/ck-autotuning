@@ -5,15 +5,18 @@
     ], 
     "flag": "-pg"
   }, 
-  "misc_ld_flags": {
-    "pthread_lib": "-pthread"
-  }, 
   "all_compiler_flags_desc": {
     "##base_flag": {
       "default_value": "-O3", 
       "field_size": "7", 
       "skip_form_refresh": "yes", 
       "forbid_disable_at_random": "yes", 
+      "sort_index": "10000", 
+      "desc_text": "compiler flag: -O3", 
+      "explore_level": "1", 
+      "explorable": "yes", 
+      "explore_type": "fixed", 
+      "has_choice": "yes", 
       "choice": [
         "-O0", 
         "-O1", 
@@ -22,12 +25,6 @@
         "-O3", 
         "-fast"
       ], 
-      "desc_text": "compiler flag: -O3", 
-      "sort_index": "10000", 
-      "explorable": "yes", 
-      "explore_type": "fixed", 
-      "has_choice": "yes", 
-      "explore_level": "1", 
       "type": "text", 
       "no_sorting": "yes"
     }, 
@@ -67,5 +64,8 @@
     "72f81bd39f84ed89", 
     "b18acc9a098465ca", 
     "5d8b43247a692746"
-  ]
+  ], 
+  "misc_ld_flags": {
+    "pthread_lib": "-pthread"
+  }
 }
