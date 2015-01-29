@@ -89,3 +89,43 @@ def clean(i):
     print ('clean program work and tmp files')
 
     return {'return':0}
+
+##############################################################################
+# auto-tuning program
+
+def autotune(i):
+    """
+    Input:  {
+            }
+
+    Output: {
+              return       - return code =  0, if successful
+                                         >  0, if error
+              (error)      - error text if return > 0
+            }
+
+    """
+
+    print ('auto-tuning program')
+
+    return {'return':0}
+
+##############################################################################
+# crowdtuning program
+
+def crowdtune(i):
+    """
+    Input:  {
+            }
+
+    Output: {
+              return       - return code =  0, if successful
+                                         >  0, if error
+              (error)      - error text if return > 0
+            }
+
+    """
+
+    print ('crowdtuning program')
+
+    return {'return':0}
