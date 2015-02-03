@@ -18,6 +18,6 @@
       "write_groups": "owner"
     }
   }, 
-  "data_name": "mvs-10x", 
+  "data_name": "Microsoft Visual Studio 10.x", 
   "backup_module_uoa": "compiler"
 }

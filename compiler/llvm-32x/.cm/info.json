@@ -17,6 +17,6 @@
       "write_groups": "owner"
     }
   }, 
-  "data_name": "llvm-32x", 
+  "data_name": "LLVM 3.2.x", 
   "backup_module_uoa": "compiler"
 }

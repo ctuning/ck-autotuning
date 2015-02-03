@@ -18,6 +18,6 @@
       "write_groups": "owner"
     }
   }, 
-  "data_name": "icc-12x", 
+  "data_name": "ICC 12.x", 
   "backup_module_uoa": "compiler"
 }
