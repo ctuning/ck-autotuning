@@ -277,8 +277,8 @@ def process_in_dir(i):
               psf=os.path.join(p, sf)
               psf0=os.path.splitext(psf)[0]
 
-              cif1=cif1.replace('$#COMPILER#$', 'cl')
-              cif1=cif1.replace('$#COMPILER_FLAGS_BEFORE#$', '/c ')
+              cif1=cif1.replace('$#COMPILER#$', 'gcc')
+              cif1=cif1.replace('$#COMPILER_FLAGS_BEFORE#$', '-c ')
               cif1=cif1.replace('$#COMPILER_FLAGS_AFTER#$', '')
 
               cif1=cif1.replace('$#SOURCE_FILE#$', psf)
@@ -286,7 +286,7 @@ def process_in_dir(i):
               if obj_ext!='':
                  cif1=cif1.replace('$#OBJ_FILE#$', sf0)
                  cif1=cif1.replace('$#OBJ_EXT#$', obj_ext)
-                 cif1=cif1.replace('$#COMPILER_OBJ_FLAG#$', '/Fo')
+                 cif1=cif1.replace('$#COMPILER_OBJ_FLAG#$', '-o ')
               else:
                  cif1=cif1.replace('$#COMPILER_OBJ_FLAG#$$#OBJ_FILE#$$#OBJ_EXT#$','')
 
@@ -330,9 +330,9 @@ def process_in_dir(i):
               if obj_files!='': obj_files+=' '
               obj_files+=sf0+obj_ext
 
-          cif1=cif1.replace('$#LINKER#$', 'link')
+          cif1=cif1.replace('$#LINKER#$', 'gcc')
           cif1=cif1.replace('$#LINKER_FLAGS_BEFORE#$', '')
-          cif1=cif1.replace('$#LINKER_FLAGS_AFTER#$', '/out:'+bin_file)
+          cif1=cif1.replace('$#LINKER_FLAGS_AFTER#$', '-o '+bin_file)
 
           cif1=cif1.replace('$#OBJ_FILES#$', obj_files)
               
