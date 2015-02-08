@@ -141,7 +141,7 @@ def process(i):
         d=r['dict']
 
         if o=='con':
-           ck.out('********************************************************************************')
+           ck.out('')
 
         ii=copy.deepcopy(ic)
         ii['path']=p
@@ -164,6 +164,8 @@ def process_in_dir(i):
 
               sub_action   - clean, compile, run
 
+              flow         - information flow dictionary
+
               path         - path
               meta         - program description
 
@@ -176,13 +178,39 @@ def process_in_dir(i):
               return       - return code =  0, if successful
                                          >  0, if error
               (error)      - error text if return > 0
+
+              flow         - information flow dictionary
             }
 
     """
     import os
+    import time
+    import sys
+
+    sys.stdout.flush()
 
     o=i.get('out','')
 
+    # Check information flow
+    flow=i.get('flow',{})
+
+    if 'meta' not in flow: flow['meta']={}
+    if 'work' not in flow: flow['work']={}
+    if 'environment' not in flow: flow['environment']={}
+    if 'state' not in flow: flow['state']={}
+    if 'characteristics' not in flow: flow['characteristics']={}
+    if 'features' not in flow: flow['features']={}
+    if 'choices' not in flow: flow['choices']={}
+
+    flowm=flow.get('meta',{})
+    floww=flow.get('work',{})
+    flowe=flow.get('environment',{})
+    flows=flow.get('state',{})
+    flowb=flow.get('characteristics',{})
+    flowf=flow.get('features',{})
+    flowc=flow.get('choices',{})
+
+    # Get host platform
     rx=ck.get_platform({})
     if rx['return']>0: return rx
     ios=rx['platform']
@@ -220,6 +248,9 @@ def process_in_dir(i):
        if bin_file=='':
           bin_file=xbin_file.get('all','')
 
+    if bin_file!='':
+       floww['binary_filename']=bin_file
+
     # Check if compile in tmp dir
     cdir=p
 
@@ -239,7 +270,6 @@ def process_in_dir(i):
           os.remove(fn)
 
           cdir=os.path.join(p, fn)
-          print cdir
        else:
           cdir=td
 
@@ -254,6 +284,8 @@ def process_in_dir(i):
     # Check sub_actions
     ################################### Compile ######################################
     if sa=='compile':
+       start_time=time.time()
+
        sfs=meta.get('source_files',[])
 
        # Check if compile individual files
@@ -277,8 +309,15 @@ def process_in_dir(i):
               psf=os.path.join(p, sf)
               psf0=os.path.splitext(psf)[0]
 
+              cflags='-c'
+
+              fcflags=flowc.get('compiler',{}).get('flags','').strip()
+              if fcflags!='': cflags+=' '+fcflags
+
+              cflags+=' '
+
               cif1=cif1.replace('$#COMPILER#$', 'gcc')
-              cif1=cif1.replace('$#COMPILER_FLAGS_BEFORE#$', '-c ')
+              cif1=cif1.replace('$#COMPILER_FLAGS_BEFORE#$', cflags)
               cif1=cif1.replace('$#COMPILER_FLAGS_AFTER#$', '')
 
               cif1=cif1.replace('$#SOURCE_FILE#$', psf)
@@ -290,14 +329,23 @@ def process_in_dir(i):
               else:
                  cif1=cif1.replace('$#COMPILER_OBJ_FLAG#$$#OBJ_FILE#$$#OBJ_EXT#$','')
 
-              if o=='con':
-                 ck.out('    '+cif1)
+              if o=='con': ck.out('    '+cif1)
               rx=os.system(cif1)
+              if rx==0:
+                 if bin_file!='':
+                    if os.path.isfile(bin_file):
+                       bin_size=os.path.getsize(bin_file);
+                       flowb['binary_size']=bin_size
+
+
+
+
+
               if rx>0:
                  return {'return':1, 'error': 'compilation failed'}
 
        else:
-          print 'checking if build script'
+          ck.out('checking if build script')
 
 
 
@@ -336,22 +384,28 @@ def process_in_dir(i):
 
           cif1=cif1.replace('$#OBJ_FILES#$', obj_files)
               
-          if o=='con':
-             ck.out('    '+cif1)
+          if o=='con': ck.out('    '+cif1)
           rx=os.system(cif1)
-          if rx>0:
-             return {'return':1, 'error': 'compilation failed'}
+
+#          if rx>0:
+#             return {'return':1, 'error': 'compilation failed'}
 
        else:
-          print 'checking if build script'
+          ck.out('TBD: build script')
+
+
+
+       flowb['compilation_time']=time.time()-start_time
 
     ################################### Clean ######################################
     elif sa=='clean':
-       print 'tbd'
+       ck.out('tbd')
 
 
     ################################### Run ######################################
     elif sa=='run':
+       start_time=time.time()
+
        run_cmds=meta.get('run_cmds',{})
        if len(run_cmds)==0:
           return {'return':1, 'error':'no CMD for run'}
@@ -417,14 +471,14 @@ def process_in_dir(i):
              df0=dfiles[0]
              c=c.replace('$#dataset_filename#$', df0)
 
-       print c
-       if o=='con':
-          ck.out('    '+c)
+       if o=='con': ck.out('    '+c)
        rx=os.system(c)
        if rx>0 and vcmd.get('ignore_return_code','').lower()!='yes':
           return {'return':1, 'error': 'execution failed'}
 
-    return {'return':0, 'tmp_dir':rcdir}
+       flowb['execution_time']=time.time()-start_time
+
+    return {'return':0, 'tmp_dir':rcdir, 'flow':flow}
 
 ##############################################################################
 # clean program work and tmp files
@@ -498,6 +552,13 @@ def run(i):
 def autotune(i):
     """
     Input:  {
+              (repo_uoa)   - program repo UOA
+              (module_uoa) - program module UOA
+              data_uoa     - program data UOA
+
+              (process_in_tmp)
+              (tmp_dir)
+
             }
 
     Output: {
@@ -508,7 +569,105 @@ def autotune(i):
 
     """
 
-    print ('auto-tuning program')
+    import copy
+    import os
+    import random
+
+    # Misc
+    ic=copy.deepcopy(i)
+
+    pp=os.getcwd()
+
+    ni=i.get('number_of_iterations',0)
+
+    # Hack
+    cduoa=i.get('compiler_desc_uoa','')
+    if cduoa!='':
+       rx=ck.access({'action':'load',
+                     'module_uoa':cfg['module_deps']['compiler'],
+                     'data_uoa':cduoa})
+       if rx['return']>0: return rx
+       cm=rx['dict']
+       cc=cm.get('all_compiler_flags_desc',{})
+
+    for m in range(0,ni+1):
+        ck.out('=========================================================')
+        ck.out('Iteration: '+str(m))
+        ck.out('')
+
+        ii=copy.deepcopy(ic)
+
+        if 'flow' not in ii: ii['flow']={}
+        flow=ii.get('flow',{})
+
+        if 'meta' not in flow: flow['meta']={}
+        flowm=flow['meta']
+
+        if 'choices' not in flow: flow['choices']={}
+        flowc=flow['choices']
+
+        if 'compiler' not in flowc: flowc['compiler']={}
+        flowcc=flowc['compiler']
+
+        flowm['program_uoa']=i.get('data_uoa','')
+
+        # Generate flags
+        cflags=''
+        if m!=0:
+           cflags='-O3'
+           for q in cc:
+               if q!='##base_flag':
+                  qx=cc[q]
+
+                  stat=random.randrange(0, 1000)
+                  if stat>900:
+                     cqx=qx.get('choice',[])
+                     lcqx=len(cqx)
+                     if lcqx>0:
+                        ln=random.randrange(0, lcqx)
+                        cflags+=' '+cqx[ln]
+                     else:
+                        cflags+=''
+
+        ck.out('Flags: '+cflags)
+        flowcc['flags']=cflags
+
+        ck.out('')
+
+        # Compile
+        os.chdir(pp)
+        rx=compile(ii)
+
+        frx=rx.get('flow',{})
+        ii['flow']=frx
+
+        fc=frx.get('characteristics',{})
+
+        xct=fc.get('compilation_time',-1)
+        xcbs=fc.get('binary_size',-1)
+
+        # Run
+        os.chdir(pp)
+        rx=run(ii)
+
+        frx=rx.get('flow',{})
+        fc=frx.get('characteristics',{})
+
+        xrt=fc.get('execution_time',-1)
+
+        ck.out('')
+        ck.out('Compile time: '+str(xct)+', binary size: '+str(xcbs)+', run time: '+str(xrt))
+
+        # Adding experiment
+        ie={'action':'add',
+            'module_uoa':'experiment',
+            'experiment_uoa':'xyz',
+            'record_all_subpoints':'yes',
+            'add_new':'yes',
+            'out':'con',
+            'dict':frx}
+        rx=ck.access(ie)
+        if rx['return']>0: return rx
 
     return {'return':0}
 
@@ -528,6 +687,6 @@ def crowdtune(i):
 
     """
 
-    print ('crowdtuning program')
+    ck.out ('tbd: crowdtuning program')
 
     return {'return':0}

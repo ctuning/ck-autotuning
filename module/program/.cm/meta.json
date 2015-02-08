@@ -23,6 +23,7 @@
   "developer_webpage": "http://cTuning.org/lab/people/gfursin", 
   "license": "See CK LICENSE.txt for licensing details",
   "module_deps": {
-    "dataset": "8a7141c59cd335f5"
+    "dataset": "8a7141c59cd335f5",
+    "compiler":"36ebc331048475bb"
   }
 }
