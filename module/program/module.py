@@ -380,7 +380,7 @@ def process_in_dir(i):
 
           cif1=cif1.replace('$#LINKER#$', 'gcc')
           cif1=cif1.replace('$#LINKER_FLAGS_BEFORE#$', '')
-          cif1=cif1.replace('$#LINKER_FLAGS_AFTER#$', '-o '+bin_file)
+          cif1=cif1.replace('$#LINKER_FLAGS_AFTER#$', '-lm -o '+bin_file)
 
           cif1=cif1.replace('$#OBJ_FILES#$', obj_files)
               
