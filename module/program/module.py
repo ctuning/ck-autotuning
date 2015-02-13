@@ -83,7 +83,8 @@ def process(i):
           a=r.get('repo_uoa','')
           m=r.get('module_uoa','')
           duoa=r.get('data_uoa','')
-       else:
+
+       if duoa=='':
           # Attempt to load configuration from the current directory
           p=os.getcwd()
 
@@ -579,6 +580,8 @@ def autotune(i):
     pp=os.getcwd()
 
     ni=i.get('number_of_iterations',0)
+    try: ni=int(ni)
+    except Exception as e: pass
 
     # Hack
     cduoa=i.get('compiler_desc_uoa','')
