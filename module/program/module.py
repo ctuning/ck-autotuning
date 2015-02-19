@@ -293,6 +293,7 @@ def process_in_dir(i):
        xcif=meta.get('compile_individual_files_cmd',{})
        obj_files=[]
 
+       rx=0
        if len(xcif)>0:
           if len(sfs)==0:
              return {'return':1, 'error':'can\'t compile individual files since source files are not specified in description'}
@@ -342,57 +343,48 @@ def process_in_dir(i):
 
 
 
-              if rx>0:
-                 return {'return':1, 'error': 'compilation failed'}
+              if rx>0: break
 
        else:
           ck.out('checking if build script')
 
-
-
-
-
-
-
-
-
-
        # Check if link individual files
-       ycif=meta.get('link_individual_files_cmd',{})
-       if len(ycif)>0:
-          if len(sfs)==0:
-             return {'return':1, 'error':'can\'t link individual files since source files are not specified in description'}
+       if rx==0:
+          ycif=meta.get('link_individual_files_cmd',{})
+          if len(ycif)>0:
+             if len(sfs)==0:
+                return {'return':1, 'error':'can\'t link individual files since source files are not specified in description'}
 
-          cif=ycif.get(ios,'')
-          if cif=='':
-             cif=ycif.get('all','')
-          if cif=='':
-             return {'return':1, 'error':'can\'t find link CMD for the platform'}
+             cif=ycif.get(ios,'')
+             if cif=='':
+                cif=ycif.get('all','')
+             if cif=='':
+                return {'return':1, 'error':'can\'t find link CMD for the platform'}
 
-          obj_files=''
-          for sf in sfs:
-              cif1=cif
-              sf0=os.path.splitext(sf)[0]
-              psf=os.path.join(p, sf)
-              psf0=os.path.splitext(psf)[0]
+             obj_files=''
+             for sf in sfs:
+                 cif1=cif
+                 sf0=os.path.splitext(sf)[0]
+                 psf=os.path.join(p, sf)
+                 psf0=os.path.splitext(psf)[0]
 
-              if obj_files!='': obj_files+=' '
-              obj_files+=sf0+obj_ext
+                 if obj_files!='': obj_files+=' '
+                 obj_files+=sf0+obj_ext
 
-          cif1=cif1.replace('$#LINKER#$', 'gcc')
-          cif1=cif1.replace('$#LINKER_FLAGS_BEFORE#$', '')
-          cif1=cif1.replace('$#LINKER_FLAGS_AFTER#$', '-lm -o '+bin_file)
+             cif1=cif1.replace('$#LINKER#$', 'gcc')
+             cif1=cif1.replace('$#LINKER_FLAGS_BEFORE#$', '')
+             cif1=cif1.replace('$#LINKER_FLAGS_AFTER#$', '-lm -o '+bin_file)
 
-          cif1=cif1.replace('$#OBJ_FILES#$', obj_files)
-              
-          if o=='con': ck.out('    '+cif1)
-          rx=os.system(cif1)
+             cif1=cif1.replace('$#OBJ_FILES#$', obj_files)
+                 
+             if o=='con': ck.out('    '+cif1)
+             rx=os.system(cif1)
 
-#          if rx>0:
-#             return {'return':1, 'error': 'compilation failed'}
+#             if rx>0:
+#                return {'return':1, 'error': 'compilation failed'}
 
-       else:
-          ck.out('TBD: build script')
+          else:
+             ck.out('TBD: build script')
 
 
 
@@ -606,8 +598,21 @@ def autotune(i):
         if 'meta' not in flow: flow['meta']={}
         flowm=flow['meta']
 
+        flowm['program name']='susan'
+        flowm['architecture name']='Intel Exxxx'
+        flowm['architecture type']='CPU'
+        flowm['architecture vendor']='Intel'
+
         if 'choices' not in flow: flow['choices']={}
         flowc=flow['choices']
+
+        if 'features' not in flow: flow['features']={}
+        flowf=flow['features']
+
+        flowf['cmd']='edges'
+        flowf['compiler name']='gcc'
+        flowf['compiler version']='gcc 4.7'
+        flowf['dataset uoa']='0001'
 
         if 'compiler' not in flowc: flowc['compiler']={}
         flowcc=flowc['compiler']
@@ -634,11 +639,13 @@ def autotune(i):
 
         ck.out('Flags: '+cflags)
         flowcc['flags']=cflags
+        flowf['compiler flags']=cflags
 
         ck.out('')
 
         # Compile
         os.chdir(pp)
+
         rx=compile(ii)
 
         frx=rx.get('flow',{})
@@ -649,12 +656,12 @@ def autotune(i):
         xct=fc.get('compilation_time',-1)
         xcbs=fc.get('binary_size',-1)
 
-        # Run
-        os.chdir(pp)
-        rx=run(ii)
-
-        frx=rx.get('flow',{})
-        fc=frx.get('characteristics',{})
+        if xcbs>0:
+           # Run
+           os.chdir(pp)
+           rx=run(ii)
+           frx=rx.get('flow',{})
+           fc=frx.get('characteristics',{})
 
         xrt=fc.get('execution_time',-1)
 
@@ -663,10 +670,12 @@ def autotune(i):
 
         # Adding experiment
         ie={'action':'add',
+            'experiment_repo_uoa': 'ck-experiments',
             'module_uoa':'experiment',
-            'experiment_uoa':'xyz',
+            'ignore_update':'yes',
+            'search_point_by_features':'yes',
+            'process_multi_keys':['characteristics','features'],
             'record_all_subpoints':'yes',
-            'add_new':'yes',
             'out':'con',
             'dict':frx}
         rx=ck.access(ie)
