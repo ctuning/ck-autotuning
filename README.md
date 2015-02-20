@@ -1,12 +1,13 @@
-Description
-===========
-
-This is a heavily evolving repository 
+Status
+======
+This is an unstable, heavily evolving repository 
 (stable release is expected in Spring 2015) - 
 please, do not use it until official announcement.
 
-We are gradually moving, simplifying and extending parts
-of functionality from Collective Mind in to new CK format!
+Description
+===========
+We are gradually moving, simplifying and extending auto-tuning
+and crowd-tuning parts from Collective Mind into new CK format!
 
 These modules will be used to:
 * clean, compile and run programs 
