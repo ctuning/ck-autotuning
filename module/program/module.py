@@ -212,7 +212,7 @@ def process_in_dir(i):
     flowc=flow.get('choices',{})
 
     # Get host platform
-    rx=ck.get_platform({})
+    rx=ck.get_os_ck({})
     if rx['return']>0: return rx
     ios=rx['platform']
 

@@ -33,7 +33,7 @@ def init(i):
 ##############################################################################
 # collect info about platforms
 
-def analyze(i):
+def detect(i):
     """
     Input:  {
               (os)        - OS module to check (if omitted, analyze host)
@@ -62,7 +62,7 @@ def analyze(i):
     xos=i.get('os','')
 
     # Get a few host parameters + target platform
-    r=ck.get_platform({'os_uoa':xos, 'find_close':'yes'})
+    r=ck.get_os_ck({'os_uoa':xos, 'find_close':'yes'})
     if r['return']>0: return r
 
     host_name=r['platform']
@@ -220,6 +220,8 @@ def analyze(i):
  
                 params[k]=v
 
+                print k+'='+v
+
              q=q1+1
           else:
              q=-1
@@ -230,11 +232,11 @@ def analyze(i):
 
        # Get params
        x1=params.get('ro.product.brand','')
-       x2=params.get('ro.product.board','')
+       x2=params.get('ro.product.model','')
 
        target_system_name=x1+' '+x2
 
-       target_system_model=params.get('ro.build.id','')
+       target_system_model=x2
 
        target_os_name_long=params.get('ro.build.kernel.version','')
        target_os_name_short='Android '+params.get('ro.build.version.release','')

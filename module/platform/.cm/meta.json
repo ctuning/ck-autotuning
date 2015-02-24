@@ -1,6 +1,6 @@
 {
   "actions": {
-    "analyze": {
+    "detect": {
       "desc": "collect info about platforms"
     }
   }, 
