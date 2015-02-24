@@ -115,6 +115,7 @@ def analyze(i):
                 ck.out('Non-zero return code :'+str(rx)+' - likely failed')
              return {'return':1, 'error':'remote device initialization failed'}
 
+       # Get devices
        rx=ck.gen_tmp_file({'prefix':'tmp-ck-'})
        if rx['return']>0: return rx
        fn=rx['file_name']
@@ -134,7 +135,6 @@ def analyze(i):
              ck.out('')
              ck.out('Non-zero return code :'+str(rx)+' - likely failed')
           return {'return':1, 'error':'access to remote device failed'}
-
 
        # Read and parse file
        rx=ck.load_text_file({'text_file':fn})
@@ -167,6 +167,7 @@ def analyze(i):
           ck.out('Available remote devices:')
           for q in devices:
               ck.out('  '+q)
+          ck.out('')
 
        if device_id!='':
           if device_id not in devices:
@@ -175,15 +176,69 @@ def analyze(i):
           if len(devices)>0:
              device_id=devices[0]
 
+       # Get all params
+       params={}
 
+       rx=ck.gen_tmp_file({'prefix':'tmp-ck-'})
+       if rx['return']>0: return rx
+       fn=rx['file_name']
 
+       adb_params=os_dict.get('adb_all_params','')
+       adb_params=adb_params.replace('$#redirect_stdout#$', ro)
+       adb_params=adb_params.replace('$#output_file#$', fn)
 
+       if o=='con':
+          ck.out('')
+          ck.out('Receiving all parameters:')
+          ck.out('  '+adb_params)
 
+       rx=os.system(adb_params)
+       if rx!=0:
+          if o=='con':
+             ck.out('')
+             ck.out('Non-zero return code :'+str(rx)+' - likely failed')
+          return {'return':1, 'error':'access to remote device failed'}
 
+       # Read and parse file
+       rx=ck.load_text_file({'text_file':fn})
+       if rx['return']>0: return rx
+       s=rx['string']
 
+       devices=[]
+       q=0
+       while (q>=0):
+          q1=s.find('\n',q)
+          if q1>=0:
+             s1=s[q:q1].strip()
 
+             q2=s1.find(']: [')
+             k=''
+             if q2>=0:
+                k=s1[1:q2].strip()
+                v=s1[q2+4:].strip()
+                v=v[:-1].strip()
+ 
+                params[k]=v
 
+             q=q1+1
+          else:
+             q=-1
 
+       target['params']=params
+
+       if os.path.isfile(fn): os.remove(fn)
+
+       # Get params
+       x1=params.get('ro.product.brand','')
+       x2=params.get('ro.product.board','')
+
+       target_system_name=x1+' '+x2
+
+       target_system_model=params.get('ro.build.id','')
+
+       target_os_name_long=params.get('ro.build.kernel.version','')
+       target_os_name_short='Android '+params.get('ro.build.version.release','')
+       
 
 
 
@@ -294,6 +349,7 @@ def analyze(i):
        ck.out('System model:       '+target_system_model)
        ck.out('')
        ck.out('CPU name:           '+target_cpu)
+       ck.out('')
        ck.out('CPU frequency:      '+target_freq)
        ck.out('CPU max frequency:  '+target_freq_max)
 
