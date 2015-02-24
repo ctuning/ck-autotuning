@@ -273,6 +273,8 @@ def detect(i):
        target_os_name_short=platform.system()+' '+platform.release()
 
        if os_win=='yes':
+
+
           r=get_from_wmic({'cmd':'cpu get CurrentClockSpeed'})
           if r['return']>0: return r
           target_freq=r['value']
