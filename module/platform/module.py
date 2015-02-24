@@ -190,8 +190,21 @@ def analyze(i):
 
 
     else:
+       try:
+          from cpuinfo import cpuinfo
+       except Exception as e:
+          if o=='con':
+             ck.out('You need to install py-cpuinfo module:')
+             if os_win=='win':
+                ck.out('     sudo apt-get install python-pip')
+                ck.out('     sudo pip install py-cpuinfo')
+             else:
+                ck.out('     sudo apt-get install python-pip')
+                ck.out('     sudo pip install py-cpuinfo')
+             ck.out('')
 
-       from cpuinfo import cpuinfo
+             return {'return':1, 'error':'python cpuinfo module is not installed - install it using "pip install py-cpuinfo"'}
+
        info=cpuinfo.get_cpu_info()
 
        target['system_info']=info
@@ -225,6 +238,41 @@ def analyze(i):
           if r['return']>0: return r
 
           target_system_model=r['value']
+       else:
+          q1=target_os_name_short.find('-')
+          if q1>=0:
+             target_os_name_short=target_os_name_short[0:q1]
+
+          x1=''
+          x2=''
+
+          file_with_vendor='/sys/devices/virtual/dmi/id/sys_vendor'
+          if os.path.isfile(file_with_vendor):
+             r=ck.load_text_file({'text_file':file_with_vendor})
+             if r['return']>0: return r
+             x1=r['string'].strip()
+
+          file_with_version='/sys/devices/virtual/dmi/id/product_version'
+          if os.path.isfile(file_with_version):
+             r=ck.load_text_file({'text_file':file_with_version})
+             if r['return']>0: return r
+             x2=r['string'].strip()
+
+          if x1!='' and x2!='':
+             target_system_name=x1+' '+x2
+
+
+#xyz
+          file_with_model='/sys/devices/virtual/dmi/id/product_name'
+          if os.path.isfile(file_with_model):
+             r=ck.load_text_file({'text_file':file_with_model})
+             if r['return']>0: return r
+             target_system_model=r['string'].strip()
+
+          if target_system_name=='' or target_system_model=='':
+             return {'return':1, 'error':'can\'t get system vendor/model in module "platform" with action "analyze" - please, help improve it for your system'}
+
+
 
     target['target_os_name_long']=target_os_name_long
     target['target_os_name_short']=target_os_name_short
