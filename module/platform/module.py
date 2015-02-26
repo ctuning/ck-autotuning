@@ -247,23 +247,6 @@ def detect(i):
 
 
     else:
-       try:
-          from cpuinfo import cpuinfo
-       except Exception as e:
-          if o=='con':
-             ck.out('You need to install py-cpuinfo module:')
-             if os_win=='win':
-                ck.out('     sudo apt-get install python-pip')
-                ck.out('     sudo pip install py-cpuinfo')
-             else:
-                ck.out('     sudo apt-get install python-pip')
-                ck.out('     sudo pip install py-cpuinfo')
-             ck.out('')
-
-             return {'return':1, 'error':'python cpuinfo module is not installed - install it using "pip install py-cpuinfo"'}
-
-       info=cpuinfo.get_cpu_info()
-
        target['system_info']=info
 
        target_cpu=info.get('brand','')
@@ -273,6 +256,12 @@ def detect(i):
        target_os_name_short=platform.system()+' '+platform.release()
 
        if os_win=='yes':
+          r=get_from_wmic({'group':'cpu'})
+          if r['return']>0: return r
+          info_cpu=r['dict']
+
+          print (info_cpu)
+          exit(1)
 
 
           r=get_from_wmic({'cmd':'cpu get CurrentClockSpeed'})
@@ -365,7 +354,8 @@ def detect(i):
 def get_from_wmic(i):
     """
     Input:  {
-              cmd - cmd for wmic
+              cmd     - cmd for wmic
+              (group) - get the whole group
             }
 
     Output: {
@@ -374,6 +364,7 @@ def get_from_wmic(i):
               (error)      - error text if return > 0
 
               value        - obtained value
+              (dict)       - if group
             }
 
     """
@@ -386,7 +377,11 @@ def get_from_wmic(i):
     if rx['return']>0: return rx
     fn=rx['file_name']
 
-    cmd='wmic '+i.get('cmd','')+' > '+fn
+    xcmd=i.get('cmd','')
+    xgroup=i.get('group','')
+    if xgroup!='': xcmd=xgroup
+
+    cmd='wmic '+xcmd+' > '+fn
     r=os.system(cmd)
     if r!=0:
        return {'return':1, 'error':'command returned non-zero value: '+cmd}
@@ -397,16 +392,19 @@ def get_from_wmic(i):
     s=rx['string']
 
     devices=[]
+    kk=''
     q=0
     while (q>=0):
        q1=s.find('\n',q)
        if q1>=0:
-          s1=s[q:q1]
+          s1=s[q:q1].strip()
 
+          if q==0:
+             kk=s1
           if q!=0: #ignore first line in ADB
              q2=s1.find('\n',q1+1)
              if q2>=0:
-                s1=s1[0:q2]
+                s1=s1[0:q2].strip()
              value=s1.strip()
              q=-1
 
@@ -416,4 +414,22 @@ def get_from_wmic(i):
 
     if os.path.isfile(fn): os.remove(fn)
 
-    return {'return':0, 'value':value}
+    dd={}
+    if xgroup!='':
+       xkeys=kk.split(' ')
+       keys=[]
+       for q in xkeys:
+           if q!='': keys.append(q)
+   
+       for q in range(0, len(keys)):
+           k=keys[q]
+           qe=len(value)
+           if q==0: qx=0
+           else: qx=kk.find(' '+k+' ')
+           if qx>=0 and q<len(keys)-1:
+              qe=kk.find(' '+keys[q+1]+' ')
+              if qe>=0:
+                 v=value[qx+1:qe].strip()
+                 dd[k]=v
+
+    return {'return':0, 'value':value, 'dict':dd}
