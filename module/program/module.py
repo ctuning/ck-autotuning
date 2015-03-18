@@ -90,7 +90,6 @@ def process(i):
           p=os.getcwd()
 
           pc=os.path.join(p, ck.cfg['subdir_ck_ext'], ck.cfg['file_meta'])
-       
           if os.path.isfile(pc):
              r=ck.load_json_file({'json_file':pc})
              if r['return']==0:
@@ -139,7 +138,7 @@ def process(i):
                      'module_uoa':muid,
                      'data_uoa':duid})
         if r['return']>0: return r
- 
+
         d=r['dict']
 
         if o=='con':
@@ -154,7 +153,7 @@ def process(i):
         r=process_in_dir(ii)
         if r['return']>0: return r
 
-    return r      
+    return r
 
 ##############################################################################
 # compile program  (called from universal function here)
@@ -265,6 +264,10 @@ def process_in_dir(i):
     sbp=hosd.get('bin_prefix','')
     sqie=hosd.get('quit_if_error','')
     evs=hosd.get('env_var_separator','')
+    es=hosd.get('env_separator','')
+    eve1=hosd.get('env_var_extra1','')
+    eve2=hosd.get('env_var_extra2','')
+    sbbp=hosd.get('batch_bash_prefix','')
     eifs=hosd.get('env_quotes_if_space','')
     eifsc=hosd.get('env_quotes_if_space_in_call','')
     wb=tosd.get('windows_base','')
@@ -335,7 +338,7 @@ def process_in_dir(i):
 
     sa=i['sub_action']
 
-    sb='' # Batch
+    sb=sbbp # Batch
 
     os.chdir(cdir)
     rcdir=os.getcwd()
@@ -365,7 +368,7 @@ def process_in_dir(i):
        comp=cdeps.get('compiler',{})
        comp_uoa=comp.get('uoa','')
        dcomp={}
-       
+
        if comp_uoa!='':
           rx=ck.access({'action':'load',
                         'module_uoa':cfg['module_deps']['env'],
@@ -397,7 +400,7 @@ def process_in_dir(i):
           ccmd=ccmds.get(hplat,{})
           if len(ccmd)==0:
              ccmd=ccmds.get('default',{})
-       
+
        sccmd=ccmd.get('cmd','')
        if sccmd=='':
           return {'return':1, 'error':'compile CMD is not found'}
@@ -409,7 +412,7 @@ def process_in_dir(i):
        if compiler_env=='': compiler_env='CK_CC'
 
        sfprefix='..'+sdirs
-       
+
        scfb=svarb+'CK_FLAGS_CREATE_OBJ'+svare
        scfb+=' '+svarb+'CK_COMPILER_FLAGS_OBLIGATORY'+svare
        if ctype=='dynamic':
@@ -440,7 +443,7 @@ def process_in_dir(i):
 
            xcfb+=' '+flags
 
-           xcfa+=' '+svarb+'CK_FLAGS_OUTPUT'+svare+sfobj
+           xcfa+=' '+svarb+eve1+'CK_FLAGS_OUTPUT'+eve2+svare+sfobj
 
            cc=sccmd
            cc=cc.replace('$#source_file#$', sfprefix+sf)
@@ -470,7 +473,7 @@ def process_in_dir(i):
              lcmd=lcmds.get(hplat,{})
              if len(lcmd)==0:
                 lcmd=lcmds.get('default',{})
-          
+
           slcmd=lcmd.get('cmd','')
           if slcmd!='':
              slfb=svarb+'CK_COMPILER_FLAGS_OBLIGATORY'+svare
@@ -480,7 +483,7 @@ def process_in_dir(i):
              elif ctype=='static':
                 slfb+=' '+svarb+'CK_FLAGS_STATIC_BIN'+svare
 
-             slfa=' '+svarb+'CK_FLAGS_OUTPUT'+svare+target_exe
+             slfa=' '+svarb+eve1+'CK_FLAGS_OUTPUT'+eve2+svare+target_exe
              slfa+=' '+svarb+'CK_LD_FLAGS_MISC'+svare
              slfa+=' '+svarb+'CK_LD_FLAGS_EXTRA'+svare
 
@@ -504,8 +507,13 @@ def process_in_dir(i):
 
        y=''
        if sexe!='':
-          y+=sexe+' '+sbp+fn+evs
+          y+=sexe+' '+sbp+fn+es
        y+=' '+scall+' '+sbp+fn
+
+       if o=='con':
+          ck.out('')
+          ck.out('Executing "'+y+'" ...')
+          ck.out('')
 
        sys.stdout.flush()
        start_time1=time.time()
@@ -607,8 +615,8 @@ def process_in_dir(i):
                            'module_uoa':dmuoa,
                            'tags':tags})
              if rx['return']>0: return rx
-             lst=rx['lst']              
-                           
+             lst=rx['lst']
+
              if len(lst)==0:
                 return {'return':1, 'error':'no related datasets found (tags='+tags+')'}  
 
@@ -648,8 +656,13 @@ def process_in_dir(i):
 
        y=''
        if sexe!='':
-          y+=sexe+' '+sbp+fn+evs
+          y+=sexe+' '+sbp+fn+es
        y+=' '+scall+' '+sbp+fn
+
+       if o=='con':
+          ck.out('')
+          ck.out('Executing "'+y+'" ...')
+          ck.out('')
 
        sys.stdout.flush()
        start_time1=time.time()
@@ -665,9 +678,6 @@ def process_in_dir(i):
           if os.path.isfile(fn): os.remove(fn)
 
        ccc['execution_time_with_module']=time.time()-start_time
-
-       print ccc
-       print misc
 
     return {'return':0, 'tmp_dir':rcdir, 'misc':misc, 'characteristics':ccc}
 
