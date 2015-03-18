@@ -1,4 +1,4 @@
-#
+#      6
 # Collective Knowledge (program)
 #
 # See CK LICENSE.txt for licensing details
@@ -12,6 +12,7 @@ work={} # Will be updated by CK (temporal data)
 ck=None # Will be updated by CK (initialized CK kernel) 
 
 # Local settings
+sep='***************************************************************************************'
 
 ##############################################################################
 # Initialize module
@@ -156,60 +157,124 @@ def process(i):
     return r      
 
 ##############################################################################
-# compile program
+# compile program  (called from universal function here)
 
 def process_in_dir(i):
     """
     Input:  {
               The same as 'compile'
 
-              sub_action   - clean, compile, run
+              sub_action         - clean, compile, run
 
-              flow         - information flow dictionary
+              path               - path
+              meta               - program description
 
-              path         - path
-              meta         - program description
+              (flags)            - compile flags
+              (lflags)           - link flags
 
-              (repo_uoa)   - program repo UOA
-              (module_uoa) - program module UOA
-              (data_uoa)   - program data UOA
+              (compile_type)     - static or dynamic (dynamic by default)
+
+              (repeat)           - repeat kernel via environment CT_REPEAT_MAIN if supported
+
+              (clean)            - if 'yes', clean tmp directory before using
+              (skip_clean_after) - if 'yes', do not remove run batch
+
+              (repo_uoa)         - program repo UOA
+              (module_uoa)       - program module UOA
+              (data_uoa)         - program data UOA
+
+              (misc)             - misc  dict
+              (characteristics)  - characteristics/features/properties
+              (env)              - preset environment
             }
 
     Output: {
-              return       - return code =  0, if successful
-                                         >  0, if error
-              (error)      - error text if return > 0
+              return          - return code =  0, if successful
+                                            >  0, if error
+              (error)         - error text if return > 0
 
-              flow         - information flow dictionary
+              misc            - updated misc dict
+              characteristics - updated characteristics
+              env             - updated environment
             }
 
     """
     import os
     import time
     import sys
+    import shutil
+
+    start_time=time.time()
 
     sys.stdout.flush()
 
     o=i.get('out','')
 
-    # Check information flow
-    flow=i.get('flow',{})
+    misc=i.get('misc',{})
+    ccc=i.get('characteristics',{})
+    env=i.get('env',{})
 
-    if 'meta' not in flow: flow['meta']={}
-    if 'work' not in flow: flow['work']={}
-    if 'environment' not in flow: flow['environment']={}
-    if 'state' not in flow: flow['state']={}
-    if 'characteristics' not in flow: flow['characteristics']={}
-    if 'features' not in flow: flow['features']={}
-    if 'choices' not in flow: flow['choices']={}
+    flags=i.get('flags','')
+    lflags=i.get('lflags','')
+    repeat=i.get('repeat','')
+    ctype=i.get('compile_type','')
+    if ctype=='': ctype='dynamic'
 
-    flowm=flow.get('meta',{})
-    floww=flow.get('work',{})
-    flowe=flow.get('environment',{})
-    flows=flow.get('state',{})
-    flowb=flow.get('characteristics',{})
-    flowf=flow.get('features',{})
-    flowc=flow.get('choices',{})
+    # Check host/target OS/CPU
+    hos=i.get('host_os','')
+    tos=i.get('target_os','')
+    tdid=i.get('target_device_id','')
+
+    r=ck.access({'action':'detect',
+                 'module_uoa':cfg['module_deps']['platform.os'],
+                 'host_os':hos,
+                 'target_os':tos,
+                 'target_device_id':tdid,
+                 'skip_info_collection':'yes'})
+    if r['return']>0: return r
+
+    hos=r['host_os_uid']
+    hosx=r['host_os_uoa']
+    hosd=r['host_os_dict']
+
+    tos=r['os_uid']
+    tosx=r['os_uoa']
+    tosd=r['os_dict']
+
+    tbits=tosd.get('bits','')
+
+    # update misc
+    misc['host_os_uoa']=hosx
+    misc['target_os_uoa']=tosx
+    misc['target_device_id']=tdid
+
+    # Get host platform type (linux or win)
+    rx=ck.get_os_ck({})
+    if rx['return']>0: return rx
+    hplat=rx['platform']
+
+    rem=hosd.get('rem','')
+    eset=hosd.get('env_set','')
+    svarb=hosd.get('env_var_start','')
+    svare=hosd.get('env_var_stop','')
+    scall=hosd.get('env_call','')
+    sdirs=hosd.get('dir_sep','')
+    sext=hosd.get('script_ext','')
+    sexe=hosd.get('set_executable','')
+    se=tosd.get('file_extensions',{}).get('exe','')
+    sbp=hosd.get('bin_prefix','')
+    sqie=hosd.get('quit_if_error','')
+    evs=hosd.get('env_var_separator','')
+    eifs=hosd.get('env_quotes_if_space','')
+    eifsc=hosd.get('env_quotes_if_space_in_call','')
+    wb=tosd.get('windows_base','')
+
+    ########################################################################
+    # Prepare some params
+    misc=i.get('misc',{})
+    misc.update({'host_os_uoa':hos,
+                 'target_os_uoa':tos,
+                 'target_os_bits':tbits})
 
     # Get host platform
     rx=ck.get_os_ck({})
@@ -223,6 +288,11 @@ def process_in_dir(i):
     muoa=i.get('module_uoa', '')
     duoa=i.get('data_uoa', '')
 
+    target_exe=meta.get('target_file','')
+    if target_exe=='':
+       target_exe=cfg.get('target_file','')
+    target_exe+=se
+
     # If muoa=='' assume program
     if muoa=='':
        muoa=work['self_module_uid']
@@ -231,26 +301,6 @@ def process_in_dir(i):
        x=meta.get('backup_data_uid','')
        if x!='':
           duoa=meta['backup_data_uid']
-
-    ########## Check common vars ################
-    # Check if use obj ext
-    obj_ext=''
-    xobj_ext=meta.get('obj_extension',{})
-    if len(xobj_ext)>0:
-       obj_ext=xobj_ext.get(ios,'')
-       if obj_ext=='':
-          obj_ext=xobj_ext.get('all','')
-
-    # Check if use bin
-    bin_file=''
-    xbin_file=meta.get('bin_file',{})
-    if len(xbin_file)>0:
-       bin_file=xbin_file.get(ios,'')
-       if bin_file=='':
-          bin_file=xbin_file.get('all','')
-
-    if bin_file!='':
-       floww['binary_filename']=bin_file
 
     # Check if compile in tmp dir
     cdir=p
@@ -263,6 +313,10 @@ def process_in_dir(i):
        td=i.get('tmp_dir','')
        if td=='': td='tmp'
 
+       if i.get('clean','')=='yes':
+          if td!='' and os.path.isdir(td):
+             shutil.rmtree(td, ignore_errors=True)
+
        if i.get('generate_rnd_tmp_dir','')=='yes':
           # Generate tmp dir
           import tempfile
@@ -274,146 +328,255 @@ def process_in_dir(i):
        else:
           cdir=td
 
+    misc['tmp_dir']=td
+
     if cdir!='' and not os.path.isdir(cdir):
        os.mkdir(cdir)
+
+    sa=i['sub_action']
+
+    sb='' # Batch
 
     os.chdir(cdir)
     rcdir=os.getcwd()
 
-    sa=i['sub_action']
+    # If compile type is dynamic, reuse deps even for run (to find specific DLLs)
+    if ctype=='dynamic' or sa=='compile':
+       # Resolve deps (if not ignored, such as when installing local version with all dependencies set)
+       cdeps=meta.get('compile_deps',{})
+       if len(cdeps)>0:
+          if o=='con':
+             ck.out(sep)
+
+          ii={'action':'resolve',
+              'module_uoa':cfg['module_deps']['env'],
+              'host_os':hos,
+              'target_os':tos,
+              'target_device_id':tdid,
+              'deps':cdeps}
+          if o=='con': ii['out']='con'
+
+          rx=ck.access(ii)
+          if rx['return']>0: return rx
+          sb+=rx['bat']
+          cdeps=rx['deps'] # Update deps (add UOA)
+
+       # If compiler, load env
+       comp=cdeps.get('compiler',{})
+       comp_uoa=comp.get('uoa','')
+       dcomp={}
+       
+       if comp_uoa!='':
+          rx=ck.access({'action':'load',
+                        'module_uoa':cfg['module_deps']['env'],
+                        'data_uoa':comp_uoa})
+          if rx['return']>0: return rx
+          dcomp=rx['dict']
 
     # Check sub_actions
     ################################### Compile ######################################
     if sa=='compile':
-       start_time=time.time()
+       # Add env
+       for k in sorted(env):
+           v=env[k]
 
+           if eifs!='' and wb!='yes':
+              if v.find(' ')>=0 and not v.startswith(eifs):
+                 v=eifs+v+eifs
+
+           sb+=eset+' '+k+'='+v+'\n'
+       sb+='\n'
+
+       # Obtaining compile CMD (first from program entry, then default from this module)
+       ccmds=meta.get('compile_cmds',{})
+       ccmd=ccmds.get(hplat,{})
+       if len(ccmd)==0:
+          ccmd=ccmds.get('default',{})
+       if len(ccmd)==0:
+          ccmds=cfg.get('compile_cmds',{})
+          ccmd=ccmds.get(hplat,{})
+          if len(ccmd)==0:
+             ccmd=ccmds.get('default',{})
+       
+       sccmd=ccmd.get('cmd','')
+       if sccmd=='':
+          return {'return':1, 'error':'compile CMD is not found'}
+
+       # Source files
        sfs=meta.get('source_files',[])
 
-       # Check if compile individual files
-       xcif=meta.get('compile_individual_files_cmd',{})
-       obj_files=[]
+       compiler_env=meta.get('compiler_env','')
+       if compiler_env=='': compiler_env='CK_CC'
 
-       rx=0
-       if len(xcif)>0:
-          if len(sfs)==0:
-             return {'return':1, 'error':'can\'t compile individual files since source files are not specified in description'}
+       sfprefix='..'+sdirs
+       
+       scfb=svarb+'CK_FLAGS_CREATE_OBJ'+svare
+       scfb+=' '+svarb+'CK_COMPILER_FLAGS_OBLIGATORY'+svare
+       if ctype=='dynamic':
+          scfb+=' '+svarb+'CK_FLAGS_DYNAMIC_BIN'+svare
+       elif ctype=='static':
+          scfb+=' '+svarb+'CK_FLAGS_STATIC_BIN'+svare
+       scfb+=' '+svarb+'CK_FLAG_PREFIX_INCLUDE'+svare+sfprefix
 
-          cif=xcif.get(ios,'')
-          if cif=='':
-             cif=xcif.get('all','')
-          if cif=='':
-             return {'return':1, 'error':'can\'t find compile CMD for the platform'}
+       scfa=''
 
-          for sf in sfs:
-              cif1=cif
-              sf0=os.path.splitext(sf)[0]
+       # Prepare compilation
+       sb+='\n'
 
-              psf=os.path.join(p, sf)
-              psf0=os.path.splitext(psf)[0]
+       sobje=dcomp.get('env',{}).get('CK_OBJ_EXT','')
+       sofs=''
+       xsofs=[]
 
-              cflags='-c'
+       for sf in sfs:
+           xcfb=scfb
+           xcfa=scfa
 
-              fcflags=flowc.get('compiler',{}).get('flags','').strip()
-              if fcflags!='': cflags+=' '+fcflags
+           sf0,sf1=os.path.splitext(sf)
 
-              cflags+=' '
+           sfobj=sf0+sobje
+           if sofs!='': sofs+=' '
+           sofs+=sfobj
+           xsofs.append(sfobj)
 
-              cif1=cif1.replace('$#COMPILER#$', 'gcc')
-              cif1=cif1.replace('$#COMPILER_FLAGS_BEFORE#$', cflags)
-              cif1=cif1.replace('$#COMPILER_FLAGS_AFTER#$', '')
+           xcfb+=' '+flags
 
-              cif1=cif1.replace('$#SOURCE_FILE#$', psf)
+           xcfa+=' '+svarb+'CK_FLAGS_OUTPUT'+svare+sfobj
 
-              if obj_ext!='':
-                 cif1=cif1.replace('$#OBJ_FILE#$', sf0)
-                 cif1=cif1.replace('$#OBJ_EXT#$', obj_ext)
-                 cif1=cif1.replace('$#COMPILER_OBJ_FLAG#$', '-o ')
-              else:
-                 cif1=cif1.replace('$#COMPILER_OBJ_FLAG#$$#OBJ_FILE#$$#OBJ_EXT#$','')
+           cc=sccmd
+           cc=cc.replace('$#source_file#$', sfprefix+sf)
 
-              if o=='con': ck.out('    '+cif1)
-              rx=os.system(cif1)
-              if rx==0:
-                 if bin_file!='':
-                    if os.path.isfile(bin_file):
-                       bin_size=os.path.getsize(bin_file);
-                       flowb['binary_size']=bin_size
+           cc=cc.replace('$#compiler#$', svarb+compiler_env+svare)
 
+           cc=cc.replace('$#flags_before#$', xcfb)
+           cc=cc.replace('$#flags_after#$', xcfa)
 
+           sb+='echo '+eifs+cc+eifs+'\n'
+           sb+=cc+'\n'
+           sb+=sqie+'\n'
 
+           sb+='\n'
 
+       # Obtaining link CMD (first from program entry, then default from this module)
+       if sofs!='':
+          linker_env=meta.get('linker_env','')
+          if linker_env=='': linker_env=compiler_env
 
-              if rx>0: break
+          lcmds=meta.get('link_cmds',{})
+          lcmd=lcmds.get(hplat,{})
+          if len(lcmd)==0:
+             lcmd=lcmds.get('default',{})
+          if len(lcmd)==0:
+             lcmds=cfg.get('link_cmds',{})
+             lcmd=lcmds.get(hplat,{})
+             if len(lcmd)==0:
+                lcmd=lcmds.get('default',{})
+          
+          slcmd=lcmd.get('cmd','')
+          if slcmd!='':
+             slfb=svarb+'CK_COMPILER_FLAGS_OBLIGATORY'+svare
+             slfb+=' '+lflags
+             if ctype=='dynamic':
+                slfb+=' '+svarb+'CK_FLAGS_DYNAMIC_BIN'+svare
+             elif ctype=='static':
+                slfb+=' '+svarb+'CK_FLAGS_STATIC_BIN'+svare
 
+             slfa=' '+svarb+'CK_FLAGS_OUTPUT'+svare+target_exe
+             slfa+=' '+svarb+'CK_LD_FLAGS_MISC'+svare
+             slfa+=' '+svarb+'CK_LD_FLAGS_EXTRA'+svare
+
+             cc=slcmd
+             cc=cc.replace('$#linker#$', svarb+linker_env+svare)
+             cc=cc.replace('$#obj_files#$', sofs)
+             cc=cc.replace('$#flags_before#$', slfb)
+             cc=cc.replace('$#flags_after#$', slfa)
+
+             sb+='echo '+eifs+cc+eifs+'\n'
+             sb+=cc+'\n'
+             sb+=sqie+'\n'
+
+       # Record to tmp batch and run
+       rx=ck.gen_tmp_file({'prefix':'tmp-', 'suffix':sext, 'remove_dir':'yes'})
+       if rx['return']>0: return rx
+       fn=rx['file_name']
+
+       rx=ck.save_text_file({'text_file':fn, 'string':sb})
+       if rx['return']>0: return rx
+
+       y=''
+       if sexe!='':
+          y+=sexe+' '+sbp+fn+evs
+       y+=' '+scall+' '+sbp+fn
+
+       sys.stdout.flush()
+       start_time1=time.time()
+       rx=os.system(y)
+       ccc['compilation_time']=time.time()-start_time1
+
+       if rx>0:
+          misc['compilation_success']='no'
        else:
-          ck.out('checking if build script')
+          misc['compilation_success']='yes'
 
-       # Check if link individual files
-       if rx==0:
-          ycif=meta.get('link_individual_files_cmd',{})
-          if len(ycif)>0:
-             if len(sfs)==0:
-                return {'return':1, 'error':'can\'t link individual files since source files are not specified in description'}
+          # Check some characteristics
+          if os.path.isfile(target_exe):
+             ccc['binary_size']=os.path.getsize(target_exe)
 
-             cif=ycif.get(ios,'')
-             if cif=='':
-                cif=ycif.get('all','')
-             if cif=='':
-                return {'return':1, 'error':'can\'t find link CMD for the platform'}
+          # Check obj file sizes
+          ofs=0
+          if len(xsofs)>0:
+             ccc['obj_sizes']={}
+             for q in xsofs:
+                 if os.path.isfile(q):
+                    ofs1=os.path.getsize(q)
+                    ccc['obj_sizes'][q]=ofs1
+                    ofs+=ofs1
+             ccc['obj_size']=ofs
 
-             obj_files=''
-             for sf in sfs:
-                 cif1=cif
-                 sf0=os.path.splitext(sf)[0]
-                 psf=os.path.join(p, sf)
-                 psf0=os.path.splitext(psf)[0]
-
-                 if obj_files!='': obj_files+=' '
-                 obj_files+=sf0+obj_ext
-
-             cif1=cif1.replace('$#LINKER#$', 'gcc')
-             cif1=cif1.replace('$#LINKER_FLAGS_BEFORE#$', '')
-             cif1=cif1.replace('$#LINKER_FLAGS_AFTER#$', '-lm -o '+bin_file)
-
-             cif1=cif1.replace('$#OBJ_FILES#$', obj_files)
-                 
-             if o=='con': ck.out('    '+cif1)
-             rx=os.system(cif1)
-
-#             if rx>0:
-#                return {'return':1, 'error': 'compilation failed'}
-
-          else:
-             ck.out('TBD: build script')
-
-
-
-       flowb['compilation_time']=time.time()-start_time
-
-    ################################### Clean ######################################
-    elif sa=='clean':
-       ck.out('tbd')
-
+       ccc['compilation_time_with_module']=time.time()-start_time
 
     ################################### Run ######################################
     elif sa=='run':
        start_time=time.time()
 
+       # Update environment
+       env1=meta.get('run_vars',{})
+       for q in env1:
+           if q not in env:
+              env[q]=env1[q]
+
+       # Update env if repeat
+       if repeat!='':
+          env['CT_REPEAT_MAIN']=repeat
+
+       # Add env
+       for k in sorted(env):
+           v=env[k]
+
+           if eifs!='' and wb!='yes':
+              if v.find(' ')>=0 and not v.startswith(eifs):
+                 v=eifs+v+eifs
+
+           sb+=eset+' '+k+'='+v+'\n'
+       sb+='\n'
+
+       # Check cmd key
        run_cmds=meta.get('run_cmds',{})
        if len(run_cmds)==0:
           return {'return':1, 'error':'no CMD for run'}
 
        krun_cmds=sorted(list(run_cmds.keys()))
 
-       cmd=i.get('cmd_key','')
-       if cmd=='':
-          if 'default' in krun_cmds: cmd='default'
-          else: cmd=krun_cmds[0]
+       kcmd=i.get('cmd_key','')
+       if kcmd=='':
+          if 'default' in krun_cmds: kcmd='default'
+          else: kcmd=krun_cmds[0]
        else:
-          if cmd not in krun_cmds:
+          if kcmd not in krun_cmds:
              return {'return':1, 'error':'CMD key not found in program description'}
 
-       vcmd=run_cmds[cmd]
+       # Command line key is set
+       vcmd=run_cmds[kcmd]
+       misc['cmd_keys']=kcmd
 
        c=''
 
@@ -424,12 +587,14 @@ def process_in_dir(i):
           return {'return':1, 'error':'cmd is not defined'}
 
        # Replace bin file
-       c=c.replace('$#BIN_FILE#$', bin_file)
+       c=c.replace('$#BIN_FILE#$', sbp+target_exe)
        c=c.replace('$#os_dir_separator#$', os.sep)
 
        # Check if takes datasets from CK
        dtags=vcmd.get('dataset_tags',[])
        if len(dtags)>0:
+          misc['dataset_tags']=dtags
+
           tags=''
           for q in dtags:
               if tags!='': tags+=','
@@ -464,14 +629,47 @@ def process_in_dir(i):
              df0=dfiles[0]
              c=c.replace('$#dataset_filename#$', df0)
 
-       if o=='con': ck.out('    '+c)
-       rx=os.system(c)
+          misc['dataset_uoa']=dduoa
+
+       if o=='con': 
+          ck.out(sep)
+          ck.out(c)
+          ck.out('')
+
+       sb+=c+'\n'
+
+       # Record to tmp batch and run
+       rx=ck.gen_tmp_file({'prefix':'tmp-', 'suffix':sext, 'remove_dir':'yes'})
+       if rx['return']>0: return rx
+       fn=rx['file_name']
+
+       rx=ck.save_text_file({'text_file':fn, 'string':sb})
+       if rx['return']>0: return rx
+
+       y=''
+       if sexe!='':
+          y+=sexe+' '+sbp+fn+evs
+       y+=' '+scall+' '+sbp+fn
+
+       sys.stdout.flush()
+       start_time1=time.time()
+       rx=os.system(y)
+       ccc['execution_time']=time.time()-start_time1
+
        if rx>0 and vcmd.get('ignore_return_code','').lower()!='yes':
-          return {'return':1, 'error': 'execution failed'}
+          misc['run_success']='no'
+       else:
+          misc['run_success']='yes'
 
-       flowb['execution_time']=time.time()-start_time
+       if i.get('skip_clean_after','')!='yes':
+          if os.path.isfile(fn): os.remove(fn)
 
-    return {'return':0, 'tmp_dir':rcdir, 'flow':flow}
+       ccc['execution_time_with_module']=time.time()-start_time
+
+       print ccc
+       print misc
+
+    return {'return':0, 'tmp_dir':rcdir, 'misc':misc, 'characteristics':ccc}
 
 ##############################################################################
 # clean program work and tmp files
@@ -488,8 +686,32 @@ def clean(i):
             }
 
     """
-    i['sub_action']='clean'
-    return process(i)
+
+    import os
+    import shutil
+
+    o=i.get('out','')
+
+    # Get host platform type (linux or win)
+    rx=ck.get_os_ck({})
+    if rx['return']>0: return rx
+    hplat=rx['platform']
+
+    cmd=cfg.get('clean_cmds',{}).get(hplat)
+
+    if o=='con':
+       ck.out(cmd)
+       ck.out('')
+
+    rx=os.system(cmd)
+
+    # Removing tmp directories
+    curdir=os.getcwd()
+    for q in os.listdir(curdir):
+        if not os.path.isfile(q) and q.startswith('tmp'):
+           shutil.rmtree(q, ignore_errors=True)
+
+    return {'return':0}
 
 ##############################################################################
 # compile program

@@ -24,6 +24,17 @@
   "license": "See CK LICENSE.txt for licensing details",
   "module_deps": {
     "dataset": "8a7141c59cd335f5",
-    "compiler":"36ebc331048475bb"
+    "compiler":"36ebc331048475bb",
+    "env":"9b9b3208ac44b891",
+    "platform.os": "41e31cc4496b8a8e"
+  },
+  "compile_cmds":{
+    "default":{"cmd":"$#compiler#$ $#flags_before#$ $#source_file#$ $#flags_after#$"}},
+  "link_cmds":{
+    "default":{"cmd":"$#linker#$ $#flags_before#$ $#obj_files#$ $#flags_after#$"}},
+  "target_file":"a",
+  "clean_cmds":{
+    "win":"del /F /Q tmp* *.out *.exe *.manifest *.obj *.o *.lib *.a *.dll *.so *.s *.asm *.i *.I *.tmp *.bc *.ll tmp* *.class *.jar",
+    "linux":"rm -rf tmp* *.out *.exe *.manifest *.obj *.o *.lib *.a *.dll *.so *.s *.asm *.i *.I *.tmp *.bc *.ll tmp* *.class *.jar"
   }
 }
