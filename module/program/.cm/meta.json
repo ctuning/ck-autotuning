@@ -36,5 +36,6 @@
   "clean_cmds":{
     "win":"del /F /Q tmp* *.out *.exe *.manifest *.obj *.o *.lib *.a *.dll *.so *.s *.asm *.i *.I *.tmp *.bc *.ll tmp* *.class *.jar",
     "linux":"rm -rf tmp* *.out *.exe *.manifest *.obj *.o *.lib *.a *.dll *.so *.s *.asm *.i *.I *.tmp *.bc *.ll tmp* *.class *.jar"
-  }
+  },
+  "deps_file":"tmp-deps.json"
 }

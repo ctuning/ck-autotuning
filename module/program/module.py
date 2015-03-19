@@ -186,6 +186,8 @@ def process_in_dir(i):
               (misc)             - misc  dict
               (characteristics)  - characteristics/features/properties
               (env)              - preset environment
+
+              (deps)             - already resolved deps (useful for auto-tuning)
             }
 
     Output: {
@@ -196,6 +198,7 @@ def process_in_dir(i):
               misc            - updated misc dict
               characteristics - updated characteristics
               env             - updated environment
+              deps            - resolved deps, if any
             }
 
     """
@@ -213,6 +216,7 @@ def process_in_dir(i):
     misc=i.get('misc',{})
     ccc=i.get('characteristics',{})
     env=i.get('env',{})
+    deps=i.get('deps',{})
 
     flags=i.get('flags','')
     lflags=i.get('lflags','')
@@ -340,11 +344,19 @@ def process_in_dir(i):
     os.chdir(cdir)
     rcdir=os.getcwd()
 
+    # If run and dynamic, check deps prepared by compiler
+    fdeps=cfg.get('deps_file','')
+    if len(deps)==0 and ctype=='dynamic' and sa=='run':
+       if os.path.isfile(fdeps):
+          rx=ck.load_json_file({'json_file':fdeps})
+          if rx['return']>0: return rx
+          deps=fdeps
+
     # If compile type is dynamic, reuse deps even for run (to find specific DLLs)
-    if ctype=='dynamic' or sa=='compile':
+    if (ctype=='dynamic' or sa=='compile'):
        # Resolve deps (if not ignored, such as when installing local version with all dependencies set)
-       cdeps=meta.get('compile_deps',{})
-       if len(cdeps)>0:
+       deps=meta.get('compile_deps',{})
+       if len(deps)>0:
           if o=='con':
              ck.out(sep)
 
@@ -353,25 +365,29 @@ def process_in_dir(i):
               'host_os':hos,
               'target_os':tos,
               'target_device_id':tdid,
-              'deps':cdeps}
+              'deps':deps}
           if o=='con': ii['out']='con'
 
           rx=ck.access(ii)
           if rx['return']>0: return rx
           sb+=rx['bat']
-          cdeps=rx['deps'] # Update deps (add UOA)
+          deps=rx['deps'] # Update deps (add UOA)
 
-       # If compiler, load env
-       comp=cdeps.get('compiler',{})
-       comp_uoa=comp.get('uoa','')
-       dcomp={}
-       
-       if comp_uoa!='':
-          rx=ck.access({'action':'load',
-                        'module_uoa':cfg['module_deps']['env'],
-                        'data_uoa':comp_uoa})
+       if sa=='compile':
+          rx=ck.save_json_to_file({'json_file':fdeps, 'dict':deps})
           if rx['return']>0: return rx
-          dcomp=rx['dict']
+
+    # If compiler, load env
+    comp=deps.get('compiler',{})
+    comp_uoa=comp.get('uoa','')
+    dcomp={}
+    
+    if comp_uoa!='':
+       rx=ck.access({'action':'load',
+                     'module_uoa':cfg['module_deps']['env'],
+                     'data_uoa':comp_uoa})
+       if rx['return']>0: return rx
+       dcomp=rx['dict']
 
     # Check sub_actions
     ################################### Compile ######################################
@@ -666,10 +682,7 @@ def process_in_dir(i):
 
        ccc['execution_time_with_module']=time.time()-start_time
 
-       print ccc
-       print misc
-
-    return {'return':0, 'tmp_dir':rcdir, 'misc':misc, 'characteristics':ccc}
+    return {'return':0, 'tmp_dir':rcdir, 'misc':misc, 'characteristics':ccc, 'deps':deps}
 
 ##############################################################################
 # clean program work and tmp files
@@ -797,6 +810,8 @@ def autotune(i):
     try: ni=int(ni)
     except Exception as e: pass
 
+    deps={}
+
     # Hack
     cduoa=i.get('compiler_desc_uoa','')
     if cduoa!='':
@@ -808,39 +823,22 @@ def autotune(i):
        cc=cm.get('all_compiler_flags_desc',{})
 
     for m in range(0,ni+1):
-        ck.out('=========================================================')
+        ck.out(sep)
         ck.out('Iteration: '+str(m))
         ck.out('')
 
         ii=copy.deepcopy(ic)
+        ii['deps']=deps
 
-        if 'flow' not in ii: ii['flow']={}
-        flow=ii.get('flow',{})
+        # Describing experiment
+        dd={}
 
-        if 'meta' not in flow: flow['meta']={}
-        flowm=flow['meta']
+        dd['input']=ii
+        dd['choices']={}
+        dd['characteristics']={}
+        dd['misc']={}
 
-        flowm['program name']='susan'
-        flowm['architecture name']='Intel Exxxx'
-        flowm['architecture type']='CPU'
-        flowm['architecture vendor']='Intel'
-
-        if 'choices' not in flow: flow['choices']={}
-        flowc=flow['choices']
-
-        if 'features' not in flow: flow['features']={}
-        flowf=flow['features']
-
-        flowf['cmd']='edges'
-        flowf['compiler name']='gcc'
-        flowf['compiler version']='gcc 4.7'
-        flowf['dataset uoa']='0001'
-
-        if 'compiler' not in flowc: flowc['compiler']={}
-        flowcc=flowc['compiler']
-
-        flowm['program_uoa']=i.get('data_uoa','')
-
+        ##########################################################################################
         # Generate flags
         cflags=''
         if m!=0:
@@ -860,46 +858,66 @@ def autotune(i):
                         cflags+=''
 
         ck.out('Flags: '+cflags)
-        flowcc['flags']=cflags
-        flowf['compiler flags']=cflags
+        ii['flags']=cflags
+        dd['choices']['compiler_flags']=cflags
 
-        ck.out('')
-
-        # Compile
+        ##########################################################################################
+        # Compile xyz
         os.chdir(pp)
 
+        ck.out('')
         rx=compile(ii)
+        if rx['return']>0: return rx 
 
-        frx=rx.get('flow',{})
-        ii['flow']=frx
+        deps=rx['deps']
+        cmisc=rx['misc']
+        cch=rx['characteristics']
 
-        fc=frx.get('characteristics',{})
+        xct=cch.get('compilation_time',-1)
+        xos=cch.get('obj_size',-1)
 
-        xct=fc.get('compilation_time',-1)
-        xcbs=fc.get('binary_size',-1)
+        dd['characteristics']['compile']=cch
+        dd['misc']['compile']=cmisc
 
-        if xcbs>0:
+        if xos>0:
+           ##########################################################################################
            # Run
+           ii['deps']=deps
+
            os.chdir(pp)
            rx=run(ii)
-           frx=rx.get('flow',{})
-           fc=frx.get('characteristics',{})
+           if rx['return']>0: return rx
 
-        xrt=fc.get('execution_time',-1)
+           rmisc=rx['misc']
+           rch=rx['characteristics']
 
-        ck.out('')
-        ck.out('Compile time: '+str(xct)+', binary size: '+str(xcbs)+', run time: '+str(xrt))
+           rsucc=rmisc.get('run_success','')
+           dataset_uoa=rmisc.get('dataset_uoa','')
+           xrt=rch.get('execution_time',-1)
 
-        # Adding experiment
+           if rsucc=='yes' and xrt>0:
+              ck.out('')
+              ck.out('****** Compile time: '+str(xct)+', obj size: '+str(xos)+', run time: '+str(xrt))
+              ck.out('')
+
+           dd['characteristics']['run']=rch
+           dd['misc']['run']=rmisc
+
         ie={'action':'add',
             'experiment_repo_uoa': 'ck-experiments',
             'module_uoa':'experiment',
             'ignore_update':'yes',
-            'search_point_by_features':'yes',
-            'process_multi_keys':['characteristics','features'],
+
+#            'search_point_by_features':'yes',
+#            'process_multi_keys':['characteristics','features'],
             'record_all_subpoints':'yes',
+            
+            'experiment_uoa':'test1',
+            'force_new_entry':'yes',
+
+            'sort_keys':'yes',
             'out':'con',
-            'dict':frx}
+            'dict':dd}
         rx=ck.access(ie)
         if rx['return']>0: return rx
 
