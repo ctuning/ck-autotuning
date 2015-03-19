@@ -1,4 +1,4 @@
-#      6
+#
 # Collective Knowledge (program)
 #
 # See CK LICENSE.txt for licensing details
