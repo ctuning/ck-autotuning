@@ -812,6 +812,8 @@ def autotune(i):
 
     deps={}
 
+    dflag=i.get('default_flag','')
+
     # Hack
     cduoa=i.get('compiler_desc_uoa','')
     if cduoa!='':
@@ -836,11 +838,12 @@ def autotune(i):
         dd['input']=ii
         dd['choices']={}
         dd['characteristics']={}
+        dd['features']={}
         dd['misc']={}
 
         ##########################################################################################
         # Generate flags
-        cflags=''
+        cflags=dflag
         if m!=0:
            cflags='-O3'
            for q in cc:
@@ -858,8 +861,10 @@ def autotune(i):
                         cflags+=''
 
         ck.out('Flags: '+cflags)
+
         ii['flags']=cflags
-        dd['choices']['compiler_flags']=cflags
+
+        dd['features']['compiler_flags']=cflags
 
         ##########################################################################################
         # Compile xyz
@@ -897,11 +902,14 @@ def autotune(i):
 
            if rsucc=='yes' and xrt>0:
               ck.out('')
-              ck.out('****** Compile time: '+str(xct)+', obj size: '+str(xos)+', run time: '+str(xrt))
+              ck.out('###### Compile time: '+str(xct)+', obj size: '+str(xos)+', run time: '+str(xrt))
               ck.out('')
 
            dd['characteristics']['run']=rch
            dd['misc']['run']=rmisc
+
+        euoa=i.get('experiment_uoa','')
+
 
         ie={'action':'add',
             'experiment_repo_uoa': 'ck-experiments',
@@ -911,8 +919,10 @@ def autotune(i):
 #            'search_point_by_features':'yes',
 #            'process_multi_keys':['characteristics','features'],
             'record_all_subpoints':'yes',
+
+            'search_point_by_features':'yes',
             
-            'experiment_uoa':'test1',
+            'experiment_uoa':euoa,
             'force_new_entry':'yes',
 
             'sort_keys':'yes',
