@@ -348,14 +348,19 @@ def process_in_dir(i):
     fdeps=cfg.get('deps_file','')
     if len(deps)==0 and ctype=='dynamic' and sa=='run':
        if os.path.isfile(fdeps):
+          ck.out('')
+          ck.out('Reloading depedencies from compilation '+fdeps+' ...')
+
           rx=ck.load_json_file({'json_file':fdeps})
           if rx['return']>0: return rx
-          deps=fdeps
+          deps=rx['dict']
 
     # If compile type is dynamic, reuse deps even for run (to find specific DLLs)
     if (ctype=='dynamic' or sa=='compile'):
        # Resolve deps (if not ignored, such as when installing local version with all dependencies set)
-       deps=meta.get('compile_deps',{})
+       if len(deps)==0: 
+          deps=meta.get('compile_deps',{})
+
        if len(deps)>0:
           if o=='con':
              ck.out(sep)
@@ -810,9 +815,16 @@ def autotune(i):
     try: ni=int(ni)
     except Exception as e: pass
 
+    srm=i.get('stat_repetitions',0)
+    try: srm=int(srm)
+    except Exception as e: pass
+
     deps={}
 
     dflag=i.get('default_flag','')
+
+    eruoa=i.get('experiment_repo_uoa','')
+    euoa=i.get('experiment_uoa','')
 
     # Hack
     cduoa=i.get('compiler_desc_uoa','')
@@ -888,48 +900,61 @@ def autotune(i):
            ##########################################################################################
            # Run
            ii['deps']=deps
+           ii1=copy.deepcopy(ii)
 
-           os.chdir(pp)
-           rx=run(ii)
-           if rx['return']>0: return rx
+           for sr in range(0, srm):
+               ck.out('')
+               ck.out('------------------- Statistical reptition: '+str(sr))
+               ii=copy.deepcopy(ii1)
 
-           rmisc=rx['misc']
-           rch=rx['characteristics']
+               os.chdir(pp)
 
-           rsucc=rmisc.get('run_success','')
-           dataset_uoa=rmisc.get('dataset_uoa','')
-           xrt=rch.get('execution_time',-1)
+               rx=run(ii)
+               if rx['return']>0: return rx
 
-           if rsucc=='yes' and xrt>0:
-              ck.out('')
-              ck.out('###### Compile time: '+str(xct)+', obj size: '+str(xos)+', run time: '+str(xrt))
-              ck.out('')
+               rmisc=rx['misc']
+               rch=rx['characteristics']
 
-           dd['characteristics']['run']=rch
-           dd['misc']['run']=rmisc
+               rsucc=rmisc.get('run_success','')
+               dataset_uoa=rmisc.get('dataset_uoa','')
+               xrt=rch.get('execution_time',-1)
 
-        euoa=i.get('experiment_uoa','')
+               if rsucc=='yes' and xrt>0:
+                  ck.out('')
+                  ck.out('###### Compile time: '+str(xct)+', obj size: '+str(xos)+', run time: '+str(xrt))
+                  ck.out('')
 
+               dd['characteristics']['run']=rch
+               dd['misc']['run']=rmisc
 
-        ie={'action':'add',
-            'experiment_repo_uoa': 'ck-experiments',
-            'module_uoa':'experiment',
-            'ignore_update':'yes',
+               ##########################################################################################
+               # For now Process/record in expeirment, only if compile was successful
+               # TBD: For compiler/architecture testing purposes, we may want to record failed cases in another repo
 
-#            'search_point_by_features':'yes',
-#            'process_multi_keys':['characteristics','features'],
-            'record_all_subpoints':'yes',
+               
+               ie={'action':'add',
 
-            'search_point_by_features':'yes',
-            
-            'experiment_uoa':euoa,
-            'force_new_entry':'yes',
+                   'module_uoa':'experiment',
 
-            'sort_keys':'yes',
-            'out':'con',
-            'dict':dd}
-        rx=ck.access(ie)
-        if rx['return']>0: return rx
+                   'ignore_update':'yes',
+
+                   'experiment_repo_uoa': eruoa,
+                   'experiment_uoa':euoa,
+
+#                   'search_point_by_features':'yes',
+#                   'process_multi_keys':['characteristics','features'],
+                   'record_all_subpoints':'yes',
+
+                   'search_point_by_features':'yes',
+                   
+                   'force_new_entry':'yes',
+
+                   'sort_keys':'yes',
+                   'out':'con',
+                   'dict':dd}
+
+               rx=ck.access(ie)
+               if rx['return']>0: return rx
 
     return {'return':0}
 

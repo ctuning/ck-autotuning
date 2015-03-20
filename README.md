@@ -7,7 +7,10 @@ please, do not use it until official announcement.
 Dependencies
 ============
 * CK repo: ck-env (to install, interconnect and call various tools and their version)
+* CK repo: ck-analytics (to record experiments and expose to predictive analytics)
+
 > ck add repo:ck-env --shared --quiet
+> ck add repo:ck-analytics --shared --quiet
 
 Description
 ===========
