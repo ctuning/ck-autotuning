@@ -308,11 +308,36 @@ def process_in_dir(i):
 
     # Check if compile in tmp dir
     cdir=p
+    os.chdir(cdir)
 
+    sa=i['sub_action']
+
+    ################################### Run ######################################
+    if sa=='clean':
+       # Get host platform type (linux or win)
+       cmd=cfg.get('clean_cmds',{}).get(hplat)
+
+       if o=='con':
+          ck.out(cmd)
+          ck.out('')
+
+       rx=os.system(cmd)
+
+       # Removing tmp directories
+       curdir=os.getcwd()
+       for q in os.listdir(curdir):
+           if not os.path.isfile(q) and q.startswith('tmp'):
+              shutil.rmtree(q, ignore_errors=True)
+
+       return {'return':0}
+
+    # Check tmp dir ...
     x=i.get('process_in_tmp','').lower()
     if x=='': x='yes'
+
     if x!='yes':
        x=meta.get('process_in_tmp','').lower()
+
     if x=='yes':
        td=i.get('tmp_dir','')
        if td=='': td='tmp'
@@ -330,14 +355,12 @@ def process_in_dir(i):
 
           cdir=os.path.join(p, fn)
        else:
-          cdir=td
+          cdir=os.path.join(p, td)
 
     misc['tmp_dir']=td
 
     if cdir!='' and not os.path.isdir(cdir):
        os.mkdir(cdir)
-
-    sa=i['sub_action']
 
     sb='' # Batch
 
@@ -370,7 +393,8 @@ def process_in_dir(i):
               'host_os':hos,
               'target_os':tos,
               'target_device_id':tdid,
-              'deps':deps}
+              'deps':deps,
+              'add_customize':'yes'}
           if o=='con': ii['out']='con'
 
           rx=ck.access(ii)
@@ -408,6 +432,26 @@ def process_in_dir(i):
            sb+=eset+' '+k+'='+v+'\n'
        sb+='\n'
 
+       # Check linking libs + include paths for deps
+       sll=''
+       sin=''
+       for k in deps:
+           kv=deps[k].get('cus',{})
+
+           pl1=kv.get('path_lib','')
+           pl2=kv.get('static_lib','')
+           if pl2!='':
+              if sll!='': sll+=' '
+              sll+=eifsc
+              if pl1!='': 
+                 sll+=pl1+sdirs
+              sll+=pl2+eifsc
+
+           pl3=kv.get('path_include','')
+           if pl3!='':
+              if sin!='': sin+=' '
+              sin+=svarb+'CK_FLAG_PREFIX_INCLUDE'+svare+eifsc+pl3+eifsc
+
        # Obtaining compile CMD (first from program entry, then default from this module)
        ccmds=meta.get('compile_cmds',{})
        ccmd=ccmds.get(hplat,{})
@@ -441,6 +485,15 @@ def process_in_dir(i):
 
        scfa=''
 
+       # Check build -D flags
+       sbcv=''
+       bcv=meta.get('build_compiler_vars',{})
+       for k in bcv:
+           kv=bcv[k]
+           if sbcv!='': sbcv+=' '
+           sbcv+=svarb+'CK_FLAG_PREFIX_VAR'+svare+k
+           if kv!='': sbcv+='='+kv
+
        # Prepare compilation
        sb+='\n'
 
@@ -458,6 +511,10 @@ def process_in_dir(i):
            if sofs!='': sofs+=' '
            sofs+=sfobj
            xsofs.append(sfobj)
+
+           if sbcv!='': xcfb+=' '+sbcv
+
+           if sin!='': xcfb+=' '+sin
 
            xcfb+=' '+flags
 
@@ -504,6 +561,8 @@ def process_in_dir(i):
              slfa=' '+svarb+'CK_FLAGS_OUTPUT'+svare+target_exe
              slfa+=' '+svarb+'CK_LD_FLAGS_MISC'+svare
              slfa+=' '+svarb+'CK_LD_FLAGS_EXTRA'+svare
+
+             if sll!='': slfa+=' '+sll
 
              cc=slcmd
              cc=cc.replace('$#linker#$', svarb+linker_env+svare)
@@ -590,7 +649,16 @@ def process_in_dir(i):
        kcmd=i.get('cmd_key','')
        if kcmd=='':
           if 'default' in krun_cmds: kcmd='default'
-          else: kcmd=krun_cmds[0]
+          else: 
+             kcmd=krun_cmds[0]
+
+
+
+
+
+
+
+
        else:
           if kcmd not in krun_cmds:
              return {'return':1, 'error':'CMD key not found in program description'}
@@ -610,30 +678,51 @@ def process_in_dir(i):
        # Replace bin file
        c=c.replace('$#BIN_FILE#$', sbp+target_exe)
        c=c.replace('$#os_dir_separator#$', os.sep)
+       c=c.replace('$#src_path#$', p+sdirs)
 
        # Check if takes datasets from CK
        dtags=vcmd.get('dataset_tags',[])
-       if len(dtags)>0:
-          misc['dataset_tags']=dtags
-
-          tags=''
-          for q in dtags:
-              if tags!='': tags+=','
-              tags+=q
-
-          dmuoa=cfg['module_deps']['dataset']
-          dduoa=i.get('dataset_uoa','')
+       dduoa=i.get('dataset_uoa','')
+       if dduoa!='' or len(dtags)>0:
           if dduoa=='':
-             rx=ck.access({'action':'search',
-                           'module_uoa':dmuoa,
-                           'tags':tags})
-             if rx['return']>0: return rx
-             lst=rx['lst']              
-                           
-             if len(lst)==0:
-                return {'return':1, 'error':'no related datasets found (tags='+tags+')'}  
+             misc['dataset_tags']=dtags
 
-             dduoa=lst[0].get('data_uid','')
+             tags=''
+             for q in dtags:
+                 if tags!='': tags+=','
+                 tags+=q
+
+             dmuoa=cfg['module_deps']['dataset']
+             dduoa=i.get('dataset_uoa','')
+             if dduoa=='':
+                rx=ck.access({'action':'search',
+                              'module_uoa':dmuoa,
+                              'tags':tags})
+                if rx['return']>0: return rx
+                lst=rx['lst']              
+                              
+                if len(lst)==0:
+                   return {'return':1, 'error':'no related datasets found (tags='+tags+')'}  
+                elif len(lst)==1:
+                   dduoa=lst[0].get('data_uid','')
+                else:
+                   dduoa=lst[0].get('data_uid','')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          if dduoa=='':
+             return {'return':1, 'error':'dataset is not specified'}  
 
           # Try to load dataset
           rx=ck.access({'action':'load',
@@ -647,8 +736,17 @@ def process_in_dir(i):
 
           dfiles=dd.get('dataset_files',[])
           if len(dfiles)>0:
-             df0=dfiles[0]
-             c=c.replace('$#dataset_filename#$', df0)
+             for k in range(0, len(dfiles)):
+                 df=dfiles[k]
+                 kk='$#dataset_filename'
+                 if k>0: kk+='_'+str(k)
+                 kk+='#$'
+                 c=c.replace(kk, df)
+
+          rcm=dd.get('cm_properties',{}).get('run_time',{}).get('run_cmd_main',{})
+          for k in rcm:
+              kv=rcm[k]
+              c=c.replace('$#'+k+'#$',kv)
 
           misc['dataset_uoa']=dduoa
 
@@ -705,31 +803,8 @@ def clean(i):
 
     """
 
-    import os
-    import shutil
-
-    o=i.get('out','')
-
-    # Get host platform type (linux or win)
-    rx=ck.get_os_ck({})
-    if rx['return']>0: return rx
-    hplat=rx['platform']
-
-    cmd=cfg.get('clean_cmds',{}).get(hplat)
-
-    if o=='con':
-       ck.out(cmd)
-       ck.out('')
-
-    rx=os.system(cmd)
-
-    # Removing tmp directories
-    curdir=os.getcwd()
-    for q in os.listdir(curdir):
-        if not os.path.isfile(q) and q.startswith('tmp'):
-           shutil.rmtree(q, ignore_errors=True)
-
-    return {'return':0}
+    i['sub_action']='clean'
+    return process(i)
 
 ##############################################################################
 # compile program
