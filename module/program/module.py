@@ -274,6 +274,8 @@ def process_in_dir(i):
     eifs=hosd.get('env_quotes_if_space','')
     eifsc=hosd.get('env_quotes_if_space_in_call','')
     wb=tosd.get('windows_base','')
+    stro=tosd.get('redirect_stdout','')
+    stre=tosd.get('redirect_stderr','')
 
     ########################################################################
     # Prepare some params
@@ -297,7 +299,8 @@ def process_in_dir(i):
     target_exe=meta.get('target_file','')
     if target_exe=='':
        target_exe=cfg.get('target_file','')
-    target_exe+=se
+    if meta.get('skip_bin_ext','')!='yes':
+       target_exe+=se
 
     # If muoa=='' assume program
     if muoa=='':
@@ -499,7 +502,8 @@ def process_in_dir(i):
        # Prepare compilation
        sb+='\n'
 
-       sobje=dcomp.get('env',{}).get('CK_OBJ_EXT','')
+       denv=dcomp.get('env',{})
+       sobje=denv.get('CK_OBJ_EXT','')
        sofs=''
        xsofs=[]
 
@@ -520,7 +524,8 @@ def process_in_dir(i):
 
            xcfb+=' '+flags
 
-           xcfa+=' '+svarb+svarb1+'CK_FLAGS_OUTPUT'+svare1+svare+sfobj
+           if 'CK_FLAGS_OUTPUT' in denv:
+              xcfa+=' '+svarb+'CK_FLAGS_OUTPUT'+svare+sfobj
 
            cc=sccmd
            cc=cc.replace('$#source_file#$', sfprefix+sf)
@@ -688,6 +693,9 @@ def process_in_dir(i):
        c=c.replace('$#os_dir_separator#$', os.sep)
        c=c.replace('$#src_path#$', p+sdirs)
 
+       c=c.replace('$#env1#$',svarb)
+       c=c.replace('$#env2#$',svare)
+
        # Check if takes datasets from CK
        dtags=vcmd.get('dataset_tags',[])
        dduoa=i.get('dataset_uoa','')
@@ -758,6 +766,13 @@ def process_in_dir(i):
               c=c.replace('$#'+k+'#$',kv)
 
           misc['dataset_uoa']=dduoa
+
+       # Check if redirect output
+       rco1=rt.get('run_cmd_out1','')
+       rco2=rt.get('run_cmd_out2','')
+
+       if rco1!='': c+=' '+stro+' '+rco1
+       if rco2!='': c+=' '+stre+' '+rco2
 
        if o=='con': 
           ck.out(sep)
