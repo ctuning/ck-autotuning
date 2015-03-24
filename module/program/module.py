@@ -172,6 +172,8 @@ def process_in_dir(i):
               (lflags)           - link flags
 
               (compile_type)     - static or dynamic (dynamic by default)
+                  or
+              (static or dynamic)
 
               (repeat)           - repeat kernel via environment CT_REPEAT_MAIN if supported
 
@@ -187,6 +189,8 @@ def process_in_dir(i):
               (env)              - preset environment
 
               (deps)             - already resolved deps (useful for auto-tuning)
+
+              (skip_device_init) - if 'yes', do not initialize device
             }
 
     Output: {
@@ -220,8 +224,12 @@ def process_in_dir(i):
     flags=i.get('flags','')
     lflags=i.get('lflags','')
     repeat=i.get('repeat','')
+
     ctype=i.get('compile_type','')
     if ctype=='': ctype='dynamic'
+
+    if i.get('static','')=='yes': ctype='static'
+    if i.get('dynamic','')=='yes': ctype='dynamic'
 
     # Check host/target OS/CPU
     hos=i.get('host_os','')
@@ -243,6 +251,8 @@ def process_in_dir(i):
     tos=r['os_uid']
     tosx=r['os_uoa']
     tosd=r['os_dict']
+
+    remote=tosd.get('remote','')
 
     tbits=tosd.get('bits','')
 
@@ -780,6 +790,16 @@ def process_in_dir(i):
           ck.out('')
 
        sb+=c+'\n'
+
+       # Init if remote
+       if remote=='yes' and i.get('skip_device_init','')!='yes':
+          remote_init=tosd.get('remote_init','')
+          if remote_init!='':
+             r=ck.access({'action':'init_device',
+                          'module_uoa':cfg['module_deps']['platform'],
+                          'os_dict':tosd,
+                          'device_id':tdid})
+             if r['return']>0: return r
 
        # Record to tmp batch and run
        rx=ck.gen_tmp_file({'prefix':'tmp-', 'suffix':sext, 'remove_dir':'yes'})
