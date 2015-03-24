@@ -268,19 +268,23 @@ def process_in_dir(i):
 
     rem=hosd.get('rem','')
     eset=hosd.get('env_set','')
+    etset=tosd.get('env_set','')
     svarb=hosd.get('env_var_start','')
     svarb1=hosd.get('env_var_extra1','')
     svare=hosd.get('env_var_stop','')
     svare1=hosd.get('env_var_extra2','')
     scall=hosd.get('env_call','')
     sdirs=hosd.get('dir_sep','')
+    stdirs=tosd.get('dir_sep','')
     sext=hosd.get('script_ext','')
     sexe=hosd.get('set_executable','')
     se=tosd.get('file_extensions',{}).get('exe','')
     sbp=hosd.get('bin_prefix','')
+    stbp=tosd.get('bin_prefix','')
     sqie=hosd.get('quit_if_error','')
     evs=hosd.get('env_var_separator','')
     envsep=hosd.get('env_separator','')
+    envtsep=tosd.get('env_separator','')
     eifs=hosd.get('env_quotes_if_space','')
     eifsc=hosd.get('env_quotes_if_space_in_call','')
     wb=tosd.get('windows_base','')
@@ -393,7 +397,8 @@ def process_in_dir(i):
           if rx['return']>0: return rx
           deps=rx['dict']
 
-    # If compile type is dynamic, reuse deps even for run (to find specific DLLs)
+    # If compile type is dynamic, reuse deps even for run (to find specific DLLs) 
+    # (REMOTE PLATFORMS ARE NOT SUPPORTED AT THE MOMENT, USE STATIC COMPILATION)
     if (ctype=='dynamic' or sa=='compile'):
        # Resolve deps (if not ignored, such as when installing local version with all dependencies set)
        if len(deps)==0: 
@@ -414,7 +419,10 @@ def process_in_dir(i):
 
           rx=ck.access(ii)
           if rx['return']>0: return rx
-          sb+=rx['bat']
+
+          if sa=='compile' or remote!='yes':
+             sb+=rx['bat']
+
           deps=rx['deps'] # Update deps (add UOA)
 
        if sa=='compile':
@@ -659,7 +667,7 @@ def process_in_dir(i):
               if v.find(' ')>=0 and not v.startswith(eifs):
                  v=eifs+v+eifs
 
-           sb+=eset+' '+k+'='+v+'\n'
+           sb+=etset+' '+k+'='+v+'\n'
        sb+='\n'
 
        # Check cmd key
@@ -694,17 +702,28 @@ def process_in_dir(i):
 
        rt=vcmd.get('run_time',{})
 
+       # Command line preparation
        c=rt.get('run_cmd_main','')
        if c=='':
           return {'return':1, 'error':'cmd is not defined'}
 
+       # Remote dir
+       if remote=='yes':
+          rdir=tosd.get('remote_dir','')
+          if rdir!='' and not rdir.endswith(stdirs): rdir+=stdirs
+
        # Replace bin file
-       c=c.replace('$#BIN_FILE#$', sbp+target_exe)
-       c=c.replace('$#os_dir_separator#$', os.sep)
-       c=c.replace('$#src_path#$', p+sdirs)
+       c=c.replace('$#BIN_FILE#$', stbp+target_exe)
+       c=c.replace('$#os_dir_separator#$', stdirs)
+       if remote=='yes':
+          c=c.replace('$#src_path#$', rdir+stdirs)
+       else:
+          c=c.replace('$#src_path#$', p+sdirs)
 
        c=c.replace('$#env1#$',svarb)
        c=c.replace('$#env2#$',svare)
+
+       sdi=i.get('skip_device_init','')
 
        # Check if takes datasets from CK
        dtags=vcmd.get('dataset_tags',[])
@@ -751,7 +770,64 @@ def process_in_dir(i):
           if dduoa=='':
              return {'return':1, 'error':'dataset is not specified'}  
 
-          # Try to load dataset
+
+
+
+       # If remote
+       if remote=='yes':
+          if target_exe=='':
+             return {'return':1, 'error':'currently can\'t run benchmarks without defined executable on remote platform'}
+
+          if sdi!='yes':
+             r=ck.access({'action':'init_device',
+                          'module_uoa':cfg['module_deps']['platform'],
+                          'os_dict':tosd,
+                          'device_id':tdid})
+             if r['return']>0: return r
+
+          rs=tosd['remote_shell'].replace('$#device#$',tdid)
+
+          # Copy exe
+          y=tosd['remote_push'].replace('$#device#$',tdid)+' '+target_exe+' '+rdir+target_exe
+          if o=='con':
+             ck.out(sep)
+             ck.out(y)
+             ck.out('')
+
+          ry=os.system(y)
+          if ry>0:
+             return {'return':1, 'error':'copying to remote device failed'}
+
+          # Set chmod
+          se=tosd.get('set_executable','')
+          if se!='':
+             y=rs+' '+se+' '+rdir+target_exe
+             if o=='con':
+                ck.out(sep)
+                ck.out(y)
+                ck.out('')
+
+             ry=os.system(y)
+             if ry>0:
+                return {'return':1, 'error':'making binary executable failed on remote device'}
+
+          # Copy explicit input files, if first time
+          rif=rt.get('run_input_files',[])
+          if sdi!='yes':
+             for df in rif:
+                 # Push data files to device
+                 y=tosd['remote_push'].replace('$#device#$',tdid)+' '+os.path.join(p,df)+' '+rdir+stdirs+df
+                 if o=='con':
+                    ck.out(sep)
+                    ck.out(y)
+                    ck.out('')
+
+                 ry=os.system(y)
+                 if ry>0:
+                    return {'return':1, 'error':'copying to remote device failed'}
+
+       # Loading dataset
+       if dduoa!='':
           rx=ck.access({'action':'load',
                         'module_uoa':dmuoa,
                         'data_uoa':dduoa})
@@ -759,7 +835,10 @@ def process_in_dir(i):
           dd=rx['dict']
           dp=rx['path']
 
-          c=c.replace('$#dataset_path#$',dp)
+          if remote=='yes':
+             c=c.replace('$#dataset_path#$','')
+          else:
+             c=c.replace('$#dataset_path#$',dp+sdirs)
 
           dfiles=dd.get('dataset_files',[])
           if len(dfiles)>0:
@@ -769,6 +848,18 @@ def process_in_dir(i):
                  if k>0: kk+='_'+str(k)
                  kk+='#$'
                  c=c.replace(kk, df)
+
+                 if remote=='yes' and sdi!='yes':
+                    # Push data files to device, if first time
+                    y=tosd['remote_push'].replace('$#device#$',tdid)+' '+os.path.join(dp,df)+' '+rdir+stdirs+df
+                    if o=='con':
+                       ck.out(sep)
+                       ck.out(y)
+                       ck.out('')
+
+                    ry=os.system(y)
+                    if ry>0:
+                       return {'return':1, 'error':'copying to remote device failed'}
 
           rcm=dd.get('cm_properties',{}).get('run_time',{}).get('run_cmd_main',{})
           for k in rcm:
@@ -784,40 +875,69 @@ def process_in_dir(i):
        if rco1!='': c+=' '+stro+' '+rco1
        if rco2!='': c+=' '+stre+' '+rco2
 
-       if o=='con': 
-          ck.out(sep)
-          ck.out(c)
-          ck.out('')
-
        sb+=c+'\n'
 
-       # Init if remote
-       if remote=='yes' and i.get('skip_device_init','')!='yes':
-          remote_init=tosd.get('remote_init','')
-          if remote_init!='':
-             r=ck.access({'action':'init_device',
-                          'module_uoa':cfg['module_deps']['platform'],
-                          'os_dict':tosd,
-                          'device_id':tdid})
-             if r['return']>0: return r
+       fn=''
 
-       # Record to tmp batch and run
-       rx=ck.gen_tmp_file({'prefix':'tmp-', 'suffix':sext, 'remove_dir':'yes'})
-       if rx['return']>0: return rx
-       fn=rx['file_name']
+       # If remote
+       if remote=='yes':
+          # Prepare command as one line
+          y=''
 
-       rx=ck.save_text_file({'text_file':fn, 'string':sb})
-       if rx['return']>0: return rx
+          x=sb.split('\n')
+          for q in x:
+              if q!='':
+                 if y!='': y+=envtsep
+                 y+=' '+q
 
-       y=''
-       if sexe!='':
-          y+=sexe+' '+sbp+fn+envsep
-       y+=' '+scall+' '+sbp+fn
+          y=rs+' '+tosd['change_dir']+' '+rdir+envtsep+' '+y
+             
+          if o=='con':
+             ck.out(sep)
+             ck.out(y)
+             ck.out('')
 
-       sys.stdout.flush()
-       start_time1=time.time()
-       rx=os.system(y)
-       ccc['execution_time']=time.time()-start_time1
+          # Execute command on remote device
+          sys.stdout.flush()
+          start_time1=time.time()
+          rx=os.system(y)
+          stop_time1=time.time()
+
+          rof=rt.get('run_output_files',[])
+          for df in rof:
+              # Push data files to device
+              y=tosd['remote_pull'].replace('$#device#$',tdid)+' '+rdir+stdirs+df+' '+df
+              if o=='con':
+                 ck.out('')
+                 ck.out(y)
+                 ck.out('')
+
+              ry=os.system(y)
+       else:
+          # Record to tmp batch and run
+          rx=ck.gen_tmp_file({'prefix':'tmp-', 'suffix':sext, 'remove_dir':'yes'})
+          if rx['return']>0: return rx
+          fn=rx['file_name']
+
+          rx=ck.save_text_file({'text_file':fn, 'string':sb})
+          if rx['return']>0: return rx
+
+          y=''
+          if sexe!='':
+             y+=sexe+' '+sbp+fn+envsep
+          y+=' '+scall+' '+sbp+fn
+
+          if o=='con': 
+             ck.out(sep)
+             ck.out(c)
+             ck.out('')
+
+          sys.stdout.flush()
+          start_time1=time.time()
+          rx=os.system(y)
+          stop_time1=time.time()
+
+       ccc['execution_time']=stop_time1-start_time1
 
        if rx>0 and vcmd.get('ignore_return_code','').lower()!='yes':
           misc['run_success']='no'
@@ -825,7 +945,7 @@ def process_in_dir(i):
           misc['run_success']='yes'
 
        if i.get('skip_clean_after','')!='yes':
-          if os.path.isfile(fn): os.remove(fn)
+          if fn!='' and os.path.isfile(fn): os.remove(fn)
 
        ccc['execution_time_with_module']=time.time()-start_time
 
@@ -955,6 +1075,8 @@ def autotune(i):
        cm=rx['dict']
        cc=cm.get('all_compiler_flags_desc',{})
 
+    sdi='no'
+
     for m in range(0,ni+1):
         ck.out(sep)
         ck.out('Iteration: '+str(m))
@@ -998,7 +1120,7 @@ def autotune(i):
         dd['features']['compiler_flags']=cflags
 
         ##########################################################################################
-        # Compile xyz
+        # Compile 
         os.chdir(pp)
 
         ck.out('')
@@ -1028,8 +1150,12 @@ def autotune(i):
 
                os.chdir(pp)
 
+               ii['skip_device_init']=sdi
+
                rx=run(ii)
                if rx['return']>0: return rx
+
+               if sdi!='yes': sdi='yes'
 
                rmisc=rx['misc']
                rch=rx['characteristics']
@@ -1050,7 +1176,8 @@ def autotune(i):
                # For now Process/record in expeirment, only if compile was successful
                # TBD: For compiler/architecture testing purposes, we may want to record failed cases in another repo
 
-               
+               ck.out(sep)
+                  
                ie={'action':'add',
 
                    'module_uoa':'experiment',
