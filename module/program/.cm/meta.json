@@ -38,5 +38,7 @@
     "win":"del /F /Q tmp* *.out *.exe *.manifest *.obj *.o *.lib *.a *.dll *.so *.s *.asm *.i *.I *.tmp *.bc *.ll tmp* *.class *.jar",
     "linux":"rm -rf tmp* *.out *.exe *.manifest *.obj *.o *.lib *.a *.dll *.so *.s *.asm *.i *.I *.tmp *.bc *.ll tmp* *.class *.jar"
   },
-  "deps_file":"tmp-deps.json"
+  "deps_file":"tmp-deps.json",
+  "calibration_time":"4.0",
+  "calibration_max":"10"
 }

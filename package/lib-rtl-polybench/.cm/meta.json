@@ -1,0 +1,25 @@
+{
+  "soft_uoa": "ac25cef24e429b24", 
+  "deps": {
+    "compiler": {
+      "local": "yes", 
+      "tags": "compiler,lang-c"
+    }, 
+    "script_ck": {
+      "local": "yes", 
+      "tags": "script,ck"
+    }
+  }, 
+  "suggested_path": "lib-rtl-polybench", 
+  "customize": {
+    "version": "2012", 
+    "version_int": 2012, 
+    "extra_dir": ""
+  }, 
+  "process_script": "process", 
+  "tags": [
+    "lib", 
+    "rtl", 
+    "polybench"
+  ]
+}

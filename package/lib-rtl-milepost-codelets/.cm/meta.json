@@ -1,0 +1,23 @@
+{
+  "soft_uoa": "4a0ba606d7cee653", 
+  "deps": {
+    "compiler": {
+      "local": "yes", 
+      "tags": "compiler,lang-c"
+    }
+  }, 
+  "suggested_path": "lib-rtl-milepost-codelet", 
+  "customize": {
+    "version": "2009", 
+    "version_int": 2009, 
+    "extra_dir": ""
+  }, 
+  "process_script": "process", 
+  "tags": [
+    "lib", 
+    "rtl", 
+    "milepost", 
+    "codelet", 
+    "v2009"
+  ]
+}

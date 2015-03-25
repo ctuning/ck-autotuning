@@ -161,36 +161,43 @@ def process(i):
 def process_in_dir(i):
     """
     Input:  {
-              The same as 'compile'
+              Comes from 'compile', 'run' and 'clean' functions
 
-              sub_action         - clean, compile, run
+              sub_action             - clean, compile, run
 
-              path               - path
-              meta               - program description
+              path                   - path
+              meta                   - program description
 
-              (flags)            - compile flags
-              (lflags)           - link flags
+              (generate_rnd_tmp_dir) - if 'yes', generate random tmp directory to compile and run program
+                                       (useful during crowd-tuning)
 
-              (compile_type)     - static or dynamic (dynamic by default)
+              (flags)                - compile flags
+              (lflags)               - link flags
+
+              (compile_type)         - static or dynamic (dynamic by default)
                   or
               (static or dynamic)
 
-              (repeat)           - repeat kernel via environment CT_REPEAT_MAIN if supported
+              (repeat)               - repeat kernel via environment CT_REPEAT_MAIN if supported
 
-              (clean)            - if 'yes', clean tmp directory before using
-              (skip_clean_after) - if 'yes', do not remove run batch
+              (clean)                - if 'yes', clean tmp directory before using
+              (skip_clean_after)     - if 'yes', do not remove run batch
 
-              (repo_uoa)         - program repo UOA
-              (module_uoa)       - program module UOA
-              (data_uoa)         - program data UOA
+              (repo_uoa)             - program repo UOA
+              (module_uoa)           - program module UOA
+              (data_uoa)             - program data UOA
 
-              (misc)             - misc  dict
-              (characteristics)  - characteristics/features/properties
-              (env)              - preset environment
+              (misc)                 - misc  dict
+              (characteristics)      - characteristics/features/properties
+              (env)                  - preset environment
 
-              (deps)             - already resolved deps (useful for auto-tuning)
+              (deps)                 - already resolved deps (useful for auto-tuning)
 
-              (skip_device_init) - if 'yes', do not initialize device
+              (skip_device_init)     - if 'yes', do not initialize device
+
+              (skip_calibration)     - if 'yes', skip execution time calibration (make it around 4.0 sec)
+              (calibration_time)     - calibration time in string, 4.0 sec. by default
+              (calibration_max)      - max number of iterations for calibration, 10 by default
             }
 
     Output: {
@@ -223,7 +230,7 @@ def process_in_dir(i):
 
     flags=i.get('flags','')
     lflags=i.get('lflags','')
-    repeat=i.get('repeat','')
+    repeat=int(i.get('repeat','-1'))
 
     ctype=i.get('compile_type','')
     if ctype=='': ctype='dynamic'
@@ -371,6 +378,7 @@ def process_in_dir(i):
           fd, fn=tempfile.mkstemp(suffix='', prefix='tmp-ck-')
           os.close(fd)
           os.remove(fn)
+          fn=os.path.basename(fn)
 
           cdir=os.path.join(p, fn)
        else:
@@ -382,6 +390,11 @@ def process_in_dir(i):
        os.mkdir(cdir)
 
     sb='' # Batch
+
+    if o=='con':
+       ck.out(sep)
+       ck.out('Current directory: '+cdir)
+       ck.out('')
 
     os.chdir(cdir)
     rcdir=os.getcwd()
@@ -444,6 +457,10 @@ def process_in_dir(i):
     # Check sub_actions
     ################################### Compile ######################################
     if sa=='compile':
+       # Clean target file
+       if target_exe!='' and os.path.isfile(target_exe):
+          os.remove(target_exe)
+
        # Add env
        for k in sorted(env):
            v=env[k]
@@ -621,8 +638,14 @@ def process_in_dir(i):
        start_time1=time.time()
 
        rx=os.system(y)
-       ccc['compilation_time']=time.time()-start_time1
+       comp_time=time.time()-start_time1
 
+       ccc['compilation_time']=comp_time
+
+       if i.get('skip_clean_after','')!='yes':
+          if fn!='' and os.path.isfile(fn): os.remove(fn)
+
+       ofs=0
        if rx>0:
           misc['compilation_success']='no'
        else:
@@ -633,7 +656,6 @@ def process_in_dir(i):
              ccc['binary_size']=os.path.getsize(target_exe)
 
           # Check obj file sizes
-          ofs=0
           if len(xsofs)>0:
              ccc['obj_sizes']={}
              for q in xsofs:
@@ -645,9 +667,18 @@ def process_in_dir(i):
 
        ccc['compilation_time_with_module']=time.time()-start_time
 
+       if o=='con':
+          ck.out('')
+          ck.out('Compilation time: '+('%.3f'%comp_time)+' sec.; Object size: '+str(ofs))
+
     ################################### Run ######################################
     elif sa=='run':
        start_time=time.time()
+
+       sc=i.get('skip_calibration','')
+       xcalibrate_time=i.get('calibration_time','')
+       if xcalibrate_time=='': xcalibrate_time=cfg['calibration_time']
+       calibrate_time=float(xcalibrate_time)
 
        # Update environment
        env1=meta.get('run_vars',{})
@@ -656,8 +687,15 @@ def process_in_dir(i):
               env[q]=env1[q]
 
        # Update env if repeat
-       if repeat!='':
-          env['CT_REPEAT_MAIN']=repeat
+       if sc!='yes':
+          if repeat!=-1:
+             if 'CT_REPEAT_MAIN' not in env1:
+                return {'return':1, 'error':'this program is not supporting execution time calibration'}
+             env['CT_REPEAT_MAIN']=str(repeat) # it is fixed by user
+             sc='yes'
+          else:
+             repeat=int(env1.get('CT_REPEAT_MAIN','1'))
+             env['CT_REPEAT_MAIN']='$#repeat#$' # find later
 
        # Add env
        for k in sorted(env):
@@ -879,30 +917,115 @@ def process_in_dir(i):
 
        fn=''
 
-       # If remote
-       if remote=='yes':
-          # Prepare command as one line
-          y=''
+       # Clean output files
+       rof=rt.get('run_output_files',[])
+       for df in rof:
+           if remote=='yes':
+              # Push data files to device
+              y=rs+' '+tosd['delete_file']+ ' '+rdir+stdirs+df
+              if o=='con':
+                 ck.out('')
+                 ck.out(y)
+                 ck.out('')
 
-          x=sb.split('\n')
-          for q in x:
-              if q!='':
-                 if y!='': y+=envtsep
-                 y+=' '+q
+              ry=os.system(y)
+           else:
+              if os.path.isfile(df): 
+                 os.remove(df)
 
-          y=rs+' '+tosd['change_dir']+' '+rdir+envtsep+' '+y
-             
+       # Calibrate execution time (to make it longer and minimize system variation, 
+       #   if supported)
+       csb=sb
+       orepeat=repeat
+       calibrate_success=False
+       
+       xcn_max=i.get('calibration_max','')
+       if xcn_max=='': xcn_max=cfg['calibration_max']
+       cn_max=int(xcn_max)
+
+       cn=0
+       while True:
+          if sc!='yes':
+             ck.out('')
+             ck.out('### Calibration: Current REPEAT number = '+str(repeat))
+
+          sb=csb
+          if sc!='yes' and 'CT_REPEAT_MAIN' in env1 and repeat!=-1:
+             sb=sb.replace('$#repeat#$', str(repeat))
+
+          # Prepare execution
+          if remote=='yes':
+             # Prepare command as one line
+             y=''
+
+             x=sb.split('\n')
+             for q in x:
+                 if q!='':
+                    if y!='': y+=envtsep
+                    y+=' '+q
+
+             y=rs+' '+tosd['change_dir']+' '+rdir+envtsep+' '+y
+          else:
+             # Record to tmp batch and run
+             rx=ck.gen_tmp_file({'prefix':'tmp-', 'suffix':sext, 'remove_dir':'yes'})
+             if rx['return']>0: return rx
+             fn=rx['file_name']
+
+             rx=ck.save_text_file({'text_file':fn, 'string':sb})
+             if rx['return']>0: return rx
+
+             y=''
+             if sexe!='':
+                y+=sexe+' '+sbp+fn+envsep
+             y+=' '+scall+' '+sbp+fn
+                
           if o=='con':
              ck.out(sep)
              ck.out(y)
              ck.out('')
 
-          # Execute command on remote device
+          # Execute command 
           sys.stdout.flush()
           start_time1=time.time()
           rx=os.system(y)
-          stop_time1=time.time()
+          exec_time=time.time()-start_time1
 
+          if i.get('skip_clean_after','')!='yes':
+             if fn!='' and os.path.isfile(fn): os.remove(fn)
+
+          # Check calibration
+          if sc=='yes' or repeat==-1: 
+             calibrate_success=True
+             break
+
+          orepeat=repeat
+          if exec_time<0.5: repeat*=10
+          elif 0.8<(calibrate_time/exec_time)<1.4: 
+             calibrate_success=True
+             break
+          else: 
+             repeat*=float(calibrate_time/exec_time)
+          repeat=int(repeat)
+
+          if repeat==orepeat:
+             calibrate_success=True
+             break
+
+          if o=='con' and sc!='yes':
+             ck.out('')
+             ck.out('### Calibration: time='+str(exec_time)+'; CT_REPEAT_MAIN='+str(orepeat)+'; new CT_REPEAT_MAIN='+str(repeat))
+
+          if cn>=cn_max:
+             return {'return':1, 'error':'calibration failed'}
+
+          cn+=1
+
+       if sc!='yes' and repeat!=-1:
+          if calibrate_success==False:
+             return {'return':1, 'error':'calibration problem'}
+
+       # Pull files from the device if remote
+       if remote=='yes':
           rof=rt.get('run_output_files',[])
           for df in rof:
               # Push data files to device
@@ -913,41 +1036,23 @@ def process_in_dir(i):
                  ck.out('')
 
               ry=os.system(y)
-       else:
-          # Record to tmp batch and run
-          rx=ck.gen_tmp_file({'prefix':'tmp-', 'suffix':sext, 'remove_dir':'yes'})
-          if rx['return']>0: return rx
-          fn=rx['file_name']
 
-          rx=ck.save_text_file({'text_file':fn, 'string':sb})
-          if rx['return']>0: return rx
-
-          y=''
-          if sexe!='':
-             y+=sexe+' '+sbp+fn+envsep
-          y+=' '+scall+' '+sbp+fn
-
-          if o=='con': 
-             ck.out(sep)
-             ck.out(c)
-             ck.out('')
-
-          sys.stdout.flush()
-          start_time1=time.time()
-          rx=os.system(y)
-          stop_time1=time.time()
-
-       ccc['execution_time']=stop_time1-start_time1
+       ccc['execution_time']=exec_time
+       if repeat>0:
+          ccc['normalized_execution_time']=exec_time/repeat
+          ccc['repeat']=repeat
+          misc['calibration_success']=calibrate_success
 
        if rx>0 and vcmd.get('ignore_return_code','').lower()!='yes':
           misc['run_success']='no'
        else:
           misc['run_success']='yes'
 
-       if i.get('skip_clean_after','')!='yes':
-          if fn!='' and os.path.isfile(fn): os.remove(fn)
-
        ccc['execution_time_with_module']=time.time()-start_time
+
+       if o=='con':
+          ck.out('')
+          ck.out('Execution time: '+('%.3f'%exec_time)+' sec.')
 
     return {'return':0, 'tmp_dir':rcdir, 'misc':misc, 'characteristics':ccc, 'deps':deps}
 
@@ -1045,7 +1150,11 @@ def autotune(i):
     import os
     import random
 
-    # Misc
+    grtd=i.get('generate_rnd_tmp_dir','')
+    if grtd=='': grtd='yes'
+    i['generate_rnd_tmp_dir']=grtd
+
+    # Prepare copy of input to reuse later
     ic=copy.deepcopy(i)
 
     pp=os.getcwd()
@@ -1143,6 +1252,8 @@ def autotune(i):
            ii['deps']=deps
            ii1=copy.deepcopy(ii)
 
+           repeat=-1
+
            for sr in range(0, srm):
                ck.out('')
                ck.out('------------------- Statistical reptition: '+str(sr))
@@ -1151,6 +1262,8 @@ def autotune(i):
                os.chdir(pp)
 
                ii['skip_device_init']=sdi
+               if repeat!=-1:
+                  ii['repeat']=repeat
 
                rx=run(ii)
                if rx['return']>0: return rx
@@ -1164,9 +1277,12 @@ def autotune(i):
                dataset_uoa=rmisc.get('dataset_uoa','')
                xrt=rch.get('execution_time',-1)
 
+               repeat=rch.get('repeat',-1)
+               xnrt=rch.get('normalized_execution_time',-1)
+
                if rsucc=='yes' and xrt>0:
                   ck.out('')
-                  ck.out('###### Compile time: '+str(xct)+', obj size: '+str(xos)+', run time: '+str(xrt))
+                  ck.out('###### Compile time: '+str(xct)+', obj size: '+str(xos)+', run time: '+str(xrt)+', repeat: '+str(repeat))
                   ck.out('')
 
                dd['characteristics']['run']=rch
