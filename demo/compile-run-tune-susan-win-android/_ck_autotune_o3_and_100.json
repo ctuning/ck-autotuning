@@ -8,7 +8,7 @@
 
  "compiler_desc_uoa":"gcc-47x",
  "default_flag":"-O3",
- "compile_type":"",
+ "compile_type":"static",
 
  "cmd_key":"edges",
 
