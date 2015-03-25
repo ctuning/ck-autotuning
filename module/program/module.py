@@ -364,27 +364,28 @@ def process_in_dir(i):
     if x!='yes':
        x=meta.get('process_in_tmp','').lower()
 
+    td=''
     if x=='yes':
-       td=i.get('tmp_dir','')
+       tdx=i.get('tmp_dir','')
+       td=tdx
        if td=='': td='tmp'
 
        if i.get('clean','')=='yes':
           if td!='' and os.path.isdir(td):
              shutil.rmtree(td, ignore_errors=True)
 
-       if i.get('generate_rnd_tmp_dir','')=='yes':
+       if tdx=='' and i.get('generate_rnd_tmp_dir','')=='yes':
           # Generate tmp dir
           import tempfile
           fd, fn=tempfile.mkstemp(suffix='', prefix='tmp-ck-')
           os.close(fd)
           os.remove(fn)
-          fn=os.path.basename(fn)
+          td=os.path.basename(fn)
 
-          cdir=os.path.join(p, fn)
-       else:
-          cdir=os.path.join(p, td)
+       cdir=os.path.join(p, td)
 
     misc['tmp_dir']=td
+    misc['path']=p
 
     if cdir!='' and not os.path.isdir(cdir):
        os.mkdir(cdir)
@@ -1052,7 +1053,10 @@ def process_in_dir(i):
 
        if o=='con':
           ck.out('')
-          ck.out('Execution time: '+('%.3f'%exec_time)+' sec.')
+          x='Execution time: '+('%.3f'%exec_time)
+          if repeat>1:
+             x+=' sec.; Repetitions: '+str(repeat)+'; Normalized execution time: '+('%.6f'%(exec_time/repeat))+' sec.'
+          ck.out(x)
 
     return {'return':0, 'tmp_dir':rcdir, 'misc':misc, 'characteristics':ccc, 'deps':deps}
 
@@ -1150,10 +1154,6 @@ def autotune(i):
     import os
     import random
 
-    grtd=i.get('generate_rnd_tmp_dir','')
-    if grtd=='': grtd='yes'
-    i['generate_rnd_tmp_dir']=grtd
-
     # Prepare copy of input to reuse later
     ic=copy.deepcopy(i)
 
@@ -1187,6 +1187,10 @@ def autotune(i):
     sdi='no'
 
     for m in range(0,ni+1):
+        grtd=i.get('generate_rnd_tmp_dir','')
+        if grtd=='': grtd='yes'
+        tmp_dir=i.get('tmp_dir','')
+
         ck.out(sep)
         ck.out('Iteration: '+str(m))
         ck.out('')
@@ -1232,6 +1236,11 @@ def autotune(i):
         # Compile 
         os.chdir(pp)
 
+        if grtd=='yes':
+           ii['generate_rnd_tmp_dir']='yes'
+        else:
+           ii['generate_rnd_tmp_dir']=''
+
         ck.out('')
         rx=compile(ii)
         if rx['return']>0: return rx 
@@ -1239,6 +1248,9 @@ def autotune(i):
         deps=rx['deps']
         cmisc=rx['misc']
         cch=rx['characteristics']
+
+        tmp_dir=cmisc['tmp_dir']
+        tp=cmisc['path']
 
         xct=cch.get('compilation_time',-1)
         xos=cch.get('obj_size',-1)
@@ -1264,6 +1276,9 @@ def autotune(i):
                ii['skip_device_init']=sdi
                if repeat!=-1:
                   ii['repeat']=repeat
+
+               if tmp_dir!='':
+                  ii['tmp_dir']=tmp_dir
 
                rx=run(ii)
                if rx['return']>0: return rx
@@ -1317,6 +1332,11 @@ def autotune(i):
 
                rx=ck.access(ie)
                if rx['return']>0: return rx
+
+        if tmp_dir!='' and tmp_dir!='tmp' and i.get('skip_clean_after','')!='yes':
+           os.chdir(tp)
+           import shutil
+           shutil.rmtree(tmp_dir)
 
     return {'return':0}
 
