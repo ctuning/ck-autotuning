@@ -712,24 +712,38 @@ def process_in_dir(i):
 
        kcmd=i.get('cmd_key','')
        if kcmd=='':
-          if 'default' in krun_cmds: kcmd='default'
-          else: 
+          if len(krun_cmds)>1:
+             ck.out('')
+             ck.out('More than one commmand line is found to run this program:')
+             ck.out('')
+             zz={}
+             iz=0
+             for z in krun_cmds:
+                 zs=str(iz)
+                 zz[zs]=z
+
+                 ck.out(zs+') '+z)
+
+                 iz+=1
+
+             ck.out('')
+             rx=ck.inp({'text':'Choose first number to select command line: '})
+             x=rx['string'].strip()
+
+             if x not in zz:
+                return {'return':1, 'error':'dependency number is not recognized'}
+             
+             kcmd=zz[x]
+
+          else:
              kcmd=krun_cmds[0]
-
-
-
-
-
-
-
-
        else:
           if kcmd not in krun_cmds:
              return {'return':1, 'error':'CMD key not found in program description'}
 
        # Command line key is set
        vcmd=run_cmds[kcmd]
-       misc['cmd_keys']=kcmd
+       misc['cmd_key']=kcmd
 
        c=''
 
@@ -1188,6 +1202,8 @@ def autotune(i):
 
     deps={}
 
+    cmd_key=i.get('cmd_key','')
+
     dflag=i.get('default_flag','')
 
     eruoa=i.get('experiment_repo_uoa','')
@@ -1299,6 +1315,9 @@ def autotune(i):
                if tmp_dir!='':
                   ii['tmp_dir']=tmp_dir
 
+               if cmd_key!='':
+                  ii['cmd_key']=cmd_key
+
                rx=run(ii)
                if rx['return']>0: return rx
 
@@ -1306,6 +1325,8 @@ def autotune(i):
 
                rmisc=rx['misc']
                rch=rx['characteristics']
+
+               cmd_key=rmisc.get('cmd_key','')
 
                rsucc=rmisc.get('run_success','')
                dataset_uoa=rmisc.get('dataset_uoa','')
