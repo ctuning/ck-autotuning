@@ -1037,6 +1037,7 @@ def process_in_dir(i):
              break
           else: 
              repeat*=float(calibrate_time/exec_time)
+             if repeat<1: repeat=1
           repeat=int(repeat)
 
           if repeat==orepeat:
