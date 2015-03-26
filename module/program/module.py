@@ -45,7 +45,7 @@ def process(i):
 
               (process_in_tmp)       - (default 'yes') - if 'yes', clean, compile and run in the tmp directory 
               (tmp_dir)              - (default 'tmp') - if !='', use this tmp directory to clean, compile and run
-              (generate_rnd_tmp_dir) - if 'yes', generate random tmp directory            
+              (generate_rnd_tmp_dir) - if 'yes', generate random tmp directory
             }
 
     Output: {
@@ -462,6 +462,11 @@ def process_in_dir(i):
        if target_exe!='' and os.path.isfile(target_exe):
           os.remove(target_exe)
 
+       # Add compiler dep again, if there
+       x=deps.get('compiler',{}).get('bat','')
+       if x!='' and not sb.endswith(x):
+          sb+='\n'+x+'\n'
+
        # Add env
        for k in sorted(env):
            v=env[k]
@@ -688,7 +693,7 @@ def process_in_dir(i):
               env[q]=env1[q]
 
        # Update env if repeat
-       if sc!='yes':
+       if sc!='yes' and 'CT_REPEAT_MAIN' in env1:
           if repeat!=-1:
              if 'CT_REPEAT_MAIN' not in env1:
                 return {'return':1, 'error':'this program is not supporting execution time calibration'}
@@ -697,17 +702,6 @@ def process_in_dir(i):
           else:
              repeat=int(env1.get('CT_REPEAT_MAIN','1'))
              env['CT_REPEAT_MAIN']='$#repeat#$' # find later
-
-       # Add env
-       for k in sorted(env):
-           v=env[k]
-
-           if eifs!='' and wb!='yes':
-              if v.find(' ')>=0 and not v.startswith(eifs):
-                 v=eifs+v+eifs
-
-           sb+=etset+' '+k+'='+v+'\n'
-       sb+='\n'
 
        # Check cmd key
        run_cmds=meta.get('run_cmds',{})
@@ -741,10 +735,33 @@ def process_in_dir(i):
 
        rt=vcmd.get('run_time',{})
 
+       # Check if run_time env is also defined
+       rte=rt.get('run_set_env2',{})
+       if len(rte)>0:
+          env.update(rte)
+
+       # Add compiler dep again, if there
+       x=deps.get('compiler',{}).get('bat','')
+       if x!='' and not sb.endswith(x):
+          sb+='\n'+x+'\n'
+
+       # Add env
+       sb+='\n'
+       for k in sorted(env):
+           v=env[k]
+
+           if eifs!='' and wb!='yes':
+              if v.find(' ')>=0 and not v.startswith(eifs):
+                 v=eifs+v+eifs
+
+           sb+=etset+' '+k+'='+v+'\n'
+       sb+='\n'
+
        # Command line preparation
        c=rt.get('run_cmd_main','')
        if c=='':
           return {'return':1, 'error':'cmd is not defined'}
+       c=c.replace('$<<',svarb+svarb1).replace('>>$',svare1+svare)
 
        # Remote dir
        if remote=='yes':
@@ -946,7 +963,7 @@ def process_in_dir(i):
 
        cn=0
        while True:
-          if sc!='yes':
+          if sc!='yes' and 'CT_REPEAT_MAIN' in env1:
              ck.out('')
              ck.out('### Calibration: Current REPEAT number = '+str(repeat))
 
@@ -979,7 +996,7 @@ def process_in_dir(i):
              if sexe!='':
                 y+=sexe+' '+sbp+fn+envsep
              y+=' '+scall+' '+sbp+fn
-                
+
           if o=='con':
              ck.out(sep)
              ck.out(y)
@@ -995,7 +1012,7 @@ def process_in_dir(i):
              if fn!='' and os.path.isfile(fn): os.remove(fn)
 
           # Check calibration
-          if sc=='yes' or repeat==-1: 
+          if sc=='yes' or repeat==-1 or 'CT_REPEAT_MAIN' not in env1:
              calibrate_success=True
              break
 
@@ -1038,6 +1055,7 @@ def process_in_dir(i):
 
               ry=os.system(y)
 
+       ccc['return_code']=rx
        ccc['execution_time']=exec_time
        xrepeat=repeat
        if xrepeat<1: xrepeat=1
