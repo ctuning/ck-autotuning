@@ -4,10 +4,6 @@
     "compiler": {
       "local": "yes", 
       "tags": "compiler,lang-c"
-    }, 
-    "script_ck": {
-      "local": "yes", 
-      "tags": "script,ck"
     }
   }, 
   "suggested_path": "lib-rtl-polybench", 

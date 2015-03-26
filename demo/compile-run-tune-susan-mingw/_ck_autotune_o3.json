@@ -10,8 +10,6 @@
  "default_flag":"-O3",
  "compile_type":"",
 
- "cmd_key":"edges",
-
  "stat_repetitions":4,
 
  "number_of_iterations":0
