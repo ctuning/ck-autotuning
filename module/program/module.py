@@ -491,7 +491,7 @@ def process_in_dir(i):
            pl3=kv.get('path_include','')
            if pl3!='':
               if sin!='': sin+=' '
-              sin+=svarb+'CK_FLAG_PREFIX_INCLUDE'+svare+eifsc+pl3+eifsc
+              sin+=svarb+svarb1+'CK_FLAG_PREFIX_INCLUDE'+svare1+svare+eifsc+pl3+eifsc
 
        # Obtaining compile CMD (first from program entry, then default from this module)
        ccmds=meta.get('compile_cmds',{})
@@ -522,7 +522,7 @@ def process_in_dir(i):
           scfb+=' '+svarb+'CK_FLAGS_DYNAMIC_BIN'+svare
        elif ctype=='static':
           scfb+=' '+svarb+'CK_FLAGS_STATIC_BIN'+svare
-       scfb+=' '+svarb+'CK_FLAG_PREFIX_INCLUDE'+svare+sfprefix
+       scfb+=' '+svarb+svarb1+'CK_FLAG_PREFIX_INCLUDE'+svare1+svare+sfprefix
 
        scfa=''
 
@@ -561,7 +561,7 @@ def process_in_dir(i):
            xcfb+=' '+flags
 
            if 'CK_FLAGS_OUTPUT' in denv:
-              xcfa+=' '+svarb+'CK_FLAGS_OUTPUT'+svare+sfobj
+              xcfa+=' '+svarb+svarb1+'CK_FLAGS_OUTPUT'+svare1+svare+sfobj
 
            cc=sccmd
            cc=cc.replace('$#source_file#$', sfprefix+sf)
@@ -939,7 +939,7 @@ def process_in_dir(i):
        csb=sb
        orepeat=repeat
        calibrate_success=False
-       
+
        xcn_max=i.get('calibration_max','')
        if xcn_max=='': xcn_max=cfg['calibration_max']
        cn_max=int(xcn_max)
@@ -1039,10 +1039,11 @@ def process_in_dir(i):
               ry=os.system(y)
 
        ccc['execution_time']=exec_time
-       if repeat>0:
-          ccc['normalized_execution_time']=exec_time/repeat
-          ccc['repeat']=repeat
-          misc['calibration_success']=calibrate_success
+       xrepeat=repeat
+       if xrepeat<1: xrepeat=1
+       ccc['normalized_execution_time']=exec_time/xrepeat
+       ccc['repeat']=xrepeat
+       misc['calibration_success']=calibrate_success
 
        if rx>0 and vcmd.get('ignore_return_code','').lower()!='yes':
           misc['run_success']='no'
@@ -1308,7 +1309,7 @@ def autotune(i):
                # TBD: For compiler/architecture testing purposes, we may want to record failed cases in another repo
 
                ck.out(sep)
-                  
+
                ie={'action':'add',
 
                    'module_uoa':'experiment',
@@ -1323,7 +1324,7 @@ def autotune(i):
                    'record_all_subpoints':'yes',
 
                    'search_point_by_features':'yes',
-                   
+
                    'force_new_entry':'yes',
 
                    'sort_keys':'yes',
