@@ -738,7 +738,7 @@ def process_in_dir(i):
 
              if x not in zz:
                 return {'return':1, 'error':'command line number is not recognized'}
-             
+
              kcmd=zz[x]
 
           else:
@@ -789,7 +789,11 @@ def process_in_dir(i):
           if rdir!='' and not rdir.endswith(stdirs): rdir+=stdirs
 
        # Replace bin file
-       c=c.replace('$#BIN_FILE#$', stbp+target_exe)
+       te=target_exe
+       if meta.get('skip_add_prefix_for_target_file','')!='yes':
+          te=stbp+te
+
+       c=c.replace('$#BIN_FILE#$', te)
        c=c.replace('$#os_dir_separator#$', stdirs)
        if remote=='yes':
           c=c.replace('$#src_path#$', rdir+stdirs)
@@ -850,7 +854,7 @@ def process_in_dir(i):
 
                    if x not in zz:
                       return {'return':1, 'error':'dataset number is not recognized'}
-                   
+
                    dduoa=zz[x]
 
           if dduoa=='':
