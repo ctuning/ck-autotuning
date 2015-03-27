@@ -1,44 +1,44 @@
 {
   "##openmp_flag": {
     "choice": [
-      "/openmp",
+      "/openmp", 
       ""
-    ],
-    "default_value": "",
-    "desc_text": "compiler flag: openmp",
-    "explorable": "no",
-    "field_size": "10",
-    "has_choice": "yes",
-    "skip_form_refresh": "yes",
-    "sort_index": "10001",
+    ], 
+    "default_value": "", 
+    "desc_text": "compiler flag: openmp", 
+    "explorable": "no", 
+    "field_size": "10", 
+    "has_choice": "yes", 
+    "skip_form_refresh": "yes", 
+    "sort_index": "10001", 
     "type": "text"
-  },
+  }, 
   "all_compiler_flags_desc": {
     "##base_flag": {
       "choice": [
-        "/O1",
-        "/O2",
-        "/Os",
-        "/Ot",
+        "/O1", 
+        "/O2", 
+        "/Os", 
+        "/Ot", 
         "/Od"
-      ],
-      "default_value": "/Ot",
-      "desc_text": "compiler flag: /Ot",
-      "explorable": "yes",
-      "explore_level": "1",
-      "explore_type": "fixed",
-      "field_size": "7",
-      "forbid_disable_at_random": "yes",
-      "has_choice": "yes",
-      "no_sorting": "yes",
-      "skip_form_refresh": "yes",
-      "sort_index": "10000",
+      ], 
+      "default_value": "/Ot", 
+      "desc_text": "compiler flag: /Ot", 
+      "explorable": "yes", 
+      "explore_level": "1", 
+      "explore_type": "fixed", 
+      "field_size": "7", 
+      "forbid_disable_at_random": "yes", 
+      "has_choice": "yes", 
+      "no_sorting": "yes", 
+      "skip_form_refresh": "yes", 
+      "sort_index": "10000", 
       "type": "text"
     }
-  },
+  }, 
   "cm_classes_uoa": [
-    "72f81bd39f84ed89",
-    "4720bab77a4160ee",
+    "72f81bd39f84ed89", 
+    "4720bab77a4160ee", 
     "394aba9de393576d"
   ]
 }

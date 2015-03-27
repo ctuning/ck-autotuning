@@ -297,6 +297,7 @@ def process_in_dir(i):
     wb=tosd.get('windows_base','')
     stro=tosd.get('redirect_stdout','')
     stre=tosd.get('redirect_stderr','')
+    ubtr=hosd.get('use_bash_to_run','')
 
     ########################################################################
     # Prepare some params
@@ -332,6 +333,9 @@ def process_in_dir(i):
        if x!='':
           duoa=meta['backup_data_uid']
 
+    # Reuse compile deps in run (useful for large benchmarks such as SPEC where compile and run is merged)
+    rcd=meta.get('reuse_compile_deps_in_run','')
+
     # Check if compile in tmp dir
     cdir=p
     os.chdir(cdir)
@@ -347,6 +351,7 @@ def process_in_dir(i):
           ck.out(cmd)
           ck.out('')
 
+       if ubtr!='': cmd=ubtr.replace('$#cmd#$',cmd)
        rx=os.system(cmd)
 
        # Removing tmp directories
@@ -400,9 +405,9 @@ def process_in_dir(i):
     os.chdir(cdir)
     rcdir=os.getcwd()
 
-    # If run and dynamic, check deps prepared by compiler
+    # If run and dynamic or reuse compile deps, check deps prepared by compiler
     fdeps=cfg.get('deps_file','')
-    if len(deps)==0 and ctype=='dynamic' and sa=='run':
+    if len(deps)==0 and sa=='run' and (rcd=='yes' or ctype=='dynamic'):
        if os.path.isfile(fdeps):
           ck.out('')
           ck.out('Reloading depedencies from compilation '+fdeps+' ...')
@@ -413,7 +418,7 @@ def process_in_dir(i):
 
     # If compile type is dynamic, reuse deps even for run (to find specific DLLs) 
     # (REMOTE PLATFORMS ARE NOT SUPPORTED AT THE MOMENT, USE STATIC COMPILATION)
-    if (ctype=='dynamic' or sa=='compile'):
+    if (ctype=='dynamic' or sa=='compile' or rcd=='yes'):
        # Resolve deps (if not ignored, such as when installing local version with all dependencies set)
        if len(deps)==0: 
           deps=meta.get('compile_deps',{})
@@ -643,6 +648,7 @@ def process_in_dir(i):
        sys.stdout.flush()
        start_time1=time.time()
 
+       if ubtr!='': y=ubtr.replace('$#cmd#$',y)
        rx=os.system(y)
        comp_time=time.time()-start_time1
 
@@ -1017,6 +1023,7 @@ def process_in_dir(i):
              ck.out('')
 
           # Execute command 
+          if ubtr!='': y=ubtr.replace('$#cmd#$',y)
           sys.stdout.flush()
           start_time1=time.time()
           rx=os.system(y)
