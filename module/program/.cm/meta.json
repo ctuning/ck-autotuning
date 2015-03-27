@@ -2,43 +2,49 @@
   "actions": {
     "autotune": {
       "desc": "auto-tune software and hardware"
-    }, 
+    },
     "clean": {
       "desc": "clean program work and tmp files"
-    }, 
+    },
     "compile": {
       "desc": "compile program"
-    }, 
+    },
     "crowdtune": {
       "desc": "crowdtune software and hardware"
-    }, 
+    },
     "run": {
       "desc": "run program"
     }
-  }, 
-  "copyright": "See CK Copyright.txt for copyright details", 
-  "desc": "program", 
-  "developer": "Grigori Fursin", 
-  "developer_email": "Grigori.Fursin@cTuning.org", 
-  "developer_webpage": "http://cTuning.org/lab/people/gfursin", 
+  },
+  "calibration_max": "10",
+  "calibration_time": "4.0",
+  "clean_cmds": {
+    "linux": "rm -rf tmp* *.out *.exe *.manifest *.obj *.o *.lib *.a *.dll *.so *.s *.asm *.i *.I *.tmp *.bc *.ll tmp* *.class *.jar",
+    "win": "del /F /Q tmp* *.out *.exe *.manifest *.obj *.o *.lib *.a *.dll *.so *.s *.asm *.i *.I *.tmp *.bc *.ll tmp* *.class *.jar"
+  },
+  "compile_cmds": {
+    "default": {
+      "cmd": "$#compiler#$ $#flags_before#$ $#source_file#$ $#flags_after#$"
+    }
+  },
+  "copyright": "See CK Copyright.txt for copyright details",
+  "deps_file": "tmp-deps.json",
+  "desc": "program",
+  "developer": "Grigori Fursin",
+  "developer_email": "Grigori.Fursin@cTuning.org",
+  "developer_webpage": "http://cTuning.org/lab/people/gfursin",
   "license": "See CK LICENSE.txt for licensing details",
+  "link_cmds": {
+    "default": {
+      "cmd": "$#linker#$ $#flags_before#$ $#obj_files#$ $#flags_after#$"
+    }
+  },
   "module_deps": {
+    "compiler": "36ebc331048475bb",
     "dataset": "8a7141c59cd335f5",
-    "compiler":"36ebc331048475bb",
-    "env":"9b9b3208ac44b891",
+    "env": "9b9b3208ac44b891",
     "platform": "707ccdfe444cafac",
     "platform.os": "41e31cc4496b8a8e"
   },
-  "compile_cmds":{
-    "default":{"cmd":"$#compiler#$ $#flags_before#$ $#source_file#$ $#flags_after#$"}},
-  "link_cmds":{
-    "default":{"cmd":"$#linker#$ $#flags_before#$ $#obj_files#$ $#flags_after#$"}},
-  "target_file":"a",
-  "clean_cmds":{
-    "win":"del /F /Q tmp* *.out *.exe *.manifest *.obj *.o *.lib *.a *.dll *.so *.s *.asm *.i *.I *.tmp *.bc *.ll tmp* *.class *.jar",
-    "linux":"rm -rf tmp* *.out *.exe *.manifest *.obj *.o *.lib *.a *.dll *.so *.s *.asm *.i *.I *.tmp *.bc *.ll tmp* *.class *.jar"
-  },
-  "deps_file":"tmp-deps.json",
-  "calibration_time":"4.0",
-  "calibration_max":"10"
+  "target_file": "a"
 }

@@ -1,23 +1,23 @@
 {
-  "soft_uoa": "815be64bec1d4613", 
+  "customize": {
+    "extra_dir": "",
+    "skip_add_to_ld_path": "yes",
+    "version": "2015",
+    "version_int": 2015
+  },
   "deps": {
     "compiler": {
-      "local": "yes", 
+      "local": "yes",
       "tags": "compiler,lang-java"
     }
-  }, 
-  "suggested_path": "lib-openme-java", 
-  "customize": {
-    "skip_add_to_ld_path": "yes", 
-    "version": "2015", 
-    "version_int": 2015, 
-    "extra_dir": ""
-  }, 
-  "process_script": "process", 
+  },
+  "process_script": "process",
+  "soft_uoa": "815be64bec1d4613",
+  "suggested_path": "lib-openme-java",
   "tags": [
-    "lib", 
-    "plugins", 
-    "openme", 
+    "lib",
+    "plugins",
+    "openme",
     "lang-java"
   ]
 }

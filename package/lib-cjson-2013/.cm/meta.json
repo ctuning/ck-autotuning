@@ -1,21 +1,21 @@
 {
-  "soft_uoa": "59c52485faf01e9a", 
+  "customize": {
+    "extra_dir": "",
+    "version": "2013",
+    "version_int": 2013
+  },
   "deps": {
     "compiler": {
-      "local": "yes", 
+      "local": "yes",
       "tags": "compiler,lang-c"
     }
-  }, 
-  "suggested_path": "lib-cjson", 
-  "customize": {
-    "version": "2013", 
-    "version_int": 2013, 
-    "extra_dir": ""
-  }, 
-  "process_script": "process", 
+  },
+  "process_script": "process",
+  "soft_uoa": "59c52485faf01e9a",
+  "suggested_path": "lib-cjson",
   "tags": [
-    "lib", 
-    "cjson", 
+    "lib",
+    "cjson",
     "v2013"
   ]
 }
