@@ -2,9 +2,9 @@
  "experiment_repo_uoa":"ck-experiments",
  "experiment_uoa":"demo-autotune-susan-mingw-o3",
 
- "repeat":"100",
-
  "target_os":"mingw-64",
+
+ "repeat":"100",
 
  "compiler_desc_uoa":"gcc-47x",
  "default_flag":"-O3",

@@ -737,7 +737,7 @@ def process_in_dir(i):
              x=rx['string'].strip()
 
              if x not in zz:
-                return {'return':1, 'error':'dependency number is not recognized'}
+                return {'return':1, 'error':'command line number is not recognized'}
              
              kcmd=zz[x]
 
@@ -803,6 +803,7 @@ def process_in_dir(i):
 
        # Check if takes datasets from CK
        dtags=vcmd.get('dataset_tags',[])
+       dmuoa=cfg['module_deps']['dataset']
        dduoa=i.get('dataset_uoa','')
        if dduoa!='' or len(dtags)>0:
           if dduoa=='':
@@ -813,7 +814,6 @@ def process_in_dir(i):
                  if tags!='': tags+=','
                  tags+=q
 
-             dmuoa=cfg['module_deps']['dataset']
              dduoa=i.get('dataset_uoa','')
              if dduoa=='':
                 rx=ck.access({'action':'search',
@@ -828,26 +828,35 @@ def process_in_dir(i):
                 elif len(lst)==1:
                    dduoa=lst[0].get('data_uid','')
                 else:
-                   dduoa=lst[0].get('data_uid','')
+                   ck.out('')
+                   ck.out('More than one dataset entry is found for this program:')
+                   ck.out('')
+                   zz={}
+                   iz=0
+                   for z1 in lst:
+                       z=z1['data_uid']
+                       zu=z1['data_uoa']
 
+                       zs=str(iz)
+                       zz[zs]=z
 
+                       ck.out(zs+') '+zu)
 
+                       iz+=1
 
+                   ck.out('')
+                   rx=ck.inp({'text':'Choose first number to select dataset UOA: '})
+                   x=rx['string'].strip()
 
-
-
-
-
-
-
-
-
+                   if x not in zz:
+                      return {'return':1, 'error':'dataset number is not recognized'}
+                   
+                   dduoa=zz[x]
 
           if dduoa=='':
              return {'return':1, 'error':'dataset is not specified'}  
 
-
-
+       misc['dataset_uoa']=dduoa
 
        # If remote
        if remote=='yes':
@@ -1181,6 +1190,9 @@ def autotune(i):
               (process_in_tmp)
               (tmp_dir)
 
+              (cmd_key)
+              (dataset_uoa)
+
             }
 
     Output: {
@@ -1211,6 +1223,7 @@ def autotune(i):
     deps={}
 
     cmd_key=i.get('cmd_key','')
+    dduoa=i.get('dataset_uoa','')
 
     dflag=i.get('default_flag','')
 
@@ -1326,6 +1339,9 @@ def autotune(i):
                if cmd_key!='':
                   ii['cmd_key']=cmd_key
 
+               if dduoa!='':
+                  ii['dataset_uoa']=dduoa
+
                rx=run(ii)
                if rx['return']>0: return rx
 
@@ -1335,6 +1351,7 @@ def autotune(i):
                rch=rx['characteristics']
 
                cmd_key=rmisc.get('cmd_key','')
+               dduoa=rmisc.get('dataset_uoa','')
 
                rsucc=rmisc.get('run_success','')
                dataset_uoa=rmisc.get('dataset_uoa','')
