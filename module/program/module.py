@@ -968,21 +968,7 @@ def process_in_dir(i):
 
        fn=''
 
-       # Clean output files
-       rof=rt.get('run_output_files',[])
-       for df in rof:
-           if remote=='yes':
-              # Push data files to device
-              y=rs+' '+tosd['delete_file']+ ' '+rdir+stdirs+df
-              if o=='con':
-                 ck.out('')
-                 ck.out(y)
-                 ck.out('')
-
-              ry=os.system(y)
-           else:
-              if os.path.isfile(df): 
-                 os.remove(df)
+       fgtf=rt.get('fine_grain_timer_file','')
 
        # Calibrate execution time (to make it longer and minimize system variation, 
        #   if supported)
@@ -996,6 +982,22 @@ def process_in_dir(i):
 
        cn=0
        while True:
+          # Clean output files
+          rof=rt.get('run_output_files',[])
+          for df in rof:
+              if remote=='yes':
+                 # Push data files to device
+                 y=rs+' '+tosd['delete_file']+ ' '+rdir+stdirs+df
+                 if o=='con':
+                    ck.out('')
+                    ck.out(y)
+                    ck.out('')
+
+                 ry=os.system(y)
+              else:
+                 if os.path.isfile(df): 
+                    os.remove(df)
+
           if sc!='yes' and 'CT_REPEAT_MAIN' in env1:
              ck.out('')
              ck.out('### Calibration: Current REPEAT number = '+str(repeat))
@@ -1045,6 +1047,28 @@ def process_in_dir(i):
           if i.get('skip_clean_after','')!='yes':
              if fn!='' and os.path.isfile(fn): os.remove(fn)
 
+          # Pull files from the device if remote
+          if remote=='yes':
+             rof=rt.get('run_output_files',[])
+             for df in rof:
+                 # Push data files to device
+                 y=tosd['remote_pull'].replace('$#device#$',tdid)+' '+rdir+stdirs+df+' '+df
+                 if o=='con':
+                    ck.out('')
+                    ck.out(y)
+                    ck.out('')
+
+                 ry=os.system(y)
+
+          # Check if fine-grain time
+          if fgtf!='':
+             rq=ck.load_json_file({'json_file':fgtf})
+             if rq['return']>0: return rq
+             drq=rq['dict']
+             et=drq.get('execution_time','')
+             if et!='':
+                exec_time=float(et)
+
           # Check calibration
           if sc=='yes' or repeat==-1 or 'CT_REPEAT_MAIN' not in env1:
              calibrate_success=True
@@ -1077,19 +1101,6 @@ def process_in_dir(i):
           if calibrate_success==False:
              return {'return':1, 'error':'calibration problem'}
 
-       # Pull files from the device if remote
-       if remote=='yes':
-          rof=rt.get('run_output_files',[])
-          for df in rof:
-              # Push data files to device
-              y=tosd['remote_pull'].replace('$#device#$',tdid)+' '+rdir+stdirs+df+' '+df
-              if o=='con':
-                 ck.out('')
-                 ck.out(y)
-                 ck.out('')
-
-              ry=os.system(y)
-
        ccc['return_code']=rx
        ccc['execution_time']=exec_time
        xrepeat=repeat
@@ -1109,7 +1120,7 @@ def process_in_dir(i):
           ck.out('')
           x='Execution time: '+('%.3f'%exec_time)
           if repeat>1:
-             x+=' sec.; Repetitions: '+str(repeat)+'; Normalized execution time: '+('%.6f'%(exec_time/repeat))+' sec.'
+             x+=' sec.; Repetitions: '+str(repeat)+'; Normalized execution time: '+('%.9f'%(exec_time/repeat))+' sec.'
           ck.out(x)
 
     return {'return':0, 'tmp_dir':rcdir, 'misc':misc, 'characteristics':ccc, 'deps':deps}
