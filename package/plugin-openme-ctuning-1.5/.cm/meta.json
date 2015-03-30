@@ -1,0 +1,23 @@
+{
+  "customize": {
+    "extra_dir": "", 
+    "version": "1.5", 
+    "version_int": 105
+  }, 
+  "deps": {
+    "compiler": {
+      "local": "yes", 
+      "tags": "compiler,lang-c"
+    }
+  }, 
+  "process_script": "process", 
+  "soft_uoa": "77a2104b4b828802", 
+  "suggested_path": "plugin-openme-ctuning", 
+  "tags": [
+    "plugin", 
+    "openme", 
+    "ctuning", 
+    "auto-tuning", 
+    "v1.5"
+  ]
+}
