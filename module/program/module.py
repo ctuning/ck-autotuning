@@ -1031,7 +1031,7 @@ def process_in_dir(i):
                     y+=' '+q
 
              if eifs!='': y=y.replace('"','\\"')
-             y=rs+' '+eifs+tosd['change_dir']+' '+rdir+envtsep+' '+y+svare+eifs
+             y=rs+' '+eifs+tosd['change_dir']+' '+rdir+envtsep+' '+y+eifs
 
              if cons!='yes':
                 if rco1!='': y+=' '+stro+' '+rco1
