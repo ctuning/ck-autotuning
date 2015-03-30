@@ -193,6 +193,10 @@ def process_in_dir(i):
 
               (deps)                 - already resolved deps (useful for auto-tuning)
 
+              (extra_env)            - extra environment as string
+
+              (console)              - if 'yes', output to console
+
               (skip_device_init)     - if 'yes', do not initialize device
 
               (skip_calibration)     - if 'yes', skip execution time calibration (make it around 4.0 sec)
@@ -227,6 +231,10 @@ def process_in_dir(i):
     ccc=i.get('characteristics',{})
     env=i.get('env',{})
     deps=i.get('deps',{})
+
+    ee=i.get('extra_env','')
+
+    cons=i.get('console','')
 
     flags=i.get('flags','')
     lflags=i.get('lflags','')
@@ -553,6 +561,9 @@ def process_in_dir(i):
        sofs=''
        xsofs=[]
 
+       if ee!='':
+          sb+='\n'+ee+'\n\n'
+
        for sf in sfs:
            xcfb=scfb
            xcfa=scfa
@@ -615,12 +626,12 @@ def process_in_dir(i):
              slfa+=' '+svarb+'CK_LD_FLAGS_MISC'+svare
              slfa+=' '+svarb+'CK_LD_FLAGS_EXTRA'+svare
 
+             if sll!='': slfa+=' '+sll
+
              evr=meta.get('extra_ld_vars','')
              if evr!='':
                 evr=evr.replace('$<<',svarb).replace('>>$',svare)
                 slfa+=' '+evr
-
-             if sll!='': slfa+=' '+sll
 
              cc=slcmd
              cc=cc.replace('$#linker#$', svarb+linker_env+svare)
@@ -762,7 +773,7 @@ def process_in_dir(i):
 
        # Add compiler dep again, if there
        x=deps.get('compiler',{}).get('bat','')
-       if x!='' and not sb.endswith(x):
+       if remote!='yes' and x!='' and not sb.endswith(x):
           sb+='\n'+x+'\n'
 
        # Add env
@@ -961,9 +972,12 @@ def process_in_dir(i):
        rco1=rt.get('run_cmd_out1','')
        rco2=rt.get('run_cmd_out2','')
 
-       if rco1!='': c+=' '+stro+' '+rco1
-       if rco2!='': c+=' '+stre+' '+rco2
+       if ee!='':
+          sb+='\n'+ee+'\n\n'
 
+       if remote!='yes' and cons!='yes':
+          if rco1!='': c+=' '+stro+' '+rco1
+          if rco2!='': c+=' '+stre+' '+rco2
        sb+=c+'\n'
 
        fn=''
@@ -994,9 +1008,8 @@ def process_in_dir(i):
                     ck.out('')
 
                  ry=os.system(y)
-              else:
-                 if os.path.isfile(df): 
-                    os.remove(df)
+              if os.path.isfile(df): 
+                 os.remove(df)
 
           if sc!='yes' and 'CT_REPEAT_MAIN' in env1:
              ck.out('')
@@ -1017,7 +1030,13 @@ def process_in_dir(i):
                     if y!='': y+=envtsep
                     y+=' '+q
 
-             y=rs+' '+tosd['change_dir']+' '+rdir+envtsep+' '+y
+             if eifs!='': y=y.replace('"','\\"')
+             y=rs+' '+eifs+tosd['change_dir']+' '+rdir+envtsep+' '+y+svare+eifs
+
+             if cons!='yes':
+                if rco1!='': y+=' '+stro+' '+rco1
+                if rco2!='': y+=' '+stre+' '+rco2
+
           else:
              # Record to tmp batch and run
              rx=ck.gen_tmp_file({'prefix':'tmp-', 'suffix':sext, 'remove_dir':'yes'})
@@ -1032,13 +1051,14 @@ def process_in_dir(i):
                 y+=sexe+' '+sbp+fn+envsep
              y+=' '+scall+' '+sbp+fn
 
+          if remote!='yes' and ubtr!='': y=ubtr.replace('$#cmd#$',y)
+
           if o=='con':
              ck.out(sep)
              ck.out(y)
              ck.out('')
 
           # Execute command 
-          if ubtr!='': y=ubtr.replace('$#cmd#$',y)
           sys.stdout.flush()
           start_time1=time.time()
           rx=os.system(y)
@@ -1068,6 +1088,10 @@ def process_in_dir(i):
              et=drq.get('execution_time','')
              if et!='':
                 exec_time=float(et)
+
+          # If return code >0 and program does not ignore return code, quit
+          if rx>0 and vcmd.get('ignore_return_code','').lower()!='yes':
+             break
 
           # Check calibration
           if sc=='yes' or repeat==-1 or 'CT_REPEAT_MAIN' not in env1:
