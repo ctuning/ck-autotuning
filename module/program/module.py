@@ -844,7 +844,7 @@ def process_in_dir(i):
                        zs=str(iz)
                        zz[zs]=z
 
-                       ck.out(zs+') '+zu)
+                       ck.out(zs+') '+zu+' ('+z+')')
 
                        iz+=1
 
