@@ -238,6 +238,8 @@ def process_in_dir(i):
 
     sa=i['sub_action']
 
+    sdi=i.get('skip_device_init','')
+
     misc=i.get('misc',{})
     ccc=i.get('characteristics',{})
     env=i.get('env',{})
@@ -268,7 +270,8 @@ def process_in_dir(i):
         'module_uoa':cfg['module_deps']['platform.os'],
         'host_os':hos,
         'target_os':tos,
-        'device_id':tdid}
+        'device_id':tdid,
+        'skip_device_init':sdi}
 
     if sa=='run': 
        ii['skip_info_collection']='no'
@@ -287,8 +290,7 @@ def process_in_dir(i):
     tosx=r['os_uoa']
     tosd=r['os_dict']
 
-    tdid=r['device_id']
-
+    if r['device_id']!='': tdid=r['device_id']
     xtdid=''
     if tdid!='': xtdid=' -s '+tdid
 
@@ -832,8 +834,6 @@ def process_in_dir(i):
        c=c.replace('$#env1#$',svarb)
        c=c.replace('$#env2#$',svare)
 
-       sdi=i.get('skip_device_init','')
-
        # Check if takes datasets from CK
        dtags=vcmd.get('dataset_tags',[])
        dmuoa=cfg['module_deps']['dataset']
@@ -896,6 +896,9 @@ def process_in_dir(i):
           if target_exe=='':
              return {'return':1, 'error':'currently can\'t run benchmarks without defined executable on remote platform'}
 
+          rs=tosd['remote_shell'].replace('$#device#$',xtdid)
+          rif=rt.get('run_input_files',[])
+
           if sdi!='yes':
              ck.out(sep)
              r=ck.access({'action':'init_device',
@@ -905,23 +908,8 @@ def process_in_dir(i):
                           'out':o})
              if r['return']>0: return r
 
-          rs=tosd['remote_shell'].replace('$#device#$',xtdid)
-
-          # Copy exe
-          y=tosd['remote_push'].replace('$#device#$',xtdid)+' '+target_exe+' '+rdir+target_exe
-          if o=='con':
-             ck.out(sep)
-             ck.out(y)
-             ck.out('')
-
-          ry=os.system(y)
-          if ry>0:
-             return {'return':1, 'error':'copying to remote device failed'}
-
-          # Set chmod
-          se=tosd.get('set_executable','')
-          if se!='':
-             y=rs+' '+se+' '+rdir+target_exe
+             # Copy exe
+             y=tosd['remote_push'].replace('$#device#$',xtdid)+' '+target_exe+' '+rdir+target_exe
              if o=='con':
                 ck.out(sep)
                 ck.out(y)
@@ -929,11 +917,22 @@ def process_in_dir(i):
 
              ry=os.system(y)
              if ry>0:
-                return {'return':1, 'error':'making binary executable failed on remote device'}
+                return {'return':1, 'error':'copying to remote device failed'}
 
-          # Copy explicit input files, if first time
-          rif=rt.get('run_input_files',[])
-          if sdi!='yes':
+             # Set chmod
+             se=tosd.get('set_executable','')
+             if se!='':
+                y=rs+' '+se+' '+rdir+target_exe
+                if o=='con':
+                   ck.out(sep)
+                   ck.out(y)
+                   ck.out('')
+
+                ry=os.system(y)
+                if ry>0:
+                   return {'return':1, 'error':'making binary executable failed on remote device'}
+
+             # Copy explicit input files, if first time
              for df in rif:
                  # Push data files to device
                  y=tosd['remote_push'].replace('$#device#$',xtdid)+' '+os.path.join(p,df)+' '+rdir+stdirs+df
@@ -1090,7 +1089,12 @@ def process_in_dir(i):
           # Pull files from the device if remote
           if remote=='yes':
              rof=rt.get('run_output_files',[])
-             for df in rof:
+
+             xrof=rof
+             if i.get('pull_only_timer_files','')=='yes':
+                xrof=[fgtf]
+ 
+             for df in xrof:
                  # Push data files to device
                  y=tosd['remote_pull'].replace('$#device#$',xtdid)+' '+rdir+stdirs+df+' '+df
                  if o=='con':
@@ -1368,7 +1372,10 @@ def autotune(i):
         else:
            ii['generate_rnd_tmp_dir']=''
 
+        if tdid!='': ii['device_id']=tdid
+
         ck.out('')
+
         rx=compile(ii)  #####################################################################
         if rx['return']>0: return rx 
 
@@ -1418,6 +1425,9 @@ def autotune(i):
                if tdid!='':
                   ii['device_id']=tdid
 
+               if repeat!=-1:
+                  ii['pull_only_timer_files']='yes'
+
                rx=run(ii)  ###############################################################
                if rx['return']>0: return rx
 
@@ -1426,7 +1436,7 @@ def autotune(i):
                rmisc=rx['misc']
                rch=rx['characteristics']
 
-               if rmisc.get('device_id','')!='': tdid=cmisc['device_id']
+               if rmisc.get('device_id','')!='': tdid=rmisc['device_id']
 
                cmd_key=rmisc.get('cmd_key','')
                dduoa=rmisc.get('dataset_uoa','')
