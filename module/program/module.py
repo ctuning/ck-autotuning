@@ -43,9 +43,14 @@ def process(i):
               (module_uoa) - program module UOA
               data_uoa     - program data UOA
 
+              (host_os)        - host OS (detect, if omitted)
+              (target_os)      - OS module to check (if omitted, analyze host)
+              (device_id)      - device id if remote (such as adb)
+
               (process_in_tmp)       - (default 'yes') - if 'yes', clean, compile and run in the tmp directory 
               (tmp_dir)              - (default 'tmp') - if !='', use this tmp directory to clean, compile and run
               (generate_rnd_tmp_dir) - if 'yes', generate random tmp directory
+
             }
 
     Output: {
@@ -163,6 +168,10 @@ def process_in_dir(i):
     Input:  {
               Comes from 'compile', 'run' and 'clean' functions
 
+              (host_os)        - host OS (detect, if omitted)
+              (target_os)      - OS module to check (if omitted, analyze host)
+              (device_id)      - device id if remote (such as adb)
+
               sub_action             - clean, compile, run
 
               path                   - path
@@ -227,6 +236,8 @@ def process_in_dir(i):
 
     o=i.get('out','')
 
+    sa=i['sub_action']
+
     misc=i.get('misc',{})
     ccc=i.get('characteristics',{})
     env=i.get('env',{})
@@ -249,14 +260,23 @@ def process_in_dir(i):
     # Check host/target OS/CPU
     hos=i.get('host_os','')
     tos=i.get('target_os','')
-    tdid=i.get('target_device_id','')
 
-    r=ck.access({'action':'detect',
-                 'module_uoa':cfg['module_deps']['platform.os'],
-                 'host_os':hos,
-                 'target_os':tos,
-                 'target_device_id':tdid,
-                 'skip_info_collection':'yes'})
+    tdid=i.get('device_id','')
+
+    # Get some info about platforms
+    ii={'action':'detect',
+        'module_uoa':cfg['module_deps']['platform.os'],
+        'host_os':hos,
+        'target_os':tos,
+        'device_id':tdid}
+
+    if sa=='run': 
+       ii['skip_info_collection']='no'
+       ii['out']=o
+    else:         
+       ii['skip_info_collection']='yes'
+
+    r=ck.access(ii)
     if r['return']>0: return r
 
     hos=r['host_os_uid']
@@ -267,6 +287,11 @@ def process_in_dir(i):
     tosx=r['os_uoa']
     tosd=r['os_dict']
 
+    tdid=r['device_id']
+
+    xtdid=''
+    if tdid!='': xtdid=' -s '+tdid
+
     remote=tosd.get('remote','')
 
     tbits=tosd.get('bits','')
@@ -274,7 +299,8 @@ def process_in_dir(i):
     # update misc
     misc['host_os_uoa']=hosx
     misc['target_os_uoa']=tosx
-    misc['target_device_id']=tdid
+    misc['target_os_bits']=tbits
+    misc['device_id']=tdid
 
     # Get host platform type (linux or win)
     rx=ck.get_os_ck({})
@@ -308,12 +334,6 @@ def process_in_dir(i):
     ubtr=hosd.get('use_bash_to_run','')
 
     ########################################################################
-    # Prepare some params
-    misc=i.get('misc',{})
-    misc.update({'host_os_uoa':hos,
-                 'target_os_uoa':tos,
-                 'target_os_bits':tbits})
-
     # Get host platform
     rx=ck.get_os_ck({})
     if rx['return']>0: return rx
@@ -347,8 +367,6 @@ def process_in_dir(i):
     # Check if compile in tmp dir
     cdir=p
     os.chdir(cdir)
-
-    sa=i['sub_action']
 
     ################################### Run ######################################
     if sa=='clean':
@@ -439,7 +457,7 @@ def process_in_dir(i):
               'module_uoa':cfg['module_deps']['env'],
               'host_os':hos,
               'target_os':tos,
-              'target_device_id':tdid,
+              'device_id':tdid,
               'deps':deps,
               'add_customize':'yes'}
           if o=='con': ii['out']='con'
@@ -879,16 +897,18 @@ def process_in_dir(i):
              return {'return':1, 'error':'currently can\'t run benchmarks without defined executable on remote platform'}
 
           if sdi!='yes':
+             ck.out(sep)
              r=ck.access({'action':'init_device',
                           'module_uoa':cfg['module_deps']['platform'],
                           'os_dict':tosd,
-                          'device_id':tdid})
+                          'device_id':tdid,
+                          'out':o})
              if r['return']>0: return r
 
-          rs=tosd['remote_shell'].replace('$#device#$',tdid)
+          rs=tosd['remote_shell'].replace('$#device#$',xtdid)
 
           # Copy exe
-          y=tosd['remote_push'].replace('$#device#$',tdid)+' '+target_exe+' '+rdir+target_exe
+          y=tosd['remote_push'].replace('$#device#$',xtdid)+' '+target_exe+' '+rdir+target_exe
           if o=='con':
              ck.out(sep)
              ck.out(y)
@@ -916,7 +936,7 @@ def process_in_dir(i):
           if sdi!='yes':
              for df in rif:
                  # Push data files to device
-                 y=tosd['remote_push'].replace('$#device#$',tdid)+' '+os.path.join(p,df)+' '+rdir+stdirs+df
+                 y=tosd['remote_push'].replace('$#device#$',xtdid)+' '+os.path.join(p,df)+' '+rdir+stdirs+df
                  if o=='con':
                     ck.out(sep)
                     ck.out(y)
@@ -951,7 +971,7 @@ def process_in_dir(i):
 
                  if remote=='yes' and sdi!='yes':
                     # Push data files to device, if first time
-                    y=tosd['remote_push'].replace('$#device#$',tdid)+' '+os.path.join(dp,df)+' '+rdir+stdirs+df
+                    y=tosd['remote_push'].replace('$#device#$',xtdid)+' '+os.path.join(dp,df)+' '+rdir+stdirs+df
                     if o=='con':
                        ck.out(sep)
                        ck.out(y)
@@ -1072,7 +1092,7 @@ def process_in_dir(i):
              rof=rt.get('run_output_files',[])
              for df in rof:
                  # Push data files to device
-                 y=tosd['remote_pull'].replace('$#device#$',tdid)+' '+rdir+stdirs+df+' '+df
+                 y=tosd['remote_pull'].replace('$#device#$',xtdid)+' '+rdir+stdirs+df+' '+df
                  if o=='con':
                     ck.out('')
                     ck.out(y)
@@ -1082,9 +1102,15 @@ def process_in_dir(i):
 
           # Check if fine-grain time
           if fgtf!='':
+             if o=='con':
+                ck.out('')
+                ck.out('Reading fine grain timers from '+fgtf+' ...')
+                ck.out('')
+
              rq=ck.load_json_file({'json_file':fgtf})
              if rq['return']>0: return rq
              drq=rq['dict']
+             ccc.update(drq)
              et=drq.get('execution_time','')
              if et!='':
                 exec_time=float(et)
@@ -1226,6 +1252,10 @@ def autotune(i):
               (module_uoa) - program module UOA
               data_uoa     - program data UOA
 
+              (host_os)        - host OS (detect, if omitted)
+              (target_os)      - OS module to check (if omitted, analyze host)
+              (device_id)      - device id if remote (such as adb)
+
               (process_in_tmp)
               (tmp_dir)
 
@@ -1268,6 +1298,8 @@ def autotune(i):
 
     eruoa=i.get('experiment_repo_uoa','')
     euoa=i.get('experiment_uoa','')
+
+    tdid=i.get('device_id','')
 
     # Hack
     cduoa=i.get('compiler_desc_uoa','')
@@ -1337,12 +1369,14 @@ def autotune(i):
            ii['generate_rnd_tmp_dir']=''
 
         ck.out('')
-        rx=compile(ii)
+        rx=compile(ii)  #####################################################################
         if rx['return']>0: return rx 
 
         deps=rx['deps']
         cmisc=rx['misc']
         cch=rx['characteristics']
+
+        if cmisc.get('device_id','')!='': tdid=cmisc['device_id']
 
         tmp_dir=cmisc['tmp_dir']
         tp=cmisc['path']
@@ -1381,13 +1415,18 @@ def autotune(i):
                if dduoa!='':
                   ii['dataset_uoa']=dduoa
 
-               rx=run(ii)
+               if tdid!='':
+                  ii['device_id']=tdid
+
+               rx=run(ii)  ###############################################################
                if rx['return']>0: return rx
 
                if sdi!='yes': sdi='yes'
 
                rmisc=rx['misc']
                rch=rx['characteristics']
+
+               if rmisc.get('device_id','')!='': tdid=cmisc['device_id']
 
                cmd_key=rmisc.get('cmd_key','')
                dduoa=rmisc.get('dataset_uoa','')
