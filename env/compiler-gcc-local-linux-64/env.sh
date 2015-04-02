@@ -31,6 +31,7 @@ export CK_FLAG_PREFIX_INCLUDE=-I
 export CK_FLAG_PREFIX_VAR=-D
 export CK_LB="ar rcs"
 export CK_LB_OUTPUT="-o "
+export CK_LD=ld
 export CK_LD_FLAGS_EXTRA=
 export CK_LIB_EXT=.a
 export CK_MAKE=make

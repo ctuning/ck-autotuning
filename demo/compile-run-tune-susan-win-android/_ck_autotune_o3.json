@@ -1,8 +1,8 @@
 {
  "experiment_repo_uoa":"ck-experiments",
- "experiment_uoa":"demo-autotune-susan-android-o3-111",
+ "experiment_uoa":"demo-autotune-susan-android-o3-112",
 
- "repeat":"20",
+ "repeat":"50",
 
  "target_os":"android-32",
 

@@ -32,6 +32,7 @@ set CK_FLAG_PREFIX_INCLUDE=-I
 set CK_FLAG_PREFIX_VAR=-D
 set CK_LB=ar rcs
 set CK_LB_OUTPUT=-o 
+set CK_LD=ld
 set CK_LD_FLAGS_EXTRA=
 set CK_LIB_EXT=.a
 set CK_MAKE=mingw32-make

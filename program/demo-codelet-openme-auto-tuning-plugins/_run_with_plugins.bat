@@ -1,5 +1,5 @@
 # Find cTuning (auto-tuning) plugin and set environment
-call ck set env tags=plugin,openme,ctuning bat_file=tmp-ck-env.bat --bat_new --print && call tmp-ck-env.bat && del /Q tmp-ck-env.bat
+call ck set env tags=plugin,openme,ctuning,target-os-windows-64 bat_file=tmp-ck-env.bat --bat_new --print && call tmp-ck-env.bat && del /Q tmp-ck-env.bat
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 set OPENME_USE=1

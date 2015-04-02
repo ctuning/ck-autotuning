@@ -755,7 +755,7 @@ def process_in_dir(i):
              ck.out('')
              zz={}
              iz=0
-             for z in krun_cmds:
+             for z in sorted(krun_cmds):
                  zs=str(iz)
                  zz[zs]=z
 
@@ -866,7 +866,7 @@ def process_in_dir(i):
                    ck.out('')
                    zz={}
                    iz=0
-                   for z1 in lst:
+                   for z1 in sorted(lst, key=lambda v: v['data_uoa']):
                        z=z1['data_uid']
                        zu=z1['data_uoa']
 
@@ -908,6 +908,7 @@ def process_in_dir(i):
                           'out':o})
              if r['return']>0: return r
 
+          if i.get('statistical_repetition',0)==0:
              # Copy exe
              y=tosd['remote_push'].replace('$#device#$',xtdid)+' '+target_exe+' '+rdir+target_exe
              if o=='con':
@@ -932,6 +933,7 @@ def process_in_dir(i):
                 if ry>0:
                    return {'return':1, 'error':'making binary executable failed on remote device'}
 
+          if sdi!='yes':
              # Copy explicit input files, if first time
              for df in rif:
                  # Push data files to device
@@ -1095,7 +1097,7 @@ def process_in_dir(i):
                 xrof=[fgtf]
  
              for df in xrof:
-                 # Push data files to device
+                 # Pull output files from device
                  y=tosd['remote_pull'].replace('$#device#$',xtdid)+' '+rdir+stdirs+df+' '+df
                  if o=='con':
                     ck.out('')
@@ -1116,6 +1118,7 @@ def process_in_dir(i):
              drq=rq['dict']
              ccc.update(drq)
              et=drq.get('execution_time','')
+             exec_time=0.0
              if et!='':
                 exec_time=float(et)
 
@@ -1155,11 +1158,12 @@ def process_in_dir(i):
           if calibrate_success==False:
              return {'return':1, 'error':'calibration problem'}
 
-       ccc['return_code']=rx
-       ccc['execution_time']=exec_time
        xrepeat=repeat
        if xrepeat<1: xrepeat=1
-       ccc['normalized_execution_time']=exec_time/xrepeat
+
+       ccc['return_code']=rx
+       ccc['execution_time']=exec_time/repeat
+       ccc['total_execution_time']=exec_time
        ccc['repeat']=xrepeat
        misc['calibration_success']=calibrate_success
 
@@ -1410,6 +1414,9 @@ def autotune(i):
                os.chdir(pp)
 
                ii['skip_device_init']=sdi
+
+               ii['statistical_repetition']=sr # Needed to avoid pushing a.out to remote device
+
                if repeat!=-1:
                   ii['repeat']=repeat
 
