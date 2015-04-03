@@ -2,10 +2,10 @@
   "data_uid": "a4328ba99679e0d1", 
   "data_name": "CK auto-tuning and crowd-tuning", 
   "dict": {
-    "url": "https://github.com/ctuning/ck-auto-tuning.git", 
+    "url": "https://github.com/ctuning/ck-autotuning.git", 
     "shared": "git", 
     "sync": "yes"
   }, 
-  "data_alias": "ck-auto-tuning", 
-  "data_uoa": "ck-auto-tuning"
+  "data_alias": "ck-autotuning", 
+  "data_uoa": "ck-autotuning"
 }

@@ -96,7 +96,9 @@ def extract(i):
 
         feat={}
 
-        ddd={'tags':tags, 'dataset_uid':duid, 'dataset_uoa':duoa}
+        otags=d.get('tags',[])
+
+        ddd={'tags':otags, 'dataset_uid':duid, 'dataset_uoa':duoa}
 
         ts=0
         for f in df:
@@ -134,7 +136,17 @@ def extract(i):
                         pass
 
         if len(feat)>0:
-           ck.out('  '+json.dumps(feat))
+           rr=ck.dumps_json({'dict':feat, 'sort_keys':'yes', 'skip_indent':'yes'})
+           if rr['return']>0: 
+              if 'raw_info' in feat: # Usually source of problems
+                 del(feat['raw_info'])
+                 rr=ck.dumps_json({'dict':feat, 'sort_keys':'yes', 'skip_indent':'yes'})
+                 if rr['return']>0: return rr
+              else:
+                 return rr
+
+           sfeat=rr['string']
+           ck.out('  '+sfeat)
 
            found=False
            ry=ck.access({'action':'load',
@@ -150,6 +162,7 @@ def extract(i):
            feat1=rz['dict1']
 
            ddd['features']=feat1
+           ddd['tags']=otags
 
            ii={}
            ii['action']='add'
@@ -159,6 +172,7 @@ def extract(i):
            ii['data_uid']=duid
            ii['repo_uoa']=truoa
            ii['dict']=ddd
+           ii['substitute']='yes'
            ry=ck.access(ii)
            if ry['return']>0: return ry
 

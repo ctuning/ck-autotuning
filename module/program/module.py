@@ -168,11 +168,11 @@ def process_in_dir(i):
     Input:  {
               Comes from 'compile', 'run' and 'clean' functions
 
+              sub_action             - clean, compile, run
+
               (host_os)        - host OS (detect, if omitted)
               (target_os)      - OS module to check (if omitted, analyze host)
               (device_id)      - device id if remote (such as adb)
-
-              sub_action             - clean, compile, run
 
               path                   - path
               meta                   - program description
@@ -262,7 +262,6 @@ def process_in_dir(i):
     # Check host/target OS/CPU
     hos=i.get('host_os','')
     tos=i.get('target_os','')
-
     tdid=i.get('device_id','')
 
     # Get some info about platforms
