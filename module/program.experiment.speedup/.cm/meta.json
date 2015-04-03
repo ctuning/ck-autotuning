@@ -1,0 +1,16 @@
+{
+  "actions": {
+    "describe": {
+      "desc": "describe experiment"
+    }, 
+    "reproduce": {
+      "desc": "reproduce experiment"
+    }
+  }, 
+  "copyright": "See CK Copyright.txt for copyright details", 
+  "desc": "Check speedup of program versus various compiler flags and data sets", 
+  "developer": "Grigori Fursin", 
+  "developer_email": "Grigori.Fursin@cTuning.org", 
+  "developer_webpage": "http://cTuning.org/lab/people/gfursin", 
+  "license": "See CK LICENSE.txt for licensing details"
+}
