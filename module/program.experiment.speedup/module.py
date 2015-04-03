@@ -68,11 +68,7 @@ def reproduce(i):
               (target_os)      - OS module to check (if omitted, analyze host)
               (device_id)      - device id if remote (such as adb)
 
-
-
-
-
-
+              (stat_repeat)    - max statistical repetitions (4 by default)
             }
 
     Output: {
@@ -97,7 +93,8 @@ def reproduce(i):
 
     ###################################################
     # Experiment table
-    table=[]
+    table=[]  # Strings (for printing)
+    otable=[] # Original format
 
     ###################################################
     ck.out(sep)
@@ -147,14 +144,115 @@ def reproduce(i):
         t.append('min time - max time:')
     table.append(t)
 
+    # Iterate over flags
+    srepeat=i.get('stat_repeat',0)
+    if srepeat<1: srepeat=4
 
-    t=[]
-    t.append('-O3')
-    t.append('123')
-    t.append('3432')
-    for ds in dlist:
-        t.append('5.343 - 5.555')
-    table.append(t)
+    repeat=i.get('repeat',-1)
+    deps={}
+    
+    hos=i.get('host_os','')
+    tos=i.get('target_os','')
+    tdid=i.get('device_id','')
+
+    for cf in cflags:
+        ck.out(sep)
+        ck.out('Checking flags "'+cf+'" ...')
+
+        t=[]
+        ot=[]
+
+        t.append(cf)
+        ot.append(cf)
+
+        ii={'action':'compile',
+            'module_uoa':cfg['module_deps']['program'],
+            'data_uoa':puoa,
+            'host_os':hos,
+            'target_os':tos,
+            'device_id':tdid,
+            'clean':'yes',
+            'flags':cf,
+            'out':'con'}
+
+        if len(deps)>0: ii['deps']=deps
+
+        r=ck.access(ii)
+        if r['return']>0: return r
+            
+        deps=r['deps']
+
+        cmisc=r['misc']
+        cchar=r['characteristics']
+
+        cs=cmisc['compilation_success']
+
+        if cs!='yes':
+           return {'return':1, 'error':'compilation failed - check above output and possibly report to authors!'}
+
+        hos=cmisc['host_os_uoa']
+        tos=cmisc['target_os_uoa']
+        tdid=cmisc['device_id']
+
+        os=cchar.get('obj_size',0)
+        md5=cchar.get('md5_sum','')
+
+        t.append(os)
+        t.append(md5)
+
+        ot.append(str(os))
+        ot.append(str(md5))
+
+        # Iterate over datasets
+        for ds in dlist:
+            duoa=ds['data_uoa']
+            duid=ds['data_uid']
+
+            ck.out(sep)
+            ck.out('Running with dataset '+duoa+' ...')
+
+            # Try to run
+            tmin=-1
+            tmax=-1
+
+            for s in range(0, srepeat):
+                ck.out(sep)
+                ck.out('Statistical repetition '+str(s+1)+' out of '+str(srepeat)+' ...')               
+
+                ij={'action':'run',
+                    'module_uoa':cfg['module_deps']['program'],
+                    'data_uoa':puoa,
+                    'host_os':hos,
+                    'target_os':tos,
+                    'device_id':tdid,
+                    'cmd_key':cmd_key,
+                    'dataset_uoa':duid,
+                    'out':'con'}
+
+                if len(deps)>0: ij['deps']=deps
+
+                if repeat>0: ij['repeat']=repeat
+
+                r=ck.access(ij)
+                if r['return']>0: return r
+
+                rmisc=r['misc']
+                rchar=r['characteristics']
+
+                rs=rmisc['run_success']
+
+                if rs!='yes':
+                   return {'return':1, 'error':'execution failed - check above output and possibly report to authors!'}
+
+                repeat=rchar['repeat']
+                tt=rchar['total_execution_time']
+
+                if tmin==-1 or tt<tmin: tmin=tt
+                if tmax==-1 or tt>tmax: tmax=tt
+
+            t.append(('%3.3f' % tmin) + ' .. ' + ('%3.3f' % tmax))
+
+        table.append(t)
 
     # Draw table
     ii={'action':'draw',
@@ -165,15 +263,25 @@ def reproduce(i):
     if r['return']>0: return r
     s=r['string']
 
+    ck.out(sep)
+    ck.out('Results:')
+    ck.out('')
+    ck.out(s)
 
+    rf=cfg['report_file']
+    rft=rf+'.txt'
+    rfh=rf+'.html'
+    rfj=rf+'.json'
+
+    r=ck.save_text_file({'text_file':rft, 'string':s})
+    if r['return']>0: return r
 
     ii['out']='html'
     r=ck.access(ii)
     if r['return']>0: return r
     html=r['string']
-        
-    print html
 
-
+    r=ck.save_text_file({'text_file':rfh, 'string':html})
+    if r['return']>0: return r
 
     return {'return':0}
