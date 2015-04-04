@@ -40,6 +40,7 @@
     }
   }, 
   "module_deps": {
+    "soft":"5e1100048ab875d7",
     "compiler": "36ebc331048475bb", 
     "dataset": "8a7141c59cd335f5", 
     "env": "9b9b3208ac44b891", 

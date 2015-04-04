@@ -495,9 +495,9 @@ def process_in_dir(i):
           os.remove(target_exe)
 
        # Add compiler dep again, if there
-       x=deps.get('compiler',{}).get('bat','')
-       if x!='' and not sb.endswith(x):
-          sb+='\n'+x+'\n'
+       cb=deps.get('compiler',{}).get('bat','')
+       if cb!='' and not sb.endswith(cb):
+          sb+='\n'+cb+'\n'
 
        # Add env
        for k in sorted(env):
@@ -510,6 +510,18 @@ def process_in_dir(i):
            sb+=eset+' '+k+'='+v+'\n'
        sb+='\n'
 
+       # Try to detect version
+       csuoa=deps.get('compiler',{}).get('dict',{}).get('soft_uoa','')
+       if csuoa!='':
+          r=ck.access({'action':'detect',
+                       'module_uoa':cfg['module_deps']['soft'],
+                       'uoa':csuoa,
+                       'env':cb,
+                       'con':o})
+          if r['return']==0:
+             misc['compiler_detected_ver_list']=r['version_lst']
+             misc['compiler_detected_ver_str']=r['version_str']
+          
        # Check linking libs + include paths for deps
        sll=''
        sin=''
@@ -662,6 +674,10 @@ def process_in_dir(i):
              sb+=cc+'\n'
              sb+=sqie+'\n'
 
+       # Try objdump
+       sb+='\n'+svarb+'CK_OBJDUMP'+svare+' '+target_exe+' '+stro+' '+target_exe+'.dump'+'\n'
+       sb+='\n'+'md5sum < '+target_exe+'.dump '+stro+' '+target_exe+'.md5'+'\n'
+
        # Record to tmp batch and run
        rx=ck.gen_tmp_file({'prefix':'tmp-', 'suffix':sext, 'remove_dir':'yes'})
        if rx['return']>0: return rx
@@ -688,6 +704,7 @@ def process_in_dir(i):
           if fn!='' and os.path.isfile(fn): os.remove(fn)
 
        ofs=0
+       md5=''
        if rx>0:
           misc['compilation_success']='no'
        else:
@@ -696,6 +713,16 @@ def process_in_dir(i):
           # Check some characteristics
           if os.path.isfile(target_exe):
              ccc['binary_size']=os.path.getsize(target_exe)
+
+             # Try to read md5 file
+             if os.path.isfile(target_exe+'.md5'):
+                rz=ck.load_text_file({'text_file':target_exe+'.md5'})
+                if rz['return']==0:
+                   md5x=rz['string']
+                   ix=md5x.find(' ')
+                   if ix>0:
+                      md5=md5x[:ix].strip()
+                      ccc['md5_sum']=md5
 
           # Check obj file sizes
           if len(xsofs)>0:
@@ -711,7 +738,7 @@ def process_in_dir(i):
 
        if o=='con':
           ck.out('')
-          ck.out('Compilation time: '+('%.3f'%comp_time)+' sec.; Object size: '+str(ofs))
+          ck.out('Compilation time: '+('%.3f'%comp_time)+' sec.; Object size: '+str(ofs)+'; MD5: '+md5)
 
     ################################### Run ######################################
     elif sa=='run':
