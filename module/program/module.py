@@ -521,6 +521,7 @@ def process_in_dir(i):
           if r['return']==0:
              misc['compiler_detected_ver_list']=r['version_lst']
              misc['compiler_detected_ver_str']=r['version_str']
+             misc['compiler_detected_ver_raw']=r['version_raw']
           
        # Check linking libs + include paths for deps
        sll=''
