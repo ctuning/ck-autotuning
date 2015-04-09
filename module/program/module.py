@@ -1546,3 +1546,159 @@ def crowdtune(i):
     ck.out ('tbd: crowdtuning program')
 
     return {'return':0}
+
+##############################################################################
+# prepare and run program pipeline (clean, compile, run, etc)
+
+def pipeline(i):
+    """
+    Input:  {
+              (setup) - dict with pipeline parameters
+
+                  (repo_uoa)   - program repo UOA
+                  (module_uoa) - program module UOA
+                  data_uoa     - program data UOA
+
+                  (host_os)        - host OS (detect, if omitted)
+                  (target_os)      - OS module to check (if omitted, analyze host)
+                  (device_id)      - device id if remote (such as adb)
+
+
+              (prepare) - if 'yes', only prepare setup
+
+            }
+
+    Output: {
+              return       - return code =  0, if successful
+                                         >  0, if error
+              (error)      - error text if return > 0
+
+              (setup)
+            }
+
+    """
+
+    import os
+    import copy
+
+    o=i.get('out','')
+
+    pr=i.get('prepare','')
+
+    csetup=i.get('setup_choices',{})
+
+    ruoa=setup.get('repo_uoa','')
+    muoa=setup.get('module_uoa','')
+    if muoa=='': muoa=work['self_module_uid']
+    duoa=setup.get('data_uoa','')
+
+    d={} # meta of program
+
+    ##############################################################################
+    # Check if more than one program
+    if duoa=='':
+       # First, try to detect CID in current directory
+       r=ck.cid({})
+       if r['return']==0:
+          ruoa=r.get('repo_uoa','')
+          muoa=r.get('module_uoa','')
+          duoa=r.get('data_uoa','')
+
+       if duoa=='':
+          # Attempt to load configuration from the current directory
+          p=os.getcwd()
+
+          pc=os.path.join(p, ck.cfg['subdir_ck_ext'], ck.cfg['file_meta'])
+          if os.path.isfile(pc):
+             r=ck.load_json_file({'json_file':pc})
+             if r['return']==0:
+                d=r['dict']
+
+    if duoa=='' and len(d)==0: duoa='*'
+
+    r=ck.search({'repo_uoa':ruoa, 'module_uoa':muoa, 'data_uoa':duoa})
+    if r['return']>0: return r
+
+    lst=r['lst']
+    if len(lst)==0:
+       return {'return':0, 'error':'no programs found'}
+    elif len(lst)==1:
+       duoa=lst['data_uid']
+    else:
+       if o=='con':
+          r=select_uoa({'lst':lst})
+          if r['return']>0: return r
+          duoa=r['uoa']
+       else:
+
+
+    csetup['##data_uoa']={'type':'uoa',
+                          'list':lst,
+                          'sort':1000}
+    setup['data_uoa']=duoa
+
+
+
+    print duoa
+
+    return {'return':0, 'setup':setup, 'setup_choices':csetup}
+       
+
+
+    # Try to compile and detect dependencies
+
+    ii={}
+    rx=ck.merge_dicts({'dict1':ii, 'dict2':setup})
+    if rx['return']>0: return rx
+    ii=rx['dict1']
+
+    rx=compile(ii)
+    if rx['return']>0: return rx
+
+
+
+
+    return {'return':0, 'setup':setup}
+
+##############################################################################
+# select uoa
+
+def select_uoa(i):
+    """
+    Input:  {
+              lst - list from search function
+            }
+
+    Output: {
+              return       - return code =  0, if successful
+                                         >  0, if error
+              (error)      - error text if return > 0
+            }
+
+    """
+
+    lst=i.get('lst',[])
+
+    zz={}
+    iz=0
+    for z1 in sorted(lst, key=lambda v: v['data_uoa']):
+        z=z1['data_uid']
+        zu=z1['data_uoa']
+
+        zs=str(iz)
+        zz[zs]=z
+
+        ck.out(zs+') '+zu+' ('+z+')')
+
+        iz+=1
+
+    ck.out('')
+    rx=ck.inp({'text':'Choose first number to select UOA: '})
+    x=rx['string'].strip()
+
+    if x not in zz:
+       return {'return':1, 'error':'number is not recognized'}
+
+    dduoa=zz[x]
+
+    return {'return':0, 'uoa':dduoa}

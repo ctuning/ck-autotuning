@@ -43,6 +43,34 @@
         "1", 
         "0205"
       ]
+    }, 
+    {
+      "author": "Grigori Fursin", 
+      "author_email": "Grigori.Fursin@cTuning.org", 
+      "author_webpage": "http://cTuning.org/lab/people/gfursin", 
+      "copyright": "See CK Copyright.txt for copyright details", 
+      "engine": "CK", 
+      "iso_datetime": "2015-04-07T17:33:56.961000", 
+      "license": "See CK LICENSE.txt for licensing details", 
+      "version": [
+        "1", 
+        "1", 
+        "0205"
+      ]
+    }, 
+    {
+      "author": "Grigori Fursin", 
+      "author_email": "Grigori.Fursin@cTuning.org", 
+      "author_webpage": "http://cTuning.org/lab/people/gfursin", 
+      "copyright": "See CK Copyright.txt for copyright details", 
+      "engine": "CK", 
+      "iso_datetime": "2015-04-07T21:44:35.979000", 
+      "license": "See CK LICENSE.txt for licensing details", 
+      "version": [
+        "1", 
+        "1", 
+        "0205"
+      ]
     }
   ]
 }

@@ -12,8 +12,14 @@
     "crowdtune": {
       "desc": "crowdtune software and hardware"
     }, 
+    "pipeline": {
+      "desc": "prepare and run program pipeline (clean, compile, run, etc)"
+    }, 
     "run": {
       "desc": "run program"
+    }, 
+    "select_uoa": {
+      "desc": "select uoa"
     }
   }, 
   "calibration_max": "10", 
@@ -40,12 +46,12 @@
     }
   }, 
   "module_deps": {
-    "soft":"5e1100048ab875d7",
     "compiler": "36ebc331048475bb", 
     "dataset": "8a7141c59cd335f5", 
     "env": "9b9b3208ac44b891", 
     "platform": "707ccdfe444cafac", 
-    "platform.os": "41e31cc4496b8a8e"
+    "platform.os": "41e31cc4496b8a8e", 
+    "soft": "5e1100048ab875d7"
   }, 
   "target_file": "a"
 }

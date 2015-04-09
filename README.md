@@ -20,13 +20,16 @@ spaces are very large, we are trying to make their exploration practical
 and scalable by combining autotuning, crowdsourcing, predictive 
 analytics and run-time adaptation.
 
-Modules from this repository will be used to:
-* clean, compile and run programs 
-* perform benchmarking
-* perform plugin-based autotuning
-* perform crowd-tuning
-* perform statistical analysis
-* gradually add reproducibility of results
+Modules from this repository will be used to unify:
+* program compilation and execution (with multiple data sets)
+* benchmarking
+* statistical analysis
+* plugin-based autotuning
+* automatic performance modeling
+* static and dynamic features extraction
+* machine learning to predict optimizations and run-time adaptation
+* crowd-tuning
+* reproducibility of experimental results
 
 Publications
 ============
