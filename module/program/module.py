@@ -1629,7 +1629,7 @@ def pipeline(i):
           r=select_uoa({'lst':lst})
           if r['return']>0: return r
           duoa=r['uoa']
-       else:
+#       else:
 
 
     csetup['##data_uoa']={'type':'uoa',
