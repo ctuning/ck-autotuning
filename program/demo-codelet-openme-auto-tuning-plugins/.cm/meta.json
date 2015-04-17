@@ -1,4 +1,5 @@
 {
+  "backup_data_uid": "794023410cbed8b0", 
   "build_compiler_vars": {
     "OPENME": ""
   }, 
@@ -20,6 +21,7 @@
     }
   }, 
   "compiler_env": "CK_CC", 
+  "data_name": "demo-codelet-openme-auto-tuning-plugins", 
   "extra_ld_vars": "$<<CK_EXTRA_LIB_M>>$ $<<CK_EXTRA_LIB_DL>>$", 
   "main_language": "c", 
   "process_in_tmp": "yes", 

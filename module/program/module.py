@@ -874,44 +874,42 @@ def process_in_dir(i):
                  if tags!='': tags+=','
                  tags+=q
 
-             dduoa=i.get('dataset_uoa','')
-             if dduoa=='':
-                rx=ck.access({'action':'search',
-                              'module_uoa':dmuoa,
-                              'tags':tags})
-                if rx['return']>0: return rx
+             rx=ck.access({'action':'search',
+                           'module_uoa':dmuoa,
+                           'tags':tags})
+             if rx['return']>0: return rx
 
-                lst=rx['lst']
+             lst=rx['lst']
 
-                if len(lst)==0:
-                   return {'return':1, 'error':'no related datasets found (tags='+tags+')'}  
-                elif len(lst)==1:
-                   dduoa=lst[0].get('data_uid','')
-                else:
-                   ck.out('')
-                   ck.out('More than one dataset entry is found for this program:')
-                   ck.out('')
-                   zz={}
-                   iz=0
-                   for z1 in sorted(lst, key=lambda v: v['data_uoa']):
-                       z=z1['data_uid']
-                       zu=z1['data_uoa']
+             if len(lst)==0:
+                return {'return':1, 'error':'no related datasets found (tags='+tags+')'}  
+             elif len(lst)==1:
+                dduoa=lst[0].get('data_uid','')
+             else:
+                ck.out('')
+                ck.out('More than one dataset entry is found for this program:')
+                ck.out('')
+                zz={}
+                iz=0
+                for z1 in sorted(lst, key=lambda v: v['data_uoa']):
+                    z=z1['data_uid']
+                    zu=z1['data_uoa']
 
-                       zs=str(iz)
-                       zz[zs]=z
+                    zs=str(iz)
+                    zz[zs]=z
 
-                       ck.out(zs+') '+zu+' ('+z+')')
+                    ck.out(zs+') '+zu+' ('+z+')')
 
-                       iz+=1
+                    iz+=1
 
-                   ck.out('')
-                   rx=ck.inp({'text':'Choose first number to select dataset UOA: '})
-                   x=rx['string'].strip()
+                ck.out('')
+                rx=ck.inp({'text':'Choose first number to select dataset UOA: '})
+                x=rx['string'].strip()
 
-                   if x not in zz:
-                      return {'return':1, 'error':'dataset number is not recognized'}
+                if x not in zz:
+                   return {'return':1, 'error':'dataset number is not recognized'}
 
-                   dduoa=zz[x]
+                dduoa=zz[x]
 
           if dduoa=='':
              return {'return':1, 'error':'dataset is not specified'}  
@@ -1564,8 +1562,9 @@ def pipeline(i):
                   (device_id)      - device id if remote (such as adb)
 
 
-              (prepare) - if 'yes', only prepare setup
-
+              (prepare)          - if 'yes', only prepare setup
+              (save_to_file)     - if !='', save updated input (state) to this file
+              (skip_interaction) - if 'yes' and out=='con', skip interaction to choose parameters
             }
 
     Output: {
@@ -1584,86 +1583,402 @@ def pipeline(i):
     o=i.get('out','')
 
     pr=i.get('prepare','')
+    si=i.get('skip_interaction','')
 
-    csetup=i.get('setup_choices',{})
+    if 'setup' not in i: i['setup']={}
+    setup=i['setup']
 
-    ruoa=setup.get('repo_uoa','')
-    muoa=setup.get('module_uoa','')
-    if muoa=='': muoa=work['self_module_uid']
-    duoa=setup.get('data_uoa','')
+    if 'setup_choices' not in i: i['setup_choices']={}
+    csetup=i['setup_choices']
 
-    d={} # meta of program
+    if 'features' not in i: i['features']={}
+    features=i['features']
+
+    if 'characteristics' not in i: i['characteristics']={}
+    chars=i['characteristics']
+
+    i['ready']='no'
+
+    ###############################################################################################################
+    # PIPELINE SECTION: VARS INIT
+
+    muoa=work['self_module_uid']
+
+    ruoa=i.get('repo_uoa','')
+    if ruoa=='': ruoa=setup.get('repo_uoa','')
+    else: setup['repo_uoa']=ruoa
+
+    duoa=i.get('data_uoa','')
+    if duoa=='': duoa=setup.get('program_uoa','')
+    else: setup['program_uoa']=duoa
+
+    tags=i.get('tags','')
+    if tags=='': tags=setup.get('program_tags','')
+    else: setup['program_tags']=tags
+
+    dduoa=i.get('dataset_uoa','')
+    if dduoa=='': dduoa=setup.get('dataset_uoa','')
+    else: setup['dataset_uoa']=dduoa
+
+    d=setup.get('dict',{}) # program meta
+
+    pdir=setup.get('program_dir','')
+    if pdir=='': pdir=os.getcwd() # Program root directory (will be updated, if duoa)
+    else: os.chdir(pdir)
+
+    if o=='con':
+       ck.out('Initializing universal program pipeline ...')
+       ck.out('')
+
+    ###############################################################################################################
+    # PIPELINE SECTION: Host and target platform selection
+    if o=='con':
+       ck.out('Obtaining platform parameters ...')
+
+    hos=i.get('host_os','')
+    if hos=='': hos=setup.get('host_os','')
+    else: setup['host_os']=hos
+
+    hosd=setup.get('host_os_dict',{})
+
+    tos=i.get('target_os','')
+    if tos=='': tos=setup.get('target_os','')
+    else: setup['target_os']=tos
+
+    tosd=setup.get('target_os_dict',{})
+    tbits=setup.get('target_os_bits','')
+
+    tdid=i.get('device_id','')
+    if tdid=='': tdid=setup.get('device_id','')
+    else: setup['device_id']=tdid
+
+    # Get some info about platforms
+    ii={'action':'detect',
+        'module_uoa':cfg['module_deps']['platform.os'],
+        'host_os':hos,
+        'target_os':tos,
+        'device_id':tdid,
+        'skip_device_init':setup.get('skip_device_init',''),
+        'out':o}
+    if si=='yes': ii['return_multi_devices']='yes'
+    r=ck.access(ii)
+    if r['return']>0: 
+       if r['return']==32:
+          csetup['##device_id']={'type':'list',
+                                 'choices':r['devices'],
+                                 'sort':1000}
+          return finalize(i)
+       return r
+
+    hos=r['host_os_uoa']
+    hosd=r['host_os_dict']
+
+    setup['host_os']=hos
+
+    tos=r['os_uoa']
+    tosd=r['os_dict']
+    tbits=tosd.get('bits','')
+
+    tdid=r['device_id']
+    if tdid!='': setup['device_id']=tdid
+
+    setup['target_os']=tos
+    setup['target_os_bits']=tbits
+
+    setup['device_id']=r['device_id']
+
+    if hos=='':
+       return {'return':1, 'error':'host_os is not defined'}
+
+    if tos=='':
+       return {'return':1, 'error':'target_os is not defined'}
+        
+    if o=='con':
+       ck.out('')
+       ck.out('  Selected host platform: '+hos)
+       ck.out('  Selected target platform: '+tos)
+       if tdid!='':
+          ck.out('  Selected target device ID: '+tdid)
+
+    ###############################################################################################################
+    # PIPELINE SECTION: target platform features
+    npf=i.get('no_platform_features','')
+    if npf=='': npf=setup.get('no_platform_features','')
+    else: setup['no_platform_features']='yes'
+
+    if setup.get('platform_features','')!='yes' and npf!='yes':
+       if o=='con':
+          ck.out('Detecting target platform features ...')
+
+       # Get some info about platforms
+       ii={'action':'detect',
+           'module_uoa':cfg['module_deps']['platform'],
+           'host_os':hos,
+           'target_os':tos,
+           'device_id':tdid,
+           'skip_device_init':setup.get('skip_device_init',''),
+           'skip_info_collection':setup.get('skip_info_collection',''),
+           'out':o}
+       r=ck.access(ii)
+       if r['return']>0: return r
+
+       features['platform']=r.get('features',{})
+       setup['platform_features']='yes'
+
+    return finalize(i)
+
+
+
+
+    ###############################################################################################################
+    # PIPELINE SECTION: PROGRAM AND DIRECTORY SELECTION 
+    #                   (either as CID or CK descrpition from current directory or return that should be selected)
+
+    # First, if duoa is not defined, try to get from current directory
+    if len(d)==0:
+       if duoa=='':
+          # First, try to detect CID in current directory
+          r=ck.cid({})
+          if r['return']==0:
+             ruoa=r.get('repo_uoa','')
+             muoa=r.get('module_uoa','')
+             duoa=r.get('data_uoa','')
+
+          if duoa=='':
+             # Attempt to load configuration from the current directory
+             pc=os.path.join(pdir, ck.cfg['subdir_ck_ext'], ck.cfg['file_meta'])
+             if os.path.isfile(pc):
+                r=ck.load_json_file({'json_file':pc})
+                if r['return']==0:
+                   d=r['dict']
+                   setup['program_dir']=pdir
+
+    # Second, if duoa is not detected ordefined, prepare selection 
+    duid=''
+    if len(d)==0:
+       if duoa=='': duoa='*'
+
+       r=ck.search({'repo_uoa':ruoa, 'module_uoa':muoa, 'data_uoa':duoa, 'add_info':'yes', 'tags':tags})
+       if r['return']>0: return r
+
+       lst=r['lst']
+       if len(lst)==0:
+          duoa=''
+       elif len(lst)==1:
+          duid=lst[0]['data_uid']
+          duoa=lst[0]['data_uoa']
+       else:
+          # SELECTOR *************************************
+          csetup['##program_uoa']={'type':'uoa',
+                                   'choices':lst,
+                                   'sort':1000}
+
+          if o=='con' and si!='yes':
+             ck.out('************ Selecting program ...')
+             ck.out('')
+             r=select_uoa({'choices':lst})
+             if r['return']>0: return r
+             duoa=r['choice']
+             ck.out('')
+          else:
+             return finalize(i)
+
+    if len(d)==0 and duoa=='':
+       return {'return':0, 'error':'no programs found for this pipeline'}
+
+    if len(d)==0 and duoa!='':
+       rx=ck.access({'action':'load',
+                     'module_uoa':muoa,
+                     'data_uoa':duoa,
+                     'repo_uoa':ruoa})
+       if rx['return']>0: return rx
+       d=rx['dict']
+       duid=rx['data_uid']
+       duoa=rx['data_uoa']
+
+    if duid=='' and d.get('backup_data_uid','')!='': duid=d['backup_data_uid']
+
+    # Update setup
+    if duoa!='': setup['program_uoa']=duoa
+    if muoa!='': setup['module_uoa']=muoa
+    # we are not recording repo_uoa for reproducibility ...   
+
+    if o=='con':
+       ck.out('  Selected program: '+duoa+' ('+duid+')')
+
+    ###############################################################################################################
+    # PIPELINE SECTION: Command line selection 
+
+    run_cmds=d.get('run_cmds',{})
+    if len(run_cmds)==0:
+       return {'return':1, 'error':'no CMD for run'}
+
+    krun_cmds=sorted(list(run_cmds.keys()))
+
+    kcmd=i.get('cmd_key','')
+    if kcmd=='': kcmd=setup.get('cmd_key','')
+
+    if kcmd=='':
+       if len(krun_cmds)>1:
+          choices=[]
+          for z in sorted(krun_cmds):
+              choices.append(z)
+
+          # SELECTOR *************************************
+          csetup['##cmd_key']={'type':'list',
+                               'choices':choices,
+                               'sort':1100}
+
+          if o=='con' and si!='yes':
+             ck.out('************ Selecting command line ...')
+             ck.out('')
+             r=select_list({'choices':choices})
+             if r['return']>0: return r
+             kcmd=r['choice']
+             ck.out('')
+          else:
+             return finalize(i)
+
+       else:
+          kcmd=krun_cmds[0]
+    else:
+       if kcmd not in krun_cmds:
+          return {'return':1, 'error':'CMD key "'+kcmd+'" not found in program description'}
+
+    setup['cmd_key']=kcmd
+
+    if o=='con':
+       ck.out('  Selected command line: '+kcmd)
+
+    ###############################################################################################################
+    # PIPELINE SECTION: Command line selection 
+
+    vcmd=run_cmds[kcmd]
+
+    dtags=vcmd.get('dataset_tags',[])
+    dmuoa=cfg['module_deps']['dataset']
+    dduid=''
+
+    if dduoa!='' or len(dtags)>0:
+       if dduoa=='':
+          tags=''
+          for q in dtags:
+              if tags!='': tags+=','
+              tags+=q
+
+          rx=ck.access({'action':'search',
+                        'module_uoa':dmuoa,
+                        'tags':tags})
+          if rx['return']>0: return rx
+
+          lst=rx['lst']
+
+          if len(lst)==0:
+             duoa=''
+          elif len(lst)==1:
+             dduid=lst[0]['data_uid']
+             dduoa=lst[0]['data_uoa']
+          else:
+             # SELECTOR *************************************
+             csetup['##dataset_uoa']={'type':'uoa',
+                                      'choices':lst,
+                                      'sort':1200}
+
+             if o=='con' and si!='yes':
+                ck.out('************ Selecting data set ...')
+                ck.out('')
+                r=select_uoa({'choices':lst})
+                if r['return']>0: return r
+                dduoa=r['choice']
+                ck.out('')
+             else:
+                return finalize(i)
+
+    if dduoa=='':
+       return {'return':0, 'error':'no datasets found for this pipeline'}
+
+    if dduoa!='':
+       rx=ck.access({'action':'load',
+                     'module_uoa':dmuoa,
+                     'data_uoa':dduoa,
+                     'repo_uoa':ruoa})
+       if rx['return']>0: return rx
+       dd=rx['dict']
+       dduid=rx['data_uid']
+       dduoa=rx['data_uoa']
+
+    if dduoa!='': setup['dataset_uoa']=dduoa
+
+    if o=='con':
+       ck.out('  Selected data set: '+dduoa+' ('+dduid+')')
+
+
+
+
+
+
+
+
+
+
+
+
+
+    ###############################################################################################################
+    # PIPELINE SECTION: resolve dependencies 
+    deps=setup.get('compile_deps',{})
+    if len(deps)==0: deps=d.get('compile_deps',{})
+
+    if len(deps)>100:
+       if o=='con':
+          ck.out(sep)
+
+       ii={'action':'resolve',
+           'module_uoa':cfg['module_deps']['env'],
+           'host_os':hos,
+           'target_os':tos,
+           'device_id':tdid,
+           'deps':deps,
+           'add_customize':'yes'}
+       if o=='con': ii['out']='con'
+
+       rx=ck.access(ii)
+       if rx['return']>0: return rx
+
+       if sa=='compile' or remote!='yes':
+          sb+=rx['bat']
+
+       deps=rx['deps'] # Update deps (add UOA)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     ##############################################################################
-    # Check if more than one program
-    if duoa=='':
-       # First, try to detect CID in current directory
-       r=ck.cid({})
-       if r['return']==0:
-          ruoa=r.get('repo_uoa','')
-          muoa=r.get('module_uoa','')
-          duoa=r.get('data_uoa','')
+    # PIPELINE SECTION: FINALIZE PIPELINE
+    i['setup']=setup
+    i['csetup']=csetup
 
-       if duoa=='':
-          # Attempt to load configuration from the current directory
-          p=os.getcwd()
-
-          pc=os.path.join(p, ck.cfg['subdir_ck_ext'], ck.cfg['file_meta'])
-          if os.path.isfile(pc):
-             r=ck.load_json_file({'json_file':pc})
-             if r['return']==0:
-                d=r['dict']
-
-    if duoa=='' and len(d)==0: duoa='*'
-
-    r=ck.search({'repo_uoa':ruoa, 'module_uoa':muoa, 'data_uoa':duoa})
-    if r['return']>0: return r
-
-    lst=r['lst']
-    if len(lst)==0:
-       return {'return':0, 'error':'no programs found'}
-    elif len(lst)==1:
-       duoa=lst['data_uid']
-    else:
-       if o=='con':
-          r=select_uoa({'lst':lst})
-          if r['return']>0: return r
-          duoa=r['uoa']
-#       else:
-
-
-    csetup['##data_uoa']={'type':'uoa',
-                          'list':lst,
-                          'sort':1000}
-    setup['data_uoa']=duoa
-
-
-
-    print duoa
-
-    return {'return':0, 'setup':setup, 'setup_choices':csetup}
-       
-
-
-    # Try to compile and detect dependencies
-
-    ii={}
-    rx=ck.merge_dicts({'dict1':ii, 'dict2':setup})
-    if rx['return']>0: return rx
-    ii=rx['dict1']
-
-    rx=compile(ii)
-    if rx['return']>0: return rx
-
-
-
-
-    return {'return':0, 'setup':setup}
+    return finalize(i)
 
 ##############################################################################
-# select uoa
-
-def select_uoa(i):
+# finalize pipeline
+def finalize(i):
     """
     Input:  {
               lst - list from search function
@@ -1677,7 +1992,52 @@ def select_uoa(i):
 
     """
 
-    lst=i.get('lst',[])
+    o=i.get('out','')
+
+    stf=i.get('save_to_file','')
+    if stf!='':
+       dd={}
+       dd['setup']=i.get('setup',{})
+       dd['setup_choices']=i.get('setup_choices',{})
+       dd['features']=i.get('features',{})
+       dd['characteristics']=i.get('characteristics',{})
+       dd['ready']=i.get('ready','')
+
+       rx=ck.save_json_to_file({'json_file':stf,
+                                'dict':dd,
+                                'sort_keys':'yes'})
+       if rx['return']>0: return rx
+
+       if o=='con':
+          ck.out('')
+          if i.get('ready','')=='yes':
+             ck.out('Pipeline is ready!')
+          else:
+             ck.out('Pipeline is NOT YET READY - multiple choices exists!')
+
+    i['return']=0
+
+    return i
+
+##############################################################################
+# select uoa
+
+def select_uoa(i):
+    """
+    Input:  {
+              choices - list from search function
+            }
+
+    Output: {
+              return  - return code =  0, if successful
+                                    >  0, if error
+              (error) - error text if return > 0
+              choice  - data UOA
+            }
+
+    """
+
+    lst=i.get('choices',[])
 
     zz={}
     iz=0
@@ -1701,4 +2061,45 @@ def select_uoa(i):
 
     dduoa=zz[x]
 
-    return {'return':0, 'uoa':dduoa}
+    return {'return':0, 'choice':dduoa}
+
+##############################################################################
+# select list
+
+def select_list(i):
+    """
+    Input:  {
+              choices - simple text list of choices
+            }
+
+    Output: {
+              return  - return code =  0, if successful
+                                    >  0, if error
+              (error) - error text if return > 0
+              choice  - selected text
+            }
+
+    """
+
+    lst=i.get('choices',[])
+
+    zz={}
+    iz=0
+    for z in lst:
+        zs=str(iz)
+        zz[zs]=z
+
+        ck.out(zs+') '+z)
+
+        iz+=1
+
+    ck.out('')
+    rx=ck.inp({'text':'Choose first number to select item: '})
+    x=rx['string'].strip()
+
+    if x not in zz:
+       return {'return':1, 'error':'number is not recognized'}
+
+    dduoa=zz[x]
+
+    return {'return':0, 'choice':dduoa}

@@ -14,6 +14,12 @@ Dependencies
 
 Description
 ===========
+During many years of research on machine learning based autotuning 
+we spent more time on data management then on innovation. At the end,
+we decided to provide a complete solution in CK where our plugin-based 
+autotuning tools are combined with our repository and python or
+R-based machine learning plugins.
+
 We are gradually moving, simplifying and extending autotuning
 from Collective Mind into new CK format! Since design and optimization
 spaces are very large, we are trying to make their exploration practical 
