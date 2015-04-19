@@ -317,6 +317,8 @@ def process_in_dir(i):
     svare1=hosd.get('env_var_extra2','')
     scall=hosd.get('env_call','')
     sdirs=hosd.get('dir_sep','')
+    sdirsx=tosd.get('remote_dir_sep','')
+    if sdirsx=='': sdirsx=sdirs
     stdirs=tosd.get('dir_sep','')
     sext=hosd.get('script_ext','')
     sexe=hosd.get('set_executable','')
@@ -328,6 +330,8 @@ def process_in_dir(i):
     envsep=hosd.get('env_separator','')
     envtsep=tosd.get('env_separator','')
     eifs=hosd.get('env_quotes_if_space','')
+    eifsx=tosd.get('remote_env_quotes_if_space','')
+    if eifsx=='': eifsx=eifs
     eifsc=hosd.get('env_quotes_if_space_in_call','')
     wb=tosd.get('windows_base','')
     stro=tosd.get('redirect_stdout','')
@@ -922,6 +926,8 @@ def process_in_dir(i):
              return {'return':1, 'error':'currently can\'t run benchmarks without defined executable on remote platform'}
 
           rs=tosd['remote_shell'].replace('$#device#$',xtdid)
+          rse=tosd.get('remote_shell_end','')+' '
+
           rif=rt.get('run_input_files',[])
 
           if sdi!='yes':
@@ -935,7 +941,26 @@ def process_in_dir(i):
 
           if i.get('statistical_repetition',0)==0:
              # Copy exe
-             y=tosd['remote_push'].replace('$#device#$',xtdid)+' '+target_exe+' '+rdir+target_exe
+             y=tosd['remote_push_pre'].replace('$#device#$',xtdid)
+             if y!='':
+                y=y.replace('$#file1#$', target_exe)
+                y=y.replace('$#file1s#$', target_exe)
+                y=y.replace('$#file2#$', rdir+target_exe)
+
+                if o=='con':
+                   ck.out(sep)
+                   ck.out(y)
+                   ck.out('')
+
+                ry=os.system(y)
+                if ry>0:
+                   return {'return':1, 'error':'copying to remote device failed'}
+
+             y=tosd['remote_push'].replace('$#device#$',xtdid)
+             y=y.replace('$#file1#$', target_exe)
+             y=y.replace('$#file1s#$', target_exe)
+             y=y.replace('$#file2#$', rdir+target_exe)
+
              if o=='con':
                 ck.out(sep)
                 ck.out(y)
@@ -948,7 +973,7 @@ def process_in_dir(i):
              # Set chmod
              se=tosd.get('set_executable','')
              if se!='':
-                y=rs+' '+se+' '+rdir+target_exe
+                y=rs+' '+se+' '+rdir+target_exe+' '+rse
                 if o=='con':
                    ck.out(sep)
                    ck.out(y)
@@ -961,8 +986,28 @@ def process_in_dir(i):
           if sdi!='yes':
              # Copy explicit input files, if first time
              for df in rif:
+                 df0, df1 = os.path.split(df)
+
                  # Push data files to device
-                 y=tosd['remote_push'].replace('$#device#$',xtdid)+' '+os.path.join(p,df)+' '+rdir+stdirs+df
+                 y=tosd['remote_push_pre'].replace('$#device#$',xtdid)
+                 if y!='':
+                    y=y.replace('$#file1#$', os.path.join(p,df))
+                    y=y.replace('$#file1s#$', df1)
+                    y=y.replace('$#file2#$', rdir+sdirsx+df)
+
+                    if o=='con':
+                       ck.out(sep)
+                       ck.out(y)
+                       ck.out('')
+
+                    ry=os.system(y)
+                    if ry>0:
+                       return {'return':1, 'error':'copying to remote device failed'}
+
+                 y=tosd['remote_push'].replace('$#device#$',xtdid)
+                 y=y.replace('$#file1#$', os.path.join(p,df))
+                 y=y.replace('$#file1s#$', df1)
+                 y=y.replace('$#file2#$', rdir+sdirsx+df)
                  if o=='con':
                     ck.out(sep)
                     ck.out(y)
@@ -996,8 +1041,29 @@ def process_in_dir(i):
                  c=c.replace(kk, df)
 
                  if remote=='yes' and sdi!='yes':
+                    df0, df1 = os.path.split(df)
+
+                    # Push data files to device
+                    y=tosd['remote_push_pre'].replace('$#device#$',xtdid)
+                    if y!='':
+                       y=y.replace('$#file1#$', os.path.join(dp,df))
+                       y=y.replace('$#file1s#$', df1)
+                       y=y.replace('$#file2#$', rdir+sdirsx+df)
+
+                       if o=='con':
+                          ck.out(sep)
+                          ck.out(y)
+                          ck.out('')
+
+                       ry=os.system(y)
+                       if ry>0:
+                          return {'return':1, 'error':'copying to remote device failed'}
+
                     # Push data files to device, if first time
-                    y=tosd['remote_push'].replace('$#device#$',xtdid)+' '+os.path.join(dp,df)+' '+rdir+stdirs+df
+                    y=tosd['remote_push'].replace('$#device#$',xtdid)
+                    y=y.replace('$#file1#$', os.path.join(dp,df))
+                    y=y.replace('$#file1s#$', df1)
+                    y=y.replace('$#file2#$', rdir+sdirsx+df)
                     if o=='con':
                        ck.out(sep)
                        ck.out(y)
@@ -1047,7 +1113,7 @@ def process_in_dir(i):
           for df in rof:
               if remote=='yes':
                  # Push data files to device
-                 y=rs+' '+tosd['delete_file']+ ' '+rdir+stdirs+df
+                 y=rs+' '+tosd['delete_file']+ ' '+rdir+stdirs+df+' '+rse
                  if o=='con':
                     ck.out('')
                     ck.out(y)
@@ -1076,8 +1142,8 @@ def process_in_dir(i):
                     if y!='': y+=envtsep
                     y+=' '+q
 
-             if eifs!='': y=y.replace('"','\\"')
-             y=rs+' '+eifs+tosd['change_dir']+' '+rdir+envtsep+' '+y+eifs
+             if eifsx!='': y=y.replace('"','\\"')
+             y=rs+' '+eifsx+tosd['change_dir']+' '+rdir+envtsep+' '+y+eifsx+' '+rse
 
              if cons!='yes':
                 if rco1!='': y+=' '+stro+' '+rco1
@@ -1123,13 +1189,34 @@ def process_in_dir(i):
  
              for df in xrof:
                  # Pull output files from device
-                 y=tosd['remote_pull'].replace('$#device#$',xtdid)+' '+rdir+stdirs+df+' '+df
+                 df0, df1 = os.path.split(df)
+
+                 # Push data files to device
+                 y=tosd['remote_pull'].replace('$#device#$',xtdid)
+                 y=y.replace('$#file1#$', rdir+sdirsx+df)
+                 y=y.replace('$#file1s#$', df1)
+                 y=y.replace('$#file2#$', df)
                  if o=='con':
                     ck.out('')
                     ck.out(y)
                     ck.out('')
 
                  ry=os.system(y)
+
+                 y=tosd['remote_pull_post'].replace('$#device#$',xtdid)
+                 if y!='':
+                    y=y.replace('$#file1#$', rdir+sdirsx+df)
+                    y=y.replace('$#file1s#$', df1)
+                    y=y.replace('$#file2#$', df)
+
+                    if o=='con':
+                       ck.out(sep)
+                       ck.out(y)
+                       ck.out('')
+
+                    ry=os.system(y)
+                    if ry>0:
+                       return {'return':1, 'error':'copying to remote device failed'}
 
           # Check if fine-grain time
           if fgtf!='':
