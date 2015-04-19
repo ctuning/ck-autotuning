@@ -330,9 +330,9 @@ def process_in_dir(i):
     envsep=hosd.get('env_separator','')
     envtsep=tosd.get('env_separator','')
     eifs=hosd.get('env_quotes_if_space','')
-    eifsx=tosd.get('remote_env_quotes_if_space','')
-    if eifsx=='': eifsx=eifs
     eifsc=hosd.get('env_quotes_if_space_in_call','')
+    eifsx=tosd.get('remote_env_quotes_if_space','')
+    if eifsx=='': eifsx=eifsc
     wb=tosd.get('windows_base','')
     stro=tosd.get('redirect_stdout','')
     stre=tosd.get('redirect_stderr','')
@@ -941,7 +941,7 @@ def process_in_dir(i):
 
           if i.get('statistical_repetition',0)==0:
              # Copy exe
-             y=tosd['remote_push_pre'].replace('$#device#$',xtdid)
+             y=tosd.get('remote_push_pre','').replace('$#device#$',xtdid)
              if y!='':
                 y=y.replace('$#file1#$', target_exe)
                 y=y.replace('$#file1s#$', target_exe)
@@ -989,11 +989,11 @@ def process_in_dir(i):
                  df0, df1 = os.path.split(df)
 
                  # Push data files to device
-                 y=tosd['remote_push_pre'].replace('$#device#$',xtdid)
+                 y=tosd.get('remote_push_pre','').replace('$#device#$',xtdid)
                  if y!='':
                     y=y.replace('$#file1#$', os.path.join(p,df))
                     y=y.replace('$#file1s#$', df1)
-                    y=y.replace('$#file2#$', rdir+sdirsx+df)
+                    y=y.replace('$#file2#$', rdir+stdirs+df)
 
                     if o=='con':
                        ck.out(sep)
@@ -1007,7 +1007,7 @@ def process_in_dir(i):
                  y=tosd['remote_push'].replace('$#device#$',xtdid)
                  y=y.replace('$#file1#$', os.path.join(p,df))
                  y=y.replace('$#file1s#$', df1)
-                 y=y.replace('$#file2#$', rdir+sdirsx+df)
+                 y=y.replace('$#file2#$', rdir+stdirs+df)
                  if o=='con':
                     ck.out(sep)
                     ck.out(y)
@@ -1044,11 +1044,11 @@ def process_in_dir(i):
                     df0, df1 = os.path.split(df)
 
                     # Push data files to device
-                    y=tosd['remote_push_pre'].replace('$#device#$',xtdid)
+                    y=tosd.get('remote_push_pre','').replace('$#device#$',xtdid)
                     if y!='':
                        y=y.replace('$#file1#$', os.path.join(dp,df))
                        y=y.replace('$#file1s#$', df1)
-                       y=y.replace('$#file2#$', rdir+sdirsx+df)
+                       y=y.replace('$#file2#$', rdir+stdirs+df)
 
                        if o=='con':
                           ck.out(sep)
@@ -1063,7 +1063,7 @@ def process_in_dir(i):
                     y=tosd['remote_push'].replace('$#device#$',xtdid)
                     y=y.replace('$#file1#$', os.path.join(dp,df))
                     y=y.replace('$#file1s#$', df1)
-                    y=y.replace('$#file2#$', rdir+sdirsx+df)
+                    y=y.replace('$#file2#$', rdir+stdirs+df)
                     if o=='con':
                        ck.out(sep)
                        ck.out(y)
@@ -1193,7 +1193,7 @@ def process_in_dir(i):
 
                  # Push data files to device
                  y=tosd['remote_pull'].replace('$#device#$',xtdid)
-                 y=y.replace('$#file1#$', rdir+sdirsx+df)
+                 y=y.replace('$#file1#$', rdir+stdirs+df)
                  y=y.replace('$#file1s#$', df1)
                  y=y.replace('$#file2#$', df)
                  if o=='con':
@@ -1203,9 +1203,9 @@ def process_in_dir(i):
 
                  ry=os.system(y)
 
-                 y=tosd['remote_pull_post'].replace('$#device#$',xtdid)
+                 y=tosd.get('remote_pull_post','').replace('$#device#$',xtdid)
                  if y!='':
-                    y=y.replace('$#file1#$', rdir+sdirsx+df)
+                    y=y.replace('$#file1#$', rdir+stdirs+df)
                     y=y.replace('$#file1s#$', df1)
                     y=y.replace('$#file2#$', df)
 
