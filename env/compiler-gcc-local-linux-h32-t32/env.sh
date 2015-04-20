@@ -2,7 +2,7 @@
 # CK generated script
 
 # Soft UOA         = compiler.gcc (3a8a82fa40bf992d) 
-# Host OS UOA      = linux-64 (4258b5fe54828a50)
+# Host OS UOA      = linux-32 (fb525e34243f49c1)
 # Target OS UOA    = linux-32 (fb525e34243f49c1)
 # Target OS bits   = 32
 # Tool version     = local

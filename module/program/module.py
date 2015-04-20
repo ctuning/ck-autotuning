@@ -183,7 +183,8 @@ def process_in_dir(i):
               (flags)                - compile flags
               (lflags)               - link flags
 
-              (compile_type)         - static or dynamic (dynamic by default)
+              (compile_type)         - static or dynamic (dynamic by default;
+                                         however takes compiler default_compile_type into account)
                   or
               (static or dynamic)
 
@@ -253,11 +254,6 @@ def process_in_dir(i):
     lflags=i.get('lflags','')
     repeat=int(i.get('repeat','-1'))
 
-    ctype=i.get('compile_type','')
-    if ctype=='': ctype='dynamic'
-
-    if i.get('static','')=='yes': ctype='static'
-    if i.get('dynamic','')=='yes': ctype='dynamic'
 
     # Check host/target OS/CPU
     hos=i.get('host_os','')
@@ -275,7 +271,7 @@ def process_in_dir(i):
     if sa=='run': 
        ii['skip_info_collection']='no'
        ii['out']=o
-    else:         
+    else:
        ii['skip_info_collection']='yes'
 
     r=ck.access(ii)
@@ -302,6 +298,16 @@ def process_in_dir(i):
     misc['target_os_uoa']=tosx
     misc['target_os_bits']=tbits
     misc['device_id']=tdid
+
+    # Check compile type
+    ctype=i.get('compile_type','')
+    if ctype=='': ctype='dynamic'
+    if i.get('static','')=='yes': ctype='static'
+    if i.get('dynamic','')=='yes': ctype='dynamic'
+    # On default Android-32, use static by default 
+    # (old platforms has problems with dynamic)
+    if tosd.get('default_compile_type','')!='':
+       ctype=tosd['default_compile_type']
 
     # Get host platform type (linux or win)
     rx=ck.get_os_ck({})
@@ -526,7 +532,7 @@ def process_in_dir(i):
              misc['compiler_detected_ver_list']=r['version_lst']
              misc['compiler_detected_ver_str']=r['version_str']
              misc['compiler_detected_ver_raw']=r['version_raw']
-          
+
        # Check linking libs + include paths for deps
        sll=''
        sin=''
