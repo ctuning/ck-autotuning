@@ -301,13 +301,15 @@ def process_in_dir(i):
 
     # Check compile type
     ctype=i.get('compile_type','')
-    if ctype=='': ctype='dynamic'
     if i.get('static','')=='yes': ctype='static'
     if i.get('dynamic','')=='yes': ctype='dynamic'
     # On default Android-32, use static by default 
     # (old platforms has problems with dynamic)
-    if tosd.get('default_compile_type','')!='':
-       ctype=tosd['default_compile_type']
+    if ctype=='':
+       if tosd.get('default_compile_type','')!='':
+          ctype=tosd['default_compile_type']
+       else:
+          ctype='dynamic'
 
     # Get host platform type (linux or win)
     rx=ck.get_os_ck({})
