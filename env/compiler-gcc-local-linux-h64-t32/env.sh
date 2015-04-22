@@ -28,6 +28,7 @@ export CK_FLAGS_OUTPUT="-o "
 export CK_FLAGS_STATIC_BIN="-static -fPIC"
 export CK_FLAGS_STATIC_LIB=-fPIC
 export CK_FLAG_PREFIX_INCLUDE=-I
+export CK_FLAG_PREFIX_LIB_DIR=-L
 export CK_FLAG_PREFIX_VAR=-D
 export CK_LB="ar rcs"
 export CK_LB_OUTPUT="-o "

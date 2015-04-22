@@ -1,22 +1,22 @@
 {
-  "backup_data_uid": "361e52ce3f4faa95", 
-  "backup_module_uid": "36ebc331048475bb", 
-  "backup_module_uoa": "compiler", 
+  "backup_data_uid": "361e52ce3f4faa95",
+  "backup_module_uid": "36ebc331048475bb",
+  "backup_module_uoa": "compiler",
   "cm_outdated": {
     "cm_access_control": {
-      "comments_groups": "admin", 
-      "read_groups": "all", 
+      "comments_groups": "admin",
+      "read_groups": "all",
       "write_groups": "owner"
-    }, 
+    },
     "powered_by": {
-      "name": "Collective Mind Engine", 
+      "name": "Collective Mind Engine",
       "version": "1.0.1977.beta"
     }
-  }, 
+  },
   "control": {
-    "engine": "CM", 
-    "iso_datetime": "2012-07-29T04:27:51.681000", 
+    "engine": "CM",
+    "iso_datetime": "2012-07-29T04:27:51.681000",
     "version": []
-  }, 
+  },
   "data_name": "java-7x"
 }

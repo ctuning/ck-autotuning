@@ -241,6 +241,8 @@ def process_in_dir(i):
 
     sdi=i.get('skip_device_init','')
 
+    sca=i.get('skip_clean_after','')
+
     misc=i.get('misc',{})
     ccc=i.get('characteristics',{})
     env=i.get('env',{})
@@ -523,7 +525,8 @@ def process_in_dir(i):
        sb+='\n'
 
        # Try to detect version
-       csuoa=deps.get('compiler',{}).get('dict',{}).get('soft_uoa','')
+       csd=deps.get('compiler',{}).get('dict',{})
+       csuoa=csd.get('soft_uoa','')
        if csuoa!='':
           r=ck.access({'action':'detect',
                        'module_uoa':cfg['module_deps']['soft'],
@@ -531,9 +534,15 @@ def process_in_dir(i):
                        'env':cb,
                        'con':o})
           if r['return']==0:
+             cver=r['version_str']
              misc['compiler_detected_ver_list']=r['version_lst']
-             misc['compiler_detected_ver_str']=r['version_str']
+             misc['compiler_detected_ver_str']=cver
              misc['compiler_detected_ver_raw']=r['version_raw']
+
+             if o=='con':
+                ck.out('')
+                ck.out('Detected compiler version: '+cver)
+                ck.out('')
 
        # Check linking libs + include paths for deps
        sll=''
@@ -543,12 +552,21 @@ def process_in_dir(i):
 
            pl1=kv.get('path_lib','')
            pl2=kv.get('static_lib','')
+
            if pl2!='':
-              if sll!='': sll+=' '
-              sll+=eifsc
-              if pl1!='': 
-                 sll+=pl1+sdirs
-              sll+=pl2+eifsc
+              if ctype=='dynamic' and remote=='yes' and csd.get('customize',{}).get('can_strip_dynamic_lib','')=='yes':
+                 pl2x=os.path.splitext(pl2)[0]
+                 if pl2x.startswith('lib'): pl2x=pl2x[3:]
+                 sll+=' '+svarb+svarb1+'CK_FLAG_PREFIX_LIB_DIR'+svare1+svare+eifsc+pl1+eifsc+' -l'+pl2x
+#                 sll+='/link /LIBPATH:'+eifsc+pl1+eifsc+' OpenCL.lib'
+
+              else:
+                 if sll!='': sll+=' '
+                 sll+=eifsc
+                 if pl1!='': 
+                    sll+=pl1+sdirs
+                 sll+=pl2
+                 sll+=eifsc
 
            pl3=kv.get('path_include','')
            if pl3!='':
@@ -708,12 +726,13 @@ def process_in_dir(i):
        start_time1=time.time()
 
        if ubtr!='': y=ubtr.replace('$#cmd#$',y)
+
        rx=os.system(y)
        comp_time=time.time()-start_time1
 
        ccc['compilation_time']=comp_time
 
-       if i.get('skip_clean_after','')!='yes':
+       if sca!='yes':
           if fn!='' and os.path.isfile(fn): os.remove(fn)
 
        ofs=0
@@ -825,6 +844,20 @@ def process_in_dir(i):
 
        rt=vcmd.get('run_time',{})
 
+       rif=rt.get('run_input_files',[])
+       rifo={}
+
+       # Check if dynamic and remote to copy .so to devices
+       if ctype=='dynamic' and remote=='yes':
+          for q in deps:
+              qq=deps[q].get('cus','')
+              qdl=qq.get('dynamic_lib','')
+              if qdl!='':
+                 qpl=qq.get('path_lib','')
+                 qq1=os.path.join(qpl,qdl)
+                 rif.append(qq1)
+                 rifo[qq1]='yes' # if pushing to external, do not use current path
+
        # Check if run_time env is also defined
        rte=rt.get('run_set_env2',{})
        if len(rte)>0:
@@ -846,6 +879,9 @@ def process_in_dir(i):
 
            sb+=etset+' '+k+'='+v+'\n'
        sb+='\n'
+
+       if tosd.get('extra_env','')!='':
+          sb+=tosd['extra_env']+'\n'
 
        # Command line preparation
        c=rt.get('run_cmd_main','')
@@ -936,8 +972,6 @@ def process_in_dir(i):
           rs=tosd['remote_shell'].replace('$#device#$',xtdid)
           rse=tosd.get('remote_shell_end','')+' '
 
-          rif=rt.get('run_input_files',[])
-
           if sdi!='yes':
              ck.out(sep)
              r=ck.access({'action':'init_device',
@@ -999,9 +1033,16 @@ def process_in_dir(i):
                  # Push data files to device
                  y=tosd.get('remote_push_pre','').replace('$#device#$',xtdid)
                  if y!='':
-                    y=y.replace('$#file1#$', os.path.join(p,df))
+                    if df in rifo:
+                       dfx=df
+                       dfy=rdir+stdirs+df1
+                    else:
+                       dfx=os.path.join(p,df)
+                       dfy=rdir+stdirs+df
+
+                    y=y.replace('$#file1#$', dfx)
                     y=y.replace('$#file1s#$', df1)
-                    y=y.replace('$#file2#$', rdir+stdirs+df)
+                    y=y.replace('$#file2#$', dfy)
 
                     if o=='con':
                        ck.out(sep)
@@ -1013,9 +1054,9 @@ def process_in_dir(i):
                        return {'return':1, 'error':'copying to remote device failed'}
 
                  y=tosd['remote_push'].replace('$#device#$',xtdid)
-                 y=y.replace('$#file1#$', os.path.join(p,df))
+                 y=y.replace('$#file1#$', dfx)
                  y=y.replace('$#file1s#$', df1)
-                 y=y.replace('$#file2#$', rdir+stdirs+df)
+                 y=y.replace('$#file2#$', dfy)
                  if o=='con':
                     ck.out(sep)
                     ck.out(y)
@@ -1120,7 +1161,7 @@ def process_in_dir(i):
           rof=rt.get('run_output_files',[])
           for df in rof:
               if remote=='yes':
-                 # Push data files to device
+                 # Clean data files on device
                  y=rs+' '+tosd['delete_file']+ ' '+rdir+stdirs+df+' '+rse
                  if o=='con':
                     ck.out('')
@@ -1128,6 +1169,16 @@ def process_in_dir(i):
                     ck.out('')
 
                  ry=os.system(y)
+
+                 if tosd.get('delete_file_extra','')!='':
+                    y=tosd['delete_file_extra']+df+' '+rse
+                    if o=='con':
+                       ck.out('')
+                       ck.out(y)
+                       ck.out('')
+
+                    ry=os.system(y)
+
               if os.path.isfile(df): 
                  os.remove(df)
 
@@ -1184,7 +1235,7 @@ def process_in_dir(i):
           rx=os.system(y)
           exec_time=time.time()-start_time1
 
-          if i.get('skip_clean_after','')!='yes':
+          if sca!='yes':
              if fn!='' and os.path.isfile(fn): os.remove(fn)
 
           # Pull files from the device if remote
@@ -1224,7 +1275,7 @@ def process_in_dir(i):
 
                     ry=os.system(y)
                     if ry>0:
-                       return {'return':1, 'error':'copying to remote device failed'}
+                       return {'return':1, 'error':'pulling from remote device failed'}
 
           # Check if fine-grain time
           if fgtf!='':
