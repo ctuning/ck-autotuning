@@ -256,7 +256,6 @@ def process_in_dir(i):
     lflags=i.get('lflags','')
     repeat=int(i.get('repeat','-1'))
 
-
     # Check host/target OS/CPU
     hos=i.get('host_os','')
     tos=i.get('target_os','')
@@ -286,6 +285,15 @@ def process_in_dir(i):
     tos=r['os_uid']
     tosx=r['os_uoa']
     tosd=r['os_dict']
+
+    bhos=hosd.get('base_uid','')
+    if bhos=='': bhos=hos
+    bhosx=hosd.get('base_uoa','')
+    if bhosx=='': bhosx=hosx
+    btos=tosd.get('base_uid','')
+    if btos=='': btos=tos
+    btosx=tosd.get('base_uoa','')
+    if btosx=='': btosx=tosx
 
     if r['device_id']!='': tdid=r['device_id']
     xtdid=''
@@ -383,7 +391,8 @@ def process_in_dir(i):
     cdir=p
     os.chdir(cdir)
 
-    ################################### Run ######################################
+    ##################################################################################################################
+    ################################### Clean ######################################
     if sa=='clean':
        # Get host platform type (linux or win)
        cmd=cfg.get('clean_cmds',{}).get(hplat)
@@ -501,7 +510,7 @@ def process_in_dir(i):
        if rx['return']>0: return rx
        dcomp=rx['dict']
 
-    # Check sub_actions
+    ##################################################################################################################
     ################################### Compile ######################################
     if sa=='compile':
        # Clean target file
@@ -772,6 +781,7 @@ def process_in_dir(i):
           ck.out('')
           ck.out('Compilation time: '+('%.3f'%comp_time)+' sec.; Object size: '+str(ofs)+'; MD5: '+md5)
 
+    ##################################################################################################################
     ################################### Run ######################################
     elif sa=='run':
        start_time=time.time()
@@ -1669,6 +1679,14 @@ def autotune(i):
            import shutil
            shutil.rmtree(tmp_dir)
 
+    # Deinit remote device, if needed
+    r=ck.access({'action':'deinit',
+                 'module_uoa':cfg['module_deps']['platform'],
+                 'host_os':i.get('host_os',''),
+                 'target_os':i.get('target_os',''),
+                 'device_id':i.get('device_id','')})
+    if r['return']>0: return r
+
     return {'return':0}
 
 ##############################################################################
@@ -1766,6 +1784,10 @@ def pipeline(i):
     if dduoa=='': dduoa=setup.get('dataset_uoa','')
     else: setup['dataset_uoa']=dduoa
 
+    cdeps=i.get('compile_deps',{})
+    if len(cdeps)==0: cdeps=setup.get('compile_deps',{})
+    else: setup['compile_deps']=cdeps
+
     d=setup.get('dict',{}) # program meta
 
     pdir=setup.get('program_dir','')
@@ -1776,9 +1798,16 @@ def pipeline(i):
        ck.out('Initializing universal program pipeline ...')
        ck.out('')
 
+    sdi=setup.get('skip_device_init','')
+    if i.get('skip_device_init','')!='': sdi=i['skip_device_init']
+
+    sic=setup.get('skip_info_collection','')
+    if i.get('skip_info_collection','')!='': sic=i['skip_info_collection']
+
     ###############################################################################################################
     # PIPELINE SECTION: Host and target platform selection
     if o=='con':
+       ck.out(sep)
        ck.out('Obtaining platform parameters ...')
 
     hos=i.get('host_os','')
@@ -1799,13 +1828,16 @@ def pipeline(i):
     else: setup['device_id']=tdid
 
     # Get some info about platforms
+    ox=o
+    if sdi=='yes' and sic=='yes': ox=''
     ii={'action':'detect',
         'module_uoa':cfg['module_deps']['platform.os'],
         'host_os':hos,
         'target_os':tos,
         'device_id':tdid,
-        'skip_device_init':setup.get('skip_device_init',''),
-        'out':o}
+        'skip_device_init':sdi,
+        'skip_info_collection':sic,
+        'out':ox}
     if si=='yes': ii['return_multi_devices']='yes'
     r=ck.access(ii)
     if r['return']>0: 
@@ -1816,6 +1848,9 @@ def pipeline(i):
           return finalize(i)
        return r
 
+    sdi='yes'
+    setup['skip_device_init']=sdi
+
     hos=r['host_os_uoa']
     hosd=r['host_os_dict']
 
@@ -1824,6 +1859,13 @@ def pipeline(i):
     tos=r['os_uoa']
     tosd=r['os_dict']
     tbits=tosd.get('bits','')
+
+    hosz=hosd.get('base_uoa','')
+    if hosz=='': hosz=hos
+    tosz=tosd.get('base_uoa','')
+    if tosz=='': tosz=tos
+
+    remote=tosd.get('remote','')
 
     tdid=r['device_id']
     if tdid!='': setup['device_id']=tdid
@@ -1845,36 +1887,6 @@ def pipeline(i):
        ck.out('  Selected target platform: '+tos)
        if tdid!='':
           ck.out('  Selected target device ID: '+tdid)
-
-    ###############################################################################################################
-    # PIPELINE SECTION: target platform features
-    npf=i.get('no_platform_features','')
-    if npf=='': npf=setup.get('no_platform_features','')
-    else: setup['no_platform_features']='yes'
-
-    if setup.get('platform_features','')!='yes' and npf!='yes':
-       if o=='con':
-          ck.out('Detecting target platform features ...')
-
-       # Get some info about platforms
-       ii={'action':'detect',
-           'module_uoa':cfg['module_deps']['platform'],
-           'host_os':hos,
-           'target_os':tos,
-           'device_id':tdid,
-           'skip_device_init':setup.get('skip_device_init',''),
-           'skip_info_collection':setup.get('skip_info_collection',''),
-           'out':o}
-       r=ck.access(ii)
-       if r['return']>0: return r
-
-       features['platform']=r.get('features',{})
-       setup['platform_features']='yes'
-
-    return finalize(i)
-
-
-
 
     ###############################################################################################################
     # PIPELINE SECTION: PROGRAM AND DIRECTORY SELECTION 
@@ -1920,8 +1932,6 @@ def pipeline(i):
                                    'sort':1000}
 
           if o=='con' and si!='yes':
-             ck.out('************ Selecting program ...')
-             ck.out('')
              r=select_uoa({'choices':lst})
              if r['return']>0: return r
              duoa=r['choice']
@@ -2058,12 +2068,33 @@ def pipeline(i):
     if o=='con':
        ck.out('  Selected data set: '+dduoa+' ('+dduid+')')
 
+    ###############################################################################################################
+    # PIPELINE SECTION: resolve compile dependencies 
+    deps=setup.get('compile_deps',{})
+    if len(deps)==0: 
+       deps=d.get('compile_deps',{})
+       print deps
+       print d
 
+       if len(deps)>0:
+          if o=='con':
+             ck.out(sep)
 
+          ii={'action':'resolve',
+              'module_uoa':cfg['module_deps']['env'],
+              'host_os':hos,
+              'target_os':tos,
+              'device_id':tdid,
+              'deps':deps,
+              'add_customize':'yes'}
+          if o=='con': ii['out']='con'
 
+          rx=ck.access(ii)
+          if rx['return']>0: return rx
 
+          deps=rx['deps'] # Update deps (add UOA)
 
-
+          setup['compile_deps']=deps
 
 
 
@@ -2071,31 +2102,32 @@ def pipeline(i):
 
 
     ###############################################################################################################
-    # PIPELINE SECTION: resolve dependencies 
-    deps=setup.get('compile_deps',{})
-    if len(deps)==0: deps=d.get('compile_deps',{})
+    # PIPELINE SECTION: target platform features
+    npf=i.get('no_platform_features','')
+    if npf=='': npf=setup.get('no_platform_features','')
+    else: setup['no_platform_features']='yes'
 
-    if len(deps)>100:
+    if setup.get('platform_features','')!='yes' and npf!='yes':
        if o=='con':
           ck.out(sep)
+          ck.out('Detecting target platform features ...')
 
-       ii={'action':'resolve',
-           'module_uoa':cfg['module_deps']['env'],
+       # Get some info about platforms
+       ii={'action':'detect',
+           'module_uoa':cfg['module_deps']['platform'],
            'host_os':hos,
            'target_os':tos,
            'device_id':tdid,
-           'deps':deps,
-           'add_customize':'yes'}
-       if o=='con': ii['out']='con'
+           'skip_print_os':'yes',
+           'skip_device_init':sdi,
+           'skip_info_collection':sic,
+           'out':o}
+       r=ck.access(ii)
+       if r['return']>0: return r
 
-       rx=ck.access(ii)
-       if rx['return']>0: return rx
-
-       if sa=='compile' or remote!='yes':
-          sb+=rx['bat']
-
-       deps=rx['deps'] # Update deps (add UOA)
-
+       features['platform']=r.get('features',{})
+       setup['platform_features']='yes'
+       setup['skip_info_collection']='yes'
 
 
 
@@ -2104,16 +2136,17 @@ def pipeline(i):
 
 
 
-
-
-
-
-
-
-
-
-
-
+    
+    ##############################################################################
+    # Deinit remote device, if needed
+    ndi=i.get('no_deinit_remote_device','')
+    if remote=='yes' and ndi!='yes':
+       r=ck.access({'action':'init_device',
+                    'module_uoa':cfg['module_deps']['platform'],
+                    'os_dict':tosd,
+                    'device_id':tdid,
+                    'key':'remote_deinit'})
+       if r['return']>0: return r
 
     ##############################################################################
     # PIPELINE SECTION: FINALIZE PIPELINE
@@ -2142,6 +2175,7 @@ def finalize(i):
 
     stf=i.get('save_to_file','')
     if stf!='':
+
        dd={}
        dd['setup']=i.get('setup',{})
        dd['setup_choices']=i.get('setup_choices',{})
