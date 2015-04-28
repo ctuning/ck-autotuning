@@ -212,6 +212,12 @@ def process_in_dir(i):
               (skip_calibration)     - if 'yes', skip execution time calibration (make it around 4.0 sec)
               (calibration_time)     - calibration time in string, 4.0 sec. by default
               (calibration_max)      - max number of iterations for calibration, 10 by default
+
+              (pull_only_timer_files) - if 'yes', pull only timer files, but not output files 
+                                        (useful for remove devices during statistical repetition)
+
+              (statistical_repetition) - int number of current (outside) statistical repetition
+                                         to avoid pushing data to remote device if !=0 ...
             }
 
     Output: {
@@ -254,7 +260,10 @@ def process_in_dir(i):
 
     flags=i.get('flags','')
     lflags=i.get('lflags','')
-    repeat=int(i.get('repeat','-1'))
+
+    xrepeat=i.get('repeat','')
+    if xrepeat=='': xrepeat='-1'
+    repeat=int(xrepeat)
 
     # Check host/target OS/CPU
     hos=i.get('host_os','')
@@ -355,6 +364,7 @@ def process_in_dir(i):
     stro=tosd.get('redirect_stdout','')
     stre=tosd.get('redirect_stderr','')
     ubtr=hosd.get('use_bash_to_run','')
+    no=tosd.get('no_output','')
 
     ########################################################################
     # Get host platform
@@ -459,8 +469,9 @@ def process_in_dir(i):
     fdeps=cfg.get('deps_file','')
     if len(deps)==0 and sa=='run' and (rcd=='yes' or ctype=='dynamic'):
        if os.path.isfile(fdeps):
-          ck.out('')
-          ck.out('Reloading depedencies from compilation '+fdeps+' ...')
+          if o=='con':
+             ck.out('')
+             ck.out('Reloading depedencies from compilation '+fdeps+' ...')
 
           rx=ck.load_json_file({'json_file':fdeps})
           if rx['return']>0: return rx
@@ -490,7 +501,7 @@ def process_in_dir(i):
           if rx['return']>0: return rx
 
           if sa=='compile' or remote!='yes':
-             sb+=rx['bat']
+             sb+=no+rx['bat']
 
           deps=rx['deps'] # Update deps (add UOA)
 
@@ -520,7 +531,7 @@ def process_in_dir(i):
        # Add compiler dep again, if there
        cb=deps.get('compiler',{}).get('bat','')
        if cb!='' and not sb.endswith(cb):
-          sb+='\n'+cb+'\n'
+          sb+='\n'+no+cb+'\n'
 
        # Add env
        for k in sorted(env):
@@ -530,7 +541,7 @@ def process_in_dir(i):
               if v.find(' ')>=0 and not v.startswith(eifs):
                  v=eifs+v+eifs
 
-           sb+=eset+' '+k+'='+v+'\n'
+           sb+=no+eset+' '+k+'='+v+'\n'
        sb+='\n'
 
        # Try to detect version
@@ -633,7 +644,7 @@ def process_in_dir(i):
        xsofs=[]
 
        if ee!='':
-          sb+='\n'+ee+'\n\n'
+          sb+='\n'+no+ee+'\n\n'
 
        for sf in sfs:
            xcfb=scfb
@@ -664,8 +675,8 @@ def process_in_dir(i):
            cc=cc.replace('$#flags_after#$', xcfa)
 
            sb+='echo '+eifs+cc+eifs+'\n'
-           sb+=cc+'\n'
-           sb+=sqie+'\n'
+           sb+=no+cc+'\n'
+           sb+=no+sqie+'\n'
 
            sb+='\n'
 
@@ -711,12 +722,12 @@ def process_in_dir(i):
              cc=cc.replace('$#flags_after#$', slfa)
 
              sb+='echo '+eifs+cc+eifs+'\n'
-             sb+=cc+'\n'
-             sb+=sqie+'\n'
+             sb+=no+cc+'\n'
+             sb+=no+sqie+'\n'
 
        # Try objdump
-       sb+='\n'+svarb+'CK_OBJDUMP'+svare+' '+target_exe+' '+stro+' '+target_exe+'.dump'+'\n'
-       sb+='\n'+'md5sum < '+target_exe+'.dump '+stro+' '+target_exe+'.md5'+'\n'
+       sb+='\n'+no+svarb+'CK_OBJDUMP'+svare+' '+target_exe+' '+stro+' '+target_exe+'.dump'+'\n'
+       sb+='\n'+no+'md5sum < '+target_exe+'.dump '+stro+' '+target_exe+'.md5'+'\n'
 
        # Record to tmp batch and run
        rx=ck.gen_tmp_file({'prefix':'tmp-', 'suffix':sext, 'remove_dir':'yes'})
@@ -731,6 +742,10 @@ def process_in_dir(i):
           y+=sexe+' '+sbp+fn+envsep
        y+=' '+scall+' '+sbp+fn
 
+       if o=='con':
+          ck.out('')
+          ck.out('Executing prepared batch file '+fn+' ...')
+  
        sys.stdout.flush()
        start_time1=time.time()
 
@@ -876,7 +891,7 @@ def process_in_dir(i):
        # Add compiler dep again, if there
        x=deps.get('compiler',{}).get('bat','')
        if remote!='yes' and x!='' and not sb.endswith(x):
-          sb+='\n'+x+'\n'
+          sb+='\n'+no+x+'\n'
 
        # Add env
        sb+='\n'
@@ -887,11 +902,11 @@ def process_in_dir(i):
               if v.find(' ')>=0 and not v.startswith(eifs):
                  v=eifs+v+eifs
 
-           sb+=etset+' '+k+'='+v+'\n'
+           sb+=no+etset+' '+k+'='+v+'\n'
        sb+='\n'
 
        if tosd.get('extra_env','')!='':
-          sb+=tosd['extra_env']+'\n'
+          sb+=no+tosd['extra_env']+'\n'
 
        # Command line preparation
        c=rt.get('run_cmd_main','')
@@ -1144,12 +1159,12 @@ def process_in_dir(i):
        rco2=rt.get('run_cmd_out2','')
 
        if ee!='':
-          sb+='\n'+ee+'\n\n'
+          sb+='\n'+no+ee+'\n\n'
 
        if remote!='yes' and cons!='yes':
           if rco1!='': c+=' '+stro+' '+rco1
           if rco2!='': c+=' '+stre+' '+rco2
-       sb+=c+'\n'
+       sb+=no+c+'\n'
 
        fn=''
 
@@ -1165,7 +1180,7 @@ def process_in_dir(i):
        if xcn_max=='': xcn_max=cfg['calibration_max']
        cn_max=int(xcn_max)
 
-       cn=0
+       cn=1
        while True:
           # Clean output files
           rof=rt.get('run_output_files',[])
@@ -1193,14 +1208,18 @@ def process_in_dir(i):
                  os.remove(df)
 
           if sc!='yes' and 'CT_REPEAT_MAIN' in env1:
-             ck.out('')
-             ck.out('### Calibration: Current REPEAT number = '+str(repeat))
+             if o=='con':
+                ck.out('')
+                ck.out('### Calibration '+str(cn)+' out of '+xcn_max+' ; Kernel repeat number = '+str(repeat))
 
           sb=csb
           if sc!='yes' and 'CT_REPEAT_MAIN' in env1 and repeat!=-1:
              sb=sb.replace('$#repeat#$', str(repeat))
 
           # Prepare execution
+          if o=='con':
+             ck.out(sep)
+
           if remote=='yes':
              # Prepare command as one line
              y=''
@@ -1218,6 +1237,9 @@ def process_in_dir(i):
                 if rco1!='': y+=' '+stro+' '+rco1
                 if rco2!='': y+=' '+stre+' '+rco2
 
+             if o=='con':
+                ck.out(y)
+
           else:
              # Record to tmp batch and run
              rx=ck.gen_tmp_file({'prefix':'tmp-', 'suffix':sext, 'remove_dir':'yes'})
@@ -1232,14 +1254,16 @@ def process_in_dir(i):
                 y+=sexe+' '+sbp+fn+envsep
              y+=' '+scall+' '+sbp+fn
 
+             if o=='con':
+                ck.out(sb)
+                ck.out('')
+                ck.out(' ('+y+')')
+
           if remote!='yes' and ubtr!='': y=ubtr.replace('$#cmd#$',y)
 
           if o=='con':
-             ck.out(sep)
-             ck.out(y)
              ck.out('')
 
-          # Execute command 
           sys.stdout.flush()
           start_time1=time.time()
           rx=os.system(y)
@@ -1432,7 +1456,7 @@ def run(i):
     return process(i)
 
 ##############################################################################
-# auto-tuning program
+# non-universal (traditional) program compiler flag autotuning
 
 def autotune(i):
     """
@@ -1715,20 +1739,67 @@ def crowdtune(i):
 def pipeline(i):
     """
     Input:  {
-              (setup) - dict with pipeline parameters
+              (repo_uoa)             - program repo UOA
+              (module_uoa)           - program module UOA
+              data_uoa               - program data UOA
 
-                  (repo_uoa)   - program repo UOA
-                  (module_uoa) - program module UOA
-                  data_uoa     - program data UOA
+              (program_tags)         - select programs by these tags
 
-                  (host_os)        - host OS (detect, if omitted)
-                  (target_os)      - OS module to check (if omitted, analyze host)
-                  (device_id)      - device id if remote (such as adb)
+              (program_dir)          - force program directory
 
+              (host_os)              - host OS (detect, if omitted)
+              (target_os)            - OS module to check (if omitted, analyze host)
+              (device_id)            - device id if remote (such as adb)
 
-              (prepare)          - if 'yes', only prepare setup
-              (save_to_file)     - if !='', save updated input (state) to this file
-              (skip_interaction) - if 'yes' and out=='con', skip interaction to choose parameters
+              (prepare)              - if 'yes', only prepare setup, but do not clean/compile/run program
+              (save_to_file)         - if !='', save updated input/output (state) to this file
+              (skip_interaction)     - if 'yes' and out=='con', skip interaction to choose parameters
+
+              (skip_device_init)     - if 'yes', skip device init
+              (skip_info_collection) - if 'yes', skip info collection
+                                 
+                 Pipeline sections' settings:
+
+              (no_platform_features) - do not collect full platform features
+              (no_clean)             - do not clean directory before compile/run
+              (no_compile)           - do not compile program
+              (no_run)               - do not run program
+
+              (generate_rnd_tmp_dir) - if 'yes', compile and run program in randomly generated temporal dir
+                      or
+              (tmp_dir)              - if !='', use this tmp_dir
+
+              (skip_clean_after)     - if 'yes', do not remove run batch
+
+              (console)              - if 'yes', output from program goes to console rather than file
+                                          (usually for testing/demos)
+
+              (cmd_key)
+              (dataset_uoa)
+
+              (compile_type)         - static or dynamic (dynamic by default;
+                                         however takes compiler default_compile_type into account)
+                  or
+              (static or dynamic)
+
+              (flags)                - compile flags
+              (lflags)               - link flags
+
+              (env)                  - preset environment
+              (extra_env)            - extra environment as string
+
+              (repeat)               - repeat kernel via environment CT_REPEAT_MAIN if supported
+              (skip_calibration)     - if 'yes', skip execution time calibration (make it around 4.0 sec)
+              (calibration_time)     - calibration time in string, 4.0 sec. by default
+              (calibration_max)      - max number of iterations for calibration, 10 by default
+
+              (compile_deps)         - compilation dependencies
+
+              (choices)              - exposed choices (if any)
+
+              (features)             - exposed features (if any)
+
+              (characteristics)      - measured characteristics/features/properties (if any)
             }
 
     Output: {
@@ -1736,24 +1807,37 @@ def pipeline(i):
                                          >  0, if error
               (error)      - error text if return > 0
 
-              (setup)
+              !!! The same as input, but with updated information !!!
+
+              ready        - if 'yes', pipeline is ready (all obligatory choices are set)
+                             if 'no', clean/compile/run program is postponed
+
+              (tmp_dir)    - if temporal directory is used, return it 
+                             (useful if randomly generated, to be reused for run or further iterations)
+
+
             }
 
     """
 
     import os
     import copy
+    import json
 
     o=i.get('out','')
+    oo=''
+    if o=='con': oo='con'
 
     pr=i.get('prepare','')
     si=i.get('skip_interaction','')
 
-    if 'setup' not in i: i['setup']={}
-    setup=i['setup']
+    if 'tmp' not in i: i['tmp']={}
+    tmp=i['tmp']
 
-    if 'setup_choices' not in i: i['setup_choices']={}
-    csetup=i['setup_choices']
+    tmp['cur_dir']=os.getcwd()
+
+    if 'choices' not in i: i['choices']={}
+    choices=i['choices']
 
     if 'features' not in i: i['features']={}
     features=i['features']
@@ -1762,70 +1846,62 @@ def pipeline(i):
     chars=i['characteristics']
 
     i['ready']='no'
+    i['fail']='no'
 
     ###############################################################################################################
     # PIPELINE SECTION: VARS INIT
-
-    muoa=work['self_module_uid']
-
-    ruoa=i.get('repo_uoa','')
-    if ruoa=='': ruoa=setup.get('repo_uoa','')
-    else: setup['repo_uoa']=ruoa
-
-    duoa=i.get('data_uoa','')
-    if duoa=='': duoa=setup.get('program_uoa','')
-    else: setup['program_uoa']=duoa
-
-    tags=i.get('tags','')
-    if tags=='': tags=setup.get('program_tags','')
-    else: setup['program_tags']=tags
-
-    dduoa=i.get('dataset_uoa','')
-    if dduoa=='': dduoa=setup.get('dataset_uoa','')
-    else: setup['dataset_uoa']=dduoa
-
-    cdeps=i.get('compile_deps',{})
-    if len(cdeps)==0: cdeps=setup.get('compile_deps',{})
-    else: setup['compile_deps']=cdeps
-
-    d=setup.get('dict',{}) # program meta
-
-    pdir=setup.get('program_dir','')
-    if pdir=='': pdir=os.getcwd() # Program root directory (will be updated, if duoa)
-    else: os.chdir(pdir)
 
     if o=='con':
        ck.out('Initializing universal program pipeline ...')
        ck.out('')
 
-    sdi=setup.get('skip_device_init','')
-    if i.get('skip_device_init','')!='': sdi=i['skip_device_init']
+    muoa=work['self_module_uid']
 
-    sic=setup.get('skip_info_collection','')
-    if i.get('skip_info_collection','')!='': sic=i['skip_info_collection']
+    meta=i.get('program_meta',{}) # program meta
+
+    ruoa=i.get('repo_uoa','')
+    duoa=i.get('data_uoa','')
+    ptags=i.get('program_tags','')
+    kcmd=i.get('cmd_key','')
+    dduoa=i.get('dataset_uoa','')
+
+    cdeps=i.get('compile_deps',{})
+
+    pdir=i.get('program_dir','')
+    if pdir=='': pdir=tmp['cur_dir'] # Program root directory (will be updated, if duoa)
+    else: os.chdir(pdir)
+
+    sdi=i.get('skip_device_init','')
+    sic=i.get('skip_info_collection','')
+
+    grtd=i.get('generate_rnd_tmp_dir','')
+    tdir=i.get('tmp_dir','')
+    sca=i.get('skip_clean_after','')
+
+    flags=i.get('flags','')
+    lflags=i.get('lflags','')
+
+    env=i.get('env',{})
+    eenv=i.get('extra_env','')
+
+    repeat=i.get('repeat','')
+    rsc=i.get('skip_calibration','')
+    rct=i.get('calibration_time','')
+    rcm=i.get('calibration_max','')
+
+    cons=i.get('console','')
 
     ###############################################################################################################
     # PIPELINE SECTION: Host and target platform selection
     if o=='con':
        ck.out(sep)
-       ck.out('Obtaining platform parameters ...')
+       ck.out('Obtaining platform parameters and checking other obligatory choices for the pipeline ...')
+       ck.out('')
 
     hos=i.get('host_os','')
-    if hos=='': hos=setup.get('host_os','')
-    else: setup['host_os']=hos
-
-    hosd=setup.get('host_os_dict',{})
-
     tos=i.get('target_os','')
-    if tos=='': tos=setup.get('target_os','')
-    else: setup['target_os']=tos
-
-    tosd=setup.get('target_os_dict',{})
-    tbits=setup.get('target_os_bits','')
-
+    tbits=i.get('target_os_bits','')
     tdid=i.get('device_id','')
-    if tdid=='': tdid=setup.get('device_id','')
-    else: setup['device_id']=tdid
 
     # Get some info about platforms
     ox=o
@@ -1842,19 +1918,19 @@ def pipeline(i):
     r=ck.access(ii)
     if r['return']>0: 
        if r['return']==32:
-          csetup['##device_id']={'type':'list',
+          choices['##device_id']={'type':'list',
                                  'choices':r['devices'],
                                  'sort':1000}
-          return finalize(i)
+          return finalize_pipeline(i)
        return r
 
     sdi='yes'
-    setup['skip_device_init']=sdi
+    i['skip_device_init']=sdi
 
     hos=r['host_os_uoa']
     hosd=r['host_os_dict']
 
-    setup['host_os']=hos
+    i['host_os']=hos
 
     tos=r['os_uoa']
     tosd=r['os_dict']
@@ -1868,21 +1944,34 @@ def pipeline(i):
     remote=tosd.get('remote','')
 
     tdid=r['device_id']
-    if tdid!='': setup['device_id']=tdid
+    if tdid!='': i['device_id']=tdid
 
-    setup['target_os']=tos
-    setup['target_os_bits']=tbits
+    i['target_os']=tos
+    i['target_os_bits']=tbits
 
-    setup['device_id']=r['device_id']
+    i['device_id']=r['device_id']
 
     if hos=='':
        return {'return':1, 'error':'host_os is not defined'}
 
     if tos=='':
        return {'return':1, 'error':'target_os is not defined'}
+
+    # Check compile type
+    ctype=i.get('compile_type','')
+    if i.get('static','')=='yes': ctype='static'
+    if i.get('dynamic','')=='yes': ctype='dynamic'
+    # On default Android-32, use static by default 
+    # (old platforms has problems with dynamic)
+    if ctype=='':
+       if tosd.get('default_compile_type','')!='':
+          ctype=tosd['default_compile_type']
+       else:
+          ctype='dynamic'
+    i['compile_type']=ctype
         
     if o=='con':
-       ck.out('')
+       ck.out(sep)
        ck.out('  Selected host platform: '+hos)
        ck.out('  Selected target platform: '+tos)
        if tdid!='':
@@ -1893,7 +1982,7 @@ def pipeline(i):
     #                   (either as CID or CK descrpition from current directory or return that should be selected)
 
     # First, if duoa is not defined, try to get from current directory
-    if len(d)==0:
+    if len(meta)==0:
        if duoa=='':
           # First, try to detect CID in current directory
           r=ck.cid({})
@@ -1908,15 +1997,14 @@ def pipeline(i):
              if os.path.isfile(pc):
                 r=ck.load_json_file({'json_file':pc})
                 if r['return']==0:
-                   d=r['dict']
-                   setup['program_dir']=pdir
+                   meta=r['dict']
 
     # Second, if duoa is not detected ordefined, prepare selection 
     duid=''
-    if len(d)==0:
+    if len(meta)==0:
        if duoa=='': duoa='*'
 
-       r=ck.search({'repo_uoa':ruoa, 'module_uoa':muoa, 'data_uoa':duoa, 'add_info':'yes', 'tags':tags})
+       r=ck.search({'repo_uoa':ruoa, 'module_uoa':muoa, 'data_uoa':duoa, 'add_info':'yes', 'tags':ptags})
        if r['return']>0: return r
 
        lst=r['lst']
@@ -1927,9 +2015,9 @@ def pipeline(i):
           duoa=lst[0]['data_uoa']
        else:
           # SELECTOR *************************************
-          csetup['##program_uoa']={'type':'uoa',
-                                   'choices':lst,
-                                   'sort':1000}
+          choices['##program_uoa']={'type':'uoa',
+                                    'choices':lst,
+                                    'sort':1000}
 
           if o=='con' and si!='yes':
              r=select_uoa({'choices':lst})
@@ -1937,27 +2025,27 @@ def pipeline(i):
              duoa=r['choice']
              ck.out('')
           else:
-             return finalize(i)
+             return finalize_pipeline(i)
 
-    if len(d)==0 and duoa=='':
+    if len(meta)==0 and duoa=='':
        return {'return':0, 'error':'no programs found for this pipeline'}
 
-    if len(d)==0 and duoa!='':
+    if len(meta)==0 and duoa!='':
        rx=ck.access({'action':'load',
                      'module_uoa':muoa,
                      'data_uoa':duoa,
                      'repo_uoa':ruoa})
        if rx['return']>0: return rx
-       d=rx['dict']
+       meta=rx['dict']
+       pdir=rx['path']
        duid=rx['data_uid']
        duoa=rx['data_uoa']
 
     if duid=='' and d.get('backup_data_uid','')!='': duid=d['backup_data_uid']
 
-    # Update setup
-    if duoa!='': setup['program_uoa']=duoa
-    if muoa!='': setup['module_uoa']=muoa
-    # we are not recording repo_uoa for reproducibility ...   
+    if duoa!='': i['data_uoa']=duoa
+    if muoa!='': i['module_uoa']=muoa
+    # we are not recording repo_uoa for reproducibility (can be different across users) ...   
 
     if o=='con':
        ck.out('  Selected program: '+duoa+' ('+duid+')')
@@ -1965,35 +2053,31 @@ def pipeline(i):
     ###############################################################################################################
     # PIPELINE SECTION: Command line selection 
 
-    run_cmds=d.get('run_cmds',{})
+    run_cmds=meta.get('run_cmds',{})
     if len(run_cmds)==0:
        return {'return':1, 'error':'no CMD for run'}
 
     krun_cmds=sorted(list(run_cmds.keys()))
-
-    kcmd=i.get('cmd_key','')
-    if kcmd=='': kcmd=setup.get('cmd_key','')
-
     if kcmd=='':
        if len(krun_cmds)>1:
-          choices=[]
+          xchoices=[]
           for z in sorted(krun_cmds):
-              choices.append(z)
+              xchoices.append(z)
 
           # SELECTOR *************************************
-          csetup['##cmd_key']={'type':'list',
-                               'choices':choices,
-                               'sort':1100}
+          choices['##cmd_key']={'type':'list',
+                                'choices':xchoices,
+                                'sort':1100}
 
           if o=='con' and si!='yes':
              ck.out('************ Selecting command line ...')
              ck.out('')
-             r=select_list({'choices':choices})
+             r=select_list({'choices':xchoices})
              if r['return']>0: return r
              kcmd=r['choice']
              ck.out('')
           else:
-             return finalize(i)
+             return finalize_pipeline(i)
 
        else:
           kcmd=krun_cmds[0]
@@ -2001,7 +2085,7 @@ def pipeline(i):
        if kcmd not in krun_cmds:
           return {'return':1, 'error':'CMD key "'+kcmd+'" not found in program description'}
 
-    setup['cmd_key']=kcmd
+    i['cmd_key']=kcmd
 
     if o=='con':
        ck.out('  Selected command line: '+kcmd)
@@ -2017,14 +2101,14 @@ def pipeline(i):
 
     if dduoa!='' or len(dtags)>0:
        if dduoa=='':
-          tags=''
+          xdtags=''
           for q in dtags:
-              if tags!='': tags+=','
-              tags+=q
+              if xdtags!='': xdtags+=','
+              xdtags+=q
 
           rx=ck.access({'action':'search',
                         'module_uoa':dmuoa,
-                        'tags':tags})
+                        'tags':xdtags})
           if rx['return']>0: return rx
 
           lst=rx['lst']
@@ -2036,9 +2120,9 @@ def pipeline(i):
              dduoa=lst[0]['data_uoa']
           else:
              # SELECTOR *************************************
-             csetup['##dataset_uoa']={'type':'uoa',
-                                      'choices':lst,
-                                      'sort':1200}
+             choices['##dataset_uoa']={'type':'uoa',
+                                       'choices':lst,
+                                       'sort':1200}
 
              if o=='con' and si!='yes':
                 ck.out('************ Selecting data set ...')
@@ -2048,7 +2132,7 @@ def pipeline(i):
                 dduoa=r['choice']
                 ck.out('')
              else:
-                return finalize(i)
+                return finalize_pipeline(i)
 
     if dduoa=='':
        return {'return':0, 'error':'no datasets found for this pipeline'}
@@ -2056,27 +2140,24 @@ def pipeline(i):
     if dduoa!='':
        rx=ck.access({'action':'load',
                      'module_uoa':dmuoa,
-                     'data_uoa':dduoa,
-                     'repo_uoa':ruoa})
+                     'data_uoa':dduoa})
        if rx['return']>0: return rx
-       dd=rx['dict']
+       ddmeta=rx['dict']
        dduid=rx['data_uid']
        dduoa=rx['data_uoa']
 
-    if dduoa!='': setup['dataset_uoa']=dduoa
+    if dduoa!='': i['dataset_uoa']=dduoa
 
     if o=='con':
        ck.out('  Selected data set: '+dduoa+' ('+dduid+')')
 
     ###############################################################################################################
     # PIPELINE SECTION: resolve compile dependencies 
-    deps=setup.get('compile_deps',{})
-    if len(deps)==0: 
-       deps=d.get('compile_deps',{})
-       print deps
-       print d
+    cdeps=i.get('compile_deps',{})
+    if len(cdeps)==0: 
+       cdeps=meta.get('compile_deps',{})
 
-       if len(deps)>0:
+       if len(cdeps)>0:
           if o=='con':
              ck.out(sep)
 
@@ -2085,32 +2166,33 @@ def pipeline(i):
               'host_os':hos,
               'target_os':tos,
               'device_id':tdid,
-              'deps':deps,
-              'add_customize':'yes'}
-          if o=='con': ii['out']='con'
+              'deps':cdeps,
+              'add_customize':'yes',
+              'out':oo}
 
           rx=ck.access(ii)
           if rx['return']>0: return rx
 
-          deps=rx['deps'] # Update deps (add UOA)
-
-          setup['compile_deps']=deps
-
-
-
-
-
+          cdeps=rx['deps'] # Update deps (add UOA)
+          i['compile_deps']=cdeps
+    else:
+       if o=='con':
+          ck.out('  Selected dependencies: ')
+          for dp in cdeps:
+              dpx=cdeps[dp]
+              tags=dpx.get('dict',{}).get('tags',[])
+              x=json.dumps(tags, sort_keys=True)
+              y=dpx.get('uoa','')
+              ck.out('      '+dp+' env = '+y+'; tags = '+x)
 
     ###############################################################################################################
     # PIPELINE SECTION: target platform features
     npf=i.get('no_platform_features','')
-    if npf=='': npf=setup.get('no_platform_features','')
-    else: setup['no_platform_features']='yes'
-
-    if setup.get('platform_features','')!='yes' and npf!='yes':
+    if i.get('platform_features','')!='yes' and npf!='yes':
        if o=='con':
           ck.out(sep)
-          ck.out('Detecting target platform features ...')
+          ck.out('Detecting all target platform features ...')
+          ck.out('')
 
        # Get some info about platforms
        ii={'action':'detect',
@@ -2121,23 +2203,118 @@ def pipeline(i):
            'skip_print_os':'yes',
            'skip_device_init':sdi,
            'skip_info_collection':sic,
-           'out':o}
+           'out':oo}
        r=ck.access(ii)
        if r['return']>0: return r
 
        features['platform']=r.get('features',{})
-       setup['platform_features']='yes'
-       setup['skip_info_collection']='yes'
+       i['platform_features']='yes'
+       i['skip_info_collection']='yes'
 
+    ###############################################################################################################
+    # Pipeline ready for compile/run
+    i['ready']='yes'
+    if pr=='yes':
+       return finalize_pipeline(i)
 
+    ###############################################################################################################
+    # PIPELINE SECTION: Compile program
+    cs='yes'
+    if i.get('no_compile','')!='yes':
+       if o=='con':
+          ck.out(sep)
+          ck.out('Compile program ...')
+          ck.out('')
 
+       cl=i.get('clean','')
+       if cl=='' and i.get('no_clean','')!='yes': cl='yes'
 
+       if meta.get('no_compile','')!='yes':
+          ii={'sub_action':'compile',
+              'host_os':hos,
+              'target_os':tos,
+              'deviced_id':tdid,
+              'path':pdir,
+              'meta':meta,
+              'deps':cdeps,
+              'generate_rnd_tmp_dir':grtd,
+              'tmp_dir':tdir,
+              'clean':cl,
+              'skip_clean_after':sca,
+              'compile_type':ctype,
+              'flags':flags,
+              'lflags':lflags,
+              'console':cons,
+              'env':env,
+              'extra_env':eenv,
+              'out':oo}
+          r=process_in_dir(ii)
+          if r['return']>0: return r
 
+          misc=r['misc']
+          tdir=misc.get('tmp_dir','')
+          if tdir!='': i['tmp_dir']=tdir
 
+          cch=r['characteristics']
+          chars['compile']=cch
 
+          xct=cch.get('compilation_time',-1)
+          xos=cch.get('obj_size',-1)
 
-    
-    ##############################################################################
+          features['compiler_version']={'list':misc.get('compiler_detected_ver_list',[]),
+                                        'str':misc.get('compiler_detected_ver_str',''),
+                                        'raw':misc.get('compiler_detected_ver_raw','')}
+
+          cs=misc.get('compilation_success','')
+          if cs=='no': i['fail']='yes'
+
+    ###############################################################################################################
+    # PIPELINE SECTION: Run program
+    if cs!='no' and i.get('no_run','')!='yes':
+       if o=='con':
+          ck.out(sep)
+          ck.out('Running program ...')
+
+       ii={'sub_action':'run',
+           'host_os':hos,
+           'target_os':tos,
+           'deviced_id':tdid,
+           'path':pdir,
+           'console':cons,
+           'meta':meta,
+           'deps':cdeps,
+           'cmd_key':kcmd,
+           'dataset_uoa':dduoa,
+           'generate_rnd_tmp_dir':grtd,
+           'tmp_dir':tdir,
+           'skip_clean_after':sca,
+           'compile_type':ctype,
+           'flags':flags,
+           'lflags':lflags,
+           'repeat':repeat,
+           'skip_calibration':rsc,
+           'calibration_time':rct,
+           'calibration_max':rcm,
+           'env':env,
+           'extra_env':eenv,
+           'out':oo}
+       r=process_in_dir(ii)
+       if r['return']>0: return r
+
+       misc=r['misc']
+       tdir=misc.get('tmp_dir','')
+       if tdir!='': i['tmp_dir']=tdir
+
+       rch=r['characteristics']
+       chars['run']=rch
+
+       csuc=misc.get('calibration_success',True)
+       rs=misc.get('run_success','')
+
+       if rs=='no' or not csuc:
+          i['fail']='yes'
+
+    ###############################################################################################################
     # Deinit remote device, if needed
     ndi=i.get('no_deinit_remote_device','')
     if remote=='yes' and ndi!='yes':
@@ -2148,19 +2325,16 @@ def pipeline(i):
                     'key':'remote_deinit'})
        if r['return']>0: return r
 
-    ##############################################################################
-    # PIPELINE SECTION: FINALIZE PIPELINE
-    i['setup']=setup
-    i['csetup']=csetup
-
-    return finalize(i)
+    ###############################################################################################################
+    # PIPELINE SECTION: finalize PIPELINE
+    return finalize_pipeline(i)
 
 ##############################################################################
 # finalize pipeline
-def finalize(i):
+def finalize_pipeline(i):
     """
     Input:  {
-              lst - list from search function
+              Input from pipeline that will be passed as output
             }
 
     Output: {
@@ -2171,29 +2345,48 @@ def finalize(i):
 
     """
 
+    import os
+
     o=i.get('out','')
 
-    stf=i.get('save_to_file','')
-    if stf!='':
+    tmp=i.get('tmp',{})
+    pr=i.get('prepare','')
 
-       dd={}
-       dd['setup']=i.get('setup',{})
-       dd['setup_choices']=i.get('setup_choices',{})
-       dd['features']=i.get('features',{})
-       dd['characteristics']=i.get('characteristics',{})
-       dd['ready']=i.get('ready','')
+    fail=i.get('fail','')
+
+    if 'tmp' in i: del(i['tmp'])
+    if 'out' in i: del(i['out'])
+    if 'xcids' in i: del(i['xcids'])
+    if 'prepare' in i: del(i['prepare']) # to be able to run pipeline when needed
+
+    stfx=i.get('save_to_file','')
+    stf=stfx
+    cd=tmp.get('cur_dir','')
+    if not os.path.isabs(stf):
+       stf=os.path.join(cd, stf)
+
+    if stfx!='':
+       if o=='con':
+          ck.out(sep)
+          ck.out('Writing state to file '+stf+' ...')
 
        rx=ck.save_json_to_file({'json_file':stf,
-                                'dict':dd,
+                                'dict':i,
                                 'sort_keys':'yes'})
        if rx['return']>0: return rx
 
-       if o=='con':
-          ck.out('')
-          if i.get('ready','')=='yes':
+    if o=='con':
+       ck.out(sep)
+       if i.get('ready','')=='yes':
+          if pr=='yes':
              ck.out('Pipeline is ready!')
           else:
-             ck.out('Pipeline is NOT YET READY - multiple choices exists!')
+             if fail=='yes':
+                ck.out('Pipeline failed!')
+             else:
+                ck.out('Pipeline executed successfully!')
+       else:
+          ck.out('Pipeline is NOT YET READY - multiple choices exists!')
 
     i['return']=0
 
