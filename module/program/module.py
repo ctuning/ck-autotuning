@@ -2287,9 +2287,9 @@ def pipeline(i):
 
           rl=rx['lst']
 
-          rmax=0 # max tag matches
-          ruid=''
-          ruoa=''
+          xrmax=0 # max tag matches
+          xruid=''
+          xruoa=''
 
           for q in rl:
               qdt=q.get('meta',{}).get('tags',[])
@@ -2297,20 +2297,20 @@ def pipeline(i):
               for qi in cdt1:
                   if qi in qdt:
                      rx+=1
-              if rx>rmax:
-                 rmax=rx
-                 ruid=q['data_uid']
-                 ruoa=q['data_uoa']
+              if rx>xrmax:
+                 xrmax=rx
+                 xruid=q['data_uid']
+                 xruoa=q['data_uoa']
 
-          if rmax==0:
+          if xrmax==0:
              import json
              return {'return':1, 'error':'can\'t find most close compiler description by tags ('+json.dumps(cdt1)+')'}
 
-          cdu=ruoa
+          cdu=xruoa
 
           if o=='con':
              ck.out('')
-             ck.out('Most close found compiler description: '+ruoa+' ('+ruid+')')
+             ck.out('Most close found compiler description: '+xruoa+' ('+xruid+')')
 
     if cdu!='':
        rx=ck.access({'action':'load',
