@@ -180,6 +180,9 @@ def process_in_dir(i):
               (generate_rnd_tmp_dir) - if 'yes', generate random tmp directory to compile and run program
                                        (useful during crowd-tuning)
 
+              (compiler_vars)        - dict with set up compiler flags (-D xyz) -> 
+                                       they will update the ones defined as default in program description ...
+
               (flags)                - compile flags
               (lflags)               - link flags
 
@@ -260,6 +263,8 @@ def process_in_dir(i):
 
     flags=i.get('flags','')
     lflags=i.get('lflags','')
+
+    cv=i.get('compiler_vars',{})
 
     xrepeat=i.get('repeat','')
     if xrepeat=='': xrepeat='-1'
@@ -523,7 +528,7 @@ def process_in_dir(i):
 
     ##################################################################################################################
     ################################### Compile ######################################
-    if sa=='compile':
+    if sa=='compile' or sa=='get_compiler_version':
        # Clean target file
        if target_exe!='' and os.path.isfile(target_exe):
           os.remove(target_exe)
@@ -564,237 +569,247 @@ def process_in_dir(i):
                 ck.out('Detected compiler version: '+cver)
                 ck.out('')
 
-       # Check linking libs + include paths for deps
-       sll=''
-       sin=''
-       for k in deps:
-           kv=deps[k].get('cus',{})
+       if sa=='compile':
+          # Check linking libs + include paths for deps
+          sll=''
+          sin=''
+          for k in deps:
+              kv=deps[k].get('cus',{})
 
-           pl1=kv.get('path_lib','')
-           pl2=kv.get('static_lib','')
+              pl1=kv.get('path_lib','')
+              pl2=kv.get('static_lib','')
 
-           if pl2!='':
-              if ctype=='dynamic' and remote=='yes' and csd.get('customize',{}).get('can_strip_dynamic_lib','')=='yes':
-                 pl2x=os.path.splitext(pl2)[0]
-                 if pl2x.startswith('lib'): pl2x=pl2x[3:]
-                 sll+=' '+svarb+svarb1+'CK_FLAG_PREFIX_LIB_DIR'+svare1+svare+eifsc+pl1+eifsc+' -l'+pl2x
-#                 sll+='/link /LIBPATH:'+eifsc+pl1+eifsc+' OpenCL.lib'
+              if pl2!='':
+                 if ctype=='dynamic' and remote=='yes' and csd.get('customize',{}).get('can_strip_dynamic_lib','')=='yes':
+                    pl2x=os.path.splitext(pl2)[0]
+                    if pl2x.startswith('lib'): pl2x=pl2x[3:]
+                    sll+=' '+svarb+svarb1+'CK_FLAG_PREFIX_LIB_DIR'+svare1+svare+eifsc+pl1+eifsc+' -l'+pl2x
+   #                 sll+='/link /LIBPATH:'+eifsc+pl1+eifsc+' OpenCL.lib'
 
-              else:
-                 if sll!='': sll+=' '
-                 sll+=eifsc
-                 if pl1!='': 
-                    sll+=pl1+sdirs
-                 sll+=pl2
-                 sll+=eifsc
+                 else:
+                    if sll!='': sll+=' '
+                    sll+=eifsc
+                    if pl1!='': 
+                       sll+=pl1+sdirs
+                    sll+=pl2
+                    sll+=eifsc
 
-           pl3=kv.get('path_include','')
-           if pl3!='':
-              if sin!='': sin+=' '
-              sin+=svarb+svarb1+'CK_FLAG_PREFIX_INCLUDE'+svare1+svare+eifsc+pl3+eifsc
+              pl3=kv.get('path_include','')
+              if pl3!='':
+                 if sin!='': sin+=' '
+                 sin+=svarb+svarb1+'CK_FLAG_PREFIX_INCLUDE'+svare1+svare+eifsc+pl3+eifsc
 
-       # Obtaining compile CMD (first from program entry, then default from this module)
-       ccmds=meta.get('compile_cmds',{})
-       ccmd=ccmds.get(hplat,{})
-       if len(ccmd)==0:
-          ccmd=ccmds.get('default',{})
-       if len(ccmd)==0:
-          ccmds=cfg.get('compile_cmds',{})
+          # Obtaining compile CMD (first from program entry, then default from this module)
+          ccmds=meta.get('compile_cmds',{})
           ccmd=ccmds.get(hplat,{})
           if len(ccmd)==0:
              ccmd=ccmds.get('default',{})
+          if len(ccmd)==0:
+             ccmds=cfg.get('compile_cmds',{})
+             ccmd=ccmds.get(hplat,{})
+             if len(ccmd)==0:
+                ccmd=ccmds.get('default',{})
 
-       sccmd=ccmd.get('cmd','')
-       if sccmd=='':
-          return {'return':1, 'error':'compile CMD is not found'}
+          sccmd=ccmd.get('cmd','')
+          if sccmd=='':
+             return {'return':1, 'error':'compile CMD is not found'}
 
-       # Source files
-       sfs=meta.get('source_files',[])
+          # Source files
+          sfs=meta.get('source_files',[])
 
-       compiler_env=meta.get('compiler_env','')
-       if compiler_env=='': compiler_env='CK_CC'
+          compiler_env=meta.get('compiler_env','')
+          if compiler_env=='': compiler_env='CK_CC'
 
-       sfprefix='..'+sdirs
+          sfprefix='..'+sdirs
 
-       scfb=svarb+'CK_FLAGS_CREATE_OBJ'+svare
-       scfb+=' '+svarb+'CK_COMPILER_FLAGS_OBLIGATORY'+svare
-       if ctype=='dynamic':
-          scfb+=' '+svarb+'CK_FLAGS_DYNAMIC_BIN'+svare
-       elif ctype=='static':
-          scfb+=' '+svarb+'CK_FLAGS_STATIC_BIN'+svare
-       scfb+=' '+svarb+svarb1+'CK_FLAG_PREFIX_INCLUDE'+svare1+svare+sfprefix
+          scfb=svarb+'CK_FLAGS_CREATE_OBJ'+svare
+          scfb+=' '+svarb+'CK_COMPILER_FLAGS_OBLIGATORY'+svare
+          if ctype=='dynamic':
+             scfb+=' '+svarb+'CK_FLAGS_DYNAMIC_BIN'+svare
+          elif ctype=='static':
+             scfb+=' '+svarb+'CK_FLAGS_STATIC_BIN'+svare
+          scfb+=' '+svarb+svarb1+'CK_FLAG_PREFIX_INCLUDE'+svare1+svare+sfprefix
 
-       scfa=''
+          scfa=''
 
-       # Check build -D flags
-       sbcv=''
-       bcv=meta.get('build_compiler_vars',{})
-       for k in bcv:
-           kv=bcv[k]
-           if sbcv!='': sbcv+=' '
-           sbcv+=svarb+svarb1+'CK_FLAG_PREFIX_VAR'+svare1+svare+k
-           if kv!='': sbcv+='='+kv
+          # Check build -D flags
+          sbcv=''
+          bcv=meta.get('build_compiler_vars',{})
+          bcv.update(cv)
 
-       # Prepare compilation
-       sb+='\n'
+          if o=='con' and len(bcv)>0:
+             ck.out(sep)
+             ck.out('Compiler vars:')
 
-       denv=dcomp.get('env',{})
-       sobje=denv.get('CK_OBJ_EXT','')
-       sofs=''
-       xsofs=[]
+          for k in bcv:
+              kv=bcv[k]
+              if sbcv!='': sbcv+=' '
+              sbcv+=svarb+svarb1+'CK_FLAG_PREFIX_VAR'+svare1+svare+k
+              if kv!='': sbcv+='='+kv
 
-       if ee!='':
-          sb+='\n'+no+ee+'\n\n'
+              if o=='con':
+                 ck.out('  '+k+'='+kv)
 
-       for sf in sfs:
-           xcfb=scfb
-           xcfa=scfa
+          # Prepare compilation
+          sb+='\n'
 
-           sf0,sf1=os.path.splitext(sf)
+          denv=dcomp.get('env',{})
+          sobje=denv.get('CK_OBJ_EXT','')
+          sofs=''
+          xsofs=[]
 
-           sfobj=sf0+sobje
-           if sofs!='': sofs+=' '
-           sofs+=sfobj
-           xsofs.append(sfobj)
+          if ee!='':
+             sb+='\n'+no+ee+'\n\n'
 
-           if sbcv!='': xcfb+=' '+sbcv
+          for sf in sfs:
+              xcfb=scfb
+              xcfa=scfa
 
-           if sin!='': xcfb+=' '+sin
+              sf0,sf1=os.path.splitext(sf)
 
-           xcfb+=' '+flags
+              sfobj=sf0+sobje
+              if sofs!='': sofs+=' '
+              sofs+=sfobj
+              xsofs.append(sfobj)
 
-           if 'CK_FLAGS_OUTPUT' in denv:
-              xcfa+=' '+svarb+svarb1+'CK_FLAGS_OUTPUT'+svare1+svare+sfobj
+              if sbcv!='': xcfb+=' '+sbcv
 
-           cc=sccmd
-           cc=cc.replace('$#source_file#$', sfprefix+sf)
+              if sin!='': xcfb+=' '+sin
 
-           cc=cc.replace('$#compiler#$', svarb+compiler_env+svare)
+              xcfb+=' '+flags
 
-           cc=cc.replace('$#flags_before#$', xcfb)
-           cc=cc.replace('$#flags_after#$', xcfa)
+              if 'CK_FLAGS_OUTPUT' in denv:
+                 xcfa+=' '+svarb+svarb1+'CK_FLAGS_OUTPUT'+svare1+svare+sfobj
 
-           sb+='echo '+eifs+cc+eifs+'\n'
-           sb+=no+cc+'\n'
-           sb+=no+sqie+'\n'
+              cc=sccmd
+              cc=cc.replace('$#source_file#$', sfprefix+sf)
 
-           sb+='\n'
+              cc=cc.replace('$#compiler#$', svarb+compiler_env+svare)
 
-       # Obtaining link CMD (first from program entry, then default from this module)
-       if sofs!='':
-          linker_env=meta.get('linker_env','')
-          if linker_env=='': linker_env=compiler_env
+              cc=cc.replace('$#flags_before#$', xcfb)
+              cc=cc.replace('$#flags_after#$', xcfa)
 
-          lcmds=meta.get('link_cmds',{})
-          lcmd=lcmds.get(hplat,{})
-          if len(lcmd)==0:
-             lcmd=lcmds.get('default',{})
-          if len(lcmd)==0:
-             lcmds=cfg.get('link_cmds',{})
+              sb+='echo '+eifs+cc+eifs+'\n'
+              sb+=no+cc+'\n'
+              sb+=no+sqie+'\n'
+
+              sb+='\n'
+
+          # Obtaining link CMD (first from program entry, then default from this module)
+          if sofs!='':
+             linker_env=meta.get('linker_env','')
+             if linker_env=='': linker_env=compiler_env
+
+             lcmds=meta.get('link_cmds',{})
              lcmd=lcmds.get(hplat,{})
              if len(lcmd)==0:
                 lcmd=lcmds.get('default',{})
+             if len(lcmd)==0:
+                lcmds=cfg.get('link_cmds',{})
+                lcmd=lcmds.get(hplat,{})
+                if len(lcmd)==0:
+                   lcmd=lcmds.get('default',{})
 
-          slcmd=lcmd.get('cmd','')
-          if slcmd!='':
-             slfb=svarb+'CK_COMPILER_FLAGS_OBLIGATORY'+svare
-             slfb+=' '+lflags
-             if ctype=='dynamic':
-                slfb+=' '+svarb+'CK_FLAGS_DYNAMIC_BIN'+svare
-             elif ctype=='static':
-                slfb+=' '+svarb+'CK_FLAGS_STATIC_BIN'+svare
+             slcmd=lcmd.get('cmd','')
+             if slcmd!='':
+                slfb=svarb+'CK_COMPILER_FLAGS_OBLIGATORY'+svare
+                slfb+=' '+lflags
+                if ctype=='dynamic':
+                   slfb+=' '+svarb+'CK_FLAGS_DYNAMIC_BIN'+svare
+                elif ctype=='static':
+                   slfb+=' '+svarb+'CK_FLAGS_STATIC_BIN'+svare
 
-             slfa=' '+svarb+svarb1+'CK_FLAGS_OUTPUT'+svare1+svare+target_exe
-             slfa+=' '+svarb+'CK_LD_FLAGS_MISC'+svare
-             slfa+=' '+svarb+'CK_LD_FLAGS_EXTRA'+svare
+                slfa=' '+svarb+svarb1+'CK_FLAGS_OUTPUT'+svare1+svare+target_exe
+                slfa+=' '+svarb+'CK_LD_FLAGS_MISC'+svare
+                slfa+=' '+svarb+'CK_LD_FLAGS_EXTRA'+svare
 
-             if sll!='': slfa+=' '+sll
+                if sll!='': slfa+=' '+sll
 
-             evr=meta.get('extra_ld_vars','')
-             if evr!='':
-                evr=evr.replace('$<<',svarb).replace('>>$',svare)
-                slfa+=' '+evr
+                evr=meta.get('extra_ld_vars','')
+                if evr!='':
+                   evr=evr.replace('$<<',svarb).replace('>>$',svare)
+                   slfa+=' '+evr
 
-             cc=slcmd
-             cc=cc.replace('$#linker#$', svarb+linker_env+svare)
-             cc=cc.replace('$#obj_files#$', sofs)
-             cc=cc.replace('$#flags_before#$', slfb)
-             cc=cc.replace('$#flags_after#$', slfa)
+                cc=slcmd
+                cc=cc.replace('$#linker#$', svarb+linker_env+svare)
+                cc=cc.replace('$#obj_files#$', sofs)
+                cc=cc.replace('$#flags_before#$', slfb)
+                cc=cc.replace('$#flags_after#$', slfa)
 
-             sb+='echo '+eifs+cc+eifs+'\n'
-             sb+=no+cc+'\n'
-             sb+=no+sqie+'\n'
+                sb+='echo '+eifs+cc+eifs+'\n'
+                sb+=no+cc+'\n'
+                sb+=no+sqie+'\n'
 
-       # Try objdump
-       sb+='\n'+no+svarb+'CK_OBJDUMP'+svare+' '+target_exe+' '+stro+' '+target_exe+'.dump'+'\n'
-       sb+='\n'+no+'md5sum < '+target_exe+'.dump '+stro+' '+target_exe+'.md5'+'\n'
+          # Try objdump
+          sb+='\n'+no+svarb+'CK_OBJDUMP'+svare+' '+target_exe+' '+stro+' '+target_exe+'.dump'+'\n'
+          sb+='\n'+no+'md5sum < '+target_exe+'.dump '+stro+' '+target_exe+'.md5'+'\n'
 
-       # Record to tmp batch and run
-       rx=ck.gen_tmp_file({'prefix':'tmp-', 'suffix':sext, 'remove_dir':'yes'})
-       if rx['return']>0: return rx
-       fn=rx['file_name']
+          # Record to tmp batch and run
+          rx=ck.gen_tmp_file({'prefix':'tmp-', 'suffix':sext, 'remove_dir':'yes'})
+          if rx['return']>0: return rx
+          fn=rx['file_name']
 
-       rx=ck.save_text_file({'text_file':fn, 'string':sb})
-       if rx['return']>0: return rx
+          rx=ck.save_text_file({'text_file':fn, 'string':sb})
+          if rx['return']>0: return rx
 
-       y=''
-       if sexe!='':
-          y+=sexe+' '+sbp+fn+envsep
-       y+=' '+scall+' '+sbp+fn
+          y=''
+          if sexe!='':
+             y+=sexe+' '+sbp+fn+envsep
+          y+=' '+scall+' '+sbp+fn
 
-       if o=='con':
-          ck.out('')
-          ck.out('Executing prepared batch file '+fn+' ...')
-  
-       sys.stdout.flush()
-       start_time1=time.time()
+          if o=='con':
+             ck.out('')
+             ck.out('Executing prepared batch file '+fn+' ...')
+     
+          sys.stdout.flush()
+          start_time1=time.time()
 
-       if ubtr!='': y=ubtr.replace('$#cmd#$',y)
+          if ubtr!='': y=ubtr.replace('$#cmd#$',y)
 
-       rx=os.system(y)
-       comp_time=time.time()-start_time1
+          rx=os.system(y)
+          comp_time=time.time()-start_time1
 
-       ccc['compilation_time']=comp_time
+          ccc['compilation_time']=comp_time
 
-       if sca!='yes':
-          if fn!='' and os.path.isfile(fn): os.remove(fn)
+          if sca!='yes':
+             if fn!='' and os.path.isfile(fn): os.remove(fn)
 
-       ofs=0
-       md5=''
-       if rx>0:
-          misc['compilation_success']='no'
-       else:
-          misc['compilation_success']='yes'
+          ofs=0
+          md5=''
+          if rx>0:
+             misc['compilation_success']='no'
+          else:
+             misc['compilation_success']='yes'
 
-          # Check some characteristics
-          if os.path.isfile(target_exe):
-             ccc['binary_size']=os.path.getsize(target_exe)
+             # Check some characteristics
+             if os.path.isfile(target_exe):
+                ccc['binary_size']=os.path.getsize(target_exe)
 
-             # Try to read md5 file
-             if os.path.isfile(target_exe+'.md5'):
-                rz=ck.load_text_file({'text_file':target_exe+'.md5'})
-                if rz['return']==0:
-                   md5x=rz['string']
-                   ix=md5x.find(' ')
-                   if ix>0:
-                      md5=md5x[:ix].strip()
-                      ccc['md5_sum']=md5
+                # Try to read md5 file
+                if os.path.isfile(target_exe+'.md5'):
+                   rz=ck.load_text_file({'text_file':target_exe+'.md5'})
+                   if rz['return']==0:
+                      md5x=rz['string']
+                      ix=md5x.find(' ')
+                      if ix>0:
+                         md5=md5x[:ix].strip()
+                         ccc['md5_sum']=md5
 
-          # Check obj file sizes
-          if len(xsofs)>0:
-             ccc['obj_sizes']={}
-             for q in xsofs:
-                 if os.path.isfile(q):
-                    ofs1=os.path.getsize(q)
-                    ccc['obj_sizes'][q]=ofs1
-                    ofs+=ofs1
-             ccc['obj_size']=ofs
+             # Check obj file sizes
+             if len(xsofs)>0:
+                ccc['obj_sizes']={}
+                for q in xsofs:
+                    if os.path.isfile(q):
+                       ofs1=os.path.getsize(q)
+                       ccc['obj_sizes'][q]=ofs1
+                       ofs+=ofs1
+                ccc['obj_size']=ofs
 
-       ccc['compilation_time_with_module']=time.time()-start_time
+          ccc['compilation_time_with_module']=time.time()-start_time
 
-       if o=='con':
-          ck.out('')
-          ck.out('Compilation time: '+('%.3f'%comp_time)+' sec.; Object size: '+str(ofs)+'; MD5: '+md5)
+          if o=='con':
+             ck.out('')
+             ck.out('Compilation time: '+('%.3f'%comp_time)+' sec.; Object size: '+str(ofs)+'; MD5: '+md5)
 
     ##################################################################################################################
     ################################### Run ######################################
@@ -1782,6 +1797,13 @@ def pipeline(i):
                   or
               (static or dynamic)
 
+              (compiler_desc_uoa)    - compiler description UOA (module compiler),
+                                       if not set, there will be an attempt to detect the most close
+                                       by version
+
+              (compiler_vars)        - dict with set up compiler flags (-Dvar=value) -> 
+                                       they will update the ones defined as default in program description ...
+
               (flags)                - compile flags
               (lflags)               - link flags
 
@@ -1918,9 +1940,11 @@ def pipeline(i):
     r=ck.access(ii)
     if r['return']>0: 
        if r['return']==32:
-          choices['##device_id']={'type':'list',
-                                 'choices':r['devices'],
-                                 'sort':1000}
+          choices['##device_id']={'type':'text',
+                                  'has_choice':'yes',
+                                  'choices':r['devices'],
+                                  'tags':['setup'],
+                                  'sort':1000}
           return finalize_pipeline(i)
        return r
 
@@ -2016,7 +2040,9 @@ def pipeline(i):
        else:
           # SELECTOR *************************************
           choices['##program_uoa']={'type':'uoa',
+                                    'has_choice':'yes',
                                     'choices':lst,
+                                    'tags':['setup'],
                                     'sort':1000}
 
           if o=='con' and si!='yes':
@@ -2065,8 +2091,10 @@ def pipeline(i):
               xchoices.append(z)
 
           # SELECTOR *************************************
-          choices['##cmd_key']={'type':'list',
+          choices['##cmd_key']={'type':'text',
+                                'has_choice':'yes',
                                 'choices':xchoices,
+                                'tags':['setup'],
                                 'sort':1100}
 
           if o=='con' and si!='yes':
@@ -2121,7 +2149,9 @@ def pipeline(i):
           else:
              # SELECTOR *************************************
              choices['##dataset_uoa']={'type':'uoa',
+                                       'has_choice':'yes',
                                        'choices':lst,
+                                       'tags':['setup', 'dataset'],
                                        'sort':1200}
 
              if o=='con' and si!='yes':
@@ -2134,8 +2164,8 @@ def pipeline(i):
              else:
                 return finalize_pipeline(i)
 
-    if dduoa=='':
-       return {'return':0, 'error':'no datasets found for this pipeline'}
+       if dduoa=='':
+          return {'return':1, 'error':'no datasets found for this pipeline'}
 
     if dduoa!='':
        rx=ck.access({'action':'load',
@@ -2146,10 +2176,11 @@ def pipeline(i):
        dduid=rx['data_uid']
        dduoa=rx['data_uoa']
 
-    if dduoa!='': i['dataset_uoa']=dduoa
+    if dduoa!='': 
+       i['dataset_uoa']=dduoa
 
-    if o=='con':
-       ck.out('  Selected data set: '+dduoa+' ('+dduid+')')
+       if o=='con':
+          ck.out('  Selected data set: '+dduoa+' ('+dduid+')')
 
     ###############################################################################################################
     # PIPELINE SECTION: resolve compile dependencies 
@@ -2184,6 +2215,124 @@ def pipeline(i):
               x=json.dumps(tags, sort_keys=True)
               y=dpx.get('uoa','')
               ck.out('      '+dp+' env = '+y+'; tags = '+x)
+
+    ###############################################################################################################
+    # PIPELINE SECTION: Detect compiler version
+    if i.get('no_detect_compiler_version','')!='yes':
+       if o=='con':
+          ck.out(sep)
+          ck.out('Detect compiler version ...')
+          ck.out('')
+
+       if meta.get('no_compile','')!='yes':
+          ii={'sub_action':'get_compiler_version',
+              'host_os':hos,
+              'target_os':tos,
+              'deviced_id':tdid,
+              'path':pdir,
+              'meta':meta,
+              'deps':cdeps,
+              'generate_rnd_tmp_dir':grtd,
+              'tmp_dir':tdir,
+              'skip_clean_after':sca,
+              'compile_type':ctype,
+              'flags':flags,
+              'lflags':lflags,
+              'console':cons,
+              'env':env,
+              'extra_env':eenv,
+              'out':oo}
+          r=process_in_dir(ii)
+          if r['return']>0: return r
+
+          misc=r['misc']
+          tdir=misc.get('tmp_dir','')
+          if tdir!='': i['tmp_dir']=tdir
+
+
+
+          features['compiler_version']={'list':misc.get('compiler_detected_ver_list',[]),
+                                        'str':misc.get('compiler_detected_ver_str',''),
+                                        'raw':misc.get('compiler_detected_ver_raw','')}
+
+
+
+    ###############################################################################################################
+    # PIPELINE SECTION: get compiler description for flag options
+    cflags_desc=choices.get('compiler_flags_desc',{})
+
+    cdu=i.get('compiler_description_uoa','')
+    if cdu=='' and i.get('no_compiler_description','')!='yes':
+       cdt=cdeps.get('compiler',{}).get('dict',{}).get('tags',[])
+
+       # Substitute with real compiler version
+       creal=features.get('compiler_version',{}).get('list',[])
+       if len(creal)>0:
+          cdt1=[]
+          for q in cdt:
+              if not q.startswith('v'): cdt1.append(q)
+          qq=''
+          for q in creal:
+              if qq=='': qq='v'
+              else: qq+='.'
+              qq+=q
+              cdt1.append(qq)
+
+          # Find most close
+          ii={'action':'list',
+              'module_uoa':cfg['module_deps']['compiler'],
+              'add_meta':'yes'}
+          rx=ck.access(ii)
+          if rx['return']>0: return rx
+
+          rl=rx['lst']
+
+          rmax=0 # max tag matches
+          ruid=''
+          ruoa=''
+
+          for q in rl:
+              qdt=q.get('meta',{}).get('tags',[])
+              rx=0
+              for qi in cdt1:
+                  if qi in qdt:
+                     rx+=1
+              if rx>rmax:
+                 rmax=rx
+                 ruid=q['data_uid']
+                 ruoa=q['data_uoa']
+
+          if rmax==0:
+             import json
+             return {'return':1, 'error':'can\'t find most close compiler description by tags ('+json.dumps(cdt1)+')'}
+
+          cdu=ruoa
+
+          if o=='con':
+             ck.out('')
+             ck.out('Most close found compiler description: '+ruoa+' ('+ruid+')')
+
+    if cdu!='':
+       rx=ck.access({'action':'load',
+                     'module_uoa':cfg['module_deps']['compiler'],
+                     'data_uoa':cdu})
+       if rx['return']>0: return rx
+       rxd=rx['dict']
+
+       if len(cflags_desc)==0:
+          cflags_desc=rxd.get('all_compiler_flags_desc',{})
+
+          choices['compiler_flags_desc']=cflags_desc
+
+    ###############################################################################################################
+    # PIPELINE SECTION: get compiler vars choices (-Dvar=value) - often for datasets such as in polyhedral benchmarks
+    bcvd=meta.get('build_compiler_vars_desc',{})
+    cbcvd=choices.get('compiler_vars',{})
+
+    if len(bcvd)>0 and len(cbcvd)==0:
+       choices['compiler_vars']=bcvd
+
+    cv=i.get('compiler_vars',{})
 
     ###############################################################################################################
     # PIPELINE SECTION: target platform features
@@ -2247,6 +2396,7 @@ def pipeline(i):
               'console':cons,
               'env':env,
               'extra_env':eenv,
+              'compiler_vars':cv,
               'out':oo}
           r=process_in_dir(ii)
           if r['return']>0: return r
@@ -2260,10 +2410,6 @@ def pipeline(i):
 
           xct=cch.get('compilation_time',-1)
           xos=cch.get('obj_size',-1)
-
-          features['compiler_version']={'list':misc.get('compiler_detected_ver_list',[]),
-                                        'str':misc.get('compiler_detected_ver_str',''),
-                                        'raw':misc.get('compiler_detected_ver_raw','')}
 
           cs=misc.get('compilation_success','')
           if cs=='no': i['fail']='yes'
@@ -2297,6 +2443,7 @@ def pipeline(i):
            'calibration_max':rcm,
            'env':env,
            'extra_env':eenv,
+           'compiler_vars':cv,
            'out':oo}
        r=process_in_dir(ii)
        if r['return']>0: return r
@@ -2354,10 +2501,10 @@ def finalize_pipeline(i):
 
     fail=i.get('fail','')
 
-    if 'tmp' in i: del(i['tmp'])
-    if 'out' in i: del(i['out'])
-    if 'xcids' in i: del(i['xcids'])
-    if 'prepare' in i: del(i['prepare']) # to be able to run pipeline when needed
+    # Cleaning input/output
+    for q in cfg['clean_vars_in_output']:
+        if q in i:
+           del(i[q])
 
     stfx=i.get('save_to_file','')
     stf=stfx

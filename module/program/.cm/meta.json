@@ -53,5 +53,6 @@
     "platform.os": "41e31cc4496b8a8e",
     "soft": "5e1100048ab875d7"
   },
+  "clean_vars_in_output":["cid","cids","xcids","tmp","out","prepare","action"],
   "target_file": "a"
 }
