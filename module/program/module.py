@@ -2501,16 +2501,16 @@ def finalize_pipeline(i):
 
     fail=i.get('fail','')
 
-    # Cleaning input/output
-    for q in cfg['clean_vars_in_output']:
-        if q in i:
-           del(i[q])
-
     stfx=i.get('save_to_file','')
     stf=stfx
     cd=tmp.get('cur_dir','')
     if not os.path.isabs(stf):
        stf=os.path.join(cd, stf)
+
+    # Cleaning input/output
+    for q in cfg['clean_vars_in_output']:
+        if q in i:
+           del(i[q])
 
     if stfx!='':
        if o=='con':
