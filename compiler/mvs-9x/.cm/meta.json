@@ -1,1 +1,34 @@
-{}
+{
+  "all_compiler_flags_desc": {
+    "##base_flag": {
+      "choice": [
+        "/O1", 
+        "/O2", 
+        "/Os", 
+        "/Ot", 
+        "/Od"
+      ], 
+      "default_value": "/Ot", 
+      "desc_text": "base compiler flag", 
+      "explorable": "yes", 
+      "explore_level": "1", 
+      "explore_type": "fixed", 
+      "field_size": "7", 
+      "forbid_disable_at_random": "yes", 
+      "has_choice": "yes", 
+      "no_sorting": "yes", 
+      "skip_form_refresh": "yes", 
+      "sort": 10000, 
+      "tags": [
+        "base", 
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }
+  }, 
+  "tags": [
+    "compiler", 
+    "mcl"
+  ]
+}

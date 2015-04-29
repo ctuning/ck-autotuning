@@ -2,70 +2,75 @@
   "all_compiler_flags_desc": {
     "##base_flag": {
       "choice": [
-        "-O0",
-        "-O1",
-        "-O2",
-        "-Os",
-        "-O3",
+        "-O0", 
+        "-O1", 
+        "-O2", 
+        "-Os", 
+        "-O3", 
         "-fast"
-      ],
-      "default_value": "-O3",
-      "desc_text": "compiler flag: -O3",
-      "explorable": "yes",
-      "explore_level": "1",
-      "explore_type": "fixed",
-      "field_size": "7",
-      "forbid_disable_at_random": "yes",
-      "has_choice": "yes",
-      "no_sorting": "yes",
-      "skip_form_refresh": "yes",
-      "sort_index": "10000",
+      ], 
+      "default_value": "-O3", 
+      "desc_text": "base compiler flag", 
+      "explorable": "yes", 
+      "explore_level": "1", 
+      "explore_type": "fixed", 
+      "field_size": "7", 
+      "forbid_disable_at_random": "yes", 
+      "has_choice": "yes", 
+      "no_sorting": "yes", 
+      "skip_form_refresh": "yes", 
+      "sort": 10000, 
+      "tags": [
+        "base", 
+        "basic", 
+        "optimization"
+      ], 
       "type": "text"
-    },
+    }, 
     "##global_loop_unrolling": {
-      "default_value": "2",
-      "desc_text": "compiler flag: -Qunroll",
-      "explorable": "yes",
-      "explore_level": "1",
-      "explore_prefix": "-Qunroll",
-      "explore_start": "1",
-      "explore_step": "1",
-      "explore_stop": "32",
-      "explore_type": "disabled",
-      "field_size": "7",
-      "forbid_disable_at_random": "no",
-      "only_for_exploration": "yes",
-      "skip_form_refresh": "yes",
-      "sort_index": "10100",
+      "default_value": "2", 
+      "desc_text": "compiler flag: -Qunroll", 
+      "explorable": "yes", 
+      "explore_level": "1", 
+      "explore_prefix": "-Qunroll", 
+      "explore_start": "1", 
+      "explore_step": "1", 
+      "explore_stop": "32", 
+      "explore_type": "disabled", 
+      "field_size": "7", 
+      "forbid_disable_at_random": "no", 
+      "only_for_exploration": "yes", 
+      "skip_form_refresh": "yes", 
+      "sort": 10100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
       "type": "integer"
-    },
+    }, 
     "##openmp_flag": {
       "choice": [
-        "-openmp",
+        "-openmp", 
         ""
-      ],
-      "default_value": "",
-      "desc_text": "compiler flag: openmp",
-      "explorable": "no",
-      "field_size": "10",
-      "has_choice": "yes",
-      "skip_form_refresh": "yes",
-      "sort_index": "10001",
+      ], 
+      "default_value": "", 
+      "desc_text": "compiler flag: openmp", 
+      "explorable": "no", 
+      "field_size": "10", 
+      "has_choice": "yes", 
+      "skip_form_refresh": "yes", 
+      "sort": 10001, 
+      "tags": [
+        "basic", 
+        "openmp", 
+        "optimization"
+      ], 
       "type": "text"
     }
-  },
-  "cm_classes_uoa": [
-    "72f81bd39f84ed89",
-    "b18acc9a098465ca",
-    "5d8b43247a692746"
-  ],
-  "misc_ld_flags": {
-    "pthread_lib": "-pthread"
-  },
-  "profile": {
-    "files": [
-      "gmon.out"
-    ],
-    "flag": "-pg"
-  }
+  }, 
+  "tags": [
+    "compiler", 
+    "icc", 
+    "v2011"
+  ]
 }
