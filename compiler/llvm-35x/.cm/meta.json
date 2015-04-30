@@ -1,6 +1,70 @@
 {
   "all_compiler_flags_desc": {
-    "##base_flag": {
+    "##aa_eval": {
+      "choice": [
+        "-aa-eval", 
+        ""
+      ], 
+      "default_value": "", 
+      "desc_text": "compiler flag: -aa-eval", 
+      "has_choice": "yes", 
+      "no_sorting": "yes", 
+      "sort": 10060, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##adce": {
+      "choice": [
+        "-adce", 
+        ""
+      ], 
+      "default_value": "", 
+      "desc_text": "compiler flag: -adce", 
+      "has_choice": "yes", 
+      "no_sorting": "yes", 
+      "sort": 10070, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##always_inline": {
+      "choice": [
+        "-always-inline", 
+        ""
+      ], 
+      "default_value": "", 
+      "desc_text": "compiler flag: -always-inline", 
+      "has_choice": "yes", 
+      "no_sorting": "yes", 
+      "sort": 10080, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##argpromotion": {
+      "choice": [
+        "-argpromotion", 
+        ""
+      ], 
+      "default_value": "", 
+      "desc_text": "compiler flag: -argpromotion", 
+      "has_choice": "yes", 
+      "no_sorting": "yes", 
+      "sort": 10090, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##base_opt": {
       "choice": [
         " ", 
         "-O1", 
@@ -9,14 +73,8 @@
       ], 
       "default_value": "-O3", 
       "desc_text": "base compiler flag", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
-      "forbid_disable_at_random": "yes", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10000, 
       "tags": [
         "base", 
@@ -25,104 +83,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_aa_eval": {
-      "choice": [
-        "-aa-eval", 
-        ""
-      ], 
-      "default_value": "", 
-      "desc_text": "compiler flag: -aa-eval", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
-      "sort": 10060, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##compiler_flag_adce": {
-      "choice": [
-        "-adce", 
-        ""
-      ], 
-      "default_value": "", 
-      "desc_text": "compiler flag: -adce", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
-      "sort": 10070, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##compiler_flag_always_inline": {
-      "choice": [
-        "-always-inline", 
-        ""
-      ], 
-      "default_value": "", 
-      "desc_text": "compiler flag: -always-inline", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
-      "sort": 10080, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##compiler_flag_argpromotion": {
-      "choice": [
-        "-argpromotion", 
-        ""
-      ], 
-      "default_value": "", 
-      "desc_text": "compiler flag: -argpromotion", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
-      "sort": 10090, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##compiler_flag_basicaa": {
+    "##basicaa": {
       "choice": [
         "-basicaa", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -basicaa", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10110, 
       "tags": [
         "basic", 
@@ -130,20 +99,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_basiccg": {
+    "##basiccg": {
       "choice": [
         "-basiccg", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -basiccg", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10120, 
       "tags": [
         "basic", 
@@ -151,20 +115,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_bb_vectorize": {
+    "##bb_vectorize": {
       "choice": [
         "-bb-vectorize", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -bb-vectorize", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10130, 
       "tags": [
         "basic", 
@@ -172,20 +131,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_block_freq": {
+    "##block_freq": {
       "choice": [
         "-block-freq", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -block-freq", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10140, 
       "tags": [
         "basic", 
@@ -193,20 +147,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_block_placement": {
+    "##block_placement": {
       "choice": [
         "-block-placement", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -block-placement", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10150, 
       "tags": [
         "basic", 
@@ -214,20 +163,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_branch_prob": {
+    "##branch_prob": {
       "choice": [
         "-branch-prob", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -branch-prob", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10160, 
       "tags": [
         "basic", 
@@ -235,20 +179,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_break_crit_edges": {
+    "##break_crit_edges": {
       "choice": [
         "-break-crit-edges", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -break-crit-edges", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10170, 
       "tags": [
         "basic", 
@@ -256,20 +195,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_codegenprepare": {
+    "##codegenprepare": {
       "choice": [
         "-codegenprepare", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -codegenprepare", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10180, 
       "tags": [
         "basic", 
@@ -277,20 +211,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_constmerge": {
+    "##constmerge": {
       "choice": [
         "-constmerge", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -constmerge", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10190, 
       "tags": [
         "basic", 
@@ -298,20 +227,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_constprop": {
+    "##constprop": {
       "choice": [
         "-constprop", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -constprop", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10200, 
       "tags": [
         "basic", 
@@ -319,20 +243,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_correlated_propagation": {
+    "##correlated_propagation": {
       "choice": [
         "-correlated-propagation", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -correlated-propagation", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10210, 
       "tags": [
         "basic", 
@@ -340,20 +259,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_count_aa": {
+    "##count_aa": {
       "choice": [
         "-count-aa", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -count-aa", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10220, 
       "tags": [
         "basic", 
@@ -361,20 +275,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_dce": {
+    "##dce": {
       "choice": [
         "-dce", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -dce", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10230, 
       "tags": [
         "basic", 
@@ -382,20 +291,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_deadargelim": {
+    "##deadargelim": {
       "choice": [
         "-deadargelim", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -deadargelim", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10240, 
       "tags": [
         "basic", 
@@ -403,20 +307,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_die": {
+    "##die": {
       "choice": [
         "-die", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -die", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10250, 
       "tags": [
         "basic", 
@@ -424,20 +323,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_disable_inlining": {
+    "##disable_inlining": {
       "choice": [
         "-disable-inlining", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -disable-inlining", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10010, 
       "tags": [
         "basic", 
@@ -445,20 +339,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_disable_simplify_libcalls": {
+    "##disable_simplify_libcalls": {
       "choice": [
         "-disable-simplify-libcalls", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -disable-simplify-libcalls", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10020, 
       "tags": [
         "basic", 
@@ -466,20 +355,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_domfrontier": {
+    "##domfrontier": {
       "choice": [
         "-domfrontier", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -domfrontier", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10260, 
       "tags": [
         "basic", 
@@ -487,20 +371,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_domtree": {
+    "##domtree": {
       "choice": [
         "-domtree", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -domtree", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10270, 
       "tags": [
         "basic", 
@@ -508,20 +387,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_dse": {
+    "##dse": {
       "choice": [
         "-dse", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -dse", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10280, 
       "tags": [
         "basic", 
@@ -529,20 +403,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_early_cse": {
+    "##early_cse": {
       "choice": [
         "-early-cse", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -early-cse", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10290, 
       "tags": [
         "basic", 
@@ -550,20 +419,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_functionattrs": {
+    "##functionattrs": {
       "choice": [
         "-functionattrs", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -functionattrs", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10300, 
       "tags": [
         "basic", 
@@ -571,20 +435,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_funit_at_a_time": {
+    "##funit_at_a_time": {
       "choice": [
         "-funit-at-a-time", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -funit-at-a-time", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10030, 
       "tags": [
         "basic", 
@@ -592,20 +451,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_globaldce": {
+    "##globaldce": {
       "choice": [
         "-globaldce", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -globaldce", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10310, 
       "tags": [
         "basic", 
@@ -613,20 +467,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_globalopt": {
+    "##globalopt": {
       "choice": [
         "-globalopt", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -globalopt", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10320, 
       "tags": [
         "basic", 
@@ -634,20 +483,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_globalsmodref_aa": {
+    "##globalsmodref_aa": {
       "choice": [
         "-globalsmodref-aa", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -globalsmodref-aa", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10330, 
       "tags": [
         "basic", 
@@ -655,20 +499,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_gvn": {
+    "##gvn": {
       "choice": [
         "-gvn", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -gvn", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10340, 
       "tags": [
         "basic", 
@@ -676,20 +515,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_indvars": {
+    "##indvars": {
       "choice": [
         "-indvars", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -indvars", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10350, 
       "tags": [
         "basic", 
@@ -697,20 +531,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_inline": {
+    "##inline": {
       "choice": [
         "-inline", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -inline", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10360, 
       "tags": [
         "basic", 
@@ -718,20 +547,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_instcombine": {
+    "##instcombine": {
       "choice": [
         "-instcombine", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -instcombine", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10370, 
       "tags": [
         "basic", 
@@ -739,20 +563,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_instcount": {
+    "##instcount": {
       "choice": [
         "-instcount", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -instcount", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10380, 
       "tags": [
         "basic", 
@@ -760,20 +579,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_instnamer": {
+    "##instnamer": {
       "choice": [
         "-instnamer", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -instnamer", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10390, 
       "tags": [
         "basic", 
@@ -781,20 +595,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_instsimplify": {
+    "##instsimplify": {
       "choice": [
         "-instsimplify", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -instsimplify", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10400, 
       "tags": [
         "basic", 
@@ -802,20 +611,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_internalize": {
+    "##internalize": {
       "choice": [
         "-internalize", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -internalize", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10410, 
       "tags": [
         "basic", 
@@ -823,20 +627,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_intervals": {
+    "##intervals": {
       "choice": [
         "-intervals", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -intervals", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10420, 
       "tags": [
         "basic", 
@@ -844,20 +643,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_ipconstprop": {
+    "##ipconstprop": {
       "choice": [
         "-ipconstprop", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -ipconstprop", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10430, 
       "tags": [
         "basic", 
@@ -865,20 +659,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_ipsccp": {
+    "##ipsccp": {
       "choice": [
         "-ipsccp", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -ipsccp", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10440, 
       "tags": [
         "basic", 
@@ -886,20 +675,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_iv_users": {
+    "##iv_users": {
       "choice": [
         "-iv-users", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -iv-users", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10450, 
       "tags": [
         "basic", 
@@ -907,20 +691,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_lazy_value_info": {
+    "##lazy_value_info": {
       "choice": [
         "-lazy-value-info", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -lazy-value-info", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10460, 
       "tags": [
         "basic", 
@@ -928,20 +707,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_lcssa": {
+    "##lcssa": {
       "choice": [
         "-lcssa", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -lcssa", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10470, 
       "tags": [
         "basic", 
@@ -949,20 +723,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_lda": {
+    "##lda": {
       "choice": [
         "-lda", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -lda", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10480, 
       "tags": [
         "basic", 
@@ -970,20 +739,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_libcall_aa": {
+    "##libcall_aa": {
       "choice": [
         "-libcall-aa", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -libcall-aa", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10490, 
       "tags": [
         "basic", 
@@ -991,20 +755,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_licm": {
+    "##licm": {
       "choice": [
         "-licm", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -licm", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10500, 
       "tags": [
         "basic", 
@@ -1012,20 +771,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_lint": {
+    "##lint": {
       "choice": [
         "-lint", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -lint", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10510, 
       "tags": [
         "basic", 
@@ -1033,20 +787,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_loop_deletion": {
+    "##loop_deletion": {
       "choice": [
         "-loop-deletion", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -loop-deletion", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10520, 
       "tags": [
         "basic", 
@@ -1054,20 +803,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_loop_extract": {
+    "##loop_extract": {
       "choice": [
         "-loop-extract", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -loop-extract", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10530, 
       "tags": [
         "basic", 
@@ -1075,20 +819,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_loop_extract_single": {
+    "##loop_extract_single": {
       "choice": [
         "-loop-extract-single", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -loop-extract-single", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10540, 
       "tags": [
         "basic", 
@@ -1096,20 +835,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_loop_idiom": {
+    "##loop_idiom": {
       "choice": [
         "-loop-idiom", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -loop-idiom", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10550, 
       "tags": [
         "basic", 
@@ -1117,20 +851,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_loop_instsimplify": {
+    "##loop_instsimplify": {
       "choice": [
         "-loop-instsimplify", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -loop-instsimplify", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10560, 
       "tags": [
         "basic", 
@@ -1138,20 +867,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_loop_reduce": {
+    "##loop_reduce": {
       "choice": [
         "-loop-reduce", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -loop-reduce", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10570, 
       "tags": [
         "basic", 
@@ -1159,20 +883,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_loop_rotate": {
+    "##loop_rotate": {
       "choice": [
         "-loop-rotate", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -loop-rotate", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10580, 
       "tags": [
         "basic", 
@@ -1180,20 +899,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_loop_simplify": {
+    "##loop_simplify": {
       "choice": [
         "-loop-simplify", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -loop-simplify", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10590, 
       "tags": [
         "basic", 
@@ -1201,20 +915,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_loop_unroll": {
+    "##loop_unroll": {
       "choice": [
         "-loop-unroll", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -loop-unroll", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10600, 
       "tags": [
         "basic", 
@@ -1222,20 +931,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_loop_unswitch": {
+    "##loop_unswitch": {
       "choice": [
         "-loop-unswitch", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -loop-unswitch", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10610, 
       "tags": [
         "basic", 
@@ -1243,20 +947,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_lower_expect": {
+    "##lower_expect": {
       "choice": [
         "-lower-expect", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -lower-expect", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10620, 
       "tags": [
         "basic", 
@@ -1264,20 +963,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_loweratomic": {
+    "##loweratomic": {
       "choice": [
         "-loweratomic", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -loweratomic", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10630, 
       "tags": [
         "basic", 
@@ -1285,20 +979,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_lowerinvoke": {
+    "##lowerinvoke": {
       "choice": [
         "-lowerinvoke", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -lowerinvoke", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10640, 
       "tags": [
         "basic", 
@@ -1306,20 +995,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_lowerswitch": {
+    "##lowerswitch": {
       "choice": [
         "-lowerswitch", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -lowerswitch", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10650, 
       "tags": [
         "basic", 
@@ -1327,20 +1011,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_mem2reg": {
+    "##mem2reg": {
       "choice": [
         "-mem2reg", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -mem2reg", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10660, 
       "tags": [
         "basic", 
@@ -1348,20 +1027,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_memcpyopt": {
+    "##memcpyopt": {
       "choice": [
         "-memcpyopt", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -memcpyopt", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10670, 
       "tags": [
         "basic", 
@@ -1369,20 +1043,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_memdep": {
+    "##memdep": {
       "choice": [
         "-memdep", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -memdep", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10680, 
       "tags": [
         "basic", 
@@ -1390,20 +1059,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_mergefunc": {
+    "##mergefunc": {
       "choice": [
         "-mergefunc", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -mergefunc", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10690, 
       "tags": [
         "basic", 
@@ -1411,20 +1075,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_mergereturn": {
+    "##mergereturn": {
       "choice": [
         "-mergereturn", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -mergereturn", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10700, 
       "tags": [
         "basic", 
@@ -1432,20 +1091,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_module_debuginfo": {
+    "##module_debuginfo": {
       "choice": [
         "-module-debuginfo", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -module-debuginfo", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10710, 
       "tags": [
         "basic", 
@@ -1453,20 +1107,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_partial_inliner": {
+    "##partial_inliner": {
       "choice": [
         "-partial-inliner", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -partial-inliner", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10720, 
       "tags": [
         "basic", 
@@ -1474,20 +1123,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_postdomtree": {
+    "##postdomtree": {
       "choice": [
         "-postdomtree", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -postdomtree", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10730, 
       "tags": [
         "basic", 
@@ -1495,20 +1139,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_preverify": {
+    "##preverify": {
       "choice": [
         "-preverify", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -preverify", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10740, 
       "tags": [
         "basic", 
@@ -1516,20 +1155,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_prune_eh": {
+    "##prune_eh": {
       "choice": [
         "-prune-eh", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -prune-eh", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10750, 
       "tags": [
         "basic", 
@@ -1537,20 +1171,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_reassociate": {
+    "##reassociate": {
       "choice": [
         "-reassociate", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -reassociate", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10760, 
       "tags": [
         "basic", 
@@ -1558,20 +1187,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_reg2mem": {
+    "##reg2mem": {
       "choice": [
         "-reg2mem", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -reg2mem", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10770, 
       "tags": [
         "basic", 
@@ -1579,20 +1203,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_regions": {
+    "##regions": {
       "choice": [
         "-regions", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -regions", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10780, 
       "tags": [
         "basic", 
@@ -1600,20 +1219,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_scalar_evolution": {
+    "##scalar_evolution": {
       "choice": [
         "-scalar-evolution", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -scalar-evolution", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10790, 
       "tags": [
         "basic", 
@@ -1621,20 +1235,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_scalarrepl": {
+    "##scalarrepl": {
       "choice": [
         "-scalarrepl", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -scalarrepl", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10800, 
       "tags": [
         "basic", 
@@ -1642,20 +1251,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_scalarrepl_ssa": {
+    "##scalarrepl_ssa": {
       "choice": [
         "-scalarrepl-ssa", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -scalarrepl-ssa", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10810, 
       "tags": [
         "basic", 
@@ -1663,20 +1267,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_sccp": {
+    "##sccp": {
       "choice": [
         "-sccp", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -sccp", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10820, 
       "tags": [
         "basic", 
@@ -1684,20 +1283,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_scev_aa": {
+    "##scev_aa": {
       "choice": [
         "-scev-aa", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -scev-aa", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10830, 
       "tags": [
         "basic", 
@@ -1705,20 +1299,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_simplify_libcalls": {
+    "##simplify_libcalls": {
       "choice": [
         "-simplify-libcalls", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -simplify-libcalls", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10840, 
       "tags": [
         "basic", 
@@ -1726,20 +1315,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_simplifycfg": {
+    "##simplifycfg": {
       "choice": [
         "-simplifycfg", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -simplifycfg", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10850, 
       "tags": [
         "basic", 
@@ -1747,20 +1331,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_sink": {
+    "##sink": {
       "choice": [
         "-sink", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -sink", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10860, 
       "tags": [
         "basic", 
@@ -1768,20 +1347,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_std_compile_opts": {
+    "##std_compile_opts": {
       "choice": [
         "-std-compile-opts", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -std-compile-opts", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10040, 
       "tags": [
         "basic", 
@@ -1789,20 +1363,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_std_link_opts": {
+    "##std_link_opts": {
       "choice": [
         "-std-link-opts", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -std-link-opts", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10050, 
       "tags": [
         "basic", 
@@ -1810,20 +1379,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_strip": {
+    "##strip": {
       "choice": [
         "-strip", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -strip", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10870, 
       "tags": [
         "basic", 
@@ -1831,20 +1395,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_strip_dead_debug_info": {
+    "##strip_dead_debug_info": {
       "choice": [
         "-strip-dead-debug-info", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -strip-dead-debug-info", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10880, 
       "tags": [
         "basic", 
@@ -1852,20 +1411,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_strip_dead_prototypes": {
+    "##strip_dead_prototypes": {
       "choice": [
         "-strip-dead-prototypes", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -strip-dead-prototypes", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10890, 
       "tags": [
         "basic", 
@@ -1873,20 +1427,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_strip_debug_declare": {
+    "##strip_debug_declare": {
       "choice": [
         "-strip-debug-declare", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -strip-debug-declare", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10900, 
       "tags": [
         "basic", 
@@ -1894,20 +1443,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_strip_nondebug": {
+    "##strip_nondebug": {
       "choice": [
         "-strip-nondebug", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -strip-nondebug", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10910, 
       "tags": [
         "basic", 
@@ -1915,20 +1459,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_tailcallelim": {
+    "##tailcallelim": {
       "choice": [
         "-tailcallelim", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -tailcallelim", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10920, 
       "tags": [
         "basic", 
@@ -1936,20 +1475,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_targetlibinfo": {
+    "##targetlibinfo": {
       "choice": [
         "-targetlibinfo", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -targetlibinfo", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10940, 
       "tags": [
         "basic", 
@@ -1957,20 +1491,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_tbaa": {
+    "##tbaa": {
       "choice": [
         "-tbaa", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -tbaa", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10950, 
       "tags": [
         "basic", 
@@ -1978,20 +1507,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_vectorize": {
+    "##vectorize": {
       "choice": [
         "-vectorize", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -vectorize", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "7", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10960, 
       "tags": [
         "basic", 

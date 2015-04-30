@@ -1,6 +1,448 @@
 {
   "all_compiler_flags_desc": {
-    "##base_flag": {
+    "##Mautoinline": {
+      "choice": [
+        "-Mnoautoinline", 
+        "-Mautoinline"
+      ], 
+      "default_value": "-Mautoinline", 
+      "desc_text": "compiler flag: -Mautoinline", 
+      "has_choice": "yes", 
+      "no_sorting": "yes", 
+      "sort": 10400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##Mcache_align": {
+      "choice": [
+        "-Mcache_align", 
+        ""
+      ], 
+      "default_value": "", 
+      "desc_text": "compiler flag: -Mcache_align", 
+      "has_choice": "yes", 
+      "no_sorting": "yes", 
+      "sort": 10200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##Mdse": {
+      "choice": [
+        "-Mnodse", 
+        "-Mdse"
+      ], 
+      "default_value": "-Mdse", 
+      "desc_text": "compiler flag: -Mdse", 
+      "has_choice": "yes", 
+      "no_sorting": "yes", 
+      "sort": 10300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##Minlinelevels": {
+      "desc_text": "compiler flag: -Minline=levels:", 
+      "explore_prefix": "-Minline=levels:", 
+      "explore_start": "5", 
+      "explore_step": "1", 
+      "explore_stop": "20", 
+      "sort": 10600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##Minlinereshape": {
+      "choice": [
+        "-Minline=reshape", 
+        ""
+      ], 
+      "default_value": "", 
+      "desc_text": "compiler flag: -Minline=reshape", 
+      "has_choice": "yes", 
+      "no_sorting": "yes", 
+      "sort": 10700, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##Minlinesize": {
+      "desc_text": "compiler flag: -Minline=size:", 
+      "explore_prefix": "-Minline=size:", 
+      "explore_start": "20", 
+      "explore_step": "1", 
+      "explore_stop": "200", 
+      "sort": 10500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##Mipafast": {
+      "choice": [
+        "-Mipa=fast", 
+        ""
+      ], 
+      "default_value": "", 
+      "desc_text": "compiler flag: -Mipa=fast", 
+      "has_choice": "yes", 
+      "no_sorting": "yes", 
+      "sort": 10800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##Mlre": {
+      "choice": [
+        "-Mnolre", 
+        "-Mlre=assoc", 
+        "-Mnolre=noassoc"
+      ], 
+      "default_value": "-Mlre", 
+      "desc_text": "compiler flag: -Mlre", 
+      "has_choice": "yes", 
+      "no_sorting": "yes", 
+      "sort": 10900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##Mmovnt": {
+      "choice": [
+        "-Mnomovnt", 
+        "-Mmovnt"
+      ], 
+      "default_value": "-Mmovnt", 
+      "desc_text": "compiler flag: -Mmovnt", 
+      "has_choice": "yes", 
+      "no_sorting": "yes", 
+      "sort": 11000, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##Mnovintr": {
+      "choice": [
+        "-Mnovintr", 
+        ""
+      ], 
+      "default_value": "", 
+      "desc_text": "compiler flag: -Mnovintr", 
+      "has_choice": "yes", 
+      "no_sorting": "yes", 
+      "sort": 11100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##Mpre": {
+      "choice": [
+        "-Mnopre", 
+        "-Mpre", 
+        "-Mpre=all"
+      ], 
+      "default_value": "-Mpre", 
+      "desc_text": "compiler flag: -Mpre", 
+      "has_choice": "yes", 
+      "no_sorting": "yes", 
+      "sort": 11200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##Mprefetchdistance": {
+      "desc_text": "compiler flag: -Mprefetch=distance:", 
+      "explore_prefix": "-Mprefetch=distance:", 
+      "explore_start": "1", 
+      "explore_step": "1", 
+      "explore_stop": "10", 
+      "sort": 11300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##Mprefetchn": {
+      "desc_text": "compiler flag: -Mprefetch=n:", 
+      "explore_prefix": "-Mprefetch=n:", 
+      "explore_start": "1", 
+      "explore_step": "1", 
+      "explore_stop": "100", 
+      "sort": 11400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##Mpropcond": {
+      "choice": [
+        "-Mnopropcond", 
+        "-Mpropcond"
+      ], 
+      "default_value": "-Mpropcond", 
+      "desc_text": "compiler flag: -Mpropcond", 
+      "has_choice": "yes", 
+      "no_sorting": "yes", 
+      "sort": 11500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##Mquad": {
+      "choice": [
+        "-Mquad", 
+        ""
+      ], 
+      "default_value": "", 
+      "desc_text": "compiler flag: -Mquad", 
+      "has_choice": "yes", 
+      "no_sorting": "yes", 
+      "sort": 11600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##Msmart": {
+      "choice": [
+        "-Mnosmart", 
+        "-Msmart"
+      ], 
+      "default_value": "-Msmart", 
+      "desc_text": "compiler flag: -Msmart", 
+      "has_choice": "yes", 
+      "no_sorting": "yes", 
+      "sort": 11700, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##Mstride0": {
+      "choice": [
+        "-Mnostride0", 
+        "-Mstride0"
+      ], 
+      "default_value": "-Mstride0", 
+      "desc_text": "compiler flag: -Mstride0", 
+      "has_choice": "yes", 
+      "no_sorting": "yes", 
+      "sort": 11800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##Munrollc": {
+      "desc_text": "compiler flag: -Munroll=c:", 
+      "explore_prefix": "-Munroll=c:", 
+      "explore_start": "2", 
+      "explore_step": "1", 
+      "explore_stop": "16", 
+      "sort": 11900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##Munrollm": {
+      "desc_text": "compiler flag: -Munroll=m:", 
+      "explore_prefix": "-Munroll=m:", 
+      "explore_start": "2", 
+      "explore_step": "1", 
+      "explore_stop": "16", 
+      "sort": 12100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##Munrolln": {
+      "desc_text": "compiler flag: -Munroll=n:", 
+      "explore_prefix": "-Munroll=n:", 
+      "explore_start": "2", 
+      "explore_step": "1", 
+      "explore_stop": "16", 
+      "sort": 12000, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##Mvectaltcode": {
+      "choice": [
+        "-Mvect=noaltcode", 
+        "-Mvect=altcode"
+      ], 
+      "default_value": "-Mvect=altcode", 
+      "desc_text": "compiler flag: -Mvect=altcode", 
+      "has_choice": "yes", 
+      "no_sorting": "yes", 
+      "sort": 12200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##Mvectassoc": {
+      "choice": [
+        "-Mvect=noassoc", 
+        "-Mvect=assoc"
+      ], 
+      "default_value": "-Mvect=assoc", 
+      "desc_text": "compiler flag: -Mvect=assoc", 
+      "has_choice": "yes", 
+      "no_sorting": "yes", 
+      "sort": 12300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##Mvectfuse": {
+      "choice": [
+        "-Mvect=nofuse", 
+        "-Mvect=fuse"
+      ], 
+      "default_value": "-Mvect=fuse", 
+      "desc_text": "compiler flag: -Mvect=fuse", 
+      "has_choice": "yes", 
+      "no_sorting": "yes", 
+      "sort": 12400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##Mvectgather": {
+      "choice": [
+        "-Mvect=nogather", 
+        "-Mvect=gather"
+      ], 
+      "default_value": "-Mvect=gather", 
+      "desc_text": "compiler flag: -Mvect=gather", 
+      "has_choice": "yes", 
+      "no_sorting": "yes", 
+      "sort": 12500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##Mvectlevels": {
+      "desc_text": "compiler flag: -Mvect=levels:", 
+      "explore_prefix": "-Mvect=levels:", 
+      "explore_start": "1", 
+      "explore_step": "1", 
+      "explore_stop": "10", 
+      "sort": 12600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##Mvectpartial": {
+      "choice": [
+        "-Mvect=partial", 
+        ""
+      ], 
+      "default_value": "", 
+      "desc_text": "compiler flag: -Mvect=partial", 
+      "has_choice": "yes", 
+      "no_sorting": "yes", 
+      "sort": 12700, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##Mvectprefetch": {
+      "choice": [
+        "-Mvect=prefetch", 
+        ""
+      ], 
+      "default_value": "", 
+      "desc_text": "compiler flag: -Mvect=prefetch", 
+      "has_choice": "yes", 
+      "no_sorting": "yes", 
+      "sort": 12800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##Mvectshort": {
+      "choice": [
+        "-Mvect=noshort", 
+        "-Mvect=short"
+      ], 
+      "default_value": "-Mvect=short", 
+      "desc_text": "compiler flag: -Mvect=short", 
+      "has_choice": "yes", 
+      "no_sorting": "yes", 
+      "sort": 12900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##Mvectsse": {
+      "choice": [
+        "-Mvect=nosse", 
+        "-Mvect=sse"
+      ], 
+      "default_value": "-Mvect=sse", 
+      "desc_text": "compiler flag: -Mvect=sse", 
+      "has_choice": "yes", 
+      "no_sorting": "yes", 
+      "sort": 13000, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##base_opt": {
       "choice": [
         "-O0", 
         "-O1", 
@@ -10,14 +452,8 @@
       ], 
       "default_value": "-O3", 
       "desc_text": "base compiler flag", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "yes", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10000, 
       "tags": [
         "base", 
@@ -26,667 +462,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_Mautoinline": {
-      "choice": [
-        "-Mnoautoinline", 
-        "-Mautoinline"
-      ], 
-      "default_value": "-Mautoinline", 
-      "desc_text": "compiler flag: -Mautoinline", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
-      "sort": 10400, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##compiler_flag_Mcache_align": {
-      "choice": [
-        "-Mcache_align", 
-        ""
-      ], 
-      "default_value": "", 
-      "desc_text": "compiler flag: -Mcache_align", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
-      "sort": 10200, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##compiler_flag_Mdse": {
-      "choice": [
-        "-Mnodse", 
-        "-Mdse"
-      ], 
-      "default_value": "-Mdse", 
-      "desc_text": "compiler flag: -Mdse", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
-      "sort": 10300, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##compiler_flag_Minlinelevels": {
-      "desc_text": "compiler flag: -Minline=levels:", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_prefix": "-Minline=levels:", 
-      "explore_start": "5", 
-      "explore_step": "1", 
-      "explore_stop": "20", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
-      "sort": 10600, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##compiler_flag_Minlinereshape": {
-      "choice": [
-        "-Minline=reshape", 
-        ""
-      ], 
-      "default_value": "", 
-      "desc_text": "compiler flag: -Minline=reshape", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
-      "sort": 10700, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##compiler_flag_Minlinesize": {
-      "desc_text": "compiler flag: -Minline=size:", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_prefix": "-Minline=size:", 
-      "explore_start": "20", 
-      "explore_step": "1", 
-      "explore_stop": "200", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
-      "sort": 10500, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##compiler_flag_Mipafast": {
-      "choice": [
-        "-Mipa=fast", 
-        ""
-      ], 
-      "default_value": "", 
-      "desc_text": "compiler flag: -Mipa=fast", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
-      "sort": 10800, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##compiler_flag_Mlre": {
-      "choice": [
-        "-Mnolre", 
-        "-Mlre=assoc", 
-        "-Mnolre=noassoc"
-      ], 
-      "default_value": "-Mlre", 
-      "desc_text": "compiler flag: -Mlre", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
-      "sort": 10900, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##compiler_flag_Mmovnt": {
-      "choice": [
-        "-Mnomovnt", 
-        "-Mmovnt"
-      ], 
-      "default_value": "-Mmovnt", 
-      "desc_text": "compiler flag: -Mmovnt", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
-      "sort": 11000, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##compiler_flag_Mnovintr": {
-      "choice": [
-        "-Mnovintr", 
-        ""
-      ], 
-      "default_value": "", 
-      "desc_text": "compiler flag: -Mnovintr", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
-      "sort": 11100, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##compiler_flag_Mpre": {
-      "choice": [
-        "-Mnopre", 
-        "-Mpre", 
-        "-Mpre=all"
-      ], 
-      "default_value": "-Mpre", 
-      "desc_text": "compiler flag: -Mpre", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
-      "sort": 11200, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##compiler_flag_Mprefetchdistance": {
-      "desc_text": "compiler flag: -Mprefetch=distance:", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_prefix": "-Mprefetch=distance:", 
-      "explore_start": "1", 
-      "explore_step": "1", 
-      "explore_stop": "10", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
-      "sort": 11300, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##compiler_flag_Mprefetchn": {
-      "desc_text": "compiler flag: -Mprefetch=n:", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_prefix": "-Mprefetch=n:", 
-      "explore_start": "1", 
-      "explore_step": "1", 
-      "explore_stop": "100", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
-      "sort": 11400, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##compiler_flag_Mpropcond": {
-      "choice": [
-        "-Mnopropcond", 
-        "-Mpropcond"
-      ], 
-      "default_value": "-Mpropcond", 
-      "desc_text": "compiler flag: -Mpropcond", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
-      "sort": 11500, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##compiler_flag_Mquad": {
-      "choice": [
-        "-Mquad", 
-        ""
-      ], 
-      "default_value": "", 
-      "desc_text": "compiler flag: -Mquad", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
-      "sort": 11600, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##compiler_flag_Msmart": {
-      "choice": [
-        "-Mnosmart", 
-        "-Msmart"
-      ], 
-      "default_value": "-Msmart", 
-      "desc_text": "compiler flag: -Msmart", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
-      "sort": 11700, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##compiler_flag_Mstride0": {
-      "choice": [
-        "-Mnostride0", 
-        "-Mstride0"
-      ], 
-      "default_value": "-Mstride0", 
-      "desc_text": "compiler flag: -Mstride0", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
-      "sort": 11800, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##compiler_flag_Munrollc": {
-      "desc_text": "compiler flag: -Munroll=c:", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_prefix": "-Munroll=c:", 
-      "explore_start": "2", 
-      "explore_step": "1", 
-      "explore_stop": "16", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
-      "sort": 11900, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##compiler_flag_Munrollm": {
-      "desc_text": "compiler flag: -Munroll=m:", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_prefix": "-Munroll=m:", 
-      "explore_start": "2", 
-      "explore_step": "1", 
-      "explore_stop": "16", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
-      "sort": 12100, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##compiler_flag_Munrolln": {
-      "desc_text": "compiler flag: -Munroll=n:", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_prefix": "-Munroll=n:", 
-      "explore_start": "2", 
-      "explore_step": "1", 
-      "explore_stop": "16", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
-      "sort": 12000, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##compiler_flag_Mvectaltcode": {
-      "choice": [
-        "-Mvect=noaltcode", 
-        "-Mvect=altcode"
-      ], 
-      "default_value": "-Mvect=altcode", 
-      "desc_text": "compiler flag: -Mvect=altcode", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
-      "sort": 12200, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##compiler_flag_Mvectassoc": {
-      "choice": [
-        "-Mvect=noassoc", 
-        "-Mvect=assoc"
-      ], 
-      "default_value": "-Mvect=assoc", 
-      "desc_text": "compiler flag: -Mvect=assoc", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
-      "sort": 12300, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##compiler_flag_Mvectfuse": {
-      "choice": [
-        "-Mvect=nofuse", 
-        "-Mvect=fuse"
-      ], 
-      "default_value": "-Mvect=fuse", 
-      "desc_text": "compiler flag: -Mvect=fuse", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
-      "sort": 12400, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##compiler_flag_Mvectgather": {
-      "choice": [
-        "-Mvect=nogather", 
-        "-Mvect=gather"
-      ], 
-      "default_value": "-Mvect=gather", 
-      "desc_text": "compiler flag: -Mvect=gather", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
-      "sort": 12500, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##compiler_flag_Mvectlevels": {
-      "desc_text": "compiler flag: -Mvect=levels:", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_prefix": "-Mvect=levels:", 
-      "explore_start": "1", 
-      "explore_step": "1", 
-      "explore_stop": "10", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
-      "sort": 12600, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##compiler_flag_Mvectpartial": {
-      "choice": [
-        "-Mvect=partial", 
-        ""
-      ], 
-      "default_value": "", 
-      "desc_text": "compiler flag: -Mvect=partial", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
-      "sort": 12700, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##compiler_flag_Mvectprefetch": {
-      "choice": [
-        "-Mvect=prefetch", 
-        ""
-      ], 
-      "default_value": "", 
-      "desc_text": "compiler flag: -Mvect=prefetch", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
-      "sort": 12800, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##compiler_flag_Mvectshort": {
-      "choice": [
-        "-Mvect=noshort", 
-        "-Mvect=short"
-      ], 
-      "default_value": "-Mvect=short", 
-      "desc_text": "compiler flag: -Mvect=short", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
-      "sort": 12900, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##compiler_flag_Mvectsse": {
-      "choice": [
-        "-Mvect=nosse", 
-        "-Mvect=sse"
-      ], 
-      "default_value": "-Mvect=sse", 
-      "desc_text": "compiler flag: -Mvect=sse", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
-      "sort": 13000, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##compiler_flag_fpic": {
+    "##fpic": {
       "choice": [
         "-fpic", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: -fpic", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10100, 
       "tags": [
         "basic", 
@@ -694,17 +478,14 @@
       ], 
       "type": "text"
     }, 
-    "##openmp_flag": {
+    "##openmp": {
       "choice": [
         "-fopenmp", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: openmp", 
-      "explorable": "no", 
-      "field_size": "10", 
       "has_choice": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10001, 
       "tags": [
         "basic", 

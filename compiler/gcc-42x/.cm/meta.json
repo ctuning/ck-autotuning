@@ -1,6 +1,6 @@
 {
   "all_compiler_flags_desc": {
-    "##base_flag": {
+    "##base_opt": {
       "choice": [
         "-O0", 
         "-O1", 
@@ -10,14 +10,8 @@
       ], 
       "default_value": "-O3", 
       "desc_text": "base compiler flag", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "fixed", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "yes", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10000, 
       "tags": [
         "base", 
@@ -26,19 +20,12 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_falign_functions": {
+    "##falign_functions": {
       "desc_text": "compiler flag: -falign-functions=", 
-      "explorable": "yes", 
-      "explore_level": "1", 
       "explore_prefix": "-falign-functions=", 
       "explore_start": "1", 
       "explore_step": "1", 
       "explore_stop": "64", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10400, 
       "tags": [
         "basic", 
@@ -46,19 +33,12 @@
       ], 
       "type": "integer"
     }, 
-    "##compiler_flag_falign_jumps": {
+    "##falign_jumps": {
       "desc_text": "compiler flag: -falign-jumps=", 
-      "explorable": "yes", 
-      "explore_level": "1", 
       "explore_prefix": "-falign-jumps=", 
       "explore_start": "1", 
       "explore_step": "1", 
       "explore_stop": "64", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10500, 
       "tags": [
         "basic", 
@@ -66,19 +46,12 @@
       ], 
       "type": "integer"
     }, 
-    "##compiler_flag_falign_labels": {
+    "##falign_labels": {
       "desc_text": "compiler flag: -falign-labels=", 
-      "explorable": "yes", 
-      "explore_level": "1", 
       "explore_prefix": "-falign-labels=", 
       "explore_start": "1", 
       "explore_step": "1", 
       "explore_stop": "64", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10600, 
       "tags": [
         "basic", 
@@ -86,19 +59,12 @@
       ], 
       "type": "integer"
     }, 
-    "##compiler_flag_falign_loops": {
+    "##falign_loops": {
       "desc_text": "compiler flag: -falign-loops=", 
-      "explorable": "yes", 
-      "explore_level": "1", 
       "explore_prefix": "-falign-loops=", 
       "explore_start": "1", 
       "explore_step": "1", 
       "explore_stop": "64", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10700, 
       "tags": [
         "basic", 
@@ -106,22 +72,15 @@
       ], 
       "type": "integer"
     }, 
-    "##compiler_flag_fbranch_count_reg": {
+    "##fbranch_count_reg": {
       "choice": [
         "-fbranch-count-reg", 
         "-fno-branch-count-reg"
       ], 
       "default_value": "-fbranch-count-reg", 
       "desc_text": "compiler flag: -fbranch-count-reg", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 11700, 
       "tags": [
         "basic", 
@@ -129,22 +88,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_fbranch_target_load_optimize": {
+    "##fbranch_target_load_optimize": {
       "choice": [
         "-fbranch-target-load-optimize", 
         "-fno-branch-target-load-optimize"
       ], 
       "default_value": "-fbranch-target-load-optimize", 
       "desc_text": "compiler flag: -fbranch-target-load-optimize", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 11800, 
       "tags": [
         "basic", 
@@ -152,22 +104,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_fbtr_bb_exclusive": {
+    "##fbtr_bb_exclusive": {
       "choice": [
         "-fbtr-bb-exclusive", 
         "-fno-btr-bb-exclusive"
       ], 
       "default_value": "-fbtr-bb-exclusive", 
       "desc_text": "compiler flag: -fbtr-bb-exclusive", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 11900, 
       "tags": [
         "basic", 
@@ -175,22 +120,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_fcaller_saves": {
+    "##fcaller_saves": {
       "choice": [
         "-fcaller-saves", 
         "-fno-caller-saves"
       ], 
       "default_value": "-fcaller-saves", 
       "desc_text": "compiler flag: -fcaller-saves", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 12000, 
       "tags": [
         "basic", 
@@ -198,22 +136,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_fcprop_registers": {
+    "##fcprop_registers": {
       "choice": [
         "-fcprop-registers", 
         "-fno-cprop-registers"
       ], 
       "default_value": "-fcprop-registers", 
       "desc_text": "compiler flag: -fcprop-registers", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 12100, 
       "tags": [
         "basic", 
@@ -221,22 +152,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_fcrossjumping": {
+    "##fcrossjumping": {
       "choice": [
         "-fcrossjumping", 
         "-fno-crossjumping"
       ], 
       "default_value": "-fcrossjumping", 
       "desc_text": "compiler flag: -fcrossjumping", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 12200, 
       "tags": [
         "basic", 
@@ -244,22 +168,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_fcse_follow_jumps": {
+    "##fcse_follow_jumps": {
       "choice": [
         "-fcse-follow-jumps", 
         "-fno-cse-follow-jumps"
       ], 
       "default_value": "-fcse-follow-jumps", 
       "desc_text": "compiler flag: -fcse-follow-jumps", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 12300, 
       "tags": [
         "basic", 
@@ -267,22 +184,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_fcse_skip_blocks": {
+    "##fcse_skip_blocks": {
       "choice": [
         "-fcse-skip-blocks", 
         "-fno-cse-skip-blocks"
       ], 
       "default_value": "-fcse-skip-blocks", 
       "desc_text": "compiler flag: -fcse-skip-blocks", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 12400, 
       "tags": [
         "basic", 
@@ -290,22 +200,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_fcx_limited_range": {
+    "##fcx_limited_range": {
       "choice": [
         "-fcx-limited-range", 
         "-fno-cx-limited-range"
       ], 
       "default_value": "-fcx-limited-range", 
       "desc_text": "compiler flag: -fcx-limited-range", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 12500, 
       "tags": [
         "basic", 
@@ -313,22 +216,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_fdefer_pop": {
+    "##fdefer_pop": {
       "choice": [
         "-fdefer-pop", 
         "-fno-defer-pop"
       ], 
       "default_value": "-fdefer-pop", 
       "desc_text": "compiler flag: -fdefer-pop", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 12600, 
       "tags": [
         "basic", 
@@ -336,22 +232,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_fdelete_null_pointer_checks": {
+    "##fdelete_null_pointer_checks": {
       "choice": [
         "-fdelete-null-pointer-checks", 
         "-fno-delete-null-pointer-checks"
       ], 
       "default_value": "-fdelete-null-pointer-checks", 
       "desc_text": "compiler flag: -fdelete-null-pointer-checks", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 12700, 
       "tags": [
         "basic", 
@@ -359,22 +248,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_fearly_inlining": {
+    "##fearly_inlining": {
       "choice": [
         "-fearly-inlining", 
         "-fno-early-inlining"
       ], 
       "default_value": "-fearly-inlining", 
       "desc_text": "compiler flag: -fearly-inlining", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 12800, 
       "tags": [
         "basic", 
@@ -382,22 +264,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_fexpensive_optimizations": {
+    "##fexpensive_optimizations": {
       "choice": [
         "-fexpensive-optimizations", 
         "-fno-expensive-optimizations"
       ], 
       "default_value": "-fexpensive-optimizations", 
       "desc_text": "compiler flag: -fexpensive-optimizations", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 12900, 
       "tags": [
         "basic", 
@@ -405,22 +280,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_ffunction_cse": {
+    "##ffunction_cse": {
       "choice": [
         "-ffunction-cse", 
         "-fno-function-cse"
       ], 
       "default_value": "-ffunction-cse", 
       "desc_text": "compiler flag: -ffunction-cse", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 13000, 
       "tags": [
         "basic", 
@@ -428,22 +296,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_fgcse": {
+    "##fgcse": {
       "choice": [
         "-fgcse", 
         "-fno-gcse"
       ], 
       "default_value": "-fgcse", 
       "desc_text": "compiler flag: -fgcse", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 13500, 
       "tags": [
         "basic", 
@@ -451,22 +312,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_fgcse_after_reload": {
+    "##fgcse_after_reload": {
       "choice": [
         "-fgcse-after-reload", 
         "-fno-gcse-after-reload"
       ], 
       "default_value": "-fgcse-after-reload", 
       "desc_text": "compiler flag: -fgcse-after-reload", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 13100, 
       "tags": [
         "basic", 
@@ -474,22 +328,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_fgcse_las": {
+    "##fgcse_las": {
       "choice": [
         "-fgcse-las", 
         "-fno-gcse-las"
       ], 
       "default_value": "-fgcse-las", 
       "desc_text": "compiler flag: -fgcse-las", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 13200, 
       "tags": [
         "basic", 
@@ -497,22 +344,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_fgcse_lm": {
+    "##fgcse_lm": {
       "choice": [
         "-fgcse-lm", 
         "-fno-gcse-lm"
       ], 
       "default_value": "-fgcse-lm", 
       "desc_text": "compiler flag: -fgcse-lm", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 13300, 
       "tags": [
         "basic", 
@@ -520,22 +360,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_fgcse_sm": {
+    "##fgcse_sm": {
       "choice": [
         "-fgcse-sm", 
         "-fno-gcse-sm"
       ], 
       "default_value": "-fgcse-sm", 
       "desc_text": "compiler flag: -fgcse-sm", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 13400, 
       "tags": [
         "basic", 
@@ -543,22 +376,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_fguess_branch_probability": {
+    "##fguess_branch_probability": {
       "choice": [
         "-fguess-branch-probability", 
         "-fno-guess-branch-probability"
       ], 
       "default_value": "-fguess-branch-probability", 
       "desc_text": "compiler flag: -fguess-branch-probability", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 13600, 
       "tags": [
         "basic", 
@@ -566,22 +392,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_fif_conversion": {
+    "##fif_conversion": {
       "choice": [
         "-fif-conversion", 
         "-fno-if-conversion"
       ], 
       "default_value": "-fif-conversion", 
       "desc_text": "compiler flag: -fif-conversion", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 13700, 
       "tags": [
         "basic", 
@@ -589,22 +408,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_fif_conversion2": {
+    "##fif_conversion2": {
       "choice": [
         "-fif-conversion2", 
         "-fno-if-conversion2"
       ], 
       "default_value": "-fif-conversion2", 
       "desc_text": "compiler flag: -fif-conversion2", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 13800, 
       "tags": [
         "basic", 
@@ -612,22 +424,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_finline_functions": {
+    "##finline_functions": {
       "choice": [
         "-finline-functions", 
         "-fno-inline-functions"
       ], 
       "default_value": "-finline-functions", 
       "desc_text": "compiler flag: -finline-functions", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 13900, 
       "tags": [
         "basic", 
@@ -635,19 +440,12 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_finline_limit": {
+    "##finline_limit": {
       "desc_text": "compiler flag: -finline-limit=", 
-      "explorable": "yes", 
-      "explore_level": "1", 
       "explore_prefix": "-finline-limit=", 
       "explore_start": "64", 
       "explore_step": "1", 
       "explore_stop": "2048", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10300, 
       "tags": [
         "basic", 
@@ -655,22 +453,15 @@
       ], 
       "type": "integer"
     }, 
-    "##compiler_flag_fivopts": {
+    "##fivopts": {
       "choice": [
         "-fivopts", 
         "-fno-ivopts"
       ], 
       "default_value": "-fivopts", 
       "desc_text": "compiler flag: -fivopts", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 14000, 
       "tags": [
         "basic", 
@@ -678,22 +469,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_floop_optimize": {
+    "##floop_optimize": {
       "choice": [
         "-floop-optimize", 
         "-fno-loop-optimize"
       ], 
       "default_value": "-floop-optimize", 
       "desc_text": "compiler flag: -floop-optimize", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 14100, 
       "tags": [
         "basic", 
@@ -701,22 +485,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_fmath_errno": {
+    "##fmath_errno": {
       "choice": [
         "-fmath-errno", 
         "-fno-math-errno"
       ], 
       "default_value": "-fmath-errno", 
       "desc_text": "compiler flag: -fmath-errno", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 14200, 
       "tags": [
         "basic", 
@@ -724,22 +501,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_fmerge_constants": {
+    "##fmerge_constants": {
       "choice": [
         "-fmerge-constants", 
         "-fno-merge-constants"
       ], 
       "default_value": "-fmerge-constants", 
       "desc_text": "compiler flag: -fmerge-constants", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 14300, 
       "tags": [
         "basic", 
@@ -747,22 +517,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_fmodulo_sched": {
+    "##fmodulo_sched": {
       "choice": [
         "-fmodulo-sched", 
         "-fno-modulo-sched"
       ], 
       "default_value": "-fmodulo-sched", 
       "desc_text": "compiler flag: -fmodulo-sched", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 14400, 
       "tags": [
         "basic", 
@@ -770,22 +533,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_fmove_loop_invariants": {
+    "##fmove_loop_invariants": {
       "choice": [
         "-fmove-loop-invariants", 
         "-fno-move-loop-invariants"
       ], 
       "default_value": "-fmove-loop-invariants", 
       "desc_text": "compiler flag: -fmove-loop-invariants", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 14500, 
       "tags": [
         "basic", 
@@ -793,22 +549,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_fomit_frame_pointer": {
+    "##fomit_frame_pointer": {
       "choice": [
         "-fomit-frame-pointer", 
         "-fno-omit-frame-pointer"
       ], 
       "default_value": "-fomit-frame-pointer", 
       "desc_text": "compiler flag: -fomit-frame-pointer", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 14600, 
       "tags": [
         "basic", 
@@ -816,22 +565,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_foptimize_register_move": {
+    "##foptimize_register_move": {
       "choice": [
         "-foptimize-register-move", 
         "-fno-optimize-register-move"
       ], 
       "default_value": "-foptimize-register-move", 
       "desc_text": "compiler flag: -foptimize-register-move", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 14700, 
       "tags": [
         "basic", 
@@ -839,22 +581,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_foptimize_sibling_calls": {
+    "##foptimize_sibling_calls": {
       "choice": [
         "-foptimize-sibling-calls", 
         "-fno-optimize-sibling-calls"
       ], 
       "default_value": "-foptimize-sibling-calls", 
       "desc_text": "compiler flag: -foptimize-sibling-calls", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 14800, 
       "tags": [
         "basic", 
@@ -862,22 +597,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_fpeel_loops": {
+    "##fpeel_loops": {
       "choice": [
         "-fpeel-loops", 
         "-fno-peel-loops"
       ], 
       "default_value": "-fpeel-loops", 
       "desc_text": "compiler flag: -fpeel-loops", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 14900, 
       "tags": [
         "basic", 
@@ -885,22 +613,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_fpeephole": {
+    "##fpeephole": {
       "choice": [
         "-fpeephole", 
         "-fno-peephole"
       ], 
       "default_value": "-fpeephole", 
       "desc_text": "compiler flag: -fpeephole", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 15000, 
       "tags": [
         "basic", 
@@ -908,22 +629,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_fpeephole2": {
+    "##fpeephole2": {
       "choice": [
         "-fpeephole2", 
         "-fno-peephole2"
       ], 
       "default_value": "-fpeephole2", 
       "desc_text": "compiler flag: -fpeephole2", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 15100, 
       "tags": [
         "basic", 
@@ -931,22 +645,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_fprefetch_loop_arrays": {
+    "##fprefetch_loop_arrays": {
       "choice": [
         "-fprefetch-loop-arrays", 
         "-fno-prefetch-loop-arrays"
       ], 
       "default_value": "-fprefetch-loop-arrays", 
       "desc_text": "compiler flag: -fprefetch-loop-arrays", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 15200, 
       "tags": [
         "basic", 
@@ -954,22 +661,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_fregmove": {
+    "##fregmove": {
       "choice": [
         "-fregmove", 
         "-fno-regmove"
       ], 
       "default_value": "-fregmove", 
       "desc_text": "compiler flag: -fregmove", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 15300, 
       "tags": [
         "basic", 
@@ -977,22 +677,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_frename_registers": {
+    "##frename_registers": {
       "choice": [
         "-frename-registers", 
         "-fno-rename-registers"
       ], 
       "default_value": "-frename-registers", 
       "desc_text": "compiler flag: -frename-registers", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 15400, 
       "tags": [
         "basic", 
@@ -1000,22 +693,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_freorder_blocks": {
+    "##freorder_blocks": {
       "choice": [
         "-freorder-blocks", 
         "-fno-reorder-blocks"
       ], 
       "default_value": "-freorder-blocks", 
       "desc_text": "compiler flag: -freorder-blocks", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 15500, 
       "tags": [
         "basic", 
@@ -1023,22 +709,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_freorder_functions": {
+    "##freorder_functions": {
       "choice": [
         "-freorder-functions", 
         "-fno-reorder-functions"
       ], 
       "default_value": "-freorder-functions", 
       "desc_text": "compiler flag: -freorder-functions", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 15600, 
       "tags": [
         "basic", 
@@ -1046,22 +725,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_frerun_cse_after_loop": {
+    "##frerun_cse_after_loop": {
       "choice": [
         "-frerun-cse-after-loop", 
         "-fno-rerun-cse-after-loop"
       ], 
       "default_value": "-frerun-cse-after-loop", 
       "desc_text": "compiler flag: -frerun-cse-after-loop", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 15700, 
       "tags": [
         "basic", 
@@ -1069,22 +741,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_frerun_loop_opt": {
+    "##frerun_loop_opt": {
       "choice": [
         "-frerun-loop-opt", 
         "-fno-rerun-loop-opt"
       ], 
       "default_value": "-frerun-loop-opt", 
       "desc_text": "compiler flag: -frerun-loop-opt", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 15800, 
       "tags": [
         "basic", 
@@ -1092,22 +757,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_freschedule_modulo_scheduled_loops": {
+    "##freschedule_modulo_scheduled_loops": {
       "choice": [
         "-freschedule-modulo-scheduled-loops", 
         "-fno-reschedule-modulo-scheduled-loops"
       ], 
       "default_value": "-freschedule-modulo-scheduled-loops", 
       "desc_text": "compiler flag: -freschedule-modulo-scheduled-loops", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 15900, 
       "tags": [
         "basic", 
@@ -1115,22 +773,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_fsched2_use_superblocks": {
+    "##fsched2_use_superblocks": {
       "choice": [
         "-fsched2-use-superblocks", 
         "-fno-sched2-use-superblocks"
       ], 
       "default_value": "-fsched2-use-superblocks", 
       "desc_text": "compiler flag: -fsched2-use-superblocks", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 16400, 
       "tags": [
         "basic", 
@@ -1138,22 +789,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_fsched_interblock": {
+    "##fsched_interblock": {
       "choice": [
         "-fsched-interblock", 
         "-fno-sched-interblock"
       ], 
       "default_value": "-fsched-interblock", 
       "desc_text": "compiler flag: -fsched-interblock", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 16000, 
       "tags": [
         "basic", 
@@ -1161,22 +805,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_fsched_spec": {
+    "##fsched_spec": {
       "choice": [
         "-fsched-spec", 
         "-fno-sched-spec"
       ], 
       "default_value": "-fsched-spec", 
       "desc_text": "compiler flag: -fsched-spec", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 16300, 
       "tags": [
         "basic", 
@@ -1184,22 +821,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_fsched_spec_load": {
+    "##fsched_spec_load": {
       "choice": [
         "-fsched-spec-load", 
         "-fno-sched-spec-load"
       ], 
       "default_value": "-fsched-spec-load", 
       "desc_text": "compiler flag: -fsched-spec-load", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 16200, 
       "tags": [
         "basic", 
@@ -1207,22 +837,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_fsched_spec_load_dangerous": {
+    "##fsched_spec_load_dangerous": {
       "choice": [
         "-fsched-spec-load-dangerous", 
         "-fno-sched-spec-load-dangerous"
       ], 
       "default_value": "-fsched-spec-load-dangerous", 
       "desc_text": "compiler flag: -fsched-spec-load-dangerous", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 16100, 
       "tags": [
         "basic", 
@@ -1230,19 +853,12 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_fsched_stalled_insns": {
+    "##fsched_stalled_insns": {
       "desc_text": "compiler flag: -fsched-stalled-insns=", 
-      "explorable": "yes", 
-      "explore_level": "1", 
       "explore_prefix": "-fsched-stalled-insns=", 
       "explore_start": "1", 
       "explore_step": "1", 
       "explore_stop": "64", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10200, 
       "tags": [
         "basic", 
@@ -1250,19 +866,12 @@
       ], 
       "type": "integer"
     }, 
-    "##compiler_flag_fsched_stalled_insns_dep": {
+    "##fsched_stalled_insns_dep": {
       "desc_text": "compiler flag: -fsched-stalled-insns-dep=", 
-      "explorable": "yes", 
-      "explore_level": "1", 
       "explore_prefix": "-fsched-stalled-insns-dep=", 
       "explore_start": "1", 
       "explore_step": "1", 
       "explore_stop": "64", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10100, 
       "tags": [
         "basic", 
@@ -1270,22 +879,15 @@
       ], 
       "type": "integer"
     }, 
-    "##compiler_flag_fschedule_insns": {
+    "##fschedule_insns": {
       "choice": [
         "-fschedule-insns", 
         "-fno-schedule-insns"
       ], 
       "default_value": "-fschedule-insns", 
       "desc_text": "compiler flag: -fschedule-insns", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 16500, 
       "tags": [
         "basic", 
@@ -1293,22 +895,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_fschedule_insns2": {
+    "##fschedule_insns2": {
       "choice": [
         "-fschedule-insns2", 
         "-fno-schedule-insns2"
       ], 
       "default_value": "-fschedule-insns2", 
       "desc_text": "compiler flag: -fschedule-insns2", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 16600, 
       "tags": [
         "basic", 
@@ -1316,22 +911,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_fsignaling_nans": {
+    "##fsignaling_nans": {
       "choice": [
         "-fsignaling-nans", 
         "-fno-signaling-nans"
       ], 
       "default_value": "-fsignaling-nans", 
       "desc_text": "compiler flag: -fsignaling-nans", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 16700, 
       "tags": [
         "basic", 
@@ -1339,22 +927,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_fsingle_precision_constant": {
+    "##fsingle_precision_constant": {
       "choice": [
         "-fsingle-precision-constant", 
         "-fno-single-precision-constant"
       ], 
       "default_value": "-fsingle-precision-constant", 
       "desc_text": "compiler flag: -fsingle-precision-constant", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 16800, 
       "tags": [
         "basic", 
@@ -1362,22 +943,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_fsplit_ivs_in_unroller": {
+    "##fsplit_ivs_in_unroller": {
       "choice": [
         "-fsplit-ivs-in-unroller", 
         "-fno-split-ivs-in-unroller"
       ], 
       "default_value": "-fsplit-ivs-in-unroller", 
       "desc_text": "compiler flag: -fsplit-ivs-in-unroller", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 16900, 
       "tags": [
         "basic", 
@@ -1385,22 +959,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_fstrength_reduce": {
+    "##fstrength_reduce": {
       "choice": [
         "-fstrength-reduce", 
         "-fno-strength-reduce"
       ], 
       "default_value": "-fstrength-reduce", 
       "desc_text": "compiler flag: -fstrength-reduce", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 17000, 
       "tags": [
         "basic", 
@@ -1408,22 +975,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_fstrict_aliasing": {
+    "##fstrict_aliasing": {
       "choice": [
         "-fstrict-aliasing", 
         "-fno-strict-aliasing"
       ], 
       "default_value": "-fstrict-aliasing", 
       "desc_text": "compiler flag: -fstrict-aliasing", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 17100, 
       "tags": [
         "basic", 
@@ -1431,22 +991,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_fthread_jumps": {
+    "##fthread_jumps": {
       "choice": [
         "-fthread-jumps", 
         "-fno-thread-jumps"
       ], 
       "default_value": "-fthread-jumps", 
       "desc_text": "compiler flag: -fthread-jumps", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 17200, 
       "tags": [
         "basic", 
@@ -1454,22 +1007,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_ftracer": {
+    "##ftracer": {
       "choice": [
         "-ftracer", 
         "-fno-tracer"
       ], 
       "default_value": "-ftracer", 
       "desc_text": "compiler flag: -ftracer", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 17300, 
       "tags": [
         "basic", 
@@ -1477,22 +1023,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_ftree_ccp": {
+    "##ftree_ccp": {
       "choice": [
         "-ftree-ccp", 
         "-fno-tree-ccp"
       ], 
       "default_value": "-ftree-ccp", 
       "desc_text": "compiler flag: -ftree-ccp", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 17400, 
       "tags": [
         "basic", 
@@ -1500,22 +1039,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_ftree_ch": {
+    "##ftree_ch": {
       "choice": [
         "-ftree-ch", 
         "-fno-tree-ch"
       ], 
       "default_value": "-ftree-ch", 
       "desc_text": "compiler flag: -ftree-ch", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 17500, 
       "tags": [
         "basic", 
@@ -1523,22 +1055,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_ftree_copyrename": {
+    "##ftree_copyrename": {
       "choice": [
         "-ftree-copyrename", 
         "-fno-tree-copyrename"
       ], 
       "default_value": "-ftree-copyrename", 
       "desc_text": "compiler flag: -ftree-copyrename", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 17600, 
       "tags": [
         "basic", 
@@ -1546,22 +1071,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_ftree_dce": {
+    "##ftree_dce": {
       "choice": [
         "-ftree-dce", 
         "-fno-tree-dce"
       ], 
       "default_value": "-ftree-dce", 
       "desc_text": "compiler flag: -ftree-dce", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 17700, 
       "tags": [
         "basic", 
@@ -1569,22 +1087,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_ftree_dominator_opts": {
+    "##ftree_dominator_opts": {
       "choice": [
         "-ftree-dominator-opts", 
         "-fno-tree-dominator-opts"
       ], 
       "default_value": "-ftree-dominator-opts", 
       "desc_text": "compiler flag: -ftree-dominator-opts", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 17800, 
       "tags": [
         "basic", 
@@ -1592,22 +1103,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_ftree_dse": {
+    "##ftree_dse": {
       "choice": [
         "-ftree-dse", 
         "-fno-tree-dse"
       ], 
       "default_value": "-ftree-dse", 
       "desc_text": "compiler flag: -ftree-dse", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 17900, 
       "tags": [
         "basic", 
@@ -1615,22 +1119,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_ftree_fre": {
+    "##ftree_fre": {
       "choice": [
         "-ftree-fre", 
         "-fno-tree-fre"
       ], 
       "default_value": "-ftree-fre", 
       "desc_text": "compiler flag: -ftree-fre", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 18000, 
       "tags": [
         "basic", 
@@ -1638,22 +1135,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_ftree_loop_im": {
+    "##ftree_loop_im": {
       "choice": [
         "-ftree-loop-im", 
         "-fno-tree-loop-im"
       ], 
       "default_value": "-ftree-loop-im", 
       "desc_text": "compiler flag: -ftree-loop-im", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 18100, 
       "tags": [
         "basic", 
@@ -1661,22 +1151,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_ftree_loop_ivcanon": {
+    "##ftree_loop_ivcanon": {
       "choice": [
         "-ftree-loop-ivcanon", 
         "-fno-tree-loop-ivcanon"
       ], 
       "default_value": "-ftree-loop-ivcanon", 
       "desc_text": "compiler flag: -ftree-loop-ivcanon", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 18200, 
       "tags": [
         "basic", 
@@ -1684,22 +1167,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_ftree_loop_linear": {
+    "##ftree_loop_linear": {
       "choice": [
         "-ftree-loop-linear", 
         "-fno-tree-loop-linear"
       ], 
       "default_value": "-ftree-loop-linear", 
       "desc_text": "compiler flag: -ftree-loop-linear", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 18300, 
       "tags": [
         "basic", 
@@ -1707,22 +1183,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_ftree_loop_optimize": {
+    "##ftree_loop_optimize": {
       "choice": [
         "-ftree-loop-optimize", 
         "-fno-tree-loop-optimize"
       ], 
       "default_value": "-ftree-loop-optimize", 
       "desc_text": "compiler flag: -ftree-loop-optimize", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 18400, 
       "tags": [
         "basic", 
@@ -1730,22 +1199,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_ftree_lrs": {
+    "##ftree_lrs": {
       "choice": [
         "-ftree-lrs", 
         "-fno-tree-lrs"
       ], 
       "default_value": "-ftree-lrs", 
       "desc_text": "compiler flag: -ftree-lrs", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 18500, 
       "tags": [
         "basic", 
@@ -1753,22 +1215,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_ftree_pre": {
+    "##ftree_pre": {
       "choice": [
         "-ftree-pre", 
         "-fno-tree-pre"
       ], 
       "default_value": "-ftree-pre", 
       "desc_text": "compiler flag: -ftree-pre", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 18600, 
       "tags": [
         "basic", 
@@ -1776,22 +1231,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_ftree_sra": {
+    "##ftree_sra": {
       "choice": [
         "-ftree-sra", 
         "-fno-tree-sra"
       ], 
       "default_value": "-ftree-sra", 
       "desc_text": "compiler flag: -ftree-sra", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 18700, 
       "tags": [
         "basic", 
@@ -1799,22 +1247,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_ftree_ter": {
+    "##ftree_ter": {
       "choice": [
         "-ftree-ter", 
         "-fno-tree-ter"
       ], 
       "default_value": "-ftree-ter", 
       "desc_text": "compiler flag: -ftree-ter", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 18800, 
       "tags": [
         "basic", 
@@ -1822,22 +1263,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_ftree_vect_loop_version": {
+    "##ftree_vect_loop_version": {
       "choice": [
         "-ftree-vect-loop-version", 
         "-fno-tree-vect-loop-version"
       ], 
       "default_value": "-ftree-vect-loop-version", 
       "desc_text": "compiler flag: -ftree-vect-loop-version", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 18900, 
       "tags": [
         "basic", 
@@ -1845,22 +1279,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_ftree_vectorize": {
+    "##ftree_vectorize": {
       "choice": [
         "-ftree-vectorize", 
         "-fno-tree-vectorize"
       ], 
       "default_value": "-ftree-vectorize", 
       "desc_text": "compiler flag: -ftree-vectorize", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 19000, 
       "tags": [
         "basic", 
@@ -1868,22 +1295,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_funroll_all_loops": {
+    "##funroll_all_loops": {
       "choice": [
         "-funroll-all-loops", 
         "-funroll-loops"
       ], 
       "default_value": "-funroll-all-loops", 
       "desc_text": "compiler flag: -funroll-all-loops", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 19100, 
       "tags": [
         "basic", 
@@ -1891,22 +1311,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_funswitch_loops": {
+    "##funswitch_loops": {
       "choice": [
         "-funswitch-loops", 
         "-fno-unswitch-loops"
       ], 
       "default_value": "-funswitch-loops", 
       "desc_text": "compiler flag: -funswitch-loops", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 19200, 
       "tags": [
         "basic", 
@@ -1914,22 +1327,15 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_fvariable_expansion_in_unroller": {
+    "##fvariable_expansion_in_unroller": {
       "choice": [
         "-fvariable-expansion-in-unroller", 
         "-fno-variable-expansion-in-unroller"
       ], 
       "default_value": "-fvariable-expansion-in-unroller", 
       "desc_text": "compiler flag: -fvariable-expansion-in-unroller", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
       "has_choice": "yes", 
       "no_sorting": "yes", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 19300, 
       "tags": [
         "basic", 
@@ -1937,197 +1343,14 @@
       ], 
       "type": "text"
     }, 
-    "##compiler_flag_param_inline_call_cost": {
-      "desc_text": "compiler flag: --param inline-call-cost=", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_prefix": "--param inline-call-cost=", 
-      "explore_start": "8", 
-      "explore_step": "1", 
-      "explore_stop": "32", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
-      "sort": 11400, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##compiler_flag_param_inline_unit_growth": {
-      "desc_text": "compiler flag: --param inline-unit-growth=", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_prefix": "--param inline-unit-growth=", 
-      "explore_start": "8", 
-      "explore_step": "1", 
-      "explore_stop": "512", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
-      "sort": 11300, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##compiler_flag_param_large_function_growth": {
-      "desc_text": "compiler flag: --param large-function-growth=", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_prefix": "--param large-function-growth=", 
-      "explore_start": "16", 
-      "explore_step": "1", 
-      "explore_stop": "1024", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
-      "sort": 11100, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##compiler_flag_param_large_function_insns": {
-      "desc_text": "compiler flag: --param large-function-insns=", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_prefix": "--param large-function-insns=", 
-      "explore_start": "1024", 
-      "explore_step": "1", 
-      "explore_stop": "4096", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
-      "sort": 11000, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##compiler_flag_param_large_unit_insns": {
-      "desc_text": "compiler flag: --param large-unit-insns=", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_prefix": "--param large-unit-insns=", 
-      "explore_start": "1024", 
-      "explore_step": "1", 
-      "explore_stop": "32768", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
-      "sort": 11200, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##compiler_flag_param_max_gcse_passes": {
-      "desc_text": "compiler flag: --param max-gcse-passes=", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_prefix": "--param max-gcse-passes=", 
-      "explore_start": "1", 
-      "explore_step": "1", 
-      "explore_stop": "4", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
-      "sort": 10800, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##compiler_flag_param_max_inline_insns_auto": {
-      "desc_text": "compiler flag: --param max-inline-insns-auto=", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_prefix": "--param max-inline-insns-auto=", 
-      "explore_start": "8", 
-      "explore_step": "1", 
-      "explore_stop": "256", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
-      "sort": 10900, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##compiler_flag_param_max_unroll_times": {
-      "desc_text": "compiler flag: --param max-unroll-times=", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_prefix": "--param max-unroll-times=", 
-      "explore_start": "2", 
-      "explore_step": "1", 
-      "explore_stop": "16", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
-      "sort": 11500, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##compiler_flag_param_max_unrolled_insns": {
-      "desc_text": "compiler flag: --param max-unrolled-insns=", 
-      "explorable": "yes", 
-      "explore_level": "1", 
-      "explore_prefix": "--param max-unrolled-insns=", 
-      "explore_start": "32", 
-      "explore_step": "1", 
-      "explore_stop": "2048", 
-      "explore_type": "disabled", 
-      "field_size": "10", 
-      "forbid_disable_at_random": "no", 
-      "only_for_exploration": "yes", 
-      "skip_form_refresh": "yes", 
-      "sort": 11600, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##openmp_flag": {
+    "##openmp": {
       "choice": [
         "-fopenmp", 
         ""
       ], 
       "default_value": "", 
       "desc_text": "compiler flag: openmp", 
-      "explorable": "no", 
-      "field_size": "10", 
       "has_choice": "yes", 
-      "skip_form_refresh": "yes", 
       "sort": 10001, 
       "tags": [
         "basic", 
@@ -2135,6 +1358,123 @@
         "optimization"
       ], 
       "type": "text"
+    }, 
+    "##param_inline_call_cost": {
+      "desc_text": "compiler flag: --param inline-call-cost=", 
+      "explore_prefix": "--param inline-call-cost=", 
+      "explore_start": "8", 
+      "explore_step": "1", 
+      "explore_stop": "32", 
+      "sort": 11400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_inline_unit_growth": {
+      "desc_text": "compiler flag: --param inline-unit-growth=", 
+      "explore_prefix": "--param inline-unit-growth=", 
+      "explore_start": "8", 
+      "explore_step": "1", 
+      "explore_stop": "512", 
+      "sort": 11300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_large_function_growth": {
+      "desc_text": "compiler flag: --param large-function-growth=", 
+      "explore_prefix": "--param large-function-growth=", 
+      "explore_start": "16", 
+      "explore_step": "1", 
+      "explore_stop": "1024", 
+      "sort": 11100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_large_function_insns": {
+      "desc_text": "compiler flag: --param large-function-insns=", 
+      "explore_prefix": "--param large-function-insns=", 
+      "explore_start": "1024", 
+      "explore_step": "1", 
+      "explore_stop": "4096", 
+      "sort": 11000, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_large_unit_insns": {
+      "desc_text": "compiler flag: --param large-unit-insns=", 
+      "explore_prefix": "--param large-unit-insns=", 
+      "explore_start": "1024", 
+      "explore_step": "1", 
+      "explore_stop": "32768", 
+      "sort": 11200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max_gcse_passes": {
+      "desc_text": "compiler flag: --param max-gcse-passes=", 
+      "explore_prefix": "--param max-gcse-passes=", 
+      "explore_start": "1", 
+      "explore_step": "1", 
+      "explore_stop": "4", 
+      "sort": 10800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max_inline_insns_auto": {
+      "desc_text": "compiler flag: --param max-inline-insns-auto=", 
+      "explore_prefix": "--param max-inline-insns-auto=", 
+      "explore_start": "8", 
+      "explore_step": "1", 
+      "explore_stop": "256", 
+      "sort": 10900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max_unroll_times": {
+      "desc_text": "compiler flag: --param max-unroll-times=", 
+      "explore_prefix": "--param max-unroll-times=", 
+      "explore_start": "2", 
+      "explore_step": "1", 
+      "explore_stop": "16", 
+      "sort": 11500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max_unrolled_insns": {
+      "desc_text": "compiler flag: --param max-unrolled-insns=", 
+      "explore_prefix": "--param max-unrolled-insns=", 
+      "explore_start": "32", 
+      "explore_step": "1", 
+      "explore_stop": "2048", 
+      "sort": 11600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
     }
   }, 
   "tags": [
