@@ -1890,8 +1890,7 @@ def pipeline(i):
     cdeps=i.get('compile_deps',{})
 
     pdir=i.get('program_dir','')
-    if pdir=='': pdir=tmp['cur_dir'] # Program root directory (will be updated, if duoa)
-    else: os.chdir(pdir)
+    if pdir!='': os.chdir(pdir)
 
     sdi=i.get('skip_device_init','')
     sic=i.get('skip_info_collection','')
@@ -2011,17 +2010,32 @@ def pipeline(i):
           # First, try to detect CID in current directory
           r=ck.cid({})
           if r['return']==0:
-             ruoa=r.get('repo_uoa','')
-             muoa=r.get('module_uoa','')
-             duoa=r.get('data_uoa','')
+             xruoa=r.get('repo_uoa','')
+             xmuoa=r.get('module_uoa','')
+             xduoa=r.get('data_uoa','')
+
+             rx=ck.access({'action':'load',
+                           'module_uoa':xmuoa,
+                           'data_uoa':xduoa,
+                           'repo_uoa':xruoa})
+             if rx['return']>0: return rx
+             xmeta=rx['dict']
+
+             if xmeta.get('program','')=='yes':
+                duoa=xduoa
+                muoa=xmuoa
+                ruoa=xruoa
+                meta=xmeta
 
           if duoa=='':
              # Attempt to load configuration from the current directory
-             pc=os.path.join(pdir, ck.cfg['subdir_ck_ext'], ck.cfg['file_meta'])
+             pc=os.path.join(tmp['cur_dir'], ck.cfg['subdir_ck_ext'], ck.cfg['file_meta'])
              if os.path.isfile(pc):
                 r=ck.load_json_file({'json_file':pc})
                 if r['return']==0:
-                   meta=r['dict']
+                   xmeta=r['dict']
+                   if xmeta.get('program','')=='yes':
+                      meta=xmeta
 
     # Second, if duoa is not detected ordefined, prepare selection 
     duid=''
@@ -2056,18 +2070,23 @@ def pipeline(i):
     if len(meta)==0 and duoa=='':
        return {'return':0, 'error':'no programs found for this pipeline'}
 
-    if len(meta)==0 and duoa!='':
+    if pdir=='' and duoa!='':
        rx=ck.access({'action':'load',
                      'module_uoa':muoa,
                      'data_uoa':duoa,
                      'repo_uoa':ruoa})
        if rx['return']>0: return rx
-       meta=rx['dict']
+       if len(meta)==0: 
+          meta=rx['dict']
        pdir=rx['path']
        duid=rx['data_uid']
        duoa=rx['data_uoa']
 
-    if duid=='' and d.get('backup_data_uid','')!='': duid=d['backup_data_uid']
+    if pdir=='': pdir=tmp['cur_dir']
+
+    i['program_meta']=meta
+
+    if duid=='' and meta.get('backup_data_uid','')!='': duid=meta['backup_data_uid']
 
     if duoa!='': i['data_uoa']=duoa
     if muoa!='': i['module_uoa']=muoa
@@ -2259,7 +2278,7 @@ def pipeline(i):
 
     ###############################################################################################################
     # PIPELINE SECTION: get compiler description for flag options
-    cflags_desc=choices.get('compiler_flags_desc',{})
+    cflags_desc=choices.get('##compiler_flags',{})
 
     cdu=i.get('compiler_description_uoa','')
     if cdu=='' and i.get('no_compiler_description','')!='yes':
@@ -2322,15 +2341,15 @@ def pipeline(i):
        if len(cflags_desc)==0:
           cflags_desc=rxd.get('all_compiler_flags_desc',{})
 
-          choices['compiler_flags_desc']=cflags_desc
+          choices['##compiler_flags']=cflags_desc
 
     ###############################################################################################################
     # PIPELINE SECTION: get compiler vars choices (-Dvar=value) - often for datasets such as in polyhedral benchmarks
     bcvd=meta.get('build_compiler_vars_desc',{})
-    cbcvd=choices.get('compiler_vars',{})
+    cbcvd=choices.get('##compiler_vars',{})
 
     if len(bcvd)>0 and len(cbcvd)==0:
-       choices['compiler_vars']=bcvd
+       choices['##compiler_vars']=bcvd
 
     cv=i.get('compiler_vars',{})
 
