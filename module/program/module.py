@@ -742,7 +742,9 @@ def process_in_dir(i):
 
           # Try objdump
           sb+='\n'+no+svarb+'CK_OBJDUMP'+svare+' '+target_exe+' '+stro+' '+target_exe+'.dump'+'\n'
-          sb+='\n'+no+'md5sum < '+target_exe+'.dump '+stro+' '+target_exe+'.md5'+'\n'
+          x='<'
+          if hplat=='win':x='' 
+          sb+='\n'+no+'md5sum '+x+' '+target_exe+'.dump '+stro+' '+target_exe+'.md5'+'\n'
 
           # Record to tmp batch and run
           rx=ck.gen_tmp_file({'prefix':'tmp-', 'suffix':sext, 'remove_dir':'yes'})
