@@ -45,6 +45,7 @@
       "cmd": "$#linker#$ $#flags_before#$ $#obj_files#$ $#flags_after#$"
     }
   },
+  "pipeline":"yes",
   "module_deps": {
     "compiler": "36ebc331048475bb",
     "dataset": "8a7141c59cd335f5",

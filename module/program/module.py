@@ -645,10 +645,10 @@ def process_in_dir(i):
               kv=bcv[k]
               if sbcv!='': sbcv+=' '
               sbcv+=svarb+svarb1+'CK_FLAG_PREFIX_VAR'+svare1+svare+k
-              if kv!='': sbcv+='='+kv
+              if kv!='': sbcv+='='+str(kv)
 
               if o=='con':
-                 ck.out('  '+k+'='+kv)
+                 ck.out('  '+k+'='+str(kv))
 
           # Prepare compilation
           sb+='\n'
@@ -1756,7 +1756,10 @@ def pipeline(i):
     Input:  {
               (repo_uoa)             - program repo UOA
               (module_uoa)           - program module UOA
-              data_uoa               - program data UOA
+              (data_uoa)             - program data UOA
+                 or
+              (program_uoa)
+                 or taken from .cm/meta.json from current directory
 
               (program_tags)         - select programs by these tags
 
@@ -1858,8 +1861,8 @@ def pipeline(i):
 
     tmp['cur_dir']=os.getcwd()
 
-    if 'choices' not in i: i['choices']={}
-    choices=i['choices']
+    if 'choices_desc' not in i: i['choices_desc']={}
+    choices=i['choices_desc']
 
     if 'features' not in i: i['features']={}
     features=i['features']
@@ -2341,7 +2344,12 @@ def pipeline(i):
        if len(cflags_desc)==0:
           cflags_desc=rxd.get('all_compiler_flags_desc',{})
 
-          choices['##compiler_flags']=cflags_desc
+          for q in cflags_desc:
+              qq=cflags_desc[q]
+              q1=q
+              if q.startswith('##'):q1=q[2:]
+              elif q.startswith('#'):q1=q[1:]
+              choices['##compiler_flags#'+q1]=qq
 
     ###############################################################################################################
     # PIPELINE SECTION: get compiler vars choices (-Dvar=value) - often for datasets such as in polyhedral benchmarks
@@ -2349,7 +2357,12 @@ def pipeline(i):
     cbcvd=choices.get('##compiler_vars',{})
 
     if len(bcvd)>0 and len(cbcvd)==0:
-       choices['##compiler_vars']=bcvd
+       for q in bcvd:
+           qq=bcvd[q]
+           q1=q
+           if q.startswith('##'):q1=q[2:]
+           elif q.startswith('#'):q1=q[1:]
+           choices['##compiler_vars#'+q1]=qq
 
     cv=i.get('compiler_vars',{})
 
