@@ -1,14 +1,13 @@
 {
   "all_compiler_flags_desc": {
     "##Mautoinline": {
+      "can_omit": "yes", 
       "choice": [
         "-Mnoautoinline", 
         "-Mautoinline"
       ], 
-      "default_value": "-Mautoinline", 
-      "desc_text": "compiler flag: -Mautoinline", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -Mautoinline", 
       "sort": 10400, 
       "tags": [
         "basic", 
@@ -17,14 +16,13 @@
       "type": "text"
     }, 
     "##Mcache_align": {
+      "can_omit": "yes", 
       "choice": [
         "-Mcache_align", 
         ""
       ], 
-      "default_value": "", 
-      "desc_text": "compiler flag: -Mcache_align", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -Mcache_align", 
       "sort": 10200, 
       "tags": [
         "basic", 
@@ -33,14 +31,13 @@
       "type": "text"
     }, 
     "##Mdse": {
+      "can_omit": "yes", 
       "choice": [
         "-Mnodse", 
         "-Mdse"
       ], 
-      "default_value": "-Mdse", 
-      "desc_text": "compiler flag: -Mdse", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -Mdse", 
       "sort": 10300, 
       "tags": [
         "basic", 
@@ -49,11 +46,13 @@
       "type": "text"
     }, 
     "##Minlinelevels": {
-      "desc_text": "compiler flag: -Minline=levels:", 
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -Minline=levels:", 
       "explore_prefix": "-Minline=levels:", 
-      "explore_start": "5", 
-      "explore_step": "1", 
-      "explore_stop": "20", 
+      "explore_start": 5, 
+      "explore_step": 1, 
+      "explore_stop": 20, 
       "sort": 10600, 
       "tags": [
         "basic", 
@@ -62,14 +61,13 @@
       "type": "integer"
     }, 
     "##Minlinereshape": {
+      "can_omit": "yes", 
       "choice": [
         "-Minline=reshape", 
         ""
       ], 
-      "default_value": "", 
-      "desc_text": "compiler flag: -Minline=reshape", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -Minline=reshape", 
       "sort": 10700, 
       "tags": [
         "basic", 
@@ -78,11 +76,13 @@
       "type": "text"
     }, 
     "##Minlinesize": {
-      "desc_text": "compiler flag: -Minline=size:", 
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -Minline=size:", 
       "explore_prefix": "-Minline=size:", 
-      "explore_start": "20", 
-      "explore_step": "1", 
-      "explore_stop": "200", 
+      "explore_start": 20, 
+      "explore_step": 1, 
+      "explore_stop": 200, 
       "sort": 10500, 
       "tags": [
         "basic", 
@@ -91,14 +91,13 @@
       "type": "integer"
     }, 
     "##Mipafast": {
+      "can_omit": "yes", 
       "choice": [
         "-Mipa=fast", 
         ""
       ], 
-      "default_value": "", 
-      "desc_text": "compiler flag: -Mipa=fast", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -Mipa=fast", 
       "sort": 10800, 
       "tags": [
         "basic", 
@@ -107,15 +106,14 @@
       "type": "text"
     }, 
     "##Mlre": {
+      "can_omit": "yes", 
       "choice": [
         "-Mnolre", 
         "-Mlre=assoc", 
         "-Mnolre=noassoc"
       ], 
-      "default_value": "-Mlre", 
-      "desc_text": "compiler flag: -Mlre", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -Mlre", 
       "sort": 10900, 
       "tags": [
         "basic", 
@@ -124,14 +122,13 @@
       "type": "text"
     }, 
     "##Mmovnt": {
+      "can_omit": "yes", 
       "choice": [
         "-Mnomovnt", 
         "-Mmovnt"
       ], 
-      "default_value": "-Mmovnt", 
-      "desc_text": "compiler flag: -Mmovnt", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -Mmovnt", 
       "sort": 11000, 
       "tags": [
         "basic", 
@@ -140,14 +137,13 @@
       "type": "text"
     }, 
     "##Mnovintr": {
+      "can_omit": "yes", 
       "choice": [
         "-Mnovintr", 
         ""
       ], 
-      "default_value": "", 
-      "desc_text": "compiler flag: -Mnovintr", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -Mnovintr", 
       "sort": 11100, 
       "tags": [
         "basic", 
@@ -156,15 +152,14 @@
       "type": "text"
     }, 
     "##Mpre": {
+      "can_omit": "yes", 
       "choice": [
         "-Mnopre", 
         "-Mpre", 
         "-Mpre=all"
       ], 
-      "default_value": "-Mpre", 
-      "desc_text": "compiler flag: -Mpre", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -Mpre", 
       "sort": 11200, 
       "tags": [
         "basic", 
@@ -173,11 +168,13 @@
       "type": "text"
     }, 
     "##Mprefetchdistance": {
-      "desc_text": "compiler flag: -Mprefetch=distance:", 
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -Mprefetch=distance:", 
       "explore_prefix": "-Mprefetch=distance:", 
-      "explore_start": "1", 
-      "explore_step": "1", 
-      "explore_stop": "10", 
+      "explore_start": 1, 
+      "explore_step": 1, 
+      "explore_stop": 10, 
       "sort": 11300, 
       "tags": [
         "basic", 
@@ -186,11 +183,13 @@
       "type": "integer"
     }, 
     "##Mprefetchn": {
-      "desc_text": "compiler flag: -Mprefetch=n:", 
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -Mprefetch=n:", 
       "explore_prefix": "-Mprefetch=n:", 
-      "explore_start": "1", 
-      "explore_step": "1", 
-      "explore_stop": "100", 
+      "explore_start": 1, 
+      "explore_step": 1, 
+      "explore_stop": 100, 
       "sort": 11400, 
       "tags": [
         "basic", 
@@ -199,14 +198,13 @@
       "type": "integer"
     }, 
     "##Mpropcond": {
+      "can_omit": "yes", 
       "choice": [
         "-Mnopropcond", 
         "-Mpropcond"
       ], 
-      "default_value": "-Mpropcond", 
-      "desc_text": "compiler flag: -Mpropcond", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -Mpropcond", 
       "sort": 11500, 
       "tags": [
         "basic", 
@@ -215,14 +213,13 @@
       "type": "text"
     }, 
     "##Mquad": {
+      "can_omit": "yes", 
       "choice": [
         "-Mquad", 
         ""
       ], 
-      "default_value": "", 
-      "desc_text": "compiler flag: -Mquad", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -Mquad", 
       "sort": 11600, 
       "tags": [
         "basic", 
@@ -231,14 +228,13 @@
       "type": "text"
     }, 
     "##Msmart": {
+      "can_omit": "yes", 
       "choice": [
         "-Mnosmart", 
         "-Msmart"
       ], 
-      "default_value": "-Msmart", 
-      "desc_text": "compiler flag: -Msmart", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -Msmart", 
       "sort": 11700, 
       "tags": [
         "basic", 
@@ -247,14 +243,13 @@
       "type": "text"
     }, 
     "##Mstride0": {
+      "can_omit": "yes", 
       "choice": [
         "-Mnostride0", 
         "-Mstride0"
       ], 
-      "default_value": "-Mstride0", 
-      "desc_text": "compiler flag: -Mstride0", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -Mstride0", 
       "sort": 11800, 
       "tags": [
         "basic", 
@@ -263,11 +258,13 @@
       "type": "text"
     }, 
     "##Munrollc": {
-      "desc_text": "compiler flag: -Munroll=c:", 
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -Munroll=c:", 
       "explore_prefix": "-Munroll=c:", 
-      "explore_start": "2", 
-      "explore_step": "1", 
-      "explore_stop": "16", 
+      "explore_start": 2, 
+      "explore_step": 1, 
+      "explore_stop": 16, 
       "sort": 11900, 
       "tags": [
         "basic", 
@@ -276,11 +273,13 @@
       "type": "integer"
     }, 
     "##Munrollm": {
-      "desc_text": "compiler flag: -Munroll=m:", 
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -Munroll=m:", 
       "explore_prefix": "-Munroll=m:", 
-      "explore_start": "2", 
-      "explore_step": "1", 
-      "explore_stop": "16", 
+      "explore_start": 2, 
+      "explore_step": 1, 
+      "explore_stop": 16, 
       "sort": 12100, 
       "tags": [
         "basic", 
@@ -289,11 +288,13 @@
       "type": "integer"
     }, 
     "##Munrolln": {
-      "desc_text": "compiler flag: -Munroll=n:", 
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -Munroll=n:", 
       "explore_prefix": "-Munroll=n:", 
-      "explore_start": "2", 
-      "explore_step": "1", 
-      "explore_stop": "16", 
+      "explore_start": 2, 
+      "explore_step": 1, 
+      "explore_stop": 16, 
       "sort": 12000, 
       "tags": [
         "basic", 
@@ -302,14 +303,13 @@
       "type": "integer"
     }, 
     "##Mvectaltcode": {
+      "can_omit": "yes", 
       "choice": [
         "-Mvect=noaltcode", 
         "-Mvect=altcode"
       ], 
-      "default_value": "-Mvect=altcode", 
-      "desc_text": "compiler flag: -Mvect=altcode", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -Mvect=altcode", 
       "sort": 12200, 
       "tags": [
         "basic", 
@@ -318,14 +318,13 @@
       "type": "text"
     }, 
     "##Mvectassoc": {
+      "can_omit": "yes", 
       "choice": [
         "-Mvect=noassoc", 
         "-Mvect=assoc"
       ], 
-      "default_value": "-Mvect=assoc", 
-      "desc_text": "compiler flag: -Mvect=assoc", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -Mvect=assoc", 
       "sort": 12300, 
       "tags": [
         "basic", 
@@ -334,14 +333,13 @@
       "type": "text"
     }, 
     "##Mvectfuse": {
+      "can_omit": "yes", 
       "choice": [
         "-Mvect=nofuse", 
         "-Mvect=fuse"
       ], 
-      "default_value": "-Mvect=fuse", 
-      "desc_text": "compiler flag: -Mvect=fuse", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -Mvect=fuse", 
       "sort": 12400, 
       "tags": [
         "basic", 
@@ -350,14 +348,13 @@
       "type": "text"
     }, 
     "##Mvectgather": {
+      "can_omit": "yes", 
       "choice": [
         "-Mvect=nogather", 
         "-Mvect=gather"
       ], 
-      "default_value": "-Mvect=gather", 
-      "desc_text": "compiler flag: -Mvect=gather", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -Mvect=gather", 
       "sort": 12500, 
       "tags": [
         "basic", 
@@ -366,11 +363,13 @@
       "type": "text"
     }, 
     "##Mvectlevels": {
-      "desc_text": "compiler flag: -Mvect=levels:", 
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -Mvect=levels:", 
       "explore_prefix": "-Mvect=levels:", 
-      "explore_start": "1", 
-      "explore_step": "1", 
-      "explore_stop": "10", 
+      "explore_start": 1, 
+      "explore_step": 1, 
+      "explore_stop": 10, 
       "sort": 12600, 
       "tags": [
         "basic", 
@@ -379,14 +378,13 @@
       "type": "integer"
     }, 
     "##Mvectpartial": {
+      "can_omit": "yes", 
       "choice": [
         "-Mvect=partial", 
         ""
       ], 
-      "default_value": "", 
-      "desc_text": "compiler flag: -Mvect=partial", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -Mvect=partial", 
       "sort": 12700, 
       "tags": [
         "basic", 
@@ -395,14 +393,13 @@
       "type": "text"
     }, 
     "##Mvectprefetch": {
+      "can_omit": "yes", 
       "choice": [
         "-Mvect=prefetch", 
         ""
       ], 
-      "default_value": "", 
-      "desc_text": "compiler flag: -Mvect=prefetch", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -Mvect=prefetch", 
       "sort": 12800, 
       "tags": [
         "basic", 
@@ -411,14 +408,13 @@
       "type": "text"
     }, 
     "##Mvectshort": {
+      "can_omit": "yes", 
       "choice": [
         "-Mvect=noshort", 
         "-Mvect=short"
       ], 
-      "default_value": "-Mvect=short", 
-      "desc_text": "compiler flag: -Mvect=short", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -Mvect=short", 
       "sort": 12900, 
       "tags": [
         "basic", 
@@ -427,14 +423,13 @@
       "type": "text"
     }, 
     "##Mvectsse": {
+      "can_omit": "yes", 
       "choice": [
         "-Mvect=nosse", 
         "-Mvect=sse"
       ], 
-      "default_value": "-Mvect=sse", 
-      "desc_text": "compiler flag: -Mvect=sse", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -Mvect=sse", 
       "sort": 13000, 
       "tags": [
         "basic", 
@@ -450,10 +445,8 @@
         "-O3", 
         "-O4"
       ], 
-      "default_value": "-O3", 
-      "desc_text": "base compiler flag", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
+      "default": "", 
+      "desc": "base compiler flag", 
       "sort": 10000, 
       "tags": [
         "base", 
@@ -463,14 +456,13 @@
       "type": "text"
     }, 
     "##fpic": {
+      "can_omit": "yes", 
       "choice": [
         "-fpic", 
         ""
       ], 
-      "default_value": "", 
-      "desc_text": "compiler flag: -fpic", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -fpic", 
       "sort": 10100, 
       "tags": [
         "basic", 
@@ -479,13 +471,13 @@
       "type": "text"
     }, 
     "##openmp": {
+      "can_omit": "yes", 
       "choice": [
         "-fopenmp", 
         ""
       ], 
-      "default_value": "", 
-      "desc_text": "compiler flag: openmp", 
-      "has_choice": "yes", 
+      "default": "", 
+      "desc": "compiler flag: openmp", 
       "sort": 10001, 
       "tags": [
         "basic", 

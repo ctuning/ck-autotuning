@@ -9,10 +9,8 @@
         "-O3", 
         "-fast"
       ], 
-      "default_value": "-O3", 
-      "desc_text": "base compiler flag", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
+      "default": "", 
+      "desc": "base compiler flag", 
       "sort": 10000, 
       "tags": [
         "base", 
@@ -22,12 +20,13 @@
       "type": "text"
     }, 
     "##global_loop_unrolling": {
-      "default_value": "2", 
-      "desc_text": "compiler flag: -Qunroll", 
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -Qunroll", 
       "explore_prefix": "-Qunroll", 
-      "explore_start": "1", 
-      "explore_step": "1", 
-      "explore_stop": "32", 
+      "explore_start": 1, 
+      "explore_step": 1, 
+      "explore_stop": 32, 
       "sort": 10100, 
       "tags": [
         "basic", 
@@ -36,13 +35,13 @@
       "type": "integer"
     }, 
     "##openmp": {
+      "can_omit": "yes", 
       "choice": [
         "-openmp", 
         ""
       ], 
-      "default_value": "", 
-      "desc_text": "compiler flag: openmp", 
-      "has_choice": "yes", 
+      "default": "", 
+      "desc": "compiler flag: openmp", 
       "sort": 10001, 
       "tags": [
         "basic", 

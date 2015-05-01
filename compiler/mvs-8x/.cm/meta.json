@@ -8,10 +8,8 @@
         "/Ot", 
         "/Od"
       ], 
-      "default_value": "/Ot", 
-      "desc_text": "base compiler flag", 
-      "has_choice": "yes", 
-      "no_sorting": "yes", 
+      "default": "", 
+      "desc": "base compiler flag", 
       "sort": 10000, 
       "tags": [
         "base", 
