@@ -114,7 +114,7 @@
 
   "choices_selection": [
      {"type":"random", "start":8, "stop":256, "step":8},
-     {"type":"parallel_loop"}
+     {"type":"parallel-loop"}
   ],
 
   "seed":12345,

@@ -92,6 +92,24 @@ def autotune(i):
 
                (seed)                 - if !='', use as random seed (to reproduce experiments)
 
+               Enforce exploration:
+               (start)
+               (stop)
+               (step)
+               (explore_type)         = random, parallel-random, loop, parallel-loop, 
+                                        machine-learning-based, model-based, adaptive, 
+                                        plugin-based, customized
+
+                    or
+               (random)
+               (parallel-random)
+               (loop)
+               (parallel-loop)
+               (machine-learning-based)
+               (model-based)
+               (adaptive)
+               (plugin-based)
+               (customized)
             }
 
     Output: {
@@ -114,6 +132,22 @@ def autotune(i):
     ic['data_uoa']=''
 
     o=i.get('out','')
+
+    jtype=i.get('explore_type','')
+    if i.get('random','')=='yes': jtype='random'
+    elif i.get('loop','')=='yes': jtype='loop'
+    elif i.get('parallel-loop','')=='yes': jtype='parallel-loop'
+    elif i.get('parallel-random','')=='yes': jtype='parallel-random'
+    elif i.get('machine-learning-based','')=='yes' or \
+         i.get('model-based','')=='yes' or \
+         i.get('adaptive','')=='yes' or \
+         i.get('plugin-based','')=='yes' or \
+         i.get('customized','')=='yes': jtype='customized' 
+    cexp={'type':jtype, 
+          'omit_probability':i.get('omit_probability',''),
+          'start':i.get('start',''),
+          'stop':i.get('stop',''),
+          'step':i.get('step','')}
 
     # Check data_uoa
     puoa=i.get('data_uoa','')
@@ -235,6 +269,7 @@ def autotune(i):
                      'choices_dims':cdims,
                      'choices_selection':csel,
                      'choices_current':ccur,
+                     'custom_explore':cexp,
                      'pipeline':pipeline,
                      'out':o})
         if r['return']>0: return r

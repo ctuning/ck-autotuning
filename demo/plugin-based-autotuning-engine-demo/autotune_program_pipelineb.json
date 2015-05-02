@@ -1,6 +1,6 @@
 {
   "pipeline":{
-     "cmd":"echo --compiler_flags=\"$#cflags#$\"\necho --dataset_size=\"NI=$#NI#$ NJ=$#NJ#$ NK=$#NK#$\"\necho --opencl_worksize=\"X=$#DIM_LOCAL_WORK_GROUP_X#$ Y=$#DIM_LOCAL_WORK_GROUP_Y#$\"",
+     "cmd":"echo --dataset_size=\"NI=$#NI#$ NJ=$#NJ#$ NK=$#NK#$\"",
 
      "choices_desc": {
        "##compiler_vars#DIM_LOCAL_WORK_GROUP_X": {
@@ -106,18 +106,14 @@
   "choices_dims":[
     [
      "##compiler_vars#N*"
-    ],
-    [
-     "##compiler_vars#DIM*"
     ]
   ],
 
   "choices_selection": [
-     {"type":"loop"},
-     {"type":"random", "iterations":10, "omit_probability":"0.50"}
+     {"type":"random"}
   ],
 
   "seed":12345,
-  "iterations":1000,
+  "iterations":100,
   "repetitions":3
 }

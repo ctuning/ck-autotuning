@@ -119,9 +119,9 @@
   ],
 
   "choices_selection": [
-     {"type":"parallel_loop", "start":16, "stop":64, "step":16},
-     {"type":"parallel_loop", "start":16, "stop":64, "step":16},
-     {"type":"parallel_loop", "start":16, "stop":64, "step":16},
+     {"type":"parallel-loop", "start":16, "stop":64, "step":16},
+     {"type":"parallel-loop", "start":16, "stop":64, "step":16},
+     {"type":"parallel-loop", "start":16, "stop":64, "step":16},
      {"type":"random", "iterations":5, "omit_probability":"0.90"}
   ],
 

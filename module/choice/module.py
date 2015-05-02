@@ -41,6 +41,7 @@ def make(i):
               choices_selection
               choices_current    - current state
               (pipeline)         - if set, update it with current choices
+              (custom_explore)   - enforce exploration params from command line
             }
 
     Output: {
@@ -67,6 +68,7 @@ def make(i):
     ccur=i['choices_current']
 
     pipeline=i.get('pipeline',{})
+    cexp=i.get('custom_explore',{})
 
     cd=len(cdims)
 
@@ -87,14 +89,22 @@ def make(i):
         t=csel[cx]
 
         tp=t.get('type','')
+        if cexp.get('type','')!='': tp=cexp['type']
+
         ti=t.get('iterations','')
         top=t.get('omit_probability','')
+        if cexp.get('omit_probability','')!='': zestart=cexp['omit_probability']
         if top=='': top=0.0
         else: top=float(top)
-        zestart=t.get('start','')
-        zestop=t.get('stop','')
-        zestep=t.get('step','')
 
+        zestart=t.get('start','')
+        if cexp.get('start','')!='': zestart=cexp['start']
+
+        zestop=t.get('stop','')
+        if cexp.get('stop','')!='': zestop=cexp['stop']
+
+        zestep=t.get('step','')
+        if cexp.get('step','')!='': zestep=cexp['step']
 
         if tp=='': tp='random'
 
@@ -143,8 +153,8 @@ def make(i):
                dv=qt.get('default','')
 
                # If exploration, set first
-               if yestart!='' and (tp=='parallel_loop' or tp=='loop'):
-                  dv=yestart
+               if yestart!='' and (tp=='parallel-loop' or tp=='loop'):
+                  dv=r1
 
                if ci!=0:
                   lcqx=len(yhc)
@@ -163,16 +173,16 @@ def make(i):
                              y=random.randrange(0,rx)
                              dv=r1+(y*rs)
                          
-                  elif tp=='parallel_random': # Change all dimensions at the same time (if explorable)!
+                  elif tp=='parallel-random': # Change all dimensions at the same time (if explorable)!
                        if yestart!='':
                           if dvsame=='':
                              y=random.randrange(0,rx)
                              dvsame=r1+(y*rs)
                           dv=dvsame
 
-                  elif tp=='parallel_loop' or tp=='loop':
+                  elif tp=='parallel-loop' or tp=='loop':
                        dv=dc[c]
-                       if tp=='parallel_loop' or c==len(cc)-1 or xupdate:
+                       if tp=='parallel-loop' or c==len(cc)-1 or xupdate:
                           if yestart!='':
                              dv=dc[c]+rs
                              if dv>r2:
@@ -204,7 +214,7 @@ def make(i):
                   # Machine learning based probabilistic adaptive sampling of multi-dimensional 
                   # design and optimization speaces via external plugin
                   # See our work on Probabilistic Source-Level Optimisation of Embedded Programs (2005) and Collective Mind (2014)
-                  elif tp=='machine-learning-based' or tp=='model' or tp=='adaptive' or tp=='plugin-based' or tp=='customized': 
+                  elif tp=='machine-learning-based' or tp=='model-based' or tp=='adaptive' or tp=='plugin-based' or tp=='customized': 
                        print 'xyz'
                          
 
