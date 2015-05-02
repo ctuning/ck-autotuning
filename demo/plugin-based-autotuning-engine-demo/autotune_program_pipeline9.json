@@ -1,0 +1,120 @@
+{
+  "pipeline":{
+     "choices_desc": {
+       "##compiler_vars#DIM_LOCAL_WORK_GROUP_X": {
+         "default": 32, 
+         "desc": "Local workgroup: block X", 
+         "explore_start": 1, 
+         "explore_step": 1, 
+         "explore_stop": 64, 
+         "sort": 3, 
+         "tags": [
+           "basic", 
+           "optimization"
+         ], 
+         "type": "integer"
+       }, 
+       "##compiler_vars#DIM_LOCAL_WORK_GROUP_Y": {
+         "default": 8, 
+         "desc": "Local workgroup: block Y", 
+         "explore_start": 1, 
+         "explore_step": 1, 
+         "explore_stop": 64, 
+         "sort": 4, 
+         "tags": [
+           "basic", 
+           "optimization"
+         ], 
+         "type": "integer"
+       }, 
+       "##compiler_vars#NI": {
+         "default": 512, 
+         "desc": "Dataset: Matrix size NI", 
+         "explore_start": 2, 
+         "explore_step": 1, 
+         "explore_stop": 5000, 
+         "sort": 1, 
+         "tags": [
+           "dataset"
+         ], 
+         "type": "integer"
+       }, 
+       "##compiler_vars#NJ": {
+         "default": 512, 
+         "desc": "Dataset: Matrix size NJ", 
+         "explore_start": 2, 
+         "explore_step": 1, 
+         "explore_stop": 5000, 
+         "sort": 2, 
+         "tags": [
+           "dataset"
+         ], 
+         "type": "integer"
+       }, 
+       "##compiler_vars#NK": {
+         "default": 512, 
+         "desc": "Dataset: Matrix size NK", 
+         "explore_start": 2, 
+         "explore_step": 1, 
+         "explore_stop": 5000, 
+         "sort": 3, 
+         "tags": [
+           "dataset"
+         ], 
+         "type": "integer"
+       },
+       "##compiler_flags#base_opt": {
+         "choice": [
+           "-O0", 
+           "-O1", 
+           "-O2", 
+           "-Os", 
+           "-O3", 
+           "-Ofast"
+         ], 
+         "default": "", 
+         "desc": "base compiler flag", 
+         "sort": 10000, 
+         "tags": [
+           "base", 
+           "basic", 
+           "optimization"
+         ], 
+         "type": "text"
+       }, 
+       "##compiler_flags#falign_functions": {
+         "can_omit": "yes", 
+         "choice": [
+           "-falign-functions", 
+           "-fno-align-functions"
+         ], 
+         "default": "", 
+         "desc": "compiler flag: -falign-functions", 
+         "sort": 16600, 
+         "tags": [
+           "basic", 
+           "optimization"
+         ], 
+         "type": "text"
+       } 
+     }, 
+     "ready": "yes"
+  },
+
+  "choices_dims":[
+    [
+     "##compiler_vars#N*"
+    ],
+    [
+     "##compiler_flags#*"
+    ]
+  ],
+
+  "choices_selection": [
+     {"type":"loop", "start":16, "stop":64, "step":16},
+     {"type":"random", "iterations":5, "omit_probability":"0.50"}
+  ],
+
+  "seed":12345,
+  "iterations":1000
+}
