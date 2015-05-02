@@ -113,8 +113,8 @@
   ],
 
   "choices_selection": [
-     {"type":"loop", "start":16, "stop":64, "step":16},
-     {"type":"random", "iterations":10, "start":4, "stop":16, "step":4, "omit_probability":"0.50"}
+     {"type":"loop"},
+     {"type":"random", "iterations":10, "omit_probability":"0.50"}
   ],
 
   "seed":12345,

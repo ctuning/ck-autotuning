@@ -156,6 +156,7 @@ def autotune(i):
     pipeline['prepare']='no'
     pipeline['module_uoa']=puoa
     pipeline['action']='pipeline'
+    pipeline['out']=o
     pipelinec=copy.deepcopy(pipeline)
           
     # Check some vars ...
@@ -242,20 +243,15 @@ def autotune(i):
            finish=True
            break
 
+        for sr in range(0, srm):
+            ck.out('')
+            ck.out('      ------------------- Statistical reptition: '+str(sr+1)+' of '+str(srm)+' -------------------')
+            ck.out('')
 
-
-
-#        for sr in range(0, srm):
-#            ck.out('')
-#            ck.out('  ------------------- Statistical reptition: '+str(sr+1)+' of '+str(srm)+' -------------------')
-#            ck.out('')
-
-
-
-#            pipeline1=copy.deepcopy(pipeline)
-#            pipeline1['out']=o
-#            rx=ck.access(pipeline1)
-#            if rx['return']>0: return rx
+            pipeline1=copy.deepcopy(pipeline)
+            pipeline1['out']=o
+            rx=ck.access(pipeline1)
+            if rx['return']>0: return rx
 
     if finish:
        ck.out('')

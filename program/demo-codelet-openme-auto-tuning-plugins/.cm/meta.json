@@ -1,90 +1,86 @@
 {
-  "backup_data_uid": "794023410cbed8b0",
+  "backup_data_uid": "794023410cbed8b0", 
   "build_compiler_vars": {
     "OPENME": ""
-  },
+  }, 
+  "build_compiler_vars_desc": {}, 
   "compile_deps": {
     "compiler": {
-      "local": "yes",
-      "sort": 10,
+      "local": "yes", 
+      "sort": 10, 
       "tags": "compiler,lang-c"
-    },
+    }, 
     "lib_openme": {
-      "local": "yes",
-      "sort": 30,
+      "local": "yes", 
+      "sort": 30, 
       "tags": "lib,plugins,openme,lang-c"
-    },
+    }, 
     "rtl_milepost_codelet": {
-      "local": "yes",
-      "sort": 20,
+      "local": "yes", 
+      "sort": 20, 
       "tags": "lib,rtl,milepost,codelet"
     }
-  },
-  "compiler_env": "CK_CC",
-  "data_name": "demo-codelet-openme-auto-tuning-plugins",
-  "extra_ld_vars": "$<<CK_EXTRA_LIB_M>>$ $<<CK_EXTRA_LIB_DL>>$",
-  "main_language": "c",
-  "process_in_tmp": "yes",
+  }, 
+  "compiler_env": "CK_CC", 
+  "data_name": "demo-codelet-openme-auto-tuning-plugins", 
+  "extra_ld_vars": "$<<CK_EXTRA_LIB_M>>$ $<<CK_EXTRA_LIB_DL>>$", 
+  "main_language": "c", 
+  "process_in_tmp": "yes", 
+  "program": "yes", 
   "run_cmds": {
     "default": {
       "hot_functions": [
         {
-          "name": "astex_codelet__2",
+          "name": "astex_codelet__2", 
           "percent": "99"
         }
-      ],
-      "ignore_return_code": "no",
+      ], 
+      "ignore_return_code": "no", 
       "run_time": {
-        "fine_grain_timer_file": "tmp-ck-timer.json",
-        "run_cmd_main": "$#BIN_FILE#$ \"$#src_path#$codelet.data\"",
-        "run_cmd_out1": "tmp-output1.tmp",
-        "run_cmd_out2": "tmp-output2.tmp",
+        "fine_grain_timer_file": "tmp-ck-timer.json", 
+        "run_cmd_main": "$#BIN_FILE#$ \"$#src_path#$codelet.data\"", 
+        "run_cmd_out1": "tmp-output1.tmp", 
+        "run_cmd_out2": "tmp-output2.tmp", 
         "run_correctness_output_files": [
           "tmp-output2.tmp"
-        ],
+        ], 
         "run_input_files": [
           "codelet.data"
-        ],
+        ], 
         "run_output_files": [
           "tmp-ck-timer.json"
         ]
       }
     }
-  },
+  }, 
   "run_vars": {
     "CT_REPEAT_MAIN": "1"
-  },
+  }, 
   "run_vars_desc": {
     "##CT_REPEAT_MAIN": {
-      "default_value": "1",
-      "desc_text": "Main function/kernel repetition",
-      "explorable": "yes",
-      "explore_level": "1",
-      "explore_start": "0",
-      "explore_step": "10",
-      "explore_stop": "1000000",
-      "field_size": "7",
-      "forbid_disable_at_random": "yes",
-      "property": "yes",
-      "skip_form_refresh": "yes",
-      "sort_index": "1",
+      "default": 1, 
+      "desc": "Main function/kernel repetition", 
+      "explore_start": 1, 
+      "explore_step": 10, 
+      "explore_stop": 1000000, 
+      "sort": 1, 
       "type": "integer"
     }
-  },
+  }, 
   "source_files": [
-    "susan.codelet__2.c",
+    "susan.codelet__2.c", 
     "susan.codelet__2.wrapper.c"
-  ],
+  ], 
   "source_files_templates": [
     "susan.codelet__2.wrapper.c"
-  ],
+  ], 
   "tags": [
-    "lang-c",
-    "program",
-    "milepost",
-    "small",
-    "codelet",
+    "lang-c", 
+    "program", 
+    "milepost", 
+    "small", 
+    "codelet", 
     "crowd-tuning"
-  ],
+  ], 
   "target_file": "a"
 }

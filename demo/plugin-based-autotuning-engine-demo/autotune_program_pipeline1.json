@@ -1,5 +1,7 @@
 {
   "pipeline":{
+     "cmd":"echo --compiler_flags=\"$#cflags#$\"\necho --dataset_size=\"NI=$#NI#$ NJ=$#NJ#$ NK=$#NK#$\"\necho --opencl_worksize=\"X=$#DIM_LOCAL_WORK_GROUP_X#$ Y=$#DIM_LOCAL_WORK_GROUP_Y#$\"",
+
      "choices_desc": {
        "##compiler_vars#DIM_LOCAL_WORK_GROUP_X": {
          "default": 32, 
@@ -116,5 +118,6 @@
   ],
 
   "seed":12345,
-  "iterations":20
+  "iterations":20,
+  "repetitions":3
 }
