@@ -3,6 +3,7 @@
     "autotune": {
       "desc": "universal pipeline autotuning"
     }, 
+    "run": {}, 
     "setup": {
       "desc": "setup pipeline"
     }
@@ -12,9 +13,9 @@
   "developer": "Grigori Fursin", 
   "developer_email": "Grigori.Fursin@cTuning.org", 
   "developer_webpage": "http://cTuning.org/lab/people/gfursin", 
-  "license": "See CK LICENSE.txt for licensing details",
-  "module_deps":{
-    "choice":"e4564d6f984400d7",
-    "module":"032630d041b4fd8a"
+  "license": "See CK LICENSE.txt for licensing details", 
+  "module_deps": {
+    "choice": "e4564d6f984400d7", 
+    "module": "032630d041b4fd8a"
   }
 }

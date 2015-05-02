@@ -263,7 +263,6 @@ def process_in_dir(i):
 
     flags=i.get('flags','')
     lflags=i.get('lflags','')
-
     cv=i.get('compiler_vars',{})
 
     xrepeat=i.get('repeat','')
@@ -1812,6 +1811,9 @@ def pipeline(i):
               (flags)                - compile flags
               (lflags)               - link flags
 
+              (compiler_flags)       - dict from compiler description (during autotuning),
+                                       if set, description should exist in input:choices_desc#compiler_flags# ...
+
               (env)                  - preset environment
               (extra_env)            - extra environment as string
 
@@ -1820,13 +1822,28 @@ def pipeline(i):
               (calibration_time)     - calibration time in string, 4.0 sec. by default
               (calibration_max)      - max number of iterations for calibration, 10 by default
 
+              (statistical_repetition_number) - statistical repetition of experiment
+                                                (for example, may be used to skip compilation, if >0)
+
+              (repeat_compilation)            - if 'yes', force compilation, even if "statistical_repetition_number">0
+              (no_state_check)       - do not check system/CPU state (frequency) over iterations ...
+
               (compile_deps)         - compilation dependencies
 
               (choices)              - exposed choices (if any)
+              (choices_dims)         - flattened choices as vector (useful if optimizations need order such as LLVM)
 
               (features)             - exposed features (if any)
 
               (characteristics)      - measured characteristics/features/properties (if any)
+
+              (state)                - kept across pipeline iterations (for example, during autotuning/exploration)
+
+                                       (tmp_dir)    - if temporal directory is used, return it 
+                                                      (useful if randomly generated, to be reused for run or further iterations)
+                                       (repeat)     - kernel repeat ...
+                                       (features.platform.cpu) - CPU features/properties obtained during iterations 
+                                                                 to check that state didn't change ...
             }
 
     Output: {
@@ -1839,10 +1856,7 @@ def pipeline(i):
               ready        - if 'yes', pipeline is ready (all obligatory choices are set)
                              if 'no', clean/compile/run program is postponed
 
-              (tmp_dir)    - if temporal directory is used, return it 
-                             (useful if randomly generated, to be reused for run or further iterations)
-
-
+              state        - should be preserved across autotuning, learning, exploration, validation iterations
             }
 
     """
@@ -1858,13 +1872,15 @@ def pipeline(i):
     pr=i.get('prepare','')
     si=i.get('skip_interaction','')
 
-    if 'tmp' not in i: i['tmp']={}
-    tmp=i['tmp']
+    if 'state' not in i: i['state']={}
+    state=i['state']
 
-    tmp['cur_dir']=os.getcwd()
+    state['cur_dir']=os.getcwd()
 
     if 'choices_desc' not in i: i['choices_desc']={}
     choices=i['choices_desc']
+
+    choices_dims=i.get('choices_dims',[])
 
     if 'features' not in i: i['features']={}
     features=i['features']
@@ -1885,6 +1901,10 @@ def pipeline(i):
     muoa=work['self_module_uid']
 
     meta=i.get('program_meta',{}) # program meta
+
+    srn=i.get('statistical_repetition_number','')
+    if srn=='': srn=0
+    else: srn=int(srn)
 
     ruoa=i.get('repo_uoa','')
     duoa=i.get('data_uoa','')
@@ -1907,10 +1927,26 @@ def pipeline(i):
     flags=i.get('flags','')
     lflags=i.get('lflags','')
 
+    # Restore compiler flag selection with order for optimization reordering (!)
+    compiler_flags=i.get('compiler_flags',{})
+    if len(compiler_flags)>0:
+       for q in choices_dims:
+           if q.startswith('##compiler_flags#'):
+              qk=q[17:]
+              qq=compiler_flags.get(qk,'')
+              if qq!='':
+                 qd=choices.get(q,{})
+                 if len(qd)>0:
+                    ep=qd.get('explore_prefix','')
+                    if flags!='': flags+=' '
+                    flags+=ep+str(qq)
+
     env=i.get('env',{})
     eenv=i.get('extra_env','')
 
     repeat=i.get('repeat','')
+    if repeat=='': repeat=state.get('repeat','')
+
     rsc=i.get('skip_calibration','')
     rct=i.get('calibration_time','')
     rcm=i.get('calibration_max','')
@@ -2034,7 +2070,7 @@ def pipeline(i):
 
           if duoa=='':
              # Attempt to load configuration from the current directory
-             pc=os.path.join(tmp['cur_dir'], ck.cfg['subdir_ck_ext'], ck.cfg['file_meta'])
+             pc=os.path.join(state['cur_dir'], ck.cfg['subdir_ck_ext'], ck.cfg['file_meta'])
              if os.path.isfile(pc):
                 r=ck.load_json_file({'json_file':pc})
                 if r['return']==0:
@@ -2087,7 +2123,7 @@ def pipeline(i):
        duid=rx['data_uid']
        duoa=rx['data_uoa']
 
-    if pdir=='': pdir=tmp['cur_dir']
+    if pdir=='': pdir=state['cur_dir']
 
     i['program_meta']=meta
 
@@ -2242,10 +2278,10 @@ def pipeline(i):
 
     ###############################################################################################################
     # PIPELINE SECTION: Detect compiler version
-    if i.get('no_detect_compiler_version','')!='yes':
+    if i.get('no_detect_compiler_version','')!='yes' and len(features.get('compiler_version',{}))==0:
        if o=='con':
           ck.out(sep)
-          ck.out('Detect compiler version ...')
+          ck.out('Detecting compiler version ...')
           ck.out('')
 
        if meta.get('no_compile','')!='yes':
@@ -2271,15 +2307,11 @@ def pipeline(i):
 
           misc=r['misc']
           tdir=misc.get('tmp_dir','')
-          if tdir!='': i['tmp_dir']=tdir
-
-
+          if tdir!='': state['tmp_dir']=tdir
 
           features['compiler_version']={'list':misc.get('compiler_detected_ver_list',[]),
                                         'str':misc.get('compiler_detected_ver_str',''),
                                         'raw':misc.get('compiler_detected_ver_raw','')}
-
-
 
     ###############################################################################################################
     # PIPELINE SECTION: get compiler description for flag options
@@ -2401,16 +2433,68 @@ def pipeline(i):
        return finalize_pipeline(i)
 
     ###############################################################################################################
+    # PIPELINE SECTION: Check that system state didn't change (frequency)
+    if i.get('no_state_check','')!='yes':
+       ii={'action':'detect',
+           'module_uoa':cfg['module_deps']['platform.cpu'],
+           'host_os':hos,
+           'target_os':tos,
+           'device_id':tdid,
+           'skip_device_init':sdi,
+           'skip_info_collection':sic,
+           'out':ox}
+       r=ck.access(ii)
+       if r['return']==0:
+          xft=r.get('features',{})
+          xft1=xft.get('cpu',{})
+          xft2=xft.get('cpu_misc',{})
+          features['platform.cpu']=xft
+
+          sft=state.get('features.platform.cpu',{})
+          if len(sft)==0:
+             state['features.platform.cpu']=xft1
+          else:
+             freq1=xft1.get('current_freq',{})
+             freq2=sft.get('current_freq',{})
+
+             if o=='con':
+                ck.out('')
+                ck.out('Checking CPU frequency:')
+                ck.out('')     
+                ck.out('  Now:    '+json.dumps(freq1, sort_keys=True))
+                ck.out('         vs')
+                ck.out('  Before: '+json.dumps(freq2, sort_keys=True))
+                ck.out('')
+
+             rx=ck.compare_dicts({'dict1':freq1, 'dict2':freq2})
+             if rx['return']>0: return rx
+
+
+             if rx['equal']!='yes':
+                if o=='con':
+                   ck.out('CPU frequency changed over iterations:')
+                   ck.out('')
+                i['fail_reason']='frequency changed during experiments'
+                i['fail']='yes'
+             else:
+                ck.out('CPU frequency stays the same ...')
+                ck.out('')
+
+    ###############################################################################################################
     # PIPELINE SECTION: Compile program
     cs='yes'
-    if i.get('no_compile','')!='yes':
+    if i.get('fail','')!='yes' and i.get('no_compile','')!='yes' and (srn==0 or (srn>0 and i.get('repeat_compilation','')=='yes')):
        if o=='con':
           ck.out(sep)
           ck.out('Compile program ...')
           ck.out('')
 
        cl=i.get('clean','')
-       if cl=='' and i.get('no_clean','')!='yes': cl='yes'
+       if cl=='' and i.get('no_clean','')!='yes' and srn==0: cl='yes'
+
+       if o=='con' and cl=='yes':
+          ck.out('Cleaning working directory ...')
+          ck.out('')
 
        if meta.get('no_compile','')!='yes':
           ii={'sub_action':'compile',
@@ -2437,7 +2521,7 @@ def pipeline(i):
 
           misc=r['misc']
           tdir=misc.get('tmp_dir','')
-          if tdir!='': i['tmp_dir']=tdir
+          if tdir!='': state['tmp_dir']=tdir
 
           cch=r['characteristics']
           chars['compile']=cch
@@ -2446,11 +2530,13 @@ def pipeline(i):
           xos=cch.get('obj_size',-1)
 
           cs=misc.get('compilation_success','')
-          if cs=='no': i['fail']='yes'
+          if cs=='no': 
+             i['fail_reason']='compilation failed'
+             i['fail']='yes'
 
     ###############################################################################################################
     # PIPELINE SECTION: Run program
-    if cs!='no' and i.get('no_run','')!='yes':
+    if i.get('fail','')!='yes' and cs!='no' and i.get('no_run','')!='yes':
        if o=='con':
           ck.out(sep)
           ck.out('Running program ...')
@@ -2484,7 +2570,7 @@ def pipeline(i):
 
        misc=r['misc']
        tdir=misc.get('tmp_dir','')
-       if tdir!='': i['tmp_dir']=tdir
+       if tdir!='': state['tmp_dir']=tdir
 
        rch=r['characteristics']
        chars['run']=rch
@@ -2492,7 +2578,11 @@ def pipeline(i):
        csuc=misc.get('calibration_success',True)
        rs=misc.get('run_success','')
 
+       repeat=rch.get('repeat','')
+       if repeat!='': state['repeat']=repeat
+
        if rs=='no' or not csuc:
+          i['fail_reason']='execution failed'
           i['fail']='yes'
 
     ###############################################################################################################
@@ -2530,14 +2620,14 @@ def finalize_pipeline(i):
 
     o=i.get('out','')
 
-    tmp=i.get('tmp',{})
+    state=i.get('state',{})
     pr=i.get('prepare','')
 
     fail=i.get('fail','')
 
     stfx=i.get('save_to_file','')
     stf=stfx
-    cd=tmp.get('cur_dir','')
+    cd=state.get('cur_dir','')
     if not os.path.isabs(stf):
        stf=os.path.join(cd, stf)
 

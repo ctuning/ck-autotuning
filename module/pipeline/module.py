@@ -110,6 +110,8 @@ def autotune(i):
                (adaptive)
                (plugin-based)
                (customized)
+
+               (state)                - pre-load state preserved across iterations
             }
 
     Output: {
@@ -125,13 +127,15 @@ def autotune(i):
     import json
     import random
 
+    o=i.get('out','')
+
     ic=copy.deepcopy(i)
     ic['module_uoa']=''
     ic['action']=''
     ic['cid']=''
     ic['data_uoa']=''
 
-    o=i.get('out','')
+    state=i.get('state',{})
 
     jtype=i.get('explore_type','')
     if i.get('random','')=='yes': jtype='random'
@@ -285,14 +289,41 @@ def autotune(i):
 
             pipeline1=copy.deepcopy(pipeline)
             pipeline1['out']=o
+            pipeline1['state']=state
+            pipeline1['statistical_repetition_number']=sr
             rx=ck.access(pipeline1)
             if rx['return']>0: return rx
+
+            state=rx.get('state',{})
+
+            fail=rx.get('fail','')
+            if fail=='yes': break
 
     if finish:
        ck.out('')
        ck.out('All iterations are done!')
 
-    ck.out(sep)
-    ck.out('Autotuning finished!')
+    if m>0:
+       ck.out(sep)
+       ck.out('Autotuning finished!')
 
     return {'return':0}
+
+##############################################################################
+# Run pipeline once ...
+
+def run(i):
+    """
+    Input:  {
+            }
+
+    Output: {
+              return       - return code =  0, if successful
+                                         >  0, if error
+              (error)      - error text if return > 0
+            }
+
+    """
+
+    i['iterations']=1
+    return autotune(i)
