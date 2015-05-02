@@ -83,7 +83,7 @@ def autotune(i):
     Input:  {
                (data_uoa)             - pipeline module UOA
 
-               (pipeline_meta)        - prepared pipeline setup (already ready to run)
+               (pipeline)             - prepared pipeline setup (already ready to run)
                      or 
                (pipeline_from_file)   - load prepared pipeline setup from file
 
@@ -130,7 +130,7 @@ def autotune(i):
        return {'return':1, 'error':'selected pipeline module is not pipeline'}
 
     # Check meta
-    pipeline=i.get('pipeline_meta',{})
+    pipeline=i.get('pipeline',{})
 
     pff=i.get('pipeline_from_file','')
     if pff!='':
@@ -177,13 +177,32 @@ def autotune(i):
 
     # Prepare multi-dimensional vector of choices
     dv1=[] # Current dimensions
-    for q1 in cdims:
+    for iq1 in range(0,len(cdims)):
+        q1=cdims[iq1]
         dv=[]
+        zz=csel[iq1]
+        ztags=zz.get('tags','').split(',')
+        znotags=zz.get('notags','').split(',')
         for q2 in q1:
             if '*' in q2 or '?' in q2:
                for k in sorted(cdesc, key=lambda v: cdesc[v].get('sort',0)):
                    if fnmatch.fnmatch(k,q2):
-                      dv.append(k)   
+                      # Check tags
+                      yy=cdesc[k].get('tags',[])
+                      add=True
+                      for j in ztags:
+                          j=j.strip()
+                          if j!='' and j not in yy:
+                             add=False
+                             break
+                      if add:
+                         for j in znotags:
+                             j=j.strip()
+                             if j!='' and j in yy:
+                                add=False
+                                break
+                         if add:
+                            dv.append(k)   
             else:
                dv.append(q2)   
         dv1.append(dv)
@@ -194,6 +213,11 @@ def autotune(i):
     if seed!='':
        random.seed(int(seed))
 
+       if o=='con':
+          ck.out('')
+          ck.out('Random seed: '+str(seed))
+          ck.out('')
+
     # Start iterations
     finish=False
     for m in range(0,ni):
@@ -203,28 +227,22 @@ def autotune(i):
         # Copy original
         pipeline=copy.deepcopy(pipelinec)
 
-
-
-
-
-
-
-
-
+        # Make selection
         r=ck.access({'module_uoa':cfg['module_deps']['choice'],
                      'action':'make',
                      'choices_desc':cdesc,
                      'choices_dims':cdims,
                      'choices_selection':csel,
                      'choices_current':ccur,
-                     'pipeline':pipeline})
+                     'pipeline':pipeline,
+                     'out':o})
         if r['return']>0: return r
 
         if r['finish']:
            finish=True
            break
 
-        ccur=r['choices_current']
+
 
 
 #        for sr in range(0, srm):

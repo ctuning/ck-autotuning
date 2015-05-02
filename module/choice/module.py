@@ -57,6 +57,8 @@ def make(i):
 
     import random
 
+    o=i.get('out','')
+
     finish=False
 
     cdesc=i['choices_desc']
@@ -225,8 +227,34 @@ def make(i):
     if update: # means that all loops were updated
        finish=True 
     else:
-       print ''
-       print csel
-       print ccur
+       if o=='con': 
+          ck.out('')
+          ck.out('  Vector of flattened and updated choices:')
+
+       cdims1=[]
+       ccur1=[]
+       for q in range(0, len(cdims)):
+           qq=cdims[q]
+           vq=ccur[q]
+           for q1 in range(0, len(qq)):
+               qq1=qq[q1]
+               vq1=vq[q1]
+
+               cdims1.append(qq1)
+               ccur1.append(vq1)
+
+               if o=='con':
+                  if vq1!='':
+                     ck.out('    '+qq1+'='+str(vq1))
+
+               rx=ck.set_by_flat_key({'dict':pipeline, 'key':qq1, 'value':vq1})
+               if rx['return']>0: return rx
+               pipeline=rx['dict']
+
+           # Flatten choices and values, and add to pipeline
+           # Useful if order of choices is important (say opt flags in LLVM)
+           # Will be decoded by a given pipeline, if needed 
+           pipeline['choices_dims']=cdims1
+           pipeline['choices']=ccur1   
 
     return {'return':0, 'choices_current':ccur, 'pipeline':pipeline, 'finish':finish}
