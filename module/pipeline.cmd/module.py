@@ -77,7 +77,7 @@ def pipeline(i):
         cc=cf[c]
         if cc!='':
            if cflags!='': cflags+=' '
-           cflags+=ep+cc
+           cflags+=ep+str(cc)
 
     cmd=cmd.replace('$#cflags#$', cflags)
 

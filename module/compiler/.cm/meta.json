@@ -1,9 +1,17 @@
 {
-  "actions": {},
-  "copyright": "See CK Copyright.txt for copyright details",
-  "desc": "compiler",
-  "developer": "Grigori Fursin",
-  "developer_email": "Grigori.Fursin@cTuning.org",
-  "developer_webpage": "http://cTuning.org/lab/people/gfursin",
-  "license": "See CK LICENSE.txt for licensing details"
+  "actions": {
+    "extract_to_pipeline": {
+      "desc": "extract choices to universal pipeline tuning"
+    }
+  }, 
+  "copyright": "See CK Copyright.txt for copyright details", 
+  "desc": "compiler", 
+  "developer": "Grigori Fursin", 
+  "developer_email": "Grigori.Fursin@cTuning.org", 
+  "developer_webpage": "http://cTuning.org/lab/people/gfursin", 
+  "license": "See CK LICENSE.txt for licensing details", 
+  "module_deps": {
+    "choice": "e4564d6f984400d7"
+  }, 
+  "pipeline_template": "universal_autotuning_pipeline_template.json"
 }

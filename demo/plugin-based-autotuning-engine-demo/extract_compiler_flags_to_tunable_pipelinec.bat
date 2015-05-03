@@ -1,0 +1,1 @@
+ck extract_to_pipeline compiler file_in=autotune_program_pipelinec_template.json file_out=autotune_program_pipelinec.json

@@ -86,9 +86,18 @@ def process(i):
        # First, try to detect CID in current directory
        r=ck.cid({})
        if r['return']==0:
-          a=r.get('repo_uoa','')
-          m=r.get('module_uoa','')
-          duoa=r.get('data_uoa','')
+          xruoa=r.get('repo_uoa','')
+          xmuoa=r.get('module_uoa','')
+          xduoa=r.get('data_uoa','')
+
+          rx=ck.access({'action':'load',
+                        'module_uoa':xmuoa,
+                        'data_uoa':xduoa,
+                        'repo_uoa':xruoa})
+          if rx['return']==0 and rx['dict'].get('program','')=='yes':
+             duoa=xduoa
+             m=xmuoa
+             a=xruoa
 
        if duoa=='':
           # Attempt to load configuration from the current directory
@@ -97,7 +106,7 @@ def process(i):
           pc=os.path.join(p, ck.cfg['subdir_ck_ext'], ck.cfg['file_meta'])
           if os.path.isfile(pc):
              r=ck.load_json_file({'json_file':pc})
-             if r['return']==0:
+             if r['return']==0 and r['dict'].get('program','')=='yes':
                 d=r['dict']
 
                 ii=copy.deepcopy(ic)
@@ -2101,7 +2110,9 @@ def pipeline(i):
                                     'sort':1000}
 
           if o=='con' and si!='yes':
-             r=select_uoa({'choices':lst})
+             r=ck.access({'action':'select_uoa',
+                          'module':cfg['module_deps']['choice'],
+                          'choices':lst})
              if r['return']>0: return r
              duoa=r['choice']
              ck.out('')
@@ -2160,7 +2171,9 @@ def pipeline(i):
           if o=='con' and si!='yes':
              ck.out('************ Selecting command line ...')
              ck.out('')
-             r=select_list({'choices':xchoices})
+             r=ck.access({'action':'select_list',
+                          'module':cfg['module_deps']['choice'],
+                          'choices':xchoices})
              if r['return']>0: return r
              kcmd=r['choice']
              ck.out('')
@@ -2217,7 +2230,9 @@ def pipeline(i):
              if o=='con' and si!='yes':
                 ck.out('************ Selecting data set ...')
                 ck.out('')
-                r=select_uoa({'choices':lst})
+                r=ck.access({'action':'select_uoa',
+                             'module':cfg['module_deps']['choice'],
+                             'choices':lst})
                 if r['return']>0: return r
                 dduoa=r['choice']
                 ck.out('')
@@ -2663,87 +2678,3 @@ def finalize_pipeline(i):
 
     return i
 
-##############################################################################
-# select uoa
-
-def select_uoa(i):
-    """
-    Input:  {
-              choices - list from search function
-            }
-
-    Output: {
-              return  - return code =  0, if successful
-                                    >  0, if error
-              (error) - error text if return > 0
-              choice  - data UOA
-            }
-
-    """
-
-    lst=i.get('choices',[])
-
-    zz={}
-    iz=0
-    for z1 in sorted(lst, key=lambda v: v['data_uoa']):
-        z=z1['data_uid']
-        zu=z1['data_uoa']
-
-        zs=str(iz)
-        zz[zs]=z
-
-        ck.out(zs+') '+zu+' ('+z+')')
-
-        iz+=1
-
-    ck.out('')
-    rx=ck.inp({'text':'Choose first number to select UOA: '})
-    x=rx['string'].strip()
-
-    if x not in zz:
-       return {'return':1, 'error':'number is not recognized'}
-
-    dduoa=zz[x]
-
-    return {'return':0, 'choice':dduoa}
-
-##############################################################################
-# select list
-
-def select_list(i):
-    """
-    Input:  {
-              choices - simple text list of choices
-            }
-
-    Output: {
-              return  - return code =  0, if successful
-                                    >  0, if error
-              (error) - error text if return > 0
-              choice  - selected text
-            }
-
-    """
-
-    lst=i.get('choices',[])
-
-    zz={}
-    iz=0
-    for z in lst:
-        zs=str(iz)
-        zz[zs]=z
-
-        ck.out(zs+') '+z)
-
-        iz+=1
-
-    ck.out('')
-    rx=ck.inp({'text':'Choose first number to select item: '})
-    x=rx['string'].strip()
-
-    if x not in zz:
-       return {'return':1, 'error':'number is not recognized'}
-
-    dduoa=zz[x]
-
-    return {'return':0, 'choice':dduoa}

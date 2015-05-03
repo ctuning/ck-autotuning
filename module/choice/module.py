@@ -268,3 +268,88 @@ def make(i):
            pipeline['choices']=ccur1   
 
     return {'return':0, 'choices_current':ccur, 'pipeline':pipeline, 'finish':finish}
+
+##############################################################################
+# select uoa
+
+def select_uoa(i):
+    """
+    Input:  {
+              choices - list from search function
+            }
+
+    Output: {
+              return  - return code =  0, if successful
+                                    >  0, if error
+              (error) - error text if return > 0
+              choice  - data UOA
+            }
+
+    """
+
+    lst=i.get('choices',[])
+
+    zz={}
+    iz=0
+    for z1 in sorted(lst, key=lambda v: v['data_uoa']):
+        z=z1['data_uid']
+        zu=z1['data_uoa']
+
+        zs=str(iz)
+        zz[zs]=z
+
+        ck.out(zs+') '+zu+' ('+z+')')
+
+        iz+=1
+
+    ck.out('')
+    rx=ck.inp({'text':'Choose first number to select UOA: '})
+    x=rx['string'].strip()
+
+    if x not in zz:
+       return {'return':1, 'error':'number is not recognized'}
+
+    dduoa=zz[x]
+
+    return {'return':0, 'choice':dduoa}
+
+##############################################################################
+# select list
+
+def select_list(i):
+    """
+    Input:  {
+              choices - simple text list of choices
+            }
+
+    Output: {
+              return  - return code =  0, if successful
+                                    >  0, if error
+              (error) - error text if return > 0
+              choice  - selected text
+            }
+
+    """
+
+    lst=i.get('choices',[])
+
+    zz={}
+    iz=0
+    for z in lst:
+        zs=str(iz)
+        zz[zs]=z
+
+        ck.out(zs+') '+z)
+
+        iz+=1
+
+    ck.out('')
+    rx=ck.inp({'text':'Choose first number to select item: '})
+    x=rx['string'].strip()
+
+    if x not in zz:
+       return {'return':1, 'error':'number is not recognized'}
+
+    dduoa=zz[x]
+
+    return {'return':0, 'choice':dduoa}
