@@ -2172,7 +2172,7 @@ def pipeline(i):
              ck.out('************ Selecting command line ...')
              ck.out('')
              r=ck.access({'action':'select_list',
-                          'module':cfg['module_deps']['choice'],
+                          'module_uoa':cfg['module_deps']['choice'],
                           'choices':xchoices})
              if r['return']>0: return r
              kcmd=r['choice']
