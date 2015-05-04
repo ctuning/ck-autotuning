@@ -770,7 +770,7 @@ def process_in_dir(i):
           if o=='con':
              ck.out('')
              ck.out('Executing prepared batch file '+fn+' ...')
-     
+
           sys.stdout.flush()
           start_time1=time.time()
 
@@ -1304,7 +1304,7 @@ def process_in_dir(i):
              xrof=rof
              if i.get('pull_only_timer_files','')=='yes':
                 xrof=[fgtf]
- 
+
              for df in xrof:
                  # Pull output files from device
                  df0, df1 = os.path.split(df)
@@ -2475,17 +2475,29 @@ def pipeline(i):
              if o=='con':
                 ck.out('')
                 ck.out('Checking CPU frequency:')
-                ck.out('')     
+                ck.out('')
                 ck.out('  Now:    '+json.dumps(freq1, sort_keys=True))
                 ck.out('         vs')
                 ck.out('  Before: '+json.dumps(freq2, sort_keys=True))
                 ck.out('')
 
-             rx=ck.compare_dicts({'dict1':freq1, 'dict2':freq2})
-             if rx['return']>0: return rx
+             equal=True
+             for icpu in freq2:
+                 if icpu not in freq1:
+                    equal=False
+                    break
+                 ff1=float(freq1[icpu])
+                 ff2=float(freq2[icpu])
+                 if ff2!=0:
+                    diff=ff1/ff2
+                 else:
+                    equal=False
+                    break
+                 if diff<0.98 or diff>1.02:
+                    equal=False
+                    break
 
-
-             if rx['equal']!='yes':
+             if not equal:
                 if o=='con':
                    ck.out('CPU frequency changed over iterations:')
                    ck.out('')
