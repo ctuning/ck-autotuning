@@ -1785,7 +1785,7 @@ def pipeline(i):
 
               (skip_device_init)     - if 'yes', skip device init
               (skip_info_collection) - if 'yes', skip info collection
-                                 
+
                  Pipeline sections' settings:
 
               (no_platform_features) - do not collect full platform features
@@ -2042,7 +2042,7 @@ def pipeline(i):
        else:
           ctype='dynamic'
     i['compile_type']=ctype
-        
+
     if o=='con':
        ck.out(sep)
        ck.out('  Selected host platform: '+hos)
@@ -2111,7 +2111,7 @@ def pipeline(i):
 
           if o=='con' and si!='yes':
              r=ck.access({'action':'select_uoa',
-                          'module':cfg['module_deps']['choice'],
+                          'module_uoa':cfg['module_deps']['choice'],
                           'choices':lst})
              if r['return']>0: return r
              duoa=r['choice']
@@ -2231,7 +2231,7 @@ def pipeline(i):
                 ck.out('************ Selecting data set ...')
                 ck.out('')
                 r=ck.access({'action':'select_uoa',
-                             'module':cfg['module_deps']['choice'],
+                             'module_uoa':cfg['module_deps']['choice'],
                              'choices':lst})
                 if r['return']>0: return r
                 dduoa=r['choice']
