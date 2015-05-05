@@ -248,6 +248,7 @@ def process_in_dir(i):
     import time
     import sys
     import shutil
+    import time
 
     start_time=time.time()
 
@@ -1234,7 +1235,7 @@ def process_in_dir(i):
 
           if sc!='yes' and 'CT_REPEAT_MAIN' in env1:
              if o=='con':
-                ck.out('')
+                ck.out(sep)
                 ck.out('### Calibration '+str(cn)+' out of '+xcn_max+' ; Kernel repeat number = '+str(repeat))
 
           sb=csb
@@ -1280,14 +1281,20 @@ def process_in_dir(i):
              y+=' '+scall+' '+sbp+fn
 
              if o=='con':
-                ck.out(sb)
+                ck.out('Prepared script:')
                 ck.out('')
-                ck.out(' ('+y+')')
+                ck.out(sb)
+                ck.out(sep)
+                ck.out('  ('+y.strip()+')')
 
           if remote!='yes' and ubtr!='': y=ubtr.replace('$#cmd#$',y)
 
           if o=='con':
              ck.out('')
+             ck.out('  (sleep 0.5 sec ...)')
+             time.sleep(0.5)
+             ck.out('')
+             ck.out('  (run ...)')
 
           sys.stdout.flush()
           start_time1=time.time()
@@ -1337,9 +1344,10 @@ def process_in_dir(i):
                        return {'return':1, 'error':'pulling from remote device failed'}
 
           # Check if fine-grain time
+          if o=='con':
+             ck.out(sep)
           if fgtf!='':
              if o=='con':
-                ck.out('')
                 ck.out('Reading fine grain timers from '+fgtf+' ...')
                 ck.out('')
 
@@ -1351,6 +1359,11 @@ def process_in_dir(i):
              exec_time=0.0
              if et!='':
                 exec_time=float(et)
+
+             if o=='con':
+                import json
+                ck.out(json.dumps(drq, indent=2))
+                ck.out('')
 
           # If return code >0 and program does not ignore return code, quit
           if rx>0 and vcmd.get('ignore_return_code','').lower()!='yes':
