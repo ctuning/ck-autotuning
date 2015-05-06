@@ -1,27 +1,27 @@
 {
   "customize": {
-    "extra_dir": "",
-    "version": "2015",
+    "extra_dir": "", 
+    "version": "2015", 
     "version_int": 2015
-  },
+  }, 
   "deps": {
     "compiler": {
-      "local": "yes",
-      "sort": 10,
+      "local": "yes", 
+      "sort": 10, 
       "tags": "compiler,lang-c"
     }
-  },
-  "process_script": "process",
-  "soft_uoa": "815be64bec1d4613",
-  "suggested_path": "lib-openme",
+  }, 
+  "process_script": "process", 
+  "soft_uoa": "815be64bec1d4613", 
+  "suggested_path": "lib-openme", 
   "tags": [
-    "lib",
-    "plugins",
-    "openme",
-    "lang-c",
-    "lang-cpp",
-    "lang-f77",
-    "lang-f90",
+    "lib", 
+    "plugins", 
+    "openme", 
+    "lang-c", 
+    "lang-cpp", 
+    "lang-f77", 
+    "lang-f90", 
     "lang-f95"
   ]
 }

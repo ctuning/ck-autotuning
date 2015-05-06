@@ -1,23 +1,23 @@
 {
   "customize": {
-    "extra_dir": "",
-    "version": "2009",
+    "extra_dir": "", 
+    "version": "2009", 
     "version_int": 2009
-  },
+  }, 
   "deps": {
     "compiler": {
-      "local": "yes",
+      "local": "yes", 
       "tags": "compiler,lang-c"
     }
-  },
-  "process_script": "process",
-  "soft_uoa": "4a0ba606d7cee653",
-  "suggested_path": "lib-rtl-milepost-codelet",
+  }, 
+  "process_script": "process", 
+  "soft_uoa": "4a0ba606d7cee653", 
+  "suggested_path": "lib-rtl-milepost-codelet", 
   "tags": [
-    "lib",
-    "rtl",
-    "milepost",
-    "codelet",
+    "lib", 
+    "rtl", 
+    "milepost", 
+    "codelet", 
     "v2009"
   ]
 }
