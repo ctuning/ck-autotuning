@@ -189,7 +189,7 @@ def process_in_dir(i):
               (generate_rnd_tmp_dir) - if 'yes', generate random tmp directory to compile and run program
                                        (useful during crowd-tuning)
 
-              (compiler_vars)        - dict with set up compiler flags (-D xyz) -> 
+              (compiler_vars)        - dict with set up compiler flags (-D var)
                                        they will update the ones defined as default in program description ...
 
               (flags)                - compile flags
@@ -607,7 +607,7 @@ def process_in_dir(i):
               if pl3!='':
                  if sin!='': sin+=' '
                  sin+=svarb+svarb1+'CK_FLAG_PREFIX_INCLUDE'+svare1+svare+eifsc+pl3+eifsc
-          
+
           # Check if local includes
           linc=meta.get('local_include_dirs',[])
           if len(linc)>0:
@@ -615,6 +615,13 @@ def process_in_dir(i):
                  if td!='' : q='../'+q # if tmp dir, reduce level
                  if sin!='': sin+=' '
                  sin+=svarb+svarb1+'CK_FLAG_PREFIX_INCLUDE'+svare1+svare+eifsc+q+eifsc
+
+          # Check if includes as environment var
+          line=meta.get('compiler_add_include_as_env',[])
+          if len(line)>0:
+             for q in line:
+                 if sin!='': sin+=' '
+                 sin+=svarb+svarb1+'CK_FLAG_PREFIX_INCLUDE'+svare1+svare+eifsc+svarb+svarb1+q+svare1+svare+eifsc
 
           # Obtaining compile CMD (first from program entry, then default from this module)
           ccmds=meta.get('compile_cmds',{})
@@ -746,6 +753,13 @@ def process_in_dir(i):
                 if evr!='':
                    evr=evr.replace('$<<',svarb).replace('>>$',svare)
                    slfa+=' '+evr
+
+                # Check if includes as environment var
+                llinkle=meta.get('linker_add_lib_as_env',[])
+                if len(llinkle)>0:
+                   for q in llinkle:
+                       if slfa!='': slfa+=' '
+                       slfa+=svarb+svarb1+q+svare1+svare
 
                 cc=slcmd
                 cc=cc.replace('$#linker#$', svarb+linker_env+svare)
