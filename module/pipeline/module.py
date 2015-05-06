@@ -111,6 +111,14 @@ def autotune(i):
                (plugin-based)
                (customized)
 
+               (record)               - (data UOA) explicitly record to this entry
+               (record_repo)          - (repo UOA) explicitly select this repo to record
+               (record_failed)        - if 'yes', record even failed experiments
+                                        (for debugging, buildbots, detecting designed 
+                                         architecture failures, etc)
+               (record_ignore_update) - (default=yes), if 'yes', skip recording date/author info for each update
+
+
                (state)                - pre-load state preserved across iterations
             }
 
@@ -134,6 +142,16 @@ def autotune(i):
     ic['action']=''
     ic['cid']=''
     ic['data_uoa']=''
+
+    record=ic.get('record','')
+    if 'record' in ic: del(ic['record'])
+    record_repo=ic.get('record_repo','')
+    if 'record_repo' in ic: del(ic['record_repo'])
+    record_failed=ic.get('record_failed','')
+    if 'record_failed' in ic: del(ic['record_failed'])
+    record_ignore_update=ic.get('record_ignore_update','')
+    if record_ignore_update=='': record_ignore_update='yes'
+    if 'record_ignore_update' in ic: del(ic['record_ignore_update'])
 
     state=i.get('state',{})
 
@@ -282,6 +300,10 @@ def autotune(i):
            finish=True
            break
 
+        # Describing experiment
+        dd={'features':pipeline.get('features',{})}
+        ddcl=[] # characteristics list
+
         for sr in range(0, srm):
             ck.out('')
             ck.out('      ------------------- Statistical reptition: '+str(sr+1)+' of '+str(srm)+' -------------------')
@@ -297,7 +319,43 @@ def autotune(i):
             state=rx.get('state',{})
 
             fail=rx.get('fail','')
+
+            if fail!='yes' or record_failed=='yes':
+               ddcl.append(pipeline1.get('characteristics',{}))
+            dd['characteristics_list']=ddcl
+
             if fail=='yes': break
+
+        if record!='':
+           if fail!='yes' or record_failed=='yes':
+               ##########################################################################################
+               # Recording experiment
+               if o=='con':
+                  ck.out(sep)
+                  ck.out('Recording experiment ...')
+                  ck.out('')
+
+               ie={'action':'add',
+
+                   'module_uoa':cfg['module_deps']['experiment'],
+
+                   'ignore_update':record_ignore_update,
+                   'out':'con',
+                   'sort_keys':'yes',
+
+                   'experiment_repo_uoa': record_repo,
+                   'experiment_uoa':record,
+
+#                   'search_point_by_features':'yes',
+#                   'process_multi_keys':['characteristics','features'],
+                   'record_all_subpoints':'yes',
+
+#                   'force_new_entry':'yes',
+
+                   'dict':dd}
+
+               rx=ck.access(ie)
+               if rx['return']>0: return rx
 
     if finish:
        ck.out('')
@@ -315,6 +373,7 @@ def autotune(i):
 def run(i):
     """
     Input:  {
+              (iterations) - default =1
             }
 
     Output: {
@@ -325,5 +384,5 @@ def run(i):
 
     """
 
-    i['iterations']=1
+    if i.get('iterations','')=='': i['iterations']=1
     return autotune(i)
