@@ -1,0 +1,18 @@
+{
+  "customize": {
+    "extra_dir": "", 
+    "version": "2.2", 
+    "version_int": 20200
+  }, 
+  "deps": {
+  }, 
+  "process_script": "process", 
+  "soft_uoa": "f3fbb766bb4456ea", 
+  "suggested_path": "lib-toon", 
+  "tags": [
+    "lib", 
+    "toon", 
+    "v2.2",
+    "v2"
+  ]
+}
