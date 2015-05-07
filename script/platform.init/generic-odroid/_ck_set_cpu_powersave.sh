@@ -1,0 +1,4 @@
+export CK_CPU_FREQ_GOVERNER=performance
+export CK_CPU_FREQ_FILE=cpuinfo_min_freq
+export CK_CPU_ONLINE=0
+. _ck_set_cpu_online_and_frequency.sh
