@@ -849,6 +849,16 @@ def process_in_dir(i):
     elif sa=='run':
        start_time=time.time()
 
+       # Remote dir
+       if remote=='yes':
+          rdir=tosd.get('remote_dir','')
+          if rdir!='' and not rdir.endswith(stdirs): rdir+=stdirs
+
+       if remote=='yes':
+          src_path=rdir+stdirs
+       else:
+          src_path=p+sdirs
+
        sc=i.get('skip_calibration','')
        xcalibrate_time=i.get('calibration_time','')
        if xcalibrate_time=='': xcalibrate_time=cfg['calibration_time']
@@ -858,7 +868,7 @@ def process_in_dir(i):
        env1=meta.get('run_vars',{})
        for q in env1:
            if q not in env:
-              env[q]=env1[q]
+              env[q]=env1[q].replace('$#src_path#$', src_path)
 
        # Update env if repeat
        if sc!='yes' and 'CT_REPEAT_MAIN' in env1:
@@ -925,7 +935,7 @@ def process_in_dir(i):
           for q in deps:
               qq=deps[q].get('cus','')
               qdl=qq.get('dynamic_lib','')
-              if qdl!='':
+              if qdl!='' and qq.get('skip_copy_to_remote','')!='yes':
                  qpl=qq.get('path_lib','')
                  qq1=os.path.join(qpl,qdl)
                  rif.append(qq1)
@@ -962,11 +972,6 @@ def process_in_dir(i):
           return {'return':1, 'error':'cmd is not defined'}
        c=c.replace('$<<',svarb+svarb1).replace('>>$',svare1+svare)
 
-       # Remote dir
-       if remote=='yes':
-          rdir=tosd.get('remote_dir','')
-          if rdir!='' and not rdir.endswith(stdirs): rdir+=stdirs
-
        # Replace bin file
        te=target_exe
        if meta.get('skip_add_prefix_for_target_file','')!='yes':
@@ -974,10 +979,7 @@ def process_in_dir(i):
 
        c=c.replace('$#BIN_FILE#$', te)
        c=c.replace('$#os_dir_separator#$', stdirs)
-       if remote=='yes':
-          c=c.replace('$#src_path#$', rdir+stdirs)
-       else:
-          c=c.replace('$#src_path#$', p+sdirs)
+       c=c.replace('$#src_path#$', src_path)
 
        c=c.replace('$#env1#$',svarb)
        c=c.replace('$#env2#$',svare)
