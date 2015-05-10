@@ -1,3 +1,6 @@
+#! /bin/bash
+# Part of Collective Knowledge; Developer: Grigori Fursin
+
 echo "*** Current frequency from scaling:"
 cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_cur_freq
 
