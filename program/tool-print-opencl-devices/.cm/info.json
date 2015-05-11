@@ -1,0 +1,24 @@
+{
+  "backup_data_uid": "e34164a6a31352e2", 
+  "backup_module_uid": "b0ac08fe1d3c2615", 
+  "backup_module_uoa": "program", 
+  "cm_outdated": {
+    "cm_access_control": {
+      "comments_groups": "admin", 
+      "read_groups": "all", 
+      "write_groups": "owner"
+    }, 
+    "powered_by": {
+      "name": "Collective Mind Engine", 
+      "version": "1.0.1977.beta"
+    }
+  }, 
+  "control": {
+    "author_uoa": "74c2480dcec9e85d", 
+    "engine": "CM", 
+    "iso_datetime": "2012-07-08T19:07:39.046000", 
+    "version": []
+  }, 
+  "data_name": "tool-print-opencl-devices", 
+  "description": "benchmarks from polybench updated by Grigori Fursin for collective and auto-tuning using cM"
+}
