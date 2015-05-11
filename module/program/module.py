@@ -230,6 +230,8 @@ def process_in_dir(i):
 
               (statistical_repetition) - int number of current (outside) statistical repetition
                                          to avoid pushing data to remote device if !=0 ...
+
+              (unparsed)               - if executing ck run program ... -- (unparsed params), add them to compile or run ...
             }
 
     Output: {
@@ -266,6 +268,12 @@ def process_in_dir(i):
     ccc=i.get('characteristics',{})
     env=i.get('env',{})
     deps=i.get('deps',{})
+
+    unparsed=i.get('unparsed', [])
+    sunparsed=''
+    for q in unparsed:
+        if sunparsed!='': sunparsed+=' '
+        sunparsed+=q
 
     ee=i.get('extra_env','')
 
@@ -579,7 +587,7 @@ def process_in_dir(i):
                 ck.out('')
 
        if sa=='compile':
-          # Check linking libs + include paths for deps
+          # Check linking libs + include paths for all deps
           sll=''
           sin=''
           for k in deps:
@@ -712,6 +720,8 @@ def process_in_dir(i):
 
               cc=cc.replace('$#flags_before#$', xcfb)
               cc=cc.replace('$#flags_after#$', xcfa)
+
+              if sunparsed!='': cc+=' '+sunparsed
 
               sb+='echo '+eifs+cc+eifs+'\n'
               sb+=no+cc+'\n'
@@ -1203,6 +1213,10 @@ def process_in_dir(i):
               c=c.replace('$#'+k+'#$',kv)
 
           misc['dataset_uoa']=dduoa
+
+       # Check if has unparsed
+       if sunparsed!='':
+          c+=' '+sunparsed
 
        # Check if redirect output
        rco1=rt.get('run_cmd_out1','')
