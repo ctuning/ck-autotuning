@@ -620,16 +620,22 @@ def process_in_dir(i):
           linc=meta.get('local_include_dirs',[])
           if len(linc)>0:
              for q in linc:
-                 if td!='' : q='../'+q # if tmp dir, reduce level
+                 if td!='' : q='..'+sdirs+q # if tmp dir, reduce level
                  if sin!='': sin+=' '
                  sin+=svarb+svarb1+'CK_FLAG_PREFIX_INCLUDE'+svare1+svare+eifsc+q+eifsc
 
-          # Check if includes as environment var
-          line=meta.get('compiler_add_include_as_env',[])
+          # Check if includes as environment var (we search in env settings, 
+          #    not in real env, otherwise, can have problems, when concatenating -I with empty string)
+          line=meta.get('compiler_add_include_as_env_from_deps',[])
           if len(line)>0:
              for q in line:
-                 if sin!='': sin+=' '
-                 sin+=svarb+svarb1+'CK_FLAG_PREFIX_INCLUDE'+svare1+svare+eifsc+svarb+svarb1+q+svare1+svare+eifsc
+                 for g1 in deps:
+                     gg=deps[g1]
+                     gge=gg.get('dict',{}).get('env',{})
+                     xgge=gge.get(q,'')
+                     if xgge!='':
+                        if sin!='': sin+=' '
+                        sin+=svarb+svarb1+'CK_FLAG_PREFIX_INCLUDE'+svare1+svare+eifsc+xgge+eifsc
 
           # Obtaining compile CMD (first from program entry, then default from this module)
           ccmds=meta.get('compile_cmds',{})
