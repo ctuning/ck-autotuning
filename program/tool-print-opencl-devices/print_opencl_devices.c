@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
     cl_device_id* devices;
     cl_uint maxComputeUnits;
 
-    FILE* fout;
+    FILE* fout=NULL;
 
     if (argc>1) {
        printf("\nOutput file: %s\n", argv[1]);
