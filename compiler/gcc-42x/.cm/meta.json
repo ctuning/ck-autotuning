@@ -2,11 +2,11 @@
   "all_compiler_flags_desc": {
     "##base_opt": {
       "choice": [
+        "-O3",
         "-O0", 
         "-O1", 
         "-O2", 
-        "-Os", 
-        "-O3"
+        "-Os"
       ], 
       "default": "", 
       "desc": "base compiler flag", 

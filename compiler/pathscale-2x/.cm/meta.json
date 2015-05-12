@@ -632,12 +632,12 @@
     }, 
     "##base_opt": {
       "choice": [
+        "-O3", 
+        "-Ofast",
         "-O0", 
         "-O1", 
         "-O2", 
-        "-Os", 
-        "-O3", 
-        "-Ofast"
+        "-Os" 
       ], 
       "default": "", 
       "desc": "base compiler flag", 

@@ -2,10 +2,11 @@
   "all_compiler_flags_desc": {
     "##base_opt": {
       "choice": [
+        "/Ot",
         "/O1", 
         "/O2", 
+        "/Og", 
         "/Os", 
-        "/Ot", 
         "/Od"
       ], 
       "default": "", 

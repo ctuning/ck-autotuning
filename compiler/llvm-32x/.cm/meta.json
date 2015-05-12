@@ -62,10 +62,9 @@
     }, 
     "##base_opt": {
       "choice": [
-        " ", 
+        "-O3",
         "-O1", 
-        "-O2", 
-        "-O3"
+        "-O2" 
       ], 
       "default": "", 
       "desc": "base compiler flag", 
