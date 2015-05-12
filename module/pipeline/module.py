@@ -87,7 +87,10 @@ def autotune(i):
                      or 
                (pipeline_from_file)   - load prepared pipeline setup from file
 
+               (pipeline_update)      - update pipeline with this dict (useful to update already prepared pipeline from file)
+
                (iterations)           - limit number of iterations, otherwise infinite (default=50)
+               (start_from_iteration) - skip all iterations before this number
                (repetitions)          - statistical repetitions (default=4)
 
                (seed)                 - if !='', use as random seed (to reproduce experiments)
@@ -194,6 +197,12 @@ def autotune(i):
        if r['return']>0: return r
        pipeline=r['dict']
 
+    pipeline_update=i.get('pipeline_update',{})
+    if len(pipeline_update)!=0:
+       r=ck.merge_dicts({'dict1':pipeline, 'dict2':pipeline_update})
+       if r['return']>0: return r
+       pipeline=r['dict1']
+
     # If pipeline meta is not defined, set up pipeline ...
     if len(pipeline)==0:
        ii=copy.deepcopy(ic)
@@ -221,6 +230,10 @@ def autotune(i):
     try: ni=int(ni)
     except Exception as e: pass
 
+    sfi=i.get('start_from_iteration','')
+    if sfi=='': sfi=1
+    if type(sfi)!=int: sfi=int(sfi)
+   
     srm=i.get('repetitions','')
     if srm=='': srm=4
     try: srm=int(srm)
@@ -278,11 +291,13 @@ def autotune(i):
     # Start iterations
     finish=False
     for m in range(0,ni):
+        mm=m+1
         ck.out(sep)
-        ck.out('Pipeline iteration: '+str(m+1)+' of '+str(ni))
+        ck.out('Pipeline iteration: '+str(mm)+' of '+str(ni))
 
         # Copy original
-        pipeline=copy.deepcopy(pipelinec)
+        if m==0 or mm>=sfi:
+           pipeline=copy.deepcopy(pipelinec)
 
         # Make selection
         r=ck.access({'module_uoa':cfg['module_deps']['choice'],
@@ -299,6 +314,12 @@ def autotune(i):
         if r['finish']:
            finish=True
            break
+
+        # Check if pass this iteration
+        if mm<sfi:
+           ck.out('')
+           ck.out('  (skiped by request)')
+           continue
 
         # Describing experiment
         dd={'features':pipeline.get('features',{})}
@@ -334,6 +355,8 @@ def autotune(i):
                   ck.out(sep)
                   ck.out('Recording experiment ...')
                   ck.out('')
+
+#               raw_input('recording ...')
 
                ie={'action':'add',
 
