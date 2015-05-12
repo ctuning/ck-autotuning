@@ -859,6 +859,8 @@ def process_in_dir(i):
           if o=='con':
              ck.out('')
              ck.out('Compilation time: '+('%.3f'%comp_time)+' sec.; Object size: '+str(ofs)+'; MD5: '+md5)
+             if misc.get('compilation_success','')=='no':
+                ck.out('Warning: compilation failed!')
 
     ##################################################################################################################
     ################################### Run ######################################
@@ -1238,6 +1240,7 @@ def process_in_dir(i):
 
        fn=''
 
+       ppc=rt.get('post_process_cmd','').replace('$#src_path#$', src_path)
        fgtf=rt.get('fine_grain_timer_file','')
 
        # Calibrate execution time (to make it longer and minimize system variation, 
@@ -1387,12 +1390,20 @@ def process_in_dir(i):
                     if ry>0:
                        return {'return':1, 'error':'pulling from remote device failed'}
 
+          # Check if post-processing script
+          if ppc!='':
+             if o=='con':
+                ck.out('')
+                ck.out('  (post processing: "'+ppc+'"')
+                ck.out('')
+             rx=os.system(ppc)
+             # For now ignore output
+
           # Check if fine-grain time
-          if o=='con':
-             ck.out(sep)
           if fgtf!='':
              if o=='con':
-                ck.out('Reading fine grain timers from '+fgtf+' ...')
+                ck.out('')
+                ck.out('  (reading fine grain timers from '+fgtf+' ...)')
                 ck.out('')
 
              rq=ck.load_json_file({'json_file':fgtf})
@@ -1406,7 +1417,7 @@ def process_in_dir(i):
 
              if o=='con':
                 import json
-                ck.out(json.dumps(drq, indent=2))
+                ck.out(json.dumps(drq, indent=2, sort_keys=True))
                 ck.out('')
 
           # If return code >0 and program does not ignore return code, quit
@@ -1463,9 +1474,9 @@ def process_in_dir(i):
 
        if o=='con':
           ck.out('')
-          x='Execution time: '+('%.3f'%exec_time)
+          x='Execution time: '+('%.3f'%exec_time)+' sec.'
           if repeat>1:
-             x+=' sec.; Repetitions: '+str(repeat)+'; Normalized execution time: '+('%.9f'%(exec_time/repeat))+' sec.'
+             x+='; Repetitions: '+str(repeat)+'; Normalized execution time: '+('%.9f'%(exec_time/repeat))+' sec.'
           ck.out(x)
 
     return {'return':0, 'tmp_dir':rcdir, 'misc':misc, 'characteristics':ccc, 'deps':deps}
