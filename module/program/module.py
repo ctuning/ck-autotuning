@@ -924,8 +924,9 @@ def process_in_dir(i):
                  iz+=1
 
              ck.out('')
-             rx=ck.inp({'text':'Choose first number to select command line: '})
+             rx=ck.inp({'text':'Choose first number to select command line (or Enter to select 0): '})
              x=rx['string'].strip()
+             if x=='': x='0'
 
              if x not in zz:
                 return {'return':1, 'error':'command line number is not recognized'}
@@ -1045,8 +1046,9 @@ def process_in_dir(i):
                     iz+=1
 
                 ck.out('')
-                rx=ck.inp({'text':'Choose first number to select dataset UOA: '})
+                rx=ck.inp({'text':'Choose first number to select dataset UOA (or Enter to select 0): '})
                 x=rx['string'].strip()
+                if x=='': x='0'
 
                 if x not in zz:
                    return {'return':1, 'error':'dataset number is not recognized'}
@@ -1997,7 +1999,10 @@ def pipeline(i):
 
     ruoa=ck.get_from_dicts(i, 'repo_uoa', '', choices)
     duoa=ck.get_from_dicts(i, 'data_uoa', '', choices)
-    puoa=ck.get_from_dicts(i, 'program_uoa', '', choices)
+    puoa=ck.get_from_dicts(i, 'program_uoa', '', None)
+    if puoa!='': 
+       duoa=puoa
+       choices['##data_uoa']=duoa
     ptags=ck.get_from_dicts(i, 'program_tags', '', choices)
     kcmd=ck.get_from_dicts(i, 'cmd_key', '', choices)
     dduoa=ck.get_from_dicts(i, 'dataset_uoa', '', choices)
@@ -2543,11 +2548,13 @@ def pipeline(i):
           xft2=xft.get('cpu_misc',{})
           features['platform.cpu']=xft
 
+          freq1=xft1.get('current_freq',{})
+          chars['current_freq']=freq1
+
           sft=state.get('features.platform.cpu',{})
           if len(sft)==0:
              state['features.platform.cpu']=xft1
           else:
-             freq1=xft1.get('current_freq',{})
              freq2=sft.get('current_freq',{})
 
              if o=='con':

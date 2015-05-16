@@ -281,7 +281,8 @@ def make(i):
 def select_uoa(i):
     """
     Input:  {
-              choices - list from search function
+              choices      - list from search function
+              (skip_enter) - if 'yes', do not select 0 when entering 0
             }
 
     Output: {
@@ -292,6 +293,8 @@ def select_uoa(i):
             }
 
     """
+
+    se=i.get('skip_enter','')
 
     lst=i.get('choices',[])
 
@@ -309,8 +312,13 @@ def select_uoa(i):
         iz+=1
 
     ck.out('')
-    rx=ck.inp({'text':'Choose first number to select UOA: '})
+    y='Choose first number to select UOA'
+    if se!='yes': y+=' (or press Enter for 0)'
+    y+=': '
+    
+    rx=ck.inp({'text':y})
     x=rx['string'].strip()
+    if x=='' and se!='yes': x='0' 
 
     if x not in zz:
        return {'return':1, 'error':'number is not recognized'}

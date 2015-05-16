@@ -11,6 +11,7 @@
       "desc": "setup pipeline"
     }
   }, 
+  "clean_pipeline":["prepare","iterations","skip_info_collection"],
   "copyright": "See CK Copyright.txt for copyright details", 
   "desc": "pipeline", 
   "developer": "Grigori Fursin", 

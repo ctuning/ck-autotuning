@@ -183,6 +183,7 @@ def autotune(i):
 
     # Check data_uoa
     puoa=i.get('data_uoa','')
+    puid=''
     if puoa=='':
        return {'return':1, 'error':'data_uoa is not set, i.e. no pipeline module'}
 
@@ -194,6 +195,7 @@ def autotune(i):
     d=r['dict']
     if d.get('pipeline','')!='yes':
        return {'return':1, 'error':'selected pipeline module is not pipeline'}
+    puid=r['data_uid']
 
     # Check meta
     pipeline=i.get('pipeline',{})
@@ -224,11 +226,9 @@ def autotune(i):
           return {'return':1, 'error':'pipeline is not ready'}
        del(pipeline['return'])
        
-    # Copy pipeline
-    pipeline['prepare']='no'
-    pipeline['module_uoa']=puoa
-    pipeline['action']='pipeline'
-    pipeline['out']=o
+    # Clean and copy pipeline before choice selection
+    for q in cfg['clean_pipeline']:
+        if q in pipeline: del(pipeline[q])
     pipelinec=copy.deepcopy(pipeline)
           
     # Check some vars ...
@@ -338,7 +338,10 @@ def autotune(i):
            continue
 
         # Describing experiment
-        dd={'features':pipeline.get('features',{})}
+        dd={'pipeline':pipelinec,
+            'pipeline_uoa':puoa,
+            'pipeline_uid':puid,
+            'features':pipeline.get('features',{})}
         ddcl=[] # characteristics list
 
         for sr in range(0, srm):
@@ -347,11 +350,17 @@ def autotune(i):
             ck.out('')
 
             pipeline1=copy.deepcopy(pipeline)
+            pipeline['prepare']='no'
+            pipeline['module_uoa']=puoa
+            pipeline['action']='pipeline'
             pipeline1['out']=o
             pipeline1['state']=state
             pipeline1['statistical_repetition_number']=sr
             rr=ck.access(pipeline1)
             if rr['return']>0: return rr
+
+            dd['choices']=rr.get('choices',{})
+            dd['choices_order']=rr.get('choices_order',[])
 
 #            import json
 #            print json.dumps(rx, indent=2)
@@ -391,7 +400,7 @@ def autotune(i):
                    'experiment_uoa':record,
 
 #                   'search_point_by_features':'yes',
-#                   'process_multi_keys':['characteristics','features'],
+                   'process_multi_keys':['characteristics','features'],
                    'record_all_subpoints':'yes',
 
 #                   'force_new_entry':'yes',
