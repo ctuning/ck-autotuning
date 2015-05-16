@@ -103,7 +103,7 @@
      "ready": "yes"
   },
 
-  "choices_dims":[
+  "choices_order":[
     [
      "##compiler_vars#NI"
     ],

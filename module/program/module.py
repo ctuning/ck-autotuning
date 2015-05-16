@@ -545,11 +545,12 @@ def process_in_dir(i):
 
     ##################################################################################################################
     ################################### Compile ######################################
-    if sa=='compile' or sa=='get_compiler_version':
+    if sa=='compile':
        # Clean target file
        if target_exe!='' and os.path.isfile(target_exe):
           os.remove(target_exe)
 
+    if sa=='compile' or sa=='get_compiler_version':
        # Add compiler dep again, if there
        cb=deps.get('compiler',{}).get('bat','')
        if cb!='' and not sb.endswith(cb):
@@ -1550,6 +1551,8 @@ def run(i):
 
 ##############################################################################
 # non-universal (traditional) program compiler flag autotuning
+# NOTE: THIS FUNCTION IS OUTDATED - use universal autotuning pipeline
+# i.e. ck autotune pipeline:program
 
 def autotune(i):
     """
@@ -1836,7 +1839,7 @@ def pipeline(i):
               (module_uoa)           - program module UOA
               (data_uoa)             - program data UOA
                  or
-              (program_uoa)
+              (program_uoa)          - useful if univeral pipeline is used, i.e. ck run pipeline:program program_uoa=...
                  or taken from .cm/meta.json from current directory
 
               (program_tags)         - select programs by these tags
@@ -1891,6 +1894,8 @@ def pipeline(i):
               (compiler_flags)       - dict from compiler description (during autotuning),
                                        if set, description should exist in input:choices_desc#compiler_flags# ...
 
+              (no_compile)           - if 'yes', skip compilation
+
               (env)                  - preset environment
               (extra_env)            - extra environment as string
 
@@ -1902,13 +1907,15 @@ def pipeline(i):
               (statistical_repetition_number) - statistical repetition of experiment
                                                 (for example, may be used to skip compilation, if >0)
 
-              (repeat_compilation)            - if 'yes', force compilation, even if "statistical_repetition_number">0
+              (repeat_compilation)   - if 'yes', force compilation, even if "statistical_repetition_number">0
               (no_state_check)       - do not check system/CPU state (frequency) over iterations ...
 
-              (compile_deps)         - compilation dependencies
+              (dependencies)         - compilation dependencies
 
               (choices)              - exposed choices (if any)
-              (choices_dims)         - flattened choices as vector (useful if optimizations need order such as LLVM)
+              (choices_order)        - vector of flattened choices (useful if optimizations need order 
+                                        such as LLVM or using our GCC plugin iterface to reorder passes,
+                                        since 'choices' dict does not have order)
 
               (features)             - exposed features (if any)
 
@@ -1939,7 +1946,6 @@ def pipeline(i):
     """
 
     import os
-    import copy
     import json
 
     o=i.get('out','')
@@ -1954,16 +1960,22 @@ def pipeline(i):
 
     state['cur_dir']=os.getcwd()
 
-    if 'choices_desc' not in i: i['choices_desc']={}
-    choices=i['choices_desc']
+    if 'choices' not in i: i['choices']={}
+    choices=i['choices']
 
-    choices_dims=i.get('choices_dims',[])
+    if 'choices_desc' not in i: i['choices_desc']={}
+    choices_desc=i['choices_desc']
+
+    choices_order=i.get('choices_order',[])
 
     if 'features' not in i: i['features']={}
     features=i['features']
 
     if 'characteristics' not in i: i['characteristics']={}
     chars=i['characteristics']
+
+    if 'dependencies' not in i: i['dependencies']={}
+    cdeps=i['dependencies']
 
     i['ready']='no'
     i['fail']='no'
@@ -1977,58 +1989,57 @@ def pipeline(i):
 
     muoa=work['self_module_uid']
 
-    meta=i.get('program_meta',{}) # program meta
+    meta=ck.get_from_dicts(i, 'program_meta', {}, choices) # program meta if needed
 
-    srn=i.get('statistical_repetition_number','')
+    srn=ck.get_from_dicts(i, 'statistical_repetition_number', '', choices)
     if srn=='': srn=0
     else: srn=int(srn)
 
-    ruoa=i.get('repo_uoa','')
-    duoa=i.get('data_uoa','')
-    ptags=i.get('program_tags','')
-    kcmd=i.get('cmd_key','')
-    dduoa=i.get('dataset_uoa','')
+    ruoa=ck.get_from_dicts(i, 'repo_uoa', '', choices)
+    duoa=ck.get_from_dicts(i, 'data_uoa', '', choices)
+    puoa=ck.get_from_dicts(i, 'program_uoa', '', choices)
+    ptags=ck.get_from_dicts(i, 'program_tags', '', choices)
+    kcmd=ck.get_from_dicts(i, 'cmd_key', '', choices)
+    dduoa=ck.get_from_dicts(i, 'dataset_uoa', '', choices)
 
-    cdeps=i.get('compile_deps',{})
-
-    pdir=i.get('program_dir','')
+    pdir=ck.get_from_dicts(i, 'program_dir', '', None) # Do not save, otherwise can't reproduce by other people
     if pdir!='': os.chdir(pdir)
 
-    sdi=i.get('skip_device_init','')
-    sic=i.get('skip_info_collection','')
+    sdi=ck.get_from_dicts(i, 'skip_device_init', '', None)
+    sic=ck.get_from_dicts(i, 'skip_info_collection', '', None)
 
-    grtd=i.get('generate_rnd_tmp_dir','')
-    tdir=i.get('tmp_dir','')
-    sca=i.get('skip_clean_after','')
+    grtd=ck.get_from_dicts(i, 'generate_rnd_tmp_dir','', None)
+    tdir=ck.get_from_dicts(i, 'tmp_dir','', None)
+    sca=ck.get_from_dicts(i, 'skip_clean_after', '', None)
 
-    flags=i.get('flags','')
-    lflags=i.get('lflags','')
+    flags=ck.get_from_dicts(i, 'flags', '', choices)
+    lflags=ck.get_from_dicts(i, 'lflags', '', choices)
 
     # Restore compiler flag selection with order for optimization reordering (!)
-    compiler_flags=i.get('compiler_flags',{})
+    compiler_flags=ck.get_from_dicts(i, 'compiler_flags', {}, choices)
     if len(compiler_flags)>0:
-       for q in choices_dims:
+       for q in choices_order:
            if q.startswith('##compiler_flags#'):
               qk=q[17:]
               qq=compiler_flags.get(qk,'')
               if qq!='':
-                 qd=choices.get(q,{})
+                 qd=choices_desc.get(q,{})
                  if len(qd)>0:
                     ep=qd.get('explore_prefix','')
                     if flags!='': flags+=' '
                     flags+=ep+str(qq)
 
-    env=i.get('env',{})
-    eenv=i.get('extra_env','')
+    env=ck.get_from_dicts(i,'env',{},choices)
+    eenv=ck.get_from_dicts(i, 'extra_env','',choices)
 
-    repeat=i.get('repeat','')
+    repeat=ck.get_from_dicts(i,'repeat','',choices)
     if repeat=='': repeat=state.get('repeat','')
 
-    rsc=i.get('skip_calibration','')
-    rct=i.get('calibration_time','')
-    rcm=i.get('calibration_max','')
+    rsc=ck.get_from_dicts(i, 'skip_calibration','', choices)
+    rct=ck.get_from_dicts(i, 'calibration_time','',choices)
+    rcm=ck.get_from_dicts(i, 'calibration_max','',choices)
 
-    cons=i.get('console','')
+    cons=ck.get_from_dicts(i, 'console','',choices)
 
     ###############################################################################################################
     # PIPELINE SECTION: Host and target platform selection
@@ -2037,10 +2048,10 @@ def pipeline(i):
        ck.out('Obtaining platform parameters and checking other obligatory choices for the pipeline ...')
        ck.out('')
 
-    hos=i.get('host_os','')
-    tos=i.get('target_os','')
-    tbits=i.get('target_os_bits','')
-    tdid=i.get('device_id','')
+    hos=ck.get_from_dicts(i, 'host_os', '', choices)
+    tos=ck.get_from_dicts(i, 'target_os', '', choices)
+    tbits=ck.get_from_dicts(i, 'target_os_bits', '', choices)
+    tdid=ck.get_from_dicts(i, 'device_id', '', choices)
 
     # Get some info about platforms
     ox=o
@@ -2057,11 +2068,11 @@ def pipeline(i):
     r=ck.access(ii)
     if r['return']>0: 
        if r['return']==32:
-          choices['##device_id']={'type':'text',
-                                  'has_choice':'yes',
-                                  'choices':r['devices'],
-                                  'tags':['setup'],
-                                  'sort':1000}
+          choices_desc['##device_id']={'type':'text',
+                                       'has_choice':'yes',
+                                       'choices':r['devices'],
+                                       'tags':['setup'],
+                                       'sort':1000}
           return finalize_pipeline(i)
        return r
 
@@ -2071,7 +2082,7 @@ def pipeline(i):
     hos=r['host_os_uoa']
     hosd=r['host_os_dict']
 
-    i['host_os']=hos
+    choices['##host_os']=hos
 
     tos=r['os_uoa']
     tosd=r['os_dict']
@@ -2085,12 +2096,12 @@ def pipeline(i):
     remote=tosd.get('remote','')
 
     tdid=r['device_id']
-    if tdid!='': i['device_id']=tdid
+    if tdid!='': choices['##device_id']=tdid
 
-    i['target_os']=tos
-    i['target_os_bits']=tbits
+    choices['##target_os']=tos
+    choices['##target_os_bits']=tbits
 
-    i['device_id']=r['device_id']
+    choices['##device_id']=r['device_id']
 
     if hos=='':
        return {'return':1, 'error':'host_os is not defined'}
@@ -2099,9 +2110,10 @@ def pipeline(i):
        return {'return':1, 'error':'target_os is not defined'}
 
     # Check compile type
-    ctype=i.get('compile_type','')
+    ctype=ck.get_from_dicts(i, 'compile_type', '', choices)
     if i.get('static','')=='yes': ctype='static'
     if i.get('dynamic','')=='yes': ctype='dynamic'
+
     # On default Android-32, use static by default 
     # (old platforms has problems with dynamic)
     if ctype=='':
@@ -2109,7 +2121,7 @@ def pipeline(i):
           ctype=tosd['default_compile_type']
        else:
           ctype='dynamic'
-    i['compile_type']=ctype
+    choices['##compile_type']=ctype
 
     if o=='con':
        ck.out(sep)
@@ -2171,11 +2183,11 @@ def pipeline(i):
           duoa=lst[0]['data_uoa']
        else:
           # SELECTOR *************************************
-          choices['##program_uoa']={'type':'uoa',
-                                    'has_choice':'yes',
-                                    'choices':lst,
-                                    'tags':['setup'],
-                                    'sort':1000}
+          choices_desc['##program_uoa']={'type':'uoa',
+                                         'has_choice':'yes',
+                                         'choices':lst,
+                                         'tags':['setup'],
+                                         'sort':1000}
 
           if o=='con' and si!='yes':
              r=ck.access({'action':'select_uoa',
@@ -2208,8 +2220,8 @@ def pipeline(i):
 
     if duid=='' and meta.get('backup_data_uid','')!='': duid=meta['backup_data_uid']
 
-    if duoa!='': i['data_uoa']=duoa
-    if muoa!='': i['module_uoa']=muoa
+    if duoa!='': choices['##data_uoa']=duoa
+    if muoa!='': choices['##module_uoa']=muoa
     # we are not recording repo_uoa for reproducibility (can be different across users) ...   
 
     if o=='con':
@@ -2230,11 +2242,11 @@ def pipeline(i):
               xchoices.append(z)
 
           # SELECTOR *************************************
-          choices['##cmd_key']={'type':'text',
-                                'has_choice':'yes',
-                                'choices':xchoices,
-                                'tags':['setup'],
-                                'sort':1100}
+          choices_desc['##cmd_key']={'type':'text',
+                                     'has_choice':'yes',
+                                     'choices':xchoices,
+                                     'tags':['setup'],
+                                     'sort':1100}
 
           if o=='con' and si!='yes':
              ck.out('************ Selecting command line ...')
@@ -2254,7 +2266,7 @@ def pipeline(i):
        if kcmd not in krun_cmds:
           return {'return':1, 'error':'CMD key "'+kcmd+'" not found in program description'}
 
-    i['cmd_key']=kcmd
+    choices['##cmd_key']=kcmd
 
     if o=='con':
        ck.out('  Selected command line: '+kcmd)
@@ -2289,11 +2301,11 @@ def pipeline(i):
              dduoa=lst[0]['data_uoa']
           else:
              # SELECTOR *************************************
-             choices['##dataset_uoa']={'type':'uoa',
-                                       'has_choice':'yes',
-                                       'choices':lst,
-                                       'tags':['setup', 'dataset'],
-                                       'sort':1200}
+             choices_desc['##dataset_uoa']={'type':'uoa',
+                                            'has_choice':'yes',
+                                            'choices':lst,
+                                            'tags':['setup', 'dataset'],
+                                            'sort':1200}
 
              if o=='con' and si!='yes':
                 ck.out('************ Selecting data set ...')
@@ -2320,14 +2332,13 @@ def pipeline(i):
        dduoa=rx['data_uoa']
 
     if dduoa!='': 
-       i['dataset_uoa']=dduoa
+       choices['##dataset_uoa']=dduoa
 
        if o=='con':
           ck.out('  Selected data set: '+dduoa+' ('+dduid+')')
 
     ###############################################################################################################
     # PIPELINE SECTION: resolve compile dependencies 
-    cdeps=i.get('compile_deps',{})
     if len(cdeps)==0: 
        cdeps=meta.get('compile_deps',{})
 
@@ -2348,7 +2359,7 @@ def pipeline(i):
           if rx['return']>0: return rx
 
           cdeps=rx['deps'] # Update deps (add UOA)
-          i['compile_deps']=cdeps
+          i['dependencies']=cdeps
     else:
        if o=='con':
           ck.out('  Selected dependencies: ')
@@ -2398,7 +2409,7 @@ def pipeline(i):
 
     ###############################################################################################################
     # PIPELINE SECTION: get compiler description for flag options
-    cflags_desc=choices.get('##compiler_flags',{})
+    cflags_desc=choices_desc.get('##compiler_flags',{})
 
     cdu=i.get('compiler_description_uoa','')
     if cdu=='' and i.get('no_compiler_description','')!='yes':
@@ -2442,7 +2453,6 @@ def pipeline(i):
                  xruoa=q['data_uoa']
 
           if xrmax==0:
-             import json
              return {'return':1, 'error':'can\'t find most close compiler description by tags ('+json.dumps(cdt1)+')'}
 
           cdu=xruoa
@@ -2466,12 +2476,12 @@ def pipeline(i):
               q1=q
               if q.startswith('##'):q1=q[2:]
               elif q.startswith('#'):q1=q[1:]
-              choices['##compiler_flags#'+q1]=qq
+              choices_desc['##compiler_flags#'+q1]=qq
 
     ###############################################################################################################
     # PIPELINE SECTION: get compiler vars choices (-Dvar=value) - often for datasets such as in polyhedral benchmarks
     bcvd=meta.get('build_compiler_vars_desc',{})
-    cbcvd=choices.get('##compiler_vars',{})
+    cbcvd=choices_desc.get('##compiler_vars',{})
 
     if len(bcvd)>0 and len(cbcvd)==0:
        for q in bcvd:
@@ -2479,9 +2489,9 @@ def pipeline(i):
            q1=q
            if q.startswith('##'):q1=q[2:]
            elif q.startswith('#'):q1=q[1:]
-           choices['##compiler_vars#'+q1]=qq
+           choices_desc['##compiler_vars#'+q1]=qq
 
-    cv=i.get('compiler_vars',{})
+    cv=ck.get_from_dicts(i,'compiler_vars',{},choices)
 
     ###############################################################################################################
     # PIPELINE SECTION: target platform features

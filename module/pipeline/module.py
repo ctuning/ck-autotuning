@@ -114,7 +114,7 @@ def autotune(i):
                (plugin-based)
                (customized)
 
-               (record)               - (data UOA) explicitly record to this entry
+               (record)               - (data UOA or CID where module_uoa ignored!) explicitly record to this entry
                (record_repo)          - (repo UOA) explicitly select this repo to record
                (record_failed)        - if 'yes', record even failed experiments
                                         (for debugging, buildbots, detecting designed 
@@ -129,6 +129,8 @@ def autotune(i):
               return       - return code =  0, if successful
                                          >  0, if error
               (error)      - error text if return > 0
+
+              output of last pipeline!
             }
 
     """
@@ -150,6 +152,11 @@ def autotune(i):
     if 'record' in ic: del(ic['record'])
     record_repo=ic.get('record_repo','')
     if 'record_repo' in ic: del(ic['record_repo'])
+    if record.find(':')>=0:
+       rx=ck.parse_cid({'cid':record})
+       if rx['return']>0: return rx
+       record=rx['data_uoa']
+       record_repo=rx.get('repo_uoa','')
     record_failed=ic.get('record_failed','')
     if 'record_failed' in ic: del(ic['record_failed'])
     record_ignore_update=ic.get('record_ignore_update','')
@@ -241,14 +248,14 @@ def autotune(i):
 
     # Check choices descriptions and dimensions
     cdesc=pipeline.get('choices_desc',{})
-    cdims=i.get('choices_dims',[])
+    corder=i.get('choices_order',[])
     csel=i.get('choices_selection',{})
     ccur=[]
 
     # Prepare multi-dimensional vector of choices
     dv1=[] # Current dimensions
-    for iq1 in range(0,len(cdims)):
-        q1=cdims[iq1]
+    for iq1 in range(0,len(corder)):
+        q1=corder[iq1]
         dv=[]
         zz=csel[iq1]
         ztags=zz.get('tags','').split(',')
@@ -276,7 +283,7 @@ def autotune(i):
             else:
                dv.append(q2)   
         dv1.append(dv)
-    cdims=dv1
+    corder=dv1
 
     # Check seed
     seed=i.get('seed','')
@@ -289,6 +296,8 @@ def autotune(i):
           ck.out('')
 
     # Start iterations
+    rr={'return':0}
+
     finish=False
     for m in range(0,ni):
         mm=m+1
@@ -303,13 +312,20 @@ def autotune(i):
         r=ck.access({'module_uoa':cfg['module_deps']['choice'],
                      'action':'make',
                      'choices_desc':cdesc,
-                     'choices_dims':cdims,
+                     'choices_order':corder,
                      'choices_selection':csel,
                      'choices_current':ccur,
                      'custom_explore':cexp,
                      'pipeline':pipeline,
                      'out':o})
         if r['return']>0: return r
+
+        choices=r['choices']
+        choices_order=r['choices_order']
+
+#        import json
+#        print json.dumps(csel, indent=2)
+#        exit(1)
 
         if r['finish']:
            finish=True
@@ -334,17 +350,22 @@ def autotune(i):
             pipeline1['out']=o
             pipeline1['state']=state
             pipeline1['statistical_repetition_number']=sr
-            rx=ck.access(pipeline1)
-            if rx['return']>0: return rx
+            rr=ck.access(pipeline1)
+            if rr['return']>0: return rr
 
-            state=rx.get('state',{})
+#            import json
+#            print json.dumps(rx, indent=2)
+#            exit(1)
 
-            fail=rx.get('fail','')
+            state=rr.get('state',{})
+
+            fail=rr.get('fail','')
 
             if fail!='yes' or record_failed=='yes':
                ddcl.append(pipeline1.get('characteristics',{}))
             dd['characteristics_list']=ddcl
 
+            
             if fail=='yes': break
 
         if record!='':
@@ -388,7 +409,7 @@ def autotune(i):
        ck.out(sep)
        ck.out('Autotuning finished!')
 
-    return {'return':0}
+    return rr
 
 ##############################################################################
 # Run pipeline once ...
@@ -396,6 +417,8 @@ def autotune(i):
 def run(i):
     """
     Input:  {
+              See 'autotune' with iterations=1 (to reuse statistical analysis and recoring to repo)
+
               (iterations) - default =1
             }
 

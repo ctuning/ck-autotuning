@@ -36,10 +36,13 @@ def init(i):
 def make(i):
     """
     Input:  {
-              choices_desc - 
-              choices_dims -
-              choices_selection
-              choices_current    - current state
+              choices_desc       - dict with description of choices (flat format)
+              choices_order      - list of list of flat choice vectors to tune [[],[],...] - 
+                                   list of list is needed to be able to enable indedepent 
+                                   selection of groups of choices. For example, iterate
+                                   over all possible data set sizes + random flags per data set
+              choices_selection  - list of dicts with types of selection for each above group
+              choices_current    - current vector of choices
               (pipeline)         - if set, update it with current choices
               (custom_explore)   - enforce exploration params from command line
             }
@@ -49,8 +52,11 @@ def make(i):
                                          >  0, if error
               (error)      - error text if return > 0
 
-              choices_current    - updated choices
-              (pipeline)         - if set
+              choices_current    - list of updated choices
+              choices            - dictionary of flat choices and values
+              choices_order      - list of flat choices (to know order if need such as for LLVM opt)
+              pipeline           - upated pipeline with choices
+                                   also choices and choices_order are added to pipeline
               finish             - if True, iterations are over
             }
 
@@ -63,19 +69,19 @@ def make(i):
     finish=False
 
     cdesc=i['choices_desc']
-    cdims=i['choices_dims']
+    corder=i['choices_order']
     csel=i['choices_selection']
     ccur=i['choices_current']
 
     pipeline=i.get('pipeline',{})
     cexp=i.get('custom_explore',{})
 
-    cd=len(cdims)
+    cd=len(corder)
 
     # Init current choices
     if len(ccur)==0:
        for c in range(0, cd):
-           cx=cdims[c]
+           cx=corder[c]
            cy=[]
            for k in range(0,len(cx)):
                cy.append('')
@@ -83,7 +89,7 @@ def make(i):
 
     update=False
     for cx in range(cd-1,-1,-1):
-        cc=cdims[cx]
+        cc=corder[cx]
         dc=ccur[cx]
 
         t=csel[cx]
@@ -241,17 +247,17 @@ def make(i):
           ck.out('')
           ck.out('  Vector of flattened and updated choices:')
 
-       cdims1=[]
-       ccur1=[]
-       for q in range(0, len(cdims)):
-           qq=cdims[q]
+       corder1=[]
+       ccur1={}
+       for q in range(0, len(corder)):
+           qq=corder[q]
            vq=ccur[q]
            for q1 in range(0, len(qq)):
                qq1=qq[q1]
                vq1=vq[q1]
 
-               cdims1.append(qq1)
-               ccur1.append(vq1)
+               corder1.append(qq1)
+               ccur1[qq1]=vq1
 
                if o=='con':
                   if vq1!='':
@@ -264,10 +270,10 @@ def make(i):
            # Flatten choices and values, and add to pipeline
            # Useful if order of choices is important (say opt flags in LLVM)
            # Will be decoded by a given pipeline, if needed 
-           pipeline['choices_dims']=cdims1
+           pipeline['choices_order']=corder1
            pipeline['choices']=ccur1   
 
-    return {'return':0, 'choices_current':ccur, 'pipeline':pipeline, 'finish':finish}
+    return {'return':0, 'choices_current':ccur, 'choices_order':corder1, 'choices':ccur1, 'pipeline':pipeline, 'finish':finish}
 
 ##############################################################################
 # select uoa

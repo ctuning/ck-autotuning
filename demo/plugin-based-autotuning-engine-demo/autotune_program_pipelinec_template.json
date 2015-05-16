@@ -8,7 +8,7 @@
      "ready": "yes"
   },
 
-  "choices_dims":[
+  "choices_order":[
     [
      "##compiler_flags#*"
     ]

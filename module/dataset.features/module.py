@@ -177,3 +177,52 @@ def extract(i):
            if ry['return']>0: return ry
 
     return {'return':0}
+
+##############################################################################
+# converting raw RGB image to png or other formats
+
+def convert_raw_rgb_image(i):
+    """
+    Input:  {
+              input_file    - input raw RGB file
+              output_file   - output file
+              width         - image width
+              height        - image height
+              (mode)        - mode: RGB (default), RGBA, ...
+              (output_type) - type of output file: PNG (default), JPEG ...
+            }
+
+    Output: {
+              return       - return code =  0, if successful
+                                         >  0, if error
+              (error)      - error text if return > 0
+            }
+
+    """
+
+    fi=i['input_file']
+    fo=i['output_file']
+
+    w=int(i['width'])
+    h=int(i['height'])
+
+    ot=i.get('output_type','')
+    if ot=='': ot='png'
+
+    mode=i.get('mode','')
+    if mode=='': mode='RGB'
+
+    # Load binary file
+    r=ck.load_text_file({'text_file':fi, 'keep_as_bin':'yes'})
+    if r['return']>0: return r
+
+    bin=r['bin']
+
+    # Create image
+    from PIL import Image
+
+    im = Image.frombuffer(mode, (w,h), bin, "raw", mode, 0, 1)
+
+    im.save(fo, ot)
+
+    return {'return':0}
