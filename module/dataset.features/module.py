@@ -41,7 +41,7 @@ def extract(i):
 
               (tags)            - tags to process specific datasets
 
-              (target_repo_uoa) - repo, where to save features
+              (target_repo_uoa) - repo, where to save features - if =='', use repo_uoa
 
 
             }
@@ -50,6 +50,8 @@ def extract(i):
               return       - return code =  0, if successful
                                          >  0, if error
               (error)      - error text if return > 0
+
+              dict         - final dict with key 'features'={...} 
             }
 
     """
@@ -64,6 +66,7 @@ def extract(i):
     ruoa=i.get('repo_uoa','')
 
     truoa=i.get('target_repo_uoa','')
+    if truoa=='' and ruoa!='': truoa=ruoa
 
     tags=i.get('tags','')
 
@@ -75,6 +78,8 @@ def extract(i):
     if rx['return']>0: return rx
 
     lst=rx['lst']
+
+    feat1={}
 
     for q in lst:
         duid=q['data_uid']
@@ -176,7 +181,7 @@ def extract(i):
            ry=ck.access(ii)
            if ry['return']>0: return ry
 
-    return {'return':0}
+    return {'return':0, 'dict':{'features':feat1}}
 
 ##############################################################################
 # converting raw RGB image to png or other formats

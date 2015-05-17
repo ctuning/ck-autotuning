@@ -276,64 +276,13 @@ def make(i):
     return {'return':0, 'choices_current':ccur, 'choices_order':corder1, 'choices':ccur1, 'pipeline':pipeline, 'finish':finish}
 
 ##############################################################################
-# select uoa
-
-def select_uoa(i):
-    """
-    Input:  {
-              choices      - list from search function
-              (skip_enter) - if 'yes', do not select 0 when entering 0
-            }
-
-    Output: {
-              return  - return code =  0, if successful
-                                    >  0, if error
-              (error) - error text if return > 0
-              choice  - data UOA
-            }
-
-    """
-
-    se=i.get('skip_enter','')
-
-    lst=i.get('choices',[])
-
-    zz={}
-    iz=0
-    for z1 in sorted(lst, key=lambda v: v['data_uoa']):
-        z=z1['data_uid']
-        zu=z1['data_uoa']
-
-        zs=str(iz)
-        zz[zs]=z
-
-        ck.out(zs+') '+zu+' ('+z+')')
-
-        iz+=1
-
-    ck.out('')
-    y='Choose first number to select UOA'
-    if se!='yes': y+=' (or press Enter for 0)'
-    y+=': '
-    
-    rx=ck.inp({'text':y})
-    x=rx['string'].strip()
-    if x=='' and se!='yes': x='0' 
-
-    if x not in zz:
-       return {'return':1, 'error':'number is not recognized'}
-
-    dduoa=zz[x]
-
-    return {'return':0, 'choice':dduoa}
-
-##############################################################################
 # select list
 
 def select_list(i):
     """
     Input:  {
-              choices - simple text list of choices
+              choices      - simple text list of choices
+              (skip_enter) - if 'yes', do not select 0 when entering 0
             }
 
     Output: {
@@ -344,6 +293,8 @@ def select_list(i):
             }
 
     """
+
+    se=i.get('skip_enter','')
 
     lst=i.get('choices',[])
 
@@ -358,8 +309,13 @@ def select_list(i):
         iz+=1
 
     ck.out('')
-    rx=ck.inp({'text':'Choose first number to select item: '})
+    y='Choose first number to select item'
+    if se!='yes': y+=' (or press Enter for 0)'
+    y+=': '
+
+    rx=ck.inp({'text':y})
     x=rx['string'].strip()
+    if x=='' and se!='yes': x='0' 
 
     if x not in zz:
        return {'return':1, 'error':'number is not recognized'}

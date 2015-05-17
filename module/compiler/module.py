@@ -84,9 +84,7 @@ def extract_to_pipeline(i):
           ck.out('')
           ck.out('Multiple choices available:')
           ck.out('')
-          r=ck.access({'action':'select_uoa',
-                       'module_uoa':cfg['module_deps']['choice'],
-                       'choices':lst})
+          r=ck.select_uoa({'choices':lst})
           if r['return']>0: return r
           duoa=r['choice']
 

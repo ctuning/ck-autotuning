@@ -3,10 +3,7 @@
     "make": {}, 
     "select_list": {
       "desc": "select list"
-    }, 
-    "select_uoa": {
-      "desc": "select UOA"
-    }
+    } 
   }, 
   "copyright": "See CK Copyright.txt for copyright details", 
   "desc": "deal with choices", 

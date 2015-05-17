@@ -120,7 +120,13 @@ def autotune(i):
                                         (for debugging, buildbots, detecting designed 
                                          architecture failures, etc)
                (record_ignore_update) - (default=yes), if 'yes', skip recording date/author info for each update
+               (tags)                 - record these tags to the entry description
+               (subtags)              - record these subtags to the point description
 
+               (record_dict)          - extra record parameters (to 'add experiment' function)
+
+               (features)             - extra features
+               (meta)                 - extra meta
 
                (state)                - pre-load state preserved across iterations
             }
@@ -148,20 +154,26 @@ def autotune(i):
     ic['cid']=''
     ic['data_uoa']=''
 
-    record=ic.get('record','')
-    if 'record' in ic: del(ic['record'])
-    record_repo=ic.get('record_repo','')
-    if 'record_repo' in ic: del(ic['record_repo'])
+    tags=ck.get_from_dicts(ic, 'tags', [], None)
+    tags=ck.convert_str_tags_to_list(tags) # if string, convert to list
+    subtags=ck.get_from_dicts(ic, 'subtags', [], None)
+    subtags=ck.convert_str_tags_to_list(subtags) # if string, convert to list
+
+    meta=ck.get_from_dicts(ic, 'meta', {}, None)
+
+    record=ck.get_from_dicts(ic, 'record', '', None)
+    record_repo=ck.get_from_dicts(ic, 'record_repo', '', None)
     if record.find(':')>=0:
        rx=ck.parse_cid({'cid':record})
        if rx['return']>0: return rx
        record=rx['data_uoa']
        record_repo=rx.get('repo_uoa','')
-    record_failed=ic.get('record_failed','')
-    if 'record_failed' in ic: del(ic['record_failed'])
+    record_failed=ck.get_from_dicts(ic, 'record_failed','', None)
     record_ignore_update=ic.get('record_ignore_update','')
     if record_ignore_update=='': record_ignore_update='yes'
     if 'record_ignore_update' in ic: del(ic['record_ignore_update'])
+
+    rdict=ck.get_from_dicts(ic, 'record_dict', {}, None)
 
     state=i.get('state',{})
 
@@ -320,13 +332,6 @@ def autotune(i):
                      'out':o})
         if r['return']>0: return r
 
-        choices=r['choices']
-        choices_order=r['choices_order']
-
-#        import json
-#        print json.dumps(csel, indent=2)
-#        exit(1)
-
         if r['finish']:
            finish=True
            break
@@ -338,77 +343,85 @@ def autotune(i):
            continue
 
         # Describing experiment
-        dd={'pipeline':pipelinec,
+        dd={'tags':tags,
+            'subtags':subtags,
+            'meta':meta,
+            'pipeline':pipelinec,
             'pipeline_uoa':puoa,
             'pipeline_uid':puid,
             'features':pipeline.get('features',{})}
-        ddcl=[] # characteristics list
 
+        ddcl=[] # characteristics list
+        rr={}
         for sr in range(0, srm):
             ck.out('')
             ck.out('      ------------------- Statistical reptition: '+str(sr+1)+' of '+str(srm)+' -------------------')
             ck.out('')
 
             pipeline1=copy.deepcopy(pipeline)
-            pipeline['prepare']='no'
-            pipeline['module_uoa']=puoa
-            pipeline['action']='pipeline'
+            pipeline1['prepare']='no'
+            pipeline1['module_uoa']=puoa
+            pipeline1['action']='pipeline'
             pipeline1['out']=o
             pipeline1['state']=state
             pipeline1['statistical_repetition_number']=sr
             rr=ck.access(pipeline1)
             if rr['return']>0: return rr
 
-            dd['choices']=rr.get('choices',{})
-            dd['choices_order']=rr.get('choices_order',[])
-
-#            import json
-#            print json.dumps(rx, indent=2)
-#            exit(1)
-
             state=rr.get('state',{})
 
             fail=rr.get('fail','')
-
             if fail!='yes' or record_failed=='yes':
                ddcl.append(pipeline1.get('characteristics',{}))
-            dd['characteristics_list']=ddcl
 
-            
             if fail=='yes': break
 
         if record!='':
            if fail!='yes' or record_failed=='yes':
-               ##########################################################################################
-               # Recording experiment
-               if o=='con':
-                  ck.out(sep)
-                  ck.out('Recording experiment ...')
-                  ck.out('')
+              # Get info from last statistical pipeline run
+              dd['choices']=rr.get('choices',{})
+              dd['choices_order']=rr.get('choices_order',[])
+              dd['choices_desc']=rr.get('choices_desc',{})
+              dd['features']=rr.get('features',{})
+              dd['features_desc']=rr.get('features_desc',{})
+              dd['dependencies']=rr.get('dependencies',{})
+              dd['characteristics_list']=ddcl
+              dd['characteristics_desc']=rr.get('characteristics_desc',{})
 
-#               raw_input('recording ...')
+              meta1=rr.get('meta',{})
+              if len(meta1)>0: meta.update(meta1)
+              dd['meta']=meta1
 
-               ie={'action':'add',
+              ##########################################################################################
+              # Recording experiment
+              if o=='con':
+                 ck.out(sep)
+                 ck.out('Recording experiment ...')
+                 ck.out('')
 
-                   'module_uoa':cfg['module_deps']['experiment'],
+              ie={'action':'add',
 
-                   'ignore_update':record_ignore_update,
-                   'out':'con',
-                   'sort_keys':'yes',
+                  'module_uoa':cfg['module_deps']['experiment'],
 
-                   'experiment_repo_uoa': record_repo,
-                   'experiment_uoa':record,
+                  'ignore_update':record_ignore_update,
+                  'out':'con',
+                  'sort_keys':'yes',
+
+                  'experiment_repo_uoa': record_repo,
+                  'experiment_uoa':record,
 
 #                   'search_point_by_features':'yes',
-                   'process_multi_keys':['characteristics','features'],
-                   'record_all_subpoints':'yes',
+                  'process_multi_keys':['characteristics','features'],
+                  'record_all_subpoints':'yes',
 
 #                   'force_new_entry':'yes',
 
-                   'dict':dd}
+                  'dict':dd}
 
-               rx=ck.access(ie)
-               if rx['return']>0: return rx
+              ie.update(rdict)
+
+              rx=ck.access(ie)
+              if rx['return']>0: return rx
 
     if finish:
        ck.out('')

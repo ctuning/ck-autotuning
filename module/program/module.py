@@ -682,6 +682,7 @@ def process_in_dir(i):
 
           for k in bcv:
               kv=bcv[k]
+
               if sbcv!='': sbcv+=' '
               sbcv+=svarb+svarb1+'CK_FLAG_PREFIX_VAR'+svare1+svare+k
               if kv!='': sbcv+='='+str(kv)
@@ -1896,6 +1897,8 @@ def pipeline(i):
               (compiler_flags)       - dict from compiler description (during autotuning),
                                        if set, description should exist in input:choices_desc#compiler_flags# ...
 
+              (best_base_flag)       - if 'yes', try to select best flag if available ...
+
               (no_compile)           - if 'yes', skip compilation
 
               (env)                  - preset environment
@@ -2006,6 +2009,7 @@ def pipeline(i):
     ptags=ck.get_from_dicts(i, 'program_tags', '', choices)
     kcmd=ck.get_from_dicts(i, 'cmd_key', '', choices)
     dduoa=ck.get_from_dicts(i, 'dataset_uoa', '', choices)
+    druoa=ck.get_from_dicts(i, 'dataset_repo_uoa', '', None)
 
     pdir=ck.get_from_dicts(i, 'program_dir', '', None) # Do not save, otherwise can't reproduce by other people
     if pdir!='': os.chdir(pdir)
@@ -2034,6 +2038,12 @@ def pipeline(i):
                     if flags!='': flags+=' '
                     flags+=ep+str(qq)
 
+    bbf=ck.get_from_dicts(i, 'best_base_flag', {}, choices)
+    if bbf=='yes':
+       qx=choices_desc.get('##compiler_flags#base_opt',{}).get('choice',[])
+       if len(qx)>0:
+          flags=qx[0]+' '+flags
+
     env=ck.get_from_dicts(i,'env',{},choices)
     eenv=ck.get_from_dicts(i, 'extra_env','',choices)
 
@@ -2059,7 +2069,7 @@ def pipeline(i):
     tdid=ck.get_from_dicts(i, 'device_id', '', choices)
 
     # Get some info about platforms
-    ox=o
+    ox=oo
     if sdi=='yes' and sic=='yes': ox=''
     ii={'action':'detect',
         'module_uoa':cfg['module_deps']['platform.os'],
@@ -2195,9 +2205,7 @@ def pipeline(i):
                                          'sort':1000}
 
           if o=='con' and si!='yes':
-             r=ck.access({'action':'select_uoa',
-                          'module_uoa':cfg['module_deps']['choice'],
-                          'choices':lst})
+             r=ck.select_uoa({'choices':lst})
              if r['return']>0: return r
              duoa=r['choice']
              ck.out('')
@@ -2221,7 +2229,7 @@ def pipeline(i):
 
     if pdir=='': pdir=state['cur_dir']
 
-    i['program_meta']=meta
+    if duid=='': i['program_meta']=meta # Write program meta only if no program UID, otherwise can restore from program entry
 
     if duid=='' and meta.get('backup_data_uid','')!='': duid=meta['backup_data_uid']
 
@@ -2285,14 +2293,15 @@ def pipeline(i):
     dmuoa=cfg['module_deps']['dataset']
     dduid=''
 
+    xdtags=''
+    for q in dtags:
+        if xdtags!='': xdtags+=','
+        xdtags+=q
+
     if dduoa!='' or len(dtags)>0:
        if dduoa=='':
-          xdtags=''
-          for q in dtags:
-              if xdtags!='': xdtags+=','
-              xdtags+=q
-
           rx=ck.access({'action':'search',
+                        'dataset_repo_uoa':druoa,
                         'module_uoa':dmuoa,
                         'tags':xdtags})
           if rx['return']>0: return rx
@@ -2315,9 +2324,7 @@ def pipeline(i):
              if o=='con' and si!='yes':
                 ck.out('************ Selecting data set ...')
                 ck.out('')
-                r=ck.access({'action':'select_uoa',
-                             'module_uoa':cfg['module_deps']['choice'],
-                             'choices':lst})
+                r=ck.select_uoa({'choices':lst})
                 if r['return']>0: return r
                 dduoa=r['choice']
                 ck.out('')
@@ -2329,6 +2336,7 @@ def pipeline(i):
 
     if dduoa!='':
        rx=ck.access({'action':'load',
+                     'dataset_repo_uoa':druoa,
                      'module_uoa':dmuoa,
                      'data_uoa':dduoa})
        if rx['return']>0: return rx
@@ -2486,20 +2494,37 @@ def pipeline(i):
     ###############################################################################################################
     # PIPELINE SECTION: get compiler vars choices (-Dvar=value) - often for datasets such as in polyhedral benchmarks
     bcvd=meta.get('build_compiler_vars_desc',{})
-    cbcvd=choices_desc.get('##compiler_vars',{})
-
-    if len(bcvd)>0 and len(cbcvd)==0:
-       for q in bcvd:
-           qq=bcvd[q]
-           q1=q
-           if q.startswith('##'):q1=q[2:]
-           elif q.startswith('#'):q1=q[1:]
-           choices_desc['##compiler_vars#'+q1]=qq
+    for q in bcvd:
+        qq=bcvd[q]
+        q1=q
+        if q.startswith('##'):q1=q[2:]
+        elif q.startswith('#'):q1=q[1:]
+        choices_desc['##compiler_vars#'+q1]=qq
 
     cv=ck.get_from_dicts(i,'compiler_vars',{},choices)
 
     ###############################################################################################################
-    # PIPELINE SECTION: target platform features
+    # PIPELINE SECTION: get run vars (preset environment)
+    rv=meta.get('run_vars_desc',{})
+    for q in rv:
+        qq=rv[q]
+        q1=q
+        if q.startswith('##'):q1=q[2:]
+        elif q.startswith('#'):q1=q[1:]
+        choices_desc['##env#'+q1]=qq
+
+    env=ck.get_from_dicts(i,'env',{},choices)
+
+    ###############################################################################################################
+    # Pipeline ready for compile/run
+    i['ready']='yes'
+    if pr=='yes':
+       return finalize_pipeline(i)
+
+    ###############################################################################################################
+
+    ###############################################################################################################
+    # PIPELINE SECTION: get target platform features
     npf=i.get('no_platform_features','')
     if i.get('platform_features','')!='yes' and npf!='yes':
        if o=='con':
@@ -2525,14 +2550,54 @@ def pipeline(i):
        i['skip_info_collection']='yes'
 
     ###############################################################################################################
-    # Pipeline ready for compile/run
-    i['ready']='yes'
-    if pr=='yes':
-       return finalize_pipeline(i)
+    # PIPELINE SECTION: get dataset features
+    npf=i.get('no_dataset_features','')
+    if npf!='yes' and dduid!='':
+       if o=='con':
+          ck.out(sep)
+          ck.out('Checking dataset features for '+dduoa+' ('+dduid+') ...')
+          ck.out('')
+
+       dsf=features.get('dataset',{})
+       dsf1={}
+
+       # Get some info about platforms (the same id as program UID)
+       ii={'action':'load',
+           'repo_uoa':druoa,
+           'module_uoa':cfg['module_deps']['dataset.features'],
+           'data_uoa':dduid}
+       r=ck.access(ii)
+       if r['return']>0: 
+          if r['return']==16:
+             # Try to extract
+             if o=='con':
+                ck.out(sep)
+                ck.out('Trying to extract dataset features ...')
+                ck.out('')
+
+             ii['tags']=xdtags
+             ii['action']='extract'
+             ii['out']=oo
+             r=ck.access(ii)
+             if r['return']==0:
+                dsf1=r['dict'].get('features',{})
+
+          # Ignore errors
+       else:
+          dsf1=r['dict'].get('features',{})
+
+       if len(dsf1)>0 and o=='con':
+          ck.out('Features found:')
+          ck.out('  '+json.dumps(dsf1))
+
+       dsf.update(dsf1)
+       features['dataset']=dsf
 
     ###############################################################################################################
     # PIPELINE SECTION: Check that system state didn't change (frequency)
     if i.get('no_state_check','')!='yes':
+       if o=='con': ck.out(sep)
+
        ii={'action':'detect',
            'module_uoa':cfg['module_deps']['platform.cpu'],
            'host_os':hos,
@@ -2710,6 +2775,7 @@ def pipeline(i):
 
     ###############################################################################################################
     # PIPELINE SECTION: finalize PIPELINE
+    i['out']=o
     return finalize_pipeline(i)
 
 ##############################################################################
