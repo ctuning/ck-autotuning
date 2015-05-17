@@ -1553,6 +1553,7 @@ def run(i):
     return process(i)
 
 ##############################################################################
+# OUTDATED!!!
 # non-universal (traditional) program compiler flag autotuning
 # NOTE: THIS FUNCTION IS OUTDATED - use universal autotuning pipeline
 # i.e. ck autotune pipeline:program
@@ -1899,6 +1900,10 @@ def pipeline(i):
 
               (best_base_flag)       - if 'yes', try to select best flag if available ...
 
+              (select_best_base_flag_for_first_iteration) - if 'yes' and autotuning_iteration=0
+
+              (autotuning_iteration) - (int) current autotuning iteration (automatically updated during pipeline tuning)
+
               (no_compile)           - if 'yes', skip compilation
 
               (env)                  - preset environment
@@ -1970,7 +1975,6 @@ def pipeline(i):
 
     if 'choices_desc' not in i: i['choices_desc']={}
     choices_desc=i['choices_desc']
-
     choices_order=i.get('choices_order',[])
 
     if 'features' not in i: i['features']={}
@@ -1981,6 +1985,11 @@ def pipeline(i):
 
     if 'dependencies' not in i: i['dependencies']={}
     cdeps=i['dependencies']
+
+    ai=ck.get_from_dicts(i, 'autotuning_iteration', '', None)
+    sbbf=ck.get_from_dicts(i, 'select_best_base_flag_for_first_iteration','', None)
+    if sbbf=='yes' and ai!='' and ai==0:
+       i['best_base_flag']='yes'
 
     i['ready']='no'
     i['fail']='no'
@@ -2000,12 +2009,12 @@ def pipeline(i):
     if srn=='': srn=0
     else: srn=int(srn)
 
-    ruoa=ck.get_from_dicts(i, 'repo_uoa', '', choices)
+    ruoa=ck.get_from_dicts(i, 'repo_uoa', '', None)
     duoa=ck.get_from_dicts(i, 'data_uoa', '', choices)
     puoa=ck.get_from_dicts(i, 'program_uoa', '', None)
     if puoa!='': 
        duoa=puoa
-       choices['##data_uoa']=duoa
+       choices['data_uoa']=duoa
     ptags=ck.get_from_dicts(i, 'program_tags', '', choices)
     kcmd=ck.get_from_dicts(i, 'cmd_key', '', choices)
     dduoa=ck.get_from_dicts(i, 'dataset_uoa', '', choices)
@@ -2025,8 +2034,23 @@ def pipeline(i):
     lflags=ck.get_from_dicts(i, 'lflags', '', choices)
 
     # Restore compiler flag selection with order for optimization reordering (!)
+    # Simplified - needs to be improved for more complex cases (dict of dict)
     compiler_flags=ck.get_from_dicts(i, 'compiler_flags', {}, choices)
+
+    # Check if use best base flag
+    bbf=ck.get_from_dicts(i, 'best_base_flag', {}, None)
+    if bbf=='yes':
+       qx=choices_desc.get('##compiler_flags#base_opt',{}).get('choice',[])
+       if len(qx)>0:
+          compiler_flags['base_opt']=qx[0]
+
     if len(compiler_flags)>0:
+       # Check if compiler flags are not in order (to set some order for reproducibility)
+       for q in sorted(list(compiler_flags.keys())):
+           q1='##compiler_flags#'+q
+           if q1 not in choices_order:
+              choices_order.append(q1)
+              
        for q in choices_order:
            if q.startswith('##compiler_flags#'):
               qk=q[17:]
@@ -2037,12 +2061,6 @@ def pipeline(i):
                     ep=qd.get('explore_prefix','')
                     if flags!='': flags+=' '
                     flags+=ep+str(qq)
-
-    bbf=ck.get_from_dicts(i, 'best_base_flag', {}, choices)
-    if bbf=='yes':
-       qx=choices_desc.get('##compiler_flags#base_opt',{}).get('choice',[])
-       if len(qx)>0:
-          flags=qx[0]+' '+flags
 
     env=ck.get_from_dicts(i,'env',{},choices)
     eenv=ck.get_from_dicts(i, 'extra_env','',choices)
@@ -2097,7 +2115,7 @@ def pipeline(i):
     hos=r['host_os_uoa']
     hosd=r['host_os_dict']
 
-    choices['##host_os']=hos
+    choices['host_os']=hos
 
     tos=r['os_uoa']
     tosd=r['os_dict']
@@ -2111,12 +2129,12 @@ def pipeline(i):
     remote=tosd.get('remote','')
 
     tdid=r['device_id']
-    if tdid!='': choices['##device_id']=tdid
+    if tdid!='': choices['device_id']=tdid
 
-    choices['##target_os']=tos
-    choices['##target_os_bits']=tbits
+    choices['target_os']=tos
+    choices['target_os_bits']=tbits
 
-    choices['##device_id']=r['device_id']
+    choices['device_id']=r['device_id']
 
     if hos=='':
        return {'return':1, 'error':'host_os is not defined'}
@@ -2136,7 +2154,7 @@ def pipeline(i):
           ctype=tosd['default_compile_type']
        else:
           ctype='dynamic'
-    choices['##compile_type']=ctype
+    choices['compile_type']=ctype
 
     if o=='con':
        ck.out(sep)
@@ -2233,8 +2251,8 @@ def pipeline(i):
 
     if duid=='' and meta.get('backup_data_uid','')!='': duid=meta['backup_data_uid']
 
-    if duoa!='': choices['##data_uoa']=duoa
-    if muoa!='': choices['##module_uoa']=muoa
+    if duoa!='': choices['data_uoa']=duoa
+    if muoa!='': choices['module_uoa']=muoa
     # we are not recording repo_uoa for reproducibility (can be different across users) ...   
 
     if o=='con':
@@ -2279,7 +2297,7 @@ def pipeline(i):
        if kcmd not in krun_cmds:
           return {'return':1, 'error':'CMD key "'+kcmd+'" not found in program description'}
 
-    choices['##cmd_key']=kcmd
+    choices['cmd_key']=kcmd
 
     if o=='con':
        ck.out('  Selected command line: '+kcmd)
@@ -2345,7 +2363,7 @@ def pipeline(i):
        dduoa=rx['data_uoa']
 
     if dduoa!='': 
-       choices['##dataset_uoa']=dduoa
+       choices['dataset_uoa']=dduoa
 
        if o=='con':
           ck.out('  Selected data set: '+dduoa+' ('+dduid+')')
@@ -2756,7 +2774,9 @@ def pipeline(i):
        rs=misc.get('run_success','')
 
        repeat=rch.get('repeat','')
-       if repeat!='': state['repeat']=repeat
+       if repeat!='': 
+          state['repeat']=repeat
+          choices['repeat']=repeat
 
        if rs=='no' or not csuc:
           i['fail_reason']='execution failed'

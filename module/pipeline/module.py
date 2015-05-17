@@ -114,7 +114,8 @@ def autotune(i):
                (plugin-based)
                (customized)
 
-               (record)               - (data UOA or CID where module_uoa ignored!) explicitly record to this entry
+               (record)               - if 'yes', record results
+               (record_uoa)           - (data UOA or CID where module_uoa ignored!) explicitly record to this entry
                (record_repo)          - (repo UOA) explicitly select this repo to record
                (record_failed)        - if 'yes', record even failed experiments
                                         (for debugging, buildbots, detecting designed 
@@ -162,6 +163,7 @@ def autotune(i):
     meta=ck.get_from_dicts(ic, 'meta', {}, None)
 
     record=ck.get_from_dicts(ic, 'record', '', None)
+    record_uoa=ck.get_from_dicts(ic, 'record_uoa', '', None)
     record_repo=ck.get_from_dicts(ic, 'record_repo', '', None)
     if record.find(':')>=0:
        rx=ck.parse_cid({'cid':record})
@@ -332,6 +334,10 @@ def autotune(i):
                      'out':o})
         if r['return']>0: return r
 
+#        import json
+#        print json.dumps(r, indent=2)
+#        exit(1)
+
         if r['finish']:
            finish=True
            break
@@ -348,10 +354,9 @@ def autotune(i):
             'meta':meta,
             'pipeline':pipelinec,
             'pipeline_uoa':puoa,
-            'pipeline_uid':puid,
-            'features':pipeline.get('features',{})}
+            'pipeline_uid':puid}
 
-        ddcl=[] # characteristics list
+        ddcl=[] # characteristics list (from statistical repetitions)
         rr={}
         for sr in range(0, srm):
             ck.out('')
@@ -364,6 +369,7 @@ def autotune(i):
             pipeline1['action']='pipeline'
             pipeline1['out']=o
             pipeline1['state']=state
+            pipeline1['autotuning_iteration']=m
             pipeline1['statistical_repetition_number']=sr
             rr=ck.access(pipeline1)
             if rr['return']>0: return rr
@@ -374,23 +380,26 @@ def autotune(i):
             if fail!='yes' or record_failed=='yes':
                ddcl.append(pipeline1.get('characteristics',{}))
 
+               if sr==0: # record for the first iteration otherwise pipeline may change via state ...
+                  dd['choices']=rr.get('choices',{})
+                  dd['choices_order']=rr.get('choices_order',[])
+                  dd['choices_desc']=rr.get('choices_desc',{})
+                  dd['features']=rr.get('features',{})
+                  dd['features_desc']=rr.get('features_desc',{})
+                  dd['dependencies']=rr.get('dependencies',{})
+                  dd['characteristics_desc']=rr.get('characteristics_desc',{})
+
+                  # TBD: CHECK HOW TO WRITE META HERE DEPENDING ON SCENARIOS ...
+
+                  meta1=rr.get('meta',{})
+                  if len(meta1)>0: meta.update(meta1)
+                  dd['meta']=meta1
+
             if fail=='yes': break
 
-        if record!='':
+        if record=='yes':
            if fail!='yes' or record_failed=='yes':
-              # Get info from last statistical pipeline run
-              dd['choices']=rr.get('choices',{})
-              dd['choices_order']=rr.get('choices_order',[])
-              dd['choices_desc']=rr.get('choices_desc',{})
-              dd['features']=rr.get('features',{})
-              dd['features_desc']=rr.get('features_desc',{})
-              dd['dependencies']=rr.get('dependencies',{})
               dd['characteristics_list']=ddcl
-              dd['characteristics_desc']=rr.get('characteristics_desc',{})
-
-              meta1=rr.get('meta',{})
-              if len(meta1)>0: meta.update(meta1)
-              dd['meta']=meta1
 
               ##########################################################################################
               # Recording experiment
@@ -408,16 +417,15 @@ def autotune(i):
                   'sort_keys':'yes',
 
                   'experiment_repo_uoa': record_repo,
-                  'experiment_uoa':record,
+                  'experiment_uoa':record_uoa,
 
-#                   'search_point_by_features':'yes',
-                  'process_multi_keys':['characteristics','features'],
                   'record_all_subpoints':'yes',
-
-#                   'force_new_entry':'yes',
 
                   'dict':dd}
 
+              # Update what we record and how we process data from external dict -> 
+              #  may be customized depending on scenarios 
+              #  (compiler flag tuning, OpenCL/MPI params, etc)
               ie.update(rdict)
 
               rx=ck.access(ie)

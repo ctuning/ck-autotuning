@@ -240,6 +240,9 @@ def make(i):
 
         t['cur_iter']=ci
 
+    corder1=[]
+    ccur1={}
+
     if update: # means that all loops were updated
        finish=True 
     else:
@@ -247,8 +250,6 @@ def make(i):
           ck.out('')
           ck.out('  Vector of flattened and updated choices:')
 
-       corder1=[]
-       ccur1={}
        for q in range(0, len(corder)):
            qq=corder[q]
            vq=ccur[q]
@@ -271,7 +272,7 @@ def make(i):
            # Useful if order of choices is important (say opt flags in LLVM)
            # Will be decoded by a given pipeline, if needed 
            pipeline['choices_order']=corder1
-           pipeline['choices']=ccur1   
+#           pipeline['choices']=ccur1   
 
     return {'return':0, 'choices_current':ccur, 'choices_order':corder1, 'choices':ccur1, 'pipeline':pipeline, 'finish':finish}
 
