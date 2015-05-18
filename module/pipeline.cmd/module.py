@@ -58,7 +58,6 @@ def pipeline(i):
 
     cv=i.get('compiler_vars',{})
     cf=i.get('compiler_flags',{})
-    cdesc=i.get('choices_desc',{})
 
     if o=='out':
        ck.out('')
@@ -72,12 +71,10 @@ def pipeline(i):
     cflags=''
     for c in cf:
         cx='##compiler_flags#'+c
-        cd=cdesc.get(cx,{})
-        ep=cd.get('explore_prefix','')
         cc=cf[c]
         if cc!='':
            if cflags!='': cflags+=' '
-           cflags+=ep+str(cc)
+           cflags+=str(cc)
 
     cmd=cmd.replace('$#cflags#$', cflags)
 

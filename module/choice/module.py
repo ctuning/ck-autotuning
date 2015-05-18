@@ -130,12 +130,17 @@ def make(i):
            xupdate=False
            for c in range(len(cc)-1,-1,-1):
                cn=cc[c]
+
                qt=cdesc.get(cn,{})
 
                yco=qt.get('can_omit','')
                yhc=qt.get('choice',[])
                yep=qt.get('explore_prefix','')
                ytp=qt.get('type','')
+
+               dcc=dc[c]
+               if yep!='' and dcc.startswith(yep):
+                  dcc=int(dcc[len(yep):])
 
                if zestart!='': yestart=zestart
                else: yestart=qt.get('explore_start','')
@@ -187,10 +192,10 @@ def make(i):
                           dv=dvsame
 
                   elif tp=='parallel-loop' or tp=='loop':
-                       dv=dc[c]
+                       dv=dcc
                        if tp=='parallel-loop' or c==len(cc)-1 or xupdate:
                           if yestart!='':
-                             dv=dc[c]+rs
+                             dv=dcc+rs
                              if dv>r2:
                                 dv=r1
                                 if tp=='loop': xupdate=True
@@ -201,7 +206,7 @@ def make(i):
                                 xupdate=False
 
                           else: # normally choice
-                             dv=dc[c]
+                             dv=dcc
                              if dv=='':
                                 ln=0
                              else:
@@ -221,7 +226,7 @@ def make(i):
                   # design and optimization speaces via external plugin
                   # See our work on Probabilistic Source-Level Optimisation of Embedded Programs (2005) and Collective Mind (2014)
                   elif tp=='machine-learning-based' or tp=='model-based' or tp=='adaptive' or tp=='plugin-based' or tp=='customized': 
-                       print 'xyz'
+                       print 'TBD: need to add CK plugin ...'
                          
 
 
@@ -233,6 +238,7 @@ def make(i):
                   else:
                      return {'return':1, 'error':'unknown autotuning type ('+tp+')'}
                            
+               if yep!='': dv=yep+str(dv)
                dc[c]=dv
 
            if xupdate:

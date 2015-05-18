@@ -130,6 +130,8 @@ def autotune(i):
                (meta)                 - extra meta
 
                (state)                - pre-load state preserved across iterations
+
+               (save_to_file)         - if !='', save output dictionary to this file
             }
 
     Output: {
@@ -159,6 +161,8 @@ def autotune(i):
     tags=ck.convert_str_tags_to_list(tags) # if string, convert to list
     subtags=ck.get_from_dicts(ic, 'subtags', [], None)
     subtags=ck.convert_str_tags_to_list(subtags) # if string, convert to list
+
+    stf=ck.get_from_dicts(ic, 'save_to_file', '', None)
 
     meta=ck.get_from_dicts(ic, 'meta', {}, None)
 
@@ -311,7 +315,7 @@ def autotune(i):
 
     # Start iterations
     rr={'return':0}
-
+    dd={}
     finish=False
     for m in range(0,ni):
         mm=m+1
@@ -357,7 +361,6 @@ def autotune(i):
             'pipeline_uid':puid}
 
         ddcl=[] # characteristics list (from statistical repetitions)
-        rr={}
         for sr in range(0, srm):
             ck.out('')
             ck.out('      ------------------- Statistical reptition: '+str(sr+1)+' of '+str(srm)+' -------------------')
@@ -397,9 +400,10 @@ def autotune(i):
 
             if fail=='yes': break
 
+        dd['characteristics_list']=ddcl
+
         if record=='yes':
            if fail!='yes' or record_failed=='yes':
-              dd['characteristics_list']=ddcl
 
               ##########################################################################################
               # Recording experiment
@@ -438,6 +442,9 @@ def autotune(i):
     if m>0:
        ck.out(sep)
        ck.out('Autotuning finished!')
+
+    if stf!='':
+       rx=ck.save_json_to_file({'json_file':stf, 'dict':{'last_iteration_output':rr, 'experiment_desc':dd}})
 
     return rr
 

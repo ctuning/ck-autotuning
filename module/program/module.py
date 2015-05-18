@@ -2033,35 +2033,6 @@ def pipeline(i):
     flags=ck.get_from_dicts(i, 'flags', '', choices)
     lflags=ck.get_from_dicts(i, 'lflags', '', choices)
 
-    # Restore compiler flag selection with order for optimization reordering (!)
-    # Simplified - needs to be improved for more complex cases (dict of dict)
-    compiler_flags=ck.get_from_dicts(i, 'compiler_flags', {}, choices)
-
-    # Check if use best base flag
-    bbf=ck.get_from_dicts(i, 'best_base_flag', {}, None)
-    if bbf=='yes':
-       qx=choices_desc.get('##compiler_flags#base_opt',{}).get('choice',[])
-       if len(qx)>0:
-          compiler_flags['base_opt']=qx[0]
-
-    if len(compiler_flags)>0:
-       # Check if compiler flags are not in order (to set some order for reproducibility)
-       for q in sorted(list(compiler_flags.keys())):
-           q1='##compiler_flags#'+q
-           if q1 not in choices_order:
-              choices_order.append(q1)
-              
-       for q in choices_order:
-           if q.startswith('##compiler_flags#'):
-              qk=q[17:]
-              qq=compiler_flags.get(qk,'')
-              if qq!='':
-                 qd=choices_desc.get(q,{})
-                 if len(qd)>0:
-                    ep=qd.get('explore_prefix','')
-                    if flags!='': flags+=' '
-                    flags+=ep+str(qq)
-
     env=ck.get_from_dicts(i,'env',{},choices)
     eenv=ck.get_from_dicts(i, 'extra_env','',choices)
 
@@ -2540,6 +2511,32 @@ def pipeline(i):
        return finalize_pipeline(i)
 
     ###############################################################################################################
+
+    # Restore compiler flag selection with order for optimization reordering (!)
+    # Simplified - needs to be improved for more complex cases (dict of dict)
+    compiler_flags=ck.get_from_dicts(i, 'compiler_flags', {}, choices)
+
+    # Check if use best base flag
+    bbf=ck.get_from_dicts(i, 'best_base_flag', '', None)
+    if bbf=='yes':
+       qx=choices_desc.get('##compiler_flags#base_opt',{}).get('choice',[])
+       if len(qx)>0:
+          compiler_flags['base_opt']=qx[0]
+          if '##compiler_flags#base_opt' not in choices_order:
+             choices_order.insert(0,'##compiler_flags#base_opt')
+
+    for q in compiler_flags:
+        if '##compiler_flags#'+q not in choices_order:
+           choices_order.append('##compiler_flags#'+q)
+
+    if len(compiler_flags)>0:
+       # Check if compiler flags are not in order (to set some order for reproducibility)
+       for q in choices_order:
+           if q.startswith('##compiler_flags#'):
+              qk=q[17:]
+              qq=compiler_flags.get(qk,'')
+              if flags!='': flags+=' '
+              flags+=str(qq)
 
     ###############################################################################################################
     # PIPELINE SECTION: get target platform features
