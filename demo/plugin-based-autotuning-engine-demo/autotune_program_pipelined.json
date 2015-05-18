@@ -1,0 +1,34 @@
+{
+  "pipeline": {
+    "ready": "yes", 
+    "cmd": "echo --compiler_flags=\"$#cflags#$\"", 
+    "choices_desc": {
+      "##compiler_flags#param_large_unit_insns": {
+        "sort": 11200, 
+        "explore_stop": 32768, 
+        "tags": [
+          "basic", 
+          "optimization"
+        ], 
+        "default": "", 
+        "can_omit": "yes", 
+        "explore_start": 1024, 
+        "explore_prefix": "--param large-unit-insns=", 
+        "type": "integer", 
+        "explore_step": 1, 
+        "desc": "compiler flag: --param large-unit-insns="
+      } 
+    }
+  }, 
+  "choices_order": [
+    [
+      "##compiler_flags#*"
+    ]
+  ], 
+  "choices_selection": [
+    {"type":"loop", "iterations":5, "start":8, "stop":256, "step":8}
+  ], 
+  "repetitions": 3, 
+  "seed": 12345, 
+  "iterations": 1000
+}
