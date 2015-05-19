@@ -126,6 +126,10 @@ def autotune(i):
 
                (record_params)        - extra record parameters (to 'add experiment' function)
 
+               (process_multi_keys)   - list of keys (starts with) to perform stat analysis on flat array,
+                                           by default ['##characteristics#*', '##features#*' '##choices#*'],
+                                           if empty, no stat analysis
+
                (features)             - extra features
                (meta)                 - extra meta
 
@@ -139,7 +143,9 @@ def autotune(i):
                                          >  0, if error
               (error)      - error text if return > 0
 
-              output of last pipeline!
+              last_iteration_output - output of last iteration
+              last_stat_analysis    - flat dict with stat analysis
+              experiment_desc       - dict with experiment description
             }
 
     """
@@ -165,6 +171,8 @@ def autotune(i):
     stf=ck.get_from_dicts(ic, 'save_to_file', '', None)
 
     meta=ck.get_from_dicts(ic, 'meta', {}, None)
+
+    pmk=ck.get_from_dicts(ic, 'process_multi_keys', '', None) # important, default should be '' to be processed later correctly ...
 
     record=ck.get_from_dicts(ic, 'record', '', None)
     record_uoa=ck.get_from_dicts(ic, 'record_uoa', '', None)
@@ -315,6 +323,8 @@ def autotune(i):
 
     # Start iterations
     rr={'return':0}
+    stat_dict={'return':0}
+    rrr={'return':0}
     dd={}
     finish=False
     for m in range(0,ni):
@@ -402,11 +412,12 @@ def autotune(i):
 
         dd['characteristics_list']=ddcl
 
+        ##########################################################################################
+        # Recording experiment if needed
+        stat_dict={}
         if record=='yes':
            if fail!='yes' or record_failed=='yes':
 
-              ##########################################################################################
-              # Recording experiment
               if o=='con':
                  ck.out(sep)
                  ck.out('Recording experiment ...')
@@ -425,6 +436,8 @@ def autotune(i):
 
                   'record_all_subpoints':'yes',
 
+                  'process_multi_keys':pmk,
+
                   'dict':dd}
 
               # Update what we record and how we process data from external dict -> 
@@ -435,6 +448,21 @@ def autotune(i):
               rx=ck.access(ie)
               if rx['return']>0: return rx
 
+              stat_dict=rx['dict_flat']
+              rrr=rx['stat_analysis']
+
+        ##########################################################################################
+        # If was not performed via recording, prform statistical analysis  here
+        if len(stat_dict)==0:
+           ii={'action':'multi_stat_analysis',
+               'module_uoa':cfg['module_deps']['experiment'],
+               'dict':stat_dict,
+               'dict_to_add':dd,
+               'process_multi_keys':pmk}
+           rrr=ck.access(ii)
+           if rrr['return']>0: return rrr
+           stat_dict=rrr['dict_flat']
+
     if finish:
        ck.out('')
        ck.out('All iterations are done!')
@@ -443,10 +471,12 @@ def autotune(i):
        ck.out(sep)
        ck.out('Autotuning finished!')
 
-    if stf!='':
-       rx=ck.save_json_to_file({'json_file':stf, 'dict':{'last_iteration_output':rr, 'experiment_desc':dd}})
+    rz={'return':0, 'last_iteration_output':rr, 'last_stat_analysis': rrr, 'experiment_desc':dd}
 
-    return rr
+    if stf!='':
+       rx=ck.save_json_to_file({'json_file':stf, 'dict':rz, 'sort_keys':'yes'})
+
+    return rz
 
 ##############################################################################
 # Run pipeline once ...

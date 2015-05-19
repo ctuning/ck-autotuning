@@ -261,8 +261,6 @@ def run(i):
                    'experiment_repo_uoa': eruoa,
                    'experiment_uoa':euoa,
 
-#                   'search_point_by_features':'yes',
-#                   'process_multi_keys':['characteristics','features'],
                    'record_all_subpoints':'yes',
 
                    'search_point_by_features':'yes',
