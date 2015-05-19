@@ -124,7 +124,7 @@ def autotune(i):
                (tags)                 - record these tags to the entry description
                (subtags)              - record these subtags to the point description
 
-               (record_dict)          - extra record parameters (to 'add experiment' function)
+               (record_params)        - extra record parameters (to 'add experiment' function)
 
                (features)             - extra features
                (meta)                 - extra meta
@@ -179,7 +179,7 @@ def autotune(i):
     if record_ignore_update=='': record_ignore_update='yes'
     if 'record_ignore_update' in ic: del(ic['record_ignore_update'])
 
-    rdict=ck.get_from_dicts(ic, 'record_dict', {}, None)
+    rdict=ck.get_from_dicts(ic, 'record_params', {}, None)
 
     state=i.get('state',{})
 
