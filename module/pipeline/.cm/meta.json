@@ -21,6 +21,7 @@
   "module_deps": {
     "choice": "e4564d6f984400d7", 
     "experiment": "bc0409fb61f0aa82",
-    "module": "032630d041b4fd8a"
+    "module": "032630d041b4fd8a",
+    "math.frontier":"99d08d331cdc5478"
   }
 }

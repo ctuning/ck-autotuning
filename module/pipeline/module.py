@@ -114,6 +114,13 @@ def autotune(i):
                (plugin-based)
                (customized)
 
+               (process_multi_keys)   - list of keys (starts with) to perform stat analysis on flat array,
+                                           by default ['##characteristics#*', '##features#*' '##choices#*'],
+                                           if empty, no stat analysis
+
+               (frontier_keys)        - list of keys to leave only best points during multi-objective autotuning
+                                        (multi-objective optimization)
+
                (record)               - if 'yes', record results
                (record_uoa)           - (data UOA or CID where module_uoa ignored!) explicitly record to this entry
                (record_repo)          - (repo UOA) explicitly select this repo to record
@@ -125,10 +132,6 @@ def autotune(i):
                (subtags)              - record these subtags to the point description
 
                (record_params)        - extra record parameters (to 'add experiment' function)
-
-               (process_multi_keys)   - list of keys (starts with) to perform stat analysis on flat array,
-                                           by default ['##characteristics#*', '##features#*' '##choices#*'],
-                                           if empty, no stat analysis
 
                (features)             - extra features
                (meta)                 - extra meta
@@ -153,9 +156,11 @@ def autotune(i):
     import copy
     import fnmatch
     import json
-    import random
+    from random import Random
 
     o=i.get('out','')
+    oo=''
+    if o=='con': oo='con'
 
     ic=copy.deepcopy(i)
     ic['module_uoa']=''
@@ -173,6 +178,8 @@ def autotune(i):
     meta=ck.get_from_dicts(ic, 'meta', {}, None)
 
     pmk=ck.get_from_dicts(ic, 'process_multi_keys', '', None) # important, default should be '' to be processed later correctly ...
+
+    fk=ck.get_from_dicts(ic, 'frontier_keys', [], None)
 
     record=ck.get_from_dicts(ic, 'record', '', None)
     record_uoa=ck.get_from_dicts(ic, 'record_uoa', '', None)
@@ -278,11 +285,15 @@ def autotune(i):
     csel=i.get('choices_selection',{})
     ccur=[]
 
+    # most likely just one iteration - then set defaults
+    if len(corder)==1 and len(csel)==0:
+       csel=[{"type":"random"}]
+
     # Prepare multi-dimensional vector of choices
     dv1=[] # Current dimensions
     for iq1 in range(0,len(corder)):
-        q1=corder[iq1]
         dv=[]
+        q1=corder[iq1]
         zz=csel[iq1]
         ztags=zz.get('tags','').split(',')
         znotags=zz.get('notags','').split(',')
@@ -313,13 +324,18 @@ def autotune(i):
 
     # Check seed
     seed=i.get('seed','')
-    if seed!='':
-       random.seed(int(seed))
+    if seed=='':
+       my_random=Random()
+    else:
+       my_random=Random(int(seed))
 
        if o=='con':
           ck.out('')
           ck.out('Random seed: '+str(seed))
           ck.out('')
+
+    # Keep best points if finding best points (possibly with Pareto)
+    points={}
 
     # Start iterations
     rr={'return':0}
@@ -345,16 +361,16 @@ def autotune(i):
                      'choices_current':ccur,
                      'custom_explore':cexp,
                      'pipeline':pipeline,
+                     'random_module':my_random,
                      'out':o})
         if r['return']>0: return r
-
-#        import json
-#        print json.dumps(r, indent=2)
-#        exit(1)
 
         if r['finish']:
            finish=True
            break
+
+        rx=ck.save_json_to_file({'json_file':'d:\\xyz3.json', 'dict':r, 'sort_keys':'yes'})
+        if rx['return']>0: return rx
 
         # Check if pass this iteration
         if mm<sfi:
@@ -453,7 +469,7 @@ def autotune(i):
 
         ##########################################################################################
         # If was not performed via recording, prform statistical analysis  here
-        if len(stat_dict)==0:
+        if fail!='yes' and len(stat_dict)==0:
            ii={'action':'multi_stat_analysis',
                'module_uoa':cfg['module_deps']['experiment'],
                'dict':stat_dict,
@@ -463,6 +479,44 @@ def autotune(i):
            if rrr['return']>0: return rrr
            stat_dict=rrr['dict_flat']
 
+        # Check if need to leave only points on frontier 
+        #   (Pareto but not 'Pareto efficient' since we have discreet characteristics)
+        if len(fk)>0 and len(stat_dict)>0:
+#           if record=='yes':
+#              # Load points from entry
+#              print 'TBD'
+
+           if o=='con':
+              ck.out(sep)
+              ck.out('Filtering multiple characteristics on Pareto frontier for multi-objective autotuning')
+              ck.out('')
+
+           rx=ck.gen_uid({})
+           if rx['return']>0: return rx
+           uid=rx['data_uid']
+
+           w={}
+           for q in stat_dict: 
+               if q in fk: w[q]=stat_dict[q]
+
+           points[uid]=w
+
+           rx=ck.access({'action':'filter',
+                         'module_uoa':cfg['module_deps']['math.frontier'],
+                         'points':points,
+                         'out':oo})
+           if rx['return']>0: return rx
+
+
+
+
+
+
+
+        rx=ck.save_json_to_file({'json_file':'d:\\xyz5.json', 'dict':points, 'sort_keys':'yes'})
+        if rx['return']>0: return rx
+
+    # Mention, if all iterations were performed, or autotuning rached max number of iterations
     if finish:
        ck.out('')
        ck.out('All iterations are done!')

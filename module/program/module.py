@@ -2270,12 +2270,21 @@ def pipeline(i):
 
     if len(compiler_flags)>0:
        # Check if compiler flags are not in order (to set some order for reproducibility)
+       # At the same time clean up choices_order with non-used flags
+       compiler_flags_used={}
        for q in choices_order:
            if q.startswith('##compiler_flags#'):
               qk=q[17:]
-              qq=compiler_flags.get(qk,'')
-              if flags!='': flags+=' '
-              flags+=str(qq)
+              if qk in compiler_flags:
+                 qq=compiler_flags[qk]
+                 if qq!=None and qq!='':
+                    compiler_flags_used[qk]=qq
+                    if flags!='': flags+=' '
+                    flags+=str(qq)
+       compiler_flags=compiler_flags_used
+
+    # to be able to properly record info
+    choices['compiler_flags']=compiler_flags
 
     ###############################################################################################################
     # PIPELINE SECTION: get target platform features

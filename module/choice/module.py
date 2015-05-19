@@ -43,6 +43,7 @@ def make(i):
                                    over all possible data set sizes + random flags per data set
               choices_selection  - list of dicts with types of selection for each above group
               choices_current    - current vector of choices
+              (random_module)    - if !=None, random module with seed
               (pipeline)         - if set, update it with current choices
               (custom_explore)   - enforce exploration params from command line
             }
@@ -62,9 +63,12 @@ def make(i):
 
     """
 
-    import random
+    from random import Random
 
     o=i.get('out','')
+
+    my_random=i.get('random_module',None)
+    if my_random==None: my_random=Random()
 
     finish=False
 
@@ -172,22 +176,22 @@ def make(i):
                   if tp=='random':
                      omit=False
                      if yco=='yes':
-                        x=random.randrange(0, 1000)
+                        x=my_random.randrange(0, 1000)
                         if x<(1000.0*top):
                            omit=True
 
                      if not omit:
                         if lcqx>0:
-                           ln=random.randrange(0, lcqx)
+                           ln=my_random.randrange(0, lcqx)
                            dv=yhc[ln]
                         elif yestart!='':
-                             y=random.randrange(0,rx)
+                             y=my_random.randrange(0,rx)
                              dv=r1+(y*rs)
                          
                   elif tp=='parallel-random': # Change all dimensions at the same time (if explorable)!
                        if yestart!='':
                           if dvsame=='':
-                             y=random.randrange(0,rx)
+                             y=my_random.randrange(0,rx)
                              dvsame=r1+(y*rs)
                           dv=dvsame
 
@@ -238,7 +242,7 @@ def make(i):
                   else:
                      return {'return':1, 'error':'unknown autotuning type ('+tp+')'}
                            
-               if yep!='': dv=yep+str(dv)
+               if yep!='' and dv!='': dv=yep+str(dv)
                dc[c]=dv
 
            if xupdate:
