@@ -118,9 +118,6 @@ def autotune(i):
                                            by default ['##characteristics#*', '##features#*' '##choices#*'],
                                            if empty, no stat analysis
 
-               (frontier_keys)        - list of keys to leave only best points during multi-objective autotuning
-                                        (multi-objective optimization)
-
                (record)               - if 'yes', record results
                (record_uoa)           - (data UOA or CID where module_uoa ignored!) explicitly record to this entry
                (record_repo)          - (repo UOA) explicitly select this repo to record
@@ -132,6 +129,17 @@ def autotune(i):
                (subtags)              - record these subtags to the point description
 
                (record_params)        - extra record parameters (to 'add experiment' function)
+
+               (features_keys_to_process)    - list of keys for features (and choices) to process/search 
+                                                    when recording experimental results (can be wildcards)
+                                                    by default ['##features#*', '##choices#*', '##choices_order#*']
+
+               (frontier_keys)        - list of keys to leave only best points during multi-objective autotuning
+                                        (multi-objective optimization)
+
+               (frontier_features_keys_to_ignore) - list of keys to ignore from 'features_keys_to_process' 
+                                                    when detecting subset of points to detect frontier
+                                                    (usually removing optimization dimensions, such as compiler flags)
 
                (features)             - extra features
                (meta)                 - extra meta
@@ -195,6 +203,8 @@ def autotune(i):
     if 'record_ignore_update' in ic: del(ic['record_ignore_update'])
 
     rdict=ck.get_from_dicts(ic, 'record_params', {}, None)
+    fkp=ck.get_from_dicts(ic, 'features_keys_to_process', [], None)
+    ffki=ck.get_from_dicts(ic, 'frontier_features_keys_to_ignore', [], None)
 
     state=i.get('state',{})
 
@@ -432,6 +442,17 @@ def autotune(i):
         # Recording experiment if needed
         stat_dict={}
         if record=='yes':
+
+           # Will be reused for frontier
+           iec={'module_uoa':cfg['module_deps']['experiment'],
+
+                'experiment_repo_uoa': record_repo,
+                'experiment_uoa':record_uoa,
+
+                'features_keys_to_process':fkp}
+
+           fft={} # flat features
+
            if fail!='yes' or record_failed=='yes':
 
               if o=='con':
@@ -439,22 +460,15 @@ def autotune(i):
                  ck.out('Recording experiment ...')
                  ck.out('')
 
-              ie={'action':'add',
+              ie=copy.deepcopy(iec)
 
-                  'module_uoa':cfg['module_deps']['experiment'],
-
-                  'ignore_update':record_ignore_update,
-                  'out':'con',
-                  'sort_keys':'yes',
-
-                  'experiment_repo_uoa': record_repo,
-                  'experiment_uoa':record_uoa,
-
-                  'record_all_subpoints':'yes',
-
-                  'process_multi_keys':pmk,
-
-                  'dict':dd}
+              ie['action']='add'
+              ie['ignore_update']=record_ignore_update
+              ie['out']='con'
+              ie['sort_keys']='yes'
+              ie['record_all_subpoints']='yes'
+              ie['process_multi_keys']=pmk
+              ie['dict']=dd
 
               # Update what we record and how we process data from external dict -> 
               #  may be customized depending on scenarios 
@@ -466,6 +480,7 @@ def autotune(i):
 
               stat_dict=rx['dict_flat']
               rrr=rx['stat_analysis']
+              fft=rx['flat_features']
 
         ##########################################################################################
         # If was not performed via recording, prform statistical analysis  here
@@ -480,41 +495,81 @@ def autotune(i):
            stat_dict=rrr['dict_flat']
 
         # Check if need to leave only points on frontier 
-        #   (Pareto but not 'Pareto efficient' since we have discreet characteristics)
+        #   (our frontier is not 'Pareto efficient' since we have discreet characteristics)
         if len(fk)>0 and len(stat_dict)>0:
-#           if record=='yes':
-#              # Load points from entry
-#              print 'TBD'
+           # If data was recorded to repo, reload all points 
+           if record=='yes':
+              if o=='con':
+                 ck.out('')
+                 ck.out('  Reloading points to detect frontier ...')
 
+              ie=copy.deepcopy(iec)
+
+              ie['action']='get'
+              ie['flat_features']=fft
+              ie['features_keys_to_ignore']=ffki # Ignore parts of fetures to be able to create subset for frontier ...
+              ie['skip_processing']='yes'
+              ie['load_json_files']=['flat']
+              ie['get_keys_from_json_files']=fk
+              ie['out']='con'
+
+              rx=ck.access(ie)
+              if rx['return']>0: return rx
+
+              xpoints=rx['points']
+              ypoints={}
+              points={}
+
+              ip=0
+              for q in xpoints:
+                  rx=ck.gen_uid({})
+                  if rx['return']>0: return rx
+                  uid=rx['data_uid']
+
+                  points[uid]=q.get('flat',{})
+                  ypoints[uid]=ip
+                  ip+=1
+           else:
+              rx=ck.gen_uid({})
+              if rx['return']>0: return rx
+              uid=rx['data_uid']
+
+              w={}
+              for q in stat_dict: 
+                  if q in fk: w[q]=stat_dict[q]
+
+              points[uid]=w
+
+           # Filtering ...
            if o=='con':
               ck.out(sep)
               ck.out('Filtering multiple characteristics on Pareto frontier for multi-objective autotuning')
               ck.out('')
 
-           rx=ck.gen_uid({})
-           if rx['return']>0: return rx
-           uid=rx['data_uid']
-
-           w={}
-           for q in stat_dict: 
-               if q in fk: w[q]=stat_dict[q]
-
-           points[uid]=w
-
+           # Save originals to know which ones to delete if recording ...
            rx=ck.access({'action':'filter',
                          'module_uoa':cfg['module_deps']['math.frontier'],
                          'points':points,
                          'out':oo})
            if rx['return']>0: return rx
 
+           points=rx['points']
+           dpoints=rx['deleted_points']
 
+           # Delete filtered if record
+           if record=='yes':
+              # Clean original points
+              ddpoints=[]
+              for q in dpoints:
+                  ip=ypoints[q]
+                  ddpoints.append(xpoints[ip])
 
-
-
-
-
-        rx=ck.save_json_to_file({'json_file':'d:\\xyz5.json', 'dict':points, 'sort_keys':'yes'})
-        if rx['return']>0: return rx
+              # Attempt to delete points
+              rx=ck.access({'action':'delete_points',
+                            'module_uoa':cfg['module_deps']['experiment'],
+                            'points':ddpoints,
+                            'out':oo})
+              if rx['return']>0: return rx
 
     # Mention, if all iterations were performed, or autotuning rached max number of iterations
     if finish:
