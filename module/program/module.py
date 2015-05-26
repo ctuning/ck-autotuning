@@ -602,13 +602,21 @@ def process_in_dir(i):
 
               # Check if extra
               extra_libs=depsk.get('extra_libs',[])
-              extra_static_libs=kv.get('extra_static_libs',{})
-
               els=[]
-              for el in extra_libs:
-                  els.append(extra_static_libs[el]) 
 
-              els.append(kv.get('static_lib',''))
+              cus_extra_libs=kv.get('extra_static_libs',{})
+              if ctype=='dynamic': cus_extra_libs=kv.get('extra_dynamic_libs',{})
+
+              for el in extra_libs:
+                  x=cus_extra_libs.get(el,'')
+                  if x=='':
+                     return {'return':1, 'error':'library '+el+'is not defined in dependencies'}
+                  els.append(x) 
+
+              x=kv.get('static_lib','')
+              if ctype=='dynamic': 
+                 if kv.get('dynamic_lib','')!='': x=kv['dynamic_lib']
+              els.append(x)
 
               for pl2 in els:
                   if pl2!='':
