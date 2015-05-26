@@ -215,7 +215,7 @@ def process_in_dir(i):
 
               (deps)                 - already resolved deps (useful for auto-tuning)
 
-              (extra_env)            - extra environment as string
+              (extra_env)            - extra environment before running code as string
 
               (console)              - if 'yes', output to console
 
@@ -592,25 +592,37 @@ def process_in_dir(i):
           sll=''
           sin=''
           for k in deps:
-              kv=deps[k].get('cus',{})
+              depsk=deps[k]
+              kv=depsk.get('cus',{})
 
               pl1=kv.get('path_lib','')
-              pl2=kv.get('static_lib','')
+              if pl1=='': pl1=kv.get('path_static_lib','')
+              pl1d=kv.get('path_dynamic_lib','')
+              if pl1d=='': pl1d=pl1
 
-              if pl2!='':
-                 if ctype=='dynamic' and remote=='yes' and csd.get('customize',{}).get('can_strip_dynamic_lib','')=='yes':
-                    pl2x=os.path.splitext(pl2)[0]
-                    if pl2x.startswith('lib'): pl2x=pl2x[3:]
-                    sll+=' '+svarb+svarb1+'CK_FLAG_PREFIX_LIB_DIR'+svare1+svare+eifsc+pl1+eifsc+' -l'+pl2x
-   #                 sll+='/link /LIBPATH:'+eifsc+pl1+eifsc+' OpenCL.lib'
+              # Check if extra
+              extra_libs=depsk.get('extra_libs',[])
+              extra_static_libs=kv.get('extra_static_libs',{})
 
-                 else:
-                    if sll!='': sll+=' '
-                    sll+=eifsc
-                    if pl1!='': 
-                       sll+=pl1+sdirs
-                    sll+=pl2
-                    sll+=eifsc
+              els=[]
+              for el in extra_libs:
+                  els.append(extra_static_libs[el]) 
+
+              els.append(kv.get('static_lib',''))
+
+              for pl2 in els:
+                  if pl2!='':
+                     if sll!='': sll+=' '
+                     if ctype=='dynamic' and remote=='yes' and csd.get('customize',{}).get('can_strip_dynamic_lib','')=='yes':
+                        pl2x=os.path.splitext(pl2)[0]
+                        if pl2x.startswith('lib'): pl2x=pl2x[3:]
+                        sll+=' '+svarb+svarb1+'CK_FLAG_PREFIX_LIB_DIR'+svare1+svare+eifsc+pl1d+eifsc+' -l'+pl2x
+                     else:
+                        sll+=eifsc
+                        if pl1!='': 
+                           sll+=pl1+sdirs
+                        sll+=pl2
+                        sll+=eifsc
 
               pl3=kv.get('path_include','')
               if pl3!='':
@@ -917,9 +929,12 @@ def process_in_dir(i):
              zz={}
              iz=0
              for z in sorted(krun_cmds):
+                 zcmd=run_cmds[z].get('run_time',{}).get('run_cmd_main','')
+
                  zs=str(iz)
                  zz[zs]=z
-
+                                        
+                 if zcmd!='': z+=' ('+zcmd+')'
                  ck.out(zs+') '+z)
 
                  iz+=1
@@ -1510,12 +1525,7 @@ def clean(i):
 def compile(i):
     """
     Input:  {
-              (repo_uoa)   - program repo UOA
-              (module_uoa) - program module UOA
-              data_uoa     - program data UOA
-
-              (process_in_tmp)
-              (tmp_dir)
+               See "process_in_dir" (i.e. ck process_in_dir program --help)
             }
 
     Output: {
@@ -1537,8 +1547,7 @@ def compile(i):
 def run(i):
     """
     Input:  {
-               (cmd_key)     - cmd key
-               (dataset_uoa) - dataset UOA
+               See "process_in_dir" (i.e. ck process_in_dir program --help)
             }
 
     Output: {
