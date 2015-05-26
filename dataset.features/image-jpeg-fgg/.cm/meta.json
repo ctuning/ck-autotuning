@@ -1,0 +1,18 @@
+{
+  "dataset_uid": "21500da03e4ccfa3", 
+  "dataset_uoa": "image-jpeg-fgg", 
+  "features": {
+    "compression": "", 
+    "format": "JPEG", 
+    "height": 320, 
+    "mode": "RGB", 
+    "total_size": 33418, 
+    "width": 240
+  }, 
+  "tags": [
+    "dataset", 
+    "image", 
+    "jpeg", 
+    "jpg"
+  ]
+}
