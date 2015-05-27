@@ -379,9 +379,6 @@ def autotune(i):
            finish=True
            break
 
-        rx=ck.save_json_to_file({'json_file':'d:\\xyz3.json', 'dict':r, 'sort_keys':'yes'})
-        if rx['return']>0: return rx
-
         # Check if pass this iteration
         if mm<sfi:
            ck.out('')
