@@ -554,7 +554,7 @@ def process_in_dir(i):
        # Add compiler dep again, if there
        cb=deps.get('compiler',{}).get('bat','')
        if cb!='' and not sb.endswith(cb):
-          sb+='\n'+no+cb+'\n'
+          sb+='\n'+no+cb.strip()+' 1\n' # We set 1 to tell environment that it should set again even if it was set before
 
        # Add env
        for k in sorted(env):
@@ -605,7 +605,7 @@ def process_in_dir(i):
               els=[]
 
               cus_extra_libs=kv.get('extra_static_libs',{})
-              if ctype=='dynamic': cus_extra_libs=kv.get('extra_dynamic_libs',{})
+              if len(cus_extra_libs)==0: cus_extra_libs=kv.get('extra_dynamic_libs',{})
 
               for el in extra_libs:
                   x=cus_extra_libs.get(el,'')
@@ -614,8 +614,7 @@ def process_in_dir(i):
                   els.append(x) 
 
               x=kv.get('static_lib','')
-              if ctype=='dynamic': 
-                 if kv.get('dynamic_lib','')!='': x=kv['dynamic_lib']
+              if x=='' and ctype=='dynamic' and kv.get('dynamic_lib','')!='': x=kv['dynamic_lib']
               els.append(x)
 
               for pl2 in els:
@@ -990,10 +989,10 @@ def process_in_dir(i):
        if len(rte)>0:
           env.update(rte)
 
-       # Add compiler dep again, if there
+       # Add compiler dep again, if there (otherwise some libs can set another compiler)
        x=deps.get('compiler',{}).get('bat','')
        if remote!='yes' and x!='' and not sb.endswith(x):
-          sb+='\n'+no+x+'\n'
+          sb+='\n'+no+x.strip()+' 1\n' # We set 1 to tell environment that it should set again even if it was set before
 
        # Add env
        sb+='\n'

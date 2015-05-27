@@ -44,3 +44,4 @@ export CK_OPT_SPEED_SAFE=-O2
 export CK_PLUGIN_FLAG=-fplugin=
 export CK_PROFILER=gprof
 
+export CK_ENV_COMPILER_GCC_SET=1

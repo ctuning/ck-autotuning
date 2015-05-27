@@ -2,6 +2,8 @@
 
 rem CK generated script
 
+if not [%1] == [1] (if defined CK_ENV_COMPILER_ICC_SET exit /b 0)
+
 rem Soft UOA         = compiler.gcc (3a8a82fa40bf992d) 
 rem Host OS UOA      = windows-64 (7a95e0754c37610a)
 rem Target OS UOA    = mingw-64 (d0f4b91ae0fb43ea)
@@ -45,5 +47,6 @@ set CK_OPT_SPEED_SAFE=-O2
 set CK_PLUGIN_FLAG=-fplugin=
 set CK_PROFILER=gprof
 
+set CK_ENV_COMPILER_GCC_SET=1
 
 exit /b 0
