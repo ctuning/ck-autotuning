@@ -1,0 +1,15 @@
+XOpenME is a simplified OpenME plugin without extenral dependencies
+to be linked with various apps and tools to dump system state 
+in json format to CK
+
+
+FGG note:
+ unlike Linux, on Windows creation of static and dynamic libs is slightly
+ different. In both cases .lib is created and both static (/MT) and dynamic
+ flags can be used (/MT). It creates a complexity.
+
+ To simplify that, on Windows on compile only static lib but with /MD, i.e.
+ itself it does not include sublibs ...
+
+ Then by default ck compile program also uses dynamic compilation, will link
+ this lib statically, but will resolve all the other dependencies dynamically too ...
