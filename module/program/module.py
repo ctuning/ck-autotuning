@@ -1996,8 +1996,12 @@ def pipeline(i):
     if kcmd=='':
        if len(krun_cmds)>1:
           xchoices=[]
+          dchoices=[]
           for z in sorted(krun_cmds):
               xchoices.append(z)
+
+              zcmd=run_cmds[z].get('run_time',{}).get('run_cmd_main','')
+              dchoices.append(zcmd)
 
           # SELECTOR *************************************
           choices_desc['##cmd_key']={'type':'text',
@@ -2011,7 +2015,8 @@ def pipeline(i):
              ck.out('')
              r=ck.access({'action':'select_list',
                           'module_uoa':cfg['module_deps']['choice'],
-                          'choices':xchoices})
+                          'choices':xchoices,
+                          'desc':dchoices})
              if r['return']>0: return r
              kcmd=r['choice']
              ck.out('')
