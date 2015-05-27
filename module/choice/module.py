@@ -294,6 +294,7 @@ def select_list(i):
     Input:  {
               choices      - simple text list of choices
               (skip_enter) - if 'yes', do not select 0 when entering 0
+              (desc)       - description for each choices entry
             }
 
     Output: {
@@ -308,12 +309,20 @@ def select_list(i):
     se=i.get('skip_enter','')
 
     lst=i.get('choices',[])
+    dsc=i.get('desc',[])
 
     zz={}
     iz=0
-    for z in lst:
+    for iz in range(0, len(lst)):
+        z=lst[iz]
+
         zs=str(iz)
         zz[zs]=z
+
+        if iz<len(dsc):
+           zd=dsc[iz]
+           if zd!='': 
+              z+=' ('+zd+')'
 
         ck.out(zs+') '+z)
 
