@@ -13,10 +13,10 @@
   }, 
   "process_script": "process", 
   "soft_uoa": "673507878d649b4a", 
-  "suggested_path": "lib-xopenme", 
+  "suggested_path": "lib-rtl-xopenme", 
   "tags": [
     "lib", 
-    "plugins", 
+    "rtl",
     "xopenme", 
     "lang-c", 
     "lang-cpp", 
