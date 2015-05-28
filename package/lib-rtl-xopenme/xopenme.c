@@ -247,7 +247,7 @@ void xopenme_dump_state(void)
     {
       if ((vars[var][0]!=0))
       {
-         if (var!=0) fprintf(f, "\n,");
+         if (var!=0) fprintf(f, ",\n");
          fprintf(f,"  %s", vars[var]);
       }
     }
@@ -282,7 +282,7 @@ void xopenme_finish(void)
   {
     free(secs);
     free(start);
-#ifdef MYTIMER2     
+#ifdef MYTIMER2
     free(before);
 #endif
   }
