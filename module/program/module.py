@@ -1151,14 +1151,15 @@ def process_in_dir(i):
 
                  # Push data files to device
                  y=tosd.get('remote_push_pre','').replace('$#device#$',xtdid)
-                 if y!='':
-                    if df in rifo:
-                       dfx=df
-                       dfy=rdir+stdirs+df1
-                    else:
-                       dfx=os.path.join(p,df)
-                       dfy=rdir+stdirs+df
 
+                 if df in rifo:
+                    dfx=df
+                    dfy=rdir+stdirs+df1
+                 else:
+                    dfx=os.path.join(p,df)
+                    dfy=rdir+stdirs+df
+
+                 if y!='':
                     y=y.replace('$#file1#$', dfx)
                     y=y.replace('$#file1s#$', df1)
                     y=y.replace('$#file2#$', dfy)
