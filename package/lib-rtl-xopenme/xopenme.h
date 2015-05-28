@@ -45,6 +45,7 @@ extern void xopenme_add_var_f(int var, char* desc, float svar);
 extern void xopenme_add_var_d(int var, char* desc, double svar);
 extern void xopenme_add_var_s(int var, char* desc, void* svar);
 extern void xopenme_dump_memory(char* name, void* array, long size);
+extern void xopenme_finish(void);
 
 #ifdef __cplusplus
 }

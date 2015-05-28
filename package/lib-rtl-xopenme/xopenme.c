@@ -69,48 +69,6 @@ extern
 #ifdef WINDOWS
 __declspec(dllexport) 
 #endif
-void xopenme_clock_start(int timer)
-{
-#ifdef WINDOWS
-  start[timer] = clock();
-#else
-  #ifdef __INTEL_COMPILERX
-    start[timer] = (double)_rdtsc();
-  #else
-    gettimeofday(&before[timer], NULL);
-  #endif
-#endif
-  if ( ((env = getenv(XOPENME_DEBUG)) != NULL) && (atoi(env)==1) )
-    printf("XOpenME event: start clock\n");
-
-}
-
-/*****************************************************************/
-extern 
-#ifdef WINDOWS
-__declspec(dllexport) 
-#endif
-void xopenme_clock_end(int timer)
-{
-#ifdef WINDOWS
-  secs[timer] = ((double)(clock() - start[timer])) / CLOCKS_PER_SEC;
-#else
-  #ifdef __INTEL_COMPILERX
-  secs[timer] = ((double)((double)_rdtsc() - start[timer])) / (double) getCPUFreq();
-  #else
-  gettimeofday(&after, NULL);
-  secs[timer] = (after.tv_sec - before[timer].tv_sec) + (after.tv_usec - before[timer].tv_usec)/1000000.0;
-  #endif
-#endif
-  if ( ((env = getenv(XOPENME_DEBUG)) != NULL) && (atoi(env)==1) )
-    printf("XOpenME event: stop clock: %f\n", secs[timer]);
-}
-
-/*****************************************************************/
-extern 
-#ifdef WINDOWS
-__declspec(dllexport) 
-#endif
 void xopenme_init(int ntimers, int nvars)
 {
   int timer;
@@ -150,6 +108,48 @@ void xopenme_init(int ntimers, int nvars)
       vars[var][0]=0;
     }
   }
+}
+
+/*****************************************************************/
+extern 
+#ifdef WINDOWS
+__declspec(dllexport) 
+#endif
+void xopenme_clock_start(int timer)
+{
+#ifdef WINDOWS
+  start[timer] = clock();
+#else
+  #ifdef __INTEL_COMPILERX
+    start[timer] = (double)_rdtsc();
+  #else
+    gettimeofday(&before[timer], NULL);
+  #endif
+#endif
+  if ( ((env = getenv(XOPENME_DEBUG)) != NULL) && (atoi(env)==1) )
+    printf("XOpenME event: start clock\n");
+
+}
+
+/*****************************************************************/
+extern 
+#ifdef WINDOWS
+__declspec(dllexport) 
+#endif
+void xopenme_clock_end(int timer)
+{
+#ifdef WINDOWS
+  secs[timer] = ((double)(clock() - start[timer])) / CLOCKS_PER_SEC;
+#else
+  #ifdef __INTEL_COMPILERX
+  secs[timer] = ((double)((double)_rdtsc() - start[timer])) / (double) getCPUFreq();
+  #else
+  gettimeofday(&after, NULL);
+  secs[timer] = (after.tv_sec - before[timer].tv_sec) + (after.tv_usec - before[timer].tv_usec)/1000000.0;
+  #endif
+#endif
+  if ( ((env = getenv(XOPENME_DEBUG)) != NULL) && (atoi(env)==1) )
+    printf("XOpenME event: stop clock: %f\n", secs[timer]);
 }
 
 /*****************************************************************/
@@ -245,14 +245,45 @@ void xopenme_dump_state(void)
     fprintf(f," \"run_time_state\":{\n");
     for (var=0; var<nnvars; var++) 
     {
-      fprintf(f,"  %s", vars[var]);
-      if (var!=(nnvars-1)) fprintf(f, ",");
-      fprintf(f, "\n");
+      if ((vars[var][0]!=0))
+      {
+         if (var!=0) fprintf(f, "\n,");
+         fprintf(f,"  %s", vars[var]);
+      }
     }
-    fprintf(f," }\n");
+    fprintf(f,"\n }\n");
   }
 
   fprintf(f,"}\n");
 
   fclose(f);
+}
+
+/*****************************************************************/
+extern 
+#ifdef WINDOWS
+__declspec(dllexport) 
+#endif
+void xopenme_finish(void)
+{
+  int timer;
+  int var;
+
+  if (nnvars>0)
+  {
+    for (var=0; var<nnvars; var++) 
+    {
+      free(vars[var]);
+    }
+    free(vars);
+  }
+
+  if (nntimers>0)
+  {
+    free(secs);
+    free(start);
+#ifdef MYTIMER2     
+    free(before);
+#endif
+  }
 }
