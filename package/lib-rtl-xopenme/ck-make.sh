@@ -10,19 +10,20 @@
 # Developer(s): Grigori Fursin, 2015
 #
 
+export CK_SOURCE_FILES="xopenme.c"
+export CK_OBJ_FILES=xopenme${CK_OBJ_EXT}
+export CK_INCLUDE_FILE=xopenme.h
+
+export LIB_NAME=libxopenme
+
+export CK_COMPILER_FLAGS_MISC="${CK_FLAG_PREFIX_INCLUDE} . ${CK_COMPILER_FLAGS_MISC}"
+
+
+
+
 echo ""
 echo "Building static library ..."
 echo ""
-
-export CK_SOURCE_FILES="cJSON.c openme.c"
-export CK_OBJ_FILES=cJSON${CK_OBJ_EXT} openme${CK_OBJ_EXT}
-
-export CK_INCLUDE_FILE=openme.h
-export CK_INCLUDE_FILE1=cJSON.h
-
-export LIB_NAME=libopenme
-
-export CK_COMPILER_FLAGS_MISC="${CK_FLAG_PREFIX_INCLUDE} . ${CK_COMPILER_FLAGS_MISC}"
 
 export CK_TARGET_FILE=${LIB_NAME}${CK_LIB_EXT}
 export CK_TARGET_FILE_S=${CK_TARGET_FILE}
@@ -43,6 +44,11 @@ ${CK_LB} ${CK_LB_OUTPUT}${CK_TARGET_FILE} ${CK_OBJ_FILES}
     exit 1
   fi
 
+
+
+
+
+
 echo ""
 echo "Building dynamic library ..."
 echo ""
@@ -59,6 +65,9 @@ ${CK_CC} ${CK_FLAGS_DLL} ${CK_CC_FLAGS} ${CK_SOURCE_FILES} ${CK_FLAGS_OUTPUT}${C
     exit 1
   fi
 
+
+
+
 echo ""
 echo "Installing ..."
 echo ""
@@ -69,4 +78,3 @@ cp -f ${CK_TARGET_FILE_D} ${INSTALL_DIR}/lib
 
 mkdir ${INSTALL_DIR}/include
 cp ${CK_INCLUDE_FILE} ${INSTALL_DIR}/include
-cp ${CK_INCLUDE_FILE1} ${INSTALL_DIR}/include

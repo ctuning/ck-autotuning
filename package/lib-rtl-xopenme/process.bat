@@ -14,6 +14,10 @@ rem INSTALL_DIR
 
 set LIB_NAME=libxopenme
 
+echo.
+echo Copying XOpenME to src dir ...
+echo.
+
 mkdir %INSTALL_DIR%\src
 
 copy /B %PACKAGE_DIR%\xopenme.c %INSTALL_DIR%\src

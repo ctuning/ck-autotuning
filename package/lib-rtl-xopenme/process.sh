@@ -12,20 +12,20 @@
 # PACKAGE_DIR
 # INSTALL_DIR
 
-export LIB_NAME=libopenme
+export LIB_NAME=libxopenme
 
 echo ""
-echo "Obtaining latest OpenME from GITHUB ..."
+echo "Copying XOpenME to src dir ..."
 echo ""
 
-cd ${INSTALL_DIR}
+mkdir ${INSTALL_DIR}/src
 
-git clone https://github.com/ctuning/openme.git openme
+cp ${PACKAGE_DIR}/xopenme.c ${INSTALL_DIR}/src
+cp ${PACKAGE_DIR}/xopenme.h ${INSTALL_DIR}/src
+cp ${PACKAGE_DIR}/ck-make.sh ${INSTALL_DIR}/src
+cp ${PACKAGE_DIR}/README ${INSTALL_DIR}/src
 
-cd openme
-git pull
-
-cd src/c
+cd ${INSTALL_DIR}/src
 
 . ./ck-make.sh
  if [ "${?}" != "0" ] ; then
