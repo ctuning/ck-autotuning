@@ -14,7 +14,7 @@ set CK_SOURCE_FILES=xopenme.c
 set CK_OBJ_FILES=xopenme%CK_OBJ_EXT%
 set CK_INCLUDE_FILE=xopenme.h
 
-set LIB_NAME=libxopenme
+set LIB_NAME=librtlxopenme
 
 set CK_COMPILER_FLAGS_MISC=%CK_FLAG_PREFIX_INCLUDE%. %CK_COMPILER_FLAGS_MISC%
 

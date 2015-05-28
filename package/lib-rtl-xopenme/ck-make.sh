@@ -14,7 +14,7 @@ export CK_SOURCE_FILES="xopenme.c"
 export CK_OBJ_FILES=xopenme${CK_OBJ_EXT}
 export CK_INCLUDE_FILE=xopenme.h
 
-export LIB_NAME=libxopenme
+export LIB_NAME=librtlxopenme
 
 export CK_COMPILER_FLAGS_MISC="${CK_FLAG_PREFIX_INCLUDE} . ${CK_COMPILER_FLAGS_MISC}"
 
