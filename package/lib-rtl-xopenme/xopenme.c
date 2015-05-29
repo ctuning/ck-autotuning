@@ -83,8 +83,8 @@ void xopenme_init(int ntimers, int nvars)
   /* init timers */
   if (ntimers>0)
   {
-     secs=malloc(ntimers*sizeof(double));
-     start=malloc(ntimers*sizeof(MYTIMER1));
+     secs=malloc((ntimers+1)*sizeof(double));
+     start=malloc((ntimers+1)*sizeof(MYTIMER1));
 #ifdef MYTIMER2     
      before=malloc(ntimers*sizeof(MYTIMER2));
 #endif
@@ -99,12 +99,12 @@ void xopenme_init(int ntimers, int nvars)
   /* init vars */
   if (nvars>0)
   {
-    vars=malloc(nvars*sizeof(512)); // temporal and ugly - should check the length ...
+    vars=malloc((nvars+1)*sizeof(char*)); 
 
     for (var=0; var<nvars; var++)
     {
 
-      vars[var]=(char*) malloc(1024*sizeof(char));
+      vars[var]=(char*) malloc(512*sizeof(char)); // temporal and ugly - should check the length ...
       vars[var][0]=0;
     }
   }
