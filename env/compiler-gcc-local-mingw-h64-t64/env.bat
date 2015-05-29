@@ -2,7 +2,7 @@
 
 rem CK generated script
 
-if not [%1] == [1] (if defined CK_ENV_COMPILER_ICC_SET exit /b 0)
+if not [%1] == [1] (if defined CK_ENV_COMPILER_GCC_SET exit /b 0)
 
 rem Soft UOA         = compiler.gcc (3a8a82fa40bf992d) 
 rem Host OS UOA      = windows-64 (7a95e0754c37610a)

@@ -631,10 +631,15 @@ def process_in_dir(i):
                         sll+=pl2
                         sll+=eifsc
 
-              pl3=kv.get('path_include','')
-              if pl3!='':
-                 if sin!='': sin+=' '
-                 sin+=svarb+svarb1+'CK_FLAG_PREFIX_INCLUDE'+svare1+svare+eifsc+pl3+eifsc
+              pl3l=kv.get('path_include','')
+              pl3ll=kv.get('path_includes',[])
+              if pl3l not in pl3ll:
+                 pl3ll.append(pl3l)
+
+              for pl3 in pl3ll:
+                  if pl3!='':
+                     if sin!='': sin+=' '
+                     sin+=svarb+svarb1+'CK_FLAG_PREFIX_INCLUDE'+svare1+svare+eifsc+pl3+eifsc
 
           # Check if local includes
           linc=meta.get('local_include_dirs',[])
