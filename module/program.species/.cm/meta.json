@@ -1,7 +1,7 @@
 {
   "actions": {}, 
   "copyright": "See CK Copyright.txt for copyright details", 
-  "desc": "classification of similar programs by the community", 
+  "desc": "classification of similar programs by machine learning and manually by the community", 
   "developer": "Grigori Fursin", 
   "developer_email": "Grigori.Fursin@cTuning.org", 
   "developer_webpage": "http://cTuning.org/lab/people/gfursin", 
