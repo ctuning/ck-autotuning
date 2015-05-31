@@ -44,6 +44,7 @@ set CK_LB_OUTPUT=-o
 set CK_LD=ld
 set CK_LD_FLAGS_EXTRA=
 set CK_LIB_EXT=.a
+set CK_LINKER_FLAG_OPENMP=-lgomp -lrt
 set CK_MAKE=mingw32-make
 set CK_OBJDUMP=objdump -d
 set CK_OBJ_EXT=.o

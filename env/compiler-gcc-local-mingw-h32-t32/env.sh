@@ -43,6 +43,7 @@ export CK_LB_OUTPUT=-o
 export CK_LD=ld
 export CK_LD_FLAGS_EXTRA=
 export CK_LIB_EXT=.a
+export CK_LINKER_FLAG_OPENMP=-lgomp -lrt
 export CK_MAKE=make
 export CK_OBJDUMP=objdump -d
 export CK_OBJ_EXT=.o

@@ -790,7 +790,7 @@ def process_in_dir(i):
                  full_path=rb['path']
               else:
                  full_path=sfprefix
-              
+
               sf0,sf1=os.path.splitext(sf)
 
               sfobj=sf0+sobje

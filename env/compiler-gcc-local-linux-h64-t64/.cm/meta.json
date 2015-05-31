@@ -52,6 +52,7 @@
     "CK_LD": "ld", 
     "CK_LD_FLAGS_EXTRA": "", 
     "CK_LIB_EXT": ".a", 
+    "CK_LINKER_FLAG_OPENMP": "-lgomp -lrt", 
     "CK_MAKE": "make", 
     "CK_OBJDUMP": "objdump -d", 
     "CK_OBJ_EXT": ".o", 
