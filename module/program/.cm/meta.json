@@ -9,9 +9,6 @@
     "compile": {
       "desc": "compile program"
     },
-    "crowdtune": {
-      "desc": "crowdtune software and hardware"
-    },
     "pipeline": {
       "desc": "prepare and run program pipeline (clean, compile, run, etc)"
     },

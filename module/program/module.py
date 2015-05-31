@@ -1637,26 +1637,6 @@ def run(i):
     return process(i)
 
 ##############################################################################
-# crowdtuning program
-
-def crowdtune(i):
-    """
-    Input:  {
-            }
-
-    Output: {
-              return       - return code =  0, if successful
-                                         >  0, if error
-              (error)      - error text if return > 0
-            }
-
-    """
-
-    ck.out ('tbd: crowdtuning program')
-
-    return {'return':0}
-
-##############################################################################
 # prepare and run program pipeline (clean, compile, run, etc)
 
 def pipeline(i):
