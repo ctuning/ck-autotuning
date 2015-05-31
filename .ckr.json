@@ -1,6 +1,6 @@
 {
   "data_uid": "a4328ba99679e0d1", 
-  "data_name": "CK auto-tuning and crowd-tuning", 
+  "data_name": "CK (machine learning based) multi-objective autotuning", 
   "dict": {
     "url": "https://github.com/ctuning/ck-autotuning.git", 
     "shared": "git", 
