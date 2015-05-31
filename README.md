@@ -1,16 +1,7 @@
 Status
 ======
-This is an unstable, heavily evolving repository 
-(stable release is expected in Spring 2015) - 
-please, do not use it until official announcement.
-
-Dependencies
-============
-* CK repo: ck-env (to install, interconnect and call various tools and their version)
-* CK repo: ck-analytics (to record experiments and expose to predictive analytics)
-
-> ck add repo:ck-env --shared --quiet
-> ck add repo:ck-analytics --shared --quiet
+This is yet unstable (though not anymore heavily evolving) 
+repository (stable release is expected around July 2015).
 
 Description
 ===========
@@ -34,7 +25,6 @@ Modules from this repository will be used to unify:
 * automatic performance modeling
 * static and dynamic features extraction
 * machine learning to predict optimizations and run-time adaptation
-* crowd-tuning
 * reproducibility of experimental results
 
 Publications
