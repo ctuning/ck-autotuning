@@ -15,6 +15,11 @@ set CK_AR=ar
 set CK_ASM_EXT=.s
 set CK_CC=gcc
 set CK_COMPILER_FLAGS_OBLIGATORY= -DWINDOWS
+set CK_COMPILER_FLAG_CPP11=-std=c++11
+set CK_COMPILER_FLAG_GPROF=-pg
+set CK_COMPILER_FLAG_OPENMP=-fopenmp
+set CK_COMPILER_FLAG_PLUGIN=-fplugin=
+set CK_COMPILER_FLAG_PTHREAD_LIB=-lpthread
 set CK_CXX=g++ -fpermissive
 set CK_DLL_EXT=.so
 set CK_EXE_EXT=.out
@@ -33,6 +38,7 @@ set CK_FLAGS_STATIC_LIB=-fPIC
 set CK_FLAG_PREFIX_INCLUDE=-I
 set CK_FLAG_PREFIX_LIB_DIR=-L
 set CK_FLAG_PREFIX_VAR=-D
+set CK_GPROF_OUT_FILE=gmon.out
 set CK_LB=ar rcs
 set CK_LB_OUTPUT=-o 
 set CK_LD=ld
