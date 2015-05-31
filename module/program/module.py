@@ -117,27 +117,12 @@ def process(i):
           return {'return':1, 'error':'data UOA is not defined'}
 
     # Check wildcards
-    if a.find('*')>=0 or a.find('?')>=0 or m.find('*')>=0 or m.find('?')>=0 or duoa.find('*')>=0 or duoa.find('?')>=0: 
-       r=ck.list_data({'repo_uoa':a, 'module_uoa':m, 'data_uoa':duoa})
-       if r['return']>0: return r
+    r=ck.list_data({'repo_uoa':a, 'module_uoa':m, 'data_uoa':duoa})
+    if r['return']>0: return r
 
-       lst=r['lst']
-    else:
-       # Find path to data
-       r=ck.find_path_to_data({'repo_uoa':a, 'module_uoa':m, 'data_uoa':duoa})
-       if r['return']>0: return r
-       p=r['path']
-       ruoa=r.get('repo_uoa','')
-       ruid=r.get('repo_uid','')
-       muoa=r.get('module_uoa','')
-       muid=r.get('module_uid','')
-       duid=r.get('data_uid','')
-       duoa=r.get('data_alias','')
-       if duoa=='': duoa=duid
-
-       lst.append({'path':p, 'repo_uoa':ruoa, 'repo_uid':ruid, 
-                             'module_uoa':muoa, 'module_uid':muid, 
-                             'data_uoa':duoa, 'data_uid': duid})
+    lst=r['lst']
+    if len(lst)==0:
+       return {'return':1, 'error':'no program(s) found'}
 
     r={'return':0}
     for ll in lst:
@@ -159,8 +144,20 @@ def process(i):
            ck.out('')
 
         ii=copy.deepcopy(ic)
-        ii['path']=p
         ii['meta']=d
+
+        # Check if base_uoa suggests to use another program path
+        buoa=d.get('base_uoa','')
+        if buoa!='':
+           rx=ck.access({'action':'find',
+                         'module_uoa':muid,
+                         'data_uoa':buoa})
+           if rx['return']>0:
+              return {'return':1, 'error':'problem finding base entry '+buoa+' ('+rx['error']+')'}
+
+           p=rx['path']
+
+        ii['path']=p
         ii['repo_uoa']=ruid
         ii['module_uoa']=muid
         ii['data_uoa']=duid
@@ -179,9 +176,9 @@ def process_in_dir(i):
 
               sub_action             - clean, compile, run
 
-              (host_os)        - host OS (detect, if omitted)
-              (target_os)      - OS module to check (if omitted, analyze host)
-              (device_id)      - device id if remote (such as adb)
+              (host_os)              - host OS (detect, if omitted)
+              (target_os)            - OS module to check (if omitted, analyze host)
+              (device_id)            - device id if remote (such as adb)
 
               path                   - path
               meta                   - program description
