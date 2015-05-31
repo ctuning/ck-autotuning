@@ -620,7 +620,7 @@ def process_in_dir(i):
               for pl2 in els:
                   if pl2!='':
                      if sll!='': sll+=' '
-                     if ctype=='dynamic' and remote=='yes' and csd.get('customize',{}).get('can_strip_dynamic_lib','')=='yes':
+                     if ctype=='dynamic' and (remote=='yes' or pl1d!='') and csd.get('customize',{}).get('can_strip_dynamic_lib','')=='yes':
                         pl2x=os.path.splitext(pl2)[0]
                         if pl2x.startswith('lib'): pl2x=pl2x[3:]
                         sll+=' '+svarb+svarb1+'CK_FLAG_PREFIX_LIB_DIR'+svare1+svare+eifsc+pl1d+eifsc+' -l'+pl2x
