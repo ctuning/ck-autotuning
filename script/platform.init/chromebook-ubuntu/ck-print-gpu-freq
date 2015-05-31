@@ -14,17 +14,17 @@ cat /sys/class/misc/mali*/device/clock
 
 echo ""
 echo "*** Available GPU frequencies:"
-cat /sys/class/misc/mali*/device/dvfs_table
+cat /sys/class/misc/mali*/device/available_frequencies
 
 echo ""
-echo "*** Available GPU frequencies/voltabges:"
-cat /sys/class/misc/mali*/device/asv_table
+echo "*** Available GPU frequencies/voltages:"
+cat /sys/class/misc/mali*/device/asv
 
 echo ""
 echo "*** Current GPU DVFS state:"
 cat /sys/class/misc/mali*/device/dvfs
 
-echo ""
-echo "*** Available GPU governors:"
-cat /sys/class/misc/mali*/device/dvfs_governor
+#echo ""
+#echo "*** Available GPU governors:"
+#cat /sys/class/misc/mali*/device/dvfs_governor
 

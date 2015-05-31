@@ -17,7 +17,7 @@ echo "*** Available GPU frequencies:"
 cat /sys/class/misc/mali*/device/dvfs_table
 
 echo ""
-echo "*** Available GPU frequencies/voltabges:"
+echo "*** Available GPU frequencies/voltages:"
 cat /sys/class/misc/mali*/device/asv_table
 
 echo ""
