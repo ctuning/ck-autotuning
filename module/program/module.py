@@ -192,6 +192,9 @@ def process_in_dir(i):
               (flags)                - compile flags
               (lflags)               - link flags
 
+              (speed)                - if 'yes', compile for speed (use env CK_OPT_SPEED from compiler)
+              (size)                 - if 'yes', compile for size (use env CK_OPT_SIZE from compiler)
+
               (compile_type)         - static or dynamic (dynamic by default;
                                          however takes compiler default_compile_type into account)
                   or
@@ -279,6 +282,9 @@ def process_in_dir(i):
     flags=i.get('flags','')
     lflags=i.get('lflags','')
     cv=i.get('compiler_vars',{})
+
+    fspeed=i.get('speed','')
+    fsize=i.get('size','')
 
     xrepeat=i.get('repeat','')
     if xrepeat=='': xrepeat='-1'
@@ -617,7 +623,7 @@ def process_in_dir(i):
               for pl2 in els:
                   if pl2!='':
                      if sll!='': sll+=' '
-                     if ctype=='dynamic' and (remote=='yes' or pl1d!='') and csd.get('customize',{}).get('can_strip_dynamic_lib','')=='yes':
+                     if ctype=='dynamic' and (remote=='yes' or (pl1d!='' and wb!='yes')) and csd.get('customize',{}).get('can_strip_dynamic_lib','')=='yes':
                         pl2x=os.path.splitext(pl2)[0]
                         if pl2x.startswith('lib'): pl2x=pl2x[3:]
                         sll+=' '+svarb+svarb1+'CK_FLAG_PREFIX_LIB_DIR'+svare1+svare+eifsc+pl1d+eifsc+' -l'+pl2x
@@ -639,12 +645,36 @@ def process_in_dir(i):
                      sin+=svarb+svarb1+'CK_FLAG_PREFIX_INCLUDE'+svare1+svare+eifsc+pl3+eifsc
 
           # Check if local includes
-          linc=meta.get('local_include_dirs',[])
+          linc=meta.get('include_dirs',[])
           if len(linc)>0:
              for q in linc:
-                 if td!='' : q='..'+sdirs+q # if tmp dir, reduce level
+                 # Check if source from another entry (species)
+                 full_path=''
+                 if q.startswith('$#ck_take_from_{'):
+                    b2=q.find('}#$')
+                    if b2=='':
+                       return {'return':1, 'error':'can\'t parse source file '+q+' ...'}
+                    bb=q[16:b2]
+
+                    rb=ck.access({'action':'load',
+                                  'module_uoa':muoa,
+                                  'data_uoa':bb})
+                    if rb['return']>0: 
+                       return {'return':1, 'error':'can\'t find sub-entry '+bb}
+
+                    q=q[b2+3:]
+
+                    full_path=rb['path']
+                 else:
+                    if td!='': full_path='..'+sdirs
+                    else: full_path=''
+
                  if sin!='': sin+=' '
-                 sin+=svarb+svarb1+'CK_FLAG_PREFIX_INCLUDE'+svare1+svare+eifsc+q+eifsc
+
+                 x=os.path.join(full_path,q)
+                 if x.endswith('\\'): x=x[:-1] # otherwise can be problems on Windows ...
+
+                 sin+=svarb+svarb1+'CK_FLAG_PREFIX_INCLUDE'+svare1+svare+eifsc+x+eifsc
 
           # Check if includes as environment var (we search in env settings, 
           #    not in real env, otherwise, can have problems, when concatenating -I with empty string)
@@ -682,7 +712,14 @@ def process_in_dir(i):
 
           sfprefix='..'+sdirs
 
-          scfb=svarb+'CK_FLAGS_CREATE_OBJ'+svare
+          scfb=''
+
+          if fspeed=='yes':
+               scfb+=' '+svarb+'CK_OPT_SPEED'+svare+' '
+          elif fsize=='yes':
+               scfb+=' '+svarb+'CK_OPT_SIZE'+svare+' '
+
+          scfb+=svarb+'CK_FLAGS_CREATE_OBJ'+svare
           scfb+=' '+svarb+'CK_COMPILER_FLAGS_OBLIGATORY'+svare
           if ctype=='dynamic':
              scfb+=' '+svarb+'CK_FLAGS_DYNAMIC_BIN'+svare
@@ -711,6 +748,12 @@ def process_in_dir(i):
               if o=='con':
                  ck.out('  '+k+'='+str(kv))
 
+          # Check if compiler flags as environment variable
+          cfev=meta.get('compiler_flags_as_env','')
+          if cfev!='':
+             cfev=cfev.replace('$<<',svarb).replace('>>$',svare)
+             sbcv+=' '+cfev
+
           # Prepare compilation
           sb+='\n'
 
@@ -723,9 +766,31 @@ def process_in_dir(i):
              sb+='\n'+no+ee+'\n\n'
 
           for sf in sfs:
+              sf=sf.strip()
+
               xcfb=scfb
               xcfa=scfa
 
+              # Check if source from another entry (species)
+              full_path=''
+              if sf.startswith('$#ck_take_from_{'):
+                 b2=sf.find('}#$')
+                 if b2=='':
+                    return {'return':1, 'error':'can\'t parse source file '+sf+' ...'}
+                 bb=sf[16:b2]
+
+                 rb=ck.access({'action':'load',
+                               'module_uoa':muoa,
+                               'data_uoa':bb})
+                 if rb['return']>0: 
+                    return {'return':1, 'error':'can\'t find sub-entry '+bb}
+
+                 sf=sf[b2+3:]
+
+                 full_path=rb['path']
+              else:
+                 full_path=sfprefix
+              
               sf0,sf1=os.path.splitext(sf)
 
               sfobj=sf0+sobje
@@ -743,7 +808,7 @@ def process_in_dir(i):
                  xcfa+=' '+svarb+svarb1+'CK_FLAGS_OUTPUT'+svare1+svare+sfobj
 
               cc=sccmd
-              cc=cc.replace('$#source_file#$', sfprefix+sf)
+              cc=cc.replace('$#source_file#$', os.path.join(full_path,sf))
 
               cc=cc.replace('$#compiler#$', svarb+compiler_env+svare)
 
