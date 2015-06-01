@@ -8,5 +8,5 @@
   }, 
   "data_alias": "ck-autotuning", 
   "data_uoa": "ck-autotuning",
-  "repo_deps":["ck-env", "ck-analytics"]
+  "repo_deps":[{"repo_uoa":"ck-env"}, {"repo_uoa":"ck-analytics"}]
 }
