@@ -202,6 +202,9 @@ def process_in_dir(i):
 
               (repeat)               - repeat kernel via environment CT_REPEAT_MAIN if supported
 
+              (sudo)                 - if 'yes', force using sudo 
+                                       (otherwise, can use ${CK_SUDO_INIT}, ${CK_SUDO_PRE}, ${CK_SUDO_POST})
+
               (clean)                - if 'yes', clean tmp directory before using
               (skip_clean_after)     - if 'yes', do not remove run batch
 
@@ -425,6 +428,19 @@ def process_in_dir(i):
     # Check if compile in tmp dir
     cdir=p
     os.chdir(cdir)
+
+    ########################################################################
+    # Check sudo
+
+    sudo_init=tosd.get('sudo_init','')
+    if sudo_init=='': sudo_init=svarb+svarb1+'CK_SUDO_INIT'+svare1+svare
+    sudo_pre=tosd.get('sudo_pre','')
+    if sudo_pre=='': sudo_pre=svarb+svarb1+'CK_SUDO_INIT'+svare1+svare
+    sudo_post=tosd.get('sudo_post','')
+    if sudo_post=='': sudo_post=svarb+svarb1+'CK_SUDO_INIT'+svare1+svare
+
+    isd=i.get('sudo','')
+    if isd=='': isd=tosd.get('force_sudo','')
 
     ##################################################################################################################
     ################################### Clean ######################################
@@ -1391,11 +1407,17 @@ def process_in_dir(i):
              # Prepare command as one line
              y=''
 
+             if isd=='yes': 
+                y+=sudo_init+' '+envtsep
+                y+=sudo_pre+' '
+
              x=sb.split('\n')
              for q in x:
                  if q!='':
                     if y!='': y+=envtsep
                     y+=' '+q
+
+             if isd=='yes': y=y+' '+envtsep+' '+sudo_post+' *'
 
              if eifsx!='': y=y.replace('"','\\"')
              y=rs+' '+eifsx+tosd['change_dir']+' '+rdir+envtsep+' '+y+eifsx+' '+rse
@@ -1420,6 +1442,9 @@ def process_in_dir(i):
              if sexe!='':
                 y+=sexe+' '+sbp+fn+envsep
              y+=' '+scall+' '+sbp+fn
+
+             if isd=='yes': 
+                y+=sudo_init+' '+envtsep+sudo_pre+' '+y+' '+envtsep+' '+sudo_post+' *'
 
              if o=='con':
                 ck.out('Prepared script:')
