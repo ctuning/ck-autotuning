@@ -960,10 +960,11 @@ def process_in_dir(i):
           rdir=tosd.get('remote_dir','')
           if rdir!='' and not rdir.endswith(stdirs): rdir+=stdirs
 
+       src_path_local=p+sdirs
        if remote=='yes':
           src_path=rdir+stdirs
        else:
-          src_path=p+sdirs
+          src_path=src_path_local
 
        sc=i.get('skip_calibration','')
        xcalibrate_time=i.get('calibration_time','')
@@ -1333,8 +1334,7 @@ def process_in_dir(i):
        sb+=no+c+'\n'
 
        fn=''
-
-       ppc=rt.get('post_process_cmd','').replace('$#src_path#$', src_path)
+       ppc=rt.get('post_process_cmd','').replace('$#src_path_local#$', src_path_local).replace('$#src_path#$', src_path)
        fgtf=rt.get('fine_grain_timer_file','')
 
        # Calibrate execution time (to make it longer and minimize system variation, 
