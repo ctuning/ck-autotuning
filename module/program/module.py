@@ -435,9 +435,9 @@ def process_in_dir(i):
     sudo_init=tosd.get('sudo_init','')
     if sudo_init=='': sudo_init=svarb+svarb1+'CK_SUDO_INIT'+svare1+svare
     sudo_pre=tosd.get('sudo_pre','')
-    if sudo_pre=='': sudo_pre=svarb+svarb1+'CK_SUDO_INIT'+svare1+svare
+    if sudo_pre=='': sudo_pre=svarb+svarb1+'CK_SUDO_PRE'+svare1+svare
     sudo_post=tosd.get('sudo_post','')
-    if sudo_post=='': sudo_post=svarb+svarb1+'CK_SUDO_INIT'+svare1+svare
+    if sudo_post=='': sudo_post=svarb+svarb1+'CK_SUDO_POST'+svare1+svare
 
     isd=i.get('sudo','')
     if isd=='': isd=tosd.get('force_sudo','')
@@ -602,7 +602,7 @@ def process_in_dir(i):
              misc['compiler_detected_ver_raw']=r['version_raw']
 
              if o=='con':
-                ck.out('')
+                ck.out(sep)
                 ck.out('Detected compiler version: '+cver)
                 ck.out('')
 
@@ -781,6 +781,7 @@ def process_in_dir(i):
           if ee!='':
              sb+='\n'+no+ee+'\n\n'
 
+          if o=='con': ck.out(sep)
           for sf in sfs:
               sf=sf.strip()
 
@@ -961,7 +962,7 @@ def process_in_dir(i):
           ccc['compilation_time_with_module']=time.time()-start_time
 
           if o=='con':
-             ck.out('')
+             ck.out(sep)
              ck.out('Compilation time: '+('%.3f'%comp_time)+' sec.; Object size: '+str(ofs)+'; MD5: '+md5)
              if misc.get('compilation_success','')=='no':
                 ck.out('Warning: compilation failed!')
@@ -1367,7 +1368,19 @@ def process_in_dir(i):
        while True:
           # Clean output files
           rof=rt.get('run_output_files',[])
+
+          rofx=[]
+          if rco1!='': rofx.append(rco1)
+          if rco2!='': rofx.append(rco2)
           for df in rof:
+              rofx.append(df)
+
+          if o=='con' and len(rofx)>0:
+             ck.out('  Cleaning output files:')
+
+          for df in rofx:
+              if o=='con': ck.out('    '+df)
+
               if remote=='yes':
                  # Clean data files on device
                  y=rs+' '+tosd['delete_file']+ ' '+rdir+stdirs+df+' '+rse
@@ -1390,6 +1403,8 @@ def process_in_dir(i):
               if os.path.isfile(df): 
                  os.remove(df)
 
+          if o=='con': ck.out('')
+
           if sc!='yes' and 'CT_REPEAT_MAIN' in env1:
              if o=='con':
                 ck.out(sep)
@@ -1399,10 +1414,17 @@ def process_in_dir(i):
           if sc!='yes' and 'CT_REPEAT_MAIN' in env1 and repeat!=-1:
              sb=sb.replace('$#repeat#$', str(repeat))
 
-          # Prepare execution
-          if o=='con':
-             ck.out(sep)
+          # Check sudo init
+          if isd=='yes':
+             if o=='con': 
+                ck.out(sep)
+                ck.out('  (preparing sudo - may ask password ...)')
+             if remote!='yes':
+                os.system(sudo_init)
 
+          if o=='con':  ck.out(sep)
+
+          # Prepare execution
           if remote=='yes':
              # Prepare command as one line
              y=''
@@ -1444,7 +1466,7 @@ def process_in_dir(i):
              y+=' '+scall+' '+sbp+fn
 
              if isd=='yes': 
-                y+=sudo_init+' '+envtsep+sudo_pre+' '+y+' '+envtsep+' '+sudo_post+' *'
+                y=sudo_pre+' '+y+' '+envtsep+' '+sudo_post+' *'
 
              if o=='con':
                 ck.out('Prepared script:')
@@ -1727,6 +1749,7 @@ def pipeline(i):
                                        if set, description should exist in input:choices_desc#compiler_flags# ...
 
               (best_base_flag)       - if 'yes', try to select best flag if available ...
+              (speed)                - the same as above
 
               (select_best_base_flag_for_first_iteration) - if 'yes' and autotuning_iteration=0
 
@@ -1736,6 +1759,9 @@ def pipeline(i):
 
               (env)                  - preset environment
               (extra_env)            - extra environment as string
+
+              (sudo)                 - if 'yes', force using sudo 
+                                       (otherwise, can use ${CK_SUDO_INIT}, ${CK_SUDO_PRE}, ${CK_SUDO_POST})
 
               (repeat)               - repeat kernel via environment CT_REPEAT_MAIN if supported
               (skip_calibration)     - if 'yes', skip execution time calibration (make it around 4.0 sec)
@@ -1747,6 +1773,18 @@ def pipeline(i):
 
               (repeat_compilation)   - if 'yes', force compilation, even if "statistical_repetition_number">0
               (no_state_check)       - do not check system/CPU state (frequency) over iterations ...
+
+              (set_cpu_freq)         - set CPU frequency, if supported (using SUDO, if also supported) 
+                                         using script ck-set-cpu-online-and-frequency
+                                       if "max" - try to set to maximum using script ck-set-cpu-performance
+                                       if "min" - try to set to minimum using scrupt ck-set-cpu-powersave
+
+              (set_gpu_freq)         - set GPU frequency, if supported (using SUDO, if also supported) 
+                                         using script ck-set-gpu-online-and-frequency
+                                       if "max" - try to set to maximum using script ck-set-gpu-performance
+                                       if "min" - try to set to minimum using scrupt ck-set-gpu-powersave
+
+              (monitor_energy)       - if 'yes', start energy monitoring (if supported) using script ck-set-power-sensors
 
               (dependencies)         - compilation dependencies
 
@@ -1848,6 +1886,10 @@ def pipeline(i):
     dduoa=ck.get_from_dicts(i, 'dataset_uoa', '', choices)
     druoa=ck.get_from_dicts(i, 'dataset_repo_uoa', '', None)
 
+    scpuf=ck.get_from_dicts(i, 'set_cpu_freq', '', choices)
+    sgpuf=ck.get_from_dicts(i, 'set_gpu_freq', '', choices)
+    sme=ck.get_from_dicts(i, 'monitor_energy', '', choices)
+
     pdir=ck.get_from_dicts(i, 'program_dir', '', None) # Do not save, otherwise can't reproduce by other people
     if pdir!='': os.chdir(pdir)
 
@@ -1940,6 +1982,17 @@ def pipeline(i):
 
     if tos=='':
        return {'return':1, 'error':'target_os is not defined'}
+
+    # check sudo
+    sudo_init=tosd.get('sudo_init','')
+    if sudo_init=='': sudo_init=svarb+svarb1+'CK_SUDO_INIT'+svare1+svare
+    sudo_pre=tosd.get('sudo_pre','')
+    if sudo_pre=='': sudo_pre=svarb+svarb1+'CK_SUDO_PRE'+svare1+svare
+    sudo_post=tosd.get('sudo_post','')
+    if sudo_post=='': sudo_post=svarb+svarb1+'CK_SUDO_POST'+svare1+svare
+
+    isd=ck.get_from_dicts(i, 'sudo', '', choices)
+    if isd=='': isd=tosd.get('force_sudo','')
 
     # Check compile type
     ctype=ck.get_from_dicts(i, 'compile_type', '', choices)
@@ -2351,6 +2404,8 @@ def pipeline(i):
 
     # Check if use best base flag
     bbf=ck.get_from_dicts(i, 'best_base_flag', '', None)
+    if bbf=='':
+       bbf=ck.get_from_dicts(i, 'speed', '', None)
     if bbf=='yes':
        qx=choices_desc.get('##compiler_flags#base_opt',{}).get('choice',[])
        if len(qx)>0:
@@ -2379,6 +2434,12 @@ def pipeline(i):
 
     # to be able to properly record info
     choices['compiler_flags']=compiler_flags
+
+    ###############################################################################################################
+    # PIPELINE SECTION: set CPU features
+    scpuf=ck.get_from_dicts(i, 'set_cpu_freq', '', choices)
+    sgpuf=ck.get_from_dicts(i, 'set_gpu_freq', '', choices)
+    sme=ck.get_from_dicts(i, 'monitor_energy', '', choices)
 
     ###############################################################################################################
     # PIPELINE SECTION: get target platform features
@@ -2589,6 +2650,8 @@ def pipeline(i):
            'tmp_dir':tdir,
            'skip_clean_after':sca,
            'compile_type':ctype,
+           'sudo':isd,
+           'monitor_energy':sme,
            'flags':flags,
            'lflags':lflags,
            'repeat':repeat,
