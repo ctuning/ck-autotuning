@@ -1886,8 +1886,8 @@ def pipeline(i):
     dduoa=ck.get_from_dicts(i, 'dataset_uoa', '', choices)
     druoa=ck.get_from_dicts(i, 'dataset_repo_uoa', '', None)
 
-    scpuf=ck.get_from_dicts(i, 'set_cpu_freq', '', choices)
-    sgpuf=ck.get_from_dicts(i, 'set_gpu_freq', '', choices)
+    scpuf=ck.get_from_dicts(i, 'set_cpu_freq', 'max', choices)
+    sgpuf=ck.get_from_dicts(i, 'set_gpu_freq', 'max', choices)
     sme=ck.get_from_dicts(i, 'monitor_energy', '', choices)
 
     pdir=ck.get_from_dicts(i, 'program_dir', '', None) # Do not save, otherwise can't reproduce by other people
@@ -2436,10 +2436,55 @@ def pipeline(i):
     choices['compiler_flags']=compiler_flags
 
     ###############################################################################################################
-    # PIPELINE SECTION: set CPU features
-    scpuf=ck.get_from_dicts(i, 'set_cpu_freq', '', choices)
-    sgpuf=ck.get_from_dicts(i, 'set_gpu_freq', '', choices)
-    sme=ck.get_from_dicts(i, 'monitor_energy', '', choices)
+    # PIPELINE SECTION: set CPU frequency
+    if scpuf!='':
+       if o=='con':
+          ck.out(sep)
+          ck.out('Setting CPU frequency to '+str(scpuf)+' (if supported) ...')
+          ck.out('')
+
+       ii={'action':'set_freq',
+           'module_uoa':cfg['module_deps']['platform.cpu'],
+           'value':scpuf,
+           'host_os':hos,
+           'target_os':tos,
+           'device_id':tdid,
+           'skip_print_os':'yes',
+           'skip_device_init':sdi,
+           'skip_info_collection':sic,
+           'out':oo}
+       r=ck.access(ii)
+       if r['return']>0: return r
+
+    ###############################################################################################################
+    # PIPELINE SECTION: set GPU frequency
+    if scpuf!='':
+       if o=='con':
+          ck.out(sep)
+          ck.out('Setting CPU frequency to '+str(scpuf)+' (if supported) ...')
+          ck.out('')
+
+       ii={'action':'set_freq',
+           'module_uoa':cfg['module_deps']['platform.accelerator'],
+           'value':scpuf,
+           'host_os':hos,
+           'target_os':tos,
+           'device_id':tdid,
+           'skip_print_os':'yes',
+           'skip_device_init':sdi,
+           'skip_info_collection':sic,
+           'out':oo}
+       r=ck.access(ii)
+       if r['return']>0: return r
+
+
+
+
+
+
+
+
+
 
     ###############################################################################################################
     # PIPELINE SECTION: get target platform features
