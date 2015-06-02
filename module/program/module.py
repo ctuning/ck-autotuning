@@ -654,13 +654,17 @@ def process_in_dir(i):
               if x=='' and ctype=='dynamic' and kv.get('dynamic_lib','')!='': x=kv['dynamic_lib']
               els.append(x)
 
+              path_added=False
               for pl2 in els:
                   if pl2!='':
                      if sll!='': sll+=' '
                      if ctype=='dynamic' and (remote=='yes' or (pl1d!='' and wb!='yes')) and csd.get('customize',{}).get('can_strip_dynamic_lib','')=='yes':
                         pl2x=os.path.splitext(pl2)[0]
                         if pl2x.startswith('lib'): pl2x=pl2x[3:]
-                        sll+=' '+svarb+svarb1+'CK_FLAG_PREFIX_LIB_DIR'+svare1+svare+eifsc+pl1d+eifsc+' -l'+pl2x
+                        if not path_added:
+                           sll+=' '+svarb+svarb1+'CK_FLAG_PREFIX_LIB_DIR'+svare1+svare+eifsc+pl1d+eifsc
+                           path_added=True
+                        sll+=' -l'+pl2x
                      else:
                         sll+=eifsc
                         if pl1!='': 
@@ -2140,6 +2144,8 @@ def pipeline(i):
           meta=rx['dict']
 
        pdir=rx['path']
+       duid=rx['data_uid']
+       duoa=rx['data_uoa']
 
        # Check if base_uoa suggests to use another program path
        buoa=meta.get('base_uoa','')
@@ -2151,9 +2157,6 @@ def pipeline(i):
              return {'return':1, 'error':'problem finding base entry '+buoa+' ('+rx['error']+')'}
 
           pdir=rx['path']
-
-       duid=rx['data_uid']
-       duoa=rx['data_uoa']
 
     if pdir=='': pdir=state['cur_dir']
 
