@@ -231,6 +231,8 @@ def process_in_dir(i):
               (pull_only_timer_files) - if 'yes', pull only timer files, but not output files 
                                         (useful for remove devices during statistical repetition)
 
+              (monitor_energy)       - if 'yes', start energy monitoring (if supported) using script ck-set-power-sensors
+
               (statistical_repetition) - int number of current (outside) statistical repetition
                                          to avoid pushing data to remote device if !=0 ...
 
@@ -292,6 +294,8 @@ def process_in_dir(i):
     xrepeat=i.get('repeat','')
     if xrepeat=='': xrepeat='-1'
     repeat=int(xrepeat)
+
+    me=i.get('monitor_energy','')
 
     # Check host/target OS/CPU
     hos=i.get('host_os','')
@@ -561,6 +565,20 @@ def process_in_dir(i):
                      'data_uoa':comp_uoa})
        if rx['return']>0: return rx
        dcomp=rx['dict']
+
+    # Add energy monitor, if needed and if supported
+    sspm1=tosd.get('script_start_power_monitor','')
+    sspm2=tosd.get('script_stop_power_monitor','')
+
+    if me=='yes' and sspm1!='':
+       if o=='con':
+          ck.out('')
+          ck.out('Adding energy monitor')
+          ck.out('')
+
+       sb+='\n'
+       sb+=scall+' '+sspm1+'\n'
+       sb+='\n'
 
     ##################################################################################################################
     ################################### Compile ######################################
@@ -897,6 +915,17 @@ def process_in_dir(i):
           x='<'
           if hplat=='win':x='' 
           sb+='\n'+no+'md5sum '+x+' '+target_exe+'.dump '+stro+' '+target_exe+'.md5'+'\n'
+
+          # Stop energy monitor, if needed and if supported
+          if me=='yes' and sspm2!='':
+             if o=='con':
+                ck.out('')
+                ck.out('Adding energy monitor')
+                ck.out('')
+
+             sb+='\n'
+             sb+=scall+' '+sspm2+'\n'
+             sb+='\n'
 
           # Record to tmp batch and run
           rx=ck.gen_tmp_file({'prefix':'tmp-', 'suffix':sext, 'remove_dir':'yes'})
@@ -1349,6 +1378,17 @@ def process_in_dir(i):
           if rco1!='': c+=' '+stro+' '+rco1
           if rco2!='': c+=' '+stre+' '+rco2
        sb+=no+c+'\n'
+
+       # Stop energy monitor, if needed and if supported
+       if me=='yes' and sspm2!='':
+          if o=='con':
+             ck.out('')
+             ck.out('Adding energy monitor')
+             ck.out('')
+
+          sb+='\n'
+          sb+=scall+' '+sspm2+'\n'
+          sb+='\n'
 
        fn=''
        ppc=rt.get('post_process_cmd','').replace('$#src_path_local#$', src_path_local).replace('$#src_path#$', src_path)
@@ -2494,15 +2534,6 @@ def pipeline(i):
            'out':oo}
        r=ck.access(ii)
        if r['return']>0: return r
-
-
-
-
-
-
-
-
-
 
     ###############################################################################################################
     # PIPELINE SECTION: get target platform features
