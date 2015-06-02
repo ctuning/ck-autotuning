@@ -294,6 +294,11 @@ void xopenme_dump_state(void)
   FILE* f;
   int timer;
   int var;
+  int energy=0; // set from CK_MONITOR_ENERGY
+
+  env = getenv(XOPENME_ENERGY);
+  if (env!= NULL)
+     energy=atoi(env);
 
   if ( ((env = getenv(XOPENME_DEBUG)) != NULL) && (atoi(env)==1) )
     printf("XOPENME event: dumping state\n");
@@ -334,7 +339,9 @@ void xopenme_dump_state(void)
       if (nnvars>0 || var!=0) fprintf(f, ",\n");
       fprintf(f,"    \"file_%u_start\":%f", var, fvars1[var]);
       fprintf(f,",\n    \"file_%u_stop\":%f", var, fvars2[var]);
-      fprintf(f,",\n    \"file_%u_diff\":%f", var, fvars2[var]-fvars1[var]);
+
+      if (energy==1 && nntimers>0)
+         fprintf(f,",\n    \"file_%u_energy\":%f", var, ((fvars2[var]+fvars1[var])/2)*secs[0]);
     }
 
     fprintf(f,"\n }");
