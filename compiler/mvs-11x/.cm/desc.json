@@ -1,0 +1,23 @@
+{
+  "all_compiler_flags_desc": {
+    "##base_opt": {
+      "choice": [
+        "/Ot", 
+        "/O1", 
+        "/O2", 
+        "/Og", 
+        "/Os", 
+        "/Od"
+      ], 
+      "default": "", 
+      "desc": "base compiler flag", 
+      "sort": 10000, 
+      "tags": [
+        "base", 
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }
+  }
+}

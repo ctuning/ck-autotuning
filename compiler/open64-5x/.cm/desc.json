@@ -1,0 +1,699 @@
+{
+  "all_compiler_flags_desc": {
+    "##CGcflowon": {
+      "can_omit": "yes", 
+      "choice": [
+        "-CG:cflow=on", 
+        "-CG:cflow=off"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -CG:cflow=on", 
+      "sort": 12200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##CGgcmon": {
+      "can_omit": "yes", 
+      "choice": [
+        "-CG:gcm=on", 
+        "-CG:gcm=off"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -CG:gcm=on", 
+      "sort": 12300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##CGload_exe": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -CG:load_exe=", 
+      "explore_prefix": "-CG:load_exe=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 2, 
+      "sort": 10100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##CGlocal_fwd_schedon": {
+      "can_omit": "yes", 
+      "choice": [
+        "-CG:local_fwd_sched=on", 
+        "-CG:local_fwd_sched=off"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -CG:local_fwd_sched=on", 
+      "sort": 12400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##CGmovnti0": {
+      "can_omit": "yes", 
+      "choice": [
+        "-CG:movnti=0", 
+        "-CG:movnti=1"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -CG:movnti=0", 
+      "sort": 12500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##CGp2align_freq": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -CG:p2align_freq=", 
+      "explore_prefix": "-CG:p2align_freq=", 
+      "explore_start": 1, 
+      "explore_step": 1, 
+      "explore_stop": 1000000, 
+      "sort": 11300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##CGp2alignon": {
+      "can_omit": "yes", 
+      "choice": [
+        "-CG:p2align=on", 
+        "-CG:p2align=off"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -CG:p2align=on", 
+      "sort": 12600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##CGprefetchon": {
+      "can_omit": "yes", 
+      "choice": [
+        "-CG:prefetch=on", 
+        "-CG:prefetch=off"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -CG:prefetch=on", 
+      "sort": 12700, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##CGuse_movlpdon": {
+      "can_omit": "yes", 
+      "choice": [
+        "-CG:use_movlpd=on", 
+        "-CG:use_movlpd=off"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -CG:use_movlpd=on", 
+      "sort": 12800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##CGuse_prefetchntaon": {
+      "can_omit": "yes", 
+      "choice": [
+        "-CG:use_prefetchnta=on", 
+        "-CG:use_prefetchnta=off"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -CG:use_prefetchnta=on", 
+      "sort": 12900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##CGuse_teston": {
+      "can_omit": "yes", 
+      "choice": [
+        "-CG:use_test=on", 
+        "-CG:use_test=off"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -CG:use_test=on", 
+      "sort": 13000, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##GRAhomeon": {
+      "can_omit": "yes", 
+      "choice": [
+        "-GRA:home=on", 
+        "-GRA:home=off"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -GRA:home=on", 
+      "sort": 13100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##GRAoptimize_boundaryon": {
+      "can_omit": "yes", 
+      "choice": [
+        "-GRA:optimize_boundary=on", 
+        "-GRA:optimize_boundary=off"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -GRA:optimize_boundary=on", 
+      "sort": 13200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##INLINEaggressiveon": {
+      "can_omit": "yes", 
+      "choice": [
+        "-INLINE:aggressive=on", 
+        "-INLINE:aggressive=off"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -INLINE:aggressive=on", 
+      "sort": 13300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##LNOblocking_size": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -LNO:blocking_size=", 
+      "explore_prefix": "-LNO:blocking_size=", 
+      "explore_start": 2, 
+      "explore_step": 1, 
+      "explore_stop": 256, 
+      "sort": 11800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##LNOblockingon": {
+      "can_omit": "yes", 
+      "choice": [
+        "-LNO:blocking=on", 
+        "-LNO:blocking=off"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -LNO:blocking=on", 
+      "sort": 13400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##LNObuild_scalar_reductionson": {
+      "can_omit": "yes", 
+      "choice": [
+        "-LNO:build_scalar_reductions=on", 
+        "-LNO:build_scalar_reductions=off"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -LNO:build_scalar_reductions=on", 
+      "sort": 13500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##LNOcseon": {
+      "can_omit": "yes", 
+      "choice": [
+        "-LNO:cse=on", 
+        "-LNO:cse=off"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -LNO:cse=on", 
+      "sort": 13600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##LNOfission": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -LNO:fission=", 
+      "explore_prefix": "-LNO:fission=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 2, 
+      "sort": 10200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##LNOfull_unroll": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -LNO:full_unroll=", 
+      "explore_prefix": "-LNO:full_unroll=", 
+      "explore_start": 1, 
+      "explore_step": 1, 
+      "explore_stop": 16, 
+      "sort": 11500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##LNOfusion": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -LNO:fusion=", 
+      "explore_prefix": "-LNO:fusion=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 2, 
+      "sort": 10300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##LNOignore_feedbackon": {
+      "can_omit": "yes", 
+      "choice": [
+        "-LNO:ignore_feedback=on", 
+        "-LNO:ignore_feedback=off"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -LNO:ignore_feedback=on", 
+      "sort": 13700, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##LNOinterchangeon": {
+      "can_omit": "yes", 
+      "choice": [
+        "-LNO:interchange=on", 
+        "-LNO:interchange=off"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -LNO:interchange=on", 
+      "sort": 13800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##LNOminvarianton": {
+      "can_omit": "yes", 
+      "choice": [
+        "-LNO:minvariant=on", 
+        "-LNO:minvariant=off"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -LNO:minvariant=on", 
+      "sort": 13900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##LNOopt": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -LNO:opt=", 
+      "explore_prefix": "-LNO:opt=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 1, 
+      "sort": 10900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##LNOou": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -LNO:ou=", 
+      "explore_prefix": "-LNO:ou=", 
+      "explore_start": 1, 
+      "explore_step": 1, 
+      "explore_stop": 16, 
+      "sort": 11600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##LNOprefetch": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -LNO:prefetch=", 
+      "explore_prefix": "-LNO:prefetch=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 3, 
+      "sort": 11000, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##LNOprefetch_ahead": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -LNO:prefetch_ahead=", 
+      "explore_prefix": "-LNO:prefetch_ahead=", 
+      "explore_start": 1, 
+      "explore_step": 1, 
+      "explore_stop": 50, 
+      "sort": 11400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##LNOsclrzeon": {
+      "can_omit": "yes", 
+      "choice": [
+        "-LNO:sclrze=on", 
+        "-LNO:sclrze=off"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -LNO:sclrze=on", 
+      "sort": 14000, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##LNOsimd": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -LNO:simd=", 
+      "explore_prefix": "-LNO:simd=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 2, 
+      "sort": 10400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##LNOvintr": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -LNO:vintr=", 
+      "explore_prefix": "-LNO:vintr=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 2, 
+      "sort": 10500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##OPTOfast": {
+      "can_omit": "yes", 
+      "choice": [
+        "-OPT:Ofast", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -OPT:Ofast", 
+      "sort": 12100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##OPTunroll_analysison": {
+      "can_omit": "yes", 
+      "choice": [
+        "-OPT:unroll_analysis=on", 
+        "-OPT:unroll_analysis=off"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -OPT:unroll_analysis=on", 
+      "sort": 14100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##OPTunroll_size": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -OPT:unroll_size=", 
+      "explore_prefix": "-OPT:unroll_size=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 512, 
+      "sort": 11100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##OPTunroll_times_max": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -OPT:unroll_times_max=", 
+      "explore_prefix": "-OPT:unroll_times_max=", 
+      "explore_start": 1, 
+      "explore_step": 1, 
+      "explore_stop": 16, 
+      "sort": 11700, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##WOPTaggstr": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -WOPT:aggstr=", 
+      "explore_prefix": "-WOPT:aggstr=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 8, 
+      "sort": 11200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##WOPTif_conv": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -WOPT:if_conv=", 
+      "explore_prefix": "-WOPT:if_conv=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 2, 
+      "sort": 10600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##WOPTmem_opndson": {
+      "can_omit": "yes", 
+      "choice": [
+        "-WOPT:mem_opnds=on", 
+        "-WOPT:mem_opnds=off"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -WOPT:mem_opnds=on", 
+      "sort": 14200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##WOPTprop_dopeon": {
+      "can_omit": "yes", 
+      "choice": [
+        "-WOPT:prop_dope=on", 
+        "-WOPT:prop_dope=off"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -WOPT:prop_dope=on", 
+      "sort": 14300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##WOPTretype_expron": {
+      "can_omit": "yes", 
+      "choice": [
+        "-WOPT:retype_expr=on", 
+        "-WOPT:retype_expr=off"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -WOPT:retype_expr=on", 
+      "sort": 14400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##WOPTunroll": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -WOPT:unroll=", 
+      "explore_prefix": "-WOPT:unroll=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 2, 
+      "sort": 10700, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##WOPTval": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -WOPT:val=", 
+      "explore_prefix": "-WOPT:val=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 2, 
+      "sort": 10800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##base_opt": {
+      "choice": [
+        "-O3", 
+        "-Ofast", 
+        "-O0", 
+        "-O1", 
+        "-O2", 
+        "-Os"
+      ], 
+      "default": "", 
+      "desc": "base compiler flag", 
+      "sort": 10000, 
+      "tags": [
+        "base", 
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##m32": {
+      "can_omit": "yes", 
+      "choice": [
+        "-m32", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -m32", 
+      "sort": 11900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##m3dnow": {
+      "can_omit": "yes", 
+      "choice": [
+        "-m3dnow", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -m3dnow", 
+      "sort": 12000, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##openmp": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fopenmp", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: openmp", 
+      "sort": 10001, 
+      "tags": [
+        "basic", 
+        "openmp", 
+        "optimization"
+      ], 
+      "type": "text"
+    }
+  }
+}
