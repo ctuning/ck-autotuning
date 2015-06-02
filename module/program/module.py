@@ -1929,6 +1929,7 @@ def pipeline(i):
     muoa=work['self_module_uid']
 
     meta=ck.get_from_dicts(i, 'program_meta', {}, choices) # program meta if needed
+    desc=ck.get_from_dicts(i, 'program_desc', {}, choices) # program desc if needed
 
     srn=ck.get_from_dicts(i, 'statistical_repetition_number', '', choices)
     if srn=='': srn=0
@@ -2099,12 +2100,14 @@ def pipeline(i):
                            'repo_uoa':xruoa})
              if rx['return']>0: return rx
              xmeta=rx['dict']
+             xdesc=rx.get('disc',{})
 
              if xmeta.get('program','')=='yes':
                 duoa=xduoa
                 muoa=xmuoa
                 ruoa=xruoa
                 meta=xmeta
+                desc=xdesc
 
           if duoa=='':
              # Attempt to load configuration from the current directory
@@ -2115,6 +2118,12 @@ def pipeline(i):
                    xmeta=r['dict']
                    if xmeta.get('program','')=='yes':
                       meta=xmeta
+
+             px=os.path.join(state['cur_dir'], ck.cfg['subdir_ck_ext'], ck.cfg['file_desc'])
+             if os.path.isfile(px):
+                r=ck.load_json_file({'json_file':px})
+                if r['return']==0:
+                   xdesc=r['dict']
 
     # Second, if duoa is not detected ordefined, prepare selection 
     duid=''
@@ -2157,6 +2166,8 @@ def pipeline(i):
        if rx['return']>0: return rx
        if len(meta)==0: 
           meta=rx['dict']
+       if len(desc)==0:
+          desc=rx.get('desc',{})
 
        pdir=rx['path']
        duid=rx['data_uid']
@@ -2175,7 +2186,10 @@ def pipeline(i):
 
     if pdir=='': pdir=state['cur_dir']
 
-    if duid=='': i['program_meta']=meta # Write program meta only if no program UID, otherwise can restore from program entry
+    if duid=='': 
+        # Write program meta and desc only if no program UID, otherwise can restore from program entry
+       i['program_meta']=meta
+       i['program_desc']=desc
 
     if duid=='' and meta.get('backup_data_uid','')!='': duid=meta['backup_data_uid']
 
@@ -2444,7 +2458,7 @@ def pipeline(i):
 
     ###############################################################################################################
     # PIPELINE SECTION: get compiler vars choices (-Dvar=value) - often for datasets such as in polyhedral benchmarks
-    bcvd=meta.get('build_compiler_vars_desc',{})
+    bcvd=desc.get('build_compiler_vars_desc',{})
     for q in bcvd:
         qq=bcvd[q]
         q1=q
@@ -2456,7 +2470,7 @@ def pipeline(i):
 
     ###############################################################################################################
     # PIPELINE SECTION: get run vars (preset environment)
-    rv=meta.get('run_vars_desc',{})
+    rv=desc.get('run_vars_desc',{})
     for q in rv:
         qq=rv[q]
         q1=q
