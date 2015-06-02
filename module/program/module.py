@@ -924,7 +924,7 @@ def process_in_dir(i):
                 ck.out('')
 
              sb+='\n'
-             sb+=scall+' '+sspm2+'\n'
+#xyz             sb+=scall+' '+sspm2+'\n'
              sb+='\n'
 
           # Record to tmp batch and run
@@ -1387,7 +1387,7 @@ def process_in_dir(i):
              ck.out('')
 
           sb+='\n'
-          sb+=scall+' '+sspm2+'\n'
+#xyz          sb+=scall+' '+sspm2+'\n'
           sb+='\n'
 
        fn=''
