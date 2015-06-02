@@ -30,6 +30,3 @@ do
       echo "  ${CV} volts; ${CI} ampers; ${CW} watts"
    fi
 done
-
-# sleep a bit to be sure that all sensors are initialized
-sleep 2
