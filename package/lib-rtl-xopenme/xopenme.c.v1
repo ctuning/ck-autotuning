@@ -27,8 +27,6 @@
 
 */
 
-#include "xopenme.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -43,6 +41,8 @@
 # endif
 #endif
 
+#define XOPENME_DEBUG "XOPENME_DEBUG"
+
 static char* ck_time_file="tmp-ck-timer.json";
 
 #ifdef WINDOWS
@@ -55,20 +55,14 @@ static char* ck_time_file="tmp-ck-timer.json";
  static MYTIMER2 *before, after;
 #endif
 
-static int nntimers=0;
 static double *secs;
-
-static int nnvars=0;
-static char **vars;
-
-static int nnfiles=0; /* Reading from file such as energy or frequency */
-static char **files;
-static double *fvars1;
-static double *fvars2;
 
 static char *env;
 
-static char buf[128]; /* tmp buffer */
+static char **vars;
+
+static int nntimers=0;
+static int nnvars=0;
 
 /*****************************************************************/
 extern 
@@ -79,10 +73,6 @@ void xopenme_init(int ntimers, int nvars)
 {
   int timer;
   int var;
-  int k=0;
-  int k1=0;
-  int kl=0;
-  int nf=0;
 
   if ( ((env = getenv(XOPENME_DEBUG)) != NULL) && (atoi(env)==1) )
     printf("XOPENME event: start program\n");
@@ -118,73 +108,6 @@ void xopenme_init(int ntimers, int nvars)
       vars[var][0]=0;
     }
   }
-
-  /* init files */
-  env = getenv(XOPENME_FILES);
-  if (env!=NULL)
-  {
-    kl=strlen(env);
-    if (kl>0)
-    {
-      nnfiles++;
-      for (k=0; k<strlen(env); k++)
-      {
-        if (env[k]==';') nnfiles++;
-      }
-    }
-  }
-
-  files=malloc((nnfiles+1)*sizeof(char*)); 
-  fvars1=malloc((nnfiles+1)*sizeof(double)); 
-  fvars2=malloc((nnfiles+1)*sizeof(double)); 
-
-  if (nnfiles>0)
-  {
-     k=0;
-     k1=0;
-     nf=0;
-
-     while (k1<kl)
-     {
-       k1++;
-       if (k1>=kl || env[k1]==';' )
-       {
-         files[nf]=(char*) malloc((k1-k+1)*sizeof(char));
-
-         strncpy(files[nf],&env[k],k1-k);
-         files[nf][k1-k]=0;
-
-         fvars1[nf]=0.0;
-         fvars2[nf]=0.0;
-
-         nf++;
-         k=k1+1;
-       }
-     }
-   }
-}
-
-void read_files(double *fvars)
-{
-  int nf=0;
-  FILE *f=NULL;
-
-  /* Read files */
-  if (nnfiles>0)
-  {
-    for (nf=0; nf<nnfiles; nf++)
-    {
-      f=fopen(files[nf], "r");
-      if (f!=NULL)
-      {
-        if (fgets(buf, 32, f)!=NULL)
-           fvars[nf]=atof(buf);
-        else
-           fvars[nf]=0,0;
-        fclose(f);
-      }
-    }
-  }
 }
 
 /*****************************************************************/
@@ -206,7 +129,6 @@ void xopenme_clock_start(int timer)
   if ( ((env = getenv(XOPENME_DEBUG)) != NULL) && (atoi(env)==1) )
     printf("XOpenME event: start clock\n");
 
-  read_files(fvars1);
 }
 
 /*****************************************************************/
@@ -228,8 +150,6 @@ void xopenme_clock_end(int timer)
 #endif
   if ( ((env = getenv(XOPENME_DEBUG)) != NULL) && (atoi(env)==1) )
     printf("XOpenME event: stop clock: %f\n", secs[timer]);
-
-  read_files(fvars2);
 }
 
 /*****************************************************************/
@@ -298,6 +218,8 @@ void xopenme_dump_state(void)
   if ( ((env = getenv(XOPENME_DEBUG)) != NULL) && (atoi(env)==1) )
     printf("XOPENME event: dumping state\n");
 
+  printf("Stop program\n");
+
   f=fopen(ck_time_file, "w");
   if (f==NULL)
   {
@@ -309,17 +231,18 @@ void xopenme_dump_state(void)
 
   if (nntimers>0) 
   {
-     fprintf(f," \"execution_time\":%.6lf", secs[0]);
+     fprintf(f," \"execution_time\":%.6lf,\n", secs[0]);
      for (timer=0; timer<nntimers; timer++) 
      {
-       fprintf(f,",\n \"execution_time_kernel_%u\":%.6lf", timer, secs[timer]);
+       fprintf(f," \"execution_time_kernel_%u\":%.6lf", timer, secs[timer]);
+       if (timer!=(nntimers-1) || (nnvars!=0)) fprintf(f, ",");
+       fprintf(f, "\n");
      }
   }
 
   if (nnvars>0)
   {
-    fprintf(f,",\n \"run_time_state\":{\n");
-
+    fprintf(f," \"run_time_state\":{\n");
     for (var=0; var<nnvars; var++) 
     {
       if ((vars[var][0]!=0))
@@ -328,19 +251,10 @@ void xopenme_dump_state(void)
          fprintf(f,"  %s", vars[var]);
       }
     }
-
-    for (var=0; var<nnfiles; var++) 
-    {
-      if (nnvars>0 || var!=0) fprintf(f, ",\n");
-      fprintf(f,"    \"file_%u_start\":%f", var, fvars1[var]);
-      fprintf(f,",\n    \"file_%u_stop\":%f", var, fvars2[var]);
-      fprintf(f,",\n    \"file_%u_diff\":%f", var, fvars2[var]-fvars1[var]);
-    }
-
-    fprintf(f,"\n }");
+    fprintf(f,"\n }\n");
   }
 
-  fprintf(f,"\n}\n");
+  fprintf(f,"}\n");
 
   fclose(f);
 }
@@ -371,16 +285,5 @@ void xopenme_finish(void)
 #ifdef MYTIMER2
     free(before);
 #endif
-  }
-
-  if (nnfiles>0)
-  {
-    for (var=0; var<nnfiles; var++)
-    {
-      free(files[var]);
-    }
-
-    free(fvars1);
-    free(fvars2);
   }
 }

@@ -29,6 +29,9 @@
 #ifndef __XOPENME_H_
 #define __XOPENME_H_
 
+#define XOPENME_DEBUG "XOPENME_DEBUG"
+#define XOPENME_FILES "XOPENME_FILES"
+
 /*************************************/
 #ifdef __cplusplus
 extern "C"
