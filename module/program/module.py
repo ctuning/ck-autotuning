@@ -232,6 +232,12 @@ def process_in_dir(i):
                                         (useful for remove devices during statistical repetition)
 
               (monitor_energy)       - if 'yes', start energy monitoring (if supported) using script ck-set-power-sensors
+                                       Also, set compiler var CK_MONITOR_ENERGY=1 and run-time var CK_MONITOR_ENERGY=1
+
+                                       Note: files, monitored for energy, are defined in system environment.
+                                             For example, odroid .profile as:
+                                               export CK_ENERGY_FILES="/sys/bus/i2c/drivers/INA231/3-0040/sensor_W;/sys/bus/i2c/drivers/INA231/3-0041/sensor_W;/sys/bus/i2c/drivers/INA231/3-0044/sensor_W;/sys/bus/i2c/drivers/INA231/3-0045/sensor_W;"
+
 
               (statistical_repetition) - int number of current (outside) statistical repetition
                                          to avoid pushing data to remote device if !=0 ...
@@ -772,6 +778,10 @@ def process_in_dir(i):
           bcv=meta.get('build_compiler_vars',{})
           bcv.update(cv)
 
+          # Update env if energy meter
+          if me=='yes':
+             bcv['CK_MONITOR_ENERGY']='1'
+
           if o=='con' and len(bcv)>0:
              ck.out(sep)
              ck.out('Compiler vars:')
@@ -1037,6 +1047,11 @@ def process_in_dir(i):
           else:
              repeat=int(env1.get('CT_REPEAT_MAIN','1'))
              env['CT_REPEAT_MAIN']='$#repeat#$' # find later
+
+       # Update env if energy meter
+       if me=='yes':
+          env['CK_MONITOR_ENERGY']='1'
+          env['XOPENME_FILES']=svarb+svarb1+'CK_ENERGY_FILES'+svare1+svare
 
        # Check cmd key
        run_cmds=meta.get('run_cmds',{})
