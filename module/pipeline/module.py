@@ -228,6 +228,16 @@ def autotune(i):
     puoa=i.get('data_uoa','')
     puid=''
     if puoa=='':
+       # Try to get from current CID (as module!)
+       r=ck.cid({})
+       if r['return']==0:
+          xruoa=r.get('repo_uoa','')
+          xmuoa=r.get('module_uoa','')
+          xduoa=r.get('data_uoa','')
+
+          puoa=xmuoa
+
+    if puoa=='':
        return {'return':1, 'error':'data_uoa is not set, i.e. no pipeline module'}
 
     # Check that data_uoa is module that exists
