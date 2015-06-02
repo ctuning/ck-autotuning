@@ -1774,12 +1774,12 @@ def pipeline(i):
               (repeat_compilation)   - if 'yes', force compilation, even if "statistical_repetition_number">0
               (no_state_check)       - do not check system/CPU state (frequency) over iterations ...
 
-              (set_cpu_freq)         - set CPU frequency, if supported (using SUDO, if also supported) 
+              (cpu_freq)             - set CPU frequency, if supported (using SUDO, if also supported) 
                                          using script ck-set-cpu-online-and-frequency
                                        if "max" - try to set to maximum using script ck-set-cpu-performance
                                        if "min" - try to set to minimum using scrupt ck-set-cpu-powersave
 
-              (set_gpu_freq)         - set GPU frequency, if supported (using SUDO, if also supported) 
+              (gpu_freq)             - set GPU frequency, if supported (using SUDO, if also supported) 
                                          using script ck-set-gpu-online-and-frequency
                                        if "max" - try to set to maximum using script ck-set-gpu-performance
                                        if "min" - try to set to minimum using scrupt ck-set-gpu-powersave
@@ -1886,8 +1886,8 @@ def pipeline(i):
     dduoa=ck.get_from_dicts(i, 'dataset_uoa', '', choices)
     druoa=ck.get_from_dicts(i, 'dataset_repo_uoa', '', None)
 
-    scpuf=ck.get_from_dicts(i, 'set_cpu_freq', 'max', choices)
-    sgpuf=ck.get_from_dicts(i, 'set_gpu_freq', 'max', choices)
+    scpuf=ck.get_from_dicts(i, 'cpu_freq', 'max', choices)
+    sgpuf=ck.get_from_dicts(i, 'gpu_freq', 'max', choices)
     sme=ck.get_from_dicts(i, 'monitor_energy', '', choices)
 
     pdir=ck.get_from_dicts(i, 'program_dir', '', None) # Do not save, otherwise can't reproduce by other people
@@ -1982,6 +1982,11 @@ def pipeline(i):
 
     if tos=='':
        return {'return':1, 'error':'target_os is not defined'}
+
+    svarb=hosd.get('env_var_start','')
+    svarb1=hosd.get('env_var_extra1','')
+    svare=hosd.get('env_var_stop','')
+    svare1=hosd.get('env_var_extra2','')
 
     # check sudo
     sudo_init=tosd.get('sudo_init','')
@@ -2093,7 +2098,20 @@ def pipeline(i):
        if rx['return']>0: return rx
        if len(meta)==0: 
           meta=rx['dict']
+
        pdir=rx['path']
+
+       # Check if base_uoa suggests to use another program path
+       buoa=meta.get('base_uoa','')
+       if buoa!='':
+          rx=ck.access({'action':'find',
+                        'module_uoa':muoa,
+                        'data_uoa':buoa})
+          if rx['return']>0:
+             return {'return':1, 'error':'problem finding base entry '+buoa+' ('+rx['error']+')'}
+
+          pdir=rx['path']
+
        duid=rx['data_uid']
        duoa=rx['data_uoa']
 
