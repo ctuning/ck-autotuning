@@ -2479,12 +2479,12 @@ def pipeline(i):
     if scpuf!='':
        if o=='con':
           ck.out(sep)
-          ck.out('Setting CPU frequency to '+str(scpuf)+' (if supported) ...')
+          ck.out('Setting GPU frequency to '+str(sgpuf)+' (if supported) ...')
           ck.out('')
 
        ii={'action':'set_freq',
            'module_uoa':cfg['module_deps']['platform.accelerator'],
-           'value':scpuf,
+           'value':sgpuf,
            'host_os':hos,
            'target_os':tos,
            'device_id':tdid,
