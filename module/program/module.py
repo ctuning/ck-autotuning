@@ -231,7 +231,7 @@ def process_in_dir(i):
               (pull_only_timer_files) - if 'yes', pull only timer files, but not output files 
                                         (useful for remove devices during statistical repetition)
 
-              (monitor_energy)       - if 'yes', start energy monitoring (if supported) using script ck-set-power-sensors
+              (energy)                - if 'yes', start energy monitoring (if supported) using script ck-set-power-sensors
                                        Also, set compiler var CK_MONITOR_ENERGY=1 and run-time var CK_MONITOR_ENERGY=1
 
                                        Note: files, monitored for energy, are defined in system environment.
@@ -301,7 +301,7 @@ def process_in_dir(i):
     if xrepeat=='': xrepeat='-1'
     repeat=int(xrepeat)
 
-    me=i.get('monitor_energy','')
+    me=i.get('energy','')
 
     # Check host/target OS/CPU
     hos=i.get('host_os','')
@@ -1843,7 +1843,7 @@ def pipeline(i):
                                        if "max" - try to set to maximum using script ck-set-gpu-performance
                                        if "min" - try to set to minimum using scrupt ck-set-gpu-powersave
 
-              (monitor_energy)       - if 'yes', start energy monitoring (if supported) using script ck-set-power-sensors
+              (energy)               - if 'yes', start energy monitoring (if supported) using script ck-set-power-sensors
 
               (dependencies)         - compilation dependencies
 
@@ -1947,7 +1947,7 @@ def pipeline(i):
 
     scpuf=ck.get_from_dicts(i, 'cpu_freq', 'max', choices)
     sgpuf=ck.get_from_dicts(i, 'gpu_freq', 'max', choices)
-    sme=ck.get_from_dicts(i, 'monitor_energy', '', choices)
+    sme=ck.get_from_dicts(i, 'energy', '', choices)
 
     pdir=ck.get_from_dicts(i, 'program_dir', '', None) # Do not save, otherwise can't reproduce by other people
     if pdir!='': os.chdir(pdir)
@@ -2763,7 +2763,7 @@ def pipeline(i):
            'skip_clean_after':sca,
            'compile_type':ctype,
            'sudo':isd,
-           'monitor_energy':sme,
+           'energy':sme,
            'flags':flags,
            'lflags':lflags,
            'repeat':repeat,
