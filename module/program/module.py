@@ -2445,9 +2445,10 @@ def pipeline(i):
                      'data_uoa':cdu})
        if rx['return']>0: return rx
        rxd=rx['dict']
+       rxdd=rx.get('desc',{})
 
        if len(cflags_desc)==0:
-          cflags_desc=rxd.get('all_compiler_flags_desc',{})
+          cflags_desc=rxdd.get('all_compiler_flags_desc',{})
 
           for q in cflags_desc:
               qq=cflags_desc[q]

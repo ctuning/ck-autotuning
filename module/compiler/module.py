@@ -97,8 +97,9 @@ def extract_to_pipeline(i):
                   'data_uoa':duoa})
     if rx['return']>0: return rx
     d=rx['dict']
+    dsc=rx.get('desc',{})
     
-    dx=d.get('all_compiler_flags_desc',{})
+    dx=dsc.get('all_compiler_flags_desc',{})
    
     # Update pipeline
     ck.out('')
