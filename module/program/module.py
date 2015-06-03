@@ -2753,7 +2753,7 @@ def pipeline(i):
           ck.out('Cleaning working directory ...')
           ck.out('')
 
-       if meta.get('no_compile','')!='yes' no_compile!='yes':
+       if meta.get('no_compile','')!='yes' and no_compile!='yes':
           ii={'sub_action':'compile',
               'host_os':hos,
               'target_os':tos,
