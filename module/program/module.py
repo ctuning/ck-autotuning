@@ -1993,6 +1993,7 @@ def pipeline(i):
     no_compile=ck.get_from_dicts(i, 'no_compile', '', choices)
     compile_only_once=ck.get_from_dicts(i, 'compile_only_once', '', choices)
     no_run=ck.get_from_dicts(i, 'no_run', '', choices)
+    no_state_check=ck.get_from_dicts(i, 'no_state_check', '', choices)
 
     env=ck.get_from_dicts(i,'env',{},choices)
     eenv=ck.get_from_dicts(i, 'extra_env','',choices)
