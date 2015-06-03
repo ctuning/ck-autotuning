@@ -1406,6 +1406,8 @@ def process_in_dir(i):
        if ee!='':
           sb+='\n'+no+ee+'\n\n'
 
+       sb+='\necho executing\n'
+
        if remote!='yes' and cons!='yes':
           if rco1!='': c+=' '+stro+' '+rco1
           if rco2!='': c+=' '+stre+' '+rco2
