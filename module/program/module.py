@@ -2670,7 +2670,7 @@ def pipeline(i):
            'device_id':tdid,
            'skip_device_init':sdi,
            'skip_info_collection':sic,
-           'out':ox}
+           'out':''} # skip here since it's second time ...
        r=ck.access(ii)
        if r['return']==0:
           xft=r.get('features',{})
