@@ -1787,6 +1787,8 @@ def pipeline(i):
 
                  Pipeline sections' settings:
 
+
+
               (no_platform_features) - if 'yes', do not collect full platform features
               (no_dataset_features)  - if 'yes', do not search and extract data set features
               (no_clean)             - if 'yes', do not clean directory before compile/run
@@ -1796,6 +1798,9 @@ def pipeline(i):
               (no_run)               - if 'yes', do not run program
                                           useful when using autotuning to find bugs in compiler, 
                                           or find differently generated code sequencies, etc ...
+              (no_state_check)       - do not check system/CPU state (frequency) over iterations ...
+
+
 
               (generate_rnd_tmp_dir) - if 'yes', compile and run program in randomly generated temporal dir
                       or
@@ -1853,7 +1858,6 @@ def pipeline(i):
                                                 (for example, may be used to skip compilation, if >0)
 
               (repeat_compilation)   - if 'yes', force compilation, even if "statistical_repetition_number">0
-              (no_state_check)       - do not check system/CPU state (frequency) over iterations ...
 
               (cpu_freq)             - set CPU frequency, if supported (using SUDO, if also supported) 
                                          using script ck-set-cpu-online-and-frequency
