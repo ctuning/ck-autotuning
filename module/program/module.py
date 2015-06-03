@@ -1,4 +1,4 @@
-#
+# 
 # Collective Knowledge (program)
 #
 # See CK LICENSE.txt for licensing details
@@ -204,6 +204,9 @@ def process_in_dir(i):
 
               (sudo)                 - if 'yes', force using sudo 
                                        (otherwise, can use ${CK_SUDO_INIT}, ${CK_SUDO_PRE}, ${CK_SUDO_POST})
+
+              (affinity)             - set processor affinity for tihs program run (if supported by OS - see "affinity" in OS)
+                                       examples: 0 ; 0,1 ; 0-3 ; 4-7  (the last two can be useful for ARM big.LITTLE arhictecture
 
               (clean)                - if 'yes', clean tmp directory before using
               (skip_clean_after)     - if 'yes', do not remove run batch
@@ -438,6 +441,12 @@ def process_in_dir(i):
     # Check if compile in tmp dir
     cdir=p
     os.chdir(cdir)
+
+    ########################################################################
+    # Check affinity
+    aff=i.get('affinity','')
+    if aff!='':
+       aff=tosd.get('set_affinity','').replace('$#ck_affinity#$',aff)
 
     ########################################################################
     # Check sudo
@@ -1153,6 +1162,10 @@ def process_in_dir(i):
        if meta.get('skip_add_prefix_for_target_file','')!='yes':
           te=stbp+te
 
+       # Check if affinity
+       if aff!='':
+          te=aff+' '+te
+
        c=c.replace('$#BIN_FILE#$', te)
        c=c.replace('$#os_dir_separator#$', stdirs)
        c=c.replace('$#src_path#$', src_path)
@@ -1822,6 +1835,9 @@ def pipeline(i):
               (sudo)                 - if 'yes', force using sudo 
                                        (otherwise, can use ${CK_SUDO_INIT}, ${CK_SUDO_PRE}, ${CK_SUDO_POST})
 
+              (affinity)             - set processor affinity for tihs program run (if supported by OS - see "affinity" in OS)
+                                       examples: 0 ; 0,1 ; 0-3 ; 4-7  (the last two can be useful for ARM big.LITTLE arhictecture
+
               (repeat)               - repeat kernel via environment CT_REPEAT_MAIN if supported
               (skip_calibration)     - if 'yes', skip execution time calibration (make it around 4.0 sec)
               (calibration_time)     - calibration time in string, 4.0 sec. by default
@@ -1972,6 +1988,8 @@ def pipeline(i):
     rsc=ck.get_from_dicts(i, 'skip_calibration','', choices)
     rct=ck.get_from_dicts(i, 'calibration_time','',choices)
     rcm=ck.get_from_dicts(i, 'calibration_max','',choices)
+
+    aff=ck.get_from_dicts(i, 'affinity', '', choices)
 
     cons=ck.get_from_dicts(i, 'console','',choices)
 
@@ -2779,6 +2797,7 @@ def pipeline(i):
            'compile_type':ctype,
            'sudo':isd,
            'energy':sme,
+           'affinity':aff,
            'flags':flags,
            'lflags':lflags,
            'repeat':repeat,
