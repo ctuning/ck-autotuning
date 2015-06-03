@@ -1829,7 +1829,6 @@ def pipeline(i):
 
               (autotuning_iteration) - (int) current autotuning iteration (automatically updated during pipeline tuning)
 
-              (no_compile)           - if 'yes', skip compilation
 
               (env)                  - preset environment
               (extra_env)            - extra environment as string
@@ -2376,7 +2375,7 @@ def pipeline(i):
           ck.out('Detecting compiler version ...')
           ck.out('')
 
-       if meta.get('no_compile','')!='yes':
+       if i.get('no_compile','')!='yes':
           ii={'sub_action':'get_compiler_version',
               'host_os':hos,
               'target_os':tos,
