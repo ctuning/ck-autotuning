@@ -92,6 +92,8 @@ def make(i):
            ccur.append(cy)
 
     update=False
+    nupdate=False # if force update next
+
     for cx in range(cd-1,-1,-1):
         cc=corder[cx]
         dc=ccur[cx]
@@ -127,8 +129,10 @@ def make(i):
 
         ci=t.get('cur_iter','')
         if ci=='': ci=-1
-        
-        if cx==(cd-1) or update or ci==-1:
+
+        if cx==(cd-1) or update or nupdate or ci==-1:
+           nupdate=False
+
            ci+=1
 
            if ti!='' and ci>=ti:
@@ -190,7 +194,7 @@ def make(i):
 
                if ci!=0:
                   lcqx=len(yhc)
-                  if tp=='random':
+                  if tp=='random' or tp=='random-with-next':
                      omit=False
                      if yco=='yes':
                         x=my_random.randrange(0, 1000)
@@ -204,7 +208,10 @@ def make(i):
                         elif yestart!='':
                              y=my_random.randrange(0,rx)
                              dv=r1+(y*rs)
-                         
+
+                  if tp=='random-with-next':
+                     nupdate=True
+   
                   elif tp=='parallel-random': # Change all dimensions at the same time (if explorable)!
                        if yestart!='':
                           if dvsame=='':
@@ -247,7 +254,8 @@ def make(i):
                   # design and optimization speaces via external plugin
                   # See our work on Probabilistic Source-Level Optimisation of Embedded Programs (2005) and Collective Mind (2014)
                   elif tp=='machine-learning-based' or tp=='model-based' or tp=='adaptive' or tp=='plugin-based' or tp=='customized': 
-                       print 'TBD: need to add CK plugin ...'
+                       ck.out('TBD: need to add CK plugin ...')
+                       exit(1)
                          
 
 

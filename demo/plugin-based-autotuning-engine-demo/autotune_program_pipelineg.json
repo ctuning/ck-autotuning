@@ -1,0 +1,41 @@
+{
+  "pipeline": {
+    "ready": "yes", 
+    "cmd": "echo --cpu_freq=$#cpu_freq#$ --gpu_freq=$#gpu_freq#$"
+  }, 
+
+  "choices_order":[
+    [
+     "##cpu_freq"
+    ],
+    [
+     "##gpu_freq"
+    ],
+    [
+     "##compiler_vars#LWS_X"
+    ],
+    [
+     "##compiler_vars#LWS_Y"
+    ],
+    [
+     "##compiler_vars#LWS_Z"
+    ],
+    [
+     "##compiler_vars#BLOCK_SIZE"
+    ]
+  ],
+
+  "choices_selection": [
+    {"type":"random-with-next", "start":200000, "stop":2000000, "step":200000},
+    {"type":"random-with-next", "choice":[177,266,350,420,480,543,600], "default":177},
+    {"type":"random-with-next", "choice":[4,8,12,16], "default":4},
+    {"type":"random-with-next", "choice":[4,8,12,16], "default":4},
+    {"type":"random-with-next", "choice":[2,4,6,8,10,12,14,16], "default":2},
+    {"type":"random-with-next", "choice":[16,32,64], "default":16}
+  ],
+
+  "repetitions": 1, 
+  "infinite":"yes",
+  "seed": 12345, 
+  "iterations": 1000
+}
