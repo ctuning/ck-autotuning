@@ -56,15 +56,20 @@ def pipeline(i):
 
     cmd=i.get('cmd','')
 
+    cpu_freq=str(i.get('cpu_freq',''))
+    gpu_freq=str(i.get('gpu_freq',''))
+
     cv=i.get('compiler_vars',{})
     cf=i.get('compiler_flags',{})
 
-    if o=='out':
+    if o=='con':
        ck.out('')
        ck.out('         Pipeline started')
        ck.out('')
        ck.out('         Input "compiler_vars"  ='+json.dumps(cv))
-       ck.out('         Input "compiler_flags" ='+json.dumps(cf))
+       ck.out('         Input "compiler_vars"  ='+json.dumps(cv))
+       ck.out('         Input "cpu_freq"       ='+cpu_freq)
+       ck.out('         Input "gpu_freq"       ='+gpu_freq)
        ck.out('         Original CMD           ='+cmd)
        ck.out('')
 
@@ -77,6 +82,9 @@ def pipeline(i):
            cflags+=str(cc)
 
     cmd=cmd.replace('$#cflags#$', cflags)
+
+    cmd=cmd.replace('$#cpu_freq#$', cpu_freq)
+    cmd=cmd.replace('$#gpu_freq#$', gpu_freq)
 
     for q in cv:
         qq=cv[q]

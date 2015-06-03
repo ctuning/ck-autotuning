@@ -1,0 +1,27 @@
+{
+  "pipeline": {
+    "ready": "yes", 
+    "cmd": "echo --cpu_freq=$#cpu_freq#$ --gpu_freq=$#gpu_freq#$", 
+    "choices_desc": {
+      "##gpu_freq": {
+        "choice":[177,266,350,420,480,543,600],
+        "default":177
+      } 
+    }
+  }, 
+  "choices_order": [
+    [
+      "##cpu_freq"
+    ],
+    [
+      "##gpu_freq"
+    ]
+  ], 
+  "choices_selection": [
+    {"type":"loop", "start":200000, "stop":2000000, "step":200000},
+    {"type":"loop"}
+  ], 
+  "repetitions": 1, 
+  "seed": 12345, 
+  "iterations": 1000
+}

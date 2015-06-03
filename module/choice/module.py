@@ -107,6 +107,13 @@ def make(i):
         if top=='': top=0.0
         else: top=float(top)
 
+        # Take descriptions first directly from choices_selection.
+        # Later will be taken from choice_desc, if exists
+        zchoice=t.get('choice',[])
+        zprefix=t.get('explore_prefix','')
+        zdefault=t.get('default','')
+        zcanomit=t.get('can_omit','')
+
         zestart=t.get('start','')
         if cexp.get('start','')!='': zestart=cexp['start']
 
@@ -137,10 +144,20 @@ def make(i):
 
                qt=cdesc.get(cn,{})
 
-               yco=qt.get('can_omit','')
-               yhc=qt.get('choice',[])
-               yep=qt.get('explore_prefix','')
-               ytp=qt.get('type','')
+               if zcanomit!='': yco=zcanomit
+               else: yco=qt.get('can_omit','')
+
+               if len(zchoice)>0: yhc=zchoice
+               else: yhc=qt.get('choice',[])
+
+               if zprefix!='': yep=zprefix
+               else: yep=qt.get('explore_prefix','')
+
+               if tp!='': ytp=tp
+               else: ytp=qt.get('type','')
+
+               if zdefault!='': ydefault=zdefault
+               else: ydefault=qt.get('default','')
 
                dcc=dc[c]
                if yep!='' and dcc.startswith(yep):
@@ -165,7 +182,7 @@ def make(i):
 
                   rx=(r2-r1+1)/rs
 
-               dv=qt.get('default','')
+               dv=ydefault
 
                # If exploration, set first
                if yestart!='' and (tp=='parallel-loop' or tp=='loop'):
@@ -220,7 +237,7 @@ def make(i):
                                 dv=yhc[ln]
                                 xupdate=False
                              else:
-                                dv=''
+                                dv=ydefault
                                 if tp=='loop': xupdate=True
                                 else:
                                    ci=0
