@@ -2674,7 +2674,7 @@ def pipeline(i):
 
     ###############################################################################################################
     # PIPELINE SECTION: Check that system state didn't change (frequency)
-    if i.get('no_state_check','')!='yes':
+    if no_state_check!='yes':
        if o=='con': ck.out(sep)
 
        ii={'action':'detect',
