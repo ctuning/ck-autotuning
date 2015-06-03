@@ -1789,17 +1789,18 @@ def pipeline(i):
 
 
 
-              (no_platform_features) - if 'yes', do not collect full platform features
-              (no_dataset_features)  - if 'yes', do not search and extract data set features
-              (no_clean)             - if 'yes', do not clean directory before compile/run
-              (no_compile)           - if 'yes', do not compile program (useful when running the same program 
+              (no_platform_features)    - if 'yes', do not collect full platform features
+              (no_dataset_features)     - if 'yes', do not search and extract data set features
+              (no_clean)                - if 'yes', do not clean directory before compile/run
+              (no_compile)              - if 'yes', do not compile program (useful when running the same program 
                                            under different system state conditions: CPU/GPU freq, cache/bus contentions, etc)
+              (compile_only_once)       - if 'yes', compile only at first iteration
               (no_compiler_description) - if 'yes', do not search for most close compiler description with flags ...
-              (no_run)               - if 'yes', do not run program
-                                          useful when using autotuning to find bugs in compiler, 
-                                          or find differently generated code sequencies, etc ...
-              (no_state_check)       - do not check system/CPU state (frequency) over iterations ...
-
+              (no_run)                  - if 'yes', do not run program
+                                             useful when using autotuning to find bugs in compiler, 
+                                             or find differently generated code sequencies, etc ...
+              (no_state_check)          - do not check system/CPU state (frequency) over iterations ...
+              
 
 
               (generate_rnd_tmp_dir) - if 'yes', compile and run program in randomly generated temporal dir
@@ -1990,6 +1991,7 @@ def pipeline(i):
     lflags=ck.get_from_dicts(i, 'lflags', '', choices)
 
     no_compile=ck.get_from_dicts(i, 'no_compile', '', choices)
+    compile_only_once=ck.get_from_dicts(i, 'compile_only_once', '', choices)
     no_run=ck.get_from_dicts(i, 'no_run', '', choices)
 
     env=ck.get_from_dicts(i,'env',{},choices)
@@ -2736,7 +2738,9 @@ def pipeline(i):
     ###############################################################################################################
     # PIPELINE SECTION: Compile program
     cs='yes'
-    if i.get('fail','')!='yes' and no_compile!='yes' and (srn==0 or (srn>0 and i.get('repeat_compilation','')=='yes')):
+    if i.get('fail','')!='yes' and no_compile!='yes' and \
+       (compile_only_once!='yes' or ai==0) and \
+       (srn==0 or (srn>0 and i.get('repeat_compilation','')=='yes')):
        if o=='con':
           ck.out(sep)
           ck.out('Compile program ...')
@@ -2749,7 +2753,7 @@ def pipeline(i):
           ck.out('Cleaning working directory ...')
           ck.out('')
 
-       if meta.get('no_compile','')!='yes':
+       if meta.get('no_compile','')!='yes' no_compile!='yes':
           ii={'sub_action':'compile',
               'host_os':hos,
               'target_os':tos,
