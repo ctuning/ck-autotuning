@@ -1787,10 +1787,14 @@ def pipeline(i):
 
                  Pipeline sections' settings:
 
-              (no_platform_features) - do not collect full platform features
-              (no_clean)             - do not clean directory before compile/run
-              (no_compile)           - do not compile program
-              (no_run)               - do not run program
+              (no_platform_features) - if 'yes', do not collect full platform features
+              (no_dataset_features)  - if 'yes', do not search and extract data set features
+              (no_clean)             - if 'yes', do not clean directory before compile/run
+              (no_compile)           - if 'yes', do not compile program (useful when running the same program 
+                                           under different system state conditions: CPU/GPU freq, cache/bus contentions, etc)
+              (no_run)               - if 'yes', do not run program
+                                          useful when using autotuning to find bugs in compiler, 
+                                          or find differently generated code sequencies, etc ...
 
               (generate_rnd_tmp_dir) - if 'yes', compile and run program in randomly generated temporal dir
                       or
@@ -1979,6 +1983,9 @@ def pipeline(i):
 
     flags=ck.get_from_dicts(i, 'flags', '', choices)
     lflags=ck.get_from_dicts(i, 'lflags', '', choices)
+
+    no_compile=ck.get_from_dicts(i, 'no_compile', '', choices)
+    no_run=ck.get_from_dicts(i, 'no_run', '', choices)
 
     env=ck.get_from_dicts(i,'env',{},choices)
     eenv=ck.get_from_dicts(i, 'extra_env','',choices)
@@ -2375,7 +2382,7 @@ def pipeline(i):
           ck.out('Detecting compiler version ...')
           ck.out('')
 
-       if i.get('no_compile','')!='yes':
+       if no_compile!='yes':
           ii={'sub_action':'get_compiler_version',
               'host_os':hos,
               'target_os':tos,
@@ -2777,7 +2784,7 @@ def pipeline(i):
 
     ###############################################################################################################
     # PIPELINE SECTION: Run program
-    if i.get('fail','')!='yes' and cs!='no' and i.get('no_run','')!='yes':
+    if i.get('fail','')!='yes' and cs!='no' and no_run!='yes':
        if o=='con':
           ck.out(sep)
           ck.out('Running program ...')
@@ -2909,4 +2916,4 @@ def finalize_pipeline(i):
     i['return']=0
 
     return i
-
+                                                   
