@@ -1792,6 +1792,7 @@ def pipeline(i):
               (no_clean)             - if 'yes', do not clean directory before compile/run
               (no_compile)           - if 'yes', do not compile program (useful when running the same program 
                                            under different system state conditions: CPU/GPU freq, cache/bus contentions, etc)
+              (no_compiler_description) - if 'yes', do not search for most close compiler description with flags ...
               (no_run)               - if 'yes', do not run program
                                           useful when using autotuning to find bugs in compiler, 
                                           or find differently generated code sequencies, etc ...
@@ -2731,7 +2732,7 @@ def pipeline(i):
     ###############################################################################################################
     # PIPELINE SECTION: Compile program
     cs='yes'
-    if i.get('fail','')!='yes' and i.get('no_compile','')!='yes' and (srn==0 or (srn>0 and i.get('repeat_compilation','')=='yes')):
+    if i.get('fail','')!='yes' and no_compile!='yes' and (srn==0 or (srn>0 and i.get('repeat_compilation','')=='yes')):
        if o=='con':
           ck.out(sep)
           ck.out('Compile program ...')
