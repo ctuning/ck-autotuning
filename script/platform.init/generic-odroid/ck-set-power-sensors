@@ -17,12 +17,11 @@ if [ "$1" != "" ]; then
   state=$1
 fi
 
+echo ""
 for dr in /sys/bus/i2c/drivers/INA231/*
 do
    if [ -f "$dr/enable" ]; then
-      echo ""
       echo "Setting sensor $dr to state $state ..."
-
       echo $state | sudo tee $dr/enable
    fi
 done
