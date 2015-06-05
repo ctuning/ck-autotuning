@@ -219,6 +219,10 @@ def process_in_dir(i):
               (characteristics)      - characteristics/features/properties
               (env)                  - preset environment
 
+              (post_process_script_uoa) - run script from this UOA
+              (post_process_subscript)  - subscript name
+              (post_process_params)     - (string) add params to CMD
+
               (deps)                 - already resolved deps (useful for auto-tuning)
 
               (extra_env)            - extra environment before running code as string
@@ -305,6 +309,10 @@ def process_in_dir(i):
     repeat=int(xrepeat)
 
     me=i.get('energy','')
+
+    pp_uoa=i.get('post_process_script_uoa','')
+    pp_name=i.get('post_process_subscript','')
+    pp_params=i.get('post_process_params','')
 
     # Check host/target OS/CPU
     hos=i.get('host_os','')
@@ -1605,6 +1613,22 @@ def process_in_dir(i):
                     if ry>0:
                        return {'return':1, 'error':'pulling from remote device failed'}
 
+          # Check if post-processing script from CMD
+          if pp_uoa!='':
+             if o=='con':
+                ck.out('')
+                ck.out('  (post processing from script ('+pp_uoa+' / '+pp_name+')..."')
+                ck.out('')
+
+             ii={'action':'run',
+                 'module_uoa':cfg['module_deps']['script'],
+                 'data_uoa':pp_uoa,
+                 'name':pp_name,
+                 'params':pp_params}
+             rx=ck.access(ii)
+             if rx['return']>0: return rx
+             # For now ignore output
+
           # Check if post-processing script
           if ppc!='':
              if o=='con':
@@ -1872,6 +1896,11 @@ def pipeline(i):
 
               (energy)               - if 'yes', start energy monitoring (if supported) using script ck-set-power-sensors
 
+              (post_process_script_uoa) - run script from this UOA
+              (post_process_subscript)  - subscript name
+              (post_process_params)     - (string) add params to CMD
+
+
               (dependencies)         - compilation dependencies
 
               (choices)              - exposed choices (if any)
@@ -1986,6 +2015,10 @@ def pipeline(i):
     grtd=ck.get_from_dicts(i, 'generate_rnd_tmp_dir','', None)
     tdir=ck.get_from_dicts(i, 'tmp_dir','', None)
     sca=ck.get_from_dicts(i, 'skip_clean_after', '', None)
+
+    pp_uoa=ck.get_from_dicts(i, 'post_process_script_uoa','', choices)
+    pp_name=ck.get_from_dicts(i, 'post_process_subscript','', choices)
+    pp_params=ck.get_from_dicts(i, 'post_process_params', '', choices)
 
     flags=ck.get_from_dicts(i, 'flags', '', choices)
     lflags=ck.get_from_dicts(i, 'lflags', '', choices)
@@ -2822,6 +2855,9 @@ def pipeline(i):
            'skip_calibration':rsc,
            'calibration_time':rct,
            'calibration_max':rcm,
+           'post_process_script_uoa':pp_uoa,
+           'post_process_subscript':pp_name,
+           'post_process_params':pp_params,
            'env':env,
            'extra_env':eenv,
            'compiler_vars':cv,
