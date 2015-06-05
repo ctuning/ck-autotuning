@@ -1620,13 +1620,13 @@ def process_in_dir(i):
                 ck.out('  (post processing from script ('+pp_uoa+' / '+pp_name+')..."')
                 ck.out('')
 
-             ii={'action':'run',
+             iz={'action':'run',
                  'module_uoa':cfg['module_deps']['script'],
                  'data_uoa':pp_uoa,
                  'name':pp_name,
                  'params':pp_params}
-             rx=ck.access(ii)
-             if rx['return']>0: return rx
+             rz=ck.access(iz)
+             if rz['return']>0: return rz
              # For now ignore output
 
           # Check if post-processing script
@@ -1635,7 +1635,7 @@ def process_in_dir(i):
                 ck.out('')
                 ck.out('  (post processing: "'+ppc+'"')
                 ck.out('')
-             rx=os.system(ppc)
+             rz=os.system(ppc)
              # For now ignore output
 
           # Check if fine-grain time
