@@ -37,6 +37,7 @@ if exists:
 
 rts=d.get('run_time_state',{})
 
+# Note that this energy is (file_0_start + file_0_stop)*execution_time_kernel_0/2
 a15=rts.get('file_0_energy','')
 mem=rts.get('file_1_energy','')
 gpu=rts.get('file_2_energy','')
