@@ -1,0 +1,29 @@
+{
+  "experiment_module_uoa":"experiment",
+
+  "data_uoa_list":["demo-autotune-flags-susan-mingw-i10", "demo-autotune-flags-susan-mingw-best"],
+
+  "flat_keys_list":[
+    "##characteristics#compile#obj_size#min",
+    "##characteristics#run#execution_time_kernel_0#center",
+    "##characteristics#run#execution_time_kernel_0#halfrange"
+  ],
+
+  "plot_type":"mpl_2d_scatter",
+  "display_x_error_bar":"no",
+  "display_y_error_bar":"yes",
+
+  "title":"Powered by Collective Knowledge",
+
+  "axis_x_desc":"Binary size",
+  "axis_y_desc":"Execution time",
+
+  "plot_grid":"yes",
+
+  "mpl_image_size_x":"12",
+  "mpl_image_size_y":"6",
+  "mpl_image_dpi":"100",
+
+  "point_style":{"1":{"elinewidth":"5", "color":"#dc3912"},
+                 "0":{"color":"#3366cc"}}
+}
