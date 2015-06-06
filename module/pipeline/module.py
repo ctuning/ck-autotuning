@@ -130,12 +130,12 @@ def autotune(i):
 
                (record_params)        - extra record parameters (to 'add experiment' function)
 
-               (features_keys_to_process)    - list of keys for features (and choices) to process/search 
-                                                    when recording experimental results (can be wildcards)
-                                                    by default ['##features#*', '##choices#*', '##choices_order#*']
+               (features_keys_to_process)        - list of keys for features (and choices) to process/search 
+                                                        when recording experimental results (can be wildcards)
+                                                        by default ['##features#*', '##choices#*', '##choices_order#*']
 
-               (frontier_keys)        - list of keys to leave only best points during multi-objective autotuning
-                                        (multi-objective optimization)
+               (frontier_keys)                   - list of keys to leave only best points during multi-objective autotuning
+                                                    (multi-objective optimization)
 
                (frontier_features_keys_to_ignore) - list of keys to ignore from 'features_keys_to_process' 
                                                     when detecting subset of points to detect frontier

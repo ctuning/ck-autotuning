@@ -246,8 +246,11 @@ def process_in_dir(i):
                                                export CK_ENERGY_FILES="/sys/bus/i2c/drivers/INA231/3-0040/sensor_W;/sys/bus/i2c/drivers/INA231/3-0041/sensor_W;/sys/bus/i2c/drivers/INA231/3-0044/sensor_W;/sys/bus/i2c/drivers/INA231/3-0045/sensor_W;"
 
 
-              (statistical_repetition) - int number of current (outside) statistical repetition
-                                         to avoid pushing data to remote device if !=0 ...
+              (statistical_repetition_number) - int number of current (outside) statistical repetition
+                                                to avoid pushing data to remote device if !=0 ...
+              (autotuning_iteration)          - int number of current autotuning iteration
+                                                to avoid pushing some data to remote device if !=0 ...
+              (skip_dataset_copy)             - if 'yes', dataset stays the same across iterations of pipeline, so do not copy to remote again
 
               (unparsed)               - if executing ck run program ... -- (unparsed params), add them to compile or run ...
             }
@@ -468,6 +471,16 @@ def process_in_dir(i):
 
     isd=i.get('sudo','')
     if isd=='': isd=tosd.get('force_sudo','')
+
+    srn=ck.get_from_dicts(i, 'statistical_repetition_number', '', None)
+    if srn=='': srn=0
+    else: srn=int(srn)
+
+    ati=ck.get_from_dicts(i, 'autotuning_iteration', '', None)
+    if ati=='': ati=0
+    else: ati=int(ati)
+
+    sdc=ck.get_from_dicts(i, 'skip_dataset_copy', '', None)
 
     ##################################################################################################################
     ################################### Clean ######################################
@@ -1123,16 +1136,17 @@ def process_in_dir(i):
        rif=rt.get('run_input_files',[])
        rifo={}
 
-       # Check if dynamic and remote to copy .so to devices
+       # Check if dynamic and remote to copy .so to devices (but for the 1st autotuning and statistical iteration!)
        if ctype=='dynamic' and remote=='yes':
-          for q in deps:
-              qq=deps[q].get('cus','')
-              qdl=qq.get('dynamic_lib','')
-              if qdl!='' and qq.get('skip_copy_to_remote','')!='yes':
-                 qpl=qq.get('path_lib','')
-                 qq1=os.path.join(qpl,qdl)
-                 rif.append(qq1)
-                 rifo[qq1]='yes' # if pushing to external, do not use current path
+          if srn==0 and ati==0:
+             for q in deps:
+                 qq=deps[q].get('cus','')
+                 qdl=qq.get('dynamic_lib','')
+                 if qdl!='' and qq.get('skip_copy_to_remote','')!='yes':
+                    qpl=qq.get('path_lib','')
+                    qq1=os.path.join(qpl,qdl)
+                    rif.append(qq1)
+                    rifo[qq1]='yes' # if pushing to external, do not use current path
 
        # Check if run_time env is also defined
        rte=rt.get('run_set_env2',{})
@@ -1254,7 +1268,7 @@ def process_in_dir(i):
                           'out':o})
              if r['return']>0: return r
 
-          if i.get('statistical_repetition',0)==0:
+          if srn==0:
              # Copy exe
              y=tosd.get('remote_push_pre','').replace('$#device#$',xtdid)
              if y!='':
@@ -1298,7 +1312,7 @@ def process_in_dir(i):
                 if ry>0:
                    return {'return':1, 'error':'making binary executable failed on remote device'}
 
-          if sdi!='yes':
+          if sdi!='yes' and src==0 or ati==0:
              # Copy explicit input files, if first time
              for df in rif:
                  df0, df1 = os.path.split(df)
@@ -1363,7 +1377,7 @@ def process_in_dir(i):
                  kk+='#$'
                  c=c.replace(kk, df)
 
-                 if remote=='yes' and sdi!='yes':
+                 if remote=='yes' and srn==0 and sdi!='yes' and sdc!='yes':
                     df0, df1 = os.path.split(df)
 
                     # Push data files to device
@@ -1862,8 +1876,6 @@ def pipeline(i):
 
               (select_best_base_flag_for_first_iteration) - if 'yes' and autotuning_iteration=0
 
-              (autotuning_iteration) - (int) current autotuning iteration (automatically updated during pipeline tuning)
-
 
               (env)                  - preset environment
               (extra_env)            - extra environment as string
@@ -1879,8 +1891,11 @@ def pipeline(i):
               (calibration_time)     - calibration time in string, 4.0 sec. by default
               (calibration_max)      - max number of iterations for calibration, 10 by default
 
-              (statistical_repetition_number) - statistical repetition of experiment
+              (statistical_repetition_number) - current statistical repetition of experiment
                                                 (for example, may be used to skip compilation, if >0)
+              (autotuning_iteration)          - (int) current autotuning iteration (automatically updated during pipeline tuning)
+              (the_same_dataset)              - if 'yes', the dataset stays the same across iterations 
+                                                   so skip copying dataset to remote from 2nd iteration
 
               (repeat_compilation)   - if 'yes', force compilation, even if "statistical_repetition_number">0
 
@@ -1895,6 +1910,7 @@ def pipeline(i):
                                        if "min" - try to set to minimum using scrupt ck-set-gpu-powersave
 
               (energy)               - if 'yes', start energy monitoring (if supported) using script ck-set-power-sensors
+
 
               (post_process_script_uoa) - run script from this UOA
               (post_process_subscript)  - subscript name
@@ -1987,9 +2003,13 @@ def pipeline(i):
     meta=ck.get_from_dicts(i, 'program_meta', {}, choices) # program meta if needed
     desc=ck.get_from_dicts(i, 'program_desc', {}, choices) # program desc if needed
 
-    srn=ck.get_from_dicts(i, 'statistical_repetition_number', '', choices)
+    srn=ck.get_from_dicts(i, 'statistical_repetition_number', '', None)
     if srn=='': srn=0
     else: srn=int(srn)
+
+    ati=ck.get_from_dicts(i, 'autotuning_iteration', '', None)
+    if ati=='': ati=0
+    else: ati=int(ati)
 
     ruoa=ck.get_from_dicts(i, 'repo_uoa', '', None)
     duoa=ck.get_from_dicts(i, 'data_uoa', '', choices)
@@ -2041,6 +2061,8 @@ def pipeline(i):
     aff=ck.get_from_dicts(i, 'affinity', '', choices)
 
     cons=ck.get_from_dicts(i, 'console','',choices)
+
+    tsd=ck.get_from_dicts(i, 'the_same_dataset', '', choices)
 
     ###############################################################################################################
     # PIPELINE SECTION: Host and target platform selection
@@ -2802,6 +2824,8 @@ def pipeline(i):
               'compile_type':ctype,
               'flags':flags,
               'lflags':lflags,
+              'statistical_repetition':srn,
+              'autotuning_iteration':ati,
               'console':cons,
               'env':env,
               'extra_env':eenv,
@@ -2824,6 +2848,12 @@ def pipeline(i):
           if cs=='no': 
              i['fail_reason']='compilation failed'
              i['fail']='yes'
+
+    ###############################################################################################################
+    # PIPELINE SECTION: Check if dataset is the same
+    sdc='no'
+    if tsd=='yes' and (ati!=0 or srn!=0):
+       sdc='yes'
 
     ###############################################################################################################
     # PIPELINE SECTION: Run program
@@ -2858,6 +2888,9 @@ def pipeline(i):
            'post_process_script_uoa':pp_uoa,
            'post_process_subscript':pp_name,
            'post_process_params':pp_params,
+           'statistical_repetition':srn,
+           'autotuning_iteration':ati,
+           'skip_dataset_copy':sdc,
            'env':env,
            'extra_env':eenv,
            'compiler_vars':cv,
