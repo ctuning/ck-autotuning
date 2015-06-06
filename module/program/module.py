@@ -1312,7 +1312,7 @@ def process_in_dir(i):
                 if ry>0:
                    return {'return':1, 'error':'making binary executable failed on remote device'}
 
-          if sdi!='yes' and src==0 or ati==0:
+          if sdi!='yes' and srn==0 or ati==0:
              # Copy explicit input files, if first time
              for df in rif:
                  df0, df1 = os.path.split(df)
@@ -2737,9 +2737,10 @@ def pipeline(i):
            'host_os':hos,
            'target_os':tos,
            'device_id':tdid,
+           'skip_print_os_info':'yes',
            'skip_device_init':sdi,
            'skip_info_collection':sic,
-           'out':''} # skip here since it's second time ...
+           'out':oo} # skip here since it's second time ...
        r=ck.access(ii)
        if r['return']==0:
           xft=r.get('features',{})
