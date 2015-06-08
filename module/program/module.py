@@ -1,4 +1,4 @@
-# 
+#
 # Collective Knowledge (program)
 #
 # See CK LICENSE.txt for licensing details
@@ -203,7 +203,7 @@ def process_in_dir(i):
               (repeat)               - repeat kernel via environment CT_REPEAT_MAIN if supported
 
               (sudo)                 - if 'yes', force using sudo 
-                                       (otherwise, can use ${CK_SUDO_INIT}, ${CK_SUDO_PRE}, ${CK_SUDO_POST})
+                                       (if not set up in OS, use ${CK_SUDO_INIT}, ${CK_SUDO_PRE}, ${CK_SUDO_POST})
 
               (affinity)             - set processor affinity for tihs program run (if supported by OS - see "affinity" in OS)
                                        examples: 0 ; 0,1 ; 0-3 ; 4-7  (the last two can be useful for ARM big.LITTLE arhictecture
@@ -387,6 +387,7 @@ def process_in_dir(i):
     if rx['return']>0: return rx
     hplat=rx['platform']
 
+    bbp=hosd.get('batch_bash_prefix','')
     rem=hosd.get('rem','')
     eset=hosd.get('env_set','')
     etset=tosd.get('env_set','')
@@ -466,8 +467,9 @@ def process_in_dir(i):
     if sudo_init=='': sudo_init=svarb+svarb1+'CK_SUDO_INIT'+svare1+svare
     sudo_pre=tosd.get('sudo_pre','')
     if sudo_pre=='': sudo_pre=svarb+svarb1+'CK_SUDO_PRE'+svare1+svare
-    sudo_post=tosd.get('sudo_post','')
-    if sudo_post=='': sudo_post=svarb+svarb1+'CK_SUDO_POST'+svare1+svare
+#    sudo_post=tosd.get('sudo_post','')
+#    if sudo_post=='': 
+    sudo_post=svarb+svarb1+'CK_SUDO_POST'+svare1+svare
 
     isd=i.get('sudo','')
     if isd=='': isd=tosd.get('force_sudo','')
@@ -1103,7 +1105,7 @@ def process_in_dir(i):
 
                  zs=str(iz)
                  zz[zs]=z
-                                        
+
                  if zcmd!='': z+=' ('+zcmd+')'
                  ck.out(zs+') '+z)
 
@@ -1535,7 +1537,7 @@ def process_in_dir(i):
                     if y!='': y+=envtsep
                     y+=' '+q
 
-             if isd=='yes': y=y+' '+envtsep+' '+sudo_post+' *'
+             if isd=='yes': y=y+' '+envtsep+' '+sudo_post
 
              if eifsx!='': y=y.replace('"','\\"')
              y=rs+' '+eifsx+tosd['change_dir']+' '+rdir+envtsep+' '+y+eifsx+' '+rse
@@ -1553,16 +1555,20 @@ def process_in_dir(i):
              if rx['return']>0: return rx
              fn=rx['file_name']
 
+             sb=bbp+'\n\n'+sb
+
              rx=ck.save_text_file({'text_file':fn, 'string':sb})
              if rx['return']>0: return rx
 
              y=''
              if sexe!='':
                 y+=sexe+' '+sbp+fn+envsep
-             y+=' '+scall+' '+sbp+fn
 
-             if isd=='yes': 
-                y=sudo_pre+' '+y+' '+envtsep+' '+sudo_post+' *'
+             if isd=='yes':
+                yy=sudo_pre+' '+sbp+fn+' '+envtsep+' '+sudo_post
+             else:
+                yy=scall+' '+sbp+fn
+             y+=' '+yy
 
              if o=='con':
                 ck.out('Prepared script:')
@@ -1838,7 +1844,6 @@ def pipeline(i):
                                              useful when using autotuning to find bugs in compiler, 
                                              or find differently generated code sequencies, etc ...
               (no_state_check)          - do not check system/CPU state (frequency) over iterations ...
-              
 
 
               (generate_rnd_tmp_dir) - if 'yes', compile and run program in randomly generated temporal dir
@@ -2142,8 +2147,9 @@ def pipeline(i):
     if sudo_init=='': sudo_init=svarb+svarb1+'CK_SUDO_INIT'+svare1+svare
     sudo_pre=tosd.get('sudo_pre','')
     if sudo_pre=='': sudo_pre=svarb+svarb1+'CK_SUDO_PRE'+svare1+svare
-    sudo_post=tosd.get('sudo_post','')
-    if sudo_post=='': sudo_post=svarb+svarb1+'CK_SUDO_POST'+svare1+svare
+#    sudo_post=tosd.get('sudo_post','')
+#    if sudo_post=='': 
+    sudo_post=svarb+svarb1+'CK_SUDO_POST'+svare1+svare
 
     isd=ck.get_from_dicts(i, 'sudo', '', choices)
     if isd=='': isd=tosd.get('force_sudo','')
@@ -2996,4 +3002,3 @@ def finalize_pipeline(i):
     i['return']=0
 
     return i
-                                                   
