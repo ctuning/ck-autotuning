@@ -2334,6 +2334,7 @@ def pipeline(i):
        return {'return':1, 'error':'no CMD for run'}
 
     krun_cmds=sorted(list(run_cmds.keys()))
+    zrt={}
     if kcmd=='':
        if len(krun_cmds)>1:
           xchoices=[]
@@ -2341,7 +2342,8 @@ def pipeline(i):
           for z in sorted(krun_cmds):
               xchoices.append(z)
 
-              zcmd=run_cmds[z].get('run_time',{}).get('run_cmd_main','')
+              zrt=run_cmds[z].get('run_time',{})
+              zcmd=zrt.get('run_cmd_main','')
               dchoices.append(zcmd)
 
           # SELECTOR *************************************
@@ -2903,8 +2905,12 @@ def pipeline(i):
 
        eenv='export LD_PRELOAD="${CK_ENV_PLUGIN_OPENCL_DVDT_PROFILER_DYNAMIC_NAME_FULL}"; '+eenv
 
+       fodp='tmp-opencl-dvdt-output.json'
+       if os.path.isfile(fodp): os.remove(fodp)
+
     ###############################################################################################################
     # PIPELINE SECTION: Run program
+    xdeps={}
     if i.get('fail','')!='yes' and cs!='no' and no_run!='yes':
        if o=='con':
           ck.out(sep)
@@ -2953,6 +2959,8 @@ def pipeline(i):
        rch=r['characteristics']
        chars['run']=rch
 
+       xdeps=r.get('deps',{})
+
        csuc=misc.get('calibration_success',True)
        rs=misc.get('run_success','')
 
@@ -2964,6 +2972,28 @@ def pipeline(i):
        if rs=='no' or not csuc:
           i['fail_reason']='execution failed'
           i['fail']='yes'
+
+    ###############################################################################################################
+    # PIPELINE SECTION: Check OpenCL DVDT profiler
+    if odp=='yes':
+       y=xdeps.get('opencl_dvdt_profiler',{}).get('bat','').rstrip()+' '+envsep
+
+       y+=' \\'+svarb+svarb1+'CK_ENV_PLUGIN_OPENCL_DVDT_PROFILER_CONVERT_TO_CK'+svare1+svare+' '+vcmd.get('run_time',{}).get('run_cmd_out1','')+' '+fodp
+
+       if ubtr!='': y=ubtr.replace('$#cmd#$',y)
+
+       if o=='con':
+          ck.out('')
+          ck.out('  (post processing OpenCL DVDT profiler ...)')
+          ck.out('')
+          ck.out(y)
+          ck.out('')
+
+       rx=os.system(y)
+
+       rx=ck.load_json_file({'json_file':fodp})
+       if rx['return']>0: return rx
+       chars['run']['opencl_dvdt_profiler']=rx['dict']
 
     ###############################################################################################################
     # Deinit remote device, if needed
