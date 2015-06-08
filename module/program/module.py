@@ -420,11 +420,6 @@ def process_in_dir(i):
     no=tosd.get('no_output','')
 
     ########################################################################
-    # Get host platform
-    rx=ck.get_os_ck({})
-    if rx['return']>0: return rx
-    ios=rx['platform']
-
     p=i['path']
     meta=i['meta']
 
@@ -562,35 +557,35 @@ def process_in_dir(i):
 
     # If compile type is dynamic, reuse deps even for run (to find specific DLLs) 
     # (REMOTE PLATFORMS ARE NOT SUPPORTED AT THE MOMENT, USE STATIC COMPILATION)
-    if (ctype=='dynamic' or sa=='compile' or rcd=='yes'):
-       # Resolve deps (if not ignored, such as when installing local version with all dependencies set)
-       if len(deps)==0: 
-          deps=meta.get('compile_deps',{})
+#    if (ctype=='dynamic' or sa=='compile' or rcd=='yes'):
+       # Resolve deps (unless should be explicitly ignored, such as when installing local version with all dependencies set)
+    if len(deps)==0: 
+       deps=meta.get('compile_deps',{})
 
-       if len(deps)>0:
-          if o=='con':
-             ck.out(sep)
+    if len(deps)>0:
+       if o=='con':
+          ck.out(sep)
 
-          ii={'action':'resolve',
-              'module_uoa':cfg['module_deps']['env'],
-              'host_os':hos,
-              'target_os':tos,
-              'device_id':tdid,
-              'deps':deps,
-              'add_customize':'yes'}
-          if o=='con': ii['out']='con'
+       ii={'action':'resolve',
+           'module_uoa':cfg['module_deps']['env'],
+           'host_os':hos,
+           'target_os':tos,
+           'device_id':tdid,
+           'deps':deps,
+           'add_customize':'yes'}
+       if o=='con': ii['out']='con'
 
-          rx=ck.access(ii)
-          if rx['return']>0: return rx
+       rx=ck.access(ii)
+       if rx['return']>0: return rx
 
-          if sa=='compile' or remote!='yes':
-             sb+=no+rx['bat']
+       if sa=='compile' or remote!='yes':
+          sb+=no+rx['bat']
 
-          deps=rx['deps'] # Update deps (add UOA)
+       deps=rx['deps'] # Update deps (add UOA)
 
-       if sa=='compile':
-          rx=ck.save_json_to_file({'json_file':fdeps, 'dict':deps})
-          if rx['return']>0: return rx
+    if sa=='compile':
+       rx=ck.save_json_to_file({'json_file':fdeps, 'dict':deps})
+       if rx['return']>0: return rx
 
     # If compiler, load env
     comp=deps.get('compiler',{})
@@ -1917,6 +1912,8 @@ def pipeline(i):
               (energy)               - if 'yes', start energy monitoring (if supported) using script ck-set-power-sensors
 
 
+              (opencl_dvdt_profiler)    - if 'yes', attempt to use opencl_dvdt_profiler when running code ...
+
               (post_process_script_uoa) - run script from this UOA
               (post_process_subscript)  - subscript name
               (post_process_params)     - (string) add params to CMD
@@ -2039,7 +2036,7 @@ def pipeline(i):
 
     grtd=ck.get_from_dicts(i, 'generate_rnd_tmp_dir','', None)
     tdir=ck.get_from_dicts(i, 'tmp_dir','', None)
-    sca=ck.get_from_dicts(i, 'skip_clean_after', '', None)
+    sca=ck.get_from_dicts(i, 'skip_clean_after', '', choices) # I add it here to be able to debug across all iterations
 
     pp_uoa=ck.get_from_dicts(i, 'post_process_script_uoa','', choices)
     pp_name=ck.get_from_dicts(i, 'post_process_subscript','', choices)
@@ -2068,6 +2065,8 @@ def pipeline(i):
     cons=ck.get_from_dicts(i, 'console','',choices)
 
     tsd=ck.get_from_dicts(i, 'the_same_dataset', '', choices)
+
+    odp=ck.get_from_dicts(i, 'opencl_dvdt_profiler','',choices)
 
     ###############################################################################################################
     # PIPELINE SECTION: Host and target platform selection
@@ -2137,10 +2136,42 @@ def pipeline(i):
     if tos=='':
        return {'return':1, 'error':'target_os is not defined'}
 
+    # Get various OS vars
+    rx=ck.get_os_ck({})
+    if rx['return']>0: return rx
+    hplat=rx['platform']
+
+    bbp=hosd.get('batch_bash_prefix','')
+    rem=hosd.get('rem','')
+    eset=hosd.get('env_set','')
+    etset=tosd.get('env_set','')
     svarb=hosd.get('env_var_start','')
     svarb1=hosd.get('env_var_extra1','')
     svare=hosd.get('env_var_stop','')
     svare1=hosd.get('env_var_extra2','')
+    scall=hosd.get('env_call','')
+    sdirs=hosd.get('dir_sep','')
+    sdirsx=tosd.get('remote_dir_sep','')
+    if sdirsx=='': sdirsx=sdirs
+    stdirs=tosd.get('dir_sep','')
+    sext=hosd.get('script_ext','')
+    sexe=hosd.get('set_executable','')
+    se=tosd.get('file_extensions',{}).get('exe','')
+    sbp=hosd.get('bin_prefix','')
+    stbp=tosd.get('bin_prefix','')
+    sqie=hosd.get('quit_if_error','')
+    evs=hosd.get('env_var_separator','')
+    envsep=hosd.get('env_separator','')
+    envtsep=tosd.get('env_separator','')
+    eifs=hosd.get('env_quotes_if_space','')
+    eifsc=hosd.get('env_quotes_if_space_in_call','')
+    eifsx=tosd.get('remote_env_quotes_if_space','')
+    if eifsx=='': eifsx=eifsc
+    wb=tosd.get('windows_base','')
+    stro=tosd.get('redirect_stdout','')
+    stre=tosd.get('redirect_stderr','')
+    ubtr=hosd.get('use_bash_to_run','')
+    no=tosd.get('no_output','')
 
     # check sudo
     sudo_init=tosd.get('sudo_init','')
@@ -2346,7 +2377,6 @@ def pipeline(i):
 
     ###############################################################################################################
     # PIPELINE SECTION: Command line selection 
-
     vcmd=run_cmds[kcmd]
 
     dtags=vcmd.get('dataset_tags',[])
@@ -2861,6 +2891,17 @@ def pipeline(i):
     sdc='no'
     if tsd=='yes' and (ati!=0 or srn!=0):
        sdc='yes'
+
+    ###############################################################################################################
+    # PIPELINE SECTION: Check OpenCL DVDT profiler
+    if odp=='yes':
+       if hplat=='win':
+          return {'return':1, 'error':'OpenCL DVDT profiler currently does not support Windows'}
+
+       if 'opencl_dvdt_profiler' not in cdeps:
+          cdeps['opencl_dvdt_profiler']={'local':'yes', 'tags':'plugin,opencl,dvdt,profiler'}
+
+       eenv='export LD_PRELOAD="${CK_ENV_PLUGIN_OPENCL_DVDT_PROFILER_DYNAMIC_NAME_FULL}"; '+eenv
 
     ###############################################################################################################
     # PIPELINE SECTION: Run program
