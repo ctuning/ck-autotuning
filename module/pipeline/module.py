@@ -204,6 +204,13 @@ def autotune(i):
     if record_ignore_update=='': record_ignore_update='yes'
     if 'record_ignore_update' in ic: del(ic['record_ignore_update'])
 
+    # Check if repo remote (to save in json rather than to out)
+    remote='no'
+    if record_repo!='':
+       rx=ck.load_repo_info_from_cache({'repo_uoa':record_repo})
+       if rx['return']>0: return rx
+       remote=rx.get('dict',{}).get('remote','')
+
     rdict=ck.get_from_dicts(ic, 'record_params', {}, None)
     fkp=ck.get_from_dicts(ic, 'features_keys_to_process', [], None)
     ffki=ck.get_from_dicts(ic, 'frontier_features_keys_to_ignore', [], None)
@@ -473,9 +480,11 @@ def autotune(i):
 
               ie=copy.deepcopy(iec)
 
+              if remote=='yes': ie['out']=''
+              else: ie['out']=oo
+
               ie['action']='add'
               ie['ignore_update']=record_ignore_update
-              ie['out']='con'
               ie['sort_keys']='yes'
               ie['record_all_subpoints']='yes'
               ie['process_multi_keys']=pmk
@@ -488,8 +497,6 @@ def autotune(i):
 
               rx=ck.access(ie)
               if rx['return']>0: return rx
-
-              ck.save_json_to_file({'json_file':'d:\\xyz.json', 'dict':rx})
 
               stat_dict=rx['dict_flat']
               rrr=rx['stat_analysis']
