@@ -415,6 +415,7 @@ def autotune(i):
             pipeline1['action']='pipeline'
             pipeline1['out']=o
             pipeline1['state']=state
+            pipeline1['meta']=meta
             pipeline1['autotuning_iteration']=m
             pipeline1['statistical_repetition_number']=sr
             rr=ck.access(pipeline1)
@@ -439,7 +440,7 @@ def autotune(i):
 
                   meta1=rr.get('meta',{})
                   if len(meta1)>0: meta.update(meta1)
-                  dd['meta']=meta1
+                  dd['meta']=meta
 
             if fail=='yes': break
 
