@@ -114,28 +114,29 @@ def autotune(i):
                (plugin-based)
                (customized)
 
-               (process_multi_keys)   - list of keys (starts with) to perform stat analysis on flat array,
-                                           by default ['##characteristics#*', '##features#*' '##choices#*'],
-                                           if empty, no stat analysis
+               (process_multi_keys)               - list of keys (starts with) to perform stat analysis on flat array,
+                                                       by default ['##characteristics#*', '##features#*' '##choices#*'],
+                                                       if empty, no stat analysis
 
-               (record)               - if 'yes', record results
-               (record_uoa)           - (data UOA or CID where module_uoa ignored!) explicitly record to this entry
-               (record_repo)          - (repo UOA) explicitly select this repo to record
-               (record_failed)        - if 'yes', record even failed experiments
-                                        (for debugging, buildbots, detecting designed 
-                                         architecture failures, etc)
-               (record_ignore_update) - (default=yes), if 'yes', skip recording date/author info for each update
-               (tags)                 - record these tags to the entry description
-               (subtags)              - record these subtags to the point description
+               (record)                           - if 'yes', record results
+               (record_uoa)                       - (data UOA or CID where module_uoa ignored!) explicitly record to this entry
+               (record_repo)                      - (repo UOA) explicitly select this repo to record
+               (record_experiment_repo)           - (repo UOA) explicitly select this repo to record
+               (record_failed)                    - if 'yes', record even failed experiments
+                                                    (for debugging, buildbots, detecting designed 
+                                                     architecture failures, etc)
+               (record_ignore_update)             - (default=yes), if 'yes', skip recording date/author info for each update
+               (tags)                             - record these tags to the entry description
+               (subtags)                          - record these subtags to the point description
 
-               (record_params)        - extra record parameters (to 'add experiment' function)
+               (record_params)                    - extra record parameters (to 'add experiment' function)
 
-               (features_keys_to_process)        - list of keys for features (and choices) to process/search 
-                                                        when recording experimental results (can be wildcards)
-                                                        by default ['##features#*', '##choices#*', '##choices_order#*']
+               (features_keys_to_process)         - list of keys for features (and choices) to process/search 
+                                                         when recording experimental results (can be wildcards)
+                                                         by default ['##features#*', '##choices#*', '##choices_order#*']
 
-               (frontier_keys)                   - list of keys to leave only best points during multi-objective autotuning
-                                                    (multi-objective optimization)
+               (frontier_keys)                    - list of keys to leave only best points during multi-objective autotuning
+                                                     (multi-objective optimization)
 
                (frontier_features_keys_to_ignore) - list of keys to ignore from 'features_keys_to_process' 
                                                     when detecting subset of points to detect frontier
@@ -192,6 +193,7 @@ def autotune(i):
     record=ck.get_from_dicts(ic, 'record', '', None)
     record_uoa=ck.get_from_dicts(ic, 'record_uoa', '', None)
     record_repo=ck.get_from_dicts(ic, 'record_repo', '', None)
+    record_experiment_repo=ck.get_from_dicts(ic, 'record_experiment_repo', '', None)
     if record.find(':')>=0:
        rx=ck.parse_cid({'cid':record})
        if rx['return']>0: return rx
@@ -454,7 +456,8 @@ def autotune(i):
            # Will be reused for frontier
            iec={'module_uoa':cfg['module_deps']['experiment'],
 
-                'experiment_repo_uoa': record_repo,
+                'repo_uoa': record_repo,
+                'experiment_repo_uoa': record_experiment_repo,
                 'experiment_uoa':record_uoa,
 
                 'features_keys_to_process':fkp}
@@ -485,6 +488,8 @@ def autotune(i):
 
               rx=ck.access(ie)
               if rx['return']>0: return rx
+
+              ck.save_json_to_file({'json_file':'d:\\xyz.json', 'dict':rx})
 
               stat_dict=rx['dict_flat']
               rrr=rx['stat_analysis']
