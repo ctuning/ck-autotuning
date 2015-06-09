@@ -189,6 +189,8 @@ def process_in_dir(i):
               (compiler_vars)        - dict with set up compiler flags (-D var)
                                        they will update the ones defined as default in program description ...
 
+              (remove_compiler_vars) - list of compiler vars to remove
+
               (flags)                - compile flags
               (lflags)               - link flags
 
@@ -303,6 +305,7 @@ def process_in_dir(i):
     flags=i.get('flags','')
     lflags=i.get('lflags','')
     cv=i.get('compiler_vars',{})
+    rcv=i.get('remove_compiler_vars',[])
 
     fspeed=i.get('speed','')
     fsize=i.get('size','')
@@ -803,6 +806,10 @@ def process_in_dir(i):
           # Check build -D flags
           sbcv=''
           bcv=meta.get('build_compiler_vars',{})
+
+          for q in rcv:
+              if q in bcv: del(bcv[q])
+
           bcv.update(cv)
 
           # Update env if energy meter
@@ -1865,6 +1872,8 @@ def pipeline(i):
               (compiler_vars)        - dict with set up compiler flags (-Dvar=value) -> 
                                        they will update the ones defined as default in program description ...
 
+              (remove_compiler_vars) - list of compiler vars to remove
+
               (flags)                - compile flags
               (lflags)               - link flags
 
@@ -2595,6 +2604,7 @@ def pipeline(i):
         choices_desc['##compiler_vars#'+q1]=qq
 
     cv=ck.get_from_dicts(i,'compiler_vars',{},choices)
+    rcv=ck.get_from_dicts(i,'remove_compiler_vars',[],choices)
 
     ###############################################################################################################
     # PIPELINE SECTION: get run vars (preset environment)
@@ -2869,6 +2879,7 @@ def pipeline(i):
               'env':env,
               'extra_env':eenv,
               'compiler_vars':cv,
+              'remove_compiler_vars':rcv,
               'out':oo}
           r=process_in_dir(ii)
           if r['return']>0: return r
@@ -2948,6 +2959,7 @@ def pipeline(i):
            'env':env,
            'extra_env':eenv,
            'compiler_vars':cv,
+           'remove_compiler_vars':rcv,
            'out':oo}
        r=process_in_dir(ii)
        if r['return']>0: return r
