@@ -165,6 +165,7 @@ def autotune(i):
     import copy
     import fnmatch
     import json
+    import time
     from random import Random
 
     o=i.get('out','')
@@ -473,6 +474,8 @@ def autotune(i):
 
            if fail!='yes' or record_failed=='yes':
 
+              t1=time.time()
+
               if o=='con':
                  ck.out(sep)
                  ck.out('Recording experiment ...')
@@ -501,6 +504,10 @@ def autotune(i):
               stat_dict=rx['dict_flat']
               rrr=rx['stat_analysis']
               fft=rx['flat_features']
+
+              tt=time.time()-t1
+              if o=='con':
+                 ck.out('Recorded successfully in '+('%.2f'%tt)+' secs.')
 
         ##########################################################################################
         # If was not performed via recording, prform statistical analysis  here
