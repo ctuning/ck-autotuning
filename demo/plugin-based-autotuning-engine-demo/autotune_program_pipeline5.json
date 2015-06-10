@@ -113,7 +113,7 @@
   ],
 
   "choices_selection": [
-     {"type":"random", "start":8, "stop":256, "step":8},
+     {"type":"random", "start":8, "stop":256, "step":8, "default":8},
      {"type":"parallel-loop"}
   ],
 

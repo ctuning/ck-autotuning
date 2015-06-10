@@ -113,7 +113,7 @@
   ],
 
   "choices_selection": [
-     {"type":"random", "iterations":5, "start":8, "stop":256, "step":1},
+     {"type":"random", "iterations":5, "start":8, "stop":256, "step":1, "default":8},
      {"type":"random", "iterations":10, "omit_probability":"0.90"}
   ],
 

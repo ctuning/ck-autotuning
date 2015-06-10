@@ -26,7 +26,7 @@
   ],
 
   "choices_selection": [
-    {"type":"random-with-next", "start":200000, "stop":2000000, "step":200000},
+    {"type":"random-with-next", "start":200000, "stop":2000000, "step":200000, "default":200000},
     {"type":"random-with-next", "choice":[177,266,350,420,480,543,600], "default":177},
     {"type":"random-with-next", "choice":[4,8,12,16], "default":4},
     {"type":"random-with-next", "choice":[4,8,12,16], "default":4},

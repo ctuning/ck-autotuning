@@ -18,7 +18,7 @@
     ]
   ], 
   "choices_selection": [
-    {"type":"loop", "start":200000, "stop":2000000, "step":200000},
+    {"type":"loop", "start":200000, "stop":2000000, "step":200000, "default":200000},
     {"type":"loop"}
   ], 
   "repetitions": 1, 

@@ -26,7 +26,7 @@
     ]
   ], 
   "choices_selection": [
-    {"type":"loop", "iterations":5, "start":8, "stop":256, "step":8}
+    {"type":"loop", "iterations":5, "start":8, "stop":256, "step":8, "default":8}
   ], 
   "repetitions": 3, 
   "seed": 12345, 
