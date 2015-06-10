@@ -209,8 +209,8 @@ def make(i):
                              y=my_random.randrange(0,rx)
                              dv=r1+(y*rs)
 
-                  elif tp=='random-with-next':
-                     nupdate=True
+                     if tp=='random-with-next':
+                        nupdate=True
    
                   elif tp=='parallel-random': # Change all dimensions at the same time (if explorable)!
                        if yestart!='':
