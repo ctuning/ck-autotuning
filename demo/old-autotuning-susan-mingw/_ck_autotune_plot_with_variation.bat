@@ -1,1 +1,1 @@
-ck plot experiment.graph: @_ck_autotune_plot_with_variation.json
+ck plot graph: @_ck_autotune_plot_with_variation.json

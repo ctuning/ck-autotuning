@@ -1,1 +1,1 @@
-ck plot experiment.graph: @reproduce_density_graph_all.json
+ck plot graph: @reproduce_density_graph_all.json

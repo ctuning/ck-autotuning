@@ -1,1 +1,1 @@
-ck plot experiment.graph: @plot_with_variation.json
+ck plot graph: @plot_with_variation.json

@@ -1,1 +1,1 @@
-ck plot experiment.graph: @plot_as_points_with_pareto.json
+ck plot graph: @plot_as_points_with_pareto.json
