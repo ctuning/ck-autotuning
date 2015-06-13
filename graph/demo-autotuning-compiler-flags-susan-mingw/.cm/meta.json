@@ -35,8 +35,50 @@
         "size_x": 700, 
         "size_y": 400, 
         "title": "Powered by Collective Knowledge"
-      }
+      },
+      "notes":"Demo of the multi-objective autotuning of compiler flags via CK (can be any objective, i.e. execution time, energy, code size, cost, precision, reliability)"
+
+    },
+
+    {
+      "id": "x2d_execution_time_vs_obj_size", 
+      "name": "x2D graphs: execution time vs obj size", 
+      "params": {
+        "axis_x_desc": "Binary size", 
+        "axis_y_desc": "Execution time", 
+        "data_uoa_list": [
+          "demo-autotune-flags-susan-mingw-best"
+        ], 
+        "display_x_error_bar": "no", 
+        "display_y_error_bar": "yes", 
+        "experiment_module_uoa": "experiment", 
+        "flat_keys_list": [
+          "##characteristics#compile#obj_size#min", 
+          "##characteristics#run#execution_time_kernel_0#center", 
+          "##characteristics#run#execution_time_kernel_0#halfrange"
+        ], 
+        "mpl_image_dpi": "100", 
+        "mpl_image_size_x": "12", 
+        "mpl_image_size_y": "6", 
+        "plot_grid": "yes", 
+        "plot_type": "mpl_2d_scatter", 
+        "point_style": {
+          "0": {
+            "color": "#3366cc"
+          }, 
+          "1": {
+            "color": "#dc3912", 
+            "elinewidth": "5"
+          }
+        }, 
+        "size_x": 700, 
+        "size_y": 400, 
+        "title": "Powered by Collective Knowledge"
+      },
+      "notes":"Demo of the multi-objective autotuning of compiler flags via CK (can be any objective, i.e. execution time, energy, code size, cost, precision, reliability)"
+
     }
+
   ], 
   "name": "CK autotuning demo graphs: compiler flag tuning for susan on mingw"
 }
