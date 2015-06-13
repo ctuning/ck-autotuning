@@ -10,7 +10,7 @@
   ],
 
   "seed":12346,
-  "iterations":100,
+  "iterations":1,
   "repetitions":2,
 
   "pipeline_update":{

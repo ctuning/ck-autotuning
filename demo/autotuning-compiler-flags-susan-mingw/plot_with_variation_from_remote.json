@@ -1,7 +1,10 @@
 {
+  "remote_repo_uoa":"remote-ck",
+  "experiment_repo_uoa":"upload",
+
   "experiment_module_uoa":"experiment",
 
-  "data_uoa_list":["demo-autotune-flags-susan-mingw-i10", "demo-autotune-flags-susan-mingw-i10-pareto", "demo-autotune-flags-susan-mingw-best"],
+  "data_uoa_list":["demo-autotune-flags-susan-mingw-i10", "demo-autotune-flags-susan-mingw-best"],
 
   "flat_keys_list":[
     "##characteristics#compile#obj_size#min",
@@ -15,8 +18,8 @@
 
   "title":"Powered by Collective Knowledge",
 
-  "axis_x_desc":"Object file size (bytes)",
-  "axis_y_desc":"Kernel execution time (sec.)",
+  "axis_x_desc":"Binary size",
+  "axis_y_desc":"Execution time",
 
   "plot_grid":"yes",
 
@@ -24,9 +27,6 @@
   "mpl_image_size_y":"6",
   "mpl_image_dpi":"100",
 
-  "bound_lines":"no",
-
-  "point_style":{"2":{"size":40, "elinewidth":"7", "color":"#000000"},
-                 "1":{"size":10, "color":"#dc3912", "frontier":"yes", "line_style":"--"},
-                 "0":{"size":40, "color":"#3366cc"}}
+  "point_style":{"1":{"elinewidth":"5", "color":"#dc3912"},
+                 "0":{"color":"#3366cc"}}
 }

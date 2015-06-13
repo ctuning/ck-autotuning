@@ -1,4 +1,7 @@
 {
+  "remote_repo_uoa":"remote-ck",
+  "experiment_repo_uoa":"upload",
+
   "experiment_module_uoa":"experiment",
 
   "data_uoa_list":["demo-autotune-flags-susan-mingw-i10", "demo-autotune-flags-susan-mingw-i10-pareto", "demo-autotune-flags-susan-mingw-best"],
@@ -13,14 +16,14 @@
 
   "expand_list":"yes",
 
-  "plot_type":"mpl_1d_density",
+  "plot_type":"mpl_1d_histogram",
 
   "bins":100,
 
   "title":"Powered by Collective Knowledge",
 
   "axis_x_desc":"Execution time",
-  "axis_y_desc":"Density",
+  "axis_y_desc":"Histogram",
 
   "plot_grid":"yes",
 
