@@ -1,0 +1,37 @@
+{
+  "experiment_module_uoa":"experiment",
+
+  "data_uoa_list":["demo-autotune-flags-susan-mingw-i10", "demo-autotune-flags-susan-mingw-i10-pareto", "demo-autotune-flags-susan-mingw-best"],
+
+  "ignore_graph_separation":"yes",
+
+  "flat_keys_list":[
+    "##characteristics#run#execution_time_kernel_0#all"
+  ],
+
+  "ignore_point_if_none":"yes",
+
+  "expand_list":"yes",
+
+  "plot_type":"mpl_1d_histogram",
+
+  "bins":100,
+
+  "title":"Powered by Collective Knowledge",
+
+  "axis_x_desc":"Execution time",
+  "axis_y_desc":"Histogram",
+
+  "plot_grid":"yes",
+
+  "mpl_image_size_x":"12",
+  "mpl_image_size_y":"6",
+  "mpl_image_dpi":"100",
+
+  "out_repo_uoa":"ck-autotuning",
+  "out_data_uoa":"demo-autotuning-compiler-flags-susan-mingw",
+
+  "out_to_file":"histogram_all_times.png",
+
+  "save_table_to_json_file":"histogram_all_times.json"
+}

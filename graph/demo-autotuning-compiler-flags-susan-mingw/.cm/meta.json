@@ -1,52 +1,63 @@
 {
   "graphs": [
     {
-      "id": "2d_execution_time_vs_obj_size", 
-      "name": "2D graphs: execution time vs obj size", 
+      "id": "2d_points_time_vs_size_with_pareto", 
+      "name": "2D graphs: execution time vs obj size (expected values as points)", 
+      "notes": "Demo of the multi-objective autotuning of compiler flags via CK with Pareto (can be any objective, i.e. execution time, energy, code size, cost, precision, reliability)", 
       "params": {
-        "axis_x_desc": "Binary size", 
-        "axis_y_desc": "Execution time", 
+        "axis_x_desc": "Object file size (bytes)", 
+        "axis_y_desc": "Kernel execution time (sec.)", 
+        "bound_lines": "no", 
         "data_uoa_list": [
           "demo-autotune-flags-susan-mingw-i10", 
-          "demo-autotune-flags-susan-mingw-best"
+          "demo-autotune-flags-susan-mingw-best", 
+          "demo-autotune-flags-susan-mingw-i10-pareto"
         ], 
         "display_x_error_bar": "no", 
-        "display_y_error_bar": "yes", 
+        "display_y_error_bar": "no", 
         "experiment_module_uoa": "experiment", 
         "flat_keys_list": [
           "##characteristics#compile#obj_size#min", 
-          "##characteristics#run#execution_time_kernel_0#center", 
-          "##characteristics#run#execution_time_kernel_0#halfrange"
+          "##characteristics#run#execution_time_kernel_0#exp"
         ], 
         "mpl_image_dpi": "100", 
-        "mpl_image_size_x": "12", 
-        "mpl_image_size_y": "6", 
+        "mpl_image_size_x": "8", 
+        "mpl_image_size_y": "4", 
         "plot_grid": "yes", 
         "plot_type": "mpl_2d_scatter", 
         "point_style": {
           "0": {
-            "color": "#3366cc"
+            "color": "#3366cc", 
+            "size": 40
           }, 
           "1": {
+            "color": "#000000", 
+            "elinewidth": "7", 
+            "size": 40
+          }, 
+          "2": {
             "color": "#dc3912", 
-            "elinewidth": "5"
+            "frontier": "yes", 
+            "line_style": "--", 
+            "size": 10
           }
         }, 
         "size_x": 700, 
         "size_y": 400, 
         "title": "Powered by Collective Knowledge"
-      },
-      "notes":"Demo of the multi-objective autotuning of compiler flags via CK (can be any objective, i.e. execution time, energy, code size, cost, precision, reliability)"
-
-    },
-
+      }
+    }, 
     {
-      "id": "x2d_execution_time_vs_obj_size", 
-      "name": "x2D graphs: execution time vs obj size", 
+      "id": "2d_variation_time_vs_size_with_pareto", 
+      "name": "2D graphs: execution time vs obj size (with variation)", 
+      "notes": "Demo of the multi-objective autotuning of compiler flags via CK with Pareto (can be any objective, i.e. execution time, energy, code size, cost, precision, reliability)", 
       "params": {
-        "axis_x_desc": "Binary size", 
-        "axis_y_desc": "Execution time", 
+        "axis_x_desc": "Object file size (bytes)", 
+        "axis_y_desc": "Kernel execution time (sec.)", 
+        "bound_lines": "no", 
         "data_uoa_list": [
+          "demo-autotune-flags-susan-mingw-i10", 
+          "demo-autotune-flags-susan-mingw-i10-pareto", 
           "demo-autotune-flags-susan-mingw-best"
         ], 
         "display_x_error_bar": "no", 
@@ -64,21 +75,86 @@
         "plot_type": "mpl_2d_scatter", 
         "point_style": {
           "0": {
-            "color": "#3366cc"
+            "color": "#3366cc", 
+            "size": 40
           }, 
           "1": {
             "color": "#dc3912", 
-            "elinewidth": "5"
+            "frontier": "yes", 
+            "line_style": "--", 
+            "size": 10
+          }, 
+          "2": {
+            "color": "#000000", 
+            "elinewidth": "7", 
+            "size": 40
           }
         }, 
         "size_x": 700, 
         "size_y": 400, 
         "title": "Powered by Collective Knowledge"
-      },
-      "notes":"Demo of the multi-objective autotuning of compiler flags via CK (can be any objective, i.e. execution time, energy, code size, cost, precision, reliability)"
-
+      }
+    }, 
+    {
+      "id": "density_all_times", 
+      "name": "Density: all execution times", 
+      "notes": "", 
+      "params": {
+        "axis_x_desc": "Execution time", 
+        "axis_y_desc": "Density", 
+        "bins": 100, 
+        "data_uoa_list": [
+          "demo-autotune-flags-susan-mingw-i10", 
+          "demo-autotune-flags-susan-mingw-i10-pareto", 
+          "demo-autotune-flags-susan-mingw-best"
+        ], 
+        "expand_list": "yes", 
+        "experiment_module_uoa": "experiment", 
+        "flat_keys_list": [
+          "##characteristics#run#execution_time_kernel_0#all"
+        ], 
+        "ignore_graph_separation": "yes", 
+        "ignore_point_if_none": "yes", 
+        "mpl_image_dpi": "100", 
+        "mpl_image_size_x": "12", 
+        "mpl_image_size_y": "6", 
+        "plot_grid": "yes", 
+        "plot_type": "mpl_1d_density", 
+        "size_x": 700, 
+        "size_y": 400, 
+        "title": "Powered by Collective Knowledge"
+      }
+    }, 
+    {
+      "id": "histogram_all_times", 
+      "name": "Histogram: all execution times", 
+      "notes": "", 
+      "params": {
+        "axis_x_desc": "Execution time", 
+        "axis_y_desc": "Histogram", 
+        "bins": 100, 
+        "data_uoa_list": [
+          "demo-autotune-flags-susan-mingw-i10", 
+          "demo-autotune-flags-susan-mingw-i10-pareto", 
+          "demo-autotune-flags-susan-mingw-best"
+        ], 
+        "expand_list": "yes", 
+        "experiment_module_uoa": "experiment", 
+        "flat_keys_list": [
+          "##characteristics#run#execution_time_kernel_0#all"
+        ], 
+        "ignore_graph_separation": "yes", 
+        "ignore_point_if_none": "yes", 
+        "mpl_image_dpi": "100", 
+        "mpl_image_size_x": "12", 
+        "mpl_image_size_y": "6", 
+        "plot_grid": "yes", 
+        "plot_type": "mpl_1d_histogram", 
+        "size_x": 700, 
+        "size_y": 400, 
+        "title": "Powered by Collective Knowledge"
+      }
     }
-
   ], 
   "name": "CK autotuning demo graphs: compiler flag tuning for susan on mingw"
 }

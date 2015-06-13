@@ -1,4 +1,7 @@
 {
+  "experiment_repo_uoa":"remote-ck",
+  "remote_repo_uoa":"upload",
+
   "data_uoa":"demo-autotune-flags-susan-mingw-best",
 
   "repetitions":2,

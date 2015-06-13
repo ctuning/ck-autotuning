@@ -1,1 +1,1 @@
-ck replay experiment:demo-autotune-flags-susan-mingw-best @replay_base_best.json
+ck replay experiment @replay_base_best.json --subpoint=%1
