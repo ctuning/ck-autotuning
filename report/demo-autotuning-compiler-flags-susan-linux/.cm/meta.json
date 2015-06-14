@@ -1,0 +1,25 @@
+{
+  "affiliations": {
+    "1": {
+      "name": "cTuning Foundation, France"
+    }, 
+    "2": {
+      "name": "dividiti, UK"
+    }
+  }, 
+  "authors": [
+    {
+      "affiliation": "1,2", 
+      "name": "Grigori Fursin", 
+      "url": "http://cTuning.org/lab/people/gfursin"
+    }, 
+    {
+      "affiliation": "2", 
+      "name": "Anton Lokhmotov", 
+      "url": "https://uk.linkedin.com/in/lokhmotov"
+    }
+  ], 
+  "live": "yes", 
+  "template": "live.html", 
+  "title": "Report demonstrating universal multi-objective autotuning in CK"
+}
