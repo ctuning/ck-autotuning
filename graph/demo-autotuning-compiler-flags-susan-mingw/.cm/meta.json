@@ -156,5 +156,10 @@
       }
     }
   ], 
-  "name": "CK autotuning demo graphs: compiler flag tuning for susan on mingw"
+  "name": "CK autotuning demo graphs: compiler flag tuning for susan on mingw",
+  "shared_repo":"ck-autotuning",
+  "get_shared_repo":"ck pull repo:ck-autotuning",
+  "scripts_repo_uoa":"",
+  "scripts_module_uoa":"demo",
+  "scripts_data_uoa":"c292a04d8881888d"
 }
