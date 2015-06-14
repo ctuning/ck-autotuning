@@ -1,4 +1,5 @@
 {
+  "get_shared_repo": "ck pull repo:ck-autotuning", 
   "graphs": [
     {
       "id": "2d_points_time_vs_size_with_pareto", 
@@ -156,10 +157,9 @@
       }
     }
   ], 
-  "name": "CK autotuning demo graphs: compiler flag tuning for susan on linux",
-  "shared_repo":"ck-autotuning",
-  "get_shared_repo":"ck pull repo:ck-autotuning",
-  "scripts_repo_uoa":"",
-  "scripts_module_uoa":"demo",
-  "scripts_data_uoa":"d093495f44f446dd"
+  "name": "CK autotuning demo graphs: compiler flag tuning for susan on linux", 
+  "scripts_data_uoa": "d093495f44f446dd", 
+  "scripts_module_uoa": "demo", 
+  "scripts_repo_uoa": "", 
+  "shared_repo": "ck-autotuning"
 }
