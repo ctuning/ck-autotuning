@@ -35,6 +35,6 @@
 
   "out_to_file":"2d_variation_time_vs_size_with_pareto.png",
 
-  "save_table_to_json_file":"2d_variation_time_vs_size_with_pareto.json"
-
+  "save_table_to_json_file":"2d_variation_time_vs_size_with_pareto.json",
+  "save_table_to_csv_file":"2d_variation_time_vs_size_with_pareto.csv"
 }

@@ -1,0 +1,179 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": [
+    "# Prepared by Grigori Fursin to demo CK"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": [
+    "import ck.kernel as ck"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {
+    "collapsed": false
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": []
+    }
+   ],
+   "source": [
+    "print (ck.version({}))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": [
+    "# run from CMD\n",
+    "# _clean_program_pipeline.bat\n",
+    "# _clean_program_pipeline.bat\n",
+    "# to clean and set up autotuning pipeline"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": [
+    "# Turn off adaptive CPU frequency governor, \n",
+    "# otherwise our pipeline will detect frequency change and will stop )"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {
+    "collapsed": false
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": []
+    }
+   ],
+   "source": [
+    "ii={'action':'run',\n",
+    "    'module_uoa':'pipeline',\n",
+    "    'data_uoa':'program',\n",
+    "#    'save_to_file':'xyz.json',\n",
+    "    'pipeline_from_file':'_setup_program_pipeline_tmp.json'}\n",
+    "r=ck.access(ii)\n",
+    "if r['return']>0:\n",
+    "    ck.err(r)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {
+    "collapsed": false
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+     ]
+    }
+   ],
+   "source": [
+    "# check if pipeline failed\n",
+    "last_iteration_output=r['last_iteration_output']\n",
+    "if last_iteration_output.get('fail','')=='yes':\n",
+    "    print ('Pipeline failed: '+last_iteration_output.get('fail_reason',''))\n",
+    "    exit(1)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": [
+    "# Get experiment desc\n",
+    "experiment_desc=r['experiment_desc']"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {
+    "collapsed": false
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+     ]
+    }
+   ],
+   "source": [
+    "# Get stat analysis and print available flat keys\n",
+    "stat_analysis=r['last_stat_analysis']\n",
+    "dict_flat=stat_analysis.get('dict_flat',{})\n",
+    "for k in dict_flat:\n",
+    "    print (k)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 2",
+   "language": "python",
+   "name": "python2"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 2
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython2",
+   "version": "2.7.8"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 0
+}
