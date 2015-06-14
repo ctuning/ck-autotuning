@@ -142,6 +142,8 @@ def autotune(i):
                                                     when detecting subset of points to detect frontier
                                                     (usually removing optimization dimensions, such as compiler flags)
 
+               (only_filter)                      - if 'yes', do not run pipeline, but run filters on data (for Pareto, for example)
+
                (features)             - extra features
                (meta)                 - extra meta
 
@@ -300,6 +302,10 @@ def autotune(i):
     try: ni=int(ni)
     except Exception as e: pass
 
+    only_filter=ck.get_from_dicts(ic, 'only_filter', '', None)
+    if only_filter=='yes':
+       ni=1
+
     sfi=i.get('start_from_iteration','')
     if sfi=='': sfi=1
     if type(sfi)!=int: sfi=int(sfi)
@@ -414,7 +420,11 @@ def autotune(i):
             'pipeline_uid':puid}
 
         ddcl=[] # characteristics list (from statistical repetitions)
+
+        fail='no'
         for sr in range(0, srm):
+            if only_filter=='yes': continue
+
             ck.out('')
             ck.out('      ------------------- Statistical reptition: '+str(sr+1)+' of '+str(srm)+' -------------------')
             ck.out('')
@@ -459,17 +469,18 @@ def autotune(i):
         ##########################################################################################
         # Recording experiment if needed
         stat_dict={}
-        if record=='yes':
 
+        iec={'module_uoa':cfg['module_deps']['experiment'],
+
+             'repo_uoa': record_repo,
+             'experiment_repo_uoa': record_experiment_repo,
+             'experiment_uoa':record_uoa,
+
+             'features_keys_to_process':fkp}
+        fft={}
+
+        if record=='yes' and only_filter!='yes':
            # Will be reused for frontier
-           iec={'module_uoa':cfg['module_deps']['experiment'],
-
-                'repo_uoa': record_repo,
-                'experiment_repo_uoa': record_experiment_repo,
-                'experiment_uoa':record_uoa,
-
-                'features_keys_to_process':fkp}
-
            fft={} # flat features
 
            if fail!='yes' or record_failed=='yes':
@@ -523,7 +534,7 @@ def autotune(i):
 
         # Check if need to leave only points on frontier 
         #   (our frontier is not 'Pareto efficient' since we have discreet characteristics)
-        if len(fk)>0 and len(stat_dict)>0:
+        if len(fk)>0 and (len(stat_dict)>0 or only_filter=='yes'):
            # If data was recorded to repo, reload all points 
            if record=='yes':
               if o=='con':
@@ -533,9 +544,16 @@ def autotune(i):
               ie=copy.deepcopy(iec)
 
               ie['action']='get'
-              ie['flat_features']=fft
-              ie['features_keys_to_ignore']=ffki # Ignore parts of fetures to be able to create subset for frontier ...
-              ie['skip_processing']='yes'
+
+              if only_filter!='yes':
+                 # NOTE - I currently do not search points by features, i.e. all points are taken for Paretto
+                 # should improve in the future ...
+                 ie['flat_features']=fft
+                 ie['features_keys_to_ignore']=ffki # Ignore parts of fetures to be able to create subset for frontier ...
+                 if 'features_keys_to_process' in ie: del(ie['features_keys_to_process'])
+                 ie['skip_processing']='yes'
+              else:
+                 ie['get_all_points']='yes'
               ie['load_json_files']=['flat']
               ie['get_keys_from_json_files']=fk
               ie['out']='con'

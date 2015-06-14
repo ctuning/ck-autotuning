@@ -1,4 +1,6 @@
 {
+  "only_filter":"yes",
+
   "choices_order":[
     [
      "##compiler_flags#*"

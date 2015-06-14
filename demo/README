@@ -3,6 +3,7 @@ More autotuning examples are available in our CPC'15 paper.
 We are currently making it fully reproducible and iteractive
 via CK repository "reproduce-ck-paper".
 
-You can get it using
+You can get all artifacts as reusable components via
+
  ck pull repo:reproduce-ck-paper
 
