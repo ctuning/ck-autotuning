@@ -1,7 +1,7 @@
 {
   "experiment_module_uoa":"experiment",
 
-  "data_uoa_list":["demo-autotune-flags-susan-linux-i10", "demo-autotune-flags-susan-linux-best", "demo-autotune-flags-susan-linux-i10-pareto"],
+  "data_uoa_list":["demo-autotune-flags-susan-linux-i10", "demo-autotune-flags-susan-linux-i10-pareto", "demo-autotune-flags-susan-linux-best"],
 
   "flat_keys_list":[
     "##characteristics#compile#obj_size#min",
@@ -26,7 +26,7 @@
 
   "bound_lines":"no",
 
-  "point_style":{"2":{"size":10, "color":"#dc3912", "frontier":"yes", "line_style":"--"},
-                 "1":{"size":40, "elinewidth":"7", "color":"#000000"},
+  "point_style":{"2":{"size":40, "elinewidth":"7", "color":"#000000"},
+                 "1":{"size":10, "color":"#dc3912"},
                  "0":{"size":40, "color":"#3366cc"}}
 }

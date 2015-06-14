@@ -13,18 +13,26 @@
 
   "expand_list":"yes",
 
-  "plot_type":"mpl_1d_density",
+  "plot_type":"mpl_1d_histogram",
 
   "bins":100,
 
   "title":"Powered by Collective Knowledge",
 
   "axis_x_desc":"Execution time",
-  "axis_y_desc":"Density",
+  "axis_y_desc":"Histogram",
 
   "plot_grid":"yes",
 
   "mpl_image_size_x":"12",
   "mpl_image_size_y":"6",
-  "mpl_image_dpi":"100"
+  "mpl_image_dpi":"100",
+
+  "out_repo_uoa":"ck-autotuning",
+  "out_data_uoa":"demo-autotuning-compiler-flags-susan-linux",
+
+  "out_to_file":"histogram_all_times.png",
+
+  "save_table_to_json_file":"histogram_all_times.json",
+  "save_table_to_csv_file":"histogram_all_times.csv"
 }
