@@ -1,0 +1,23 @@
+{
+  "experiment_repo_uoa":"remote-ck",
+  "remote_repo_uoa":"upload",
+
+  "data_uoa":"demo-autotune-flags-susan-linux-best",
+
+  "repetitions":2,
+
+  "record_original_flat_json":"$#ck_cur_path#$replay_base_best_orig_tmp.json",
+  "record_reproduced_flat_json":"$#ck_cur_path#$replay_base_best_reproduced_tmp.json",
+
+  "dims_to_check":["##characteristics#run#execution_time_kernel_0#*"],
+  "end_of_dims_to_check":["#min", "#mean", "#exp"],
+
+  "threshold_to_compare":8,
+
+  "pipeline_update":{
+     "choices":{
+       "host_os":"windows-64",
+       "target_os":"mingw-64"
+     }
+   }
+}
