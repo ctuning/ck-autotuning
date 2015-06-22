@@ -1,1 +1,37 @@
-{}
+{
+  "flat_keys":["##choices#host_os",
+           "##choices#target_os",
+           "##features#platform#cpu#name",
+           "##features#platform#cpu#sub_name",
+           "##features#platform#cpu#num_proc",
+           "##features#compiler_version#raw@0",
+           "##characteristics#run#repeat",
+           "##characteristics#run#execution_time_kernel_0", 
+           "##characteristics#run#run_time_state#energy_a15_mem_gpu",
+           "##characteristics#run#run_time_state#energy_a7_mem_gpu",
+           "##characteristics#compile#obj_size", 
+           "##characteristics#current_freq#0",
+           "##choices#gpu_freq",
+           "##characteristics#run#accuracy", 
+           "##characteristics#run#faults", 
+           "##choices#compiler_flags#*" 
+           ],
+
+  "names": ["Host OS",
+            "Target OS",
+            "CPU name",
+            "CPU sub-name",
+            "Number of logical cores",
+            "Raw compiler name",
+            "Kernel repetitions",
+            "Execution time (sec.)", 
+            "Energy total (A15, joules)", 
+            "Energy total (A7, joules)", 
+            "Object size (bytes)", 
+            "CPU freq (MHz)",
+            "GPU freq (MHz)",
+            "Algorithm accuracy",
+            "Faults",
+            "Compiler flags"
+            ]
+}
