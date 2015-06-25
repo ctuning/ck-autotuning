@@ -1896,7 +1896,8 @@ def pipeline(i):
                                        examples: 0 ; 0,1 ; 0-3 ; 4-7  (the last two can be useful for ARM big.LITTLE arhictecture
 
               (repeat)               - repeat kernel via environment CT_REPEAT_MAIN if supported
-              (skip_calibration)     - if 'yes', skip execution time calibration (make it around 4.0 sec)
+              (do_not_reuse_repeat)  - if 'yes', do not reuse repeat across iterations - needed for dataset exploration, for example
+              (skip_calibration)     - if 'yes', skip execution time calibration (otherwise, make it around 4.0 sec)
               (calibration_time)     - calibration time in string, 4.0 sec. by default
               (calibration_max)      - max number of iterations for calibration, 10 by default
 
@@ -2062,8 +2063,11 @@ def pipeline(i):
     env=ck.get_from_dicts(i,'env',{},choices)
     eenv=ck.get_from_dicts(i, 'extra_env','',choices)
 
-    repeat=ck.get_from_dicts(i,'repeat','',choices)
-    if repeat=='': repeat=state.get('repeat','')
+    if i.get('do_not_reuse_repeat','')=='yes' and srn==0:
+       repeat=''
+    else: 
+       repeat=ck.get_from_dicts(i,'repeat','',choices)
+       if repeat=='': repeat=state.get('repeat','')
 
     rsc=ck.get_from_dicts(i, 'skip_calibration','', choices)
     rct=ck.get_from_dicts(i, 'calibration_time','',choices)
