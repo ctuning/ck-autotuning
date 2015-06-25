@@ -1,0 +1,2323 @@
+{
+  "characteristics": {}, 
+  "choices": {
+    "cmd_key": "default", 
+    "compile_type": "dynamic", 
+    "cpu_freq": "max", 
+    "data_uoa": "polybench-opencl-gemm", 
+    "device_id": "", 
+    "energy": "no", 
+    "gpu_freq": "max", 
+    "host_os": "windows-64", 
+    "module_uoa": "b0ac08fe1d3c2615", 
+    "target_os": "windows-64", 
+    "target_os_bits": "64"
+  }, 
+  "choices_desc": {
+    "##compiler_flags#aa_eval": {
+      "can_omit": "yes", 
+      "choice": [
+        "-aa-eval", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -aa-eval", 
+      "sort": 10060, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#adce": {
+      "can_omit": "yes", 
+      "choice": [
+        "-adce", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -adce", 
+      "sort": 10070, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#always_inline": {
+      "can_omit": "yes", 
+      "choice": [
+        "-always-inline", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -always-inline", 
+      "sort": 10080, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#argpromotion": {
+      "can_omit": "yes", 
+      "choice": [
+        "-argpromotion", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -argpromotion", 
+      "sort": 10090, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#base_opt": {
+      "choice": [
+        "-O3", 
+        "-O1", 
+        "-O2"
+      ], 
+      "default": "", 
+      "desc": "base compiler flag", 
+      "sort": 10000, 
+      "tags": [
+        "base", 
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#basicaa": {
+      "can_omit": "yes", 
+      "choice": [
+        "-basicaa", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -basicaa", 
+      "sort": 10110, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#basiccg": {
+      "can_omit": "yes", 
+      "choice": [
+        "-basiccg", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -basiccg", 
+      "sort": 10120, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#bb_vectorize": {
+      "can_omit": "yes", 
+      "choice": [
+        "-bb-vectorize", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -bb-vectorize", 
+      "sort": 10130, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#block_freq": {
+      "can_omit": "yes", 
+      "choice": [
+        "-block-freq", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -block-freq", 
+      "sort": 10140, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#block_placement": {
+      "can_omit": "yes", 
+      "choice": [
+        "-block-placement", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -block-placement", 
+      "sort": 10150, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#branch_prob": {
+      "can_omit": "yes", 
+      "choice": [
+        "-branch-prob", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -branch-prob", 
+      "sort": 10160, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#break_crit_edges": {
+      "can_omit": "yes", 
+      "choice": [
+        "-break-crit-edges", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -break-crit-edges", 
+      "sort": 10170, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#codegenprepare": {
+      "can_omit": "yes", 
+      "choice": [
+        "-codegenprepare", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -codegenprepare", 
+      "sort": 10180, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#constmerge": {
+      "can_omit": "yes", 
+      "choice": [
+        "-constmerge", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -constmerge", 
+      "sort": 10190, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#constprop": {
+      "can_omit": "yes", 
+      "choice": [
+        "-constprop", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -constprop", 
+      "sort": 10200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#correlated_propagation": {
+      "can_omit": "yes", 
+      "choice": [
+        "-correlated-propagation", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -correlated-propagation", 
+      "sort": 10210, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#count_aa": {
+      "can_omit": "yes", 
+      "choice": [
+        "-count-aa", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -count-aa", 
+      "sort": 10220, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#dce": {
+      "can_omit": "yes", 
+      "choice": [
+        "-dce", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -dce", 
+      "sort": 10230, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#deadargelim": {
+      "can_omit": "yes", 
+      "choice": [
+        "-deadargelim", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -deadargelim", 
+      "sort": 10240, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#die": {
+      "can_omit": "yes", 
+      "choice": [
+        "-die", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -die", 
+      "sort": 10250, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#disable_inlining": {
+      "can_omit": "yes", 
+      "choice": [
+        "-disable-inlining", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -disable-inlining", 
+      "sort": 10010, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#disable_simplify_libcalls": {
+      "can_omit": "yes", 
+      "choice": [
+        "-disable-simplify-libcalls", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -disable-simplify-libcalls", 
+      "sort": 10020, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#domfrontier": {
+      "can_omit": "yes", 
+      "choice": [
+        "-domfrontier", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -domfrontier", 
+      "sort": 10260, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#domtree": {
+      "can_omit": "yes", 
+      "choice": [
+        "-domtree", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -domtree", 
+      "sort": 10270, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#dse": {
+      "can_omit": "yes", 
+      "choice": [
+        "-dse", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -dse", 
+      "sort": 10280, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#early_cse": {
+      "can_omit": "yes", 
+      "choice": [
+        "-early-cse", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -early-cse", 
+      "sort": 10290, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#functionattrs": {
+      "can_omit": "yes", 
+      "choice": [
+        "-functionattrs", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -functionattrs", 
+      "sort": 10300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#funit_at_a_time": {
+      "can_omit": "yes", 
+      "choice": [
+        "-funit-at-a-time", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -funit-at-a-time", 
+      "sort": 10030, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#globaldce": {
+      "can_omit": "yes", 
+      "choice": [
+        "-globaldce", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -globaldce", 
+      "sort": 10310, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#globalopt": {
+      "can_omit": "yes", 
+      "choice": [
+        "-globalopt", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -globalopt", 
+      "sort": 10320, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#globalsmodref_aa": {
+      "can_omit": "yes", 
+      "choice": [
+        "-globalsmodref-aa", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -globalsmodref-aa", 
+      "sort": 10330, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#gvn": {
+      "can_omit": "yes", 
+      "choice": [
+        "-gvn", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -gvn", 
+      "sort": 10340, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#indvars": {
+      "can_omit": "yes", 
+      "choice": [
+        "-indvars", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -indvars", 
+      "sort": 10350, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#inline": {
+      "can_omit": "yes", 
+      "choice": [
+        "-inline", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -inline", 
+      "sort": 10360, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#instcombine": {
+      "can_omit": "yes", 
+      "choice": [
+        "-instcombine", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -instcombine", 
+      "sort": 10370, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#instcount": {
+      "can_omit": "yes", 
+      "choice": [
+        "-instcount", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -instcount", 
+      "sort": 10380, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#instnamer": {
+      "can_omit": "yes", 
+      "choice": [
+        "-instnamer", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -instnamer", 
+      "sort": 10390, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#instsimplify": {
+      "can_omit": "yes", 
+      "choice": [
+        "-instsimplify", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -instsimplify", 
+      "sort": 10400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#internalize": {
+      "can_omit": "yes", 
+      "choice": [
+        "-internalize", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -internalize", 
+      "sort": 10410, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#intervals": {
+      "can_omit": "yes", 
+      "choice": [
+        "-intervals", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -intervals", 
+      "sort": 10420, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#ipconstprop": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ipconstprop", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ipconstprop", 
+      "sort": 10430, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#ipsccp": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ipsccp", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ipsccp", 
+      "sort": 10440, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#iv_users": {
+      "can_omit": "yes", 
+      "choice": [
+        "-iv-users", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -iv-users", 
+      "sort": 10450, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#lazy_value_info": {
+      "can_omit": "yes", 
+      "choice": [
+        "-lazy-value-info", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -lazy-value-info", 
+      "sort": 10460, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#lcssa": {
+      "can_omit": "yes", 
+      "choice": [
+        "-lcssa", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -lcssa", 
+      "sort": 10470, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#lda": {
+      "can_omit": "yes", 
+      "choice": [
+        "-lda", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -lda", 
+      "sort": 10480, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#libcall_aa": {
+      "can_omit": "yes", 
+      "choice": [
+        "-libcall-aa", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -libcall-aa", 
+      "sort": 10490, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#licm": {
+      "can_omit": "yes", 
+      "choice": [
+        "-licm", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -licm", 
+      "sort": 10500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#lint": {
+      "can_omit": "yes", 
+      "choice": [
+        "-lint", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -lint", 
+      "sort": 10510, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#loop_deletion": {
+      "can_omit": "yes", 
+      "choice": [
+        "-loop-deletion", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -loop-deletion", 
+      "sort": 10520, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#loop_extract": {
+      "can_omit": "yes", 
+      "choice": [
+        "-loop-extract", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -loop-extract", 
+      "sort": 10530, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#loop_extract_single": {
+      "can_omit": "yes", 
+      "choice": [
+        "-loop-extract-single", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -loop-extract-single", 
+      "sort": 10540, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#loop_idiom": {
+      "can_omit": "yes", 
+      "choice": [
+        "-loop-idiom", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -loop-idiom", 
+      "sort": 10550, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#loop_instsimplify": {
+      "can_omit": "yes", 
+      "choice": [
+        "-loop-instsimplify", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -loop-instsimplify", 
+      "sort": 10560, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#loop_reduce": {
+      "can_omit": "yes", 
+      "choice": [
+        "-loop-reduce", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -loop-reduce", 
+      "sort": 10570, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#loop_rotate": {
+      "can_omit": "yes", 
+      "choice": [
+        "-loop-rotate", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -loop-rotate", 
+      "sort": 10580, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#loop_simplify": {
+      "can_omit": "yes", 
+      "choice": [
+        "-loop-simplify", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -loop-simplify", 
+      "sort": 10590, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#loop_unroll": {
+      "can_omit": "yes", 
+      "choice": [
+        "-loop-unroll", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -loop-unroll", 
+      "sort": 10600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#loop_unswitch": {
+      "can_omit": "yes", 
+      "choice": [
+        "-loop-unswitch", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -loop-unswitch", 
+      "sort": 10610, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#lower_expect": {
+      "can_omit": "yes", 
+      "choice": [
+        "-lower-expect", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -lower-expect", 
+      "sort": 10620, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#loweratomic": {
+      "can_omit": "yes", 
+      "choice": [
+        "-loweratomic", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -loweratomic", 
+      "sort": 10630, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#lowerinvoke": {
+      "can_omit": "yes", 
+      "choice": [
+        "-lowerinvoke", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -lowerinvoke", 
+      "sort": 10640, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#lowerswitch": {
+      "can_omit": "yes", 
+      "choice": [
+        "-lowerswitch", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -lowerswitch", 
+      "sort": 10650, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#mem2reg": {
+      "can_omit": "yes", 
+      "choice": [
+        "-mem2reg", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -mem2reg", 
+      "sort": 10660, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#memcpyopt": {
+      "can_omit": "yes", 
+      "choice": [
+        "-memcpyopt", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -memcpyopt", 
+      "sort": 10670, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#memdep": {
+      "can_omit": "yes", 
+      "choice": [
+        "-memdep", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -memdep", 
+      "sort": 10680, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#mergefunc": {
+      "can_omit": "yes", 
+      "choice": [
+        "-mergefunc", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -mergefunc", 
+      "sort": 10690, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#mergereturn": {
+      "can_omit": "yes", 
+      "choice": [
+        "-mergereturn", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -mergereturn", 
+      "sort": 10700, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#module_debuginfo": {
+      "can_omit": "yes", 
+      "choice": [
+        "-module-debuginfo", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -module-debuginfo", 
+      "sort": 10710, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#partial_inliner": {
+      "can_omit": "yes", 
+      "choice": [
+        "-partial-inliner", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -partial-inliner", 
+      "sort": 10720, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#postdomtree": {
+      "can_omit": "yes", 
+      "choice": [
+        "-postdomtree", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -postdomtree", 
+      "sort": 10730, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#preverify": {
+      "can_omit": "yes", 
+      "choice": [
+        "-preverify", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -preverify", 
+      "sort": 10740, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#prune_eh": {
+      "can_omit": "yes", 
+      "choice": [
+        "-prune-eh", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -prune-eh", 
+      "sort": 10750, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#reassociate": {
+      "can_omit": "yes", 
+      "choice": [
+        "-reassociate", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -reassociate", 
+      "sort": 10760, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#reg2mem": {
+      "can_omit": "yes", 
+      "choice": [
+        "-reg2mem", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -reg2mem", 
+      "sort": 10770, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#regions": {
+      "can_omit": "yes", 
+      "choice": [
+        "-regions", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -regions", 
+      "sort": 10780, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#scalar_evolution": {
+      "can_omit": "yes", 
+      "choice": [
+        "-scalar-evolution", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -scalar-evolution", 
+      "sort": 10790, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#scalarrepl": {
+      "can_omit": "yes", 
+      "choice": [
+        "-scalarrepl", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -scalarrepl", 
+      "sort": 10800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#scalarrepl_ssa": {
+      "can_omit": "yes", 
+      "choice": [
+        "-scalarrepl-ssa", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -scalarrepl-ssa", 
+      "sort": 10810, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#sccp": {
+      "can_omit": "yes", 
+      "choice": [
+        "-sccp", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -sccp", 
+      "sort": 10820, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#scev_aa": {
+      "can_omit": "yes", 
+      "choice": [
+        "-scev-aa", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -scev-aa", 
+      "sort": 10830, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#simplify_libcalls": {
+      "can_omit": "yes", 
+      "choice": [
+        "-simplify-libcalls", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -simplify-libcalls", 
+      "sort": 10840, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#simplifycfg": {
+      "can_omit": "yes", 
+      "choice": [
+        "-simplifycfg", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -simplifycfg", 
+      "sort": 10850, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#sink": {
+      "can_omit": "yes", 
+      "choice": [
+        "-sink", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -sink", 
+      "sort": 10860, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#std_compile_opts": {
+      "can_omit": "yes", 
+      "choice": [
+        "-std-compile-opts", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -std-compile-opts", 
+      "sort": 10040, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#std_link_opts": {
+      "can_omit": "yes", 
+      "choice": [
+        "-std-link-opts", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -std-link-opts", 
+      "sort": 10050, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#strip": {
+      "can_omit": "yes", 
+      "choice": [
+        "-strip", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -strip", 
+      "sort": 10870, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#strip_dead_debug_info": {
+      "can_omit": "yes", 
+      "choice": [
+        "-strip-dead-debug-info", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -strip-dead-debug-info", 
+      "sort": 10880, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#strip_dead_prototypes": {
+      "can_omit": "yes", 
+      "choice": [
+        "-strip-dead-prototypes", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -strip-dead-prototypes", 
+      "sort": 10890, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#strip_debug_declare": {
+      "can_omit": "yes", 
+      "choice": [
+        "-strip-debug-declare", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -strip-debug-declare", 
+      "sort": 10900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#strip_nondebug": {
+      "can_omit": "yes", 
+      "choice": [
+        "-strip-nondebug", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -strip-nondebug", 
+      "sort": 10910, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#tailcallelim": {
+      "can_omit": "yes", 
+      "choice": [
+        "-tailcallelim", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -tailcallelim", 
+      "sort": 10920, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#targetlibinfo": {
+      "can_omit": "yes", 
+      "choice": [
+        "-targetlibinfo", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -targetlibinfo", 
+      "sort": 10940, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#tbaa": {
+      "can_omit": "yes", 
+      "choice": [
+        "-tbaa", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -tbaa", 
+      "sort": 10950, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_flags#vectorize": {
+      "can_omit": "yes", 
+      "choice": [
+        "-vectorize", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -vectorize", 
+      "sort": 10960, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_vars#DATA_TYPE": {
+      "choice": [
+        "double", 
+        "float"
+      ], 
+      "default": "float", 
+      "desc": "Program property: Variable precision", 
+      "sort": 25, 
+      "tags": [
+        "dataset"
+      ], 
+      "type": "text"
+    }, 
+    "##compiler_vars#DIM_LOCAL_WORK_GROUP_X": {
+      "default": 32, 
+      "desc": "Local workgroup: block X", 
+      "explore_start": 1, 
+      "explore_step": 1, 
+      "explore_stop": 64, 
+      "sort": 3, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##compiler_vars#DIM_LOCAL_WORK_GROUP_Y": {
+      "default": 8, 
+      "desc": "Local workgroup: block Y", 
+      "explore_start": 1, 
+      "explore_step": 1, 
+      "explore_stop": 64, 
+      "sort": 4, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##compiler_vars#NI": {
+      "default": 512, 
+      "desc": "Dataset: Matrix size NI", 
+      "explore_start": 2, 
+      "explore_step": 1, 
+      "explore_stop": 5000, 
+      "sort": 1, 
+      "tags": [
+        "dataset"
+      ], 
+      "type": "integer"
+    }, 
+    "##compiler_vars#NJ": {
+      "default": 512, 
+      "desc": "Dataset: Matrix size NJ", 
+      "explore_start": 2, 
+      "explore_step": 1, 
+      "explore_stop": 5000, 
+      "sort": 2, 
+      "tags": [
+        "dataset"
+      ], 
+      "type": "integer"
+    }, 
+    "##compiler_vars#NK": {
+      "default": 512, 
+      "desc": "Dataset: Matrix size NK", 
+      "explore_start": 2, 
+      "explore_step": 1, 
+      "explore_stop": 5000, 
+      "sort": 3, 
+      "tags": [
+        "dataset"
+      ], 
+      "type": "integer"
+    }, 
+    "##env#CT_REPEAT_MAIN": {
+      "default": 1, 
+      "desc": "Main function/kernel repetition", 
+      "explore_start": 1, 
+      "explore_step": 10, 
+      "explore_stop": 1000000, 
+      "sort": 1, 
+      "type": "integer"
+    }
+  }, 
+  "dependencies": {
+    "compiler": {
+      "bat": "call D:\\Work1\\CK\\ck-repos\\fgg-local-win\\env\\d1cad28a354152b3\\env.bat\n", 
+      "build_dir_name": "llvm", 
+      "cus": {
+        "build_dir_name": "llvm", 
+        "can_strip_dynamic_lib": "yes", 
+        "env_prefix": "CK_ENV_COMPILER_LLVM", 
+        "extra_dir": "", 
+        "languages": [
+          "C", 
+          "CPP"
+        ], 
+        "path_bin": "d:\\Work1\\CK\\ck-tools\\llvm-3.6-x86\\bin", 
+        "path_install": "d:\\Work1\\CK\\ck-tools\\llvm-3.6-x86", 
+        "retarget": "no", 
+        "skip_add_to_ld_path": "yes", 
+        "tool_prefix": "", 
+        "version": "3.6.0", 
+        "version_int": 30600
+      }, 
+      "dict": {
+        "customize": {
+          "build_dir_name": "llvm", 
+          "can_strip_dynamic_lib": "yes", 
+          "env_prefix": "CK_ENV_COMPILER_LLVM", 
+          "extra_dir": "", 
+          "languages": [
+            "C", 
+            "CPP"
+          ], 
+          "path_bin": "d:\\Work1\\CK\\ck-tools\\llvm-3.6-x86\\bin", 
+          "path_install": "d:\\Work1\\CK\\ck-tools\\llvm-3.6-x86", 
+          "retarget": "no", 
+          "skip_add_to_ld_path": "yes", 
+          "tool_prefix": "", 
+          "version": "3.6.0", 
+          "version_int": 30600
+        }, 
+        "deps": {
+          "compiler_mcl": {
+            "bat": "call D:\\Work1\\CK\\ck-repos\\fgg-local-win\\env\\924e05b4e11f9dcc\\env.bat\n", 
+            "build_dir_name": "mcl", 
+            "dict": {
+              "customize": {
+                "add_win_sdk_path": "yes", 
+                "build-dir-name": "mcl", 
+                "build_dir_name": "mcl", 
+                "env_prefix": "CK_ENV_COMPILER_MVSC", 
+                "extra_dir": "", 
+                "input_path_example": "C:\\Program Files (x86)\\Microsoft Visual Studio 9.0\\VC", 
+                "languages": [
+                  "C", 
+                  "CPP"
+                ], 
+                "path_install": "C:\\Program Files (x86)\\Microsoft Visual Studio 12.0\\VC", 
+                "retarget": "", 
+                "skip_add_to_bin": "yes", 
+                "skip_add_to_ld_path": "yes", 
+                "skip_add_to_path": "yes", 
+                "tool_prefix": "", 
+                "version": "18.00", 
+                "version_int": 1800
+              }, 
+              "deps": {}, 
+              "env": {
+                "CK_AR": "lib", 
+                "CK_ASM_EXT": ".asm", 
+                "CK_CC": "cl", 
+                "CK_COMPILER_FLAGS_OBLIGATORY": "/DWINDOWS /GS-", 
+                "CK_COMPILER_FLAG_CPP11": "/Qstd=c++11", 
+                "CK_COMPILER_FLAG_OPENMP": "/openmp", 
+                "CK_COMPILER_FLAG_PTHREAD_LIB": "/pthread", 
+                "CK_COMPILER_FLAG_STD90": "/Qstd=c90", 
+                "CK_COMPILER_FLAG_STD99": "/Qstd=c99", 
+                "CK_CXX": "cl", 
+                "CK_DLL_EXT": ".dll", 
+                "CK_EXE_EXT": ".exe", 
+                "CK_FLAGS_CREATE_ASM": "/Fa /c", 
+                "CK_FLAGS_CREATE_OBJ": "/c", 
+                "CK_FLAGS_DLL": "/MT /DWin /LD", 
+                "CK_FLAGS_DLL_EXTRA": "/link /dll", 
+                "CK_FLAGS_DYNAMIC_BIN": "/MD", 
+                "CK_FLAGS_OUTPUT": "/Fe", 
+                "CK_FLAGS_STATIC_BIN": "/MT", 
+                "CK_FLAGS_STATIC_LIB": "/MD", 
+                "CK_FLAG_PREFIX_INCLUDE": "/I", 
+                "CK_FLAG_PREFIX_VAR": "/D", 
+                "CK_LB": "lib", 
+                "CK_LB_OUTPUT": "/OUT:", 
+                "CK_LD_DYNAMIC_FLAGS": "/link /NODEFAULTLIB:LIBCMT", 
+                "CK_LD_FLAGS_EXTRA": "", 
+                "CK_LIB_EXT": ".lib", 
+                "CK_MAKE": "nmake", 
+                "CK_OBJDUMP": "dumpbin /disasm", 
+                "CK_OBJ_EXT": ".obj"
+              }, 
+              "env_script": "env.bat", 
+              "setup": {
+                "host_os_uoa": "7a95e0754c37610a", 
+                "target_os_bits": "64", 
+                "target_os_uoa": "7a95e0754c37610a", 
+                "version": "18.00"
+              }, 
+              "soft_uoa": "a4c8d6c8e946c49f", 
+              "tags": [
+                "64bits", 
+                "compiler", 
+                "host-os-windows-64", 
+                "lang-c", 
+                "lang-cpp", 
+                "mcl", 
+                "target-os-windows-64", 
+                "v18", 
+                "v18.00"
+              ]
+            }, 
+            "local": "yes", 
+            "num_entries": 1, 
+            "tags": "compiler,mcl,v18.00", 
+            "uoa": "924e05b4e11f9dcc", 
+            "ver": "18.00"
+          }
+        }, 
+        "env": {
+          "CK_AFTER_COMPILE_TO_BC": "ren *.o *", 
+          "CK_AR": "lib", 
+          "CK_ASM_EXT": ".s", 
+          "CK_BC_EXT": ".bc", 
+          "CK_CC": "clang", 
+          "CK_COMPILER_FLAGS_OBLIGATORY": "-DWINDOWS -target x86_64-pc-windows-msvc", 
+          "CK_COMPILER_FLAG_CPP11": "-std=c++11", 
+          "CK_COMPILER_FLAG_OPENMP": "-fopenmp", 
+          "CK_COMPILER_FLAG_PTHREAD_LIB": "-lpthread", 
+          "CK_COMPILER_FLAG_STD90": "-std=c90", 
+          "CK_COMPILER_FLAG_STD99": "-std=c99", 
+          "CK_CXX": "clang++ -fpermissive", 
+          "CK_DLL_EXT": ".dll", 
+          "CK_EXE_EXT": ".exe", 
+          "CK_EXTRA_LIB_DL": "", 
+          "CK_EXTRA_LIB_M": "", 
+          "CK_F90": "", 
+          "CK_F95": "", 
+          "CK_FC": "", 
+          "CK_FLAGS_CREATE_ASM": "-S", 
+          "CK_FLAGS_CREATE_BC": "-c -emit-llvm", 
+          "CK_FLAGS_CREATE_OBJ": "-c", 
+          "CK_FLAGS_DLL": "", 
+          "CK_FLAGS_DLL_EXTRA": "-Xlinker /dll", 
+          "CK_FLAGS_DYNAMIC_BIN": "", 
+          "CK_FLAGS_OUTPUT": "-o", 
+          "CK_FLAGS_STATIC_BIN": "-static -Wl,/LARGEADDRESSAWARE:NO", 
+          "CK_FLAGS_STATIC_LIB": "-fPIC", 
+          "CK_FLAG_PREFIX_INCLUDE": "-I", 
+          "CK_FLAG_PREFIX_LIB_DIR": "-L", 
+          "CK_FLAG_PREFIX_VAR": "-D", 
+          "CK_LB": "lib", 
+          "CK_LB_OUTPUT": "/OUT:", 
+          "CK_LD_DYNAMIC_FLAGS": "", 
+          "CK_LD_FLAGS_EXTRA": "", 
+          "CK_LIB_EXT": ".lib", 
+          "CK_LINKER_FLAG_OPENMP": "-lgomp -lrt", 
+          "CK_MAKE": "nmake", 
+          "CK_OBJDUMP": "llvm-objdump -d", 
+          "CK_OBJ_EXT": ".o", 
+          "CK_OPT_SIZE": "-Os", 
+          "CK_OPT_SPEED": "-O3", 
+          "CK_OPT_SPEED_SAFE": "-O2", 
+          "CK_PLUGIN_FLAG": "-fplugin=", 
+          "CK_PROFILER": "gprof", 
+          "CM_INTERMEDIATE_OPT_TOOL": "opt", 
+          "CM_INTERMEDIATE_OPT_TOOL_OUT": "-o"
+        }, 
+        "env_script": "env.bat", 
+        "setup": {
+          "deps_compiler_mcl": "924e05b4e11f9dcc", 
+          "host_os_uoa": "7a95e0754c37610a", 
+          "target_os_bits": "64", 
+          "target_os_uoa": "7a95e0754c37610a", 
+          "version": "3.6.0"
+        }, 
+        "soft_uoa": "41d42741f4f4474a", 
+        "tags": [
+          "64bits", 
+          "compiler", 
+          "host-os-windows-64", 
+          "lang-c", 
+          "lang-cpp", 
+          "llvm", 
+          "target-os-windows-64", 
+          "v3", 
+          "v3.6", 
+          "v3.6.0"
+        ]
+      }, 
+      "local": "yes", 
+      "num_entries": 1, 
+      "sort": 10, 
+      "tags": "compiler,lang-c", 
+      "uoa": "d1cad28a354152b3", 
+      "ver": "3.6.0"
+    }, 
+    "lib_opencl": {
+      "bat": "call D:\\Work1\\CK\\ck-repos\\fgg-local-win\\env\\de433cac44b1c0f7\\env.bat\n", 
+      "cus": {
+        "add_include_path": "yes", 
+        "env_prefix": "CK_ENV_LIB_OPENCL", 
+        "include_name": "CL\\opencl.h", 
+        "path_bin": "C:\\Program Files (x86)\\Intel\\OpenCL SDK\\4.6\\bin\\x64", 
+        "path_include": "C:\\Program Files (x86)\\Intel\\OpenCL SDK\\4.6\\include", 
+        "path_install": "C:\\Program Files (x86)\\Intel\\OpenCL SDK\\4.6", 
+        "path_lib": "C:\\Program Files (x86)\\Intel\\OpenCL SDK\\4.6\\lib\\x64", 
+        "skip_add_to_ld_path": "yes", 
+        "static_lib": "OpenCL.lib", 
+        "version": "4.6", 
+        "version_int": 406
+      }, 
+      "dict": {
+        "customize": {
+          "add_include_path": "yes", 
+          "env_prefix": "CK_ENV_LIB_OPENCL", 
+          "include_name": "CL\\opencl.h", 
+          "path_bin": "C:\\Program Files (x86)\\Intel\\OpenCL SDK\\4.6\\bin\\x64", 
+          "path_include": "C:\\Program Files (x86)\\Intel\\OpenCL SDK\\4.6\\include", 
+          "path_install": "C:\\Program Files (x86)\\Intel\\OpenCL SDK\\4.6", 
+          "path_lib": "C:\\Program Files (x86)\\Intel\\OpenCL SDK\\4.6\\lib\\x64", 
+          "skip_add_to_ld_path": "yes", 
+          "static_lib": "OpenCL.lib", 
+          "version": "4.6", 
+          "version_int": 406
+        }, 
+        "deps": {}, 
+        "env": {
+          "CK_ENV_LIB_OPENCL_DYNAMIC_NAME": "", 
+          "CK_ENV_LIB_OPENCL_INCLUDE_NAME": "CL\\opencl.h", 
+          "CK_ENV_LIB_OPENCL_STATIC_NAME": "OpenCL.lib"
+        }, 
+        "env_script": "env.bat", 
+        "setup": {
+          "host_os_uoa": "7a95e0754c37610a", 
+          "target_os_bits": "64", 
+          "target_os_uoa": "7a95e0754c37610a", 
+          "version": "4.6"
+        }, 
+        "soft_uoa": "b13b6a18695c3675", 
+        "tags": [
+          "64bits", 
+          "host-os-windows-64", 
+          "intel", 
+          "lib", 
+          "opencl", 
+          "target-os-windows-64", 
+          "v4", 
+          "v4.6"
+        ]
+      }, 
+      "local": "yes", 
+      "num_entries": 1, 
+      "sort": 20, 
+      "tags": "lib,opencl", 
+      "uoa": "de433cac44b1c0f7", 
+      "ver": "4.6"
+    }, 
+    "rtl_polybench": {
+      "bat": "call D:\\Work1\\CK\\ck-repos\\fgg-local-win\\env\\95ed3011944ca48f\\env.bat\n", 
+      "cus": {
+        "add_include_path": "yes", 
+        "dynamic_lib": "librtlpolybench.dll", 
+        "env_prefix": "CK_ENV_LIB_RTL_POLYBENCH", 
+        "extra_dir": "", 
+        "include_name": "polybench.h", 
+        "path_include": "D:\\!FGG\\Installations\\lib-rtl-polybench-2012-llvm-3.6.0-windows-64\\include", 
+        "path_install": "D:\\!FGG\\Installations\\lib-rtl-polybench-2012-llvm-3.6.0-windows-64", 
+        "path_lib": "D:\\!FGG\\Installations\\lib-rtl-polybench-2012-llvm-3.6.0-windows-64\\lib", 
+        "skip_add_to_bin": "yes", 
+        "skip_add_to_path": "yes", 
+        "static_lib": "librtlpolybench.lib", 
+        "version": "2012", 
+        "version_int": 2012
+      }, 
+      "dict": {
+        "customize": {
+          "add_include_path": "yes", 
+          "dynamic_lib": "librtlpolybench.dll", 
+          "env_prefix": "CK_ENV_LIB_RTL_POLYBENCH", 
+          "extra_dir": "", 
+          "include_name": "polybench.h", 
+          "path_include": "D:\\!FGG\\Installations\\lib-rtl-polybench-2012-llvm-3.6.0-windows-64\\include", 
+          "path_install": "D:\\!FGG\\Installations\\lib-rtl-polybench-2012-llvm-3.6.0-windows-64", 
+          "path_lib": "D:\\!FGG\\Installations\\lib-rtl-polybench-2012-llvm-3.6.0-windows-64\\lib", 
+          "skip_add_to_bin": "yes", 
+          "skip_add_to_path": "yes", 
+          "static_lib": "librtlpolybench.lib", 
+          "version": "2012", 
+          "version_int": 2012
+        }, 
+        "deps": {
+          "compiler": {
+            "bat": "call D:\\Work1\\CK\\ck-repos\\fgg-local-win\\env\\d1cad28a354152b3\\env.bat\n", 
+            "build_dir_name": "llvm", 
+            "dict": {
+              "customize": {
+                "build_dir_name": "llvm", 
+                "can_strip_dynamic_lib": "yes", 
+                "env_prefix": "CK_ENV_COMPILER_LLVM", 
+                "extra_dir": "", 
+                "languages": [
+                  "C", 
+                  "CPP"
+                ], 
+                "path_bin": "d:\\Work1\\CK\\ck-tools\\llvm-3.6-x86\\bin", 
+                "path_install": "d:\\Work1\\CK\\ck-tools\\llvm-3.6-x86", 
+                "retarget": "no", 
+                "skip_add_to_ld_path": "yes", 
+                "tool_prefix": "", 
+                "version": "3.6.0", 
+                "version_int": 30600
+              }, 
+              "deps": {
+                "compiler_mcl": {
+                  "bat": "call D:\\Work1\\CK\\ck-repos\\fgg-local-win\\env\\924e05b4e11f9dcc\\env.bat\n", 
+                  "build_dir_name": "mcl", 
+                  "dict": {
+                    "customize": {
+                      "add_win_sdk_path": "yes", 
+                      "build-dir-name": "mcl", 
+                      "build_dir_name": "mcl", 
+                      "env_prefix": "CK_ENV_COMPILER_MVSC", 
+                      "extra_dir": "", 
+                      "input_path_example": "C:\\Program Files (x86)\\Microsoft Visual Studio 9.0\\VC", 
+                      "languages": [
+                        "C", 
+                        "CPP"
+                      ], 
+                      "path_install": "C:\\Program Files (x86)\\Microsoft Visual Studio 12.0\\VC", 
+                      "retarget": "", 
+                      "skip_add_to_bin": "yes", 
+                      "skip_add_to_ld_path": "yes", 
+                      "skip_add_to_path": "yes", 
+                      "tool_prefix": "", 
+                      "version": "18.00", 
+                      "version_int": 1800
+                    }, 
+                    "deps": {}, 
+                    "env": {
+                      "CK_AR": "lib", 
+                      "CK_ASM_EXT": ".asm", 
+                      "CK_CC": "cl", 
+                      "CK_COMPILER_FLAGS_OBLIGATORY": "/DWINDOWS /GS-", 
+                      "CK_COMPILER_FLAG_CPP11": "/Qstd=c++11", 
+                      "CK_COMPILER_FLAG_OPENMP": "/openmp", 
+                      "CK_COMPILER_FLAG_PTHREAD_LIB": "/pthread", 
+                      "CK_COMPILER_FLAG_STD90": "/Qstd=c90", 
+                      "CK_COMPILER_FLAG_STD99": "/Qstd=c99", 
+                      "CK_CXX": "cl", 
+                      "CK_DLL_EXT": ".dll", 
+                      "CK_EXE_EXT": ".exe", 
+                      "CK_FLAGS_CREATE_ASM": "/Fa /c", 
+                      "CK_FLAGS_CREATE_OBJ": "/c", 
+                      "CK_FLAGS_DLL": "/MT /DWin /LD", 
+                      "CK_FLAGS_DLL_EXTRA": "/link /dll", 
+                      "CK_FLAGS_DYNAMIC_BIN": "/MD", 
+                      "CK_FLAGS_OUTPUT": "/Fe", 
+                      "CK_FLAGS_STATIC_BIN": "/MT", 
+                      "CK_FLAGS_STATIC_LIB": "/MD", 
+                      "CK_FLAG_PREFIX_INCLUDE": "/I", 
+                      "CK_FLAG_PREFIX_VAR": "/D", 
+                      "CK_LB": "lib", 
+                      "CK_LB_OUTPUT": "/OUT:", 
+                      "CK_LD_DYNAMIC_FLAGS": "/link /NODEFAULTLIB:LIBCMT", 
+                      "CK_LD_FLAGS_EXTRA": "", 
+                      "CK_LIB_EXT": ".lib", 
+                      "CK_MAKE": "nmake", 
+                      "CK_OBJDUMP": "dumpbin /disasm", 
+                      "CK_OBJ_EXT": ".obj"
+                    }, 
+                    "env_script": "env.bat", 
+                    "setup": {
+                      "host_os_uoa": "7a95e0754c37610a", 
+                      "target_os_bits": "64", 
+                      "target_os_uoa": "7a95e0754c37610a", 
+                      "version": "18.00"
+                    }, 
+                    "soft_uoa": "a4c8d6c8e946c49f", 
+                    "tags": [
+                      "64bits", 
+                      "compiler", 
+                      "host-os-windows-64", 
+                      "lang-c", 
+                      "lang-cpp", 
+                      "mcl", 
+                      "target-os-windows-64", 
+                      "v18", 
+                      "v18.00"
+                    ]
+                  }, 
+                  "local": "yes", 
+                  "num_entries": 1, 
+                  "tags": "compiler,mcl,v18.00", 
+                  "uoa": "924e05b4e11f9dcc", 
+                  "ver": "18.00"
+                }
+              }, 
+              "env": {
+                "CK_AFTER_COMPILE_TO_BC": "ren *.o *", 
+                "CK_AR": "lib", 
+                "CK_ASM_EXT": ".s", 
+                "CK_BC_EXT": ".bc", 
+                "CK_CC": "clang", 
+                "CK_COMPILER_FLAGS_OBLIGATORY": "-DWINDOWS -target x86_64-pc-windows-msvc", 
+                "CK_COMPILER_FLAG_CPP11": "-std=c++11", 
+                "CK_COMPILER_FLAG_OPENMP": "-fopenmp", 
+                "CK_COMPILER_FLAG_PTHREAD_LIB": "-lpthread", 
+                "CK_COMPILER_FLAG_STD90": "-std=c90", 
+                "CK_COMPILER_FLAG_STD99": "-std=c99", 
+                "CK_CXX": "clang++ -fpermissive", 
+                "CK_DLL_EXT": ".dll", 
+                "CK_EXE_EXT": ".exe", 
+                "CK_EXTRA_LIB_DL": "", 
+                "CK_EXTRA_LIB_M": "", 
+                "CK_F90": "", 
+                "CK_F95": "", 
+                "CK_FC": "", 
+                "CK_FLAGS_CREATE_ASM": "-S", 
+                "CK_FLAGS_CREATE_BC": "-c -emit-llvm", 
+                "CK_FLAGS_CREATE_OBJ": "-c", 
+                "CK_FLAGS_DLL": "", 
+                "CK_FLAGS_DLL_EXTRA": "-Xlinker /dll", 
+                "CK_FLAGS_DYNAMIC_BIN": "", 
+                "CK_FLAGS_OUTPUT": "-o", 
+                "CK_FLAGS_STATIC_BIN": "-static -Wl,/LARGEADDRESSAWARE:NO", 
+                "CK_FLAGS_STATIC_LIB": "-fPIC", 
+                "CK_FLAG_PREFIX_INCLUDE": "-I", 
+                "CK_FLAG_PREFIX_LIB_DIR": "-L", 
+                "CK_FLAG_PREFIX_VAR": "-D", 
+                "CK_LB": "lib", 
+                "CK_LB_OUTPUT": "/OUT:", 
+                "CK_LD_DYNAMIC_FLAGS": "", 
+                "CK_LD_FLAGS_EXTRA": "", 
+                "CK_LIB_EXT": ".lib", 
+                "CK_LINKER_FLAG_OPENMP": "-lgomp -lrt", 
+                "CK_MAKE": "nmake", 
+                "CK_OBJDUMP": "llvm-objdump -d", 
+                "CK_OBJ_EXT": ".o", 
+                "CK_OPT_SIZE": "-Os", 
+                "CK_OPT_SPEED": "-O3", 
+                "CK_OPT_SPEED_SAFE": "-O2", 
+                "CK_PLUGIN_FLAG": "-fplugin=", 
+                "CK_PROFILER": "gprof", 
+                "CM_INTERMEDIATE_OPT_TOOL": "opt", 
+                "CM_INTERMEDIATE_OPT_TOOL_OUT": "-o"
+              }, 
+              "env_script": "env.bat", 
+              "setup": {
+                "deps_compiler_mcl": "924e05b4e11f9dcc", 
+                "host_os_uoa": "7a95e0754c37610a", 
+                "target_os_bits": "64", 
+                "target_os_uoa": "7a95e0754c37610a", 
+                "version": "3.6.0"
+              }, 
+              "soft_uoa": "41d42741f4f4474a", 
+              "tags": [
+                "64bits", 
+                "compiler", 
+                "host-os-windows-64", 
+                "lang-c", 
+                "lang-cpp", 
+                "llvm", 
+                "target-os-windows-64", 
+                "v3", 
+                "v3.6", 
+                "v3.6.0"
+              ]
+            }, 
+            "local": "yes", 
+            "num_entries": 1, 
+            "tags": "compiler,lang-c", 
+            "uoa": "d1cad28a354152b3", 
+            "ver": "3.6.0"
+          }
+        }, 
+        "env": {
+          "CK_ENV_LIB_RTL_POLYBENCH_DYNAMIC_NAME": "librtlpolybench.dll", 
+          "CK_ENV_LIB_RTL_POLYBENCH_INCLUDE_NAME": "polybench.h", 
+          "CK_ENV_LIB_RTL_POLYBENCH_STATIC_NAME": "librtlpolybench.lib"
+        }, 
+        "env_script": "env.bat", 
+        "package_uoa": "ef82449518b55218", 
+        "setup": {
+          "deps_compiler": "d1cad28a354152b3", 
+          "host_os_uoa": "7a95e0754c37610a", 
+          "target_os_bits": "64", 
+          "target_os_uoa": "7a95e0754c37610a", 
+          "version": "2012"
+        }, 
+        "soft_uoa": "ac25cef24e429b24", 
+        "tags": [
+          "64bits", 
+          "host-os-windows-64", 
+          "lib", 
+          "polybench", 
+          "rtl", 
+          "target-os-windows-64", 
+          "v2012"
+        ]
+      }, 
+      "local": "yes", 
+      "num_entries": 1, 
+      "sort": 30, 
+      "tags": "lib,rtl,polybench", 
+      "uoa": "95ed3011944ca48f", 
+      "ver": "2012"
+    }, 
+    "xopenme": {
+      "bat": "call D:\\Work1\\CK\\ck-repos\\fgg-local-win\\env\\56584503a3d19181\\env.bat\n", 
+      "cus": {
+        "add_include_path": "yes", 
+        "dynamic_lib": "librtlxopenme.dll", 
+        "env_prefix": "CK_ENV_LIB_RTL_XOPENME", 
+        "extra_dir": "", 
+        "include_name": "xopenme.h", 
+        "path_include": "D:\\!FGG\\Installations\\lib-rtl-xopenme-0.3-llvm-3.6.0-windows-64\\include", 
+        "path_install": "D:\\!FGG\\Installations\\lib-rtl-xopenme-0.3-llvm-3.6.0-windows-64", 
+        "path_lib": "D:\\!FGG\\Installations\\lib-rtl-xopenme-0.3-llvm-3.6.0-windows-64\\lib", 
+        "skip_add_to_bin": "yes", 
+        "skip_add_to_path": "yes", 
+        "static_lib": "librtlxopenme.lib", 
+        "version": "0.3", 
+        "version_int": 3
+      }, 
+      "dict": {
+        "customize": {
+          "add_include_path": "yes", 
+          "dynamic_lib": "librtlxopenme.dll", 
+          "env_prefix": "CK_ENV_LIB_RTL_XOPENME", 
+          "extra_dir": "", 
+          "include_name": "xopenme.h", 
+          "path_include": "D:\\!FGG\\Installations\\lib-rtl-xopenme-0.3-llvm-3.6.0-windows-64\\include", 
+          "path_install": "D:\\!FGG\\Installations\\lib-rtl-xopenme-0.3-llvm-3.6.0-windows-64", 
+          "path_lib": "D:\\!FGG\\Installations\\lib-rtl-xopenme-0.3-llvm-3.6.0-windows-64\\lib", 
+          "skip_add_to_bin": "yes", 
+          "skip_add_to_path": "yes", 
+          "static_lib": "librtlxopenme.lib", 
+          "version": "0.3", 
+          "version_int": 3
+        }, 
+        "deps": {
+          "compiler": {
+            "bat": "call D:\\Work1\\CK\\ck-repos\\fgg-local-win\\env\\d1cad28a354152b3\\env.bat\n", 
+            "build_dir_name": "llvm", 
+            "dict": {
+              "customize": {
+                "build_dir_name": "llvm", 
+                "can_strip_dynamic_lib": "yes", 
+                "env_prefix": "CK_ENV_COMPILER_LLVM", 
+                "extra_dir": "", 
+                "languages": [
+                  "C", 
+                  "CPP"
+                ], 
+                "path_bin": "d:\\Work1\\CK\\ck-tools\\llvm-3.6-x86\\bin", 
+                "path_install": "d:\\Work1\\CK\\ck-tools\\llvm-3.6-x86", 
+                "retarget": "no", 
+                "skip_add_to_ld_path": "yes", 
+                "tool_prefix": "", 
+                "version": "3.6.0", 
+                "version_int": 30600
+              }, 
+              "deps": {
+                "compiler_mcl": {
+                  "bat": "call D:\\Work1\\CK\\ck-repos\\fgg-local-win\\env\\924e05b4e11f9dcc\\env.bat\n", 
+                  "build_dir_name": "mcl", 
+                  "dict": {
+                    "customize": {
+                      "add_win_sdk_path": "yes", 
+                      "build-dir-name": "mcl", 
+                      "build_dir_name": "mcl", 
+                      "env_prefix": "CK_ENV_COMPILER_MVSC", 
+                      "extra_dir": "", 
+                      "input_path_example": "C:\\Program Files (x86)\\Microsoft Visual Studio 9.0\\VC", 
+                      "languages": [
+                        "C", 
+                        "CPP"
+                      ], 
+                      "path_install": "C:\\Program Files (x86)\\Microsoft Visual Studio 12.0\\VC", 
+                      "retarget": "", 
+                      "skip_add_to_bin": "yes", 
+                      "skip_add_to_ld_path": "yes", 
+                      "skip_add_to_path": "yes", 
+                      "tool_prefix": "", 
+                      "version": "18.00", 
+                      "version_int": 1800
+                    }, 
+                    "deps": {}, 
+                    "env": {
+                      "CK_AR": "lib", 
+                      "CK_ASM_EXT": ".asm", 
+                      "CK_CC": "cl", 
+                      "CK_COMPILER_FLAGS_OBLIGATORY": "/DWINDOWS /GS-", 
+                      "CK_COMPILER_FLAG_CPP11": "/Qstd=c++11", 
+                      "CK_COMPILER_FLAG_OPENMP": "/openmp", 
+                      "CK_COMPILER_FLAG_PTHREAD_LIB": "/pthread", 
+                      "CK_COMPILER_FLAG_STD90": "/Qstd=c90", 
+                      "CK_COMPILER_FLAG_STD99": "/Qstd=c99", 
+                      "CK_CXX": "cl", 
+                      "CK_DLL_EXT": ".dll", 
+                      "CK_EXE_EXT": ".exe", 
+                      "CK_FLAGS_CREATE_ASM": "/Fa /c", 
+                      "CK_FLAGS_CREATE_OBJ": "/c", 
+                      "CK_FLAGS_DLL": "/MT /DWin /LD", 
+                      "CK_FLAGS_DLL_EXTRA": "/link /dll", 
+                      "CK_FLAGS_DYNAMIC_BIN": "/MD", 
+                      "CK_FLAGS_OUTPUT": "/Fe", 
+                      "CK_FLAGS_STATIC_BIN": "/MT", 
+                      "CK_FLAGS_STATIC_LIB": "/MD", 
+                      "CK_FLAG_PREFIX_INCLUDE": "/I", 
+                      "CK_FLAG_PREFIX_VAR": "/D", 
+                      "CK_LB": "lib", 
+                      "CK_LB_OUTPUT": "/OUT:", 
+                      "CK_LD_DYNAMIC_FLAGS": "/link /NODEFAULTLIB:LIBCMT", 
+                      "CK_LD_FLAGS_EXTRA": "", 
+                      "CK_LIB_EXT": ".lib", 
+                      "CK_MAKE": "nmake", 
+                      "CK_OBJDUMP": "dumpbin /disasm", 
+                      "CK_OBJ_EXT": ".obj"
+                    }, 
+                    "env_script": "env.bat", 
+                    "setup": {
+                      "host_os_uoa": "7a95e0754c37610a", 
+                      "target_os_bits": "64", 
+                      "target_os_uoa": "7a95e0754c37610a", 
+                      "version": "18.00"
+                    }, 
+                    "soft_uoa": "a4c8d6c8e946c49f", 
+                    "tags": [
+                      "64bits", 
+                      "compiler", 
+                      "host-os-windows-64", 
+                      "lang-c", 
+                      "lang-cpp", 
+                      "mcl", 
+                      "target-os-windows-64", 
+                      "v18", 
+                      "v18.00"
+                    ]
+                  }, 
+                  "local": "yes", 
+                  "num_entries": 1, 
+                  "tags": "compiler,mcl,v18.00", 
+                  "uoa": "924e05b4e11f9dcc", 
+                  "ver": "18.00"
+                }
+              }, 
+              "env": {
+                "CK_AFTER_COMPILE_TO_BC": "ren *.o *", 
+                "CK_AR": "lib", 
+                "CK_ASM_EXT": ".s", 
+                "CK_BC_EXT": ".bc", 
+                "CK_CC": "clang", 
+                "CK_COMPILER_FLAGS_OBLIGATORY": "-DWINDOWS -target x86_64-pc-windows-msvc", 
+                "CK_COMPILER_FLAG_CPP11": "-std=c++11", 
+                "CK_COMPILER_FLAG_OPENMP": "-fopenmp", 
+                "CK_COMPILER_FLAG_PTHREAD_LIB": "-lpthread", 
+                "CK_COMPILER_FLAG_STD90": "-std=c90", 
+                "CK_COMPILER_FLAG_STD99": "-std=c99", 
+                "CK_CXX": "clang++ -fpermissive", 
+                "CK_DLL_EXT": ".dll", 
+                "CK_EXE_EXT": ".exe", 
+                "CK_EXTRA_LIB_DL": "", 
+                "CK_EXTRA_LIB_M": "", 
+                "CK_F90": "", 
+                "CK_F95": "", 
+                "CK_FC": "", 
+                "CK_FLAGS_CREATE_ASM": "-S", 
+                "CK_FLAGS_CREATE_BC": "-c -emit-llvm", 
+                "CK_FLAGS_CREATE_OBJ": "-c", 
+                "CK_FLAGS_DLL": "", 
+                "CK_FLAGS_DLL_EXTRA": "-Xlinker /dll", 
+                "CK_FLAGS_DYNAMIC_BIN": "", 
+                "CK_FLAGS_OUTPUT": "-o", 
+                "CK_FLAGS_STATIC_BIN": "-static -Wl,/LARGEADDRESSAWARE:NO", 
+                "CK_FLAGS_STATIC_LIB": "-fPIC", 
+                "CK_FLAG_PREFIX_INCLUDE": "-I", 
+                "CK_FLAG_PREFIX_LIB_DIR": "-L", 
+                "CK_FLAG_PREFIX_VAR": "-D", 
+                "CK_LB": "lib", 
+                "CK_LB_OUTPUT": "/OUT:", 
+                "CK_LD_DYNAMIC_FLAGS": "", 
+                "CK_LD_FLAGS_EXTRA": "", 
+                "CK_LIB_EXT": ".lib", 
+                "CK_LINKER_FLAG_OPENMP": "-lgomp -lrt", 
+                "CK_MAKE": "nmake", 
+                "CK_OBJDUMP": "llvm-objdump -d", 
+                "CK_OBJ_EXT": ".o", 
+                "CK_OPT_SIZE": "-Os", 
+                "CK_OPT_SPEED": "-O3", 
+                "CK_OPT_SPEED_SAFE": "-O2", 
+                "CK_PLUGIN_FLAG": "-fplugin=", 
+                "CK_PROFILER": "gprof", 
+                "CM_INTERMEDIATE_OPT_TOOL": "opt", 
+                "CM_INTERMEDIATE_OPT_TOOL_OUT": "-o"
+              }, 
+              "env_script": "env.bat", 
+              "setup": {
+                "deps_compiler_mcl": "924e05b4e11f9dcc", 
+                "host_os_uoa": "7a95e0754c37610a", 
+                "target_os_bits": "64", 
+                "target_os_uoa": "7a95e0754c37610a", 
+                "version": "3.6.0"
+              }, 
+              "soft_uoa": "41d42741f4f4474a", 
+              "tags": [
+                "64bits", 
+                "compiler", 
+                "host-os-windows-64", 
+                "lang-c", 
+                "lang-cpp", 
+                "llvm", 
+                "target-os-windows-64", 
+                "v3", 
+                "v3.6", 
+                "v3.6.0"
+              ]
+            }, 
+            "local": "yes", 
+            "num_entries": 1, 
+            "sort": 10, 
+            "tags": "compiler,lang-c", 
+            "uoa": "d1cad28a354152b3", 
+            "ver": "3.6.0"
+          }
+        }, 
+        "env": {
+          "CK_ENV_LIB_RTL_XOPENME_DYNAMIC_NAME": "librtlxopenme.dll", 
+          "CK_ENV_LIB_RTL_XOPENME_INCLUDE_NAME": "xopenme.h", 
+          "CK_ENV_LIB_RTL_XOPENME_STATIC_NAME": "librtlxopenme.lib"
+        }, 
+        "env_script": "env.bat", 
+        "package_uoa": "0573487b8121d094", 
+        "setup": {
+          "deps_compiler": "d1cad28a354152b3", 
+          "host_os_uoa": "7a95e0754c37610a", 
+          "target_os_bits": "64", 
+          "target_os_uoa": "7a95e0754c37610a", 
+          "version": "0.3"
+        }, 
+        "soft_uoa": "673507878d649b4a", 
+        "tags": [
+          "64bits", 
+          "host-os-windows-64", 
+          "lang-c", 
+          "lang-cpp", 
+          "lang-f77", 
+          "lang-f90", 
+          "lang-f95", 
+          "lib", 
+          "rtl", 
+          "target-os-windows-64", 
+          "v0", 
+          "v0.3", 
+          "xopenme"
+        ]
+      }, 
+      "local": "yes", 
+      "num_entries": 1, 
+      "sort": 20, 
+      "tags": "lib,xopenme", 
+      "uoa": "56584503a3d19181", 
+      "ver": "0.3"
+    }
+  }, 
+  "do_not_reuse_repeat": "yes", 
+  "fail": "no", 
+  "features": {
+    "compiler_version": {
+      "list": [
+        "3", 
+        "6", 
+        "0"
+      ], 
+      "raw": [
+        "clang version 3.6.0 (tags/RELEASE_360/final)", 
+        "Target: i686-pc-windows-gnu", 
+        "Thread model: posix", 
+        ""
+      ], 
+      "str": "3.6.0"
+    }
+  }, 
+  "ready": "yes", 
+  "speed": "yes", 
+  "state": {
+    "cur_dir": "D:\\Work1\\CK\\ck-repos\\ck-autotuning\\demo\\explore-dataset-gemm-opencl", 
+    "tmp_dir": "tmp"
+  }
+}

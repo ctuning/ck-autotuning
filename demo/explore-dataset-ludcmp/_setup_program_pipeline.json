@@ -1,0 +1,16 @@
+{
+ "prepare":"yes",
+
+ "save_to_file":"_setup_program_pipeline_tmp.json",
+
+ "data_uoa":"polybench-cpu-ludcmp",
+
+ "energy":"no",
+ "speed":"yes",
+
+ "do_not_reuse_repeat":"yes",
+
+ "cpu_freq":"max",
+ "gpu_freq":"max"
+}
+

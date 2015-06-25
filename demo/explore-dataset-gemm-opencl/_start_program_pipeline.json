@@ -1,0 +1,11 @@
+{
+ "pipeline_update":{
+  "cpu_freq":"max",
+  "gpu_freq":"max",
+  "compiler_vars": {
+    "NI":20,
+    "NJ":20,
+    "NK":20
+  }
+ }
+}
