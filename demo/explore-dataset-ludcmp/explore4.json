@@ -6,7 +6,7 @@
   ],
 
   "choices_selection": [
-    {"type":"loop", "start":2600, "stop":4000, "step":200, "default":2500}
+    {"type":"loop", "start":4000, "stop":5000, "step":200, "default":4000}
   ],
 
  "pipeline_update":{
@@ -19,7 +19,7 @@
   "repetitions":3,
 
   "record":"yes",
-  "record_uoa":"explore-ludcmp-dataset-random-icc",
+  "record_uoa":"explore-ludcmp-dataset-loop-llvm",
 
   "features_keys_to_process":["##choices#*"],
 

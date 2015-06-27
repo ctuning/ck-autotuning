@@ -3,7 +3,7 @@
   "cpu_freq":"max",
   "gpu_freq":"max",
   "compiler_vars": {
-    "N":1200
+    "N":1800
   }
  }
 }

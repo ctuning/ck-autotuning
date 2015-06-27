@@ -8,7 +8,9 @@
     "##features#compiler_version#raw@0", 
     "##choices#dataset_uoa", 
     "##characteristics#run#repeat", 
-    "##characteristics#run#execution_time_kernel_0", 
+    "##characteristics#run#dim_cpu", 
+    "##characteristics#run#dim_gpu_only", 
+    "##characteristics#run#dim_gpu_with_mem", 
     "##characteristics#run#run_time_state#energy_a15_mem_gpu", 
     "##characteristics#run#run_time_state#energy_a7_mem_gpu", 
     "##characteristics#compile#obj_size", 
@@ -51,7 +53,13 @@
       "desc": "Kernel repetitions"
     }, 
     {
-      "desc": "Execution time (sec.)"
+      "desc": "CPU time (sec.)"
+    }, 
+    {
+      "desc": "GPU only time (sec.)"
+    }, 
+    {
+      "desc": "GPU with mem time (sec.)"
     }, 
     {
       "desc": "Energy total (A15, joules)"
