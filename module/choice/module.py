@@ -152,12 +152,15 @@ def make(i):
                else: yco=qt.get('can_omit','')
 
                if len(zchoice)>0: yhc=zchoice
-               else: yhc=qt.get('choice',[])
+               else:              
+                  yhc=qt.get('choice',[])
+                  if len(yhc)==0:
+                     yhc=qt.get('choices',[])
 
                if zprefix!='': yep=zprefix
                else: yep=qt.get('explore_prefix','')
 
-               if tp!='': ytp=tp
+               if tp!='': ytp=t.get('subtype','')
                else: ytp=qt.get('type','')
 
                if zdefault!='': ydefault=zdefault
@@ -189,8 +192,11 @@ def make(i):
                dv=ydefault
 
                # If exploration, set first
-               if yestart!='' and (tp=='parallel-loop' or tp=='loop'):
-                  dv=r1
+               if tp=='parallel-loop' or tp=='loop':
+                  if yestart!='': 
+                     dv=r1
+                  elif len(yhc)>0:
+                       dv=yhc[0]
 
                if ci!=0:
                   lcqx=len(yhc)
@@ -234,12 +240,14 @@ def make(i):
                                 xupdate=False
 
                           else: # normally choice
-                             dv=dcc
                              if dv=='':
                                 ln=0
                              else:
-                                ln=yhc.index(dv)
-                                ln+=1
+                                if dv in yhc:
+                                   ln=yhc.index(dv)
+                                   ln+=1
+                                else:
+                                   ln=0
                              if ln<lcqx:
                                 dv=yhc[ln]
                                 xupdate=False

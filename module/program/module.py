@@ -228,6 +228,8 @@ def process_in_dir(i):
               (deps)                 - already resolved deps (useful for auto-tuning)
 
               (extra_env)            - extra environment before running code as string
+              (extra_run_cmd)        - extra CMD (can use $#key#$ for autotuning)
+              (run_cmd_substitutes)  - dict with substs ($#key#$=value) in run CMD (useful for CMD autotuning)
 
               (console)              - if 'yes', output to console
 
@@ -299,6 +301,8 @@ def process_in_dir(i):
         sunparsed+=q
 
     ee=i.get('extra_env','')
+    ercmd=i.get('extra_run_cmd','')
+    rcsub=i.get('run_cmd_substitutes','')
 
     cons=i.get('console','')
 
@@ -1199,6 +1203,14 @@ def process_in_dir(i):
        c=c.replace('$#env1#$',svarb)
        c=c.replace('$#env2#$',svare)
 
+       if ercmd!='':
+          c+=' '+ercmd
+
+       # Update keys in run cmd (useful for CMD autotuning)
+       for k in rcsub:
+           xv=rcsub[k]
+           c=c.replace('$#'+k+'#$',str(xv))
+
        # Check if takes datasets from CK
        dtags=vcmd.get('dataset_tags',[])
        dmuoa=cfg['module_deps']['dataset']
@@ -1857,17 +1869,19 @@ def pipeline(i):
               (console)              - if 'yes', output from program goes to console rather than file
                                           (usually for testing/demos)
 
-              (cmd_key)
-              (dataset_uoa)
+              (cmd_key)              - CMD key
+              (dataset_uoa)          - UOA of a dataset
+
+              (compiler_env_uoa)     - env of a compiler  
 
               (compile_type)         - static or dynamic (dynamic by default;
                                          however takes compiler default_compile_type into account)
                   or
               (static or dynamic)
 
-              (compiler_desc_uoa)    - compiler description UOA (module compiler),
-                                       if not set, there will be an attempt to detect the most close
-                                       by version
+              (compiler_description_uoa)    - compiler description UOA (module compiler),
+                                              if not set, there will be an attempt to detect the most close
+                                              by version
 
               (compiler_vars)        - dict with set up compiler flags (-Dvar=value) -> 
                                        they will update the ones defined as default in program description ...
@@ -1888,6 +1902,8 @@ def pipeline(i):
 
               (env)                  - preset environment
               (extra_env)            - extra environment as string
+              (extra_run_cmd)        - extra CMD (can use $#key#$ for autotuning)
+              (run_cmd_substitutes)  - dict with substs ($#key#$=value) in run CMD (useful for CMD autotuning)
 
               (sudo)                 - if 'yes', force using sudo 
                                        (otherwise, can use ${CK_SUDO_INIT}, ${CK_SUDO_PRE}, ${CK_SUDO_POST})
@@ -2034,6 +2050,8 @@ def pipeline(i):
     dduoa=ck.get_from_dicts(i, 'dataset_uoa', '', choices)
     druoa=ck.get_from_dicts(i, 'dataset_repo_uoa', '', None)
 
+    ceuoa=ck.get_from_dicts(i, 'compiler_env_uoa', '', choices)
+
     scpuf=ck.get_from_dicts(i, 'cpu_freq', 'max', choices)
     sgpuf=ck.get_from_dicts(i, 'gpu_freq', 'max', choices)
     sme=ck.get_from_dicts(i, 'energy', '', choices)
@@ -2062,6 +2080,8 @@ def pipeline(i):
 
     env=ck.get_from_dicts(i,'env',{},choices)
     eenv=ck.get_from_dicts(i, 'extra_env','',choices)
+    ercmd=ck.get_from_dicts(i, 'extra_run_cmd','',choices)
+    rcsub=ck.get_from_dicts(i, 'run_cmd_substitutes',{},choices)
 
     if i.get('do_not_reuse_repeat','')=='yes' and srn==0:
        repeat=''
@@ -2391,7 +2411,7 @@ def pipeline(i):
        ck.out('  Selected command line: '+kcmd)
 
     ###############################################################################################################
-    # PIPELINE SECTION: Command line selection 
+    # PIPELINE SECTION: dataset selection 
     vcmd=run_cmds[kcmd]
 
     dtags=vcmd.get('dataset_tags',[])
@@ -2413,6 +2433,10 @@ def pipeline(i):
 
           lst=rx['lst']
 
+          xchoices=[]
+          for z in lst:
+              xchoices.append(z['data_uid'])
+
           if len(lst)==0:
              duoa=''
           elif len(lst)==1:
@@ -2422,7 +2446,7 @@ def pipeline(i):
              # SELECTOR *************************************
              choices_desc['##dataset_uoa']={'type':'uoa',
                                             'has_choice':'yes',
-                                            'choices':lst,
+                                            'choices':xchoices,
                                             'tags':['setup', 'dataset'],
                                             'sort':1200}
 
@@ -2457,12 +2481,29 @@ def pipeline(i):
 
     ###############################################################################################################
     # PIPELINE SECTION: resolve compile dependencies 
-    if len(cdeps)==0: 
+    if ceuoa!='':
+       rx=ck.access({'action':'load',
+                     'module_uoa':cfg['module_deps']['env'],
+                     'data_uoa':ceuoa})
+       if rx['return']>0: return rx
+       ceuoa=rx['data_uid']
+
+    if len(cdeps)==0 or ceuoa!='': 
        cdeps=meta.get('compile_deps',{})
 
        if len(cdeps)>0:
           if o=='con':
              ck.out(sep)
+
+          if ceuoa!='':
+             # clean compiler version, otherwise wrong detection of flags
+             if 'compiler_version' in features: del(features['compiler_version'])
+             x=cdeps.get('compiler',{})
+             if len(x)>0:
+                if 'cus' in x: del(x['cus'])
+                if 'deps' in x: del(x['deps'])
+                x['uoa']=ceuoa
+                cdeps['compiler']=x
 
           ii={'action':'resolve',
               'module_uoa':cfg['module_deps']['env'],
@@ -2478,6 +2519,15 @@ def pipeline(i):
 
           cdeps=rx['deps'] # Update deps (add UOA)
           i['dependencies']=cdeps
+
+          # Check if multiple compiler choices
+          cmpl=cdeps.get('compiler',{}).get('choices',[])
+          if len(cmpl)>0 and len(choices_desc.get('##compiler_env_uoa',{}))==0:
+             choices_desc['##compiler_env_uoa']={'type':'uoa',
+                                                 'has_choice':'yes',
+                                                 'choices':cmpl,
+                                                 'sort':2000}
+
     else:
        if o=='con':
           ck.out('  Selected dependencies: ')
@@ -2666,6 +2716,8 @@ def pipeline(i):
 
     # to be able to properly record info
     choices['compiler_flags']=compiler_flags
+
+    choices['joined_compiler_flags']=flags
 
     ###############################################################################################################
     # PIPELINE SECTION: set CPU frequency
@@ -2931,6 +2983,11 @@ def pipeline(i):
           ck.out(sep)
           ck.out('Running program ...')
 
+       # Check run cmd keys subst
+       for k in choices:
+           if k.startswith('run_cmd_key_'):
+              rcsub[k]=choices[k]
+
        ii={'sub_action':'run',
            'host_os':hos,
            'target_os':tos,
@@ -2962,6 +3019,8 @@ def pipeline(i):
            'skip_dataset_copy':sdc,
            'env':env,
            'extra_env':eenv,
+           'extra_run_cmd':ercmd,
+           'run_cmd_substitutes':rcsub,
            'compiler_vars':cv,
            'remove_compiler_vars':rcv,
            'out':oo}

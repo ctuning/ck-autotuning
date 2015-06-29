@@ -11,10 +11,11 @@
 
   "seed":12345,
   "iterations":10,
-  "repetitions":3,
+  "repetitions":2,
 
   "pipeline_update":{
      "repeat":200,
+     "best_base_flag":"yes",
      "select_best_base_flag_for_first_iteration":"yes"
    },
 

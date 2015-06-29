@@ -12,8 +12,8 @@
     ]
   ], 
   "choices_selection": [
-    {"type":"loop", "start":200000, "stop":2000000, "step":200000},
-    {"type":"loop", "choice":[177,266,350,420,480,543,600], "default":177}
+    {"type":"loop", "start":200000, "stop":2000000, "step":200000, "default":600000},
+    {"type":"loop", "choice":[177,266,350,420,480,543,600], "default":350}
   ], 
   "repetitions": 1, 
   "seed": 12345, 

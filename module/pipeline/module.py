@@ -405,6 +405,8 @@ def autotune(i):
            finish=True
            break
 
+        time.sleep(3) # wait to see selection ...
+
         # Check if pass this iteration
         if mm<sfi:
            ck.out('')
@@ -438,6 +440,7 @@ def autotune(i):
             pipeline1['meta']=meta
             pipeline1['autotuning_iteration']=m
             pipeline1['statistical_repetition_number']=sr
+
             rr=ck.access(pipeline1)
             if rr['return']>0: return rr
 
