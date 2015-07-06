@@ -2088,6 +2088,8 @@ def pipeline(i):
     perf=ck.get_from_dicts(i, 'perf', '', choices)
     vtune=ck.get_from_dicts(i, 'vtune', '', choices)
 
+    prcmd=''
+
     pdir=ck.get_from_dicts(i, 'program_dir', '', None) # Do not save, otherwise can't reproduce by other people
     if pdir!='': os.chdir(pdir)
 
@@ -3017,12 +3019,32 @@ def pipeline(i):
     if tsd=='yes' and (ati!=0 or srn!=0):
        sdc='yes'
 
+
+    ###############################################################################################################
+    # PIPELINE SECTION: perf
+    perf_tmp=''
+    if perf=='yes':
+       if o=='con':
+          ck.out(sep)
+          ck.out('Preparing perf ...')
+
+       rx=ck.gen_tmp_file({'prefix':'tmp-', 'remove_dir':'yes'})
+       if rx['return']>0: return rx
+       perf_tmp=rx['file_name']
+
+       prcmd='perf stat -x, -o '+perf_tmp
+
+       if perf_tmp not in rof: rof.append(perf_tmp)
+
     ###############################################################################################################
     # PIPELINE SECTION: Intel vTune 
-    prcmd=''
     vtune_tmp=''
     vtune_tmp1=''
     if vtune=='yes':
+       if o=='con':
+          ck.out(sep)
+          ck.out('Preparing vtune ...')
+
        if 'vtune_profiler' not in cdeps:
           cdeps['vtune_profiler']={'local':'yes', 'tags':'perf,intel,vtune'}
 
@@ -3038,7 +3060,7 @@ def pipeline(i):
        vtune_tmp=rx['file_name']
        vtune_tmp1=vtune_tmp+'.csv'
 
-       if vtune_tmp not in rof: rof.append(vtune_tmp1)
+       if vtune_tmp1 not in rof: rof.append(vtune_tmp1)
 
        eppc+='\namplxe-cl -report hw-events -r r000 -report-output='+vtune_tmp+' -format csv -csv-delimiter=comma -filter module=$#ONLY_BIN_FILE#$'
 
@@ -3185,6 +3207,64 @@ def pipeline(i):
                    chars['run']['global_cpi']=cpi
                    chars['run']['global_clock']=float(val[clk])
                    chars['run']['global_instructions_retired']=float(val[inst])
+
+    ###############################################################################################################
+    # PIPELINE SECTION: finish perf
+    if perf=='yes':
+       if o=='con':
+          ck.out(sep)
+          ck.out('Processing perf output ...')
+          ck.out('')
+
+       if os.path.isfile(perf_tmp):
+          ii={'text_file':perf_tmp, 
+              'split_to_list':'yes', 
+              'encoding':sys.stdin.encoding}
+#          if sca!='yes': 
+#             ii['delete_after_read']='yes'
+
+          rx=ck.load_text_file(ii)
+          if rx['return']>0: return rx
+          glst=rx['lst']
+
+          clk='cycles'
+          inst='instructions'
+          val={}
+          found=False
+          for lx in glst:
+             l=lx.strip()
+             if found:
+                x=l.find(',')
+                if x>0:
+                   v=l[0:x]
+
+                   try:
+                      v=float(v)
+                   except ValueError:
+                      pass
+
+                   y=l.rfind(',')
+                   if y>x:
+                      key=l[y+1:]
+                      val[key]=v
+             elif l.find(',task-clock')>0:
+                found=True
+
+          if sca!='yes':
+             os.remove(perf_tmp)
+
+          if len(val)>0:
+             if clk in val and inst in val:
+                cpi=0
+                try:
+                   cpi=val[clk]/val[inst]
+                except ValueError:
+                   pass
+                if cpi!=0:
+                   chars['run']['global_cpi']=cpi
+                   chars['run']['global_clock']=val[clk]
+                   chars['run']['global_instructions_retired']=val[inst]
+                   chars['run']['perf']=val
 
     ###############################################################################################################
     # PIPELINE SECTION: finish gprof
