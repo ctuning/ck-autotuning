@@ -5,8 +5,8 @@
 
   "flat_keys_list":[
     "##choices#compiler_vars#N#min",
-    "##characteristics#run#execution_time_kernel_0n_div_by_dim_nxn1#center",
-    "##characteristics#run#execution_time_kernel_0n_div_by_dim_nxn1#halfrange"
+    "##characteristics#run#global_cpi#center",
+    "##characteristics#run#global_cpi#halfrange"
   ],
 
   "plot_type":"mpl_2d_scatter",
@@ -15,8 +15,8 @@
 
   "title":"Powered by Collective Knowledge",
 
-  "axis_x_desc":"Vector size (N)",
-  "axis_y_desc":"Execution time / a*N*N",
+  "axis_x_desc":"vector size (N)",
+  "axis_y_desc":"CPI",
 
   "plot_grid":"yes",
 
