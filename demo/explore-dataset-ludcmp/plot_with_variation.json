@@ -1,12 +1,12 @@
 {
   "experiment_module_uoa":"experiment",
 
-  "data_uoa_list":["explore-ludcmp-dataset-loop-llvm"],
+  "data_uoa_list":["explore-ludcmp-dataset-random-icc"],
 
   "flat_keys_list":[
     "##choices#compiler_vars#N#min",
-    "##characteristics#run#execution_time_kernel_0n_div_by_dim_nxn1#center",
-    "##characteristics#run#execution_time_kernel_0n_div_by_dim_nxn1#halfrange"
+    "##characteristics#run#global_cpi#center",
+    "##characteristics#run#global_cpi#halfrange"
   ],
 
   "plot_type":"mpl_2d_scatter",

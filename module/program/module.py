@@ -228,6 +228,7 @@ def process_in_dir(i):
               (deps)                 - already resolved deps (useful for auto-tuning)
 
               (extra_env)            - extra environment before running code as string
+              (pre_run_cmd)          - pre CMD for binary
               (extra_run_cmd)        - extra CMD (can use $#key#$ for autotuning)
               (run_cmd_substitutes)  - dict with substs ($#key#$=value) in run CMD (useful for CMD autotuning)
 
@@ -249,6 +250,9 @@ def process_in_dir(i):
                                              For example, odroid .profile as:
                                                export CK_ENERGY_FILES="/sys/bus/i2c/drivers/INA231/3-0040/sensor_W;/sys/bus/i2c/drivers/INA231/3-0041/sensor_W;/sys/bus/i2c/drivers/INA231/3-0044/sensor_W;/sys/bus/i2c/drivers/INA231/3-0045/sensor_W;"
 
+              (run_output_files)              - extra list of output files (useful to add in pipeline to collect profiling from Android mobile, for example)
+
+              (extra_post_process_cmd)        - append at the end of execution bat (for example, to call gprof ...)
 
               (statistical_repetition_number) - int number of current (outside) statistical repetition
                                                 to avoid pushing data to remote device if !=0 ...
@@ -294,6 +298,9 @@ def process_in_dir(i):
     env=i.get('env',{})
     deps=i.get('deps',{})
 
+    rof=i.get('run_output_files',[])
+    eppc=i.get('extra_post_process_cmd','')
+
     unparsed=i.get('unparsed', [])
     sunparsed=''
     for q in unparsed:
@@ -302,6 +309,7 @@ def process_in_dir(i):
 
     ee=i.get('extra_env','')
     ercmd=i.get('extra_run_cmd','')
+    prcmd=i.get('pre_run_cmd','')
     rcsub=i.get('run_cmd_substitutes','')
 
     cons=i.get('console','')
@@ -1187,6 +1195,9 @@ def process_in_dir(i):
           return {'return':1, 'error':'cmd is not defined'}
        c=c.replace('$<<',svarb+svarb1).replace('>>$',svare1+svare)
 
+       # Add extra before CMD if there ...
+       c=prcmd+' '+c
+
        # Replace bin file
        te=target_exe
        if meta.get('skip_add_prefix_for_target_file','')!='yes':
@@ -1466,6 +1477,17 @@ def process_in_dir(i):
        ppc=rt.get('post_process_cmd','').replace('$#src_path_local#$', src_path_local).replace('$#src_path#$', src_path)
        fgtf=rt.get('fine_grain_timer_file','')
 
+       # Check if extra post_process
+       if eppc!='':
+          sb+=eppc+'\n'
+
+       sb=sb.replace('$#BIN_FILE#$', te)
+
+       te1=te
+       if te.startswith('./'):
+          te1=te[2:]
+       sb=sb.replace('$#ONLY_BIN_FILE#$', te1)
+
        # Calibrate execution time (to make it longer and minimize system variation, 
        #   if supported)
        csb=sb
@@ -1476,11 +1498,13 @@ def process_in_dir(i):
        if xcn_max=='': xcn_max=cfg['calibration_max']
        cn_max=int(xcn_max)
 
+
+       for g in rt.get('run_output_files',[]):
+           rof.append(g)
+
        cn=1
        while True:
           # Clean output files
-          rof=rt.get('run_output_files',[])
-
           rofx=[]
           if rco1!='': rofx.append(rco1)
           if rco2!='': rofx.append(rco2)
@@ -1937,6 +1961,9 @@ def pipeline(i):
 
               (energy)               - if 'yes', start energy monitoring (if supported) using script ck-set-power-sensors
 
+              (gprof)                   - if 'yes', use gprof to collect profile info
+              (perf)                    - if 'yes', use perf to collect hardware counters
+              (vtune)                   - if 'yes', use Intel vtune to collect hardware counters
 
               (opencl_dvdt_profiler)    - if 'yes', attempt to use opencl_dvdt_profiler when running code ...
 
@@ -1982,6 +2009,7 @@ def pipeline(i):
 
     import os
     import json
+    import sys
 
     o=i.get('out','')
     oo=''
@@ -2055,6 +2083,10 @@ def pipeline(i):
     scpuf=ck.get_from_dicts(i, 'cpu_freq', 'max', choices)
     sgpuf=ck.get_from_dicts(i, 'gpu_freq', 'max', choices)
     sme=ck.get_from_dicts(i, 'energy', '', choices)
+
+    gprof=ck.get_from_dicts(i, 'gprof', '', choices)
+    perf=ck.get_from_dicts(i, 'perf', '', choices)
+    vtune=ck.get_from_dicts(i, 'vtune', '', choices)
 
     pdir=ck.get_from_dicts(i, 'program_dir', '', None) # Do not save, otherwise can't reproduce by other people
     if pdir!='': os.chdir(pdir)
@@ -2205,6 +2237,9 @@ def pipeline(i):
     stre=tosd.get('redirect_stderr','')
     ubtr=hosd.get('use_bash_to_run','')
     no=tosd.get('no_output','')
+
+    rof=[] # run output files ...
+    eppc='' # extra post process CMD
 
     # check sudo
     sudo_init=tosd.get('sudo_init','')
@@ -2717,6 +2752,27 @@ def pipeline(i):
     # to be able to properly record info
     choices['compiler_flags']=compiler_flags
 
+    ###############################################################################################################
+    # PIPELINE SECTION: use gprof for profiling
+    gprof_tmp=''
+    if gprof=='yes':
+       if o=='con':
+          ck.out(sep)
+          ck.out('Adding gprof compilation flag ...')
+          ck.out('')
+
+       flags=svarb+svarb1+'CK_COMPILER_FLAG_GPROF'+svare1+svare+' '+flags
+       lflags=svarb+svarb1+'CK_COMPILER_FLAG_GPROF'+svare1+svare+' '+lflags
+
+       if cfg['gprof_tmp'] not in rof: rof.append(cfg['gprof_file'])
+
+       rx=ck.gen_tmp_file({'prefix':'tmp-', 'remove_dir':'yes'})
+       if rx['return']>0: return rx
+       gprof_tmp=rx['file_name']
+
+       eppc+='\n'+svarb+svarb1+'CK_PROFILER'+svare1+svare+' $#BIN_FILE#$ > '+gprof_tmp
+
+    # Recording final compilation flags
     choices['joined_compiler_flags']=flags
 
     ###############################################################################################################
@@ -2962,6 +3018,31 @@ def pipeline(i):
        sdc='yes'
 
     ###############################################################################################################
+    # PIPELINE SECTION: Intel vTune 
+    prcmd=''
+    vtune_tmp=''
+    vtune_tmp1=''
+    if vtune=='yes':
+       if 'vtune_profiler' not in cdeps:
+          cdeps['vtune_profiler']={'local':'yes', 'tags':'perf,intel,vtune'}
+
+       if hplat=='win':
+          eenv='\nrd /S /Q r000\n'+eenv
+       else:
+          eenv='\nrm -rf r000\n'+eenv
+
+       prcmd='amplxe-runss -r r000 -event-based-counts --'
+
+       rx=ck.gen_tmp_file({'prefix':'tmp-', 'remove_dir':'yes'})
+       if rx['return']>0: return rx
+       vtune_tmp=rx['file_name']
+       vtune_tmp1=vtune_tmp+'.csv'
+
+       if vtune_tmp not in rof: rof.append(vtune_tmp1)
+
+       eppc+='\namplxe-cl -report hw-events -r r000 -report-output='+vtune_tmp+' -format csv -csv-delimiter=comma -filter module=$#ONLY_BIN_FILE#$'
+
+    ###############################################################################################################
     # PIPELINE SECTION: Check OpenCL DVDT profiler
     if odp=='yes':
        if hplat=='win':
@@ -3008,6 +3089,8 @@ def pipeline(i):
            'flags':flags,
            'lflags':lflags,
            'repeat':repeat,
+           'pre_run_cmd':prcmd,
+           'run_output_files':rof,
            'skip_calibration':rsc,
            'calibration_time':rct,
            'calibration_max':rcm,
@@ -3020,6 +3103,7 @@ def pipeline(i):
            'env':env,
            'extra_env':eenv,
            'extra_run_cmd':ercmd,
+           'extra_post_process_cmd':eppc,
            'run_cmd_substitutes':rcsub,
            'compiler_vars':cv,
            'remove_compiler_vars':rcv,
@@ -3047,6 +3131,98 @@ def pipeline(i):
        if rs=='no' or not csuc:
           i['fail_reason']='execution failed'
           i['fail']='yes'
+
+    ###############################################################################################################
+    # PIPELINE SECTION: finish vtune
+    if vtune=='yes':
+       if o=='con':
+          ck.out(sep)
+          ck.out('Processing Intel vTune output ...')
+          ck.out('')
+
+       if os.path.isfile(vtune_tmp1):
+          import csv
+
+          clk='Hardware Event Count:CPU_CLK_UNHALTED.THREAD:Self'
+          inst='Hardware Event Count:INST_RETIRED.ANY:Self'
+
+          f=open(vtune_tmp1, 'rb')
+          c=csv.reader(f, delimiter=',')
+
+          hc=[]
+          val={}
+
+          first=True
+          for q in c:
+              if first:
+                 first=False
+                 if len(q)>1:
+                    for k in range(2,len(q)):
+                        hc.append(q[k])
+              else:
+                 func=q[0]
+                 module=q[1]
+
+                 if len(q)>1:
+                    for k in range(2,len(q)):
+                        val[hc[k-2]]=q[k]
+
+                 break
+
+          f.close()
+
+          if sca!='yes':
+             os.remove(vtune_tmp1)
+
+          if len(val)>0:
+             if clk in val and inst in val:
+                cpi=0
+                try:
+                   cpi=float(val[clk])/float(val[inst])
+                except ValueError:
+                   pass
+                if cpi!=0:
+                   chars['run']['global_cpi']=cpi
+                   chars['run']['global_clock']=float(val[clk])
+                   chars['run']['global_instructions_retired']=float(val[inst])
+
+    ###############################################################################################################
+    # PIPELINE SECTION: finish gprof
+    if gprof=='yes':
+       if o=='con':
+          ck.out(sep)
+          ck.out('Processing gprof output ...')
+          ck.out('')
+
+       if os.path.isfile(cfg['gprof_file']):
+          ii={'text_file':gprof_tmp, 
+              'split_to_list':'yes', 
+              'encoding':sys.stdin.encoding}
+          if sca!='yes': 
+             ii['delete_after_read']='yes'
+
+          rx=ck.load_text_file(ii)
+          if rx['return']>0: return rx
+          glst=rx['lst']
+
+          process=False
+          cgprof={}
+          for g in glst:
+              if g.startswith(' time'):
+                 process=True
+                 continue
+
+              if process:
+                 if g=='':
+                    break
+
+                 gg=g.replace('  ','').split(' ')
+                 igg=len(gg)
+                 if igg>0:
+                    cgprof[gg[igg-1]]=gg
+
+          chars['run']['gprof']=cgprof
+          chars['run']['gprof_list']=glst
 
     ###############################################################################################################
     # PIPELINE SECTION: Check OpenCL DVDT profiler

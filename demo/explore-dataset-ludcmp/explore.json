@@ -6,7 +6,7 @@
   ],
 
   "choices_selection": [
-    {"type":"random", "start":4, "stop":1300, "step":1, "default":16}
+    {"type":"random", "start":4000, "stop":5000, "step":1, "default":4500}
   ],
 
  "pipeline_update":{

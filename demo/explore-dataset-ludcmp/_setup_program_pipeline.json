@@ -8,6 +8,8 @@
  "energy":"no",
  "speed":"yes",
 
+ "vtune":"yes",
+
  "do_not_reuse_repeat":"yes",
 
  "cpu_freq":"max",
