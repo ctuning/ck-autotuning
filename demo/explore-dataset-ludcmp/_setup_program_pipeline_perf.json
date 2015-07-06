@@ -6,7 +6,7 @@
  "data_uoa":"polybench-cpu-ludcmp",
 
  "energy":"no",
- "speed":"yes",
+ "speed":"no",
 
  "perf":"yes",
 

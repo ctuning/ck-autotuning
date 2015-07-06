@@ -1,0 +1,32 @@
+{
+  "choices_order":[
+    [
+     "##compiler_vars#N"
+    ]
+  ],
+
+  "choices_selection": [
+    {"type":"random", "start":4, "stop":5000, "step":1, "default":16}
+  ],
+
+ "pipeline_update":{
+   "cpu_freq":"max",
+   "gpu_freq":"max",
+   "no_state_check":"yes",
+   "flags":"-fast"
+  },
+
+  "seed":12345,
+  "iterations":1000,
+  "repetitions":3,
+
+  "record":"yes",
+  "record_uoa":"explore-ludcmp-dataset-random-llvm",
+
+  "features_keys_to_process":["##choices#*"],
+
+  "record_params": {
+    "search_point_by_features":"yes"
+  }
+
+}
