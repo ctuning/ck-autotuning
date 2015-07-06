@@ -1,0 +1,31 @@
+{
+  "experiment_module_uoa":"experiment",
+
+  "data_uoa_list":["explore-gemm-dataset-ni500"],
+
+  "flat_keys_list":[
+    "##choices#compiler_vars#NJ#min",
+    "##choices#compiler_vars#NK#min",
+    "##characteristics#run#global_cpi#min"
+  ],
+
+  "plot_type":"mpl_3d_scatter",
+  "display_x_error_bar":"no",
+  "display_y_error_bar":"no",
+
+  "title":"Powered by Collective Knowledge",
+
+  "axis_x_desc":"NJ",
+  "axis_y_desc":"NK (NI=500)",
+  "axis_z_desc":"CPI",
+
+  "plot_grid":"no",
+
+  "mpl_image_size_x":"12",
+  "mpl_image_size_y":"6",
+  "mpl_image_dpi":"100",
+
+  "save_table_to_json_file":"tmp-table.json",
+
+  "point_style":{"0":{"elinewidth":"0", "marker":"o", "size":50, "colorbar_orietation":"horizontal", "colorbar_label":"CPI"}}
+}

@@ -3,7 +3,7 @@
 
  "save_to_file":"_setup_program_pipeline_tmp.json",
 
- "data_uoa":"polybench-cpu-ludcmp",
+ "data_uoa":"polybench-cpu-gemm",
 
  "energy":"no",
  "speed":"yes",

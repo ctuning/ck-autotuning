@@ -1,0 +1,37 @@
+{
+  "choices_order":[
+    [
+     "##compiler_vars#NI"
+    ],
+    [
+     "##compiler_vars#NK"
+    ]
+  ],
+
+  "choices_selection": [
+    {"type":"loop", "start":100, "stop":1400, "step":100, "default":100},
+    {"type":"loop", "start":100, "stop":1400, "step":100, "default":100}
+  ],
+
+ "pipeline_update":{
+   "cpu_freq":"max",
+   "gpu_freq":"max",
+   "compiler_vars": {
+    "NJ":500
+   }
+  },
+
+  "seed":22345,
+  "iterations":1000,
+  "repetitions":1,
+
+  "record":"yes",
+  "record_uoa":"explore-gemm-dataset-nj500",
+
+  "features_keys_to_process":["##choices#*"],
+
+  "record_params": {
+    "search_point_by_features":"yes"
+  }
+
+}
