@@ -1,0 +1,21 @@
+{
+  "customize": {
+    "add_m32": "no", 
+    "bugfix1": "no", 
+    "extra_dir": "", 
+    "retarget": "no", 
+    "tool_prefix_configured": "yes", 
+    "version": "4.9.3", 
+    "version_int": 40903
+  }, 
+  "process_script": "process", 
+  "soft_uoa": "3a8a82fa40bf992d", 
+  "suggested_path": "gcc", 
+  "tags": [
+    "compiler", 
+    "gcc", 
+    "v4.9.3", 
+    "v4.9", 
+    "v4"
+  ]
+}
