@@ -13,8 +13,8 @@
 # INSTALL_DIR
 
 export PACKAGE_NAME=gcc-4.9.3
-set PACKAGE_FILE=%PACKAGE_NAME%.tar.bz2
-set PACKAGE_URL=http://mirrors-uk.hotimportnights.com/gcc/releases/gcc-4.9.3/%PACKAGE_FILE%
+export PACKAGE_FILE=${PACKAGE_NAME}.tar.bz2
+export PACKAGE_URL=http://mirrors-uk.hotimportnights.com/gcc/releases/gcc-4.9.3/${PACKAGE_FILE}
 
 cd ${INSTALL_DIR}
 
