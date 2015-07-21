@@ -1,0 +1,12 @@
+{
+  "experiment_module_uoa":"experiment",
+
+  "data_uoa_list":["demo-autotune-flags-susan-mingw-i10", "demo-autotune-flags-susan-mingw-i10-pareto", "demo-autotune-flags-susan-mingw-best"],
+
+  "flat_keys_list":[
+    "##characteristics#compile#obj_size#min",
+    "##characteristics#run#execution_time_kernel_0#center",
+    "##characteristics#run#execution_time_kernel_0#halfrange"
+  ]
+
+}
