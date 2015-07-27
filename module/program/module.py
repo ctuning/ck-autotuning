@@ -2766,7 +2766,7 @@ def pipeline(i):
        flags=svarb+svarb1+'CK_COMPILER_FLAG_GPROF'+svare1+svare+' '+flags
        lflags=svarb+svarb1+'CK_COMPILER_FLAG_GPROF'+svare1+svare+' '+lflags
 
-       if cfg['gprof_tmp'] not in rof: rof.append(cfg['gprof_file'])
+       if cfg['gprof_file'] not in rof: rof.append(cfg['gprof_file'])
 
        rx=ck.gen_tmp_file({'prefix':'tmp-', 'remove_dir':'yes'})
        if rx['return']>0: return rx
@@ -2785,6 +2785,8 @@ def pipeline(i):
           ck.out('Setting CPU frequency to '+str(scpuf)+' (if supported) ...')
           ck.out('')
 
+       env['CK_CPU_FREQUENCY']=scpuf
+
        ii={'action':'set_freq',
            'module_uoa':cfg['module_deps']['platform.cpu'],
            'value':scpuf,
@@ -2800,11 +2802,13 @@ def pipeline(i):
 
     ###############################################################################################################
     # PIPELINE SECTION: set GPU frequency
-    if scpuf!='':
+    if sgpuf!='':
        if o=='con':
           ck.out(sep)
           ck.out('Setting GPU frequency to '+str(sgpuf)+' (if supported) ...')
           ck.out('')
+
+       env['CK_GPU_FREQUENCY']=sgpuf
 
        ii={'action':'set_freq',
            'module_uoa':cfg['module_deps']['platform.accelerator'],
