@@ -1,22 +1,22 @@
 {
   "actions": {
     "autotune": {
-      "desc": "auto-tune software and hardware"
+      "desc": "universal, multi-objective, multi-dimensional software/hardware autotuning"
     },
     "clean": {
-      "desc": "clean program work and tmp files"
+      "desc": "clean temporal files and directories of a given program"
     },
     "compile": {
-      "desc": "compile program"
+      "desc": "compile a given program"
     },
     "pipeline": {
-      "desc": "prepare and run program pipeline (clean, compile, run, etc)"
+      "desc": "universal program compilation and execution pipeline (workflow)"
     },
     "run": {
-      "desc": "run program"
+      "desc": "run a given program"
     },
     "select_uoa": {
-      "desc": "select uoa"
+      "desc": "select program UOA in console mode"
     }
   },
   "calibration_max": "10",
@@ -32,7 +32,7 @@
   },
   "copyright": "See CK Copyright.txt for copyright details",
   "deps_file": "tmp-deps.json",
-  "desc": "program",
+  "desc": "program compilation and execution workflow (pipeline)",
   "developer": "Grigori Fursin",
   "developer_email": "Grigori.Fursin@cTuning.org",
   "developer_webpage": "http://cTuning.org/lab/people/gfursin",

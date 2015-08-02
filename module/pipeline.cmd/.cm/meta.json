@@ -1,11 +1,11 @@
 {
   "actions": {
     "pipeline": {
-      "desc": "run pipeline"
+      "desc": "run universal command line pipeline (demo)"
     }
   }, 
   "copyright": "See CK Copyright.txt for copyright details", 
-  "desc": "pipeline demo", 
+  "desc": "demonstrating command line pipeline (for CMD-based autotuning)", 
   "developer": "Grigori Fursin", 
   "developer_email": "Grigori.Fursin@cTuning.org", 
   "developer_webpage": "http://cTuning.org/lab/people/gfursin", 

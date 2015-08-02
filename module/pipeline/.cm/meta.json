@@ -1,19 +1,21 @@
 {
   "actions": {
     "autotune": {
-      "desc": "universal pipeline autotuning"
+      "desc": "perform autotuning of any available CK pipeline (workflow)"
     }, 
-    "run": {}, 
+    "run": {
+      "desc": "run a given pipeline (workflow) once"
+    }, 
     "run_stat": {
-      "desc": "statistical run"
+      "desc": "run a given pipeline (workflow) N times and perform statistical analysis"
     }, 
     "setup": {
-      "desc": "setup pipeline"
+      "desc": "setup a given pipeline (workflow) for execution/autotuning"
     }
   }, 
   "clean_pipeline":["prepare","iterations","skip_info_collection"],
   "copyright": "See CK Copyright.txt for copyright details", 
-  "desc": "pipeline", 
+  "desc": "defining universal pipelines (experiment workflows)", 
   "developer": "Grigori Fursin", 
   "developer_email": "Grigori.Fursin@cTuning.org", 
   "developer_webpage": "http://cTuning.org/lab/people/gfursin", 

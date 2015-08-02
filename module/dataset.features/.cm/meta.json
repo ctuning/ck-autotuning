@@ -1,10 +1,10 @@
 {
   "actions": {
     "convert_raw_rgb_image": {
-      "desc": "converting raw RGB image to png"
+      "desc": "convert raw RGB image to png (originally used for SLAM application tuning)"
     }, 
     "extract": {
-      "desc": "extract dataset features"
+      "desc": "extract data set features"
     }
   }, 
   "copyright": "See CK Copyright.txt for copyright details", 

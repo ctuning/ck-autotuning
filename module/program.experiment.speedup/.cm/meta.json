@@ -18,7 +18,7 @@
     ]
   },
   "copyright": "See CK Copyright.txt for copyright details",
-  "desc": "experiment to check program speedups vs compiler flags vs data sets",
+  "desc": "checking program speedups vs compiler flags vs data sets",
   "developer": "Grigori Fursin",
   "developer_email": "Grigori.Fursin@cTuning.org",
   "developer_webpage": "http://cTuning.org/lab/people/gfursin",

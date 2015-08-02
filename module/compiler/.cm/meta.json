@@ -1,11 +1,11 @@
 {
   "actions": {
     "extract_to_pipeline": {
-      "desc": "extract choices to universal pipeline tuning"
+      "desc": "prepare compiler flag choices for universal tuning via program pipeline (experimental workflow)"
     }
   }, 
   "copyright": "See CK Copyright.txt for copyright details", 
-  "desc": "compiler", 
+  "desc": "describing compilers and their optimization choices", 
   "developer": "Grigori Fursin", 
   "developer_email": "Grigori.Fursin@cTuning.org", 
   "developer_webpage": "http://cTuning.org/lab/people/gfursin", 

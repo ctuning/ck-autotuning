@@ -1,12 +1,14 @@
 {
   "actions": {
-    "make": {}, 
+    "make": {
+      "desc": "make next choice in multi-dimensional space"
+  }, 
     "select_list": {
-      "desc": "select list"
+      "desc": "select from a list of choices in console mode"
     } 
   }, 
   "copyright": "See CK Copyright.txt for copyright details", 
-  "desc": "deal with choices", 
+  "desc": "exploring choices in multi-dimensional spaces (customizing autotuning)", 
   "developer": "Grigori Fursin", 
   "developer_email": "Grigori.Fursin@cTuning.org", 
   "developer_webpage": "http://cTuning.org/lab/people/gfursin", 
