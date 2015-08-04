@@ -1,12 +1,18 @@
 {
-  "data_uid": "a4328ba99679e0d1", 
   "data_name": "CK (machine learning based) multi-objective autotuning", 
-  "dict": {
-    "url": "https://github.com/ctuning/ck-autotuning.git", 
-    "shared": "git", 
-    "sync": "yes"
-  }, 
   "data_alias": "ck-autotuning", 
-  "data_uoa": "ck-autotuning",
-  "repo_deps":[{"repo_uoa":"ck-env"}, {"repo_uoa":"ck-analytics"}]
+  "data_uid": "a4328ba99679e0d1", 
+  "data_uoa": "ck-autotuning", 
+  "dict": {
+    "repo_deps": [
+      {
+        "repo_uoa": "ck-env"
+      }, 
+      {
+        "repo_uoa": "ck-analytics"
+      }
+    ], 
+    "url": "https://github.com/ctuning/ck-autotuning", 
+    "shared": "git"
+  }
 }
