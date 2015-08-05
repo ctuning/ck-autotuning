@@ -57,20 +57,22 @@ def describe(i):
 def reproduce(i):
     """
     Input:  {
-              program_uoa      - program UOA to check
+              program_uoa       - program UOA to check
 
-              (cmd_key)        - cmd key
-              (dataset_uoas)   - check dataset UOA
+              (cmd_key)         - cmd key
+              (dataset_uoas)    - check dataset UOA
 
-              (choices)        - dict['flags'] - list of combinations of compiler flags
+              (choices)         - dict['flags'] - list of combinations of compiler flags
 
-              (host_os)        - host OS (detect, if omitted)
-              (target_os)      - OS module to check (if omitted, analyze host)
-              (device_id)      - device id if remote (such as adb)
+              (host_os)         - host OS (detect, if omitted)
+              (target_os)       - OS module to check (if omitted, analyze host)
+              (device_id)       - device id if remote (such as adb)
 
-              (stat_repeat)    - max statistical repetitions (4 by default)
+              (stat_repeat)     - max statistical repetitions (4 by default)
 
-              (check_speedup)  - if 'yes', check speedups for the first two optimizations ...
+              (check_speedup)   - if 'yes', check speedups for the first two optimizations ...
+
+              (add_to_pipeline) - add this dict to pipeline 
             }
 
     Output: {
@@ -93,6 +95,8 @@ def reproduce(i):
     if len(cflags)==0:
        return {'return':1, 'error':'choices dictionary doesn\'t have "flags" list'}
 
+    ap=i.get('add_to_pipeline',{})
+
     ###################################################
     # Experiment table
     table=[]  # Strings (for printing)
@@ -101,7 +105,7 @@ def reproduce(i):
     ###################################################
     ck.out(sep)
     ck.out('Loading program meta info ...')
-    
+
     r=ck.access({'action':'load',
                  'module_uoa':cfg['module_deps']['program'],
                  'data_uoa':puoa})
@@ -151,7 +155,7 @@ def reproduce(i):
     if srepeat<1: srepeat=4
 
     repeat=i.get('repeat',-1)
-    
+
     hos=i.get('host_os','')
     tos=i.get('target_os','')
     tdid=i.get('device_id','')
@@ -187,11 +191,13 @@ def reproduce(i):
 
             'out':'con'}
 
+        if len(ap)>0: ii.update(ap)
+
         if len(deps)>0: ii['dependencies']=deps
 
         r=ck.access(ii)
         if r['return']>0: return r
-            
+
         lio=r.get('last_iteration_output',{})
 
         fail=lio.get('fail','')
@@ -201,7 +207,7 @@ def reproduce(i):
 
         ed=r.get('experiment_desc',{})
         deps=ed.get('dependencies',{})
-        
+
         cc=ed.get('choices',{})
 
         hos=cc['host_os']
@@ -251,6 +257,8 @@ def reproduce(i):
 
                 'out':'con'}
 
+            if len(ap)>0: ij.update(ap)
+
             if repeat>0: ij['repeat']=repeat
 
             r=ck.access(ij)
@@ -296,11 +304,11 @@ def reproduce(i):
 
     ck.out(sep)
     ck.out('Raw results (exported to '+rf+'.txt, .html, .json):')
-    
+
     if dcomp!='':
        ck.out('')
        ck.out('Detected compiler version: '+dcomp)
-     
+
     ck.out('')
     ck.out(s)
 
