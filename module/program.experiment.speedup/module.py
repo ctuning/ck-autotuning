@@ -342,7 +342,7 @@ def reproduce(i):
        sd0=t0d0/t1d0
        sd1=t0d1/t1d1
 
-       if sd0>1.1 or sd1>1.1 or sd0<0.9 or sd1<0.9:
+       if sd0>1.08 or sd1>1.08 or sd0<0.92 or sd1<0.92:
           ck.out(sep)
           ck.out('Found speedup or slow down for the first 2 optimizations:')
           ck.out('')
@@ -353,17 +353,21 @@ def reproduce(i):
           r=ck.inp({'text':'Would you like to share this result with an author via public "remote-ck" web service (Y/n): '})
           x=r['string'].lower()
           if x=='' or x=='yes' or x=='y':
-             xchoices['optimization_0']:cflags[0],
-             xchoices['optimization_1']:cflags[1],
+             xchoices['optimization_0']=cflags[0]
+             xchoices['optimization_1']=cflags[1]
 
-             xchoices['dataset_uoa_0']:dlist[0]['data_uoa'],
-             xchoices['dataset_uoa_1']:dlist[1]['data_uoa'],
+             xchoices['dataset_uoa_0']=dlist[0]['data_uoa']
+             xchoices['dataset_uoa_1']=dlist[1]['data_uoa']
 
-             xchoices['dataset_uid_0']:dlist[0]['data_uid'],
-             xchoices['dataset_uid_1']:dlist[1]['data_uid'],
-             
+             xchoices['dataset_uid_0']=dlist[0]['data_uid']
+             xchoices['dataset_uid_1']=dlist[1]['data_uid']
+
+             xchoices['compiler_version']=dcomp
+
              ii={'action':'add',
                  'module_uoa':cfg['module_deps']['experiment'],
+
+                 'tags':['crowdsource experiments','ck-paper','filter','if-conversion','speedup'],
 
                  'experiment_repo_uoa':cfg['repository_to_share_results'],
                  'remote_repo_uoa':cfg['remote_repo_uoa'],
@@ -376,12 +380,20 @@ def reproduce(i):
                       'speedup_0':sd0,
                       'speedup_1':sd1
                    }
+                 }
                 }
 
              r=ck.access(ii)
              if r['return']>0: return r
 
              ck.out('')
-             ck.out('  Results shared successfully! Thank you for participating in experiment crowdsourcing!')
-                 
+             ck.out('  Results shared successfully!')
+
+       else:
+          ck.out('')
+          ck.out('Note: speedups/slowdowns were not detected on your platform!')
+
+    ck.out('')
+    ck.out('Thank you for participating in experiment crowdsourcing!')
+
     return {'return':0}
