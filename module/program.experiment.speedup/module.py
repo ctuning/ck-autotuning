@@ -334,10 +334,10 @@ def reproduce(i):
        r1d0=otable[1][dlist[0]['data_uoa']]
        r1d1=otable[1][dlist[1]['data_uoa']]
 
-       t0d0=r0d0['##characteristics#run#execution_time_kernel_0#exp']
-       t0d1=r0d1['##characteristics#run#execution_time_kernel_0#exp']
-       t1d0=r1d0['##characteristics#run#execution_time_kernel_0#exp']
-       t1d1=r1d1['##characteristics#run#execution_time_kernel_0#exp']
+       t0d0=r0d0['##characteristics#run#execution_time_kernel_0#exp']/repeat
+       t0d1=r0d1['##characteristics#run#execution_time_kernel_0#exp']/repeat
+       t1d0=r1d0['##characteristics#run#execution_time_kernel_0#exp']/repeat
+       t1d1=r1d1['##characteristics#run#execution_time_kernel_0#exp']/repeat
 
        sd0=t0d0/t1d0
        sd1=t0d1/t1d1
@@ -367,18 +367,21 @@ def reproduce(i):
              ii={'action':'add',
                  'module_uoa':cfg['module_deps']['experiment'],
 
-                 'tags':['crowdsource experiments','ck-paper','filter','if-conversion','speedup'],
-
-                 'experiment_repo_uoa':cfg['repository_to_share_results'],
-                 'remote_repo_uoa':cfg['remote_repo_uoa'],
+                 'repo_uoa':cfg['repository_to_share_results'],
+                 'experiment_repo_uoa':cfg['remote_repo_uoa'],
                  'experiment_uoa':cfg['remote_experiment_uoa'],
 
                  'dict':{
+                   'tags':['crowdsource experiments','ck-paper','filter','if-conversion','speedup'],
                    'features':features,
                    'choices':xchoices,
                    'characteristics': {
                       'speedup_0':sd0,
-                      'speedup_1':sd1
+                      'speedup_1':sd1,
+                      'execution_time_div_by_repeat_opt0_ds0':t0d0,
+                      'execution_time_div_by_repeat_opt0_ds1':t0d1,
+                      'execution_time_div_by_repeat_opt1_ds0':t1d0,
+                      'execution_time_div_by_repeat_opt1_ds1':t1d1
                    }
                  }
                 }

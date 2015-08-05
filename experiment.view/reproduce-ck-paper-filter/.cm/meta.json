@@ -1,0 +1,75 @@
+{
+  "flat_keys": [
+    "##choices#host_os", 
+    "##choices#target_os", 
+    "##features#platform#cpu#name", 
+    "##features#platform#cpu#sub_name", 
+    "##features#platform#cpu#num_proc", 
+    "##features#compiler_version#raw@0", 
+    "##choices#dataset_uoa_0", 
+    "##choices#dataset_uoa_1", 
+    "##choices#optimization_0", 
+    "##choices#optimization_1", 
+    "##characteristics#speedup_0", 
+    "##characteristics#speedup_1", 
+    "##characteristics#execution_time_div_by_repeat_opt0_ds0",
+    "##characteristics#execution_time_div_by_repeat_opt0_ds1" 
+  ], 
+  "flat_keys_desc": [
+    {
+      "desc": "Host OS", 
+      "module_uoa": "0440cb72c2bc5cc6", 
+      "type": "uoa"
+    }, 
+    {
+      "desc": "Target OS", 
+      "module_uoa": "0440cb72c2bc5cc6", 
+      "type": "uoa"
+    }, 
+    {
+      "desc": "CPU name"
+    }, 
+    {
+      "desc": "CPU sub-name"
+    }, 
+    {
+      "desc": "Number of logical cores"
+    }, 
+    {
+      "desc": "Raw compiler name"
+    }, 
+    {
+      "desc": "Dataset UOA 0", 
+      "module_uoa": "8a7141c59cd335f5", 
+      "type": "uoa"
+    }, 
+    {
+      "desc": "Dataset UOA 1", 
+      "module_uoa": "8a7141c59cd335f5", 
+      "type": "uoa"
+    }, 
+    {
+      "desc": "Optimization 0"
+    }, 
+    {
+      "desc": "Optimization 1"
+    }, 
+    {
+      "desc": "Speedup DS0 (TOpt0/TOpt1)",
+      "format":"%4.2f"
+    }, 
+    {
+      "desc": "Speedup DS1 (TOpt0/TOpt1)",
+      "format":"%4.2f"
+    }, 
+    {
+      "desc": "Expected time DS0 Opt0 (s.)",
+      "format":"%1.5f"
+    }, 
+    {
+      "desc": "Expected time DS1 Opt0 (s.)",
+      "format":"%1.5f"
+    } 
+  ],
+  "no_replay":"yes"
+}
