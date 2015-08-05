@@ -69,6 +69,8 @@ def reproduce(i):
               (device_id)      - device id if remote (such as adb)
 
               (stat_repeat)    - max statistical repetitions (4 by default)
+
+              (check_speedup)  - if 'yes', check speedups for the first two optimizations ...
             }
 
     Output: {
@@ -141,117 +143,141 @@ def reproduce(i):
     t.append('Binary size:')
     t.append('MD5SUM:')
     for ds in dlist:
-        t.append('min time - max time:')
+        t.append('min time (s); exp time (s); var (%):')
     table.append(t)
 
-    # Iterate over flags
-    srepeat=i.get('stat_repeat',0)
+    # Number of statistical repetitions
+    srepeat=int(i.get('stat_repeat',0))
     if srepeat<1: srepeat=4
 
     repeat=i.get('repeat',-1)
-    deps={}
     
     hos=i.get('host_os','')
     tos=i.get('target_os','')
     tdid=i.get('device_id','')
+
+    # will be updated later
+    deps={}
+    features={}
+
+    dcomp=''
 
     for cf in cflags:
         ck.out(sep)
         ck.out('Checking flags "'+cf+'" ...')
 
         t=[]
-        ot=[]
-
         t.append(cf)
-        ot.append(cf)
 
-        ii={'action':'compile',
-            'module_uoa':cfg['module_deps']['program'],
-            'data_uoa':puoa,
+        ii={'action':'run',
+
+            'module_uoa':cfg['module_deps']['pipeline'],
+            'data_uoa':cfg['module_deps']['program'],
+            'program_uoa':puoa,
+
             'host_os':hos,
             'target_os':tos,
             'device_id':tdid,
-            'clean':'yes',
+
             'flags':cf,
+
+            'repetitions': 1,
+
+            'no_run':'yes',
+
             'out':'con'}
 
-        if len(deps)>0: ii['deps']=deps
+        if len(deps)>0: ii['dependencies']=deps
 
         r=ck.access(ii)
         if r['return']>0: return r
             
-        deps=r['deps']
+        lio=r.get('last_iteration_output',{})
 
-        cmisc=r['misc']
-        cchar=r['characteristics']
+        fail=lio.get('fail','')
 
-        cs=cmisc['compilation_success']
+        if fail=='yes':
+           return {'return':1, 'error':'compilation failed ('+lio.get('fail_reason','')+')- check above output and possibly report to the authors!'}
 
-        if cs!='yes':
-           return {'return':1, 'error':'compilation failed - check above output and possibly report to authors!'}
+        ed=r.get('experiment_desc',{})
+        deps=ed.get('dependencies',{})
+        
+        cc=ed.get('choices',{})
 
-        hos=cmisc['host_os_uoa']
-        tos=cmisc['target_os_uoa']
-        tdid=cmisc['device_id']
+        hos=cc['host_os']
+        tos=cc['target_os']
+        tdid=cc['device_id']
 
-        os=cchar.get('obj_size',0)
-        md5=cchar.get('md5_sum','')
+        ft=ed.get('features',{})
+        if len(features)==0: features=ft
+
+        if dcomp=='': dcomp=ft.get('compiler_version',{}).get('str','')
+
+        lsa=r.get('last_stat_analysis',{})
+        fresults=lsa.get('dict_flat',{})
+
+        os=fresults.get('##characteristics#compile#obj_size#min',0)
+        md5=fresults.get('##characteristics#compile#obj_size#md5_sum','')
 
         t.append(os)
         t.append(md5)
 
-        ot.append(str(os))
-        ot.append(str(md5))
-
         # Iterate over datasets
+        oresults={}
+
         for ds in dlist:
             duoa=ds['data_uoa']
             duid=ds['data_uid']
 
             ck.out(sep)
             ck.out('Running with dataset '+duoa+' ...')
+            ck.out('')
 
-            # Try to run
-            tmin=-1
-            tmax=-1
+            ij={'action':'run',
 
-            for s in range(0, srepeat):
-                ck.out(sep)
-                ck.out('Statistical repetition '+str(s+1)+' out of '+str(srepeat)+' ...')               
+                'module_uoa':cfg['module_deps']['pipeline'],
+                'data_uoa':cfg['module_deps']['program'],
+                'program_uoa':puoa,
 
-                ij={'action':'run',
-                    'module_uoa':cfg['module_deps']['program'],
-                    'data_uoa':puoa,
-                    'host_os':hos,
-                    'target_os':tos,
-                    'device_id':tdid,
-                    'cmd_key':cmd_key,
-                    'dataset_uoa':duid,
-                    'out':'con'}
+                'host_os':hos,
+                'target_os':tos,
+                'device_id':tdid,
 
-                if len(deps)>0: ij['deps']=deps
+                'repetitions': srepeat,
 
-                if repeat>0: ij['repeat']=repeat
+                'cmd_key':cmd_key,
+                'dataset_uoa':duid,
+                'no_compile':'yes',
 
-                r=ck.access(ij)
-                if r['return']>0: return r
+                'out':'con'}
 
-                rmisc=r['misc']
-                rchar=r['characteristics']
+            if repeat>0: ij['repeat']=repeat
 
-                rs=rmisc['run_success']
+            r=ck.access(ij)
+            if r['return']>0: return r
 
-                if rs!='yes':
-                   return {'return':1, 'error':'execution failed - check above output and possibly report to authors!'}
+            lio=r.get('last_iteration_output',{})
 
-                repeat=rchar['repeat']
-                tt=rchar['total_execution_time']
+            fail=lio.get('fail','')
 
-                if tmin==-1 or tt<tmin: tmin=tt
-                if tmax==-1 or tt>tmax: tmax=tt
+            if fail=='yes':
+               return {'return':1, 'error':'execution failed ('+lio.get('fail_reason','')+')- check above output and possibly report to the authors!'}
 
-            t.append(('%3.3f' % tmin) + ' .. ' + ('%3.3f' % tmax))
+            state=lio.get('state',{})
+            repeat=state['repeat']
 
+            lsa=r.get('last_stat_analysis',{})
+            fresults=lsa.get('dict_flat',{})
+
+            texp=fresults.get('##characteristics#run#execution_time_kernel_0#exp',0)
+            tmin=fresults.get('##characteristics#run#execution_time_kernel_0#min',0)
+            tdelta=fresults.get('##characteristics#run#execution_time_kernel_0#range_percent',0)
+
+            oresults[duoa]=fresults
+
+            t.append('      '+('%3.3f' % tmin) + ' ;       ' + ('%3.3f' % texp) + ' ;    ' + ('%3.1f' % (tdelta*100))+'%')
+
+        otable.append(oresults)
         table.append(t)
 
     # Draw table
@@ -263,15 +289,20 @@ def reproduce(i):
     if r['return']>0: return r
     s=r['string']
 
-    ck.out(sep)
-    ck.out('Results:')
-    ck.out('')
-    ck.out(s)
-
     rf=cfg['report_file']
     rft=rf+'.txt'
     rfh=rf+'.html'
     rfj=rf+'.json'
+
+    ck.out(sep)
+    ck.out('Raw results (exported to '+rf+'.txt, .html, .json):')
+    
+    if dcomp!='':
+       ck.out('')
+       ck.out('Detected compiler version: '+dcomp)
+     
+    ck.out('')
+    ck.out(s)
 
     r=ck.save_text_file({'text_file':rft, 'string':s})
     if r['return']>0: return r
@@ -283,5 +314,28 @@ def reproduce(i):
 
     r=ck.save_text_file({'text_file':rfh, 'string':html})
     if r['return']>0: return r
+
+    # Checking if there is a speedup ...
+    # Expect that otable[0] - -O3; otable[1] - -O3 -fno-if-conversion
+    if i.get('check_speedup','')=='yes' and len(otable)>1:
+       r0d0=otable[0][dlist[0]['data_uoa']]
+       r0d1=otable[0][dlist[1]['data_uoa']]
+       r1d0=otable[1][dlist[0]['data_uoa']]
+       r1d1=otable[1][dlist[1]['data_uoa']]
+
+       t0d0=r0d0['##characteristics#run#execution_time_kernel_0#exp']
+       t0d1=r0d1['##characteristics#run#execution_time_kernel_0#exp']
+       t1d0=r1d0['##characteristics#run#execution_time_kernel_0#exp']
+       t1d1=r1d1['##characteristics#run#execution_time_kernel_0#exp']
+
+       sd0=t0d0/t1d0
+       sd1=t0d1/t1d1
+
+       if sd0>1.1 or sd1>1.1 or sd0<0.9 or sd1<0.9:
+          ck.out(sep)
+          ck.out('Found speedup or slow down for the first 2 optimizations:')
+          ck.out('')
+          ck.out(' Dataset 0 ('+dlist[0]['data_uoa']+') speedup (T_opt0/T_opt1) = '+('%2.2f' % sd0))
+          ck.out(' Dataset 1 ('+dlist[1]['data_uoa']+') speedup (T_opt0/T_opt1) = '+('%2.2f' % sd1))
 
     return {'return':0}

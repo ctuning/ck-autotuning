@@ -2460,7 +2460,7 @@ def pipeline(i):
         if xdtags!='': xdtags+=','
         xdtags+=q
 
-    if dduoa!='' or len(dtags)>0:
+    if no_run!='yes' and (dduoa!='' or len(dtags)>0):
        if dduoa=='':
           rx=ck.access({'action':'search',
                         'dataset_repo_uoa':druoa,
@@ -2525,59 +2525,60 @@ def pipeline(i):
        if rx['return']>0: return rx
        ceuoa=rx['data_uid']
 
-    if len(cdeps)==0 or ceuoa!='': 
-       cdeps=meta.get('compile_deps',{})
+    if no_compile!='yes':
+       if len(cdeps)==0 or ceuoa!='': 
+          cdeps=meta.get('compile_deps',{})
 
-       if len(cdeps)>0:
+          if len(cdeps)>0:
+             if o=='con':
+                ck.out(sep)
+
+             if ceuoa!='':
+                # clean compiler version, otherwise wrong detection of flags
+                if 'compiler_version' in features: del(features['compiler_version'])
+                x=cdeps.get('compiler',{})
+                if len(x)>0:
+                   if 'cus' in x: del(x['cus'])
+                   if 'deps' in x: del(x['deps'])
+                   x['uoa']=ceuoa
+                   cdeps['compiler']=x
+
+             ii={'action':'resolve',
+                 'module_uoa':cfg['module_deps']['env'],
+                 'host_os':hos,
+                 'target_os':tos,
+                 'device_id':tdid,
+                 'deps':cdeps,
+                 'add_customize':'yes',
+                 'out':oo}
+
+             rx=ck.access(ii)
+             if rx['return']>0: return rx
+
+             cdeps=rx['deps'] # Update deps (add UOA)
+             i['dependencies']=cdeps
+
+             # Check if multiple compiler choices
+             cmpl=cdeps.get('compiler',{}).get('choices',[])
+             if len(cmpl)>0 and len(choices_desc.get('##compiler_env_uoa',{}))==0:
+                choices_desc['##compiler_env_uoa']={'type':'uoa',
+                                                    'has_choice':'yes',
+                                                    'choices':cmpl,
+                                                    'sort':2000}
+
+       else:
           if o=='con':
-             ck.out(sep)
-
-          if ceuoa!='':
-             # clean compiler version, otherwise wrong detection of flags
-             if 'compiler_version' in features: del(features['compiler_version'])
-             x=cdeps.get('compiler',{})
-             if len(x)>0:
-                if 'cus' in x: del(x['cus'])
-                if 'deps' in x: del(x['deps'])
-                x['uoa']=ceuoa
-                cdeps['compiler']=x
-
-          ii={'action':'resolve',
-              'module_uoa':cfg['module_deps']['env'],
-              'host_os':hos,
-              'target_os':tos,
-              'device_id':tdid,
-              'deps':cdeps,
-              'add_customize':'yes',
-              'out':oo}
-
-          rx=ck.access(ii)
-          if rx['return']>0: return rx
-
-          cdeps=rx['deps'] # Update deps (add UOA)
-          i['dependencies']=cdeps
-
-          # Check if multiple compiler choices
-          cmpl=cdeps.get('compiler',{}).get('choices',[])
-          if len(cmpl)>0 and len(choices_desc.get('##compiler_env_uoa',{}))==0:
-             choices_desc['##compiler_env_uoa']={'type':'uoa',
-                                                 'has_choice':'yes',
-                                                 'choices':cmpl,
-                                                 'sort':2000}
-
-    else:
-       if o=='con':
-          ck.out('  Selected dependencies: ')
-          for dp in cdeps:
-              dpx=cdeps[dp]
-              tags=dpx.get('dict',{}).get('tags',[])
-              x=json.dumps(tags, sort_keys=True)
-              y=dpx.get('uoa','')
-              ck.out('      '+dp+' env = '+y+'; tags = '+x)
+             ck.out('  Selected dependencies: ')
+             for dp in cdeps:
+                 dpx=cdeps[dp]
+                 tags=dpx.get('dict',{}).get('tags',[])
+                 x=json.dumps(tags, sort_keys=True)
+                 y=dpx.get('uoa','')
+                 ck.out('      '+dp+' env = '+y+'; tags = '+x)
 
     ###############################################################################################################
     # PIPELINE SECTION: Detect compiler version
-    if i.get('no_detect_compiler_version','')!='yes' and len(features.get('compiler_version',{}))==0:
+    if no_compile!='yes' and i.get('no_detect_compiler_version','')!='yes' and len(features.get('compiler_version',{}))==0:
        if o=='con':
           ck.out(sep)
           ck.out('Detecting compiler version ...')
@@ -2617,7 +2618,7 @@ def pipeline(i):
     cflags_desc=choices_desc.get('##compiler_flags',{})
 
     cdu=i.get('compiler_description_uoa','')
-    if cdu=='' and i.get('no_compiler_description','')!='yes':
+    if no_compile!='yes' and cdu=='' and i.get('no_compiler_description','')!='yes':
        cdt=cdeps.get('compiler',{}).get('dict',{}).get('tags',[])
 
        # Substitute with real compiler version

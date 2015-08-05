@@ -10,15 +10,11 @@
   "choices": {
     "flags": [
       "-O3",
-      "-O3 -fno-if-conversion",
-      "-O2",
-      "-O1",
-      "-Os",
-      "-Os -fno-if-conversion"
+      "-O3 -fno-if-conversion"
     ]
   },
   "copyright": "See CK Copyright.txt for copyright details",
-  "desc": "checking program speedups vs compiler flags vs data sets",
+  "desc": "example of a script to reproduce and crowdsource experiments: checking program speedups vs a set of compiler flags vs a few data sets",
   "developer": "Grigori Fursin",
   "developer_email": "Grigori.Fursin@cTuning.org",
   "developer_webpage": "http://cTuning.org/lab/people/gfursin",
@@ -27,6 +23,7 @@
   "module_deps": {
     "dataset": "8a7141c59cd335f5",
     "program": "b0ac08fe1d3c2615",
+    "pipeline":"db25414b48b4ffb3",
     "table": "2884ee69eaefe71e"
   },
   "report_file": "report.program.experiment.speedup"
