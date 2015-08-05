@@ -392,6 +392,9 @@ def reproduce(i):
              ck.out('')
              ck.out('  Results shared successfully!')
 
+             ck.out('')
+             ck.out('  You can see all shared results at http://cknowledge.org/repo/web.php?wcid=bc0409fb61f0aa82:8404df882462f978&subview=reproduce-ck-paper-filter')
+
        else:
           ck.out('')
           ck.out('Note: speedups/slowdowns were not detected on your platform!')
