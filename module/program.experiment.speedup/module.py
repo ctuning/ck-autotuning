@@ -163,6 +163,7 @@ def reproduce(i):
     # will be updated later
     deps={}
     features={}
+    xchoices={}
 
     dcomp=''
 
@@ -209,6 +210,8 @@ def reproduce(i):
         deps=ed.get('dependencies',{})
 
         cc=ed.get('choices',{})
+
+        if len(xchoices)==0: xchoices=cc
 
         hos=cc['host_os']
         tos=cc['target_os']
@@ -343,7 +346,42 @@ def reproduce(i):
           ck.out(sep)
           ck.out('Found speedup or slow down for the first 2 optimizations:')
           ck.out('')
-          ck.out(' Dataset 0 ('+dlist[0]['data_uoa']+') speedup (T_opt0/T_opt1) = '+('%2.2f' % sd0))
-          ck.out(' Dataset 1 ('+dlist[1]['data_uoa']+') speedup (T_opt0/T_opt1) = '+('%2.2f' % sd1))
+          ck.out('* Dataset 0 ('+dlist[0]['data_uoa']+') speedup (T_opt0/T_opt1) = '+('%2.2f' % sd0))
+          ck.out('* Dataset 1 ('+dlist[1]['data_uoa']+') speedup (T_opt0/T_opt1) = '+('%2.2f' % sd1))
 
+          ck.out('')
+          r=ck.inp({'text':'Would you like to share this result with an author via public "remote-ck" web service (Y/n): '})
+          x=r['string'].lower()
+          if x=='' or x=='yes' or x=='y':
+             xchoices['optimization_0']:cflags[0],
+             xchoices['optimization_1']:cflags[1],
+
+             xchoices['dataset_uoa_0']:dlist[0]['data_uoa'],
+             xchoices['dataset_uoa_1']:dlist[1]['data_uoa'],
+
+             xchoices['dataset_uid_0']:dlist[0]['data_uid'],
+             xchoices['dataset_uid_1']:dlist[1]['data_uid'],
+             
+             ii={'action':'add',
+                 'module_uoa':cfg['module_deps']['experiment'],
+
+                 'experiment_repo_uoa':cfg['repository_to_share_results'],
+                 'remote_repo_uoa':cfg['remote_repo_uoa'],
+                 'experiment_uoa':cfg['remote_experiment_uoa'],
+
+                 'dict':{
+                   'features':features,
+                   'choices':xchoices,
+                   'characteristics': {
+                      'speedup_0':sd0,
+                      'speedup_1':sd1
+                   }
+                }
+
+             r=ck.access(ii)
+             if r['return']>0: return r
+
+             ck.out('')
+             ck.out('  Results shared successfully! Thank you for participating in experiment crowdsourcing!')
+                 
     return {'return':0}
