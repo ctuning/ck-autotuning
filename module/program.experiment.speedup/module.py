@@ -275,7 +275,7 @@ def reproduce(i):
 
             oresults[duoa]=fresults
 
-            t.append('      '+('%3.3f' % tmin) + ' ;       ' + ('%3.3f' % texp) + ' ;    ' + ('%3.1f' % (tdelta*100))+'%')
+            t.append('      '+('%3.3f' % tmin) + ' ;       ' + ('%3.3f' % texp) + ' ;   ' + ('%4.1f' % (tdelta*100))+'%')
 
         otable.append(oresults)
         table.append(t)
