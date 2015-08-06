@@ -290,12 +290,12 @@ def autotune(i):
        if pipeline.get('ready','')!='yes':
           return {'return':1, 'error':'pipeline is not ready'}
        del(pipeline['return'])
-       
+
     # Clean and copy pipeline before choice selection
     for q in cfg['clean_pipeline']:
         if q in pipeline: del(pipeline[q])
     pipelinec=copy.deepcopy(pipeline)
-          
+
     # Check some vars ...
     ni=i.get('iterations','')
     if ni=='': ni=50
@@ -309,7 +309,7 @@ def autotune(i):
     sfi=i.get('start_from_iteration','')
     if sfi=='': sfi=1
     if type(sfi)!=int: sfi=int(sfi)
-   
+
     srm=i.get('repetitions','')
     if srm=='': srm=4
     try: srm=int(srm)

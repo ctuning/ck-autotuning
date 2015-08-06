@@ -73,6 +73,11 @@ def reproduce(i):
               (check_speedup)   - if 'yes', check speedups for the first two optimizations ...
 
               (add_to_pipeline) - add this dict to pipeline 
+
+
+              (experiment_repo_uoa)        - repo to record experiments (by default "remote-ck")
+              (experiment_remote_repo_uoa) - if above repo is remote, repo on remote server to record experiments (by default "upload")
+              (experiment_uoa)             - CK entry UOA to record experiments (by default "reproduce-ck-paper-filter-optimization")
             }
 
     Output: {
@@ -82,6 +87,10 @@ def reproduce(i):
             }
 
     """
+
+    import os
+    curdir=os.getcwd()
+    rf=os.path.join(curdir, cfg['report_file'])
 
     puoa=i.get('program_uoa','')
     if puoa=='':
@@ -96,6 +105,14 @@ def reproduce(i):
        return {'return':1, 'error':'choices dictionary doesn\'t have "flags" list'}
 
     ap=i.get('add_to_pipeline',{})
+
+    e_repo_uoa=cfg['repository_to_share_results']
+    e_remote_repo_uoa=cfg['remote_repo_uoa']
+    e_uoa=cfg['remote_experiment_uoa']
+
+    if i.get('experiment_repo_uoa','')!='': e_repo_uoa=i['experiment_repo_uoa']
+    if i.get('experiment_remote_repo_uoa','')!='': e_remote_repo_uoa=i['experiment_remote_repo_uoa']
+    if i.get('experiment_uoa','')!='': e_uoa=i['experiment_uoa']
 
     ###################################################
     # Experiment table
@@ -267,6 +284,8 @@ def reproduce(i):
             r=ck.access(ij)
             if r['return']>0: return r
 
+            exit(1)
+
             lio=r.get('last_iteration_output',{})
 
             fail=lio.get('fail','')
@@ -300,7 +319,6 @@ def reproduce(i):
     if r['return']>0: return r
     s=r['string']
 
-    rf=cfg['report_file']
     rft=rf+'.txt'
     rfh=rf+'.html'
     rfj=rf+'.json'
@@ -342,7 +360,7 @@ def reproduce(i):
        sd0=t0d0/t1d0
        sd1=t0d1/t1d1
 
-       if sd0>1.08 or sd1>1.08 or sd0<0.92 or sd1<0.92:
+       if sd0>1.08 or sd1>1.08 or sd0<0.92 or sd1<0.92 or i.get('force_record','')=='yes':
           ck.out(sep)
           ck.out('Found speedup or slow down for the first 2 optimizations:')
           ck.out('')
@@ -350,7 +368,7 @@ def reproduce(i):
           ck.out('* Dataset 1 ('+dlist[1]['data_uoa']+') speedup (T_opt0/T_opt1) = '+('%2.2f' % sd1))
 
           ck.out('')
-          r=ck.inp({'text':'Would you like to share this result with an author via public "remote-ck" web service (Y/n): '})
+          r=ck.inp({'text':'Would you like to share this result with the community and author via public "remote-ck" web service (Y/n): '})
           x=r['string'].lower()
           if x=='' or x=='yes' or x=='y':
              xchoices['optimization_0']=cflags[0]
@@ -367,9 +385,9 @@ def reproduce(i):
              ii={'action':'add',
                  'module_uoa':cfg['module_deps']['experiment'],
 
-                 'repo_uoa':cfg['repository_to_share_results'],
-                 'experiment_repo_uoa':cfg['remote_repo_uoa'],
-                 'experiment_uoa':cfg['remote_experiment_uoa'],
+                 'repo_uoa':e_repo_uoa,
+                 'experiment_repo_uoa':e_remote_repo_uoa,
+                 'experiment_uoa':e_uoa,
 
                  'dict':{
                    'tags':['crowdsource experiments','ck-paper','filter','if-conversion','speedup'],
