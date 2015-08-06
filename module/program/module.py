@@ -434,6 +434,8 @@ def process_in_dir(i):
     ubtr=hosd.get('use_bash_to_run','')
     no=tosd.get('no_output','')
 
+    md5sum=hosd.get('md5sum','')
+
     ########################################################################
     p=i['path']
     meta=i['meta']
@@ -974,7 +976,7 @@ def process_in_dir(i):
           sb+='\n'+no+svarb+'CK_OBJDUMP'+svare+' '+target_exe+' '+stro+' '+target_exe+'.dump'+'\n'
           x='<'
           if hplat=='win':x='' 
-          sb+='\n'+no+'md5sum '+x+' '+target_exe+'.dump '+stro+' '+target_exe+'.md5'+'\n'
+          sb+='\n'+no+md5sum+' '+x+' '+target_exe+'.dump '+stro+' '+target_exe+'.md5'+'\n'
 
           # Stop energy monitor, if needed and if supported
           if me=='yes' and sspm2!='':
