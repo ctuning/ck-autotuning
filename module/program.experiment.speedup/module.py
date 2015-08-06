@@ -284,8 +284,6 @@ def reproduce(i):
             r=ck.access(ij)
             if r['return']>0: return r
 
-            exit(1)
-
             lio=r.get('last_iteration_output',{})
 
             fail=lio.get('fail','')
