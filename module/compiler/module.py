@@ -137,6 +137,9 @@ def extract_opts(i):
               (device_id)            - device id if remote (such as adb)
 
               (compiler_id)          - currently support only "gcc" (default)
+
+              (repo_uoa)             - repo UOA to record compiler description
+              (data_uoa)             - data UOA to record compiler description (if empty, autogenerate)
             }
 
     Output: {
@@ -225,14 +228,9 @@ def extract_opts(i):
     if rx['return']>0: return rx
     fout1=rx['file_name']
 
-    rx=ck.gen_tmp_file({'prefix':'tmp-', 'suffix':'.tmp', 'remove_dir':'yes'})
-    if rx['return']>0: return rx
-    fout2=rx['file_name']
-
     # Prepare GCC help
     bat+='\n'
     bat+=scall+' gcc --help=optimizer > '+fout1+'\n'
-    bat+=scall+' gcc --help=params > '+fout2+'\n'
 
     # Save file
     rx=ck.save_text_file({'text_file':fbat, 'string':bat})
@@ -250,7 +248,7 @@ def extract_opts(i):
 
     os.remove(fbat)
     
-    # Load files
+    # Load opt file
     rx=ck.load_text_file({'text_file':fout1,
                           'split_to_list':'yes', 
                           'encoding':sys.stdin.encoding,
@@ -258,12 +256,20 @@ def extract_opts(i):
     if rx['return']>0: return rx
     lopts=rx['lst']
 
-    rx=ck.load_text_file({'text_file':fout2,
-                          'split_to_list':'yes', 
-                          'encoding':sys.stdin.encoding,
-                          'delete_after_read':'yes'})
-    if rx['return']>0: return rx
-    lparams=rx['lst']
+    # Check if want params
+    ck.out('')
+    r=ck.inp({'text':'Enter full path to params.def file if you have GCC sources (or Enter to skip it): '})
+    if r['return']>0: return r
+
+    fpar=r['string'].strip()
+    
+    lparams=[]
+    if fpar!='':
+       rx=ck.load_text_file({'text_file':fpar,
+                             'split_to_list':'yes', 
+                             'encoding':sys.stdin.encoding})
+       if rx['return']>0: return rx
+       lparams=rx['lst']
 
     # Parsing opts
     dd={"##base_opt": {
@@ -329,7 +335,7 @@ def extract_opts(i):
         if add and opt!='':
            iopt+=1
 
-           ck.out('Adding '+str(iopt)+' "'+opt+'" - '+desc)
+           ck.out('Adding opt '+str(iopt)+' "'+opt+'" - '+desc)
 
            dd['##'+opt]={
              "can_omit": "yes", 
@@ -354,5 +360,105 @@ def extract_opts(i):
 
         if finish: 
            break
+
+    # Parsing params
+    opt=''
+    opt1=''
+    desc=''
+    desc1=''
+
+    add=False
+    finish=False
+
+    for q in range(0, len(lparams)):
+        qq=lparams[q].strip()
+        if qq.startswith('DEFPARAM'):
+           iparam+=1
+
+           q+=1
+           opt=lparams[q].strip()[1:-2]
+
+           q+=1
+           desc=lparams[q].strip()[1:-2]
+           line='x'
+           while True:
+              q+=1
+              line=lparams[q].strip()
+              if line[-1]==')': break
+              desc+=line[1:-2]
+
+           e1=0
+           e2=0
+
+           exp=line[:-1].split(',')
+
+           skip=False
+           for j in range(0, len(exp)):
+               jj=exp[j].strip()
+               if jj.find('*')>0 or jj.find('_')>0:
+                  skip=True
+               else:
+                  jj=int(exp[j].strip())
+                  exp[j]=jj
+
+           if not skip:
+              if exp[2]>exp[1]:
+                 e1=exp[1]
+                 e2=exp[2]
+              else:
+                 e1=0
+                 e2=exp[0]*2
+
+              ck.out('Adding param '+str(iparam)+' "'+opt+'" - '+desc)
+
+              dd['##param_'+opt]={
+                "can_omit": "yes", 
+                "default": "", 
+                "desc": "compiler flag: --param "+opt+"= ("+desc+")", 
+                "sort": iparam*100+30000, 
+                "explore_prefix": "--param "+opt+"=", 
+                "explore_start": e1, 
+                "explore_step": 1, 
+                "explore_stop": e2, 
+                "tags": [
+                  "basic", 
+                 "optimization"
+                ], 
+                "type":"integer"
+              }
+
+    # Prepare CK entry
+    duoa=i.get('data_uoa','')
+    if duoa=='':
+       v=vstr.split('.')
+       duoa='gcc-'+v[0]+v[1]+'x'
+
+    if o=='con':
+       ck.out('')
+       ck.out('Recording to '+duoa+' ...')
+
+    ii={'action':'add',
+        'module_uoa':work['self_module_uid'],
+        'repo_uoa':i.get('repo_uoa',''),
+        'data_uoa':duoa,
+        'desc':{'all_compiler_flags_desc':dd},
+        'dict':{
+          "tags": [
+          "compiler", 
+          "gcc", 
+          "v"+v[0], 
+          "v"+v[0]+"."+v[1]
+          ]
+        }
+       }
+    r=ck.access(ii)
+    if r['return']>0: return r
+
+    # Final info
+    if o=='con':
+       ck.out('')
+       ck.out('Compiler version:           '+vstr)
+       ck.out('Number of boolean opts:     '+str(iopt))
+       ck.out('Number of parameteric opts: '+str(iparam))
 
     return {'return':0}
