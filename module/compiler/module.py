@@ -246,7 +246,7 @@ def extract_opts(i):
     sys.stdout.flush()
     rx=os.system(y)
 
-    os.remove(fbat)
+#    os.remove(fbat)
     
     # Load opt file
     rx=ck.load_text_file({'text_file':fout1,
