@@ -237,7 +237,7 @@ def extract_opts(i):
     if rx['return']>0: return rx
 
     # Execute 
-    y=scall+' '+sbp+fbat
+    y=sbp+fbat
 
     if o=='con':
        ck.out('')
@@ -246,7 +246,7 @@ def extract_opts(i):
     sys.stdout.flush()
     rx=os.system(y)
 
-#    os.remove(fbat)
+    os.remove(fbat)
     
     # Load opt file
     rx=ck.load_text_file({'text_file':fout1,
