@@ -230,14 +230,14 @@ def extract_opts(i):
 
     # Prepare GCC help
     bat+='\n'
-    bat+=scall+' gcc --help=optimizer > '+fout1+'\n'
+    bat+='gcc --help=optimizer > '+fout1+'\n'
 
     # Save file
     rx=ck.save_text_file({'text_file':fbat, 'string':bat})
     if rx['return']>0: return rx
 
     # Execute 
-    y=sbp+fbat
+    y=scall+' '+sbp+fbat
 
     if o=='con':
        ck.out('')
