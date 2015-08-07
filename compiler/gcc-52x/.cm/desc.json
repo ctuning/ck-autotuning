@@ -1,0 +1,5903 @@
+{
+  "all_compiler_flags_desc": {
+    "##base_opt": {
+      "choice": [
+        "-O3", 
+        "-Ofast", 
+        "-O0", 
+        "-O1", 
+        "-O2", 
+        "-Os"
+      ], 
+      "default": "", 
+      "desc": "base compiler flag", 
+      "sort": 10000, 
+      "tags": [
+        "base", 
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##faggressive-loop-optimizations": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffaggressive-loop-optimizations", 
+        "-fno-faggressive-loop-optimizations"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffaggressive-loop-optimizations(Aggressively optimize loops using language constraints)", 
+      "sort": 100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##falign-functions": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffalign-functions", 
+        "-fno-falign-functions"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffalign-functions(Align the start of functions)", 
+      "sort": 200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##falign-jumps": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffalign-jumps", 
+        "-fno-falign-jumps"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffalign-jumps(Align labels which are only reached by jumping)", 
+      "sort": 300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##falign-labels": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffalign-labels", 
+        "-fno-falign-labels"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffalign-labels(Align all labels)", 
+      "sort": 400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##falign-loops": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffalign-loops", 
+        "-fno-falign-loops"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffalign-loops(Align the start of loops)", 
+      "sort": 500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fassociative-math": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffassociative-math", 
+        "-fno-fassociative-math"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffassociative-math(Allow optimization for floating-point arithmetic which may change the result of the operation due to rounding.)", 
+      "sort": 600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fasynchronous-unwind-tables": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffasynchronous-unwind-tables", 
+        "-fno-fasynchronous-unwind-tables"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffasynchronous-unwind-tables(Generate unwind tables that are exact at each instruction boundary)", 
+      "sort": 700, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fauto-inc-dec": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffauto-inc-dec", 
+        "-fno-fauto-inc-dec"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffauto-inc-dec(Generate auto-inc/dec instructions)", 
+      "sort": 800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fbranch-count-reg": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffbranch-count-reg", 
+        "-fno-fbranch-count-reg"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffbranch-count-reg(Replace add, compare, branch with branch on count register)", 
+      "sort": 900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fbranch-probabilities": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffbranch-probabilities", 
+        "-fno-fbranch-probabilities"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffbranch-probabilities(Use profiling information for branch probabilities)", 
+      "sort": 1000, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fbranch-target-load-optimize": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffbranch-target-load-optimize", 
+        "-fno-fbranch-target-load-optimize"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffbranch-target-load-optimize(Perform branch target load optimization before prologue / epilogue threading)", 
+      "sort": 1100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fbranch-target-load-optimize2": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffbranch-target-load-optimize2", 
+        "-fno-fbranch-target-load-optimize2"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffbranch-target-load-optimize2(Perform branch target load optimization after prologue / epilogue threading)", 
+      "sort": 1200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fbtr-bb-exclusive": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffbtr-bb-exclusive", 
+        "-fno-fbtr-bb-exclusive"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffbtr-bb-exclusive(Restrict target load migration not to re-use registers in any basic block)", 
+      "sort": 1300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fcaller-saves": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffcaller-saves", 
+        "-fno-fcaller-saves"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffcaller-saves(Save registers around function calls)", 
+      "sort": 1400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fcombine-stack-adjustments": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffcombine-stack-adjustments", 
+        "-fno-fcombine-stack-adjustments"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffcombine-stack-adjustments(Looks for opportunities to reduce stack adjustments and stack references.)", 
+      "sort": 1500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fcompare-elim": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffcompare-elim", 
+        "-fno-fcompare-elim"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffcompare-elim(Perform comparison elimination after register allocation has finished)", 
+      "sort": 1600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fconserve-stack": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffconserve-stack", 
+        "-fno-fconserve-stack"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffconserve-stack(Do not perform optimizations increasing noticeably stack usage)", 
+      "sort": 1700, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fcprop-registers": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffcprop-registers", 
+        "-fno-fcprop-registers"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffcprop-registers(Perform a register copy-propagation optimization pass)", 
+      "sort": 1800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fcrossjumping": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffcrossjumping", 
+        "-fno-fcrossjumping"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffcrossjumping(Perform cross-jumping optimization)", 
+      "sort": 1900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fcse-follow-jumps": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffcse-follow-jumps", 
+        "-fno-fcse-follow-jumps"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffcse-follow-jumps(When running CSE, follow jumps to their targets)", 
+      "sort": 2000, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fcx-fortran-rules": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffcx-fortran-rules", 
+        "-fno-fcx-fortran-rules"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffcx-fortran-rules(Complex multiplication and division follow Fortran rules)", 
+      "sort": 2100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fcx-limited-range": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffcx-limited-range", 
+        "-fno-fcx-limited-range"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffcx-limited-range(Omit range reduction step when performing complex division)", 
+      "sort": 2200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fdce": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffdce", 
+        "-fno-fdce"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffdce(Use the RTL dead code elimination pass)", 
+      "sort": 2300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fdefer-pop": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffdefer-pop", 
+        "-fno-fdefer-pop"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffdefer-pop(Defer popping functions args from stack until later)", 
+      "sort": 2400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fdelayed-branch": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffdelayed-branch", 
+        "-fno-fdelayed-branch"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffdelayed-branch(Attempt to fill delay slots of branch instructions)", 
+      "sort": 2500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fdelete-dead-exceptions": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffdelete-dead-exceptions", 
+        "-fno-fdelete-dead-exceptions"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffdelete-dead-exceptions(Delete dead instructions that may throw exceptions)", 
+      "sort": 2600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fdelete-null-pointer-checks": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffdelete-null-pointer-checks", 
+        "-fno-fdelete-null-pointer-checks"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffdelete-null-pointer-checks(Delete useless null pointer checks)", 
+      "sort": 2700, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fdevirtualize": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffdevirtualize", 
+        "-fno-fdevirtualize"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffdevirtualize(Try to convert virtual calls to direct ones.)", 
+      "sort": 2800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fdevirtualize-speculatively": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffdevirtualize-speculatively", 
+        "-fno-fdevirtualize-speculatively"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffdevirtualize-speculatively(Perform speculative devirtualization)", 
+      "sort": 2900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fdse": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffdse", 
+        "-fno-fdse"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffdse(Use the RTL dead store elimination pass)", 
+      "sort": 3000, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fearly-inlining": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffearly-inlining", 
+        "-fno-fearly-inlining"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffearly-inlining(Perform early inlining)", 
+      "sort": 3100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fexceptions": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffexceptions", 
+        "-fno-fexceptions"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffexceptions(Enable exception handling)", 
+      "sort": 3200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fexpensive-optimizations": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffexpensive-optimizations", 
+        "-fno-fexpensive-optimizations"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffexpensive-optimizations(Perform a number of minor, expensive optimizations)", 
+      "sort": 3300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ffinite-math-only": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fffinite-math-only", 
+        "-fno-ffinite-math-only"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fffinite-math-only(Assume no NaNs or infinities are generated)", 
+      "sort": 3400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ffloat-store": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fffloat-store", 
+        "-fno-ffloat-store"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fffloat-store(Don't allocate floats and doubles in extended-precision registers)", 
+      "sort": 3500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fforward-propagate": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffforward-propagate", 
+        "-fno-fforward-propagate"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffforward-propagate(Perform a forward propagation pass on RTL)", 
+      "sort": 3600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ffp-contract=": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fffp-contract=", 
+        "-fno-ffp-contract="
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fffp-contract=(-ffp-contract=[off|on|fast] Perform floating-point expression contraction.)", 
+      "sort": 3700, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ffunction-cse": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fffunction-cse", 
+        "-fno-ffunction-cse"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fffunction-cse(Allow function addresses to be held in registers)", 
+      "sort": 3800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fgcse": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffgcse", 
+        "-fno-fgcse"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffgcse(Perform global common subexpression elimination)", 
+      "sort": 3900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fgcse-after-reload": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffgcse-after-reload", 
+        "-fno-fgcse-after-reload"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffgcse-after-reload(Perform global common subexpression elimination after register allocation has finished)", 
+      "sort": 4000, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fgcse-las": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffgcse-las", 
+        "-fno-fgcse-las"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffgcse-las(Perform redundant load after store elimination in global common subexpression elimination)", 
+      "sort": 4100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fgcse-lm": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffgcse-lm", 
+        "-fno-fgcse-lm"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffgcse-lm(Perform enhanced load motion during global common subexpression elimination)", 
+      "sort": 4200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fgcse-sm": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffgcse-sm", 
+        "-fno-fgcse-sm"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffgcse-sm(Perform store motion after global common subexpression elimination)", 
+      "sort": 4300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fgraphite": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffgraphite", 
+        "-fno-fgraphite"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffgraphite(Enable in and out of Graphite representation)", 
+      "sort": 4400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fgraphite-identity": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffgraphite-identity", 
+        "-fno-fgraphite-identity"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffgraphite-identity(Enable Graphite Identity transformation)", 
+      "sort": 4500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fguess-branch-probability": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffguess-branch-probability", 
+        "-fno-fguess-branch-probability"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffguess-branch-probability(Enable guessing of branch probabilities)", 
+      "sort": 4600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fhandle-exceptions": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffhandle-exceptions", 
+        "-fno-fhandle-exceptions"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffhandle-exceptions(This switch lacks documentation)", 
+      "sort": 4700, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fhoist-adjacent-loads": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffhoist-adjacent-loads", 
+        "-fno-fhoist-adjacent-loads"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffhoist-adjacent-loads(Enable hoisting adjacent loads to encourage generating conditional move instructions)", 
+      "sort": 4800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fif-conversion": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffif-conversion", 
+        "-fno-fif-conversion"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffif-conversion(Perform conversion of conditional jumps to branchless equivalents)", 
+      "sort": 4900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fif-conversion2": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffif-conversion2", 
+        "-fno-fif-conversion2"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffif-conversion2(Perform conversion of conditional jumps to conditional execution)", 
+      "sort": 5000, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##findirect-inlining": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffindirect-inlining", 
+        "-fno-findirect-inlining"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffindirect-inlining(Perform indirect inlining)", 
+      "sort": 5100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##finline": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffinline", 
+        "-fno-finline"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffinline(Enable inlining of function declared \"inline\", disabling disables all inlining)", 
+      "sort": 5200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##finline-atomics": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffinline-atomics", 
+        "-fno-finline-atomics"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffinline-atomics(Inline __atomic operations when a lock free instruction sequence is available.)", 
+      "sort": 5300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##finline-functions": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffinline-functions", 
+        "-fno-finline-functions"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffinline-functions(Integrate functions not declared \"inline\" into their callers when profitable)", 
+      "sort": 5400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##finline-functions-called-once": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffinline-functions-called-once", 
+        "-fno-finline-functions-called-once"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffinline-functions-called-once(Integrate functions only required by their single caller)", 
+      "sort": 5500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##finline-small-functions": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffinline-small-functions", 
+        "-fno-finline-small-functions"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffinline-small-functions(Integrate functions into their callers when code size is known not to grow)", 
+      "sort": 5600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fipa-cp": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffipa-cp", 
+        "-fno-fipa-cp"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffipa-cp(Perform interprocedural constant propagation)", 
+      "sort": 5700, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fipa-cp-alignment": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffipa-cp-alignment", 
+        "-fno-fipa-cp-alignment"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffipa-cp-alignment(Perform alignment discovery and propagation to make Interprocedural constant propagation stronger)", 
+      "sort": 5800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fipa-cp-clone": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffipa-cp-clone", 
+        "-fno-fipa-cp-clone"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffipa-cp-clone(Perform cloning to make Interprocedural constant propagation stronger)", 
+      "sort": 5900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fipa-icf": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffipa-icf", 
+        "-fno-fipa-icf"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffipa-icf(Perform Identical Code Folding for functions and read-only variables)", 
+      "sort": 6000, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fipa-icf-functions": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffipa-icf-functions", 
+        "-fno-fipa-icf-functions"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffipa-icf-functions(Perform Identical Code Folding for functions)", 
+      "sort": 6100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fipa-profile": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffipa-profile", 
+        "-fno-fipa-profile"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffipa-profile(Perform interprocedural profile propagation)", 
+      "sort": 6200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fipa-pta": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffipa-pta", 
+        "-fno-fipa-pta"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffipa-pta(Perform interprocedural points-to analysis)", 
+      "sort": 6300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fipa-pure-const": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffipa-pure-const", 
+        "-fno-fipa-pure-const"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffipa-pure-const(Discover pure and const functions)", 
+      "sort": 6400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fipa-ra": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffipa-ra", 
+        "-fno-fipa-ra"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffipa-ra(Use caller save register across calls if possible)", 
+      "sort": 6500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fipa-reference": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffipa-reference", 
+        "-fno-fipa-reference"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffipa-reference(Discover readonly and non addressable static variables)", 
+      "sort": 6600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fipa-sra": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffipa-sra", 
+        "-fno-fipa-sra"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffipa-sra(Perform interprocedural reduction of aggregates)", 
+      "sort": 6700, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fira-algorithm=": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffira-algorithm=", 
+        "-fno-fira-algorithm="
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffira-algorithm=(-fira-algorithm=[CB|priority] Set the used IRA algorithm)", 
+      "sort": 6800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fira-hoist-pressure": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffira-hoist-pressure", 
+        "-fno-fira-hoist-pressure"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffira-hoist-pressure(Use IRA based register pressure calculation in RTL hoist optimizations.)", 
+      "sort": 6900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fira-loop-pressure": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffira-loop-pressure", 
+        "-fno-fira-loop-pressure"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffira-loop-pressure(Use IRA based register pressure calculation in RTL loop optimizations.)", 
+      "sort": 7000, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fira-region=": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffira-region=", 
+        "-fno-fira-region="
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffira-region=(-fira-region=[one|all|mixed] Set regions for IRA)", 
+      "sort": 7100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fira-share-save-slots": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffira-share-save-slots", 
+        "-fno-fira-share-save-slots"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffira-share-save-slots(Share slots for saving different hard registers.)", 
+      "sort": 7200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fira-share-spill-slots": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffira-share-spill-slots", 
+        "-fno-fira-share-spill-slots"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffira-share-spill-slots(Share stack slots for spilled pseudo-registers.)", 
+      "sort": 7300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fisolate-erroneous-paths-attribute": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffisolate-erroneous-paths-attribute", 
+        "-fno-fisolate-erroneous-paths-attribute"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffisolate-erroneous-paths-attribute(Detect paths that trigger erroneous or undefined behavior due a null value being used in a way forbidden by a returns_nonnull or nonnull attribute.  Isolate those paths from the main control flow and turn the statement with erroneous or undefined behavior into a trap.)", 
+      "sort": 7400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fisolate-erroneous-paths-dereference": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffisolate-erroneous-paths-dereference", 
+        "-fno-fisolate-erroneous-paths-dereference"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffisolate-erroneous-paths-dereference(Detect paths that trigger erroneous or undefined behavior due to dereferencing a null pointer.  Isolate those paths from the main control flow and turn the statement with erroneous or undefined behavior into a trap.)", 
+      "sort": 7500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fivopts": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffivopts", 
+        "-fno-fivopts"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffivopts(Optimize induction variables on trees)", 
+      "sort": 7600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fjump-tables": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffjump-tables", 
+        "-fno-fjump-tables"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffjump-tables(Use jump tables for sufficiently large switch statements)", 
+      "sort": 7700, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##flifetime-dse": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fflifetime-dse", 
+        "-fno-flifetime-dse"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fflifetime-dse(Tell DSE that the storage for a C++ object is dead when the constructor starts and when the destructor finishes.)", 
+      "sort": 7800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##flive-range-shrinkage": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fflive-range-shrinkage", 
+        "-fno-flive-range-shrinkage"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fflive-range-shrinkage(Relief of register pressure through live range shrinkage)", 
+      "sort": 7900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##floop-block": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffloop-block", 
+        "-fno-floop-block"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffloop-block(Enable Loop Blocking transformation)", 
+      "sort": 8000, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##floop-interchange": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffloop-interchange", 
+        "-fno-floop-interchange"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffloop-interchange(Enable Loop Interchange transformation)", 
+      "sort": 8100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##floop-nest-optimize": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffloop-nest-optimize", 
+        "-fno-floop-nest-optimize"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffloop-nest-optimize(Enable the ISL based loop nest optimizer)", 
+      "sort": 8200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##floop-parallelize-all": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffloop-parallelize-all", 
+        "-fno-floop-parallelize-all"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffloop-parallelize-all(Mark all loops as parallel)", 
+      "sort": 8300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##floop-strip-mine": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffloop-strip-mine", 
+        "-fno-floop-strip-mine"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffloop-strip-mine(Enable Loop Strip Mining transformation)", 
+      "sort": 8400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##floop-unroll-and-jam": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffloop-unroll-and-jam", 
+        "-fno-floop-unroll-and-jam"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffloop-unroll-and-jam(Enable Loop Unroll Jam transformation)", 
+      "sort": 8500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##flra-remat": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fflra-remat", 
+        "-fno-flra-remat"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fflra-remat(Do CFG-sensitive rematerialization in LRA)", 
+      "sort": 8600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fmath-errno": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffmath-errno", 
+        "-fno-fmath-errno"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffmath-errno(Set errno after built-in math functions)", 
+      "sort": 8700, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fmodulo-sched": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffmodulo-sched", 
+        "-fno-fmodulo-sched"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffmodulo-sched(Perform SMS based modulo scheduling before the first scheduling pass)", 
+      "sort": 8800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fmodulo-sched-allow-regmoves": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffmodulo-sched-allow-regmoves", 
+        "-fno-fmodulo-sched-allow-regmoves"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffmodulo-sched-allow-regmoves(Perform SMS based modulo scheduling with register moves allowed)", 
+      "sort": 8900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fmove-loop-invariants": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffmove-loop-invariants", 
+        "-fno-fmove-loop-invariants"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffmove-loop-invariants(Move loop invariant computations out of loops)", 
+      "sort": 9000, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fno-threadsafe-statics": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffno-threadsafe-statics", 
+        "-fno-fno-threadsafe-statics"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffno-threadsafe-statics(Do not generate thread-safe code for initializing local statics)", 
+      "sort": 15800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fnon-call-exceptions": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffnon-call-exceptions", 
+        "-fno-fnon-call-exceptions"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffnon-call-exceptions(Support synchronous non-call exceptions)", 
+      "sort": 9100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fnothrow-opt": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffnothrow-opt", 
+        "-fno-fnothrow-opt"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffnothrow-opt(Treat a throw() exception specification as noexcept to improve code size)", 
+      "sort": 9200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fomit-frame-pointer": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffomit-frame-pointer", 
+        "-fno-fomit-frame-pointer"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffomit-frame-pointer(When possible do not generate stack frames)", 
+      "sort": 9300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fopt-info": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffopt-info", 
+        "-fno-fopt-info"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffopt-info(Enable all optimization info dumps on stderr)", 
+      "sort": 9400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##foptimize-sibling-calls": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffoptimize-sibling-calls", 
+        "-fno-foptimize-sibling-calls"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffoptimize-sibling-calls(Optimize sibling and tail recursive calls)", 
+      "sort": 9500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##foptimize-strlen": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffoptimize-strlen", 
+        "-fno-foptimize-strlen"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffoptimize-strlen(Enable string length optimizations on trees)", 
+      "sort": 9600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fpack-struct": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffpack-struct", 
+        "-fno-fpack-struct"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffpack-struct(Pack structure members together without holes)", 
+      "sort": 9700, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fpack-struct=<number>": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffpack-struct=<number>", 
+        "-fno-fpack-struct=<number>"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffpack-struct=<number>(Set initial maximum structure member alignment)", 
+      "sort": 9800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fpartial-inlining": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffpartial-inlining", 
+        "-fno-fpartial-inlining"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffpartial-inlining(Perform partial inlining)", 
+      "sort": 9900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fpeel-loops": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffpeel-loops", 
+        "-fno-fpeel-loops"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffpeel-loops(Perform loop peeling)", 
+      "sort": 10000, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fpeephole": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffpeephole", 
+        "-fno-fpeephole"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffpeephole(Enable machine specific peephole optimizations)", 
+      "sort": 10100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fpeephole2": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffpeephole2", 
+        "-fno-fpeephole2"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffpeephole2(Enable an RTL peephole pass before sched2)", 
+      "sort": 10200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fpredictive-commoning": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffpredictive-commoning", 
+        "-fno-fpredictive-commoning"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffpredictive-commoning(Run predictive commoning optimization.)", 
+      "sort": 10300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fprefetch-loop-arrays": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffprefetch-loop-arrays", 
+        "-fno-fprefetch-loop-arrays"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffprefetch-loop-arrays(Generate prefetch instructions, if available, for arrays in loops)", 
+      "sort": 10400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##freciprocal-math": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffreciprocal-math", 
+        "-fno-freciprocal-math"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffreciprocal-math(Same as -fassociative-math for expressions which include division.)", 
+      "sort": 10500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##freg-struct-return": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffreg-struct-return", 
+        "-fno-freg-struct-return"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffreg-struct-return(Return small aggregates in registers)", 
+      "sort": 10600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##frename-registers": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffrename-registers", 
+        "-fno-frename-registers"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffrename-registers(Perform a register renaming optimization pass)", 
+      "sort": 10700, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##freorder-blocks": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffreorder-blocks", 
+        "-fno-freorder-blocks"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffreorder-blocks(Reorder basic blocks to improve code placement)", 
+      "sort": 10800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##freorder-blocks-and-partition": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffreorder-blocks-and-partition", 
+        "-fno-freorder-blocks-and-partition"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffreorder-blocks-and-partition(Reorder basic blocks and partition into hot and cold sections)", 
+      "sort": 10900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##freorder-functions": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffreorder-functions", 
+        "-fno-freorder-functions"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffreorder-functions(Reorder functions to improve code placement)", 
+      "sort": 11000, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##frerun-cse-after-loop": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffrerun-cse-after-loop", 
+        "-fno-frerun-cse-after-loop"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffrerun-cse-after-loop(Add a common subexpression elimination pass after loop optimizations)", 
+      "sort": 11100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##freschedule-modulo-scheduled-loops": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffreschedule-modulo-scheduled-loops", 
+        "-fno-freschedule-modulo-scheduled-loops"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffreschedule-modulo-scheduled-loops(Enable/Disable the traditional scheduling in loops that already passed modulo scheduling)", 
+      "sort": 11200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##frounding-math": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffrounding-math", 
+        "-fno-frounding-math"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffrounding-math(Disable optimizations that assume default FP rounding behavior)", 
+      "sort": 11300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##frtti": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffrtti", 
+        "-fno-frtti"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffrtti(Generate run time type descriptor information)", 
+      "sort": 11400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fsched-critical-path-heuristic": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffsched-critical-path-heuristic", 
+        "-fno-fsched-critical-path-heuristic"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffsched-critical-path-heuristic(Enable the critical path heuristic in the scheduler)", 
+      "sort": 11500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fsched-dep-count-heuristic": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffsched-dep-count-heuristic", 
+        "-fno-fsched-dep-count-heuristic"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffsched-dep-count-heuristic(Enable the dependent count heuristic in the scheduler)", 
+      "sort": 11600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fsched-group-heuristic": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffsched-group-heuristic", 
+        "-fno-fsched-group-heuristic"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffsched-group-heuristic(Enable the group heuristic in the scheduler)", 
+      "sort": 11700, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fsched-interblock": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffsched-interblock", 
+        "-fno-fsched-interblock"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffsched-interblock(Enable scheduling across basic blocks)", 
+      "sort": 11800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fsched-last-insn-heuristic": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffsched-last-insn-heuristic", 
+        "-fno-fsched-last-insn-heuristic"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffsched-last-insn-heuristic(Enable the last instruction heuristic in the scheduler)", 
+      "sort": 11900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fsched-pressure": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffsched-pressure", 
+        "-fno-fsched-pressure"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffsched-pressure(Enable register pressure sensitive insn scheduling)", 
+      "sort": 12000, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fsched-rank-heuristic": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffsched-rank-heuristic", 
+        "-fno-fsched-rank-heuristic"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffsched-rank-heuristic(Enable the rank heuristic in the scheduler)", 
+      "sort": 12100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fsched-spec": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffsched-spec", 
+        "-fno-fsched-spec"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffsched-spec(Allow speculative motion of non-loads)", 
+      "sort": 12200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fsched-spec-insn-heuristic": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffsched-spec-insn-heuristic", 
+        "-fno-fsched-spec-insn-heuristic"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffsched-spec-insn-heuristic(Enable the speculative instruction heuristic in the scheduler)", 
+      "sort": 12300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fsched-spec-load": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffsched-spec-load", 
+        "-fno-fsched-spec-load"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffsched-spec-load(Allow speculative motion of some loads)", 
+      "sort": 12400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fsched-spec-load-dangerous": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffsched-spec-load-dangerous", 
+        "-fno-fsched-spec-load-dangerous"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffsched-spec-load-dangerous(Allow speculative motion of more loads)", 
+      "sort": 12500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fsched-stalled-insns": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffsched-stalled-insns", 
+        "-fno-fsched-stalled-insns"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffsched-stalled-insns(Allow premature scheduling of queued insns)", 
+      "sort": 12600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fsched-stalled-insns-dep": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffsched-stalled-insns-dep", 
+        "-fno-fsched-stalled-insns-dep"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffsched-stalled-insns-dep(Set dependence distance checking in premature scheduling of queued insns)", 
+      "sort": 12700, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fsched-stalled-insns-dep=<number>": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffsched-stalled-insns-dep=<number>", 
+        "-fno-fsched-stalled-insns-dep=<number>"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffsched-stalled-insns-dep=<number>(Set dependence distance checking in premature scheduling of queued insns)", 
+      "sort": 12800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fsched-stalled-insns=<number>": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffsched-stalled-insns=<number>", 
+        "-fno-fsched-stalled-insns=<number>"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffsched-stalled-insns=<number>(Set number of queued insns that can be prematurely scheduled)", 
+      "sort": 12900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fsched2-use-superblocks": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffsched2-use-superblocks", 
+        "-fno-fsched2-use-superblocks"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffsched2-use-superblocks(If scheduling post reload, do superblock scheduling)", 
+      "sort": 13000, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fschedule-fusion": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffschedule-fusion", 
+        "-fno-fschedule-fusion"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffschedule-fusion(Perform a target dependent instruction fusion optimization pass)", 
+      "sort": 13100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fschedule-insns": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffschedule-insns", 
+        "-fno-fschedule-insns"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffschedule-insns(Reschedule instructions before register allocation)", 
+      "sort": 13200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fschedule-insns2": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffschedule-insns2", 
+        "-fno-fschedule-insns2"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffschedule-insns2(Reschedule instructions after register allocation)", 
+      "sort": 13300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fsection-anchors": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffsection-anchors", 
+        "-fno-fsection-anchors"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffsection-anchors(Access data in the same section from shared anchor points)", 
+      "sort": 13400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fsel-sched-pipelining": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffsel-sched-pipelining", 
+        "-fno-fsel-sched-pipelining"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffsel-sched-pipelining(Perform software pipelining of inner loops during selective scheduling)", 
+      "sort": 13500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fsel-sched-pipelining-outer-loops": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffsel-sched-pipelining-outer-loops", 
+        "-fno-fsel-sched-pipelining-outer-loops"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffsel-sched-pipelining-outer-loops(Perform software pipelining of outer loops during selective scheduling)", 
+      "sort": 13600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fsel-sched-reschedule-pipelined": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffsel-sched-reschedule-pipelined", 
+        "-fno-fsel-sched-reschedule-pipelined"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffsel-sched-reschedule-pipelined(Reschedule pipelined regions without pipelining)", 
+      "sort": 13700, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fselective-scheduling": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffselective-scheduling", 
+        "-fno-fselective-scheduling"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffselective-scheduling(Schedule instructions using selective scheduling algorithm)", 
+      "sort": 13800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fselective-scheduling2": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffselective-scheduling2", 
+        "-fno-fselective-scheduling2"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffselective-scheduling2(Run selective scheduling after reload)", 
+      "sort": 13900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fshort-double": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffshort-double", 
+        "-fno-fshort-double"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffshort-double(Use the same size for double as for float)", 
+      "sort": 14000, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fshort-enums": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffshort-enums", 
+        "-fno-fshort-enums"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffshort-enums(Use the narrowest integer type possible for enumeration types)", 
+      "sort": 14100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fshort-wchar": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffshort-wchar", 
+        "-fno-fshort-wchar"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffshort-wchar(Force the underlying type for \"wchar_t\" to be \"unsigned short\")", 
+      "sort": 14200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fshrink-wrap": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffshrink-wrap", 
+        "-fno-fshrink-wrap"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffshrink-wrap(Emit function prologues only before parts of the function that need it, rather than at the top of the function.)", 
+      "sort": 14300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fsignaling-nans": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffsignaling-nans", 
+        "-fno-fsignaling-nans"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffsignaling-nans(Disable optimizations observable by IEEE signaling NaNs)", 
+      "sort": 14400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fsigned-zeros": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffsigned-zeros", 
+        "-fno-fsigned-zeros"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffsigned-zeros(Disable floating point optimizations that ignore the IEEE signedness of zero)", 
+      "sort": 14500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fsimd-cost-model=": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffsimd-cost-model=", 
+        "-fno-fsimd-cost-model="
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffsimd-cost-model=(Specifies the vectorization cost model for code marked with a simd directive)", 
+      "sort": 14600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fsingle-precision-constant": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffsingle-precision-constant", 
+        "-fno-fsingle-precision-constant"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffsingle-precision-constant(Convert floating point constants to single precision constants)", 
+      "sort": 14700, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fsplit-ivs-in-unroller": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffsplit-ivs-in-unroller", 
+        "-fno-fsplit-ivs-in-unroller"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffsplit-ivs-in-unroller(Split lifetimes of induction variables when loops are unrolled)", 
+      "sort": 14800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fsplit-wide-types": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffsplit-wide-types", 
+        "-fno-fsplit-wide-types"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffsplit-wide-types(Split wide types into independent registers)", 
+      "sort": 14900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fssa-phiopt": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffssa-phiopt", 
+        "-fno-fssa-phiopt"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffssa-phiopt(Optimize conditional patterns using SSA PHI nodes)", 
+      "sort": 15000, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fstack-reuse=": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffstack-reuse=", 
+        "-fno-fstack-reuse="
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffstack-reuse=(-fstack-reuse=[all|named_vars|none] Set stack reuse level for local variables.)", 
+      "sort": 15100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fstdarg-opt": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffstdarg-opt", 
+        "-fno-fstdarg-opt"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffstdarg-opt(Optimize amount of stdarg registers saved to stack at start of function)", 
+      "sort": 15200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fstrict-aliasing": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffstrict-aliasing", 
+        "-fno-fstrict-aliasing"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffstrict-aliasing(Assume strict aliasing rules apply)", 
+      "sort": 15300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fstrict-enums": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffstrict-enums", 
+        "-fno-fstrict-enums"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffstrict-enums(Assume that values of enumeration type are always within the minimum range of that type)", 
+      "sort": 15400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fstrict-overflow": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffstrict-overflow", 
+        "-fno-fstrict-overflow"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffstrict-overflow(Treat signed overflow as undefined)", 
+      "sort": 15500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fstrict-volatile-bitfields": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffstrict-volatile-bitfields", 
+        "-fno-fstrict-volatile-bitfields"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffstrict-volatile-bitfields(Force bitfield accesses to match their type width)", 
+      "sort": 15600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fthread-jumps": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffthread-jumps", 
+        "-fno-fthread-jumps"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffthread-jumps(Perform jump threading optimizations)", 
+      "sort": 15700, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ftracer": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fftracer", 
+        "-fno-ftracer"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fftracer(Perform superblock formation via tail duplication)", 
+      "sort": 15900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ftrapping-math": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fftrapping-math", 
+        "-fno-ftrapping-math"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fftrapping-math(Assume floating-point operations can trap)", 
+      "sort": 16000, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ftrapv": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fftrapv", 
+        "-fno-ftrapv"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fftrapv(Trap for signed overflow in addition, subtraction and multiplication)", 
+      "sort": 16100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ftree-bit-ccp": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fftree-bit-ccp", 
+        "-fno-ftree-bit-ccp"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fftree-bit-ccp(Enable SSA-BIT-CCP optimization on trees)", 
+      "sort": 16200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ftree-builtin-call-dce": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fftree-builtin-call-dce", 
+        "-fno-ftree-builtin-call-dce"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fftree-builtin-call-dce(Enable conditional dead code elimination for builtin calls)", 
+      "sort": 16300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ftree-ccp": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fftree-ccp", 
+        "-fno-ftree-ccp"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fftree-ccp(Enable SSA-CCP optimization on trees)", 
+      "sort": 16400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ftree-ch": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fftree-ch", 
+        "-fno-ftree-ch"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fftree-ch(Enable loop header copying on trees)", 
+      "sort": 16500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ftree-coalesce-inlined-vars": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fftree-coalesce-inlined-vars", 
+        "-fno-ftree-coalesce-inlined-vars"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fftree-coalesce-inlined-vars(Enable coalescing of copy-related user variables that are inlined)", 
+      "sort": 16600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ftree-coalesce-vars": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fftree-coalesce-vars", 
+        "-fno-ftree-coalesce-vars"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fftree-coalesce-vars(Enable coalescing of all copy-related user variables)", 
+      "sort": 16700, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ftree-copy-prop": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fftree-copy-prop", 
+        "-fno-ftree-copy-prop"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fftree-copy-prop(Enable copy propagation on trees)", 
+      "sort": 16800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ftree-copyrename": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fftree-copyrename", 
+        "-fno-ftree-copyrename"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fftree-copyrename(Replace SSA temporaries with better names in copies)", 
+      "sort": 16900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ftree-cselim": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fftree-cselim", 
+        "-fno-ftree-cselim"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fftree-cselim(Transform condition stores into unconditional ones)", 
+      "sort": 17000, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ftree-dce": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fftree-dce", 
+        "-fno-ftree-dce"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fftree-dce(Enable SSA dead code elimination optimization on trees)", 
+      "sort": 17100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ftree-dominator-opts": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fftree-dominator-opts", 
+        "-fno-ftree-dominator-opts"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fftree-dominator-opts(Enable dominator optimizations)", 
+      "sort": 17200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ftree-dse": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fftree-dse", 
+        "-fno-ftree-dse"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fftree-dse(Enable dead store elimination)", 
+      "sort": 17300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ftree-forwprop": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fftree-forwprop", 
+        "-fno-ftree-forwprop"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fftree-forwprop(Enable forward propagation on trees)", 
+      "sort": 17400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ftree-fre": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fftree-fre", 
+        "-fno-ftree-fre"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fftree-fre(Enable Full Redundancy Elimination (FRE) on trees)", 
+      "sort": 17500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ftree-loop-distribute-patterns": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fftree-loop-distribute-patterns", 
+        "-fno-ftree-loop-distribute-patterns"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fftree-loop-distribute-patterns(Enable loop distribution for patterns transformed into a library call)", 
+      "sort": 17600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ftree-loop-distribution": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fftree-loop-distribution", 
+        "-fno-ftree-loop-distribution"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fftree-loop-distribution(Enable loop distribution on trees)", 
+      "sort": 17700, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ftree-loop-if-convert": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fftree-loop-if-convert", 
+        "-fno-ftree-loop-if-convert"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fftree-loop-if-convert(Convert conditional jumps in innermost loops to branchless equivalents)", 
+      "sort": 17800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ftree-loop-if-convert-stores": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fftree-loop-if-convert-stores", 
+        "-fno-ftree-loop-if-convert-stores"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fftree-loop-if-convert-stores(Also if-convert conditional jumps containing memory writes)", 
+      "sort": 17900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ftree-loop-im": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fftree-loop-im", 
+        "-fno-ftree-loop-im"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fftree-loop-im(Enable loop invariant motion on trees)", 
+      "sort": 18000, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ftree-loop-ivcanon": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fftree-loop-ivcanon", 
+        "-fno-ftree-loop-ivcanon"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fftree-loop-ivcanon(Create canonical induction variables in loops)", 
+      "sort": 18100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ftree-loop-optimize": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fftree-loop-optimize", 
+        "-fno-ftree-loop-optimize"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fftree-loop-optimize(Enable loop optimizations on tree level)", 
+      "sort": 18200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ftree-loop-vectorize": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fftree-loop-vectorize", 
+        "-fno-ftree-loop-vectorize"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fftree-loop-vectorize(Enable loop vectorization on trees)", 
+      "sort": 18300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ftree-lrs": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fftree-lrs", 
+        "-fno-ftree-lrs"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fftree-lrs(Perform live range splitting during the SSA->normal pass)", 
+      "sort": 18400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ftree-parallelize-loops=": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fftree-parallelize-loops=", 
+        "-fno-ftree-parallelize-loops="
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fftree-parallelize-loops=(Enable automatic parallelization of loops)", 
+      "sort": 18500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ftree-partial-pre": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fftree-partial-pre", 
+        "-fno-ftree-partial-pre"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fftree-partial-pre(In SSA-PRE optimization on trees, enable partial-partial redundancy elimination)", 
+      "sort": 18600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ftree-phiprop": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fftree-phiprop", 
+        "-fno-ftree-phiprop"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fftree-phiprop(Enable hoisting loads from conditional pointers.)", 
+      "sort": 18700, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ftree-pre": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fftree-pre", 
+        "-fno-ftree-pre"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fftree-pre(Enable SSA-PRE optimization on trees)", 
+      "sort": 18800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ftree-pta": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fftree-pta", 
+        "-fno-ftree-pta"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fftree-pta(Perform function-local points-to analysis on trees.)", 
+      "sort": 18900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ftree-reassoc": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fftree-reassoc", 
+        "-fno-ftree-reassoc"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fftree-reassoc(Enable reassociation on tree level)", 
+      "sort": 19000, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ftree-scev-cprop": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fftree-scev-cprop", 
+        "-fno-ftree-scev-cprop"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fftree-scev-cprop(Enable copy propagation of scalar-evolution information.)", 
+      "sort": 19100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ftree-sink": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fftree-sink", 
+        "-fno-ftree-sink"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fftree-sink(Enable SSA code sinking on trees)", 
+      "sort": 19200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ftree-slp-vectorize": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fftree-slp-vectorize", 
+        "-fno-ftree-slp-vectorize"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fftree-slp-vectorize(Enable basic block vectorization (SLP) on trees)", 
+      "sort": 19300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ftree-slsr": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fftree-slsr", 
+        "-fno-ftree-slsr"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fftree-slsr(Perform straight-line strength reduction)", 
+      "sort": 19400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ftree-sra": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fftree-sra", 
+        "-fno-ftree-sra"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fftree-sra(Perform scalar replacement of aggregates)", 
+      "sort": 19500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ftree-switch-conversion": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fftree-switch-conversion", 
+        "-fno-ftree-switch-conversion"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fftree-switch-conversion(Perform conversions of switch initializations.)", 
+      "sort": 19600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ftree-tail-merge": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fftree-tail-merge", 
+        "-fno-ftree-tail-merge"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fftree-tail-merge(Enable tail merging on trees)", 
+      "sort": 19700, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ftree-ter": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fftree-ter", 
+        "-fno-ftree-ter"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fftree-ter(Replace temporary expressions in the SSA->normal pass)", 
+      "sort": 19800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ftree-vectorize": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fftree-vectorize", 
+        "-fno-ftree-vectorize"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fftree-vectorize(Enable vectorization on trees)", 
+      "sort": 19900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ftree-vrp": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fftree-vrp", 
+        "-fno-ftree-vrp"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fftree-vrp(Perform Value Range Propagation on trees)", 
+      "sort": 20000, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##funroll-all-loops": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffunroll-all-loops", 
+        "-fno-funroll-all-loops"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffunroll-all-loops(Perform loop unrolling for all loops)", 
+      "sort": 20100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##funroll-loops": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffunroll-loops", 
+        "-fno-funroll-loops"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffunroll-loops(Perform loop unrolling when iteration count is known)", 
+      "sort": 20200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##funsafe-loop-optimizations": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffunsafe-loop-optimizations", 
+        "-fno-funsafe-loop-optimizations"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffunsafe-loop-optimizations(Allow loop optimizations to assume that the loops behave in normal way)", 
+      "sort": 20300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##funsafe-math-optimizations": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffunsafe-math-optimizations", 
+        "-fno-funsafe-math-optimizations"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffunsafe-math-optimizations(Allow math optimizations that may violate IEEE or ISO standards)", 
+      "sort": 20400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##funswitch-loops": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffunswitch-loops", 
+        "-fno-funswitch-loops"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffunswitch-loops(Perform loop unswitching)", 
+      "sort": 20500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##funwind-tables": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffunwind-tables", 
+        "-fno-funwind-tables"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffunwind-tables(Just generate unwind tables for exception handling)", 
+      "sort": 20600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fvar-tracking": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffvar-tracking", 
+        "-fno-fvar-tracking"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffvar-tracking(Perform variable tracking)", 
+      "sort": 20700, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fvar-tracking-assignments": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffvar-tracking-assignments", 
+        "-fno-fvar-tracking-assignments"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffvar-tracking-assignments(Perform variable tracking by annotating assignments)", 
+      "sort": 20800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fvar-tracking-assignments-toggle": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffvar-tracking-assignments-toggle", 
+        "-fno-fvar-tracking-assignments-toggle"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffvar-tracking-assignments-toggle(Toggle -fvar-tracking-assignments)", 
+      "sort": 20900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fvar-tracking-uninit": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffvar-tracking-uninit", 
+        "-fno-fvar-tracking-uninit"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffvar-tracking-uninit(Perform variable tracking and also tag variables that are uninitialized)", 
+      "sort": 21000, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fvariable-expansion-in-unroller": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffvariable-expansion-in-unroller", 
+        "-fno-fvariable-expansion-in-unroller"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffvariable-expansion-in-unroller(Apply variable expansion when loops are unrolled)", 
+      "sort": 21100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fvect-cost-model=": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffvect-cost-model=", 
+        "-fno-fvect-cost-model="
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffvect-cost-model=(Specifies the cost model for vectorization)", 
+      "sort": 21200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fvpt": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffvpt", 
+        "-fno-fvpt"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffvpt(Use expression value profiles in optimizations)", 
+      "sort": 21300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fweb": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffweb", 
+        "-fno-fweb"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffweb(Construct webs and split unrelated uses of single variable)", 
+      "sort": 21400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##fwrapv": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffwrapv", 
+        "-fno-fwrapv"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffwrapv(Assume signed arithmetic overflow wraps around)", 
+      "sort": 21500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##param_align-loop-iterations": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param align-loop-iterations= (Loops iterating at least selected number of iterations will get loop alignement.)", 
+      "explore_prefix": "--param align-loop-iterations=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 8, 
+      "sort": 35600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_align-threshold": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param align-threshold= (Select fraction of the maximal frequency of executions of basic block in function given basic block get alignment)", 
+      "explore_prefix": "--param align-threshold=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 200, 
+      "sort": 35500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_allow-store-data-races": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param allow-store-data-races= (Allow new data races on stores to be introduced)", 
+      "explore_prefix": "--param allow-store-data-races=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 1, 
+      "sort": 46300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_asan-globals": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param asan-globals= (Enable asan globals protection)", 
+      "explore_prefix": "--param asan-globals=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 1, 
+      "sort": 47100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_asan-instrument-reads": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param asan-instrument-reads= (Enable asan load operations protection)", 
+      "explore_prefix": "--param asan-instrument-reads=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 1, 
+      "sort": 47300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_asan-instrument-writes": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param asan-instrument-writes= (Enable asan store operations protection)", 
+      "explore_prefix": "--param asan-instrument-writes=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 1, 
+      "sort": 47200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_asan-memintrin": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param asan-memintrin= (Enable asan builtin functions protection)", 
+      "explore_prefix": "--param asan-memintrin=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 1, 
+      "sort": 47400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_asan-stack": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param asan-stack= (Enable asan stack protection)", 
+      "explore_prefix": "--param asan-stack=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 1, 
+      "sort": 47000, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_asan-use-after-return": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param asan-use-after-return= (Enable asan detection of use-after-return bugs)", 
+      "explore_prefix": "--param asan-use-after-return=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 1, 
+      "sort": 47500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_builtin-expect-probability": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param builtin-expect-probability= (Set the estimated probability in percentage for builtin expect. The default value is 90% probability.)", 
+      "explore_prefix": "--param builtin-expect-probability=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 100, 
+      "sort": 35800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_case-values-threshold": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param case-values-threshold= (The smallest number of different values for which it is best touse a jump-table instead of a tree of conditional branches,if 0, use the default for the machine)", 
+      "explore_prefix": "--param case-values-threshold=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 0, 
+      "sort": 46200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_chkp-max-ctor-size": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param chkp-max-ctor-size= (Maximum number of statements to be included into a single staticconstructor generated by Pointer Bounds Checker)", 
+      "explore_prefix": "--param chkp-max-ctor-size=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 10000, 
+      "sort": 47800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_comdat-sharing-probability": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param comdat-sharing-probability= (Probability that COMDAT function will be shared with different compilation unit)", 
+      "explore_prefix": "--param comdat-sharing-probability=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 40, 
+      "sort": 31100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_cxx-max-namespaces-for-diagnostic-help": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param cxx-max-namespaces-for-diagnostic-help= (Maximum number of namespaces to search for alternatives whenname lookup fails)", 
+      "explore_prefix": "--param cxx-max-namespaces-for-diagnostic-help=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 2000, 
+      "sort": 46000, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_early-inlining-insns": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param early-inlining-insns= (Maximal estimated growth of function body caused by early inlining of single call)", 
+      "explore_prefix": "--param early-inlining-insns=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 28, 
+      "sort": 32400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_gcse-after-reload-critical-fraction": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param gcse-after-reload-critical-fraction= (The threshold ratio of critical edges execution count that permit performing redundancy elimination after reload)", 
+      "explore_prefix": "--param gcse-after-reload-critical-fraction=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 20, 
+      "sort": 33000, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_gcse-after-reload-partial-fraction": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param gcse-after-reload-partial-fraction= (The threshold ratio for performing partial redundancy elimination after reload)", 
+      "explore_prefix": "--param gcse-after-reload-partial-fraction=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 6, 
+      "sort": 32900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_gcse-cost-distance-ratio": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param gcse-cost-distance-ratio= (Scaling factor in calculation of maximum distance an expression can be moved by GCSE optimizations)", 
+      "explore_prefix": "--param gcse-cost-distance-ratio=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 20, 
+      "sort": 33100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_gcse-unrestricted-cost": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param gcse-unrestricted-cost= (Cost at which GCSE optimizations will not constraint the distance an expression can travel)", 
+      "explore_prefix": "--param gcse-unrestricted-cost=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 6, 
+      "sort": 33200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_graphite-max-bbs-per-function": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param graphite-max-bbs-per-function= (maximum number of basic blocks per function to be analyzed by Graphite)", 
+      "explore_prefix": "--param graphite-max-bbs-per-function=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 200, 
+      "sort": 43400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_graphite-max-nb-scop-params": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param graphite-max-nb-scop-params= (maximum number of parameters in a SCoP)", 
+      "explore_prefix": "--param graphite-max-nb-scop-params=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 20, 
+      "sort": 43300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_hot-bb-count-ws-permille": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param hot-bb-count-ws-permille= (A basic block profile count is considered hot if it contributes tothe given permillage of the entire profiled execution)", 
+      "explore_prefix": "--param hot-bb-count-ws-permille=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 1000, 
+      "sort": 35200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_hot-bb-frequency-fraction": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param hot-bb-frequency-fraction= (Select fraction of the maximal frequency of executions of basic block in function given basic block needs to have to be considered hot)", 
+      "explore_prefix": "--param hot-bb-frequency-fraction=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 2000, 
+      "sort": 35300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_indir-call-topn-profile": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param indir-call-topn-profile= (track topn target addresses in indirect-call profile)", 
+      "explore_prefix": "--param indir-call-topn-profile=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 1, 
+      "sort": 43800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_inline-min-speedup": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param inline-min-speedup= (The minimal estimated speedup allowing inliner to ignore inline-insns-single and inline-isnsns-auto)", 
+      "explore_prefix": "--param inline-min-speedup=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 20, 
+      "sort": 30200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_inline-unit-growth": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param inline-unit-growth= (How much can given compilation unit grow because of the inlining (in percent))", 
+      "explore_prefix": "--param inline-unit-growth=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 40, 
+      "sort": 32200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_integer-share-limit": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param integer-share-limit= (The upper bound for sharing integer constants)", 
+      "explore_prefix": "--param integer-share-limit=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 502, 
+      "sort": 40800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_ipa-cp-array-index-hint-bonus": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param ipa-cp-array-index-hint-bonus= (Compile-time bonus IPA-CP assigns to candidates which make an arrayindex known.)", 
+      "explore_prefix": "--param ipa-cp-array-index-hint-bonus=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 96, 
+      "sort": 45600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_ipa-cp-eval-threshold": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param ipa-cp-eval-threshold= (Threshold ipa-cp opportunity evaluation that is still consideredbeneficial to clone.)", 
+      "explore_prefix": "--param ipa-cp-eval-threshold=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 1000, 
+      "sort": 45100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_ipa-cp-loop-hint-bonus": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param ipa-cp-loop-hint-bonus= (Compile-time bonus IPA-CP assigns to candidates which make loopbounds or strides known.)", 
+      "explore_prefix": "--param ipa-cp-loop-hint-bonus=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 128, 
+      "sort": 45500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_ipa-cp-recursion-penalty": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param ipa-cp-recursion-penalty= (Percentage penalty the recursive functions will receive when theyare evaluated for cloning.)", 
+      "explore_prefix": "--param ipa-cp-recursion-penalty=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 100, 
+      "sort": 45200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_ipa-cp-single-call-penalty": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param ipa-cp-single-call-penalty= (Percentage penalty functions containg a single call to anotherfunction will receive when they are evaluated for cloning.)", 
+      "explore_prefix": "--param ipa-cp-single-call-penalty=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 100, 
+      "sort": 45300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_ipa-cp-value-list-size": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param ipa-cp-value-list-size= (Maximum size of a list of values associated with each parameter forinterprocedural constant propagation)", 
+      "explore_prefix": "--param ipa-cp-value-list-size=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 16, 
+      "sort": 45000, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_ipa-max-aa-steps": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param ipa-max-aa-steps= (Maximum number of statements that will be visited by IPA formalparameter analysis based on alias analysis in any given function)", 
+      "explore_prefix": "--param ipa-max-aa-steps=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 50000, 
+      "sort": 45700, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_ipa-max-agg-items": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param ipa-max-agg-items= (Maximum number of aggregate content items for a parameter injump functions and lattices)", 
+      "explore_prefix": "--param ipa-max-agg-items=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 32, 
+      "sort": 45400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_ipa-sra-ptr-growth-factor": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param ipa-sra-ptr-growth-factor= (Maximum allowed growth of size of new parameters ipa-sra replacesa pointer to an aggregate with)", 
+      "explore_prefix": "--param ipa-sra-ptr-growth-factor=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 4, 
+      "sort": 44600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_ipcp-unit-growth": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param ipcp-unit-growth= (How much can given compilation unit grow because of the interprocedural constant propagation (in percent))", 
+      "explore_prefix": "--param ipcp-unit-growth=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 20, 
+      "sort": 32300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_ira-loop-reserved-regs": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param ira-loop-reserved-regs= (The number of registers in each class kept unused by loop invariant motion)", 
+      "explore_prefix": "--param ira-loop-reserved-regs=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 4, 
+      "sort": 42600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_ira-max-conflict-table-size": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param ira-max-conflict-table-size= (Max size of conflict table in MB)", 
+      "explore_prefix": "--param ira-max-conflict-table-size=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 2000, 
+      "sort": 42500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_ira-max-loops-num": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param ira-max-loops-num= (Max loops number for regional RA)", 
+      "explore_prefix": "--param ira-max-loops-num=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 200, 
+      "sort": 42400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_iv-always-prune-cand-set-bound": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param iv-always-prune-cand-set-bound= (If number of candidates in the set is smaller, we always try to remove unused ivs during its optimization)", 
+      "explore_prefix": "--param iv-always-prune-cand-set-bound=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 20, 
+      "sort": 37400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_iv-consider-all-candidates-bound": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param iv-consider-all-candidates-bound= (Bound on number of candidates below that all candidates are considered in iv optimizations)", 
+      "explore_prefix": "--param iv-consider-all-candidates-bound=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 60, 
+      "sort": 37200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_iv-max-considered-uses": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param iv-max-considered-uses= (Bound on number of iv uses in loop optimized in iv optimizations)", 
+      "explore_prefix": "--param iv-max-considered-uses=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 500, 
+      "sort": 37300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_l1-cache-line-size": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param l1-cache-line-size= (The size of L1 cache line)", 
+      "explore_prefix": "--param l1-cache-line-size=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 64, 
+      "sort": 41800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_l1-cache-size": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param l1-cache-size= (The size of L1 cache)", 
+      "explore_prefix": "--param l1-cache-size=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 128, 
+      "sort": 41700, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_l2-cache-size": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param l2-cache-size= (The size of L2 cache)", 
+      "explore_prefix": "--param l2-cache-size=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 1024, 
+      "sort": 41900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_large-function-growth": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param large-function-growth= (Maximal growth due to inlining of large function (in percent))", 
+      "explore_prefix": "--param large-function-growth=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 200, 
+      "sort": 32000, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_large-function-insns": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param large-function-insns= (The size of function body to be considered large)", 
+      "explore_prefix": "--param large-function-insns=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 5400, 
+      "sort": 31900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_large-stack-frame": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param large-stack-frame= (The size of stack frame to be considered large)", 
+      "explore_prefix": "--param large-stack-frame=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 512, 
+      "sort": 32500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_large-stack-frame-growth": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param large-stack-frame-growth= (Maximal stack frame growth due to inlining (in percent))", 
+      "explore_prefix": "--param large-stack-frame-growth=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 2000, 
+      "sort": 32600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_large-unit-insns": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param large-unit-insns= (The size of translation unit to be considered large)", 
+      "explore_prefix": "--param large-unit-insns=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 20000, 
+      "sort": 32100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_lim-expensive": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param lim-expensive= (The minimum cost of an expensive expression in the loop invariant motion)", 
+      "explore_prefix": "--param lim-expensive=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 40, 
+      "sort": 37100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_loop-block-tile-size": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param loop-block-tile-size= (size of tiles for loop blocking)", 
+      "explore_prefix": "--param loop-block-tile-size=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 102, 
+      "sort": 43000, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_loop-invariant-max-bbs-in-loop": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param loop-invariant-max-bbs-in-loop= (Max basic blocks number in loop for loop invariant motion)", 
+      "explore_prefix": "--param loop-invariant-max-bbs-in-loop=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 20000, 
+      "sort": 43600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_loop-max-datarefs-for-datadeps": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param loop-max-datarefs-for-datadeps= (Maximum number of datarefs in loop for building loop data dependencies)", 
+      "explore_prefix": "--param loop-max-datarefs-for-datadeps=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 2000, 
+      "sort": 43500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_loop-unroll-jam-depth": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param loop-unroll-jam-depth= (depth of unrolled loop for unroll-and-jam)", 
+      "explore_prefix": "--param loop-unroll-jam-depth=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 4, 
+      "sort": 43200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_loop-unroll-jam-size": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param loop-unroll-jam-size= (size of unrolling factor for unroll-and-jam)", 
+      "explore_prefix": "--param loop-unroll-jam-size=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 8, 
+      "sort": 43100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_lra-inheritance-ebb-probability-cutoff": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param lra-inheritance-ebb-probability-cutoff= (Minimal fall-through edge probability in percentage used to add BB to inheritance EBB in LRA)", 
+      "explore_prefix": "--param lra-inheritance-ebb-probability-cutoff=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 100, 
+      "sort": 42800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_lra-max-considered-reload-pseudos": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param lra-max-considered-reload-pseudos= (The max number of reload pseudos which are considered during spilling a non-reload pseudo)", 
+      "explore_prefix": "--param lra-max-considered-reload-pseudos=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 1000, 
+      "sort": 42700, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_lto-min-partition": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param lto-min-partition= (Minimal size of a partition for LTO (in estimated instructions))", 
+      "explore_prefix": "--param lto-min-partition=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 2000, 
+      "sort": 45900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_lto-partitions": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param lto-partitions= (Number of partitions the program should be split to)", 
+      "explore_prefix": "--param lto-partitions=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 64, 
+      "sort": 45800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-average-unrolled-insns": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-average-unrolled-insns= (The maximum number of instructions to consider to unroll in a loop on average)", 
+      "explore_prefix": "--param max-average-unrolled-insns=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 160, 
+      "sort": 33500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-combine-insns": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-combine-insns= (The maximum number of insns combine tries to combine)", 
+      "explore_prefix": "--param max-combine-insns=", 
+      "explore_start": 2, 
+      "explore_step": 1, 
+      "explore_stop": 4, 
+      "sort": 40700, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-completely-peel-loop-nest-depth": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-completely-peel-loop-nest-depth= (The maximum depth of a loop nest we completely peel)", 
+      "explore_prefix": "--param max-completely-peel-loop-nest-depth=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 16, 
+      "sort": 34300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-completely-peel-times": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-completely-peel-times= (The maximum number of peelings of a single loop that is peeled completely)", 
+      "explore_prefix": "--param max-completely-peel-times=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 32, 
+      "sort": 34100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-completely-peeled-insns": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-completely-peeled-insns= (The maximum number of insns of a completely peeled loop)", 
+      "explore_prefix": "--param max-completely-peeled-insns=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 400, 
+      "sort": 34000, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-crossjump-edges": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-crossjump-edges= (The maximum number of incoming edges to consider for crossjumping)", 
+      "explore_prefix": "--param max-crossjump-edges=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 200, 
+      "sort": 36500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-cse-insns": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-cse-insns= (The maximum instructions CSE process before flushing)", 
+      "explore_prefix": "--param max-cse-insns=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 2000, 
+      "sort": 37000, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-cse-path-length": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-cse-path-length= (The maximum length of path considered in cse)", 
+      "explore_prefix": "--param max-cse-path-length=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 20, 
+      "sort": 36900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-cselib-memory-locations": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-cselib-memory-locations= (The maximum memory locations recorded by cselib)", 
+      "explore_prefix": "--param max-cselib-memory-locations=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 1000, 
+      "sort": 38700, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-delay-slot-insn-search": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-delay-slot-insn-search= (The maximum number of instructions to consider to fill a delay slot)", 
+      "explore_prefix": "--param max-delay-slot-insn-search=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 200, 
+      "sort": 31500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-delay-slot-live-search": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-delay-slot-live-search= (The maximum number of instructions to consider to find accurate live register information)", 
+      "explore_prefix": "--param max-delay-slot-live-search=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 666, 
+      "sort": 31600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-dse-active-local-stores": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-dse-active-local-stores= (Maximum number of active local stores in RTL dead store elimination)", 
+      "explore_prefix": "--param max-dse-active-local-stores=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 10000, 
+      "sort": 41400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-early-inliner-iterations": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-early-inliner-iterations= (The maximum number of nested indirect inlining performed by early inliner)", 
+      "explore_prefix": "--param max-early-inliner-iterations=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 2, 
+      "sort": 31000, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-fields-for-field-sensitive": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-fields-for-field-sensitive= (Maximum number of fields in a structure before pointer analysis treats the structure as a single variable)", 
+      "explore_prefix": "--param max-fields-for-field-sensitive=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 0, 
+      "sort": 41200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-fsm-thread-length": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-fsm-thread-length= (Maximum number of basic blocks on a finite state automaton jump thread path)", 
+      "explore_prefix": "--param max-fsm-thread-length=", 
+      "explore_start": 1, 
+      "explore_step": 1, 
+      "explore_stop": 999999, 
+      "sort": 48000, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-fsm-thread-path-insns": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-fsm-thread-path-insns= (Maximum number of instructions to copy when duplicating blocks on a finite state automaton jump thread path)", 
+      "explore_prefix": "--param max-fsm-thread-path-insns=", 
+      "explore_start": 1, 
+      "explore_step": 1, 
+      "explore_stop": 999999, 
+      "sort": 47900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-fsm-thread-paths": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-fsm-thread-paths= (Maximum number of new jump thread paths to create for a finite state automaton)", 
+      "explore_prefix": "--param max-fsm-thread-paths=", 
+      "explore_start": 1, 
+      "explore_step": 1, 
+      "explore_stop": 999999, 
+      "sort": 48100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-gcse-insertion-ratio": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-gcse-insertion-ratio= (The maximum ratio of insertions to deletions of expressions in GCSE)", 
+      "explore_prefix": "--param max-gcse-insertion-ratio=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 40, 
+      "sort": 32800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-goto-duplication-insns": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-goto-duplication-insns= (The maximum number of insns to duplicate when unfactoring computed gotos)", 
+      "explore_prefix": "--param max-goto-duplication-insns=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 16, 
+      "sort": 36800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-grow-copy-bb-insns": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-grow-copy-bb-insns= (The maximum expansion factor when copying basic blocks)", 
+      "explore_prefix": "--param max-grow-copy-bb-insns=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 16, 
+      "sort": 36700, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-hoist-depth": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-hoist-depth= (Maximum depth of search in the dominator tree for expressions to hoist)", 
+      "explore_prefix": "--param max-hoist-depth=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 60, 
+      "sort": 33300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-inline-insns-auto": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-inline-insns-auto= (The maximum number of instructions when automatically inlining)", 
+      "explore_prefix": "--param max-inline-insns-auto=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 80, 
+      "sort": 30400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-inline-insns-recursive": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-inline-insns-recursive= (The maximum number of instructions inline function can grow to via recursive inlining)", 
+      "explore_prefix": "--param max-inline-insns-recursive=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 900, 
+      "sort": 30500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-inline-insns-recursive-auto": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-inline-insns-recursive-auto= (The maximum number of instructions non-inline function can grow to via recursive inlining)", 
+      "explore_prefix": "--param max-inline-insns-recursive-auto=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 900, 
+      "sort": 30600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-inline-insns-single": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-inline-insns-single= (The maximum number of instructions in a single function eligible for inlining)", 
+      "explore_prefix": "--param max-inline-insns-single=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 800, 
+      "sort": 30300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-inline-recursive-depth": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-inline-recursive-depth= (The maximum depth of recursive inlining for inline functions)", 
+      "explore_prefix": "--param max-inline-recursive-depth=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 16, 
+      "sort": 30700, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-inline-recursive-depth-auto": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-inline-recursive-depth-auto= (The maximum depth of recursive inlining for non-inline functions)", 
+      "explore_prefix": "--param max-inline-recursive-depth-auto=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 16, 
+      "sort": 30800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-iterations-computation-cost": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-iterations-computation-cost= (Bound on the cost of an expression to compute the number of iterations)", 
+      "explore_prefix": "--param max-iterations-computation-cost=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 20, 
+      "sort": 34700, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-iterations-to-track": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-iterations-to-track= (Bound on the number of iterations the brute force # of iterations analysis algorithm evaluates)", 
+      "explore_prefix": "--param max-iterations-to-track=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 2000, 
+      "sort": 34600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-jump-thread-duplication-stmts": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-jump-thread-duplication-stmts= (Maximum number of statements allowed in a block that needs to be duplicated when threading jumps)", 
+      "explore_prefix": "--param max-jump-thread-duplication-stmts=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 30, 
+      "sort": 41100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-last-value-rtl": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-last-value-rtl= (The maximum number of RTL nodes that can be recorded as combiner's last value)", 
+      "explore_prefix": "--param max-last-value-rtl=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 20000, 
+      "sort": 40600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-modulo-backtrack-attempts": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-modulo-backtrack-attempts= (The maximum number of backtrack attempts the scheduler should make when modulo scheduling a loop)", 
+      "explore_prefix": "--param max-modulo-backtrack-attempts=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 80, 
+      "sort": 31800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-once-peeled-insns": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-once-peeled-insns= (The maximum number of insns of a peeled loop that rolls only once)", 
+      "explore_prefix": "--param max-once-peeled-insns=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 800, 
+      "sort": 34200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-partial-antic-length": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-partial-antic-length= (Maximum length of partial antic set when performing tree pre optimization)", 
+      "explore_prefix": "--param max-partial-antic-length=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 200, 
+      "sort": 42100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-peel-branches": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-peel-branches= (The maximum number of branches on the path through the peeled sequence)", 
+      "explore_prefix": "--param max-peel-branches=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 64, 
+      "sort": 33900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-peel-times": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-peel-times= (The maximum number of peelings of a single loop)", 
+      "explore_prefix": "--param max-peel-times=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 32, 
+      "sort": 33800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-peeled-insns": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-peeled-insns= (The maximum number of insns of a peeled loop)", 
+      "explore_prefix": "--param max-peeled-insns=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 200, 
+      "sort": 33700, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-pending-list-length": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-pending-list-length= (The maximum length of scheduling's pending operations list)", 
+      "explore_prefix": "--param max-pending-list-length=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 64, 
+      "sort": 31700, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-pipeline-region-blocks": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-pipeline-region-blocks= (The maximum number of blocks in a region to be considered for interblock scheduling)", 
+      "explore_prefix": "--param max-pipeline-region-blocks=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 30, 
+      "sort": 39400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-pipeline-region-insns": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-pipeline-region-insns= (The maximum number of insns in a region to be considered for interblock scheduling)", 
+      "explore_prefix": "--param max-pipeline-region-insns=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 400, 
+      "sort": 39500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-predicted-iterations": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-predicted-iterations= (The maximum number of loop iterations we predict statically)", 
+      "explore_prefix": "--param max-predicted-iterations=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 200, 
+      "sort": 35700, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-reload-search-insns": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-reload-search-insns= (The maximum number of instructions to search backward when looking for equivalent reload)", 
+      "explore_prefix": "--param max-reload-search-insns=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 200, 
+      "sort": 39000, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-sched-extend-regions-iters": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-sched-extend-regions-iters= (The maximum number of iterations through CFG to extend regions)", 
+      "explore_prefix": "--param max-sched-extend-regions-iters=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 0, 
+      "sort": 39700, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-sched-insn-conflict-delay": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-sched-insn-conflict-delay= (The maximum conflict delay for an insn to be considered for speculative motion)", 
+      "explore_prefix": "--param max-sched-insn-conflict-delay=", 
+      "explore_start": 1, 
+      "explore_step": 1, 
+      "explore_stop": 10, 
+      "sort": 39800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-sched-ready-insns": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-sched-ready-insns= (The maximum number of instructions ready to be issued to be considered by the scheduler during the first scheduling pass)", 
+      "explore_prefix": "--param max-sched-ready-insns=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 200, 
+      "sort": 41300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-sched-region-blocks": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-sched-region-blocks= (The maximum number of blocks in a region to be considered for interblock scheduling)", 
+      "explore_prefix": "--param max-sched-region-blocks=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 20, 
+      "sort": 39200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-sched-region-insns": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-sched-region-insns= (The maximum number of insns in a region to be considered for interblock scheduling)", 
+      "explore_prefix": "--param max-sched-region-insns=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 200, 
+      "sort": 39300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-slsr-cand-scan": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-slsr-cand-scan= (Maximum length of candidate scans for straight-linestrength reduction)", 
+      "explore_prefix": "--param max-slsr-cand-scan=", 
+      "explore_start": 1, 
+      "explore_step": 1, 
+      "explore_stop": 999999, 
+      "sort": 46900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-stores-to-sink": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-stores-to-sink= (Maximum number of conditional store pairs that can be sunk)", 
+      "explore_prefix": "--param max-stores-to-sink=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 4, 
+      "sort": 46100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-tail-merge-comparisons": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-tail-merge-comparisons= (Maximum amount of similar bbs to compare a bb with)", 
+      "explore_prefix": "--param max-tail-merge-comparisons=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 20, 
+      "sort": 46500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-tail-merge-iterations": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-tail-merge-iterations= (Maximum amount of iterations of the pass over a function)", 
+      "explore_prefix": "--param max-tail-merge-iterations=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 4, 
+      "sort": 46600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-tracked-strlens": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-tracked-strlens= (Maximum number of strings for which strlen optimization pass willtrack string lengths)", 
+      "explore_prefix": "--param max-tracked-strlens=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 20000, 
+      "sort": 46700, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-unroll-times": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-unroll-times= (The maximum number of unrollings of a single loop)", 
+      "explore_prefix": "--param max-unroll-times=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 16, 
+      "sort": 33600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-unrolled-insns": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-unrolled-insns= (The maximum number of instructions to consider to unroll in a loop)", 
+      "explore_prefix": "--param max-unrolled-insns=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 400, 
+      "sort": 33400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-unswitch-insns": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-unswitch-insns= (The maximum number of insns of an unswitched loop)", 
+      "explore_prefix": "--param max-unswitch-insns=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 100, 
+      "sort": 34400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-unswitch-level": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-unswitch-level= (The maximum number of unswitchings in a single loop)", 
+      "explore_prefix": "--param max-unswitch-level=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 6, 
+      "sort": 34500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-variable-expansions-in-unroller": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-variable-expansions-in-unroller= (If -fvariable-expansion-in-unroller is used, the maximum number of times that an individual variable will be expanded during loop unrolling)", 
+      "explore_prefix": "--param max-variable-expansions-in-unroller=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 2, 
+      "sort": 31300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-vartrack-expr-depth": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-vartrack-expr-depth= (Max. recursion depth for expanding var tracking expressions)", 
+      "explore_prefix": "--param max-vartrack-expr-depth=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 24, 
+      "sort": 44300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-vartrack-reverse-op-size": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-vartrack-reverse-op-size= (Max. size of loc list for which reverse ops should be added)", 
+      "explore_prefix": "--param max-vartrack-reverse-op-size=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 100, 
+      "sort": 44400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_max-vartrack-size": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-vartrack-size= (Max. size of var tracking hash tables)", 
+      "explore_prefix": "--param max-vartrack-size=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 100000000, 
+      "sort": 44200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_min-crossjump-insns": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param min-crossjump-insns= (The minimum number of matching instructions to consider for crossjumping)", 
+      "explore_prefix": "--param min-crossjump-insns=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 10, 
+      "sort": 36600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_min-inline-recursive-probability": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param min-inline-recursive-probability= (Inline recursively only when the probability of call being executed exceeds the parameter)", 
+      "explore_prefix": "--param min-inline-recursive-probability=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 20, 
+      "sort": 30900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_min-insn-to-prefetch-ratio": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param min-insn-to-prefetch-ratio= (Min. ratio of insns to prefetches to enable prefetching fora loop with an unknown trip count)", 
+      "explore_prefix": "--param min-insn-to-prefetch-ratio=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 18, 
+      "sort": 44000, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_min-nondebug-insn-uid": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param min-nondebug-insn-uid= (The minimum UID to be used for a nondebug insn)", 
+      "explore_prefix": "--param min-nondebug-insn-uid=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 0, 
+      "sort": 44500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_min-size-for-stack-sharing": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param min-size-for-stack-sharing= (The minimum size of variables taking part in stack slot sharingwhen not optimizing)", 
+      "explore_prefix": "--param min-size-for-stack-sharing=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 64, 
+      "sort": 41000, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_min-spec-prob": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param min-spec-prob= (The minimum probability of reaching a source block for interblock speculative scheduling)", 
+      "explore_prefix": "--param min-spec-prob=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 80, 
+      "sort": 39600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_min-vect-loop-bound": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param min-vect-loop-bound= (If -ftree-vectorize is used, the minimal loop bound of a loop to be considered for vectorization)", 
+      "explore_prefix": "--param min-vect-loop-bound=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 2, 
+      "sort": 31400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_omega-eliminate-redundant-constraints": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param omega-eliminate-redundant-constraints= (When set to 1, use expensive methods to eliminate all redundant constraints)", 
+      "explore_prefix": "--param omega-eliminate-redundant-constraints=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 1, 
+      "sort": 38300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_omega-hash-table-size": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param omega-hash-table-size= (Bound on the size of the hash table in Omega constraint systems)", 
+      "explore_prefix": "--param omega-hash-table-size=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 1100, 
+      "sort": 38100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_omega-max-eqs": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param omega-max-eqs= (Bound on the number of equalities in Omega constraint systems)", 
+      "explore_prefix": "--param omega-max-eqs=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 256, 
+      "sort": 37900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_omega-max-geqs": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param omega-max-geqs= (Bound on the number of inequalities in Omega constraint systems)", 
+      "explore_prefix": "--param omega-max-geqs=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 512, 
+      "sort": 37800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_omega-max-keys": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param omega-max-keys= (Bound on the number of keys in Omega constraint systems)", 
+      "explore_prefix": "--param omega-max-keys=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 1000, 
+      "sort": 38200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_omega-max-vars": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param omega-max-vars= (Bound on the number of variables in Omega constraint systems)", 
+      "explore_prefix": "--param omega-max-vars=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 256, 
+      "sort": 37700, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_omega-max-wild-cards": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param omega-max-wild-cards= (Bound on the number of wild cards in Omega constraint systems)", 
+      "explore_prefix": "--param omega-max-wild-cards=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 36, 
+      "sort": 38000, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_partial-inlining-entry-probability": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param partial-inlining-entry-probability= (Maximum probability of the entry BB of split region (in percent relative to entry BB of the function) to make partial inlining happen)", 
+      "explore_prefix": "--param partial-inlining-entry-probability=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 140, 
+      "sort": 31200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_predictable-branch-outcome": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param predictable-branch-outcome= (Maximal estimated outcome of branch considered predictable)", 
+      "explore_prefix": "--param predictable-branch-outcome=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 50, 
+      "sort": 30100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_prefetch-latency": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param prefetch-latency= (The number of insns executed before prefetch is completed)", 
+      "explore_prefix": "--param prefetch-latency=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 400, 
+      "sort": 41500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_prefetch-min-insn-to-mem-ratio": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param prefetch-min-insn-to-mem-ratio= (Min. ratio of insns to mem ops to enable prefetching in a loop)", 
+      "explore_prefix": "--param prefetch-min-insn-to-mem-ratio=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 6, 
+      "sort": 44100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_profile-func-internal-id": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param profile-func-internal-id= (use internal function id in profile lookup)", 
+      "explore_prefix": "--param profile-func-internal-id=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 1, 
+      "sort": 43700, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_sccvn-max-alias-queries-per-access": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param sccvn-max-alias-queries-per-access= (Maximum number of disambiguations to perform per memory access)", 
+      "explore_prefix": "--param sccvn-max-alias-queries-per-access=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 2000, 
+      "sort": 42300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_sccvn-max-scc-size": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param sccvn-max-scc-size= (Maximum size of a SCC before SCCVN stops processing a function)", 
+      "explore_prefix": "--param sccvn-max-scc-size=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 20000, 
+      "sort": 42200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_scev-max-expr-complexity": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param scev-max-expr-complexity= (Bound on the complexity of the expressions in the scalar evolutions analyzer)", 
+      "explore_prefix": "--param scev-max-expr-complexity=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 20, 
+      "sort": 37600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_scev-max-expr-size": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param scev-max-expr-size= (Bound on size of expressions used in the scalar evolutions analyzer)", 
+      "explore_prefix": "--param scev-max-expr-size=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 200, 
+      "sort": 37500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_sched-autopref-queue-depth": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param sched-autopref-queue-depth= (Hardware autoprefetcher scheduler model control flag.  Number of lookahead cycles the model looks into; at '0' only enable instruction sorting heuristic.  Disabled by default.)", 
+      "explore_prefix": "--param sched-autopref-queue-depth=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": -2, 
+      "sort": 40500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_sched-mem-true-dep-cost": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param sched-mem-true-dep-cost= (Minimal distance between possibly conflicting store and load)", 
+      "explore_prefix": "--param sched-mem-true-dep-cost=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 2, 
+      "sort": 40400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_sched-pressure-algorithm": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param sched-pressure-algorithm= (Which -fsched-pressure algorithm to apply)", 
+      "explore_prefix": "--param sched-pressure-algorithm=", 
+      "explore_start": 1, 
+      "explore_step": 1, 
+      "explore_stop": 2, 
+      "sort": 46800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_sched-spec-prob-cutoff": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param sched-spec-prob-cutoff= (The minimal probability of speculation success (in percents), so that speculative insn will be scheduled.)", 
+      "explore_prefix": "--param sched-spec-prob-cutoff=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 100, 
+      "sort": 39900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_sched-state-edge-prob-cutoff": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param sched-state-edge-prob-cutoff= (The minimum probability an edge must have for the scheduler to save its state across it.)", 
+      "explore_prefix": "--param sched-state-edge-prob-cutoff=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 100, 
+      "sort": 40000, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_selsched-insns-to-rename": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param selsched-insns-to-rename= (Maximum number of instructions in the ready list that are considered eligible for renaming)", 
+      "explore_prefix": "--param selsched-insns-to-rename=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 4, 
+      "sort": 40300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_selsched-max-lookahead": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param selsched-max-lookahead= (The maximum size of the lookahead window of selective scheduling)", 
+      "explore_prefix": "--param selsched-max-lookahead=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 100, 
+      "sort": 40100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_selsched-max-sched-times": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param selsched-max-sched-times= (Maximum number of times that an insn could be scheduled)", 
+      "explore_prefix": "--param selsched-max-sched-times=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 4, 
+      "sort": 40200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_simultaneous-prefetches": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param simultaneous-prefetches= (The number of prefetches that can run at the same time)", 
+      "explore_prefix": "--param simultaneous-prefetches=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 6, 
+      "sort": 41600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_sink-frequency-threshold": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param sink-frequency-threshold= (Target block's relative execution frequency (as a percentage) required to sink a statement)", 
+      "explore_prefix": "--param sink-frequency-threshold=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 100, 
+      "sort": 39100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_slp-max-insns-in-bb": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param slp-max-insns-in-bb= (Maximum number of instructions in basic block to be considered for SLP vectorization)", 
+      "explore_prefix": "--param slp-max-insns-in-bb=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 2000, 
+      "sort": 43900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_sms-dfa-history": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param sms-dfa-history= (The number of cycles the swing modulo scheduler considers when checking conflicts using DFA)", 
+      "explore_prefix": "--param sms-dfa-history=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 0, 
+      "sort": 35000, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_sms-loop-average-count-threshold": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param sms-loop-average-count-threshold= (A threshold on the average loop count considered by the swing modulo scheduler)", 
+      "explore_prefix": "--param sms-loop-average-count-threshold=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 0, 
+      "sort": 35100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_sms-max-ii-factor": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param sms-max-ii-factor= (A factor for tuning the upper bound that swing modulo scheduler uses for scheduling a loop)", 
+      "explore_prefix": "--param sms-max-ii-factor=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 200, 
+      "sort": 34800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_sms-min-sc": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param sms-min-sc= (The minimum value of stage count that swing modulo scheduler will generate.)", 
+      "explore_prefix": "--param sms-min-sc=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 4, 
+      "sort": 34900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_sra-max-scalarization-size-Osize": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param sra-max-scalarization-size-Osize= (Maximum size, in storage units, of an aggregate which should beconsidered for scalarization when compiling for size)", 
+      "explore_prefix": "--param sra-max-scalarization-size-Osize=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 0, 
+      "sort": 44900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_sra-max-scalarization-size-Ospeed": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param sra-max-scalarization-size-Ospeed= (Maximum size, in storage units, of an aggregate which should beconsidered for scalarization when compiling for speed)", 
+      "explore_prefix": "--param sra-max-scalarization-size-Ospeed=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 0, 
+      "sort": 44800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_ssp-buffer-size": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param ssp-buffer-size= (The lower bound for a buffer to be considered for stack smashing protection)", 
+      "explore_prefix": "--param ssp-buffer-size=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 16, 
+      "sort": 40900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_switch-conversion-max-branch-ratio": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param switch-conversion-max-branch-ratio= (The maximum ratio between array size and switch branches fora switch conversion to take place)", 
+      "explore_prefix": "--param switch-conversion-max-branch-ratio=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 16, 
+      "sort": 42900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_tm-max-aggregate-size": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param tm-max-aggregate-size= (Size in bytes after which thread-local aggregates should beinstrumented with the logging functions instead of save/restorepairs)", 
+      "explore_prefix": "--param tm-max-aggregate-size=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 18, 
+      "sort": 44700, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_tracer-dynamic-coverage": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param tracer-dynamic-coverage= (The percentage of function, weighted by execution frequency, that must be covered by trace formation. Used when profile feedback is not available)", 
+      "explore_prefix": "--param tracer-dynamic-coverage=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 100, 
+      "sort": 36000, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_tracer-dynamic-coverage-feedback": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param tracer-dynamic-coverage-feedback= (The percentage of function, weighted by execution frequency, that must be covered by trace formation. Used when profile feedback is available)", 
+      "explore_prefix": "--param tracer-dynamic-coverage-feedback=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 100, 
+      "sort": 35900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_tracer-max-code-growth": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param tracer-max-code-growth= (Maximal code growth caused by tail duplication (in percent))", 
+      "explore_prefix": "--param tracer-max-code-growth=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 200, 
+      "sort": 36100, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_tracer-min-branch-probability": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param tracer-min-branch-probability= (Stop forward growth if the probability of best edge is less than this threshold (in percent). Used when profile feedback is not available)", 
+      "explore_prefix": "--param tracer-min-branch-probability=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 100, 
+      "sort": 36400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_tracer-min-branch-probability-feedback": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param tracer-min-branch-probability-feedback= (Stop forward growth if the probability of best edge is less than this threshold (in percent). Used when profile feedback is available)", 
+      "explore_prefix": "--param tracer-min-branch-probability-feedback=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 100, 
+      "sort": 36300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_tracer-min-branch-ratio": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param tracer-min-branch-ratio= (Stop reverse growth if the reverse probability of best edge is less than this threshold (in percent))", 
+      "explore_prefix": "--param tracer-min-branch-ratio=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 100, 
+      "sort": 36200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_tree-reassoc-width": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param tree-reassoc-width= (Set the maximum number of instructions executed in parallel inreassociated tree. If 0, use the target dependent heuristic.)", 
+      "explore_prefix": "--param tree-reassoc-width=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 0, 
+      "sort": 46400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_uninit-control-dep-attempts": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param uninit-control-dep-attempts= (Maximum number of nested calls to search for control dependenciesduring uninitialized variable analysis)", 
+      "explore_prefix": "--param uninit-control-dep-attempts=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 2000, 
+      "sort": 47700, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_unlikely-bb-count-fraction": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param unlikely-bb-count-fraction= (The minimum fraction of profile runs a given basic block execution count must be not to be considered unlikely)", 
+      "explore_prefix": "--param unlikely-bb-count-fraction=", 
+      "explore_start": 1, 
+      "explore_step": 1, 
+      "explore_stop": 10000, 
+      "sort": 35400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_use-canonical-types": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param use-canonical-types= (Whether to use canonical types)", 
+      "explore_prefix": "--param use-canonical-types=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 1, 
+      "sort": 42000, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_vect-max-peeling-for-alignment": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param vect-max-peeling-for-alignment= (Max number of loop peels to enhancement alignment of data references in a loop)", 
+      "explore_prefix": "--param vect-max-peeling-for-alignment=", 
+      "explore_start": -1, 
+      "explore_step": 1, 
+      "explore_stop": 64, 
+      "sort": 38600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_vect-max-version-for-alias-checks": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param vect-max-version-for-alias-checks= (Bound on number of runtime checks inserted by the vectorizer's loop versioning for alias check)", 
+      "explore_prefix": "--param vect-max-version-for-alias-checks=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 20, 
+      "sort": 38500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param_vect-max-version-for-alignment-checks": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param vect-max-version-for-alignment-checks= (Bound on number of runtime checks inserted by the vectorizer's loop versioning for alignment check)", 
+      "explore_prefix": "--param vect-max-version-for-alignment-checks=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 12, 
+      "sort": 38400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }
+  }
+}
