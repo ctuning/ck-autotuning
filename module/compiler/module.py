@@ -427,13 +427,15 @@ def extract_opts(i):
        for q in sorted(list(results.keys())):
            qq=results[q]
 
-           x=q+' '*(10-len(q))+', '+qq['year']+', '
+           x=qq['year']+', '
 
            ib=str(qq['boolean_opts'])
            x+=' '*(6-len(ib))+ib+', '
 
            ip=str(qq['parametric_opts'])
-           x+=' '*(6-len(ip))+ip
+           x+=' '*(6-len(ip))+ip+', '
+
+           x+=q+' '*(10-len(q))
 
            ck.out(x)
 
