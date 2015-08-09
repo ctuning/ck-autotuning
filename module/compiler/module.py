@@ -283,6 +283,9 @@ def extract_opts(i):
 
                                          opt=j[2:]
 
+                                         if opt.startswith('no-'):
+                                            opt=opt[3:]
+
                                          ck.out('Adding opt '+str(iopt)+' '+j)
 
                                          dd['##'+opt]={
