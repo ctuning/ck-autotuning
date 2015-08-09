@@ -128,8 +128,312 @@ def extract_to_pipeline(i):
 
 ##############################################################################
 # extract optimization flags and parameters from a compiler for autotuning (currently GCC)
+# Note: GCC sources are needed - this script searches for GCC opts in all sub-directories
+#       in a current directory. Therefore, just untar all GCC sources in current directory.
+#
+# (partially based on scripts from Abdul Wahid Memon and Yuriy Kashnikov)
 
 def extract_opts(i):
+    """
+    Input:  {
+              (record)               - if 'yes, record to repo
+              (repo_uoa)             - repo UOA to record compiler description
+              (data_uoa)             - data UOA to record compiler description (if empty, autogenerate)
+            }
+
+    Output: {
+              return       - return code =  0, if successful
+                                         >  0, if error
+              (error)      - error text if return > 0
+            }
+
+    """
+
+    import os
+    import sys
+
+    o=i.get('out','')
+
+    p=os.getcwd()
+
+    f1a=cfg['gcc_src_opt_file1']
+    f1b=cfg['gcc_src_opt_file2']
+    f2=cfg['gcc_src_params']
+
+    results={}
+
+    # Checking if GCC 
+    try:
+       dirList=os.listdir(p)
+    except Exception as e:
+        None
+    else:
+        for fn in dirList:
+            pp=os.path.join(p, fn)
+            if os.path.isdir(pp) and fn.startswith('gcc-'):
+               found=False
+
+               p1a=os.path.join(pp,f1a)
+               p1b=os.path.join(pp,f1b)
+               p2=os.path.join(pp,f2)
+
+               if os.path.isfile(p1a) or os.path.isfile(p1b) or os.path.isfile(p2):
+                  # Found GCC source directory with needed files
+                  ck.out('*************************************')
+                  ck.out('Processing GCC directory: '+fn)
+
+                  ck.out('')
+
+                  ver=fn[4:]
+                  lver=ver.split('.')
+
+                  dd={}
+
+                  iopt=0
+                  iparam=0
+
+                  p1=''
+                  if os.path.isfile(p1a):
+                     p1=p1a
+                  elif os.path.isfile(p1b):
+                     p1=p1b
+
+                  if p1!='':
+                     # Load opt file
+                     rx=ck.load_text_file({'text_file':p1,
+                                           'split_to_list':'yes', 
+                                           'encoding':sys.stdin.encoding})
+                     if rx['return']>0: return rx
+                     lopts=rx['lst']
+
+                     found=False
+                     for q in range(0, len(lopts)):
+                         qq=lopts[q].strip()
+
+                         if not found:
+                            if qq=='@item Optimization Options':
+                               ck.out('Found optimization flags')
+                               found=True
+                         else:
+                            if qq.startswith('@end ') or qq=='':
+                               break
+
+                            if qq.startswith('@gccoptlist{'):
+                               qq=qq[11:]
+                            elif qq.startswith('@'):
+                               continue                               
+
+                            if qq.endswith('@gol'):
+                               qq=qq[:-5]
+
+                            jj=qq.split(' ')
+
+                            # Check if base flag
+                            if len(jj)>0 and jj[0].startswith('-O'):
+                               choice=[]
+                               if '-O3' in jj: choice.append('-O3')
+                               for j in jj:
+                                   if j!='' and j!='-O3' and j!='-O':
+                                      choice.append(j)
+
+                               dd["##base_opt"]={
+                                       "choice": choice,
+                                       "default": "", 
+                                       "desc": "base compiler flag", 
+                                       "sort": 10000, 
+                                       "tags": [
+                                         "base", 
+                                         "basic", 
+                                         "optimization"
+                                       ], 
+                                       "type": "text"
+                                     }
+
+                            else:
+                               for j in jj:
+                                   if j!='' and not j.startswith('--param') and not j.startswith('@') and j.startswith('-f'):
+                                      if '@' in j:
+                                         iparam+=1
+
+                                         ij=j.find('@')
+                                         opt=j[:ij]
+
+                                         ck.out('Adding param '+str(iparam)+' '+opt)
+
+                                         dd['##param_'+opt]={
+                                           "can_omit": "yes", 
+                                           "default": "", 
+                                           "desc": "compiler flag: "+j, 
+                                           "sort": iparam*100+30000, 
+                                           "explore_prefix": j, 
+                                           "explore_start": 0, 
+                                           "explore_step": 1, 
+                                           "explore_stop": 0, 
+                                           "tags": [
+                                             "basic", 
+                                            "optimization"
+                                           ], 
+                                           "type":"integer"
+                                         }
+
+                                      else:
+                                         iopt+=1
+
+                                         opt=j[2:]
+
+                                         ck.out('Adding opt '+str(iopt)+' '+j)
+
+                                         dd['##'+opt]={
+                                           "can_omit": "yes", 
+                                           "choice": [
+                                             "-f"+opt, 
+                                             "-fno-"+opt
+                                           ], 
+                                           "default": "", 
+                                           "desc": "compiler flag: "+j, 
+                                           "sort": iopt*100, 
+                                           "tags": [
+                                             "basic", 
+                                            "optimization"
+                                           ], 
+                                           "type":"text"
+                                         }
+
+                  # Checking params
+                  if os.path.isfile(p2):
+                     # Load opt file
+                     rx=ck.load_text_file({'text_file':p2,
+                                           'split_to_list':'yes', 
+                                           'encoding':sys.stdin.encoding})
+                     if rx['return']>0: return rx
+                     lparams=rx['lst']
+
+                     # Parsing params
+                     opt=''
+                     opt1=''
+                     desc=''
+                     desc1=''
+
+                     add=False
+                     finish=False
+
+                     for q in range(0, len(lparams)):
+                         qq=lparams[q].strip()
+                         if qq.startswith('DEFPARAM'):
+                            iparam+=1
+
+                            q+=1
+                            opt=lparams[q].strip()[1:-2]
+
+                            q+=1
+                            desc=lparams[q].strip()[1:-2]
+                            line='x'
+                            while True:
+                               q+=1
+                               line=lparams[q].strip()
+                               if line[-1]==')': break
+                               desc+=line[1:-2]
+
+                            e1=0
+                            e2=0
+
+                            exp=line[:-1].split(',')
+
+                            skip=False
+                            for j in range(0, len(exp)):
+                                jj=exp[j].strip()
+                                if jj.find('*')>0 or jj.find('_')>0:
+                                   skip=True
+                                else:
+                                   jj=int(exp[j].strip())
+                                   exp[j]=jj
+
+                            if not skip:
+                               if len(exp)>1 and exp[2]>exp[1]:
+                                  e1=exp[1]
+                                  e2=exp[2]
+                               else:
+                                  e1=0
+                                  e2=exp[0]*2
+
+                               ck.out('Adding param '+str(iparam)+' "'+opt+'" - '+desc)
+
+                               dd['##param_'+opt]={
+                                 "can_omit": "yes", 
+                                 "default": "", 
+                                 "desc": "compiler flag: --param "+opt+"= ("+desc+")", 
+                                 "sort": iparam*100+30000, 
+                                 "explore_prefix": "--param "+opt+"=", 
+                                 "explore_start": e1, 
+                                 "explore_step": 1, 
+                                 "explore_stop": e2, 
+                                 "tags": [
+                                   "basic", 
+                                  "optimization"
+                                 ], 
+                                 "type":"integer"
+                               }
+
+                  # Prepare CK entry
+                  if i.get('record','')=='yes':
+                     duoa=i.get('data_uoa','')
+                     if duoa=='':
+                        v=vstr.split('.')
+                        duoa='gcc-'+lver[0]+lver[1]+'-auto'
+
+                     if o=='con':
+                        ck.out('')
+                        ck.out('Recording to '+duoa+' ...')
+
+                     ii={'action':'add',
+                         'module_uoa':work['self_module_uid'],
+                         'repo_uoa':i.get('repo_uoa',''),
+                         'data_uoa':duoa,
+                         'desc':{'all_compiler_flags_desc':dd},
+                         'dict':{
+                           "tags": [
+                             "compiler", 
+                             "gcc", 
+                             "v"+lver[0], 
+                             "v"+lver[0]+"."+lver[1],
+                             "auto"
+                           ]
+                         }
+                        }
+                     r=ck.access(ii)
+                     if r['return']>0: return r
+
+                  results[fn]={'boolean_opts':iopt, 'parametric_opts':iparam, 'year':''}
+
+                  # Final info
+                  if o=='con':
+                     ck.out('')
+                     ck.out('Compiler:                   '+str(fn))
+                     ck.out('Number of boolean opts:     '+str(iopt))
+                     ck.out('Number of parameteric opts: '+str(iparam))
+
+    # Summary
+    if len(results)>0:
+       ck.out('*********************************************************')
+       for q in sorted(list(results.keys())):
+           qq=results[q]
+
+           x=q+' '*(10-len(q))+': '
+
+           ib=str(qq['boolean_opts'])
+           x+=' '*(6-len(ib))+ib
+
+           ip=str(qq['parametric_opts'])
+           x+=' '*(6-len(ip))+ip
+
+           ck.out(x)
+
+    return {'return':0}
+
+##############################################################################
+# extract optimization flags and parameters from a compiler for autotuning (currently GCC)
+
+def extract_opts_new(i):
     """
     Input:  {
               (host_os)              - host OS (detect, if omitted)

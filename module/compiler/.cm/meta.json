@@ -1,7 +1,10 @@
 {
   "actions": {
     "extract_opts": {
-      "desc": "extract optimization flags and parameters from a compiler for autotuning (currently GCC)"
+      "desc": "extract optimization flags and parameters from a compiler for autotuning (currently from GCC sources)"
+    }, 
+    "extract_opts_new": {
+      "desc": "extract optimization flags and parameters from a compiler for autotuning (currently from GCC --help:optimizers and sources)"
     }, 
     "extract_to_pipeline": {
       "desc": "prepare compiler flag choices for universal tuning via program pipeline (experimental workflow)"
@@ -19,5 +22,8 @@
     "platform.os": "41e31cc4496b8a8e",
     "soft":"5e1100048ab875d7"
   }, 
-  "pipeline_template": "universal_autotuning_pipeline_template.json"
+  "pipeline_template": "universal_autotuning_pipeline_template.json",
+  "gcc_src_opt_file1":"gcc/doc/invoke.texi",
+  "gcc_src_opt_file2":"gcc/invoke.texi",
+  "gcc_src_params":"gcc/params.def"
 }
