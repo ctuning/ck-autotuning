@@ -1,0 +1,2 @@
+* 2015.08.09 FGG: * add extra dict when recording experiments (useful to record name and subview_uoa, for example)
+                  * fixing a few bugs in experiment viewing

@@ -387,8 +387,13 @@ def reproduce(i):
                  'experiment_repo_uoa':e_remote_repo_uoa,
                  'experiment_uoa':e_uoa,
 
+                 'sort_keys':'yes',
+
                  'dict':{
+                   'dict':{'subview_uoa':cfg['data_deps']['subview_uoa']},
+
                    'tags':['crowdsource experiments','ck-paper','filter','if-conversion','speedup'],
+
                    'features':features,
                    'choices':xchoices,
                    'characteristics': {
