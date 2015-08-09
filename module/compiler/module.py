@@ -272,7 +272,8 @@ def extract_opts(i):
                                            "explore_stop": 0, 
                                            "tags": [
                                              "basic", 
-                                            "optimization"
+                                             "parametric",
+                                             "optimization"
                                            ], 
                                            "type":"integer"
                                          }
@@ -295,7 +296,8 @@ def extract_opts(i):
                                            "sort": iopt*100, 
                                            "tags": [
                                              "basic", 
-                                            "optimization"
+                                             "boolean",
+                                             "optimization"
                                            ], 
                                            "type":"text"
                                          }
@@ -370,7 +372,8 @@ def extract_opts(i):
                                  "explore_stop": e2, 
                                  "tags": [
                                    "basic", 
-                                  "optimization"
+                                   "parametric",
+                                   "optimization"
                                  ], 
                                  "type":"integer"
                                }
