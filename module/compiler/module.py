@@ -151,6 +151,7 @@ def extract_opts(i):
 
     import os
     import sys
+    import datetime
 
     o=i.get('out','')
 
@@ -403,14 +404,22 @@ def extract_opts(i):
                      r=ck.access(ii)
                      if r['return']>0: return r
 
-                  results[fn]={'boolean_opts':iopt, 'parametric_opts':iparam, 'year':''}
+                  p9=os.path.join(pp, 'ChangeLog')
+                  year=''
+                  if os.path.isfile(p9):
+                     t = os.path.getmtime(p9)
+                     t1=str(datetime.datetime.fromtimestamp(t))
+                     year=t1[:4]
+
+                  results[fn]={'boolean_opts':iopt, 'parametric_opts':iparam, 'year':year}
 
                   # Final info
                   if o=='con':
                      ck.out('')
-                     ck.out('Compiler:                   '+str(fn))
-                     ck.out('Number of boolean opts:     '+str(iopt))
-                     ck.out('Number of parameteric opts: '+str(iparam))
+                     ck.out('Compiler:                     '+str(fn))
+                     ck.out('  Year:                       '+year)
+                     ck.out('  Number of boolean opts:     '+str(iopt))
+                     ck.out('  Number of parameteric opts: '+str(iparam))
 
     # Summary
     if len(results)>0:
@@ -418,10 +427,10 @@ def extract_opts(i):
        for q in sorted(list(results.keys())):
            qq=results[q]
 
-           x=q+' '*(10-len(q))+': '
+           x=q+' '*(10-len(q))+', '+qq['year']+', '
 
            ib=str(qq['boolean_opts'])
-           x+=' '*(6-len(ib))+ib
+           x+=' '*(6-len(ib))+ib+', '
 
            ip=str(qq['parametric_opts'])
            x+=' '*(6-len(ip))+ip
