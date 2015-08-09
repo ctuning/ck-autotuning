@@ -379,8 +379,7 @@ def extract_opts(i):
                   if i.get('record','')=='yes':
                      duoa=i.get('data_uoa','')
                      if duoa=='':
-                        v=vstr.split('.')
-                        duoa='gcc-'+lver[0]+lver[1]+'-auto'
+                        duoa=fn+'-auto'
 
                      if o=='con':
                         ck.out('')
