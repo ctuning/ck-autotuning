@@ -18,7 +18,7 @@
       ], 
       "type": "text"
     }, 
-    "##bounds-check": {
+    "##bool-bounds-check": {
       "can_omit": "yes", 
       "choice": [
         "-fbounds-check", 
@@ -26,7 +26,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fbounds-check", 
-      "sort": 100, 
+      "sort": 10010, 
       "tags": [
         "basic", 
         "boolean", 
@@ -34,7 +34,7 @@
       ], 
       "type": "text"
     }, 
-    "##branch-count-reg": {
+    "##bool-branch-count-reg": {
       "can_omit": "yes", 
       "choice": [
         "-fbranch-count-reg", 
@@ -42,7 +42,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fno-branch-count-reg", 
-      "sort": 4000, 
+      "sort": 10390, 
       "tags": [
         "basic", 
         "boolean", 
@@ -50,7 +50,7 @@
       ], 
       "type": "text"
     }, 
-    "##branch-probabilities": {
+    "##bool-branch-probabilities": {
       "can_omit": "yes", 
       "choice": [
         "-fbranch-probabilities", 
@@ -58,7 +58,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fbranch-probabilities", 
-      "sort": 500, 
+      "sort": 10050, 
       "tags": [
         "basic", 
         "boolean", 
@@ -66,7 +66,7 @@
       ], 
       "type": "text"
     }, 
-    "##branch-target-load-optimize": {
+    "##bool-branch-target-load-optimize": {
       "can_omit": "yes", 
       "choice": [
         "-fbranch-target-load-optimize", 
@@ -74,7 +74,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fbranch-target-load-optimize", 
-      "sort": 800, 
+      "sort": 10070, 
       "tags": [
         "basic", 
         "boolean", 
@@ -82,7 +82,7 @@
       ], 
       "type": "text"
     }, 
-    "##branch-target-load-optimize2": {
+    "##bool-branch-target-load-optimize2": {
       "can_omit": "yes", 
       "choice": [
         "-fbranch-target-load-optimize2", 
@@ -90,7 +90,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fbranch-target-load-optimize2", 
-      "sort": 900, 
+      "sort": 10080, 
       "tags": [
         "basic", 
         "boolean", 
@@ -98,7 +98,7 @@
       ], 
       "type": "text"
     }, 
-    "##btr-bb-exclusive": {
+    "##bool-btr-bb-exclusive": {
       "can_omit": "yes", 
       "choice": [
         "-fbtr-bb-exclusive", 
@@ -106,7 +106,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fbtr-bb-exclusive", 
-      "sort": 1000, 
+      "sort": 10090, 
       "tags": [
         "basic", 
         "boolean", 
@@ -114,7 +114,7 @@
       ], 
       "type": "text"
     }, 
-    "##caller-saves": {
+    "##bool-caller-saves": {
       "can_omit": "yes", 
       "choice": [
         "-fcaller-saves", 
@@ -122,7 +122,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fcaller-saves", 
-      "sort": 1100, 
+      "sort": 10100, 
       "tags": [
         "basic", 
         "boolean", 
@@ -130,7 +130,7 @@
       ], 
       "type": "text"
     }, 
-    "##cprop-registers": {
+    "##bool-cprop-registers": {
       "can_omit": "yes", 
       "choice": [
         "-fcprop-registers", 
@@ -138,7 +138,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fcprop-registers", 
-      "sort": 1200, 
+      "sort": 10110, 
       "tags": [
         "basic", 
         "boolean", 
@@ -146,7 +146,7 @@
       ], 
       "type": "text"
     }, 
-    "##crossjumping": {
+    "##bool-crossjumping": {
       "can_omit": "yes", 
       "choice": [
         "-fcrossjumping", 
@@ -154,7 +154,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fcrossjumping", 
-      "sort": 3100, 
+      "sort": 10300, 
       "tags": [
         "basic", 
         "boolean", 
@@ -162,7 +162,7 @@
       ], 
       "type": "text"
     }, 
-    "##cse-follow-jumps": {
+    "##bool-cse-follow-jumps": {
       "can_omit": "yes", 
       "choice": [
         "-fcse-follow-jumps", 
@@ -170,7 +170,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fcse-follow-jumps", 
-      "sort": 1300, 
+      "sort": 10120, 
       "tags": [
         "basic", 
         "boolean", 
@@ -178,7 +178,7 @@
       ], 
       "type": "text"
     }, 
-    "##cse-skip-blocks": {
+    "##bool-cse-skip-blocks": {
       "can_omit": "yes", 
       "choice": [
         "-fcse-skip-blocks", 
@@ -186,7 +186,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fcse-skip-blocks", 
-      "sort": 1400, 
+      "sort": 10130, 
       "tags": [
         "basic", 
         "boolean", 
@@ -194,7 +194,7 @@
       ], 
       "type": "text"
     }, 
-    "##cx-limited-range": {
+    "##bool-cx-limited-range": {
       "can_omit": "yes", 
       "choice": [
         "-fcx-limited-range", 
@@ -202,7 +202,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fcx-limited-range", 
-      "sort": 1500, 
+      "sort": 10140, 
       "tags": [
         "basic", 
         "boolean", 
@@ -210,7 +210,7 @@
       ], 
       "type": "text"
     }, 
-    "##data-sections": {
+    "##bool-data-sections": {
       "can_omit": "yes", 
       "choice": [
         "-fdata-sections", 
@@ -218,7 +218,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fdata-sections", 
-      "sort": 1600, 
+      "sort": 10150, 
       "tags": [
         "basic", 
         "boolean", 
@@ -226,7 +226,7 @@
       ], 
       "type": "text"
     }, 
-    "##default-inline": {
+    "##bool-default-inline": {
       "can_omit": "yes", 
       "choice": [
         "-fdefault-inline", 
@@ -234,7 +234,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fno-default-inline", 
-      "sort": 4100, 
+      "sort": 10400, 
       "tags": [
         "basic", 
         "boolean", 
@@ -242,7 +242,7 @@
       ], 
       "type": "text"
     }, 
-    "##defer-pop": {
+    "##bool-defer-pop": {
       "can_omit": "yes", 
       "choice": [
         "-fdefer-pop", 
@@ -250,7 +250,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fno-defer-pop", 
-      "sort": 4200, 
+      "sort": 10410, 
       "tags": [
         "basic", 
         "boolean", 
@@ -258,7 +258,7 @@
       ], 
       "type": "text"
     }, 
-    "##delayed-branch": {
+    "##bool-delayed-branch": {
       "can_omit": "yes", 
       "choice": [
         "-fdelayed-branch", 
@@ -266,7 +266,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fdelayed-branch", 
-      "sort": 1700, 
+      "sort": 10160, 
       "tags": [
         "basic", 
         "boolean", 
@@ -274,7 +274,7 @@
       ], 
       "type": "text"
     }, 
-    "##delete-null-pointer-checks": {
+    "##bool-delete-null-pointer-checks": {
       "can_omit": "yes", 
       "choice": [
         "-fdelete-null-pointer-checks", 
@@ -282,7 +282,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fdelete-null-pointer-checks", 
-      "sort": 1800, 
+      "sort": 10170, 
       "tags": [
         "basic", 
         "boolean", 
@@ -290,7 +290,7 @@
       ], 
       "type": "text"
     }, 
-    "##expensive-optimizations": {
+    "##bool-expensive-optimizations": {
       "can_omit": "yes", 
       "choice": [
         "-fexpensive-optimizations", 
@@ -298,7 +298,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fexpensive-optimizations", 
-      "sort": 1900, 
+      "sort": 10180, 
       "tags": [
         "basic", 
         "boolean", 
@@ -306,7 +306,7 @@
       ], 
       "type": "text"
     }, 
-    "##fast-math": {
+    "##bool-fast-math": {
       "can_omit": "yes", 
       "choice": [
         "-ffast-math", 
@@ -314,7 +314,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -ffast-math", 
-      "sort": 2000, 
+      "sort": 10190, 
       "tags": [
         "basic", 
         "boolean", 
@@ -322,7 +322,7 @@
       ], 
       "type": "text"
     }, 
-    "##finite-math-only": {
+    "##bool-finite-math-only": {
       "can_omit": "yes", 
       "choice": [
         "-ffinite-math-only", 
@@ -330,7 +330,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -ffinite-math-only", 
-      "sort": 5200, 
+      "sort": 10510, 
       "tags": [
         "basic", 
         "boolean", 
@@ -338,7 +338,7 @@
       ], 
       "type": "text"
     }, 
-    "##float-store": {
+    "##bool-float-store": {
       "can_omit": "yes", 
       "choice": [
         "-ffloat-store", 
@@ -346,7 +346,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -ffloat-store", 
-      "sort": 2100, 
+      "sort": 10200, 
       "tags": [
         "basic", 
         "boolean", 
@@ -354,7 +354,7 @@
       ], 
       "type": "text"
     }, 
-    "##force-addr": {
+    "##bool-force-addr": {
       "can_omit": "yes", 
       "choice": [
         "-fforce-addr", 
@@ -362,7 +362,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fforce-addr", 
-      "sort": 2200, 
+      "sort": 10210, 
       "tags": [
         "basic", 
         "boolean", 
@@ -370,7 +370,7 @@
       ], 
       "type": "text"
     }, 
-    "##force-mem": {
+    "##bool-force-mem": {
       "can_omit": "yes", 
       "choice": [
         "-fforce-mem", 
@@ -378,7 +378,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fforce-mem", 
-      "sort": 2300, 
+      "sort": 10220, 
       "tags": [
         "basic", 
         "boolean", 
@@ -386,7 +386,7 @@
       ], 
       "type": "text"
     }, 
-    "##function-cse": {
+    "##bool-function-cse": {
       "can_omit": "yes", 
       "choice": [
         "-ffunction-cse", 
@@ -394,7 +394,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fno-function-cse", 
-      "sort": 4500, 
+      "sort": 10440, 
       "tags": [
         "basic", 
         "boolean", 
@@ -402,7 +402,7 @@
       ], 
       "type": "text"
     }, 
-    "##function-sections": {
+    "##bool-function-sections": {
       "can_omit": "yes", 
       "choice": [
         "-ffunction-sections", 
@@ -410,7 +410,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -ffunction-sections", 
-      "sort": 2400, 
+      "sort": 10230, 
       "tags": [
         "basic", 
         "boolean", 
@@ -418,7 +418,7 @@
       ], 
       "type": "text"
     }, 
-    "##gcse": {
+    "##bool-gcse": {
       "can_omit": "yes", 
       "choice": [
         "-fgcse", 
@@ -426,7 +426,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fgcse", 
-      "sort": 2500, 
+      "sort": 10240, 
       "tags": [
         "basic", 
         "boolean", 
@@ -434,7 +434,7 @@
       ], 
       "type": "text"
     }, 
-    "##gcse-after-reload": {
+    "##bool-gcse-after-reload": {
       "can_omit": "yes", 
       "choice": [
         "-fgcse-after-reload", 
@@ -442,7 +442,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fgcse-after-reload", 
-      "sort": 2900, 
+      "sort": 10280, 
       "tags": [
         "basic", 
         "boolean", 
@@ -450,7 +450,7 @@
       ], 
       "type": "text"
     }, 
-    "##gcse-las": {
+    "##bool-gcse-las": {
       "can_omit": "yes", 
       "choice": [
         "-fgcse-las", 
@@ -458,7 +458,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fgcse-las", 
-      "sort": 2800, 
+      "sort": 10270, 
       "tags": [
         "basic", 
         "boolean", 
@@ -466,7 +466,7 @@
       ], 
       "type": "text"
     }, 
-    "##gcse-lm": {
+    "##bool-gcse-lm": {
       "can_omit": "yes", 
       "choice": [
         "-fgcse-lm", 
@@ -474,7 +474,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fgcse-lm", 
-      "sort": 2600, 
+      "sort": 10250, 
       "tags": [
         "basic", 
         "boolean", 
@@ -482,7 +482,7 @@
       ], 
       "type": "text"
     }, 
-    "##gcse-sm": {
+    "##bool-gcse-sm": {
       "can_omit": "yes", 
       "choice": [
         "-fgcse-sm", 
@@ -490,7 +490,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fgcse-sm", 
-      "sort": 2700, 
+      "sort": 10260, 
       "tags": [
         "basic", 
         "boolean", 
@@ -498,7 +498,7 @@
       ], 
       "type": "text"
     }, 
-    "##guess-branch-probability": {
+    "##bool-guess-branch-probability": {
       "can_omit": "yes", 
       "choice": [
         "-fguess-branch-probability", 
@@ -506,7 +506,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fno-guess-branch-probability", 
-      "sort": 4600, 
+      "sort": 10450, 
       "tags": [
         "basic", 
         "boolean", 
@@ -514,7 +514,7 @@
       ], 
       "type": "text"
     }, 
-    "##if-conversion": {
+    "##bool-if-conversion": {
       "can_omit": "yes", 
       "choice": [
         "-fif-conversion", 
@@ -522,7 +522,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fif-conversion", 
-      "sort": 3200, 
+      "sort": 10310, 
       "tags": [
         "basic", 
         "boolean", 
@@ -530,7 +530,7 @@
       ], 
       "type": "text"
     }, 
-    "##if-conversion2": {
+    "##bool-if-conversion2": {
       "can_omit": "yes", 
       "choice": [
         "-fif-conversion2", 
@@ -538,7 +538,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fif-conversion2", 
-      "sort": 3300, 
+      "sort": 10320, 
       "tags": [
         "basic", 
         "boolean", 
@@ -546,7 +546,7 @@
       ], 
       "type": "text"
     }, 
-    "##inline": {
+    "##bool-inline": {
       "can_omit": "yes", 
       "choice": [
         "-finline", 
@@ -554,7 +554,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fno-inline", 
-      "sort": 4700, 
+      "sort": 10460, 
       "tags": [
         "basic", 
         "boolean", 
@@ -562,7 +562,7 @@
       ], 
       "type": "text"
     }, 
-    "##inline-functions": {
+    "##bool-inline-functions": {
       "can_omit": "yes", 
       "choice": [
         "-finline-functions", 
@@ -570,7 +570,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -finline-functions", 
-      "sort": 3400, 
+      "sort": 10330, 
       "tags": [
         "basic", 
         "boolean", 
@@ -578,7 +578,7 @@
       ], 
       "type": "text"
     }, 
-    "##ivopts": {
+    "##bool-ivopts": {
       "can_omit": "yes", 
       "choice": [
         "-fivopts", 
@@ -586,7 +586,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fivopts", 
-      "sort": 9800, 
+      "sort": 10950, 
       "tags": [
         "basic", 
         "boolean", 
@@ -594,7 +594,7 @@
       ], 
       "type": "text"
     }, 
-    "##keep-inline-functions": {
+    "##bool-keep-inline-functions": {
       "can_omit": "yes", 
       "choice": [
         "-fkeep-inline-functions", 
@@ -602,7 +602,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fkeep-inline-functions", 
-      "sort": 3500, 
+      "sort": 10340, 
       "tags": [
         "basic", 
         "boolean", 
@@ -610,7 +610,7 @@
       ], 
       "type": "text"
     }, 
-    "##keep-static-consts": {
+    "##bool-keep-static-consts": {
       "can_omit": "yes", 
       "choice": [
         "-fkeep-static-consts", 
@@ -618,7 +618,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fkeep-static-consts", 
-      "sort": 3600, 
+      "sort": 10350, 
       "tags": [
         "basic", 
         "boolean", 
@@ -626,7 +626,7 @@
       ], 
       "type": "text"
     }, 
-    "##loop-optimize": {
+    "##bool-loop-optimize": {
       "can_omit": "yes", 
       "choice": [
         "-floop-optimize", 
@@ -634,7 +634,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -floop-optimize", 
-      "sort": 3000, 
+      "sort": 10290, 
       "tags": [
         "basic", 
         "boolean", 
@@ -642,7 +642,7 @@
       ], 
       "type": "text"
     }, 
-    "##loop-optimize2": {
+    "##bool-loop-optimize2": {
       "can_omit": "yes", 
       "choice": [
         "-floop-optimize2", 
@@ -650,7 +650,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -floop-optimize2", 
-      "sort": 4300, 
+      "sort": 10420, 
       "tags": [
         "basic", 
         "boolean", 
@@ -658,7 +658,7 @@
       ], 
       "type": "text"
     }, 
-    "##math-errno": {
+    "##bool-math-errno": {
       "can_omit": "yes", 
       "choice": [
         "-fmath-errno", 
@@ -666,7 +666,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fno-math-errno", 
-      "sort": 4800, 
+      "sort": 10470, 
       "tags": [
         "basic", 
         "boolean", 
@@ -674,7 +674,7 @@
       ], 
       "type": "text"
     }, 
-    "##merge-all-constants": {
+    "##bool-merge-all-constants": {
       "can_omit": "yes", 
       "choice": [
         "-fmerge-all-constants", 
@@ -682,7 +682,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fmerge-all-constants", 
-      "sort": 3800, 
+      "sort": 10370, 
       "tags": [
         "basic", 
         "boolean", 
@@ -690,7 +690,7 @@
       ], 
       "type": "text"
     }, 
-    "##merge-constants": {
+    "##bool-merge-constants": {
       "can_omit": "yes", 
       "choice": [
         "-fmerge-constants", 
@@ -698,7 +698,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fmerge-constants", 
-      "sort": 3700, 
+      "sort": 10360, 
       "tags": [
         "basic", 
         "boolean", 
@@ -706,7 +706,7 @@
       ], 
       "type": "text"
     }, 
-    "##modulo-sched": {
+    "##bool-modulo-sched": {
       "can_omit": "yes", 
       "choice": [
         "-fmodulo-sched", 
@@ -714,7 +714,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fmodulo-sched", 
-      "sort": 3900, 
+      "sort": 10380, 
       "tags": [
         "basic", 
         "boolean", 
@@ -722,7 +722,7 @@
       ], 
       "type": "text"
     }, 
-    "##move-loop-invariants": {
+    "##bool-move-loop-invariants": {
       "can_omit": "yes", 
       "choice": [
         "-fmove-loop-invariants", 
@@ -730,7 +730,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fmove-loop-invariants", 
-      "sort": 4400, 
+      "sort": 10430, 
       "tags": [
         "basic", 
         "boolean", 
@@ -738,7 +738,7 @@
       ], 
       "type": "text"
     }, 
-    "##mudflap": {
+    "##bool-mudflap": {
       "can_omit": "yes", 
       "choice": [
         "-fmudflap", 
@@ -746,7 +746,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fmudflap", 
-      "sort": 200, 
+      "sort": 10020, 
       "tags": [
         "basic", 
         "boolean", 
@@ -754,7 +754,7 @@
       ], 
       "type": "text"
     }, 
-    "##mudflapir": {
+    "##bool-mudflapir": {
       "can_omit": "yes", 
       "choice": [
         "-fmudflapir", 
@@ -762,7 +762,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fmudflapir", 
-      "sort": 400, 
+      "sort": 10040, 
       "tags": [
         "basic", 
         "boolean", 
@@ -770,7 +770,7 @@
       ], 
       "type": "text"
     }, 
-    "##mudflapth": {
+    "##bool-mudflapth": {
       "can_omit": "yes", 
       "choice": [
         "-fmudflapth", 
@@ -778,7 +778,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fmudflapth", 
-      "sort": 300, 
+      "sort": 10030, 
       "tags": [
         "basic", 
         "boolean", 
@@ -786,7 +786,7 @@
       ], 
       "type": "text"
     }, 
-    "##omit-frame-pointer": {
+    "##bool-omit-frame-pointer": {
       "can_omit": "yes", 
       "choice": [
         "-fomit-frame-pointer", 
@@ -794,7 +794,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fomit-frame-pointer", 
-      "sort": 5500, 
+      "sort": 10540, 
       "tags": [
         "basic", 
         "boolean", 
@@ -802,7 +802,7 @@
       ], 
       "type": "text"
     }, 
-    "##optimize-register-move": {
+    "##bool-optimize-register-move": {
       "can_omit": "yes", 
       "choice": [
         "-foptimize-register-move", 
@@ -810,7 +810,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -foptimize-register-move", 
-      "sort": 5600, 
+      "sort": 10550, 
       "tags": [
         "basic", 
         "boolean", 
@@ -818,7 +818,7 @@
       ], 
       "type": "text"
     }, 
-    "##optimize-sibling-calls": {
+    "##bool-optimize-sibling-calls": {
       "can_omit": "yes", 
       "choice": [
         "-foptimize-sibling-calls", 
@@ -826,7 +826,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -foptimize-sibling-calls", 
-      "sort": 5700, 
+      "sort": 10560, 
       "tags": [
         "basic", 
         "boolean", 
@@ -834,7 +834,871 @@
       ], 
       "type": "text"
     }, 
-    "##param_-falign-jumps=": {
+    "##bool-peel-loops": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fpeel-loops", 
+        "-fno-peel-loops"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fpeel-loops", 
+      "sort": 10840, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-peephole": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fpeephole", 
+        "-fno-peephole"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fno-peephole", 
+      "sort": 10480, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-peephole2": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fpeephole2", 
+        "-fno-peephole2"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fno-peephole2", 
+      "sort": 10490, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-prefetch-loop-arrays": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fprefetch-loop-arrays", 
+        "-fno-prefetch-loop-arrays"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fprefetch-loop-arrays", 
+      "sort": 10570, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-regmove": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fregmove", 
+        "-fno-regmove"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fregmove", 
+      "sort": 10580, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-rename-registers": {
+      "can_omit": "yes", 
+      "choice": [
+        "-frename-registers", 
+        "-fno-rename-registers"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -frename-registers", 
+      "sort": 10590, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-reorder-blocks": {
+      "can_omit": "yes", 
+      "choice": [
+        "-freorder-blocks", 
+        "-fno-reorder-blocks"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -freorder-blocks", 
+      "sort": 10600, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-reorder-blocks-and-partition": {
+      "can_omit": "yes", 
+      "choice": [
+        "-freorder-blocks-and-partition", 
+        "-fno-reorder-blocks-and-partition"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -freorder-blocks-and-partition", 
+      "sort": 10610, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-reorder-functions": {
+      "can_omit": "yes", 
+      "choice": [
+        "-freorder-functions", 
+        "-fno-reorder-functions"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -freorder-functions", 
+      "sort": 10620, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-rerun-cse-after-loop": {
+      "can_omit": "yes", 
+      "choice": [
+        "-frerun-cse-after-loop", 
+        "-fno-rerun-cse-after-loop"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -frerun-cse-after-loop", 
+      "sort": 10630, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-rerun-loop-opt": {
+      "can_omit": "yes", 
+      "choice": [
+        "-frerun-loop-opt", 
+        "-fno-rerun-loop-opt"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -frerun-loop-opt", 
+      "sort": 10640, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-reschedule-modulo-scheduled-loops": {
+      "can_omit": "yes", 
+      "choice": [
+        "-freschedule-modulo-scheduled-loops", 
+        "-fno-reschedule-modulo-scheduled-loops"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -freschedule-modulo-scheduled-loops", 
+      "sort": 10740, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-rounding-math": {
+      "can_omit": "yes", 
+      "choice": [
+        "-frounding-math", 
+        "-fno-rounding-math"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -frounding-math", 
+      "sort": 10650, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-sched-interblock": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fsched-interblock", 
+        "-fno-sched-interblock"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fno-sched-interblock", 
+      "sort": 10680, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-sched-spec": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fsched-spec", 
+        "-fno-sched-spec"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fno-sched-spec", 
+      "sort": 10690, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-sched-spec-load": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fsched-spec-load", 
+        "-fno-sched-spec-load"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fsched-spec-load", 
+      "sort": 10700, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-sched-spec-load-dangerous": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fsched-spec-load-dangerous", 
+        "-fno-sched-spec-load-dangerous"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fsched-spec-load-dangerous", 
+      "sort": 10710, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-sched2-use-superblocks": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fsched2-use-superblocks", 
+        "-fno-sched2-use-superblocks"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fsched2-use-superblocks", 
+      "sort": 10720, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-sched2-use-traces": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fsched2-use-traces", 
+        "-fno-sched2-use-traces"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fsched2-use-traces", 
+      "sort": 10730, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-schedule-insns": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fschedule-insns", 
+        "-fno-schedule-insns"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fschedule-insns", 
+      "sort": 10660, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-schedule-insns2": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fschedule-insns2", 
+        "-fno-schedule-insns2"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fschedule-insns2", 
+      "sort": 10670, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-signaling-nans": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fsignaling-nans", 
+        "-fno-signaling-nans"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fsignaling-nans", 
+      "sort": 10750, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-single-precision-constant": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fsingle-precision-constant", 
+        "-fno-single-precision-constant"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fsingle-precision-constant", 
+      "sort": 10760, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-speculative-prefetching": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fspeculative-prefetching", 
+        "-fno-speculative-prefetching"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fspeculative-prefetching", 
+      "sort": 10770, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-split-ivs-in-unroller": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fsplit-ivs-in-unroller", 
+        "-fno-split-ivs-in-unroller"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fsplit-ivs-in-unroller", 
+      "sort": 10850, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-strength-reduce": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fstrength-reduce", 
+        "-fno-strength-reduce"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fstrength-reduce", 
+      "sort": 10780, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-strict-aliasing": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fstrict-aliasing", 
+        "-fno-strict-aliasing"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fstrict-aliasing", 
+      "sort": 10790, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-thread-jumps": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fthread-jumps", 
+        "-fno-thread-jumps"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fthread-jumps", 
+      "sort": 10810, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-tracer": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ftracer", 
+        "-fno-tracer"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ftracer", 
+      "sort": 10800, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-trapping-math": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ftrapping-math", 
+        "-fno-trapping-math"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fno-trapping-math", 
+      "sort": 10520, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-tree-ccp": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ftree-ccp", 
+        "-fno-tree-ccp"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ftree-ccp", 
+      "sort": 10890, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-tree-ch": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ftree-ch", 
+        "-fno-tree-ch"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ftree-ch", 
+      "sort": 10990, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-tree-copyrename": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ftree-copyrename", 
+        "-fno-tree-copyrename"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ftree-copyrename", 
+      "sort": 10980, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-tree-dce": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ftree-dce", 
+        "-fno-tree-dce"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ftree-dce", 
+      "sort": 10900, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-tree-dominator-opts": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ftree-dominator-opts", 
+        "-fno-tree-dominator-opts"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ftree-dominator-opts", 
+      "sort": 10960, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-tree-dse": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ftree-dse", 
+        "-fno-tree-dse"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ftree-dse", 
+      "sort": 10970, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-tree-fre": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ftree-fre", 
+        "-fno-tree-fre"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ftree-fre", 
+      "sort": 11030, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-tree-loop-im": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ftree-loop-im", 
+        "-fno-tree-loop-im"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ftree-loop-im", 
+      "sort": 10930, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-tree-loop-ivcanon": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ftree-loop-ivcanon", 
+        "-fno-tree-loop-ivcanon"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ftree-loop-ivcanon", 
+      "sort": 10940, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-tree-loop-linear": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ftree-loop-linear", 
+        "-fno-tree-loop-linear"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ftree-loop-linear", 
+      "sort": 10920, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-tree-loop-optimize": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ftree-loop-optimize", 
+        "-fno-tree-loop-optimize"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ftree-loop-optimize", 
+      "sort": 10910, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-tree-lrs": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ftree-lrs", 
+        "-fno-tree-lrs"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ftree-lrs", 
+      "sort": 11020, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-tree-pre": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ftree-pre", 
+        "-fno-tree-pre"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ftree-pre", 
+      "sort": 10880, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-tree-sra": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ftree-sra", 
+        "-fno-tree-sra"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ftree-sra", 
+      "sort": 11000, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-tree-ter": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ftree-ter", 
+        "-fno-tree-ter"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ftree-ter", 
+      "sort": 11010, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-tree-vectorize": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ftree-vectorize", 
+        "-fno-tree-vectorize"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ftree-vectorize", 
+      "sort": 11040, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-unroll-all-loops": {
+      "can_omit": "yes", 
+      "choice": [
+        "-funroll-all-loops", 
+        "-fno-unroll-all-loops"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -funroll-all-loops", 
+      "sort": 10820, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-unroll-loops": {
+      "can_omit": "yes", 
+      "choice": [
+        "-funroll-loops", 
+        "-fno-unroll-loops"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -funroll-loops", 
+      "sort": 10830, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-unsafe-math-optimizations": {
+      "can_omit": "yes", 
+      "choice": [
+        "-funsafe-math-optimizations", 
+        "-fno-unsafe-math-optimizations"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -funsafe-math-optimizations", 
+      "sort": 10500, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-unswitch-loops": {
+      "can_omit": "yes", 
+      "choice": [
+        "-funswitch-loops", 
+        "-fno-unswitch-loops"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -funswitch-loops", 
+      "sort": 10860, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-variable-expansion-in-unroller": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fvariable-expansion-in-unroller", 
+        "-fno-variable-expansion-in-unroller"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fvariable-expansion-in-unroller", 
+      "sort": 10870, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-vpt": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fvpt", 
+        "-fno-vpt"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fvpt", 
+      "sort": 10060, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-web": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fweb", 
+        "-fno-web"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fweb", 
+      "sort": 11050, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-zero-initialized-in-bss": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fzero-initialized-in-bss", 
+        "-fno-zero-initialized-in-bss"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fno-zero-initialized-in-bss", 
+      "sort": 10530, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##param--falign-jumps=": {
       "can_omit": "yes", 
       "default": "", 
       "desc": "compiler flag: -falign-jumps=@var{n}", 
@@ -842,7 +1706,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 0, 
-      "sort": 30100, 
+      "sort": 30010, 
       "tags": [
         "basic", 
         "parametric", 
@@ -850,7 +1714,7 @@
       ], 
       "type": "integer"
     }, 
-    "##param_-falign-labels=": {
+    "##param--falign-labels=": {
       "can_omit": "yes", 
       "default": "", 
       "desc": "compiler flag: -falign-labels=@var{n}", 
@@ -858,6 +1722,166 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 0, 
+      "sort": 30020, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param--falign-loops=": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -falign-loops=@var{n}", 
+      "explore_prefix": "-falign-loops=@var{n}", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 0, 
+      "sort": 30030, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param--finline-limit=": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -finline-limit=@var{n}", 
+      "explore_prefix": "-finline-limit=@var{n}", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 0, 
+      "sort": 30040, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param--fsched-stalled-insns=": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -fsched-stalled-insns=@var{n}", 
+      "explore_prefix": "-fsched-stalled-insns=@var{n}", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 0, 
+      "sort": 30050, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-gcse-after-reload-critical-fraction": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param gcse-after-reload-critical-fraction= (The threshold ratio of critical edges execution count that permit performing redundancy elimination after reload.)", 
+      "explore_prefix": "--param gcse-after-reload-critical-fraction=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 20, 
+      "sort": 30250, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-gcse-after-reload-partial-fraction": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param gcse-after-reload-partial-fraction= (The threshold ratio for performing partial redundancy elimination after reload.)", 
+      "explore_prefix": "--param gcse-after-reload-partial-fraction=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 6, 
+      "sort": 30240, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-global-var-threshold": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param global-var-threshold= (Given N calls and V call-clobbered vars in a function.  Use .GLOBAL_VAR if NxV is larger than this limit)", 
+      "explore_prefix": "--param global-var-threshold=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 1000000, 
+      "sort": 30570, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-hot-bb-count-fraction": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param hot-bb-count-fraction= (Select fraction of the maximal count of repetitions of basic block in program given basic block needs to have to be considered hot)", 
+      "explore_prefix": "--param hot-bb-count-fraction=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 20000, 
+      "sort": 30410, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-hot-bb-frequency-fraction": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param hot-bb-frequency-fraction= (Select fraction of the maximal frequency of executions of basic block in function given basic block needs to have to be considered hot)", 
+      "explore_prefix": "--param hot-bb-frequency-fraction=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 2000, 
+      "sort": 30420, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-inline-call-cost": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param inline-call-cost= (expense of call operation relative to ordinary aritmetic operations)", 
+      "explore_prefix": "--param inline-call-cost=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 32, 
+      "sort": 30210, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-inline-unit-growth": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param inline-unit-growth= (how much can given compilation unit grow because of the inlining (in percent))", 
+      "explore_prefix": "--param inline-unit-growth=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 100, 
       "sort": 30200, 
       "tags": [
         "basic", 
@@ -866,14 +1890,446 @@
       ], 
       "type": "integer"
     }, 
-    "##param_-falign-loops=": {
+    "##param-integer-share-limit": {
       "can_omit": "yes", 
       "default": "", 
-      "desc": "compiler flag: -falign-loops=@var{n}", 
-      "explore_prefix": "-falign-loops=@var{n}", 
+      "desc": "compiler flag: --param integer-share-limit= (The upper bound for sharing integer constants)", 
+      "explore_prefix": "--param integer-share-limit=", 
       "explore_start": 0, 
       "explore_step": 1, 
-      "explore_stop": 0, 
+      "explore_stop": 512, 
+      "sort": 30660, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-iv-always-prune-cand-set-bound": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param iv-always-prune-cand-set-bound= (If number of candidates in the set is smaller, we always try to remove unused ivs during its optimization)", 
+      "explore_prefix": "--param iv-always-prune-cand-set-bound=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 20, 
+      "sort": 30560, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-iv-consider-all-candidates-bound": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param iv-consider-all-candidates-bound= (Bound on number of candidates below that all candidates are considered in iv optimizations)", 
+      "explore_prefix": "--param iv-consider-all-candidates-bound=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 60, 
+      "sort": 30540, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-iv-max-considered-uses": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param iv-max-considered-uses= (Bound on number of iv uses in loop optimized in iv optimizations)", 
+      "explore_prefix": "--param iv-max-considered-uses=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 500, 
+      "sort": 30550, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-large-function-growth": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param large-function-growth= (Maximal growth due to inlining of large function (in percent))", 
+      "explore_prefix": "--param large-function-growth=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 200, 
+      "sort": 30190, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-large-function-insns": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param large-function-insns= (The size of function body to be considered large)", 
+      "explore_prefix": "--param large-function-insns=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 5400, 
+      "sort": 30180, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-lim-expensive": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param lim-expensive= (The minimum cost of an expensive expression in the loop invariant motion)", 
+      "explore_prefix": "--param lim-expensive=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 40, 
+      "sort": 30530, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-max-aliased-vops": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-aliased-vops= (The maximum number of virtual operands allowed to represent aliases before triggering alias grouping.)", 
+      "explore_prefix": "--param max-aliased-vops=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 1000, 
+      "sort": 30620, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-max-average-unrolled-insns": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-average-unrolled-insns= (The maximum number of instructions to consider to unroll in a loop on average)", 
+      "explore_prefix": "--param max-average-unrolled-insns=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 160, 
+      "sort": 30270, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-max-completely-peel-times": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-completely-peel-times= (The maximum number of peelings of a single loop that is peeled completely)", 
+      "explore_prefix": "--param max-completely-peel-times=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 32, 
+      "sort": 30320, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-max-completely-peeled-insns": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-completely-peeled-insns= (The maximum number of insns of a completely peeled loop)", 
+      "explore_prefix": "--param max-completely-peeled-insns=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 800, 
+      "sort": 30310, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-max-crossjump-edges": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-crossjump-edges= (The maximum number of incoming edges to consider for crossjumping)", 
+      "explore_prefix": "--param max-crossjump-edges=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 200, 
+      "sort": 30490, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-max-cse-path-length": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-cse-path-length= (The maximum length of path considered in cse)", 
+      "explore_prefix": "--param max-cse-path-length=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 20, 
+      "sort": 30520, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-max-cselib-memory-locations": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-cselib-memory-locations= (The maximum memory locations recorded by cselib)", 
+      "explore_prefix": "--param max-cselib-memory-locations=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 1000, 
+      "sort": 30580, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-max-delay-slot-insn-search": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-delay-slot-insn-search= (The maximum number of instructions to consider to fill a delay slot)", 
+      "explore_prefix": "--param max-delay-slot-insn-search=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 200, 
+      "sort": 30150, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-max-delay-slot-live-search": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-delay-slot-live-search= (The maximum number of instructions to consider to find accurate live register information)", 
+      "explore_prefix": "--param max-delay-slot-live-search=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 666, 
+      "sort": 30160, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-max-gcse-passes": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-gcse-passes= (The maximum number of passes to make when doing GCSE)", 
+      "explore_prefix": "--param max-gcse-passes=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 2, 
+      "sort": 30230, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-max-goto-duplication-insns": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-goto-duplication-insns= (The maximum number of insns to duplicate when unfactoring computed gotos)", 
+      "explore_prefix": "--param max-goto-duplication-insns=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 16, 
+      "sort": 30510, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-max-inline-insns-auto": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-inline-insns-auto= (The maximum number of instructions when automatically inlining)", 
+      "explore_prefix": "--param max-inline-insns-auto=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 180, 
+      "sort": 30090, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-max-inline-insns-recursive": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-inline-insns-recursive= (The maximum number of instructions inline function can grow to via recursive inlining)", 
+      "explore_prefix": "--param max-inline-insns-recursive=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 900, 
+      "sort": 30100, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-max-inline-insns-recursive-auto": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-inline-insns-recursive-auto= (The maximum number of instructions non-inline function can grow to via recursive inlining)", 
+      "explore_prefix": "--param max-inline-insns-recursive-auto=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 900, 
+      "sort": 30110, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-max-inline-insns-single": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-inline-insns-single= (The maximum number of instructions in a single function eligible for inlining)", 
+      "explore_prefix": "--param max-inline-insns-single=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 900, 
+      "sort": 30080, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-max-inline-recursive-depth": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-inline-recursive-depth= (The maximum depth of recursive inlining for inline functions)", 
+      "explore_prefix": "--param max-inline-recursive-depth=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 16, 
+      "sort": 30120, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-max-inline-recursive-depth-auto": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-inline-recursive-depth-auto= (The maximum depth of recursive inlining for non-inline functions)", 
+      "explore_prefix": "--param max-inline-recursive-depth-auto=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 16, 
+      "sort": 30130, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-max-iterations-to-track": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-iterations-to-track= (Bound on the number of iterations the brute force # of iterations analysis algorithm evaluates)", 
+      "explore_prefix": "--param max-iterations-to-track=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 2000, 
+      "sort": 30360, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-max-last-value-rtl": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-last-value-rtl= (The maximum number of RTL nodes that can be recorded as combiner's last value)", 
+      "explore_prefix": "--param max-last-value-rtl=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 20000, 
+      "sort": 30650, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-max-once-peeled-insns": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-once-peeled-insns= (The maximum number of insns of a peeled loop that rolls only once)", 
+      "explore_prefix": "--param max-once-peeled-insns=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 800, 
+      "sort": 30330, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-max-peel-times": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-peel-times= (The maximum number of peelings of a single loop)", 
+      "explore_prefix": "--param max-peel-times=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 32, 
       "sort": 30300, 
       "tags": [
         "basic", 
@@ -882,11 +2338,219 @@
       ], 
       "type": "integer"
     }, 
-    "##param_-finline-limit=": {
+    "##param-max-peeled-insns": {
       "can_omit": "yes", 
       "default": "", 
-      "desc": "compiler flag: -finline-limit=@var{n}", 
-      "explore_prefix": "-finline-limit=@var{n}", 
+      "desc": "compiler flag: --param max-peeled-insns= (The maximum number of insns of a peeled loop)", 
+      "explore_prefix": "--param max-peeled-insns=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 800, 
+      "sort": 30290, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-max-pending-list-length": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-pending-list-length= (The maximum length of scheduling's pending operations list)", 
+      "explore_prefix": "--param max-pending-list-length=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 64, 
+      "sort": 30170, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-max-reload-search-insns": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-reload-search-insns= (The maximum number of instructions to search backward when looking for equivalent reload)", 
+      "explore_prefix": "--param max-reload-search-insns=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 200, 
+      "sort": 30610, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-max-sched-region-blocks": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-sched-region-blocks= (The maximum number of blocks in a region to be considered for interblock scheduling)", 
+      "explore_prefix": "--param max-sched-region-blocks=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 20, 
+      "sort": 30630, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-max-sched-region-insns": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-sched-region-insns= (The maximum number of insns in a region to be considered for interblock scheduling)", 
+      "explore_prefix": "--param max-sched-region-insns=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 200, 
+      "sort": 30640, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-max-sms-loop-number": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-sms-loop-number= (Maximum number of loops to perform swing modulo scheduling on (mainly for debugging))", 
+      "explore_prefix": "--param max-sms-loop-number=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": -2, 
+      "sort": 30370, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-max-unroll-times": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-unroll-times= (The maximum number of unrollings of a single loop)", 
+      "explore_prefix": "--param max-unroll-times=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 16, 
+      "sort": 30280, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-max-unrolled-insns": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-unrolled-insns= (The maximum number of instructions to consider to unroll in a loop)", 
+      "explore_prefix": "--param max-unrolled-insns=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 400, 
+      "sort": 30260, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-max-unswitch-insns": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-unswitch-insns= (The maximum number of insns of an unswitched loop)", 
+      "explore_prefix": "--param max-unswitch-insns=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 100, 
+      "sort": 30340, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-max-unswitch-level": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-unswitch-level= (The maximum number of unswitchings in a single loop)", 
+      "explore_prefix": "--param max-unswitch-level=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 6, 
+      "sort": 30350, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-max-variable-expansions-in-unroller": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-variable-expansions-in-unroller= (If -fvariable-expansion-in-unroller is used, the maximum number ofimes that an individual variable will be expandeduring loop unrolling)", 
+      "explore_prefix": "--param max-variable-expansions-in-unroller=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 2, 
+      "sort": 30140, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-min-crossjump-insns": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param min-crossjump-insns= (The minimum number of matching instructions to consider for crossjumping)", 
+      "explore_prefix": "--param min-crossjump-insns=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 10, 
+      "sort": 30500, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-sms-dfa-history": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param sms-dfa-history= (The number of cycles the swing modulo scheduler considers whenhecking conflicts using DFA)", 
+      "explore_prefix": "--param sms-dfa-history=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 0, 
+      "sort": 30390, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-sms-loop-average-count-threshold": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param sms-loop-average-count-threshold= (A threshold on the average loop count considered by the swing modulo scheduler)", 
+      "explore_prefix": "--param sms-loop-average-count-threshold=", 
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 0, 
@@ -898,807 +2562,7 @@
       ], 
       "type": "integer"
     }, 
-    "##param_-fsched-stalled-insns=": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: -fsched-stalled-insns=@var{n}", 
-      "explore_prefix": "-fsched-stalled-insns=@var{n}", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 0, 
-      "sort": 30500, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_gcse-after-reload-critical-fraction": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param gcse-after-reload-critical-fraction= (The threshold ratio of critical edges execution count that permit performing redundancy elimination after reload.)", 
-      "explore_prefix": "--param gcse-after-reload-critical-fraction=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 20, 
-      "sort": 32500, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_gcse-after-reload-partial-fraction": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param gcse-after-reload-partial-fraction= (The threshold ratio for performing partial redundancy elimination after reload.)", 
-      "explore_prefix": "--param gcse-after-reload-partial-fraction=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 6, 
-      "sort": 32400, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_global-var-threshold": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param global-var-threshold= (Given N calls and V call-clobbered vars in a function.  Use .GLOBAL_VAR if NxV is larger than this limit)", 
-      "explore_prefix": "--param global-var-threshold=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 1000000, 
-      "sort": 35700, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_hot-bb-count-fraction": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param hot-bb-count-fraction= (Select fraction of the maximal count of repetitions of basic block in program given basic block needs to have to be considered hot)", 
-      "explore_prefix": "--param hot-bb-count-fraction=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 20000, 
-      "sort": 34100, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_hot-bb-frequency-fraction": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param hot-bb-frequency-fraction= (Select fraction of the maximal frequency of executions of basic block in function given basic block needs to have to be considered hot)", 
-      "explore_prefix": "--param hot-bb-frequency-fraction=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 2000, 
-      "sort": 34200, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_inline-call-cost": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param inline-call-cost= (expense of call operation relative to ordinary aritmetic operations)", 
-      "explore_prefix": "--param inline-call-cost=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 32, 
-      "sort": 32100, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_inline-unit-growth": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param inline-unit-growth= (how much can given compilation unit grow because of the inlining (in percent))", 
-      "explore_prefix": "--param inline-unit-growth=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 100, 
-      "sort": 32000, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_integer-share-limit": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param integer-share-limit= (The upper bound for sharing integer constants)", 
-      "explore_prefix": "--param integer-share-limit=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 512, 
-      "sort": 36600, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_iv-always-prune-cand-set-bound": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param iv-always-prune-cand-set-bound= (If number of candidates in the set is smaller, we always try to remove unused ivs during its optimization)", 
-      "explore_prefix": "--param iv-always-prune-cand-set-bound=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 20, 
-      "sort": 35600, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_iv-consider-all-candidates-bound": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param iv-consider-all-candidates-bound= (Bound on number of candidates below that all candidates are considered in iv optimizations)", 
-      "explore_prefix": "--param iv-consider-all-candidates-bound=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 60, 
-      "sort": 35400, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_iv-max-considered-uses": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param iv-max-considered-uses= (Bound on number of iv uses in loop optimized in iv optimizations)", 
-      "explore_prefix": "--param iv-max-considered-uses=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 500, 
-      "sort": 35500, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_large-function-growth": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param large-function-growth= (Maximal growth due to inlining of large function (in percent))", 
-      "explore_prefix": "--param large-function-growth=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 200, 
-      "sort": 31900, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_large-function-insns": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param large-function-insns= (The size of function body to be considered large)", 
-      "explore_prefix": "--param large-function-insns=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 5400, 
-      "sort": 31800, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_lim-expensive": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param lim-expensive= (The minimum cost of an expensive expression in the loop invariant motion)", 
-      "explore_prefix": "--param lim-expensive=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 40, 
-      "sort": 35300, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_max-aliased-vops": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param max-aliased-vops= (The maximum number of virtual operands allowed to represent aliases before triggering alias grouping.)", 
-      "explore_prefix": "--param max-aliased-vops=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 1000, 
-      "sort": 36200, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_max-average-unrolled-insns": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param max-average-unrolled-insns= (The maximum number of instructions to consider to unroll in a loop on average)", 
-      "explore_prefix": "--param max-average-unrolled-insns=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 160, 
-      "sort": 32700, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_max-completely-peel-times": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param max-completely-peel-times= (The maximum number of peelings of a single loop that is peeled completely)", 
-      "explore_prefix": "--param max-completely-peel-times=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 32, 
-      "sort": 33200, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_max-completely-peeled-insns": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param max-completely-peeled-insns= (The maximum number of insns of a completely peeled loop)", 
-      "explore_prefix": "--param max-completely-peeled-insns=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 800, 
-      "sort": 33100, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_max-crossjump-edges": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param max-crossjump-edges= (The maximum number of incoming edges to consider for crossjumping)", 
-      "explore_prefix": "--param max-crossjump-edges=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 200, 
-      "sort": 34900, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_max-cse-path-length": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param max-cse-path-length= (The maximum length of path considered in cse)", 
-      "explore_prefix": "--param max-cse-path-length=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 20, 
-      "sort": 35200, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_max-cselib-memory-locations": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param max-cselib-memory-locations= (The maximum memory locations recorded by cselib)", 
-      "explore_prefix": "--param max-cselib-memory-locations=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 1000, 
-      "sort": 35800, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_max-delay-slot-insn-search": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param max-delay-slot-insn-search= (The maximum number of instructions to consider to fill a delay slot)", 
-      "explore_prefix": "--param max-delay-slot-insn-search=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 200, 
-      "sort": 31500, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_max-delay-slot-live-search": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param max-delay-slot-live-search= (The maximum number of instructions to consider to find accurate live register information)", 
-      "explore_prefix": "--param max-delay-slot-live-search=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 666, 
-      "sort": 31600, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_max-gcse-passes": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param max-gcse-passes= (The maximum number of passes to make when doing GCSE)", 
-      "explore_prefix": "--param max-gcse-passes=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 2, 
-      "sort": 32300, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_max-goto-duplication-insns": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param max-goto-duplication-insns= (The maximum number of insns to duplicate when unfactoring computed gotos)", 
-      "explore_prefix": "--param max-goto-duplication-insns=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 16, 
-      "sort": 35100, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_max-inline-insns-auto": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param max-inline-insns-auto= (The maximum number of instructions when automatically inlining)", 
-      "explore_prefix": "--param max-inline-insns-auto=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 180, 
-      "sort": 30900, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_max-inline-insns-recursive": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param max-inline-insns-recursive= (The maximum number of instructions inline function can grow to via recursive inlining)", 
-      "explore_prefix": "--param max-inline-insns-recursive=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 900, 
-      "sort": 31000, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_max-inline-insns-recursive-auto": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param max-inline-insns-recursive-auto= (The maximum number of instructions non-inline function can grow to via recursive inlining)", 
-      "explore_prefix": "--param max-inline-insns-recursive-auto=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 900, 
-      "sort": 31100, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_max-inline-insns-single": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param max-inline-insns-single= (The maximum number of instructions in a single function eligible for inlining)", 
-      "explore_prefix": "--param max-inline-insns-single=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 900, 
-      "sort": 30800, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_max-inline-recursive-depth": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param max-inline-recursive-depth= (The maximum depth of recursive inlining for inline functions)", 
-      "explore_prefix": "--param max-inline-recursive-depth=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 16, 
-      "sort": 31200, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_max-inline-recursive-depth-auto": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param max-inline-recursive-depth-auto= (The maximum depth of recursive inlining for non-inline functions)", 
-      "explore_prefix": "--param max-inline-recursive-depth-auto=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 16, 
-      "sort": 31300, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_max-iterations-to-track": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param max-iterations-to-track= (Bound on the number of iterations the brute force # of iterations analysis algorithm evaluates)", 
-      "explore_prefix": "--param max-iterations-to-track=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 2000, 
-      "sort": 33600, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_max-last-value-rtl": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param max-last-value-rtl= (The maximum number of RTL nodes that can be recorded as combiner's last value)", 
-      "explore_prefix": "--param max-last-value-rtl=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 20000, 
-      "sort": 36500, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_max-once-peeled-insns": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param max-once-peeled-insns= (The maximum number of insns of a peeled loop that rolls only once)", 
-      "explore_prefix": "--param max-once-peeled-insns=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 800, 
-      "sort": 33300, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_max-peel-times": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param max-peel-times= (The maximum number of peelings of a single loop)", 
-      "explore_prefix": "--param max-peel-times=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 32, 
-      "sort": 33000, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_max-peeled-insns": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param max-peeled-insns= (The maximum number of insns of a peeled loop)", 
-      "explore_prefix": "--param max-peeled-insns=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 800, 
-      "sort": 32900, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_max-pending-list-length": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param max-pending-list-length= (The maximum length of scheduling's pending operations list)", 
-      "explore_prefix": "--param max-pending-list-length=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 64, 
-      "sort": 31700, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_max-reload-search-insns": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param max-reload-search-insns= (The maximum number of instructions to search backward when looking for equivalent reload)", 
-      "explore_prefix": "--param max-reload-search-insns=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 200, 
-      "sort": 36100, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_max-sched-region-blocks": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param max-sched-region-blocks= (The maximum number of blocks in a region to be considered for interblock scheduling)", 
-      "explore_prefix": "--param max-sched-region-blocks=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 20, 
-      "sort": 36300, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_max-sched-region-insns": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param max-sched-region-insns= (The maximum number of insns in a region to be considered for interblock scheduling)", 
-      "explore_prefix": "--param max-sched-region-insns=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 200, 
-      "sort": 36400, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_max-sms-loop-number": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param max-sms-loop-number= (Maximum number of loops to perform swing modulo scheduling on (mainly for debugging))", 
-      "explore_prefix": "--param max-sms-loop-number=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": -2, 
-      "sort": 33700, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_max-unroll-times": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param max-unroll-times= (The maximum number of unrollings of a single loop)", 
-      "explore_prefix": "--param max-unroll-times=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 16, 
-      "sort": 32800, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_max-unrolled-insns": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param max-unrolled-insns= (The maximum number of instructions to consider to unroll in a loop)", 
-      "explore_prefix": "--param max-unrolled-insns=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 400, 
-      "sort": 32600, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_max-unswitch-insns": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param max-unswitch-insns= (The maximum number of insns of an unswitched loop)", 
-      "explore_prefix": "--param max-unswitch-insns=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 100, 
-      "sort": 33400, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_max-unswitch-level": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param max-unswitch-level= (The maximum number of unswitchings in a single loop)", 
-      "explore_prefix": "--param max-unswitch-level=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 6, 
-      "sort": 33500, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_max-variable-expansions-in-unroller": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param max-variable-expansions-in-unroller= (If -fvariable-expansion-in-unroller is used, the maximum number ofimes that an individual variable will be expandeduring loop unrolling)", 
-      "explore_prefix": "--param max-variable-expansions-in-unroller=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 2, 
-      "sort": 31400, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_min-crossjump-insns": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param min-crossjump-insns= (The minimum number of matching instructions to consider for crossjumping)", 
-      "explore_prefix": "--param min-crossjump-insns=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 10, 
-      "sort": 35000, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_sms-dfa-history": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param sms-dfa-history= (The number of cycles the swing modulo scheduler considers whenhecking conflicts using DFA)", 
-      "explore_prefix": "--param sms-dfa-history=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 0, 
-      "sort": 33900, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_sms-loop-average-count-threshold": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param sms-loop-average-count-threshold= (A threshold on the average loop count considered by the swing modulo scheduler)", 
-      "explore_prefix": "--param sms-loop-average-count-threshold=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 0, 
-      "sort": 34000, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_sms-max-ii-factor": {
+    "##param-sms-max-ii-factor": {
       "can_omit": "yes", 
       "default": "", 
       "desc": "compiler flag: --param sms-max-ii-factor= (A factor for tuning the upper bound that swing modulo scheduler uses for scheduling a loop)", 
@@ -1706,7 +2570,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 200, 
-      "sort": 33800, 
+      "sort": 30380, 
       "tags": [
         "basic", 
         "parametric", 
@@ -1714,7 +2578,7 @@
       ], 
       "type": "integer"
     }, 
-    "##param_sra-field-structure-ratio": {
+    "##param-sra-field-structure-ratio": {
       "can_omit": "yes", 
       "default": "", 
       "desc": "compiler flag: --param sra-field-structure-ratio= (The threshold ratio between instantiated fields and the total structure size)", 
@@ -1722,7 +2586,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 100, 
-      "sort": 30700, 
+      "sort": 30070, 
       "tags": [
         "basic", 
         "parametric", 
@@ -1730,7 +2594,7 @@
       ], 
       "type": "integer"
     }, 
-    "##param_sra-max-structure-size": {
+    "##param-sra-max-structure-size": {
       "can_omit": "yes", 
       "default": "", 
       "desc": "compiler flag: --param sra-max-structure-size= (The maximum structure size (in bytes) at which GCC will do block copies)", 
@@ -1738,7 +2602,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 0, 
-      "sort": 30600, 
+      "sort": 30060, 
       "tags": [
         "basic", 
         "parametric", 
@@ -1746,39 +2610,7 @@
       ], 
       "type": "integer"
     }, 
-    "##param_tracer-dynamic-coverage": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param tracer-dynamic-coverage= (The percentage of function, weighted by execution frequency, that must be covered by trace formation. Used when profile feedback is not available)", 
-      "explore_prefix": "--param tracer-dynamic-coverage=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 100, 
-      "sort": 34400, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_tracer-dynamic-coverage-feedback": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param tracer-dynamic-coverage-feedback= (The percentage of function, weighted by execution frequency, that must be covered by trace formation. Used when profile feedback is available)", 
-      "explore_prefix": "--param tracer-dynamic-coverage-feedback=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 100, 
-      "sort": 34300, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_tracer-max-code-growth": {
+    "##param-tracer-max-code-growth": {
       "can_omit": "yes", 
       "default": "", 
       "desc": "compiler flag: --param tracer-max-code-growth= (Maximal code growth caused by tail duplication (in percent))", 
@@ -1786,7 +2618,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 200, 
-      "sort": 34500, 
+      "sort": 30450, 
       "tags": [
         "basic", 
         "parametric", 
@@ -1794,7 +2626,7 @@
       ], 
       "type": "integer"
     }, 
-    "##param_tracer-min-branch-probability": {
+    "##param-tracer-min-branch-probability": {
       "can_omit": "yes", 
       "default": "", 
       "desc": "compiler flag: --param tracer-min-branch-probability= (Stop forward growth if the probability of best edge is less than this threshold (in percent). Used when profile feedback is not available)", 
@@ -1802,7 +2634,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 100, 
-      "sort": 34800, 
+      "sort": 30480, 
       "tags": [
         "basic", 
         "parametric", 
@@ -1810,7 +2642,7 @@
       ], 
       "type": "integer"
     }, 
-    "##param_tracer-min-branch-probability-feedback": {
+    "##param-tracer-min-branch-probability-feedback": {
       "can_omit": "yes", 
       "default": "", 
       "desc": "compiler flag: --param tracer-min-branch-probability-feedback= (Stop forward growth if the probability of best edge is less than this threshold (in percent). Used when profile feedback is available)", 
@@ -1818,7 +2650,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 100, 
-      "sort": 34700, 
+      "sort": 30470, 
       "tags": [
         "basic", 
         "parametric", 
@@ -1826,7 +2658,7 @@
       ], 
       "type": "integer"
     }, 
-    "##param_tracer-min-branch-ratio": {
+    "##param-tracer-min-branch-ratio": {
       "can_omit": "yes", 
       "default": "", 
       "desc": "compiler flag: --param tracer-min-branch-ratio= (Stop reverse growth if the reverse probability of best edge is less than this threshold (in percent))", 
@@ -1834,925 +2666,13 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 100, 
-      "sort": 34600, 
+      "sort": 30460, 
       "tags": [
         "basic", 
         "parametric", 
         "optimization"
       ], 
       "type": "integer"
-    }, 
-    "##peel-loops": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fpeel-loops", 
-        "-fno-peel-loops"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fpeel-loops", 
-      "sort": 8700, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##peephole": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fpeephole", 
-        "-fno-peephole"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fno-peephole", 
-      "sort": 4900, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##peephole2": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fpeephole2", 
-        "-fno-peephole2"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fno-peephole2", 
-      "sort": 5000, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##prefetch-loop-arrays": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fprefetch-loop-arrays", 
-        "-fno-prefetch-loop-arrays"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fprefetch-loop-arrays", 
-      "sort": 5800, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##profile-generate": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fprofile-generate", 
-        "-fno-profile-generate"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fprofile-generate", 
-      "sort": 5900, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##profile-use": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fprofile-use", 
-        "-fno-profile-use"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fprofile-use", 
-      "sort": 6000, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##profile-values": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fprofile-values", 
-        "-fno-profile-values"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fprofile-values", 
-      "sort": 600, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##regmove": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fregmove", 
-        "-fno-regmove"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fregmove", 
-      "sort": 6100, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##rename-registers": {
-      "can_omit": "yes", 
-      "choice": [
-        "-frename-registers", 
-        "-fno-rename-registers"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -frename-registers", 
-      "sort": 6200, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##reorder-blocks": {
-      "can_omit": "yes", 
-      "choice": [
-        "-freorder-blocks", 
-        "-fno-reorder-blocks"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -freorder-blocks", 
-      "sort": 6300, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##reorder-blocks-and-partition": {
-      "can_omit": "yes", 
-      "choice": [
-        "-freorder-blocks-and-partition", 
-        "-fno-reorder-blocks-and-partition"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -freorder-blocks-and-partition", 
-      "sort": 6400, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##reorder-functions": {
-      "can_omit": "yes", 
-      "choice": [
-        "-freorder-functions", 
-        "-fno-reorder-functions"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -freorder-functions", 
-      "sort": 6500, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##rerun-cse-after-loop": {
-      "can_omit": "yes", 
-      "choice": [
-        "-frerun-cse-after-loop", 
-        "-fno-rerun-cse-after-loop"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -frerun-cse-after-loop", 
-      "sort": 6600, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##rerun-loop-opt": {
-      "can_omit": "yes", 
-      "choice": [
-        "-frerun-loop-opt", 
-        "-fno-rerun-loop-opt"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -frerun-loop-opt", 
-      "sort": 6700, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##reschedule-modulo-scheduled-loops": {
-      "can_omit": "yes", 
-      "choice": [
-        "-freschedule-modulo-scheduled-loops", 
-        "-fno-reschedule-modulo-scheduled-loops"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -freschedule-modulo-scheduled-loops", 
-      "sort": 7700, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##rounding-math": {
-      "can_omit": "yes", 
-      "choice": [
-        "-frounding-math", 
-        "-fno-rounding-math"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -frounding-math", 
-      "sort": 6800, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##sched-interblock": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fsched-interblock", 
-        "-fno-sched-interblock"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fno-sched-interblock", 
-      "sort": 7100, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##sched-spec": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fsched-spec", 
-        "-fno-sched-spec"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fno-sched-spec", 
-      "sort": 7200, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##sched-spec-load": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fsched-spec-load", 
-        "-fno-sched-spec-load"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fsched-spec-load", 
-      "sort": 7300, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##sched-spec-load-dangerous": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fsched-spec-load-dangerous", 
-        "-fno-sched-spec-load-dangerous"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fsched-spec-load-dangerous", 
-      "sort": 7400, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##sched2-use-superblocks": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fsched2-use-superblocks", 
-        "-fno-sched2-use-superblocks"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fsched2-use-superblocks", 
-      "sort": 7500, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##sched2-use-traces": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fsched2-use-traces", 
-        "-fno-sched2-use-traces"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fsched2-use-traces", 
-      "sort": 7600, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##schedule-insns": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fschedule-insns", 
-        "-fno-schedule-insns"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fschedule-insns", 
-      "sort": 6900, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##schedule-insns2": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fschedule-insns2", 
-        "-fno-schedule-insns2"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fschedule-insns2", 
-      "sort": 7000, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##signaling-nans": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fsignaling-nans", 
-        "-fno-signaling-nans"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fsignaling-nans", 
-      "sort": 7800, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##single-precision-constant": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fsingle-precision-constant", 
-        "-fno-single-precision-constant"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fsingle-precision-constant", 
-      "sort": 7900, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##speculative-prefetching": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fspeculative-prefetching", 
-        "-fno-speculative-prefetching"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fspeculative-prefetching", 
-      "sort": 8000, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##split-ivs-in-unroller": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fsplit-ivs-in-unroller", 
-        "-fno-split-ivs-in-unroller"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fsplit-ivs-in-unroller", 
-      "sort": 8800, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##strength-reduce": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fstrength-reduce", 
-        "-fno-strength-reduce"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fstrength-reduce", 
-      "sort": 8100, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##strict-aliasing": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fstrict-aliasing", 
-        "-fno-strict-aliasing"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fstrict-aliasing", 
-      "sort": 8200, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##thread-jumps": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fthread-jumps", 
-        "-fno-thread-jumps"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fthread-jumps", 
-      "sort": 8400, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##tracer": {
-      "can_omit": "yes", 
-      "choice": [
-        "-ftracer", 
-        "-fno-tracer"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -ftracer", 
-      "sort": 8300, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##trapping-math": {
-      "can_omit": "yes", 
-      "choice": [
-        "-ftrapping-math", 
-        "-fno-trapping-math"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fno-trapping-math", 
-      "sort": 5300, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##tree-ccp": {
-      "can_omit": "yes", 
-      "choice": [
-        "-ftree-ccp", 
-        "-fno-tree-ccp"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -ftree-ccp", 
-      "sort": 9200, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##tree-ch": {
-      "can_omit": "yes", 
-      "choice": [
-        "-ftree-ch", 
-        "-fno-tree-ch"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -ftree-ch", 
-      "sort": 10200, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##tree-copyrename": {
-      "can_omit": "yes", 
-      "choice": [
-        "-ftree-copyrename", 
-        "-fno-tree-copyrename"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -ftree-copyrename", 
-      "sort": 10100, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##tree-dce": {
-      "can_omit": "yes", 
-      "choice": [
-        "-ftree-dce", 
-        "-fno-tree-dce"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -ftree-dce", 
-      "sort": 9300, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##tree-dominator-opts": {
-      "can_omit": "yes", 
-      "choice": [
-        "-ftree-dominator-opts", 
-        "-fno-tree-dominator-opts"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -ftree-dominator-opts", 
-      "sort": 9900, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##tree-dse": {
-      "can_omit": "yes", 
-      "choice": [
-        "-ftree-dse", 
-        "-fno-tree-dse"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -ftree-dse", 
-      "sort": 10000, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##tree-fre": {
-      "can_omit": "yes", 
-      "choice": [
-        "-ftree-fre", 
-        "-fno-tree-fre"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -ftree-fre", 
-      "sort": 10600, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##tree-loop-im": {
-      "can_omit": "yes", 
-      "choice": [
-        "-ftree-loop-im", 
-        "-fno-tree-loop-im"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -ftree-loop-im", 
-      "sort": 9600, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##tree-loop-ivcanon": {
-      "can_omit": "yes", 
-      "choice": [
-        "-ftree-loop-ivcanon", 
-        "-fno-tree-loop-ivcanon"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -ftree-loop-ivcanon", 
-      "sort": 9700, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##tree-loop-linear": {
-      "can_omit": "yes", 
-      "choice": [
-        "-ftree-loop-linear", 
-        "-fno-tree-loop-linear"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -ftree-loop-linear", 
-      "sort": 9500, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##tree-loop-optimize": {
-      "can_omit": "yes", 
-      "choice": [
-        "-ftree-loop-optimize", 
-        "-fno-tree-loop-optimize"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -ftree-loop-optimize", 
-      "sort": 9400, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##tree-lrs": {
-      "can_omit": "yes", 
-      "choice": [
-        "-ftree-lrs", 
-        "-fno-tree-lrs"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -ftree-lrs", 
-      "sort": 10500, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##tree-pre": {
-      "can_omit": "yes", 
-      "choice": [
-        "-ftree-pre", 
-        "-fno-tree-pre"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -ftree-pre", 
-      "sort": 9100, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##tree-sra": {
-      "can_omit": "yes", 
-      "choice": [
-        "-ftree-sra", 
-        "-fno-tree-sra"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -ftree-sra", 
-      "sort": 10300, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##tree-ter": {
-      "can_omit": "yes", 
-      "choice": [
-        "-ftree-ter", 
-        "-fno-tree-ter"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -ftree-ter", 
-      "sort": 10400, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##tree-vectorize": {
-      "can_omit": "yes", 
-      "choice": [
-        "-ftree-vectorize", 
-        "-fno-tree-vectorize"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -ftree-vectorize", 
-      "sort": 10700, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##unroll-all-loops": {
-      "can_omit": "yes", 
-      "choice": [
-        "-funroll-all-loops", 
-        "-fno-unroll-all-loops"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -funroll-all-loops", 
-      "sort": 8500, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##unroll-loops": {
-      "can_omit": "yes", 
-      "choice": [
-        "-funroll-loops", 
-        "-fno-unroll-loops"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -funroll-loops", 
-      "sort": 8600, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##unsafe-math-optimizations": {
-      "can_omit": "yes", 
-      "choice": [
-        "-funsafe-math-optimizations", 
-        "-fno-unsafe-math-optimizations"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -funsafe-math-optimizations", 
-      "sort": 5100, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##unswitch-loops": {
-      "can_omit": "yes", 
-      "choice": [
-        "-funswitch-loops", 
-        "-fno-unswitch-loops"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -funswitch-loops", 
-      "sort": 8900, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##variable-expansion-in-unroller": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fvariable-expansion-in-unroller", 
-        "-fno-variable-expansion-in-unroller"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fvariable-expansion-in-unroller", 
-      "sort": 9000, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##vpt": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fvpt", 
-        "-fno-vpt"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fvpt", 
-      "sort": 700, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##web": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fweb", 
-        "-fno-web"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fweb", 
-      "sort": 10800, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##zero-initialized-in-bss": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fzero-initialized-in-bss", 
-        "-fno-zero-initialized-in-bss"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fno-zero-initialized-in-bss", 
-      "sort": 5400, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
     }
   }
 }

@@ -252,7 +252,7 @@ def extract_opts(i):
 
                             else:
                                for j in jj:
-                                   if j!='' and not j.startswith('--param') and not j.startswith('@') and j.startswith('-f') and
+                                   if j!='' and not j.startswith('--param') and not j.startswith('@') and j.startswith('-f') and \
                                                 j.find('profile')==-1 and j.find('coverage')==-1:
                                       if '@' in j:
                                          iparam+=1
