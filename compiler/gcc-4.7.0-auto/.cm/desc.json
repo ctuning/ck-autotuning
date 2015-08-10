@@ -1107,38 +1107,6 @@
       ], 
       "type": "text"
     }, 
-    "##bool-lto-compression-level": {
-      "can_omit": "yes", 
-      "choice": [
-        "-flto-compression-level", 
-        "-fno-lto-compression-level"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -flto-compression-level", 
-      "sort": 10630, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##bool-lto-report": {
-      "can_omit": "yes", 
-      "choice": [
-        "-flto-report", 
-        "-fno-lto-report"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -flto-report", 
-      "sort": 10640, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
     "##bool-math-errno": {
       "can_omit": "yes", 
       "choice": [
