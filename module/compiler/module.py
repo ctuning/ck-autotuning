@@ -252,7 +252,8 @@ def extract_opts(i):
 
                             else:
                                for j in jj:
-                                   if j!='' and not j.startswith('--param') and not j.startswith('@') and j.startswith('-f'):
+                                   if j!='' and not j.startswith('--param') and not j.startswith('@') and j.startswith('-f') and
+                                                j.find('profile')==-1 and j.find('coverage')==-1:
                                       if '@' in j:
                                          iparam+=1
 
@@ -261,11 +262,11 @@ def extract_opts(i):
 
                                          ck.out('Adding param '+str(iparam)+' '+opt)
 
-                                         dd['##param_'+opt]={
+                                         dd['##param-'+opt]={
                                            "can_omit": "yes", 
                                            "default": "", 
                                            "desc": "compiler flag: "+j, 
-                                           "sort": iparam*100+30000, 
+                                           "sort": iparam*10+30000, 
                                            "explore_prefix": j, 
                                            "explore_start": 0, 
                                            "explore_step": 1, 
@@ -288,7 +289,7 @@ def extract_opts(i):
 
                                          ck.out('Adding opt '+str(iopt)+' '+j)
 
-                                         dd['##'+opt]={
+                                         dd['##bool-'+opt]={
                                            "can_omit": "yes", 
                                            "choice": [
                                              "-f"+opt, 
@@ -296,7 +297,7 @@ def extract_opts(i):
                                            ], 
                                            "default": "", 
                                            "desc": "compiler flag: "+j, 
-                                           "sort": iopt*100, 
+                                           "sort": iopt*10+10000, 
                                            "tags": [
                                              "basic", 
                                              "boolean",
@@ -331,55 +332,56 @@ def extract_opts(i):
                             q+=1
                             opt=lparams[q].strip()[1:-2]
 
-                            q+=1
-                            desc=lparams[q].strip()[1:-2]
-                            line='x'
-                            while True:
+                            if opt.find('profile')==-1 and opt.find('coverage')==-1:
                                q+=1
-                               line=lparams[q].strip()
-                               if line[-1]==')': break
-                               desc+=line[1:-2]
+                               desc=lparams[q].strip()[1:-2]
+                               line='x'
+                               while True:
+                                  q+=1
+                                  line=lparams[q].strip()
+                                  if line[-1]==')': break
+                                  desc+=line[1:-2]
 
-                            e1=0
-                            e2=0
+                               e1=0
+                               e2=0
 
-                            exp=line[:-1].split(',')
+                               exp=line[:-1].split(',')
 
-                            skip=False
-                            for j in range(0, len(exp)):
-                                jj=exp[j].strip()
-                                if jj.find('*')>0 or jj.find('_')>0:
-                                   skip=True
-                                else:
-                                   jj=int(exp[j].strip())
-                                   exp[j]=jj
+                               skip=False
+                               for j in range(0, len(exp)):
+                                   jj=exp[j].strip()
+                                   if jj.find('*')>0 or jj.find('_')>0:
+                                      skip=True
+                                   else:
+                                      jj=int(exp[j].strip())
+                                      exp[j]=jj
 
-                            if not skip:
-                               if len(exp)>1 and exp[2]>exp[1]:
-                                  e1=exp[1]
-                                  e2=exp[2]
-                               else:
-                                  e1=0
-                                  e2=exp[0]*2
+                               if not skip:
+                                  if len(exp)>1 and exp[2]>exp[1]:
+                                     e1=exp[1]
+                                     e2=exp[2]
+                                  else:
+                                     e1=0
+                                     e2=exp[0]*2
 
-                               ck.out('Adding param '+str(iparam)+' "'+opt+'" - '+desc)
+                                  ck.out('Adding param '+str(iparam)+' "'+opt+'" - '+desc)
 
-                               dd['##param_'+opt]={
-                                 "can_omit": "yes", 
-                                 "default": "", 
-                                 "desc": "compiler flag: --param "+opt+"= ("+desc+")", 
-                                 "sort": iparam*100+30000, 
-                                 "explore_prefix": "--param "+opt+"=", 
-                                 "explore_start": e1, 
-                                 "explore_step": 1, 
-                                 "explore_stop": e2, 
-                                 "tags": [
-                                   "basic", 
-                                   "parametric",
-                                   "optimization"
-                                 ], 
-                                 "type":"integer"
-                               }
+                                  dd['##param-'+opt]={
+                                    "can_omit": "yes", 
+                                    "default": "", 
+                                    "desc": "compiler flag: --param "+opt+"= ("+desc+")", 
+                                    "sort": iparam*10+30000, 
+                                    "explore_prefix": "--param "+opt+"=", 
+                                    "explore_start": e1, 
+                                    "explore_step": 1, 
+                                    "explore_stop": e2, 
+                                    "tags": [
+                                      "basic", 
+                                      "parametric",
+                                      "optimization"
+                                    ], 
+                                    "type":"integer"
+                                  }
 
                   # Prepare CK entry
                   if i.get('record','')=='yes':
