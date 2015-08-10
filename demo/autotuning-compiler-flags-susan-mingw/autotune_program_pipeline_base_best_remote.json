@@ -1,11 +1,9 @@
 {
-  
-
   "iterations":1,
 
   "choices_order":[
     [
-     "##compiler_flags#*"
+     "##compiler_flags#bool-*"
     ]
   ],
 

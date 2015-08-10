@@ -1,7 +1,7 @@
 {
   "choices_order":[
     [
-     "##compiler_flags#*"
+     "##compiler_flags#bool-*"
     ]
   ],
 
@@ -15,7 +15,7 @@
 
   "pipeline_update":{
      "repeat":200,
-     "select_best_base_flag_for_first_iteration":"yes"
+     "best_base_flag":"yes"
    },
 
   "record":"yes",
