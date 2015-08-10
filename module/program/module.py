@@ -2921,7 +2921,7 @@ def pipeline(i):
           chars['current_freq']=freq1
 
           sft=state.get('features.platform.cpu',{})
-          if len(sft)==0:
+          if len(sft)==0 or (srn==0 and ati==0):
              state['features.platform.cpu']=xft1
           else:
              freq2=sft.get('current_freq',{})
