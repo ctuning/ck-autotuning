@@ -1268,54 +1268,6 @@
       ], 
       "type": "text"
     }, 
-    "##bool-lto-compression-level": {
-      "can_omit": "yes", 
-      "choice": [
-        "-flto-compression-level", 
-        "-fno-lto-compression-level"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -flto-compression-level", 
-      "sort": 10730, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##bool-lto-report": {
-      "can_omit": "yes", 
-      "choice": [
-        "-flto-report", 
-        "-fno-lto-report"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -flto-report", 
-      "sort": 10740, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##bool-lto-report-wpa": {
-      "can_omit": "yes", 
-      "choice": [
-        "-flto-report-wpa", 
-        "-fno-lto-report-wpa"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -flto-report-wpa", 
-      "sort": 10750, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
     "##bool-math-errno": {
       "can_omit": "yes", 
       "choice": [
@@ -2132,70 +2084,6 @@
       ], 
       "type": "text"
     }, 
-    "##bool-stack-protector": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fstack-protector", 
-        "-fno-stack-protector"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fstack-protector", 
-      "sort": 11350, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##bool-stack-protector-all": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fstack-protector-all", 
-        "-fno-stack-protector-all"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fstack-protector-all", 
-      "sort": 11360, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##bool-stack-protector-explicit": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fstack-protector-explicit", 
-        "-fno-stack-protector-explicit"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fstack-protector-explicit", 
-      "sort": 11380, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##bool-stack-protector-strong": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fstack-protector-strong", 
-        "-fno-stack-protector-strong"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fstack-protector-strong", 
-      "sort": 11370, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
     "##bool-stdarg-opt": {
       "can_omit": "yes", 
       "choice": [
@@ -2365,22 +2253,6 @@
       "default": "", 
       "desc": "compiler flag: -ftree-ch", 
       "sort": 11470, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##bool-tree-coalesce-inline-vars": {
-      "can_omit": "yes", 
-      "choice": [
-        "-ftree-coalesce-inline-vars", 
-        "-fno-tree-coalesce-inline-vars"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -ftree-coalesce-inline-vars", 
-      "sort": 11480, 
       "tags": [
         "basic", 
         "boolean", 

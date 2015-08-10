@@ -1172,54 +1172,6 @@
       ], 
       "type": "text"
     }, 
-    "##bool-lto-compression-level": {
-      "can_omit": "yes", 
-      "choice": [
-        "-flto-compression-level", 
-        "-fno-lto-compression-level"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -flto-compression-level", 
-      "sort": 10680, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##bool-lto-report": {
-      "can_omit": "yes", 
-      "choice": [
-        "-flto-report", 
-        "-fno-lto-report"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -flto-report", 
-      "sort": 10690, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##bool-lto-report-wpa": {
-      "can_omit": "yes", 
-      "choice": [
-        "-flto-report-wpa", 
-        "-fno-lto-report-wpa"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -flto-report-wpa", 
-      "sort": 10700, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
     "##bool-math-errno": {
       "can_omit": "yes", 
       "choice": [
@@ -2189,22 +2141,6 @@
       "default": "", 
       "desc": "compiler flag: -ftree-ch", 
       "sort": 11370, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##bool-tree-coalesce-inline-vars": {
-      "can_omit": "yes", 
-      "choice": [
-        "-ftree-coalesce-inline-vars", 
-        "-fno-tree-coalesce-inline-vars"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -ftree-coalesce-inline-vars", 
-      "sort": 11380, 
       "tags": [
         "basic", 
         "boolean", 
