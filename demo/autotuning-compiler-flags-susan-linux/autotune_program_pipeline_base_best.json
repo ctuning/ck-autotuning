@@ -9,7 +9,9 @@
 
   "pipeline_update":{
      "repeat":200,
-     "select_best_base_flag_for_first_iteration":"yes"
+     "select_best_base_flag_for_first_iteration":"yes",
+     "cpu_freq":"max",
+     "gpu_freq":"max"
    },
 
   "record":"yes",

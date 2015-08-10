@@ -60,7 +60,7 @@
       ], 
       "default": "", 
       "desc": "base compiler flag", 
-      "sort": 10000, 
+      "sort": 0, 
       "tags": [
         "base", 
         "basic", 
@@ -1293,70 +1293,6 @@
       "default": "", 
       "desc": "compiler flag: -flto", 
       "sort": 7400, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##lto-compression-level": {
-      "can_omit": "yes", 
-      "choice": [
-        "-flto-compression-level", 
-        "-fno-lto-compression-level"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -flto-compression-level", 
-      "sort": 7500, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##lto-report": {
-      "can_omit": "yes", 
-      "choice": [
-        "-flto-report", 
-        "-fno-lto-report"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -flto-report", 
-      "sort": 7600, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##lto-report-wpa": {
-      "can_omit": "yes", 
-      "choice": [
-        "-flto-report-wpa", 
-        "-fno-lto-report-wpa"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -flto-report-wpa", 
-      "sort": 7700, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##math-errno": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fmath-errno", 
-        "-fno-math-errno"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fno-math-errno", 
-      "sort": 8800, 
       "tags": [
         "basic", 
         "boolean", 

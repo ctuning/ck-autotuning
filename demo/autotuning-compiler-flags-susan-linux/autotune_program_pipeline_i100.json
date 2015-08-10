@@ -6,7 +6,7 @@
   ],
 
   "choices_selection": [
-     {"type":"random", "omit_probability":"0.90", "tags":"basic,optimization", "notags":""}
+     {"type":"random", "omit_probability":"0.90", "tags":"basic,optimization", "notags":"parametric"}
   ],
 
   "seed":12346,
@@ -15,7 +15,9 @@
 
   "pipeline_update":{
      "repeat":200,
-     "select_best_base_flag_for_first_iteration":"yes"
+     "select_best_base_flag_for_first_iteration":"yes",
+     "cpu_freq":"max",
+     "gpu_freq":"max"
    },
 
   "record":"yes",

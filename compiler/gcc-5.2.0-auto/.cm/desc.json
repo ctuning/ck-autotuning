@@ -32,22 +32,6 @@
       ], 
       "type": "text"
     }, 
-    "##auto-profile": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fauto-profile", 
-        "-fno-auto-profile"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fauto-profile", 
-      "sort": 200, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
     "##base_opt": {
       "choice": [
         "-O3", 
@@ -60,7 +44,7 @@
       ], 
       "default": "", 
       "desc": "base compiler flag", 
-      "sort": 10000, 
+      "sort": 0, 
       "tags": [
         "base", 
         "basic", 
@@ -916,22 +900,6 @@
       ], 
       "type": "text"
     }, 
-    "##ipa-profile": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fipa-profile", 
-        "-fno-ipa-profile"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fipa-profile", 
-      "sort": 5300, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
     "##ipa-pta": {
       "can_omit": "yes", 
       "choice": [
@@ -1293,70 +1261,6 @@
       "default": "", 
       "desc": "compiler flag: -flto", 
       "sort": 7400, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##lto-compression-level": {
-      "can_omit": "yes", 
-      "choice": [
-        "-flto-compression-level", 
-        "-fno-lto-compression-level"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -flto-compression-level", 
-      "sort": 7500, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##lto-report": {
-      "can_omit": "yes", 
-      "choice": [
-        "-flto-report", 
-        "-fno-lto-report"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -flto-report", 
-      "sort": 7600, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##lto-report-wpa": {
-      "can_omit": "yes", 
-      "choice": [
-        "-flto-report-wpa", 
-        "-fno-lto-report-wpa"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -flto-report-wpa", 
-      "sort": 7700, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##math-errno": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fmath-errno", 
-        "-fno-math-errno"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fno-math-errno", 
-      "sort": 8800, 
       "tags": [
         "basic", 
         "boolean", 
@@ -4388,102 +4292,6 @@
       ], 
       "type": "integer"
     }, 
-    "##param_tracer-dynamic-coverage": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param tracer-dynamic-coverage= (The percentage of function, weighted by execution frequency, that must be covered by trace formation. Used when profile feedback is not available)", 
-      "explore_prefix": "--param tracer-dynamic-coverage=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 100, 
-      "sort": 37800, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_tracer-dynamic-coverage-feedback": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param tracer-dynamic-coverage-feedback= (The percentage of function, weighted by execution frequency, that must be covered by trace formation. Used when profile feedback is available)", 
-      "explore_prefix": "--param tracer-dynamic-coverage-feedback=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 100, 
-      "sort": 37700, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_tracer-max-code-growth": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param tracer-max-code-growth= (Maximal code growth caused by tail duplication (in percent))", 
-      "explore_prefix": "--param tracer-max-code-growth=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 200, 
-      "sort": 37900, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_tracer-min-branch-probability": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param tracer-min-branch-probability= (Stop forward growth if the probability of best edge is less than this threshold (in percent). Used when profile feedback is not available)", 
-      "explore_prefix": "--param tracer-min-branch-probability=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 100, 
-      "sort": 38200, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_tracer-min-branch-probability-feedback": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param tracer-min-branch-probability-feedback= (Stop forward growth if the probability of best edge is less than this threshold (in percent). Used when profile feedback is available)", 
-      "explore_prefix": "--param tracer-min-branch-probability-feedback=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 100, 
-      "sort": 38100, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param_tracer-min-branch-ratio": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param tracer-min-branch-ratio= (Stop reverse growth if the reverse probability of best edge is less than this threshold (in percent))", 
-      "explore_prefix": "--param tracer-min-branch-ratio=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 100, 
-      "sort": 38000, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
     "##param_tree-reassoc-width": {
       "can_omit": "yes", 
       "default": "", 
@@ -5380,86 +5188,6 @@
       ], 
       "type": "text"
     }, 
-    "##stack-protector": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fstack-protector", 
-        "-fno-stack-protector"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fstack-protector", 
-      "sort": 14300, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##stack-protector-all": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fstack-protector-all", 
-        "-fno-stack-protector-all"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fstack-protector-all", 
-      "sort": 14400, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##stack-protector-explicit": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fstack-protector-explicit", 
-        "-fno-stack-protector-explicit"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fstack-protector-explicit", 
-      "sort": 14600, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##stack-protector-strong": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fstack-protector-strong", 
-        "-fno-stack-protector-strong"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fstack-protector-strong", 
-      "sort": 14500, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##stdarg-opt": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fstdarg-opt", 
-        "-fno-stdarg-opt"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fstdarg-opt", 
-      "sort": 14700, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
     "##strict-aliasing": {
       "can_omit": "yes", 
       "choice": [
@@ -5613,22 +5341,6 @@
       "default": "", 
       "desc": "compiler flag: -ftree-ch", 
       "sort": 15500, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##tree-coalesce-inline-vars": {
-      "can_omit": "yes", 
-      "choice": [
-        "-ftree-coalesce-inline-vars", 
-        "-fno-tree-coalesce-inline-vars"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -ftree-coalesce-inline-vars", 
-      "sort": 15600, 
       "tags": [
         "basic", 
         "boolean", 

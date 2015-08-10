@@ -1,5 +1,10 @@
 {
  "prepare":"no",
  "save_to_file":"_setup_program_pipeline_tmp.json",
+  "pipeline_update":{
+     "repeat":200,
+     "cpu_freq":"max",
+     "gpu_freq":"max"
+   },
  "data_uoa":"cbench-automotive-susan"
 }

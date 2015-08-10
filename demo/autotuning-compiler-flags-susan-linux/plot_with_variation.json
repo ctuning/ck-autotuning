@@ -1,7 +1,7 @@
 {
   "experiment_module_uoa":"experiment",
 
-  "data_uoa_list":["demo-autotune-flags-susan-linux-i10", "demo-autotune-flags-susan-linux-best"],
+  "data_uoa_list":["demo-autotune-flags-susan-linux-best", "demo-autotune-flags-susan-linux-i10", "demo-autotune-flags-susan-linux-i100"],
 
   "flat_keys_list":[
     "##characteristics#compile#obj_size#min",
@@ -24,6 +24,7 @@
   "mpl_image_size_y":"6",
   "mpl_image_dpi":"100",
 
-  "point_style":{"1":{"elinewidth":"5", "color":"#dc3912"},
-                 "0":{"color":"#3366cc"}}
+  "point_style":{"0":{"elinewidth":"5", "color":"#dc3912"},
+                 "1":{"color":"#3366cc"},
+                 "2":{"color":"#3366cc"}}
 }
