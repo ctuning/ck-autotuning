@@ -74,6 +74,7 @@ def reproduce(i):
 
               (add_to_pipeline) - add this dict to pipeline 
 
+              (force_record)    - if 'yes', force record even if behavior expected ...
 
               (experiment_repo_uoa)        - repo to record experiments (by default "remote-ck")
               (experiment_remote_repo_uoa) - if above repo is remote, repo on remote server to record experiments (by default "upload")
