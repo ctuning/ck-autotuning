@@ -260,6 +260,8 @@ def extract_opts(i):
                                          ij=j.find('@')
                                          opt=j[:ij]
 
+                                         if opt.endswith('@var{n}'): opt=opt[:-7]
+
                                          ck.out('Adding param '+str(iparam)+' '+opt)
 
                                          dd['##param-'+opt]={
@@ -784,3 +786,122 @@ def extract_opts_new(i):
        ck.out('Number of parameteric opts: '+str(iparam))
 
     return {'return':0}
+
+##############################################################################
+# viewing compiler description as HTML
+
+def html_viewer(i):
+    """
+    Input:  {
+              data_uoa
+
+              url_base
+              url_pull
+
+              url_pull_tmp
+              tmp_data_uoa
+
+              url_wiki
+
+              html_share
+
+              form_name     - current form name
+
+              (all_params)
+            }
+
+    Output: {
+              return       - return code =  0, if successful
+                                         >  0, if error
+              (error)      - error text if return > 0
+
+              html         - generated HTML
+
+              raw          - if 'yes', output in CK raw format
+              show_top     - if 'yes', include CK top header with QR-code
+            }
+
+    """
+
+    h=''
+    raw='no'
+    top='yes'
+
+    duoa=i['data_uoa']
+
+    if duoa!='':
+       # Load entry
+       rx=ck.access({'action':'load',
+                     'module_uoa':work['self_module_uid'],
+                     'data_uoa':duoa})
+       if rx['return']>0: return rx
+
+       desc=rx['desc']
+
+       h+='<hr>\n'
+
+       # Output compiler flags description
+       acfd=desc.get('all_compiler_flags_desc',{})
+       if len(acfd)>0:
+          h+='<center>\n'
+          h+='<b>Compiler optimization flag description (boolean and parametric)</b><br><br>\n'
+
+          h+='<table border="1" cellpadding="5" cellspacing="0">\n'
+
+          h+=' <tr>\n'
+          h+='  <td><b>JSON key</b></td>\n'
+          h+='  <td><b>Description</b></td>\n'
+          h+='  <td><b>Type</b></td>\n'
+          h+='  <td><b>Order</b></td>\n'
+          h+='  <td><b>Choices</b></td>\n'
+          h+='  <td><b>Parameter prefix</b></td>\n'
+          h+='  <td><b>Start</b></td>\n'
+          h+='  <td><b>Stop</b></td>\n'
+          h+='  <td><b>Step</b></td>\n'
+          h+='  <td><b>Tags</b></td>\n'
+          h+=' </tr>\n'
+
+          for k in sorted(list(acfd.keys())):
+              v=acfd[k]
+
+              tags=v.get('tags',[])
+              stags=''
+              for q in tags:
+                  if stags!='': stags+=', '
+                  stags+=q
+
+              desc=v.get('desc','')
+              sort=v.get('sort','')
+
+              tp=v.get('type','')
+
+              choice=v.get('choice',[])
+              schoice=''
+              for q in choice:
+                  if schoice!='': schoice+=', '
+                  schoice+=q
+
+              ep=v.get('explore_prefix','')
+              estart=str(v.get('explore_start',''))
+              estep=str(v.get('explore_step',''))
+              estop=str(v.get('explore_stop',''))
+
+              h+=' <tr>\n'
+              h+='  <td><i>'+k+'</i></td>\n'
+              h+='  <td>'+desc+'</td>\n'
+              h+='  <td>'+tp+'</td>\n'
+              h+='  <td>'+str(sort)+'</td>\n'
+              h+='  <td>'+schoice+'</td>\n'
+              h+='  <td>'+ep+'</td>\n'
+              h+='  <td>'+estart+'</td>\n'
+              h+='  <td>'+estop+'</td>\n'
+              h+='  <td>'+estep+'</td>\n'
+              h+='  <td>'+stags+'</td>\n'
+              h+=' </tr>\n'
+
+          h+='</table>\n'
+          h+='</center>\n'
+
+       h+='<hr>\n'
+
+    return {'return':0, 'raw':raw, 'show_top':top, 'html':h}

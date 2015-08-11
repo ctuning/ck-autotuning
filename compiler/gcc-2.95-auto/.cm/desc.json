@@ -565,8 +565,8 @@
     "##param--finline-limit-": {
       "can_omit": "yes", 
       "default": "", 
-      "desc": "compiler flag: -finline-limit-@var{n}", 
-      "explore_prefix": "-finline-limit-@var{n}", 
+      "desc": "compiler flag: -finline-limit-", 
+      "explore_prefix": "-finline-limit-", 
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 0, 
