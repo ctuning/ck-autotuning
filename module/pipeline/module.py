@@ -147,6 +147,8 @@ def autotune(i):
                (features)             - extra features
                (meta)                 - extra meta
 
+               (record_dict)          - extra dict when recording experiments (useful to set subview_uoa, for example)
+
                (state)                - pre-load state preserved across iterations
 
                (save_to_file)         - if !='', save output dictionary to this file
@@ -451,6 +453,7 @@ def autotune(i):
                ddcl.append(pipeline1.get('characteristics',{}))
 
                if sr==0: # record for the first iteration otherwise pipeline may change via state ...
+                  dd['dict']=i.get('record_dict',{}) # useful for subview_uoa
                   dd['choices']=rr.get('choices',{})
                   dd['choices_order']=rr.get('choices_order',[])
                   dd['choices_desc']=rr.get('choices_desc',{})
