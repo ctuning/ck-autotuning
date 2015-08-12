@@ -138,6 +138,9 @@ def autotune(i):
                (frontier_keys)                    - list of keys to leave only best points during multi-objective autotuning
                                                      (multi-objective optimization)
 
+               (frontier_keys_reverse)            - list of values associated with above keys. If True, reverse sorting for a give key
+                                                    (by default descending)
+
                (frontier_features_keys_to_ignore) - list of keys to ignore from 'features_keys_to_process' 
                                                     when detecting subset of points to detect frontier
                                                     (usually removing optimization dimensions, such as compiler flags)
@@ -194,6 +197,7 @@ def autotune(i):
     pmk=ck.get_from_dicts(ic, 'process_multi_keys', '', None) # important, default should be '' to be processed later correctly ...
 
     fk=ck.get_from_dicts(ic, 'frontier_keys', [], None)
+    fkr=ck.get_from_dicts(ic, 'frontier_keys_reverse', [], None)
 
     record=ck.get_from_dicts(ic, 'record', '', None)
     record_uoa=ck.get_from_dicts(ic, 'record_uoa', '', None)
@@ -601,6 +605,8 @@ def autotune(i):
            rx=ck.access({'action':'filter',
                          'module_uoa':cfg['module_deps']['math.frontier'],
                          'points':points,
+                         'frontier_keys':fk,
+                         'reverse_keys':fkr,
                          'out':oo})
            if rx['return']>0: return rx
 

@@ -1,5 +1,7 @@
 * 2015.08.12 FGG: * adding 'auto' tag to identify/detect automatically extracted compiler descriptions
                   * adding parsing of reserved key $#ck_take_from_{CID}$# - for example, used to calculate accuracy for autotuning in slambench
+                  * adding possibility to reverse key order in Pareto frontier filter during multi-objective autotuning 
+                    (useful for FPS in slambench, for example)
 * 2015.08.11 FGG: * showing compiler flags in HTML (when viewing entries)
                   * fixing some wrong compiler flag descriptions
 * 2015.08.10 FGG: * added GCC 5.2.0 CK package (will be downloaded and installed)
