@@ -738,30 +738,19 @@ def process_in_dir(i):
              for q in linc:
                  # Check if source from another entry (species)
                  full_path=''
+
                  if q.startswith('$#ck_take_from_{'):
-                    b2=q.find('}#$')
-                    if b2=='':
-                       return {'return':1, 'error':'can\'t parse source file '+q+' ...'}
-                    bb=q[16:b2]
-
-                    rb=ck.access({'action':'load',
-                                  'module_uoa':muoa,
-                                  'data_uoa':bb})
-                    if rb['return']>0: 
-                       return {'return':1, 'error':'can\'t find sub-entry '+bb}
-
-                    q=q[b2+3:]
-
-                    full_path=rb['path']
+                    r9=substitute_some_ck_keys({'string':q})
+                    if r9['return']>0: return r9
+                    x=r9['string']
                  else:
                     if td!='': full_path='..'+sdirs
                     else: full_path=''
+                    x=os.path.join(full_path,q)
 
-                 if sin!='': sin+=' '
-
-                 x=os.path.join(full_path,q)
                  if x.endswith('\\'): x=x[:-1] # otherwise can be problems on Windows ...
 
+                 if sin!='': sin+=' '
                  sin+=svarb+svarb1+'CK_FLAG_PREFIX_INCLUDE'+svare1+svare+eifsc+x+eifsc
 
           # Check if includes as environment var (we search in env settings, 
@@ -1384,6 +1373,7 @@ def process_in_dir(i):
                     return {'return':1, 'error':'copying to remote device failed'}
 
        # Loading dataset
+       dp=''
        if dduoa!='':
           rx=ck.access({'action':'load',
                         'module_uoa':dmuoa,
@@ -1476,7 +1466,12 @@ def process_in_dir(i):
           sb+='\n'
 
        fn=''
-       ppc=rt.get('post_process_cmd','').replace('$#src_path_local#$', src_path_local).replace('$#src_path#$', src_path)
+
+       # Check post-processing scripts
+       lppc=rt.get('post_process_cmds',[])
+       ppc=rt.get('post_process_cmd','')
+       if ppc!='': lppc.append(ppc)
+       
        fgtf=rt.get('fine_grain_timer_file','')
 
        # Check if extra post_process
@@ -1690,13 +1685,26 @@ def process_in_dir(i):
              # For now ignore output
 
           # Check if post-processing script
-          if ppc!='':
-             if o=='con':
-                ck.out('')
-                ck.out('  (post processing: "'+ppc+'"')
-                ck.out('')
-             rz=os.system(ppc)
-             # For now ignore output
+          if len(lppc)>0:
+             for ppc in lppc:
+                 ppc=ppc.replace('$#src_path_local#$', src_path_local).replace('$#src_path#$', src_path)
+
+                 if remote=='yes':
+                    ppc=ppc.replace('$#dataset_path#$','')
+                 elif dp!='':
+                    ppc=ppc.replace('$#dataset_path#$',dp+sdirs)
+
+                 r9=substitute_some_ck_keys({'string':ppc})
+                 if r9['return']>0: return r9
+                 ppc=r9['string']
+
+                 if o=='con':
+                    ck.out('')
+                    ck.out('  (post processing: "'+ppc+'"')
+                    ck.out('')
+
+                 rz=os.system(ppc)
+                 # For now ignore output
 
           # Check if fine-grain time
           if fgtf!='':
@@ -3412,3 +3420,61 @@ def finalize_pipeline(i):
     i['return']=0
 
     return i
+
+##############################################################################
+# substitute some CK reserved keys
+#   $#ck_take_from{CID or UID}#$ (if module_uoa omitted, use current one)
+#   $#ck_host_os_sep#$
+
+def substitute_some_ck_keys(i):
+    """
+    Input:  {
+              string
+            }
+
+    Output: {
+              return       - return code =  0, if successful
+                                         >  0, if error
+              (error)      - error text if return > 0
+
+              string       - 
+              path         - if substitute ck_take_from_{
+            }
+
+    """
+
+    import os
+
+    s=i['string']
+    p=''
+
+    b1=s.find('$#ck_take_from_{')
+    if b1>=0:
+       b2=s.find('}#$', b1)
+       if b2<0:
+          return {'return':1, 'error':'wrong format of the $#ck_take_from{}#$ ('+s+')'}
+       bb=s[b1+16:b2]
+
+       rx=ck.parse_cid({'cid':bb})
+       if rx['return']==0: 
+          ruoa=rx.get('repo_uoa','')
+          muoa=rx.get('module_uoa','')
+          duoa=rx.get('data_uoa','')
+       else:
+          ruoa=''
+          muoa=work['self_module_uid']
+          duoa=bb
+
+       rb=ck.access({'action':'load',
+                     'module_uoa':muoa,
+                     'data_uoa':duoa,
+                     'repo_uoa':ruoa})
+       if rb['return']>0: return rb
+
+       p=rb['path']
+
+       s=s[:b1]+p+os.path.sep+s[b2+3:]
+
+    s=s.replace('$#ck_host_os_sep#$', os.path.sep)
+
+    return {'return':0, 'string':s, 'path':p}
