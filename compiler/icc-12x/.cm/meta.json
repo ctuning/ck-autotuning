@@ -2,6 +2,7 @@
   "tags": [
     "compiler", 
     "icc", 
-    "v2011"
+    "v2011",
+    "auto"
   ]
 }

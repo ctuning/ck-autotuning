@@ -2639,7 +2639,8 @@ def pipeline(i):
           # Find most close
           ii={'action':'list',
               'module_uoa':cfg['module_deps']['compiler'],
-              'add_meta':'yes'}
+              'add_meta':'yes',
+              'tags':'auto'}
           rx=ck.access(ii)
           if rx['return']>0: return rx
 
