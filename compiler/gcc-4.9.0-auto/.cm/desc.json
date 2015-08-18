@@ -8,7 +8,7 @@
         "-O2", 
         "-Os", 
         "-Ofast", 
-        "-Og}"
+        "-Og"
       ], 
       "default": "", 
       "desc": "base compiler flag", 
