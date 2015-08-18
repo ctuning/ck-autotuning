@@ -2683,8 +2683,13 @@ def pipeline(i):
                      'module_uoa':cfg['module_deps']['compiler'],
                      'data_uoa':cdu})
        if rx['return']>0: return rx
+       xruid=rx['data_uid']
        rxd=rx['dict']
        rxdd=rx.get('desc',{})
+
+       if o=='con':
+          ck.out('')
+          ck.out('Loading compiler description: '+cdu+' ('+xruid+') ...')
 
        if len(cflags_desc)==0:
           cflags_desc=rxdd.get('all_compiler_flags_desc',{})
