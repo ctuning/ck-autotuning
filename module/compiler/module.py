@@ -235,6 +235,7 @@ def extract_opts(i):
                                if '-O3' in jj: choice.append('-O3')
                                for j in jj:
                                    if j!='' and j!='-O3' and j!='-O':
+                                      if j.endswith('}'): j=j[:-1].strip()
                                       choice.append(j)
 
                                dd["##base_opt"]={
