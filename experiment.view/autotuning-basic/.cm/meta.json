@@ -48,7 +48,7 @@
       "type": "uoa"
     }, 
     {
-      "desc": "Kernel repetitions"
+      "desc": "Calibration"
     }, 
     {
       "desc": "Execution time (sec.)"
