@@ -651,7 +651,7 @@ def process_in_dir(i):
               if v.find(' ')>=0 and not v.startswith(eifs):
                  v=eifs+v+eifs
 
-           sb+=no+eset+' '+k+'='+v+'\n'
+           sb+=no+eset+' '+k+'='+str(v)+'\n'
        sb+='\n'
 
        # Try to detect version
@@ -1072,7 +1072,12 @@ def process_in_dir(i):
        env1=meta.get('run_vars',{})
        for q in env1:
            if q not in env:
-              env[q]=env1[q].replace('$#src_path#$', src_path)
+              x=env1[q]
+              try:
+                 x=x.replace('$#src_path#$', src_path)
+              except Exception as e: # need to detect if not string (not to crash)
+                 pass
+              env[q]=x
 
        # Update env if repeat
        if sc!='yes' and 'CT_REPEAT_MAIN' in env1:
@@ -1174,7 +1179,7 @@ def process_in_dir(i):
               if v.find(' ')>=0 and not v.startswith(eifs):
                  v=eifs+v+eifs
 
-           sb+=no+etset+' '+k+'='+v+'\n'
+           sb+=no+etset+' '+k+'='+str(v)+'\n'
        sb+='\n'
 
        if tosd.get('extra_env','')!='':
