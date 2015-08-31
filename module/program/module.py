@@ -1389,6 +1389,12 @@ def process_in_dir(i):
 
           dfiles=dd.get('dataset_files',[])
           if len(dfiles)>0:
+
+             dfile=i.get('dataset_file','')
+             if dfile!='':
+                dfiles=[dfile]
+                misc['dataset_file']=dfile
+
              for k in range(0, len(dfiles)):
                  df=dfiles[k]
                  kk='$#dataset_filename'
@@ -1905,6 +1911,7 @@ def pipeline(i):
 
               (cmd_key)              - CMD key
               (dataset_uoa)          - UOA of a dataset
+              (dataset_file)         - dataset filename (if more than one inside one entry - suggest to have a UID in name)
 
               (compiler_env_uoa)     - env of a compiler  
 
@@ -2086,6 +2093,7 @@ def pipeline(i):
     ptags=ck.get_from_dicts(i, 'program_tags', '', choices)
     kcmd=ck.get_from_dicts(i, 'cmd_key', '', choices)
     dduoa=ck.get_from_dicts(i, 'dataset_uoa', '', choices)
+    ddfile=ck.get_from_dicts(i, 'dataset_file', '', choices)
     druoa=ck.get_from_dicts(i, 'dataset_repo_uoa', '', None)
 
     ceuoa=ck.get_from_dicts(i, 'compiler_env_uoa', '', choices)
@@ -2510,6 +2518,7 @@ def pipeline(i):
        if dduoa=='':
           return {'return':1, 'error':'no datasets found for this pipeline'}
 
+    ddmeta={}
     if dduoa!='':
        rx=ck.access({'action':'load',
                      'dataset_repo_uoa':druoa,
@@ -2525,6 +2534,36 @@ def pipeline(i):
 
        if o=='con':
           ck.out('  Selected data set: '+dduoa+' ('+dduid+')')
+
+    ###############################################################################################################
+    # PIPELINE SECTION: dataset file selection (if more than one in one entry)
+    ddfiles=ddmeta.get('dataset_files',[])
+    if len(ddfiles)>0:
+       if ddfile=='':
+          # SELECTOR *************************************
+          choices_desc['##dataset_file']={'type':'text',
+                                          'has_choice':'yes',
+                                          'choices':ddfiles,
+                                          'tags':['setup'],
+                                          'sort':1100}
+
+          if o=='con' and si!='yes':
+             ck.out('************ Selecting dataset file ...')
+             ck.out('')
+             r=ck.access({'action':'select_list',
+                          'module_uoa':cfg['module_deps']['choice'],
+                          'choices':ddfiles,
+                          'desc':ddfiles})
+             if r['return']>0: return r
+             ddfile=r['choice']
+             ck.out('')
+          else:
+             return finalize_pipeline(i)
+
+    choices['dataset_file']=ddfile
+
+    if ddfile!='' and o=='con':
+       ck.out('  Selected dataset file: '+ddfile)
 
     ###############################################################################################################
     # PIPELINE SECTION: resolve compile dependencies 
@@ -3122,6 +3161,7 @@ def pipeline(i):
            'deps':cdeps,
            'cmd_key':kcmd,
            'dataset_uoa':dduoa,
+           'dataset_file':ddfile,
            'generate_rnd_tmp_dir':grtd,
            'tmp_dir':tdir,
            'skip_clean_after':sca,
