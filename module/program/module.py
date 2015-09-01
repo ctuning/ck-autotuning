@@ -346,7 +346,9 @@ def process_in_dir(i):
         'skip_device_init':sdi}
 
     if sa=='run': 
-       ii['skip_info_collection']='no'
+       x='no'
+       if i.get('skip_info_collection','')!='': x=i['skip_info_collection']
+       ii['skip_info_collection']=x
        ii['out']=o
     else:
        ii['skip_info_collection']='yes'
@@ -2116,8 +2118,8 @@ def pipeline(i):
     pdir=ck.get_from_dicts(i, 'program_dir', '', None) # Do not save, otherwise can't reproduce by other people
     if pdir!='': os.chdir(pdir)
 
-    sdi=ck.get_from_dicts(i, 'skip_device_init', '', None)
-    sic=ck.get_from_dicts(i, 'skip_info_collection', '', None)
+    sdi=ck.get_from_dicts(i, 'skip_device_init', '', choices)
+    sic=ck.get_from_dicts(i, 'skip_info_collection', '', choices)
 
     grtd=ck.get_from_dicts(i, 'generate_rnd_tmp_dir','', None)
     tdir=ck.get_from_dicts(i, 'tmp_dir','', None)
