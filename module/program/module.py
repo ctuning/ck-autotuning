@@ -556,6 +556,7 @@ def process_in_dir(i):
     misc['path']=p
 
     if cdir!='' and not os.path.isdir(cdir):
+       time.sleep(0.5)
        os.mkdir(cdir)
 
     sb='' # Batch
@@ -1030,6 +1031,7 @@ def process_in_dir(i):
              misc['fail_reason']=ry['error']
           elif rx>0:
              misc['compilation_success']='no'
+             misc['fail_reason']='return code '+str(rx)+' !=0 '
           else:
              misc['compilation_success']='yes'
 
@@ -1815,6 +1817,7 @@ def process_in_dir(i):
           misc['fail_reason']=ry['error']
        if rx>0 and vcmd.get('ignore_return_code','').lower()!='yes':
           misc['run_success']='no'
+          misc['fail_reason']='return code '+str(rx)+' !=0 '
        else:
           misc['run_success']='yes'
 
