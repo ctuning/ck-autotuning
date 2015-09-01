@@ -260,7 +260,10 @@ def process_in_dir(i):
                                                 to avoid pushing some data to remote device if !=0 ...
               (skip_dataset_copy)             - if 'yes', dataset stays the same across iterations of pipeline, so do not copy to remote again
 
-              (unparsed)               - if executing ck run program ... -- (unparsed params), add them to compile or run ...
+              (unparsed)                      - if executing ck run program ... -- (unparsed params), add them to compile or run ...
+
+              (compile_timeout)               - (sec.) - kill compile job if too long
+              (run_timeout)                   - (sec.) - kill run job if too long
             }
 
     Output: {
@@ -327,6 +330,9 @@ def process_in_dir(i):
     repeat=int(xrepeat)
 
     me=i.get('energy','')
+
+    xcto=i.get('compile_timeout','')
+    xrto=i.get('run_timeout','')
 
     pp_uoa=i.get('post_process_script_uoa','')
     pp_name=i.get('post_process_subscript','')
@@ -1002,9 +1008,16 @@ def process_in_dir(i):
 
           if ubtr!='': y=ubtr.replace('$#cmd#$',y)
 
-          rx=os.system(y)
-          comp_time=time.time()-start_time1
+          ############################################## Compiling code here ##############################################
+          rx=0
+          ry=ck.system_with_timeout({'cmd':y, 'timeout':xcto})
+          rry=ry['return']
+          if rry>0:
+             if rry!=8: return ry
+          else:
+             rx=ry['return_code']
 
+          comp_time=time.time()-start_time1
           ccc['compilation_time']=comp_time
 
           if sca!='yes':
@@ -1012,7 +1025,10 @@ def process_in_dir(i):
 
           ofs=0
           md5=''
-          if rx>0:
+          if rry==8:
+             misc['compilation_success']='no'
+             misc['fail_reason']=ry['error']
+          elif rx>0:
              misc['compilation_success']='no'
           else:
              misc['compilation_success']='yes'
@@ -1634,9 +1650,18 @@ def process_in_dir(i):
              ck.out('')
              ck.out('  (run ...)')
 
+          ############################################## Running code here ##############################################
           sys.stdout.flush()
           start_time1=time.time()
-          rx=os.system(y)
+
+          rx=0
+          ry=ck.system_with_timeout({'cmd':y, 'timeout':xrto})
+          rry=ry['return']
+          if rry>0:
+             if rry!=8: return ry
+          else:
+             rx=ry['return_code']
+
           exec_time=time.time()-start_time1
 
           if sca!='yes':
@@ -1741,7 +1766,7 @@ def process_in_dir(i):
                 ck.out('')
 
           # If return code >0 and program does not ignore return code, quit
-          if rx>0 and vcmd.get('ignore_return_code','').lower()!='yes':
+          if (rx>0 and vcmd.get('ignore_return_code','').lower()!='yes') or rry>0:
              break
 
           # Check calibration
@@ -1785,6 +1810,9 @@ def process_in_dir(i):
        ccc['repeat']=xrepeat
        misc['calibration_success']=calibrate_success
 
+       if rry==8:
+          misc['run_success']='no'
+          misc['fail_reason']=ry['error']
        if rx>0 and vcmd.get('ignore_return_code','').lower()!='yes':
           misc['run_success']='no'
        else:
@@ -1991,6 +2019,9 @@ def pipeline(i):
 
               (opencl_dvdt_profiler)    - if 'yes', attempt to use opencl_dvdt_profiler when running code ...
 
+              (compile_timeout)         - (sec.) - kill compile job if too long
+              (run_timeout)             - (sec.) - kill run job if too long
+
               (post_process_script_uoa) - run script from this UOA
               (post_process_subscript)  - subscript name
               (post_process_params)     - (string) add params to CMD
@@ -2159,6 +2190,9 @@ def pipeline(i):
     tsd=ck.get_from_dicts(i, 'the_same_dataset', '', choices)
 
     odp=ck.get_from_dicts(i, 'opencl_dvdt_profiler','',choices)
+
+    xcto=ck.get_from_dicts(i, 'compile_timeout','',choices)
+    xrto=ck.get_from_dicts(i, 'run_timeout','',choices)
 
     ###############################################################################################################
     # PIPELINE SECTION: Host and target platform selection
@@ -3061,6 +3095,7 @@ def pipeline(i):
               'extra_env':eenv,
               'compiler_vars':cv,
               'remove_compiler_vars':rcv,
+              'compile_timeout':xcto,
               'out':oo}
           r=process_in_dir(ii)
           if r['return']>0: return r
@@ -3077,7 +3112,9 @@ def pipeline(i):
 
           cs=misc.get('compilation_success','')
           if cs=='no': 
-             i['fail_reason']='compilation failed'
+             x='compilation failed'
+             if misc.get('fail_reason','')!='': x+=' - '+misc['fail_reason']
+             i['fail_reason']=x
              i['fail']='yes'
 
     ###############################################################################################################
@@ -3197,6 +3234,7 @@ def pipeline(i):
            'run_cmd_substitutes':rcsub,
            'compiler_vars':cv,
            'remove_compiler_vars':rcv,
+           'run_timeout':xrto,
            'out':oo}
        r=process_in_dir(ii)
        if r['return']>0: return r
@@ -3212,6 +3250,7 @@ def pipeline(i):
 
        csuc=misc.get('calibration_success',True)
        rs=misc.get('run_success','')
+       rsf=misc.get('fail_reason','')
 
        repeat=rch.get('repeat','')
        if repeat!='': 
@@ -3219,7 +3258,9 @@ def pipeline(i):
           choices['repeat']=repeat
 
        if rs=='no' or not csuc:
-          i['fail_reason']='execution failed'
+          x='execution failed'
+          if rsf!='': x+=' - '+rsf
+          i['fail_reason']=x
           i['fail']='yes'
 
     ###############################################################################################################
@@ -3434,6 +3475,7 @@ def finalize_pipeline(i):
     pr=i.get('prepare','')
 
     fail=i.get('fail','')
+    fail_reason=i.get('fail_reason','')
 
     stfx=i.get('save_to_file','')
     stf=stfx
@@ -3463,7 +3505,9 @@ def finalize_pipeline(i):
              ck.out('Pipeline is ready!')
           else:
              if fail=='yes':
-                ck.out('Pipeline failed!')
+                x=''
+                if fail_reason!='': x=' ('+fail_reason+')'
+                ck.out('Pipeline failed'+x+'!')
              else:
                 ck.out('Pipeline executed successfully!')
        else:
