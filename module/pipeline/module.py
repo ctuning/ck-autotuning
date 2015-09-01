@@ -125,6 +125,9 @@ def autotune(i):
                (record_failed)                    - if 'yes', record even failed experiments
                                                     (for debugging, buildbots, detecting designed 
                                                      architecture failures, etc)
+               (record_only_failed)               - if 'yes', record only failed experiments
+                                                    (useful to crowdsource experiments when searching only 
+                                                     for compiler/program/architecture bugs)...
                (record_ignore_update)             - (default=yes), if 'yes', skip recording date/author info for each update
                (tags)                             - record these tags to the entry description
                (subtags)                          - record these subtags to the point description
@@ -209,6 +212,7 @@ def autotune(i):
        record=rx['data_uoa']
        record_repo=rx.get('repo_uoa','')
     record_failed=ck.get_from_dicts(ic, 'record_failed','', None)
+    record_only_failed=ck.get_from_dicts(ic, 'record_only_failed','', None)
     record_ignore_update=ic.get('record_ignore_update','')
     if record_ignore_update=='': record_ignore_update='yes'
     if 'record_ignore_update' in ic: del(ic['record_ignore_update'])
@@ -453,7 +457,7 @@ def autotune(i):
             state=rr.get('state',{})
 
             fail=rr.get('fail','')
-            if fail!='yes' or record_failed=='yes':
+            if (fail!='yes' and record_only_failed!='yes') or (fail=='yes' and (record_failed=='yes' or record_only_failed=='yes')):
                ddcl.append(pipeline1.get('characteristics',{}))
 
                if sr==0: # record for the first iteration otherwise pipeline may change via state ...
@@ -493,7 +497,7 @@ def autotune(i):
            # Will be reused for frontier
            fft={} # flat features
 
-           if fail!='yes' or record_failed=='yes':
+           if (fail!='yes' and record_only_failed!='yes') or (fail=='yes' and (record_failed=='yes' or record_only_failed=='yes')):
 
               t1=time.time()
 

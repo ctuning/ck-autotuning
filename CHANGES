@@ -3,6 +3,8 @@
                     generated code may be buggy and result in infinite loops,
                     i.e. during autotuning or compiler testing and bug detection)
                   * providing more info about compilation and execution failures
+                  * adding possibility to record only failed cases
+                    (useful to crowdsource testing compilers/programs/os/architecture for bugs)
 
 * 2015.08.12 FGG: * adding 'auto' tag to identify/detect automatically extracted compiler descriptions
                   * adding parsing of reserved key $#ck_take_from_{CID}$# - for example, used to calculate accuracy for autotuning in slambench

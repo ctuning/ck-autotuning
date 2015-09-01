@@ -556,8 +556,8 @@ def process_in_dir(i):
     misc['path']=p
 
     if cdir!='' and not os.path.isdir(cdir):
-       time.sleep(0.5)
-       os.mkdir(cdir)
+       time.sleep(1)
+       os.makedirs(cdir)
 
     sb='' # Batch
 
