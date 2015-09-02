@@ -3,6 +3,7 @@
  "save_to_file":"_setup_program_pipeline_tmp.json",
  "data_uoa":"cbench-automotive-susan",
  "cmd_key":"edges",
- "target_os":"mingw-64"
+ "target_os":"mingw-64",
+ "no_state_check":"yes"
 }
 

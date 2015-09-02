@@ -296,6 +296,8 @@ def process_in_dir(i):
 
     sca=i.get('skip_clean_after','')
 
+    grtd=i.get('generate_rnd_tmp_dir','')
+
     misc=i.get('misc',{})
     ccc=i.get('characteristics',{})
     env=i.get('env',{})
@@ -542,7 +544,7 @@ def process_in_dir(i):
           if td!='' and os.path.isdir(td):
              shutil.rmtree(td, ignore_errors=True)
 
-       if tdx=='' and i.get('generate_rnd_tmp_dir','')=='yes':
+       if tdx=='' and grtd=='yes':
           # Generate tmp dir
           import tempfile
           fd, fn=tempfile.mkstemp(suffix='', prefix='tmp-ck-')
@@ -565,6 +567,8 @@ def process_in_dir(i):
        ck.out(sep)
        ck.out('Current directory: '+cdir)
        ck.out('')
+
+    odir=os.getcwd()
 
     os.chdir(cdir)
     rcdir=os.getcwd()
@@ -1029,11 +1033,18 @@ def process_in_dir(i):
           if rry==8:
              misc['compilation_success']='no'
              misc['fail_reason']=ry['error']
+
+             ccc['compilation_success']='no'
+             ccc['fail_reason']=ry['error']
           elif rx>0:
              misc['compilation_success']='no'
              misc['fail_reason']='return code '+str(rx)+' !=0 '
+
+             ccc['compilation_success']='no'
+             ccc['fail_reason']='return code '+str(rx)+' !=0 '
           else:
              misc['compilation_success']='yes'
+             ccc['compilation_success']='yes'
 
              # Check some characteristics
              if os.path.isfile(target_exe):
@@ -1815,11 +1826,18 @@ def process_in_dir(i):
        if rry==8:
           misc['run_success']='no'
           misc['fail_reason']=ry['error']
+
+          ccc['run_success']='no'
+          ccc['fail_reason']=ry['error']
        if rx>0 and vcmd.get('ignore_return_code','').lower()!='yes':
           misc['run_success']='no'
           misc['fail_reason']='return code '+str(rx)+' !=0 '
+
+          ccc['run_success']='no'
+          ccc['fail_reason']='return code '+str(rx)+' !=0 '
        else:
           misc['run_success']='yes'
+          ccc['run_success']='yes'
 
        ccc['execution_time_with_module']=time.time()-start_time
 
@@ -1829,6 +1847,14 @@ def process_in_dir(i):
           if repeat>1:
              x+='; Repetitions: '+str(repeat)+'; Normalized execution time: '+('%.9f'%(exec_time/repeat))+' sec.'
           ck.out(x)
+
+    # Check to clean random directory
+    if grtd=='yes' and sca!='yes':
+       os.chdir(odir)
+       try:
+          shutil.rmtree(cdir, ignore_errors=True)
+       except Exception as e:
+          pass
 
     return {'return':0, 'tmp_dir':rcdir, 'misc':misc, 'characteristics':ccc, 'deps':deps}
 

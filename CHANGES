@@ -1,3 +1,6 @@
+* 2015.09.02 FGG: * turning off 'state check' (frequency change during experiments) by default
+                    in autotuning demos
+
 * 2015.09.01 FGG: * adding timeout for program compilation and execution
                     (useful for research in computer engineering where
                     generated code may be buggy and result in infinite loops,

@@ -13,6 +13,8 @@
  "do_not_reuse_repeat":"yes",
 
  "cpu_freq":"max",
- "gpu_freq":"max"
+ "gpu_freq":"max",
+
+ "no_state_check":"yes"
 }
 
