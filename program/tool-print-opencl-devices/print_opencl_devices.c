@@ -1,20 +1,30 @@
-#include <stdio.h>                                                                                                                                              
+#include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
+
 #ifdef __APPLE__
 #include <OpenCL/opencl.h>
 #else
 #include <CL/cl.h>
 #endif
- 
+
+#define MAX_NUM_PLATFORMS (0xF)
+
 int main(int argc, char *argv[]) {
  
-    int i, j;
+    cl_int err = CL_SUCCESS;
+    
     char* value;
     size_t valueSize;
+
     cl_uint platformCount;
     cl_platform_id* platforms;
+    cl_uint p;
+
     cl_uint deviceCount;
     cl_device_id* devices;
+    cl_uint d;
+
     cl_uint maxComputeUnits;
 
     FILE* fout=NULL;
@@ -26,78 +36,108 @@ int main(int argc, char *argv[]) {
     }
 
     // get all platforms
-    clGetPlatformIDs(0, NULL, &platformCount);
+    
+    // platformCount = min(number of available platforms, MAX_NUM_PLATFORMS)
+    err = clGetPlatformIDs(MAX_NUM_PLATFORMS, NULL, &platformCount);
+    assert(CL_SUCCESS == err && platformCount <= MAX_NUM_PLATFORMS);
     platforms = (cl_platform_id*) malloc(sizeof(cl_platform_id) * platformCount);
-    clGetPlatformIDs(platformCount, platforms, NULL);
+    assert(platforms);
+    err = clGetPlatformIDs(platformCount, platforms, NULL);
+    assert(CL_SUCCESS == err);
  
-    for (i = 0; i < platformCount; i++) {
+    for (p = 0; p < platformCount; p++) {
  
         printf("*******************************************\n");
-        printf("Platform: %u\n\n", i);
+        printf("Platform: %u\n\n", p);
 
-        if (fout!=NULL) fprintf(fout, "  \"%u\":{\n", i);
+        if (fout!=NULL) fprintf(fout, "  \"%u\":{\n", p);
 
         // get all devices
-        clGetDeviceIDs(platforms[i], CL_DEVICE_TYPE_ALL, 0, NULL, &deviceCount);
+        err = clGetDeviceIDs(platforms[p], CL_DEVICE_TYPE_ALL, 0, NULL, &deviceCount);
+        assert(CL_SUCCESS == err);
         devices = (cl_device_id*) malloc(sizeof(cl_device_id) * deviceCount);
-        clGetDeviceIDs(platforms[i], CL_DEVICE_TYPE_ALL, deviceCount, devices, NULL);
+        assert(devices);
+        err = clGetDeviceIDs(platforms[p], CL_DEVICE_TYPE_ALL, deviceCount, devices, NULL);
+        assert(CL_SUCCESS == err);
  
         // for each device print critical attributes
-        for (j = 0; j < deviceCount; j++) {
+        for (d = 0; d < deviceCount; d++) {
  
-            if (fout!=NULL) fprintf(fout, "    \"%u\":{\n", j);
+            if (fout!=NULL) fprintf(fout, "    \"%u\":{\n", d);
 
             // print device name
-            clGetDeviceInfo(devices[j], CL_DEVICE_NAME, 0, NULL, &valueSize);
-            value = (char*) malloc(valueSize);
-            clGetDeviceInfo(devices[j], CL_DEVICE_NAME, valueSize, value, NULL);
-            printf("%d. Device: %s\n", j, value);
-            if (fout!=NULL) fprintf(fout, "      \"device_name\":\"%s\",\n", value);
-
-            free(value);
+            {
+                err = clGetDeviceInfo(devices[d], CL_DEVICE_NAME, 0, NULL, &valueSize);
+                assert(CL_SUCCESS == err);
+                value = (char*) malloc(valueSize);
+                assert(value);
+                err = clGetDeviceInfo(devices[d], CL_DEVICE_NAME, valueSize, value, NULL);
+                assert(CL_SUCCESS == err);
+                printf("%d. Device: %s\n", d, value);
+                if (fout!=NULL) fprintf(fout, "      \"device_name\":\"%s\",\n", value);
+                free(value);
+            }
  
             // print hardware device version
-            clGetDeviceInfo(devices[j], CL_DEVICE_VERSION, 0, NULL, &valueSize);
-            value = (char*) malloc(valueSize);
-            clGetDeviceInfo(devices[j], CL_DEVICE_VERSION, valueSize, value, NULL);
-            printf(" %d.%d Hardware version: %s\n", j, 1, value);
-            if (fout!=NULL) fprintf(fout, "      \"hardware_version\":\"%s\",\n", value);
-            free(value);
+            {
+                err = clGetDeviceInfo(devices[d], CL_DEVICE_VERSION, 0, NULL, &valueSize);
+                assert(CL_SUCCESS == err);
+                value = (char*) malloc(valueSize);
+                assert(value);
+                err = clGetDeviceInfo(devices[d], CL_DEVICE_VERSION, valueSize, value, NULL);
+                assert(CL_SUCCESS == err);
+                printf(" %d.%d Hardware (device) version: %s\n", d, 1, value);
+                if (fout!=NULL) fprintf(fout, "      \"hardware_version\":\"%s\",\n", value);
+                free(value);
+            }
  
             // print software driver version
-            clGetDeviceInfo(devices[j], CL_DRIVER_VERSION, 0, NULL, &valueSize);
-            value = (char*) malloc(valueSize);
-            clGetDeviceInfo(devices[j], CL_DRIVER_VERSION, valueSize, value, NULL);
-            printf(" %d.%d Software version: %s\n", j, 2, value);
-            if (fout!=NULL) fprintf(fout, "      \"software_version\":\"%s\",\n", value);
-            free(value);
+            {
+                err = clGetDeviceInfo(devices[d], CL_DRIVER_VERSION, 0, NULL, &valueSize);
+                assert(CL_SUCCESS == err);
+                value = (char*) malloc(valueSize);
+                assert(value);
+                err = clGetDeviceInfo(devices[d], CL_DRIVER_VERSION, valueSize, value, NULL);
+                assert(CL_SUCCESS == err);
+                printf(" %d.%d Software (driver) version: %s\n", d, 2, value);
+                if (fout!=NULL) fprintf(fout, "      \"software_version\":\"%s\",\n", value);
+                free(value);
+            }
  
             // print c version supported by compiler for device
-            clGetDeviceInfo(devices[j], CL_DEVICE_OPENCL_C_VERSION, 0, NULL, &valueSize);
-            value = (char*) malloc(valueSize);
-            clGetDeviceInfo(devices[j], CL_DEVICE_OPENCL_C_VERSION, valueSize, value, NULL);
-            printf(" %d.%d OpenCL C version: %s\n", j, 3, value);
-            if (fout!=NULL) fprintf(fout, "      \"opencl_c_version\":\"%s\",\n", value);
-            free(value);
+            {
+                err = clGetDeviceInfo(devices[d], CL_DEVICE_OPENCL_C_VERSION, 0, NULL, &valueSize);
+                assert(CL_SUCCESS == err);
+                value = (char*) malloc(valueSize);
+                assert(value);
+                err = clGetDeviceInfo(devices[d], CL_DEVICE_OPENCL_C_VERSION, valueSize, value, NULL);
+                assert(CL_SUCCESS == err);
+                printf(" %d.%d OpenCL C version: %s\n", d, 3, value);
+                if (fout!=NULL) fprintf(fout, "      \"opencl_c_version\":\"%s\",\n", value);
+                free(value);
+            }
  
             // print parallel compute units
-            clGetDeviceInfo(devices[j], CL_DEVICE_MAX_COMPUTE_UNITS,
-                    sizeof(maxComputeUnits), &maxComputeUnits, NULL);
-            printf(" %d.%d Parallel compute units: %d\n", j, 4, maxComputeUnits);
-            if (fout!=NULL) fprintf(fout, "      \"parallel_compute_units\":\"%d\"\n", maxComputeUnits);
+            {
+                err = clGetDeviceInfo(devices[d], CL_DEVICE_MAX_COMPUTE_UNITS,
+                        sizeof(maxComputeUnits), &maxComputeUnits, NULL);
+                assert(CL_SUCCESS == err);
+                printf(" %d.%d Parallel compute units: %d\n", d, 4, maxComputeUnits);
+                if (fout!=NULL) fprintf(fout, "      \"parallel_compute_units\":\"%d\"\n", maxComputeUnits);
+            }
 
             if (fout!=NULL) {
-              fprintf(fout, "    }", j);
-              if (j!=(deviceCount-1)) fprintf(fout, ",");
-              fprintf(fout, "\n");
+               fprintf(fout, "    }");
+               if (d!=(deviceCount-1)) fprintf(fout, ",");
+               fprintf(fout, "\n");
             }
         }
 
-            if (fout!=NULL) {
-              fprintf(fout, "  }", j);
-              if (i!=(platformCount-1)) fprintf(fout, ",");
-              fprintf(fout, "\n");
-            }
+        if (fout!=NULL) {
+           fprintf(fout, "  }");
+           if (p!=(platformCount-1)) fprintf(fout, ",");
+           fprintf(fout, "\n");
+        }
  
         free(devices);
     }
@@ -109,5 +149,4 @@ int main(int argc, char *argv[]) {
  
     free(platforms);
     return 0;
- 
 }
