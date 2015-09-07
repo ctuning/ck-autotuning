@@ -438,7 +438,7 @@ def autotune(i):
             if only_filter=='yes': continue
 
             ck.out('')
-            ck.out('      ------------------- Statistical reptition: '+str(sr+1)+' of '+str(srm)+' -------------------')
+            ck.out('      ------------------- Statistical repetition: '+str(sr+1)+' of '+str(srm)+' -------------------')
             ck.out('')
 
             pipeline1=copy.deepcopy(pipeline)
