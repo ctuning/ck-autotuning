@@ -1783,9 +1783,11 @@ def process_in_dir(i):
              break
 
           # Check calibration
+          raw_input('xyz')
           if sc=='yes' or repeat==-1 or 'CT_REPEAT_MAIN' not in env1:
              calibrate_success=True
              break
+          raw_input('xyz1')
 
           orepeat=repeat
           if exec_time<0.5: repeat*=10
@@ -1810,7 +1812,7 @@ def process_in_dir(i):
 
           cn+=1
 
-       if sc!='yes' and repeat!=-1:
+       if sc!='yes' and repeat!=-1 and 'CT_REPEAT_MAIN' in env1:
           if calibrate_success==False:
              return {'return':1, 'error':'calibration problem'}
 
