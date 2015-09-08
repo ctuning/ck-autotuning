@@ -1153,7 +1153,7 @@ def process_in_dir(i):
                  iz+=1
 
              ck.out('')
-             rx=ck.inp({'text':'Choose first number to select command line (or Enter to select 0): '})
+             rx=ck.inp({'text':'Select command line (or Enter to select 0): '})
              x=rx['string'].strip()
              if x=='': x='0'
 
@@ -1291,7 +1291,7 @@ def process_in_dir(i):
                     iz+=1
 
                 ck.out('')
-                rx=ck.inp({'text':'Choose first number to select dataset UOA (or Enter to select 0): '})
+                rx=ck.inp({'text':'Select dataset UOA (or Enter to select 0): '})
                 x=rx['string'].strip()
                 if x=='': x='0'
 
@@ -2608,8 +2608,10 @@ def pipeline(i):
     ###############################################################################################################
     # PIPELINE SECTION: dataset file selection (if more than one in one entry)
     ddfiles=ddmeta.get('dataset_files',[])
-    if len(ddfiles)>0:
-       if ddfile=='':
+    if ddfile=='':
+       if len(ddfiles)==1:
+          ddfile=ddfiles[0]
+       elif len(ddfiles)>0:
           # SELECTOR *************************************
           choices_desc['##dataset_file']={'type':'text',
                                           'has_choice':'yes',

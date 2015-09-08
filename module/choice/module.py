@@ -362,7 +362,7 @@ def select_list(i):
         iz+=1
 
     ck.out('')
-    y='Choose first number to select item'
+    y='Select item'
     if se!='yes': y+=' (or press Enter for 0)'
     y+=': '
 
