@@ -90,6 +90,7 @@ def autotune(i):
                (pipeline_update)      - update pipeline with this dict (useful to update already prepared pipeline from file)
 
                (iterations)           - limit number of iterations, otherwise infinite (default=50)
+                                        if -1, infinite (or until all choices are explored)
                (start_from_iteration) - skip all iterations before this number
                (repetitions)          - statistical repetitions (default=4)
 
@@ -389,10 +390,19 @@ def autotune(i):
     rrr={'return':0}
     dd={}
     finish=False
-    for m in range(0,ni):
+
+    m=-1
+    while True:
+        m+=1
+        if ni!=-1 and m>=ni:
+           break
+
         mm=m+1
         ck.out(sep)
-        ck.out('Pipeline iteration: '+str(mm)+' of '+str(ni))
+        x='Pipeline iteration: '+str(mm)
+        if ni!=-1: x+=' of '+str(ni) 
+
+        ck.out(x)
 
         # Copy original
         if m==0 or mm>=sfi:

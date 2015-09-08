@@ -1,6 +1,7 @@
 * 2015.09.08 FGG: * improving dataset file selector (suggested by Anton)
                   * making text to select UIDs less ambiguous (asked by Anton)
                   * fixing program calibration problem for slambench (detected by Anton)
+                  * if iterations in pipeline == -1, infinite loop (suggested by Andrei Lascu)
 
 * 2015.09.02 FGG: * turning off 'state check' (frequency change during experiments) by default
                     in autotuning demos
