@@ -1,3 +1,6 @@
+* 2015.09.09 FGG: * adding 'skip_stat_analysis' to compact recorded data when stat analysis is not needed
+                    (useful for CLSmith)
+
 * 2015.09.08 FGG: * improving dataset file selector (suggested by Anton)
                   * making text to select UIDs less ambiguous (asked by Anton)
                   * fixing program calibration problem for slambench (detected by Anton)

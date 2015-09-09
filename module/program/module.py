@@ -559,7 +559,12 @@ def process_in_dir(i):
 
     if cdir!='' and not os.path.isdir(cdir):
        time.sleep(1)
-       os.makedirs(cdir)
+       try:
+          os.makedirs(cdir)
+       except Exception as e:
+          pass
+       if not os.path.isdir(cdir):
+          return {'return':1, 'error':'can\'t create tmp directory ('+cdir+')'}
 
     sb='' # Batch
 

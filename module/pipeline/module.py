@@ -151,6 +151,9 @@ def autotune(i):
 
                (only_filter)                      - if 'yes', do not run pipeline, but run filters on data (for Pareto, for example)
 
+               (skip_stat_analysis)               - if 'yes', just flatten array and add #min
+
+
                (features)             - extra features
                (meta)                 - extra meta
 
@@ -188,6 +191,7 @@ def autotune(i):
     ic['action']=''
     ic['cid']=''
     ic['data_uoa']=''
+
 
     tags=ck.get_from_dicts(ic, 'tags', [], None)
     tags=ck.convert_str_tags_to_list(tags) # if string, convert to list
@@ -316,6 +320,8 @@ def autotune(i):
     only_filter=ck.get_from_dicts(ic, 'only_filter', '', None)
     if only_filter=='yes':
        ni=1
+
+    ssa=ck.get_from_dicts(ic, 'skip_stat_analysis', '', None)
 
     sfi=i.get('start_from_iteration','')
     if sfi=='': sfi=1
@@ -528,6 +534,8 @@ def autotune(i):
               ie['process_multi_keys']=pmk
               ie['dict']=dd
 
+              if ssa!='': ie['skip_stat_analysis']=ssa
+
               # Update what we record and how we process data from external dict -> 
               #  may be customized depending on scenarios 
               #  (compiler flag tuning, OpenCL/MPI params, etc)
@@ -551,7 +559,8 @@ def autotune(i):
                'module_uoa':cfg['module_deps']['experiment'],
                'dict':stat_dict,
                'dict_to_add':dd,
-               'process_multi_keys':pmk}
+               'process_multi_keys':pmk,
+               'skip_stat_analysis':ssa}
            rrr=ck.access(ii)
            if rrr['return']>0: return rrr
            stat_dict=rrr['dict_flat']
