@@ -1435,9 +1435,22 @@ def process_in_dir(i):
              if dfile!='':
                 dfiles=[dfile]
                 misc['dataset_file']=dfile
+             elif len(dfiles)>0:
+                if len(dfiles)==1:
+                   dfile=dfiles[0]
+                else:
+                   ck.out('************ Selecting dataset file ...')
+                   ck.out('')
+                   r=ck.access({'action':'select_list',
+                                'module_uoa':cfg['module_deps']['choice'],
+                                'choices':dfiles,
+                                'desc':dfiles})
+                   if r['return']>0: return r
+                   dfile=r['choice']
 
              for k in range(0, len(dfiles)):
                  df=dfiles[k]
+                 if dfile!='' and k==0: df=dfile
                  kk='$#dataset_filename'
                  if k>0: kk+='_'+str(k)
                  kk+='#$'
