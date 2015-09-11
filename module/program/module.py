@@ -897,7 +897,10 @@ def process_in_dir(i):
 
               sf0,sf1=os.path.splitext(sf)
 
-              sfobj=sf0+sobje
+              sf00=os.path.basename(sf)
+              sf00a,sf00b=os.path.splitext(sf00)
+
+              sfobj=sf00a+sobje
               if sofs!='': sofs+=' '
               sofs+=sfobj
               xsofs.append(sfobj)

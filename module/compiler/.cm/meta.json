@@ -14,11 +14,11 @@
       "for_web": "yes"
     }
   }, 
-  "copyright": "See CK Copyright.txt for copyright details", 
+  "copyright": "See CK COPYRIGHT.txt for copyright details", 
   "desc": "describing compilers and their optimization choices", 
   "developer": "Grigori Fursin", 
   "developer_email": "Grigori.Fursin@cTuning.org", 
-  "developer_webpage": "http://cTuning.org/lab/people/gfursin", 
+  "developer_webpage": "http://fursin.net", 
   "gcc_src_opt_file1": "gcc/doc/invoke.texi", 
   "gcc_src_opt_file2": "gcc/invoke.texi", 
   "gcc_src_params": "gcc/params.def", 

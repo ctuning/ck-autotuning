@@ -13,11 +13,11 @@
       "-O3 -fno-if-conversion"
     ]
   },
-  "copyright": "See CK Copyright.txt for copyright details",
+  "copyright": "See CK COPYRIGHT.txt for copyright details",
   "desc": "example of a script to reproduce and crowdsource experiments: checking program speedups vs a set of compiler flags vs a few data sets",
   "developer": "Grigori Fursin",
   "developer_email": "Grigori.Fursin@cTuning.org",
-  "developer_webpage": "http://cTuning.org/lab/people/gfursin",
+  "developer_webpage": "http://fursin.net",
   "full_desc": "Experiment: check program speedups vs a few combinations of compiler flags and several data sets\n\nAuthor: Grigori Fursin (Grigori.Fursin@cTuning.org)\n\nIdea: I started related and ad-hoc experiments around 1993 when optimizing simulation of my semiconductor neural networks on supercomputers in terms of performance, energy and size. Since then I spent many years developing various machine learning based autotuning techniques. At the end, I decided to unify such experimentation.\n\nFirst public version: I developed related plugin for my plugin-based autotuning and crowd-tuning cTuning framework around 2007 for the MILEPOST project (where I developed practical machine-learning based compiler).",
   "license": "See CK LICENSE.txt for licensing details",
   "module_deps": {
