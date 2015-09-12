@@ -6,6 +6,10 @@ Status
 This is a relatively stable repository for universal,
 multi-dimensional, multi-objective autotuning
 
+Prerequisites
+=============
+* Collective Knowledge Framework: http://github.com/ctuning/ck
+
 Description
 ===========
 During many years of research on machine learning based autotuning 
