@@ -1,5 +1,6 @@
 * 2015.09.22 FGG: * fixing pipeline update when dataset is changed (i.e. updating related datset files)
                     (reported by Anton)
+                  * taking statistical repeat from pipeline if exists (to properly replay experiments) 
 
 * 2015.09.10 FGG: * moved 'script:platform.init' to 'platform.init:*'
 

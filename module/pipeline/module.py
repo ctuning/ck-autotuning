@@ -93,6 +93,7 @@ def autotune(i):
                                         if -1, infinite (or until all choices are explored)
                (start_from_iteration) - skip all iterations before this number
                (repetitions)          - statistical repetitions (default=4)
+                                        (if 'repeat' exists in choices, take it instead - useful for replay)
 
                (seed)                 - if !='', use as random seed (to reproduce experiments)
 
@@ -338,7 +339,10 @@ def autotune(i):
     if type(sfi)!=int: sfi=int(sfi)
 
     srm=i.get('repetitions','')
-    if srm=='': srm=4
+    if srm=='': 
+       srm=pipeline.get('choices',{}).get('repeat','')
+       if srm=='':
+          srm=4
     try: srm=int(srm)
     except Exception as e: pass
 
