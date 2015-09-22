@@ -1,3 +1,6 @@
+* 2015.09.22 FGG: * fixing pipeline update when dataset is changed (i.e. updating related datset files)
+                    (reported by Anton)
+
 * 2015.09.10 FGG: * moved 'script:platform.init' to 'platform.init:*'
 
 * 2015.09.09 FGG: * adding 'skip_stat_analysis' to compact recorded data when stat analysis is not needed

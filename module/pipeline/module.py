@@ -287,18 +287,28 @@ def autotune(i):
        pipeline=r['dict']
 
     pipeline_update=i.get('pipeline_update',{})
+    force_pipeline_update=False
     if len(pipeline_update)!=0:
        r=ck.merge_dicts({'dict1':pipeline, 'dict2':pipeline_update})
        if r['return']>0: return r
        pipeline=r['dict1']
 
+       # Force pipeline update (for example, since changing dataset may change available files)
+       force_pipeline_update=True
+
     # If pipeline meta is not defined, set up pipeline ...
-    if len(pipeline)==0:
-       ii=copy.deepcopy(ic)
+    if len(pipeline)==0 or force_pipeline_update:
+       if force_pipeline_update:
+          ii=copy.deepcopy(pipeline)
+       else:
+          ii=copy.deepcopy(ic)
+
        ii['module_uoa']=puoa
        ii['action']='pipeline'
        ii['prepare']='yes'
+
        pipeline=ck.access(ii)
+
        if pipeline['return']>0: return pipeline
        if pipeline.get('fail','')=='yes':
           return {'return':1, 'error':'pipeline setup failed'}
@@ -306,7 +316,7 @@ def autotune(i):
           return {'return':1, 'error':'pipeline is not ready'}
        del(pipeline['return'])
 
-    # Clean and copy pipeline before choice selection
+   # Clean and copy pipeline before choice selection
     for q in cfg['clean_pipeline']:
         if q in pipeline: del(pipeline[q])
     pipelinec=copy.deepcopy(pipeline)
