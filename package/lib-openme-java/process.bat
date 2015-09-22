@@ -15,7 +15,7 @@ rem INSTALL_DIR
 set LIB_NAME=libopenme
 
 echo.
-echo Obtaining latest OpenME from GITHUB ...
+echo Obtaining latest OpenME from GitHub ...
 echo.
 
 cd %INSTALL_DIR%
