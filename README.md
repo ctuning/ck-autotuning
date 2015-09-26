@@ -10,6 +10,9 @@ Prerequisites
 =============
 * Collective Knowledge Framework: http://github.com/ctuning/ck
 
+* For Windows:
+** md5sum.exe
+
 Description
 ===========
 During many years of research on machine learning based autotuning 

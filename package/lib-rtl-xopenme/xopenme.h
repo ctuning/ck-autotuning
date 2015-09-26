@@ -40,16 +40,65 @@ extern "C"
 #endif
 /*************************************/
 
-extern void xopenme_clock_start(int timer);
-extern void xopenme_clock_end(int timer);
-extern void xopenme_init(int ntimers, int nvars);
-extern void xopenme_dump_state(void);
-extern void xopenme_add_var_i(int var, char* desc, int svar);
-extern void xopenme_add_var_f(int var, char* desc, float svar);
-extern void xopenme_add_var_d(int var, char* desc, double svar);
-extern void xopenme_add_var_s(int var, char* desc, void* svar);
-extern void xopenme_dump_memory(char* name, void* array, long size);
-extern void xopenme_finish(void);
+extern 
+#ifdef WINDOWS
+__declspec(dllexport) 
+#endif
+void xopenme_clock_start(int timer);
+
+extern 
+#ifdef WINDOWS
+__declspec(dllexport) 
+#endif
+void xopenme_clock_end(int timer);
+
+extern 
+#ifdef WINDOWS
+__declspec(dllexport) 
+#endif
+void xopenme_init(int ntimers, int nvars);
+
+extern 
+#ifdef WINDOWS
+__declspec(dllexport) 
+#endif
+void xopenme_dump_state(void);
+
+extern 
+#ifdef WINDOWS
+__declspec(dllexport) 
+#endif
+void xopenme_add_var_i(int var, char* desc, int svar);
+
+extern 
+#ifdef WINDOWS
+__declspec(dllexport) 
+#endif
+void xopenme_add_var_f(int var, char* desc, float svar);
+
+extern 
+#ifdef WINDOWS
+__declspec(dllexport) 
+#endif
+void xopenme_add_var_d(int var, char* desc, double svar);
+
+extern 
+#ifdef WINDOWS
+__declspec(dllexport) 
+#endif
+void xopenme_add_var_s(int var, char* desc, void* svar);
+
+extern 
+#ifdef WINDOWS
+__declspec(dllexport) 
+#endif
+void xopenme_dump_memory(char* name, void* array, long size);
+
+extern 
+#ifdef WINDOWS
+__declspec(dllexport) 
+#endif
+void xopenme_finish(void);
 
 #ifdef __cplusplus
 }

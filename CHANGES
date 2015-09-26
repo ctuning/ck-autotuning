@@ -1,3 +1,5 @@
+* 2015.09.25 FGG: * fixing xopenme.h for Windows 
+
 * 2015.09.22 FGG: * fixing pipeline update when dataset is changed (i.e. updating related datset files)
                     (reported by Anton)
                   * taking statistical repeat from pipeline if exists (to properly replay experiments) 
