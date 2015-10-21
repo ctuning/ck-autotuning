@@ -1,3 +1,6 @@
+* 2015.10.22 FGG: * adding support to compile via scripts 
+                    (useful for PENCILCC from CARP project and LLVM LNT)
+
 * 2015.09.25 FGG: * fixing xopenme.h for Windows 
 
 * 2015.09.22 FGG: * fixing pipeline update when dataset is changed (i.e. updating related datset files)

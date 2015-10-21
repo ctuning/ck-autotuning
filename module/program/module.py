@@ -799,6 +799,8 @@ def process_in_dir(i):
           if sccmd=='':
              return {'return':1, 'error':'compile CMD is not found'}
 
+          sccmd=sccmd.replace('$#script_ext#$',sext)
+
           # Source files
           sfs=meta.get('source_files',[])
 
@@ -809,10 +811,12 @@ def process_in_dir(i):
 
           scfb=''
 
+          flags_def=''
           if fspeed=='yes':
                scfb+=' '+svarb+'CK_OPT_SPEED'+svare+' '
+               flags_def+=' '+svarb+'CK_OPT_SPEED'+svare+' '
           elif fsize=='yes':
-               scfb+=' '+svarb+'CK_OPT_SIZE'+svare+' '
+               flags_def+=' '+svarb+'CK_OPT_SIZE'+svare+' '
 
           scfb+=svarb+'CK_FLAGS_CREATE_OBJ'+svare
           scfb+=' '+svarb+'CK_COMPILER_FLAGS_OBLIGATORY'+svare
@@ -869,66 +873,116 @@ def process_in_dir(i):
              sb+='\n'+no+ee+'\n\n'
 
           if o=='con': ck.out(sep)
-          for sf in sfs:
-              sf=sf.strip()
 
-              xcfb=scfb
-              xcfa=scfa
+          # Compilation flags
+          xcfb=scfb
 
-              # Check if source from another entry (species)
-              full_path=''
-              if sf.startswith('$#ck_take_from_{'):
-                 b2=sf.find('}#$')
-                 if b2=='':
-                    return {'return':1, 'error':'can\'t parse source file '+sf+' ...'}
-                 bb=sf[16:b2]
+          if sbcv!='': xcfb+=' '+sbcv
+          if sin!='': xcfb+=' '+sin
+          xcfb+=' '+flags
 
-                 rb=ck.access({'action':'load',
-                               'module_uoa':muoa,
-                               'data_uoa':bb})
-                 if rb['return']>0: 
-                    return {'return':1, 'error':'can\'t find sub-entry '+bb}
+          # Linking flags
+          slfb=svarb+'CK_COMPILER_FLAGS_OBLIGATORY'+svare
+          slfb+=' '+lflags
+          if ctype=='dynamic':
+             slfb+=' '+svarb+'CK_FLAGS_DYNAMIC_BIN'+svare
+          elif ctype=='static':
+             slfb+=' '+svarb+'CK_FLAGS_STATIC_BIN'+svare
 
-                 sf=sf[b2+3:]
+          slfa=' '+svarb+svarb1+'CK_FLAGS_OUTPUT'+svare1+svare+target_exe
+          slfa+=' '+svarb+'CK_LD_FLAGS_MISC'+svare
+          slfa+=' '+svarb+'CK_LD_FLAGS_EXTRA'+svare
 
-                 full_path=rb['path']
-              else:
-                 full_path=sfprefix
+          if sll!='': slfa+=' '+sll
 
-              sf0,sf1=os.path.splitext(sf)
+          evr=meta.get('extra_ld_vars','')
+          if evr!='':
+             evr=evr.replace('$<<',svarb).replace('>>$',svare)
+             slfa+=' '+evr
 
-              sf00=os.path.basename(sf)
-              sf00a,sf00b=os.path.splitext(sf00)
+          # Check if includes as environment var
+          llinkle=meta.get('linker_add_lib_as_env',[])
+          if len(llinkle)>0:
+             for q in llinkle:
+                 if slfa!='': slfa+=' '
+                 slfa+=svarb+svarb1+q+svare1+svare
 
-              sfobj=sf00a+sobje
-              if sofs!='': sofs+=' '
-              sofs+=sfobj
-              xsofs.append(sfobj)
+          # Check if call compile CMD only once with all files
+          if meta.get('use_compile_script','')=='yes':
+             cc=sccmd
 
-              if sbcv!='': xcfb+=' '+sbcv
+             # Add compiler and linker flags as environment
+             sb+='\n'
+             genv={'CK_PROG_COMPILER_FLAGS_BEFORE':xcfb,
+                   'CK_PROG_LINKER_FLAGS_BEFORE':slfb,
+                   'CK_PROG_LINKER_FLAGS_AFTER':slfa,
+                   'CK_PROG_COMPILER_FLAGS':flags_def+' '+flags,
+                   'CK_PROG_LINKER_LIBS':sll,
+                   'CK_PROG_TARGET_EXE':target_exe}
+             for gg in genv:
+                 gx=genv[gg]
+                 if eifs!='': gx=gx.replace(eifs, '\\'+eifs)
+                 sb+=no+eset+' '+gg+'='+eifs+gx+eifs+'\n'
 
-              if sin!='': xcfb+=' '+sin
+             sb+='echo '+eifs+cc+eifs+'\n'
+             sb+=no+cc+'\n'
+             sb+=no+sqie+'\n'
 
-              xcfb+=' '+flags
+             sb+='\n'
+          else:
+             for sf in sfs:
+                 sf=sf.strip()
 
-              if 'CK_FLAGS_OUTPUT' in denv:
-                 xcfa+=' '+svarb+svarb1+'CK_FLAGS_OUTPUT'+svare1+svare+sfobj
+                 xcfa=scfa
 
-              cc=sccmd
-              cc=cc.replace('$#source_file#$', os.path.join(full_path,sf))
+                 # Check if source from another entry (species)
+                 full_path=''
+                 if sf.startswith('$#ck_take_from_{'):
+                    b2=sf.find('}#$')
+                    if b2=='':
+                       return {'return':1, 'error':'can\'t parse source file '+sf+' ...'}
+                    bb=sf[16:b2]
 
-              cc=cc.replace('$#compiler#$', svarb+compiler_env+svare)
+                    rb=ck.access({'action':'load',
+                                  'module_uoa':muoa,
+                                  'data_uoa':bb})
+                    if rb['return']>0: 
+                       return {'return':1, 'error':'can\'t find sub-entry '+bb}
 
-              cc=cc.replace('$#flags_before#$', xcfb)
-              cc=cc.replace('$#flags_after#$', xcfa)
+                    sf=sf[b2+3:]
 
-              if sunparsed!='': cc+=' '+sunparsed
+                    full_path=rb['path']
+                 else:
+                    full_path=sfprefix
 
-              sb+='echo '+eifs+cc+eifs+'\n'
-              sb+=no+cc+'\n'
-              sb+=no+sqie+'\n'
+                 sf0,sf1=os.path.splitext(sf)
 
-              sb+='\n'
+                 sf00=os.path.basename(sf)
+                 sf00a,sf00b=os.path.splitext(sf00)
+
+                 sfobj=sf00a+sobje
+                 if sofs!='': sofs+=' '
+                 sofs+=sfobj
+                 xsofs.append(sfobj)
+
+                 if 'CK_FLAGS_OUTPUT' in denv:
+                    xcfa+=' '+svarb+svarb1+'CK_FLAGS_OUTPUT'+svare1+svare+sfobj
+
+                 cc=sccmd
+                 cc=cc.replace('$#source_file#$', os.path.join(full_path,sf))
+
+                 cc=cc.replace('$#compiler#$', svarb+compiler_env+svare)
+
+                 cc=cc.replace('$#flags_before#$', xcfb)
+                 cc=cc.replace('$#flags_after#$', xcfa)
+
+                 if sunparsed!='': cc+=' '+sunparsed
+
+                 sb+='echo '+eifs+cc+eifs+'\n'
+                 sb+=no+cc+'\n'
+                 sb+=no+sqie+'\n'
+
+                 sb+='\n'
 
           # Obtaining link CMD (first from program entry, then default from this module)
           if sofs!='':
@@ -1057,6 +1111,7 @@ def process_in_dir(i):
              # Check some characteristics
              if os.path.isfile(target_exe):
                 ccc['binary_size']=os.path.getsize(target_exe)
+                ofs=ccc['binary_size']
 
                 # Try to read md5 file
                 if os.path.isfile(target_exe+'.md5'):
@@ -1070,6 +1125,7 @@ def process_in_dir(i):
 
              # Check obj file sizes
              if len(xsofs)>0:
+                ofs=0
                 ccc['obj_sizes']={}
                 for q in xsofs:
                     if os.path.isfile(q):
@@ -1534,7 +1590,7 @@ def process_in_dir(i):
        lppc=rt.get('post_process_cmds',[])
        ppc=rt.get('post_process_cmd','')
        if ppc!='': lppc.append(ppc)
-       
+
        fgtf=rt.get('fine_grain_timer_file','')
 
        # Check if extra post_process
