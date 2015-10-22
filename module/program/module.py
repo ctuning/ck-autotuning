@@ -191,6 +191,8 @@ def process_in_dir(i):
 
               (remove_compiler_vars) - list of compiler vars to remove
 
+              (extra_env_for_compliation) - set environment variables before compiling program
+
               (flags)                - compile flags
               (lflags)               - link flags
 
@@ -323,6 +325,7 @@ def process_in_dir(i):
     lflags=i.get('lflags','')
     cv=i.get('compiler_vars',{})
     rcv=i.get('remove_compiler_vars',[])
+    eefc=i.get('extra_env_for_compliation',{})
 
     fspeed=i.get('speed','')
     fsize=i.get('size','')
@@ -920,9 +923,12 @@ def process_in_dir(i):
                    'CK_PROG_LINKER_LIBS':sll,
                    'CK_PROG_TARGET_EXE':target_exe}
 
-             extcomp=meta.get('add_extra_env_for_compliation',{})
+             extcomp=meta.get('extra_env_for_compliation',{})
              if len(extcomp)>0:
                 genv.update(extcomp)
+
+             if len(eefc)>0:
+                genv.update(eefc)
 
              for gg in genv:
                  gx=genv[gg]
@@ -2075,6 +2081,8 @@ def pipeline(i):
 
               (remove_compiler_vars) - list of compiler vars to remove
 
+              (extra_env_for_compliation) - set environment variables before compiling program
+
               (flags)                - compile flags
               (lflags)               - link flags
 
@@ -2906,6 +2914,7 @@ def pipeline(i):
 
     cv=ck.get_from_dicts(i,'compiler_vars',{},choices)
     rcv=ck.get_from_dicts(i,'remove_compiler_vars',[],choices)
+    eefc=ck.get_from_dicts(i,'extra_env_for_compliation',{},choices)
 
     ###############################################################################################################
     # PIPELINE SECTION: get run vars (preset environment)
@@ -3208,6 +3217,7 @@ def pipeline(i):
               'extra_env':eenv,
               'compiler_vars':cv,
               'remove_compiler_vars':rcv,
+              'extra_env_for_compliation':eefc,
               'compile_timeout':xcto,
               'out':oo}
           r=process_in_dir(ii)
@@ -3347,6 +3357,7 @@ def pipeline(i):
            'run_cmd_substitutes':rcsub,
            'compiler_vars':cv,
            'remove_compiler_vars':rcv,
+           'extra_env_for_compliation':eefc,
            'run_timeout':xrto,
            'out':oo}
        r=process_in_dir(ii)
