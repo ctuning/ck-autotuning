@@ -922,7 +922,7 @@ def process_in_dir(i):
 
              extcomp=meta.get('add_extra_env_for_compliation',{})
              if len(extcomp)>0:
-                genv.merge(extcomp)
+                genv.update(extcomp)
 
              for gg in genv:
                  gx=genv[gg]
