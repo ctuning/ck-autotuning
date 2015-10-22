@@ -919,6 +919,11 @@ def process_in_dir(i):
                    'CK_PROG_COMPILER_FLAGS':flags_def+' '+flags,
                    'CK_PROG_LINKER_LIBS':sll,
                    'CK_PROG_TARGET_EXE':target_exe}
+
+             extcomp=meta.get('add_extra_env_for_compliation',{})
+             if len(extcomp)>0:
+                genv.merge(extcomp)
+
              for gg in genv:
                  gx=genv[gg]
                  if eifs!='': gx=gx.replace(eifs, '\\'+eifs)
@@ -2486,7 +2491,7 @@ def pipeline(i):
                 if r['return']==0:
                    xdesc=r['dict']
 
-    # Second, if duoa is not detected ordefined, prepare selection 
+    # Second, if duoa is not detected or defined, prepare selection 
     duid=''
     if len(meta)==0:
        if duoa=='': duoa='*'

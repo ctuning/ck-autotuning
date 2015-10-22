@@ -1,5 +1,7 @@
 * 2015.10.22 FGG: * adding support to compile via scripts 
                     (useful for PENCILCC from CARP project and LLVM LNT)
+                  * adding "add_extra_env_for_compliation" in compilation meta
+                    (useful for PENCILBENCH)
 
 * 2015.09.25 FGG: * fixing xopenme.h for Windows 
 
