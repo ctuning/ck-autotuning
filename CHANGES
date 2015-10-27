@@ -1,3 +1,5 @@
+* 2015.10.27 FGG: * adding 'cp' to copy programs and update 'backup_data_uid' (fixing issue #41)
+
 * 2015.10.22 FGG: * adding support to compile via scripts 
                     (useful for PENCILCC from CARP project and LLVM LNT)
                   * adding "add_extra_env_for_compliation" in compilation meta

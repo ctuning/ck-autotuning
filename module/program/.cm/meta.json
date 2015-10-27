@@ -9,6 +9,9 @@
     "compile": {
       "desc": "compile a given program"
     }, 
+    "cp": {
+      "desc": "copy program"
+    }, 
     "pipeline": {
       "desc": "universal program compilation and execution pipeline (workflow)"
     }, 

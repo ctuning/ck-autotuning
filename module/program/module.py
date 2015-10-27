@@ -3698,3 +3698,39 @@ def substitute_some_ck_keys(i):
     s=s.replace('$#ck_host_os_sep#$', os.path.sep)
 
     return {'return':0, 'string':s, 'path':p}
+
+##############################################################################
+# copy program
+
+def cp(i):
+    """
+    Input:  {
+            }
+
+    Output: {
+              return       - return code =  0, if successful
+                                         >  0, if error
+              (error)      - error text if return > 0
+            }
+
+    """
+
+    i['common_func']='yes'
+    r=ck.access(i)
+
+    ruid=r['repo_uid']
+    muid=r['module_uid']
+    duid=r['data_uid']
+    d=r['dict']
+
+    d['backup_data_uid']=duid
+
+    ii={'action':'update',
+        'module_uoa':muid,
+        'repo_uoa':ruid,
+        'data_uoa':duid,
+        'dict':d,
+        'ignore_update':'yes',
+        'sort_keys':'yes'}
+
+    return ck.access(ii)
