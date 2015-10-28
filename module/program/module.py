@@ -658,6 +658,7 @@ def process_in_dir(i):
        if target_exe!='' and os.path.isfile(target_exe):
           os.remove(target_exe)
 
+xyz
     if sa=='compile' or sa=='get_compiler_version':
        # Add compiler dep again, if there
        cb=deps.get('compiler',{}).get('bat','')
@@ -1048,11 +1049,16 @@ def process_in_dir(i):
                 sb+=no+cc+'\n'
                 sb+=no+sqie+'\n'
 
-          # Try objdump
+          # Add objdump
           sb+='\n'+no+svarb+'CK_OBJDUMP'+svare+' '+target_exe+' '+stro+' '+target_exe+'.dump'+'\n'
+
+          # Add md5sum
           x='<'
           if hplat=='win':x='' 
           sb+='\n'+no+md5sum+' '+x+' '+target_exe+'.dump '+stro+' '+target_exe+'.md5'+'\n'
+
+          # Add git hash (if supported)
+          sb+='\ngit rev-parse HEAD '+stro+' '+target_exe_'.git_hash'+'\n'
 
           # Stop energy monitor, if needed and if supported
           if me=='yes' and sspm2!='':
@@ -1101,6 +1107,14 @@ def process_in_dir(i):
 
           if sca!='yes':
              if fn!='' and os.path.isfile(fn): os.remove(fn)
+
+          git_hash=''
+          # Try to read git hush file
+          if os.path.isfile(target_exe+'.git_hash'):
+             rz=ck.load_text_file({'text_file':target_exe+'.git_hash'})
+             if rz['return']==0:
+                git_hash=rz['string']
+                ccc['program_git_hash']=git_hash
 
           ofs=0
           md5=''

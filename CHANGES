@@ -1,4 +1,7 @@
 * 2015.10.28 * adding CK_PROG_COMPILER_VARS when compiling via script ...
+             * adding "git rev-parse HEAD" during compilation to check
+               GIT hash for the compiled program (useful to debug and explain
+                unexpected behavior when reproducing experiments)
 
 * 2015.10.27 * adding 'cp' to copy programs and update 'backup_data_uid' (fixing issue #41)
 
