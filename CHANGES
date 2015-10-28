@@ -1,31 +1,33 @@
-* 2015.10.27 FGG: * adding 'cp' to copy programs and update 'backup_data_uid' (fixing issue #41)
+* 2015.10.28 * adding CK_PROG_COMPILER_VARS when compiling via script ...
 
-* 2015.10.22 FGG: * adding support to compile via scripts 
+* 2015.10.27 * adding 'cp' to copy programs and update 'backup_data_uid' (fixing issue #41)
+
+* 2015.10.22 * adding support to compile via scripts 
                     (useful for PENCILCC from CARP project and LLVM LNT)
                   * adding "add_extra_env_for_compliation" in compilation meta
                     (useful for PENCILBENCH)
 
-* 2015.09.25 FGG: * fixing xopenme.h for Windows 
+* 2015.09.25 * fixing xopenme.h for Windows 
 
-* 2015.09.22 FGG: * fixing pipeline update when dataset is changed (i.e. updating related datset files)
+* 2015.09.22 * fixing pipeline update when dataset is changed (i.e. updating related datset files)
                     (reported by Anton)
                   * taking statistical repeat from pipeline if exists (to properly replay experiments) 
 
-* 2015.09.10 FGG: * moved 'script:platform.init' to 'platform.init:*'
+* 2015.09.10 * moved 'script:platform.init' to 'platform.init:*'
 
-* 2015.09.09 FGG: * adding 'skip_stat_analysis' to compact recorded data when stat analysis is not needed
+* 2015.09.09 * adding 'skip_stat_analysis' to compact recorded data when stat analysis is not needed
                     (useful for CLSmith)
                   * adding function 'import_all_files' in 'dataset' to automatically register all dataset files
 
-* 2015.09.08 FGG: * improving dataset file selector (suggested by Anton)
+* 2015.09.08 * improving dataset file selector (suggested by Anton)
                   * making text to select UIDs less ambiguous (asked by Anton)
                   * fixing program calibration problem for slambench (detected by Anton)
                   * if iterations in pipeline == -1, infinite loop (suggested by Andrei Lascu)
 
-* 2015.09.02 FGG: * turning off 'state check' (frequency change during experiments) by default
+* 2015.09.02 * turning off 'state check' (frequency change during experiments) by default
                     in autotuning demos
 
-* 2015.09.01 FGG: * adding timeout for program compilation and execution
+* 2015.09.01 * adding timeout for program compilation and execution
                     (useful for research in computer engineering where
                     generated code may be buggy and result in infinite loops,
                     i.e. during autotuning or compiler testing and bug detection)
@@ -33,15 +35,15 @@
                   * adding possibility to record only failed cases
                     (useful to crowdsource testing compilers/programs/os/architecture for bugs)
 
-* 2015.08.12 FGG: * adding 'auto' tag to identify/detect automatically extracted compiler descriptions
+* 2015.08.12 * adding 'auto' tag to identify/detect automatically extracted compiler descriptions
                   * adding parsing of reserved key $#ck_take_from_{CID}$# - for example, used to calculate accuracy for autotuning in slambench
                   * adding possibility to reverse key order in Pareto frontier filter during multi-objective autotuning 
                     (useful for FPS in slambench, for example)
 
-* 2015.08.11 FGG: * showing compiler flags in HTML (when viewing entries)
+* 2015.08.11 * showing compiler flags in HTML (when viewing entries)
                   * fixing some wrong compiler flag descriptions
 
-* 2015.08.10 FGG: * added GCC 5.2.0 CK package (will be downloaded and installed)
+* 2015.08.10 * added GCC 5.2.0 CK package (will be downloaded and installed)
 
-* 2015.08.09 FGG: * add extra dict when recording experiments (useful to record name and subview_uoa, for example)
+* 2015.08.09 * add extra dict when recording experiments (useful to record name and subview_uoa, for example)
                   * fixing a few bugs in experiment viewing

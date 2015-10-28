@@ -919,6 +919,7 @@ def process_in_dir(i):
              genv={'CK_PROG_COMPILER_FLAGS_BEFORE':xcfb,
                    'CK_PROG_LINKER_FLAGS_BEFORE':slfb,
                    'CK_PROG_LINKER_FLAGS_AFTER':slfa,
+                   'CK_PROG_COMPILER_VARS':sbcv,
                    'CK_PROG_COMPILER_FLAGS':flags_def+' '+flags,
                    'CK_PROG_LINKER_LIBS':sll,
                    'CK_PROG_TARGET_EXE':target_exe}
