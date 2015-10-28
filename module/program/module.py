@@ -658,7 +658,6 @@ def process_in_dir(i):
        if target_exe!='' and os.path.isfile(target_exe):
           os.remove(target_exe)
 
-xyz
     if sa=='compile' or sa=='get_compiler_version':
        # Add compiler dep again, if there
        cb=deps.get('compiler',{}).get('bat','')
