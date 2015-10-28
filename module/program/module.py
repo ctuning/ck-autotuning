@@ -1112,7 +1112,7 @@ def process_in_dir(i):
           if os.path.isfile(target_exe+'.git_hash'):
              rz=ck.load_text_file({'text_file':target_exe+'.git_hash'})
              if rz['return']==0:
-                git_hash=rz['string']
+                git_hash=rz['string'].strip()
                 ccc['program_git_hash']=git_hash
 
           ofs=0
