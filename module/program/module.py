@@ -2536,6 +2536,8 @@ def pipeline(i):
                                          'sort':1000}
 
           if o=='con' and si!='yes':
+             ck.out('************ Selecting program/benchmark/kernel ...')
+             ck.out('')
              r=ck.select_uoa({'choices':lst})
              if r['return']>0: return r
              duoa=r['choice']
