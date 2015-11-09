@@ -238,7 +238,6 @@ def make(i):
                                    update=True
                              else:
                                 xupdate=False
-
                           else: # normally choice
                              if dv=='':
                                 ln=0
@@ -252,7 +251,9 @@ def make(i):
                                 dv=yhc[ln]
                                 xupdate=False
                              else:
-                                dv=ydefault
+# Next is wrong, but check compatibility with previous cases!
+#                                dv=ydefault
+                                dv=yhc[0]
                                 if tp=='loop': xupdate=True
                                 else:
                                    ci=0
