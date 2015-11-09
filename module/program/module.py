@@ -1541,37 +1541,46 @@ def process_in_dir(i):
                  c=c.replace(kk, df)
 
                  if remote=='yes' and srn==0 and sdi!='yes' and sdc!='yes':
-                    df0, df1 = os.path.split(df)
+                    # check if also extra files
+                    dfx=[df]
 
-                    # Push data files to device
-                    y=tosd.get('remote_push_pre','').replace('$#device#$',xtdid)
-                    if y!='':
-                       y=y.replace('$#file1#$', os.path.join(dp,df))
-                       y=y.replace('$#file1s#$', df1)
-                       y=y.replace('$#file2#$', rdir+stdirs+df)
+                    dfx1=dd.get('extra_dataset_files',{}).get(df,[])
+                    for dfy in dfx1:
+                        if dfy not in dfx:
+                           dfx.append(dfy)
 
-                       if o=='con':
-                          ck.out(sep)
-                          ck.out(y)
-                          ck.out('')
+                    for dfz in dfx:
+                        df0, df1 = os.path.split(dfz)
 
-                       ry=os.system(y)
-                       if ry>0:
-                          return {'return':1, 'error':'copying to remote device failed'}
+                        # Push data files to device
+                        y=tosd.get('remote_push_pre','').replace('$#device#$',xtdid)
+                        if y!='':
+                           y=y.replace('$#file1#$', os.path.join(dp,dfz))
+                           y=y.replace('$#file1s#$', df1)
+                           y=y.replace('$#file2#$', rdir+stdirs+dfz)
 
-                    # Push data files to device, if first time
-                    y=tosd['remote_push'].replace('$#device#$',xtdid)
-                    y=y.replace('$#file1#$', os.path.join(dp,df))
-                    y=y.replace('$#file1s#$', df1)
-                    y=y.replace('$#file2#$', rdir+stdirs+df)
-                    if o=='con':
-                       ck.out(sep)
-                       ck.out(y)
-                       ck.out('')
+                           if o=='con':
+                              ck.out(sep)
+                              ck.out(y)
+                              ck.out('')
 
-                    ry=os.system(y)
-                    if ry>0:
-                       return {'return':1, 'error':'copying to remote device failed'}
+                           ry=os.system(y)
+                           if ry>0:
+                              return {'return':1, 'error':'copying to remote device failed'}
+
+                        # Push data files to device, if first time
+                        y=tosd['remote_push'].replace('$#device#$',xtdid)
+                        y=y.replace('$#file1#$', os.path.join(dp,dfz))
+                        y=y.replace('$#file1s#$', df1)
+                        y=y.replace('$#file2#$', rdir+stdirs+dfz)
+                        if o=='con':
+                           ck.out(sep)
+                           ck.out(y)
+                           ck.out('')
+
+                        ry=os.system(y)
+                        if ry>0:
+                           return {'return':1, 'error':'copying to remote device failed'}
 
           rcm=dd.get('cm_properties',{}).get('run_time',{}).get('run_cmd_main',{})
           for k in rcm:
