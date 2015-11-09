@@ -677,7 +677,7 @@ def autotune(i):
 
     if m>0:
        ck.out(sep)
-       ck.out('Autotuning finished!')
+       ck.out('Done!')
 
     rz={'return':0, 'last_iteration_output':rr, 'last_stat_analysis': rrr, 'experiment_desc':dd}
 
