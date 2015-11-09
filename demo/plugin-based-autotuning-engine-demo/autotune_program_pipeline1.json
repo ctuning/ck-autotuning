@@ -119,5 +119,6 @@
 
   "seed":12345,
   "iterations":20,
-  "repetitions":3
+  "repetitions":3,
+  "sleep":0
 }

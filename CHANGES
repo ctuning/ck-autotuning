@@ -1,3 +1,5 @@
+* 2015.11.10 * adding "sleep" parameter to autotune pipeline (set delay between interations)
+
 * 2015.10.28 * adding CK_PROG_COMPILER_VARS when compiling via script ...
              * adding "git rev-parse HEAD" during compilation to check
                GIT hash for the compiled program (useful to debug and explain

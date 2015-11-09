@@ -30,5 +30,6 @@
   ], 
   "repetitions": 3, 
   "seed": 12345, 
-  "iterations": 1000
+  "iterations": 1000,
+  "sleep":0
 }

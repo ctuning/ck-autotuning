@@ -163,6 +163,8 @@ def autotune(i):
                (state)                - pre-load state preserved across iterations
 
                (save_to_file)         - if !='', save output dictionary to this file
+
+               (sleep)                - set sleep before iterations ...
             }
 
     Output: {
@@ -193,6 +195,9 @@ def autotune(i):
     ic['cid']=''
     ic['data_uoa']=''
 
+    dsleep=3
+    if i.get('sleep','')!='':
+       dsleep=float(i['sleep'])
 
     tags=ck.get_from_dicts(ic, 'tags', [], None)
     tags=ck.convert_str_tags_to_list(tags) # if string, convert to list
@@ -445,7 +450,7 @@ def autotune(i):
            finish=True
            break
 
-        time.sleep(3) # wait to see selection ...
+        time.sleep(dsleep) # wait to see selection ...
 
         # Check if pass this iteration
         if mm<sfi:
