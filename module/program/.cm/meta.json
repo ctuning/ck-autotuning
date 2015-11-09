@@ -15,6 +15,9 @@
     "pipeline": {
       "desc": "universal program compilation and execution pipeline (workflow)"
     }, 
+    "process_in_dir": {
+      "desc": "process program in a given directory (clean, compile or run)"
+    }, 
     "run": {
       "desc": "run a given program"
     }, 
