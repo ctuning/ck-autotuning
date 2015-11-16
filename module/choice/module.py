@@ -192,11 +192,11 @@ def make(i):
                dv=ydefault
 
                # If exploration, set first
-               if tp=='parallel-loop' or tp=='loop':
-                  if yestart!='': 
-                     dv=r1
-                  elif len(yhc)>0:
-                       dv=yhc[0]
+#               if tp=='parallel-loop' or tp=='loop':
+               if yestart!='': 
+                  dv=r1
+               elif len(yhc)>0:
+                    dv=yhc[0]
 
                if ci!=0:
                   lcqx=len(yhc)

@@ -1,3 +1,6 @@
+* 2015.11.16 * adding correct selection of default parameters for the first iteration of random autotuning 
+               (noticed during dgemmbench OpenCL autotuning)
+
 * 2015.11.10 * adding "sleep" parameter to autotune pipeline (set delay between interations)
              * fixing error in exhaustive exploration when using "loop" with "choices" 
              * adding extra_dataset_files to dataset module to support more files
