@@ -446,6 +446,7 @@ def process_in_dir(i):
     stre=tosd.get('redirect_stderr','')
     ubtr=hosd.get('use_bash_to_run','')
     no=tosd.get('no_output','')
+    bex=hosd.get('batch_exit','')
 
     md5sum=hosd.get('md5sum','')
 
@@ -1057,7 +1058,7 @@ def process_in_dir(i):
           sb+='\n'+no+md5sum+' '+x+' '+target_exe+'.dump '+stro+' '+target_exe+'.md5'+'\n'
 
           # Add git hash (if supported)
-          sb+='\ngit rev-parse HEAD '+stro+' '+target_exe+'.git_hash'+'\n'
+          sb+='\n'+no+'git rev-parse HEAD '+stro+' '+target_exe+'.git_hash'+'\n'
 
           # Stop energy monitor, if needed and if supported
           if me=='yes' and sspm2!='':
@@ -1069,6 +1070,10 @@ def process_in_dir(i):
              sb+='\n'
              sb+=scall+' '+sspm2+'\n'
              sb+='\n'
+
+          # Add exit /0 if needed (on Windows git and md5sum can mess up return code)
+          if bex!='':
+             sb+='\n\n'+bex.replace('$#return_code#$','0')
 
           # Record to tmp batch and run
           rx=ck.gen_tmp_file({'prefix':'tmp-', 'suffix':sext, 'remove_dir':'yes'})
@@ -1096,6 +1101,7 @@ def process_in_dir(i):
           rx=0
           ry=ck.system_with_timeout({'cmd':y, 'timeout':xcto})
           rry=ry['return']
+
           if rry>0:
              if rry!=8: return ry
           else:
