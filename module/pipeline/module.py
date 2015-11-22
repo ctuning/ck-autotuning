@@ -345,9 +345,10 @@ def autotune(i):
 
     srm=i.get('repetitions','')
     if srm=='': 
-       srm=pipeline.get('choices',{}).get('repeat','')
-       if srm=='':
-          srm=4
+#       FGG: next one is wrong - that repat is CT_REPEAT_MAIN (kernel repetitions)
+#       srm=pipeline.get('choices',{}).get('repeat','')
+#       if srm=='':
+       srm=4
     try: srm=int(srm)
     except Exception as e: pass
 

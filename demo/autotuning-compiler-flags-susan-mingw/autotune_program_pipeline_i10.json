@@ -16,7 +16,7 @@
   "pipeline_update":{
      "repeat":200,
      "best_base_flag":"yes",
-     "select_best_base_flag_for_first_iteration":"yes"
+     "speed":"yes"
    },
 
   "record":"yes",

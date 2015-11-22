@@ -9,7 +9,7 @@
 
   "pipeline_update":{
      "repeat":200,
-     "select_best_base_flag_for_first_iteration":"yes"
+     "speed":"yes"
    },
 
   "record":"yes",

@@ -1,3 +1,6 @@
+* 2015.11.22 * fixing compile flag autotuning demos; 
+             * fixing a few bugs in random compiler flag autotuning (iterative compilation);
+
 * 2015.11.20 * fixing problem with return code when compiling programs, if programs are not from GIT repo
 
 * 2015.11.16 * adding correct selection of default parameters for the first iteration of random autotuning 

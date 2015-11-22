@@ -198,7 +198,7 @@ def make(i):
                elif len(yhc)>0:
                     dv=yhc[0]
 
-               if ci!=0:
+               if ci!=0 or (tp=='random' or tp=='random-with-next'):
                   lcqx=len(yhc)
                   if tp=='random' or tp=='random-with-next':
                      omit=False
@@ -207,7 +207,9 @@ def make(i):
                         if x<(1000.0*top):
                            omit=True
 
-                     if not omit:
+                     if omit:
+                        dv=''
+                     else:
                         if lcqx>0:
                            ln=my_random.randrange(0, lcqx)
                            dv=yhc[ln]
