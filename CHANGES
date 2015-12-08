@@ -1,3 +1,6 @@
+* 2015.12.06 * adding 'local_platform' key to be able to use local platform parameters
+               (useful to retarget experiments from another machine)
+
 * 2015.11.23 * adding algorithm module dummy (future work)
 
 * 2015.11.22 * fixing compile flag autotuning demos; 

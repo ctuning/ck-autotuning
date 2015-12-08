@@ -2057,6 +2057,9 @@ def pipeline(i):
               (target_os)            - OS module to check (if omitted, analyze host)
               (device_id)            - device id if remote (such as adb)
 
+              (local_platform)       - if 'yes', use host_os/target_os from the current platform
+                                       (useful when replaying experiments from another machine and even OS)
+
               (prepare)              - if 'yes', only prepare setup, but do not clean/compile/run program
               (save_to_file)         - if !='', save updated input/output (state) to this file
               (skip_interaction)     - if 'yes' and out=='con', skip interaction to choose parameters
@@ -2353,6 +2356,13 @@ def pipeline(i):
     tos=ck.get_from_dicts(i, 'target_os', '', choices)
     tbits=ck.get_from_dicts(i, 'target_os_bits', '', choices)
     tdid=ck.get_from_dicts(i, 'device_id', '', choices)
+
+    # Useful when replaying experiments, to retarget them to a local platform
+    if i.get('local_platform','')=='yes':
+       hos=''
+       tos=''
+       tbits=''
+       tdid=''
 
     # Get some info about platforms
     ox=oo
