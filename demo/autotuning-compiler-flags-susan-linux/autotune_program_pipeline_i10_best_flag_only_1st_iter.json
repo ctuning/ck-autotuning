@@ -15,11 +15,13 @@
 
   "pipeline_update":{
      "repeat":200,
-     "speed":"yes"
+     "best_base_flag":"yes"
    },
 
   "record":"yes",
   "record_uoa":"demo-autotune-flags-susan-linux-i10",
+
+  "tags":"demo,autotuning,compiler flags,susan,linux",
 
   "features_keys_to_process":["##choices#*"],
 

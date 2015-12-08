@@ -3,7 +3,6 @@
 
   "choices_order":[
     [
-     "##compiler_flags#bool-*"
     ]
   ],
 
@@ -13,6 +12,8 @@
 
   "record":"yes",
   "record_uoa":"demo-autotune-flags-susan-linux-no-flags",
+
+  "tags":"demo,autotuning,compiler flags,susan,linux",
 
   "features_keys_to_process":["##choices#*"],
 

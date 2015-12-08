@@ -3,9 +3,10 @@
 
   "choices_order":[
     [
-     "##compiler_flags#bool-*"
     ]
   ],
+
+  "repetitions":4,
 
   "pipeline_update":{
      "repeat":200,
@@ -14,6 +15,8 @@
 
   "record":"yes",
   "record_uoa":"demo-autotune-flags-susan-mingw-best",
+
+  "tags":"demo,autotuning,compiler flags,susan,mingw",
 
   "features_keys_to_process":["##choices#*"],
 

@@ -21,6 +21,8 @@
   "record":"yes",
   "record_uoa":"demo-autotune-flags-susan-linux-pareto",
 
+  "tags":"demo,autotuning,compiler flags,susan,linux",
+
   "features_keys_to_process":["##choices#*"],
 
   "record_params": {

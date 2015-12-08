@@ -12,8 +12,7 @@
   "iterations":10,
 
   "pipeline_update":{
-     "repeat":200,
-     "speed":"yes"
+     "repeat":200
    },
 
   "record":"yes",
@@ -21,6 +20,8 @@
 
   "record_repo":"remote-ck",
   "record_experiment_repo":"upload",
+
+  "tags":"demo,autotuning,compiler flags,susan,linux",
 
   "features_keys_to_process":["##choices#*"],
 

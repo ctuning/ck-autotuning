@@ -12,12 +12,13 @@
   "iterations":10,
 
   "pipeline_update":{
-     "repeat":200,
-     "speed":"yes"
+     "repeat":200
    },
 
   "record":"yes",
   "record_uoa":"demo-autotune-flags-susan-mingw-oall",
+
+  "tags":"demo,autotuning,compiler flags,susan,mingw",
 
   "record_repo":"remote-ck",
   "record_experiment_repo":"upload",

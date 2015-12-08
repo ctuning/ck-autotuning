@@ -1,3 +1,6 @@
+* 2015.12.07 * fixing compiler flag autotuning demo (small API change)
+             * fixing a bug in scatter graphs (found when plotting results of multi-objective optimization)
+
 * 2015.12.06 * adding 'local_platform' key to be able to use local platform parameters
                (useful to retarget experiments from another machine)
 

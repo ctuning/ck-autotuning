@@ -3,7 +3,6 @@
 
   "choices_order":[
     [
-     "##compiler_flags#bool-*"
     ]
   ],
 
@@ -16,6 +15,8 @@
 
   "record_repo":"remote-ck",
   "record_experiment_repo":"upload",
+
+  "tags":"demo,autotuning,compiler flags,susan,mingw",
 
   "features_keys_to_process":["##choices#*"],
 

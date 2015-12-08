@@ -9,15 +9,16 @@
      {"type":"loop"}
   ],
 
-  "iterations":10,
+  "iterations":-1,
 
   "pipeline_update":{
-     "repeat":200,
-     "speed":"yes"
+     "repeat":200
    },
 
   "record":"yes",
   "record_uoa":"demo-autotune-flags-susan-mingw-oall",
+
+  "tags":"demo,autotuning,compiler flags,susan,mingw",
 
   "features_keys_to_process":["##choices#*"],
 
