@@ -14,7 +14,8 @@
   "repetitions":3,
 
   "pipeline_update":{
-     "repeat":200
+     "repeat":200,
+     "best_base_flag":"yes"
    },
 
   "record":"yes",
