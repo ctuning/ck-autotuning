@@ -1853,6 +1853,7 @@ def process_in_dir(i):
              # For now ignore output
 
           # Check if post-processing script
+          srx=0 # script exit code
           if len(lppc)>0:
              for ppc in lppc:
                  ppc=ppc.replace('$#src_path_local#$', src_path_local).replace('$#src_path#$', src_path)
@@ -1871,8 +1872,15 @@ def process_in_dir(i):
                     ck.out('  (post processing: "'+ppc+'"')
                     ck.out('')
 
-                 rz=os.system(ppc)
-                 # For now ignore output
+                 srx=os.system(ppc)
+                 # If error code > 0, set as the error code of the main program and quit
+                 if srx>0:
+                    if o=='con':
+                       ck.out('  (post processing script failed!)')
+                    break
+
+          # If script failed, exit
+          if srx>0: break
 
           # Check if fine-grain time
           if fgtf!='':

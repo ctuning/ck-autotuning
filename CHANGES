@@ -1,3 +1,5 @@
+* 2015.12.12 * failing autotuning pipeline if postprocessing scripts fails
+
 * 2015.12.07 * fixing compiler flag autotuning demo (small API change)
              * fixing a bug in scatter graphs (found when plotting results of multi-objective optimization)
 
