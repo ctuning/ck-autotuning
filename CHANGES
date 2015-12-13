@@ -1,3 +1,8 @@
+* 2015.12.13 * adding boolean keys "compilation_success_bool" and "run_success_bool" (True/False)
+               to autotuning pipeline to speed up predictive analytics
+             * recording extra info for reproducibility in flat array (pipeline_state 
+               with statistical repetition number and with pipeline fail and reason)
+
 * 2015.12.12 * failing autotuning pipeline if postprocessing scripts fails
 
 * 2015.12.07 * fixing compiler flag autotuning demo (small API change)

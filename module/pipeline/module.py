@@ -164,6 +164,8 @@ def autotune(i):
 
                (save_to_file)         - if !='', save output dictionary to this file
 
+               (skip_done)            - if 'yes', do not print 'done' at the end of autotuning
+
                (sleep)                - set sleep before iterations ...
             }
 
@@ -467,6 +469,7 @@ def autotune(i):
         ddcl=[] # characteristics list (from statistical repetitions)
 
         fail='no'
+        fail_reason=''
         for sr in range(0, srm):
             if only_filter=='yes': continue
 
@@ -490,6 +493,7 @@ def autotune(i):
             state=rr.get('state',{})
 
             fail=rr.get('fail','')
+            fail_reason=rr.get('fail_reason','')
             if (fail!='yes' and record_only_failed!='yes') or (fail=='yes' and (record_failed=='yes' or record_only_failed=='yes')):
                ddcl.append(pipeline1.get('characteristics',{}))
 
@@ -511,6 +515,16 @@ def autotune(i):
 
             if fail=='yes': break
 
+        # Record extra pipeline info
+        fail_bool=False
+        if fail=='yes': fail_bool=True
+        print fail_reason
+        dd['pipeline_state']={'repetitions':srm,
+                              'fail_reason':fail_reason,
+                              'fail':fail,
+                              'fail_bool':fail_bool}
+
+        # Record list of characteristics (from multiple reptitions)
         dd['characteristics_list']=ddcl
 
         ##########################################################################################
@@ -673,7 +687,7 @@ def autotune(i):
        ck.out('')
        ck.out('All iterations are done!')
 
-    if m>0:
+    if m>0 and i.get('skip_done','')!='yes':
        ck.out(sep)
        ck.out('Done!')
 

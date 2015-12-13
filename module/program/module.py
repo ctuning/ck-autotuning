@@ -1125,19 +1125,25 @@ def process_in_dir(i):
           md5=''
           if rry==8:
              misc['compilation_success']='no'
+             misc['compilation_success_bool']=False
              misc['fail_reason']=ry['error']
 
              ccc['compilation_success']='no'
+             ccc['compilation_success_bool']=False
              ccc['fail_reason']=ry['error']
           elif rx>0:
              misc['compilation_success']='no'
+             misc['compilation_success_bool']=False
              misc['fail_reason']='return code '+str(rx)+' !=0 '
 
              ccc['compilation_success']='no'
+             ccc['compilation_success_bool']=False
              ccc['fail_reason']='return code '+str(rx)+' !=0 '
           else:
              misc['compilation_success']='yes'
+             misc['compilation_success_bool']=True
              ccc['compilation_success']='yes'
+             ccc['compilation_success_bool']=True
 
              # Check some characteristics
              if os.path.isfile(target_exe):
@@ -1950,19 +1956,25 @@ def process_in_dir(i):
 
        if rry==8:
           misc['run_success']='no'
+          misc['run_success_bool']=False
           misc['fail_reason']=ry['error']
 
           ccc['run_success']='no'
+          ccc['run_success_bool']=False
           ccc['fail_reason']=ry['error']
        if rx>0 and vcmd.get('ignore_return_code','').lower()!='yes':
           misc['run_success']='no'
+          misc['run_success_bool']=False
           misc['fail_reason']='return code '+str(rx)+' !=0 '
 
           ccc['run_success']='no'
+          ccc['run_success_bool']=False
           ccc['fail_reason']='return code '+str(rx)+' !=0 '
        else:
           misc['run_success']='yes'
+          misc['run_success_bool']=True
           ccc['run_success']='yes'
+          ccc['run_success_bool']=True
 
        ccc['execution_time_with_module']=time.time()-start_time
 
