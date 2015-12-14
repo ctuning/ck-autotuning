@@ -1864,10 +1864,11 @@ def process_in_dir(i):
              for ppc in lppc:
                  ppc=ppc.replace('$#src_path_local#$', src_path_local).replace('$#src_path#$', src_path)
 
-                 if remote=='yes':
-                    ppc=ppc.replace('$#dataset_path#$','')
-                 elif dp!='':
-                    ppc=ppc.replace('$#dataset_path#$',dp+sdirs)
+#                Post-processing is performed on the local machine, so dataset path should be local, not remote!
+#                 if remote=='yes':
+#                    ppc=ppc.replace('$#dataset_path#$','')
+#                 elif dp!='':
+                 ppc=ppc.replace('$#dataset_path#$',dp+sdirs)
 
                  r9=substitute_some_ck_keys({'string':ppc})
                  if r9['return']>0: return r9
