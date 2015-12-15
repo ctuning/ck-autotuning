@@ -311,6 +311,7 @@ def autotune(i):
        else:
           ii=copy.deepcopy(ic)
 
+       ii['out']=o # My latest change (to be able to use local env)
        ii['module_uoa']=puoa
        ii['action']='pipeline'
        ii['prepare']='yes'
@@ -518,7 +519,6 @@ def autotune(i):
         # Record extra pipeline info
         fail_bool=False
         if fail=='yes': fail_bool=True
-        print fail_reason
         dd['pipeline_state']={'repetitions':srm,
                               'fail_reason':fail_reason,
                               'fail':fail,
