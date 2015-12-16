@@ -598,6 +598,7 @@ def process_in_dir(i):
     # (REMOTE PLATFORMS ARE NOT SUPPORTED AT THE MOMENT, USE STATIC COMPILATION)
 #    if (ctype=='dynamic' or sa=='compile' or rcd=='yes'):
        # Resolve deps (unless should be explicitly ignored, such as when installing local version with all dependencies set)
+
     if len(deps)==0: 
        deps=meta.get('compile_deps',{})
 

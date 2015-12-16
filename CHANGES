@@ -1,3 +1,5 @@
+* 2015.12.15 * adding "force_pipeline_update" key to properly update pipelines (workflows) during replay
+
 * 2015.12.13 * adding boolean keys "compilation_success_bool" and "run_success_bool" (True/False)
                to autotuning pipeline to speed up predictive analytics
              * recording extra info for reproducibility in flat array (pipeline_state 

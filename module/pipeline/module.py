@@ -167,6 +167,9 @@ def autotune(i):
                (skip_done)            - if 'yes', do not print 'done' at the end of autotuning
 
                (sleep)                - set sleep before iterations ...
+
+               (force_pipeline_update) - if 'yes', re-check pipeline preparation - 
+                                         useful for replay not to ask for choices between statistical repetitions
             }
 
     Output: {
@@ -305,8 +308,9 @@ def autotune(i):
        force_pipeline_update=True
 
     # If pipeline meta is not defined, set up pipeline ...
-    if len(pipeline)==0 or force_pipeline_update:
-       if force_pipeline_update:
+    fpu=i.get('force_pipeline_update','')
+    if len(pipeline)==0 or force_pipeline_update or fpu=='yes':
+       if force_pipeline_update or fpu=='yes':
           ii=copy.deepcopy(pipeline)
        else:
           ii=copy.deepcopy(ic)
