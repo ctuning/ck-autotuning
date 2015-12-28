@@ -11,6 +11,7 @@ Prerequisites
 * Collective Knowledge Framework: http://github.com/ctuning/ck
 
 * For Windows:
+
 ** md5sum.exe
 
 Description
@@ -47,6 +48,7 @@ Authors
 =======
 
 * Grigori Fursin, cTuning foundation (France) / dividiti (UK)
+* Anton Lokhmotov, dividiti (UK)
 
 License
 =======
