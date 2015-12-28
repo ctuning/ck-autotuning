@@ -1,10 +1,11 @@
-Universal software and hardware autotuning
-==========================================
+Universal, customizable and multi-objective software and hardware autotuning
+============================================================================
 
 Status
 ======
 This is a relatively stable repository for universal,
-multi-dimensional, multi-objective autotuning
+customizable, multi-dimensional, multi-objective 
+SW/HW autotuning.
 
 Prerequisites
 =============
