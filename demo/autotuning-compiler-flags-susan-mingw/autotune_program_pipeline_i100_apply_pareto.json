@@ -32,7 +32,7 @@
   },
 
 
-  "frontier_keys":["##characteristics#run#execution_time#min",
+  "frontier_keys":["##characteristics#run#execution_time_kernel_0#min",
                    "##characteristics#compile#binary_size#min"],
 
   "frontier_features_keys_to_ignore":["##choices#compiler_flags#*"]

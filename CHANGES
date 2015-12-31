@@ -1,3 +1,9 @@
+* 2015.12.31 * adding dummy "program.output" to check program output during benchmarking/tuning
+
+* 2015.12.30 * adding "ask_enter_after_each_iteration" - if 'yes', ask to press Enter after each iteration
+               - useful for debugging, analyzing Pareto and checking speedups
+             * fixing bug with feature selection for Pareto
+
 * 2015.12.15 * adding "force_pipeline_update" key to properly update pipelines (workflows) during replay
 
 * 2015.12.13 * adding boolean keys "compilation_success_bool" and "run_success_bool" (True/False)

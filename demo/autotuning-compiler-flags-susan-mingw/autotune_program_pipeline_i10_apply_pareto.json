@@ -22,7 +22,7 @@
 
 
 
-  "frontier_keys":["##characteristics#run#execution_time_kernel_0#center",
+  "frontier_keys":["##characteristics#run#execution_time_kernel_0#min",
                    "##characteristics#compile#obj_size#min"],
 
 
