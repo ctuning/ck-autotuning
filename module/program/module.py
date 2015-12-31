@@ -3056,9 +3056,6 @@ def pipeline(i):
 
        eppc+='\n'+svarb+svarb1+'CK_PROFILER'+svare1+svare+' $#BIN_FILE#$ > '+gprof_tmp
 
-    # Recording final compilation flags
-    choices['joined_compiler_flags']=flags
-
     ###############################################################################################################
     # PIPELINE SECTION: set CPU frequency
     if scpuf!='':
@@ -3291,6 +3288,7 @@ def pipeline(i):
           if tdir!='': state['tmp_dir']=tdir
 
           cch=r['characteristics']
+          cch['joined_compiler_flags']=flags # Add joint compilation flags as string from previous sections
           chars['compile']=cch
 
           xct=cch.get('compilation_time',-1)

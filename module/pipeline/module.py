@@ -170,6 +170,8 @@ def autotune(i):
 
                (force_pipeline_update) - if 'yes', re-check pipeline preparation - 
                                          useful for replay not to ask for choices between statistical repetitions
+
+               (ask_enter_after_each_iteration) - if 'yes', ask to press Enter after each iteration
             }
 
     Output: {
@@ -585,6 +587,7 @@ def autotune(i):
 
               tt=time.time()-t1
               if o=='con':
+                 ck.out('')
                  ck.out('Recorded successfully in '+('%.2f'%tt)+' secs.')
 
         ##########################################################################################
@@ -607,7 +610,8 @@ def autotune(i):
            if record=='yes':
               if o=='con':
                  ck.out('')
-                 ck.out('  Reloading points to detect frontier ...')
+                 ck.out('Reloading points to detect frontier ...')
+                 ck.out('')
 
               ie=copy.deepcopy(iec)
 
@@ -685,6 +689,10 @@ def autotune(i):
                             'points':ddpoints,
                             'out':oo})
               if rx['return']>0: return rx
+
+        if i.get('ask_enter_after_each_iteration','')=='yes':
+           ck.out('')
+           ck.inp({'text':'Press Enter to continue autotuning or DSE ...'})
 
     # Mention, if all iterations were performed, or autotuning rached max number of iterations
     if finish:
