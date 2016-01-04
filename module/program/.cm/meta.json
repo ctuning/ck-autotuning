@@ -12,6 +12,9 @@
     "cp": {
       "desc": "copy program"
     }, 
+    "crowdtune": {
+      "desc": "crowdtune program"
+    }, 
     "pipeline": {
       "desc": "universal program compilation and execution pipeline (workflow)"
     }, 
@@ -67,6 +70,7 @@
       "cmd": "$#linker#$ $#flags_before#$ $#obj_files#$ $#flags_after#$"
     }
   }, 
+  "module_program_optimization":"program.optimization",
   "module_deps": {
     "choice": "e4564d6f984400d7", 
     "compiler": "36ebc331048475bb", 

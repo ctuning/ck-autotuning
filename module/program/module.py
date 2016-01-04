@@ -3795,3 +3795,42 @@ def cp(i):
         'sort_keys':'yes'}
 
     return ck.access(ii)
+
+##############################################################################
+# crowdtune program (redirecting to crowdsource program.optimization from ck-crowdtuning)
+
+def crowdtune(i):
+    """
+    Input:  {
+               See 'crowdsource program.optimization'
+            }
+
+    Output: {
+              return       - return code =  0, if successful
+                                         >  0, if error
+              (error)      - error text if return > 0
+            }
+
+    """
+
+    o=i.get('out','')
+
+    m=cfg['module_program_optimization']
+
+    # Check if module exists
+    r=ck.access({'action':'find', 'module_uoa':'module', 'data_uoa':m})
+    if r['return']>0:
+       if o=='con':
+          ck.out('Module "program.optimization" doesn\'t exist!')
+          ck.out('')
+          ck.out('Please, try to install shared repository "ck-crowdtuning"')
+          ck.out('  $ ck pull repo:ck-crowdtuning')
+          ck.out('')
+
+       return r
+
+    # Redirecting to crowdsource program.optimization
+    i['action']='crowdsource'
+    i['module_uoa']=m
+
+    return ck.access(i)

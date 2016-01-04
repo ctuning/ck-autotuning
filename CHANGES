@@ -1,3 +1,5 @@
+* 2016.01.04 * adding crowdtune action -> redirecting to "ck crowdsrouce program.optimization"
+
 * 2015.12.31 * adding dummy "program.output" to check program output during benchmarking/tuning
 
 * 2015.12.30 * adding "ask_enter_after_each_iteration" - if 'yes', ask to press Enter after each iteration
