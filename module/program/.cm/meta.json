@@ -6,6 +6,9 @@
     "clean": {
       "desc": "clean temporal files and directories of a given program"
     }, 
+    "clean_tmp": {
+      "desc": "clean all tmp directories"
+    }, 
     "compile": {
       "desc": "compile a given program"
     }, 
@@ -70,7 +73,6 @@
       "cmd": "$#linker#$ $#flags_before#$ $#obj_files#$ $#flags_after#$"
     }
   }, 
-  "module_program_optimization":"program.optimization",
   "module_deps": {
     "choice": "e4564d6f984400d7", 
     "compiler": "36ebc331048475bb", 
@@ -84,6 +86,7 @@
     "script": "84e27ad9dd12e734", 
     "soft": "5e1100048ab875d7"
   }, 
+  "module_program_optimization": "program.optimization", 
   "pipeline": "yes", 
   "target_file": "a"
 }

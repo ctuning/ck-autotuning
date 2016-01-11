@@ -1,5 +1,7 @@
 * 2016.01.11 * adding support to select program, cmd, dataset and dataset file randomly
                to support program multi-objective crowdtuning
+             * adding 'ck clean_tmp program:*' to clean tmp dirs in all program entries
+               (to clean up results of crowd-tuning)
 
 * 2016.01.04 * adding crowdtune action -> redirecting to "ck crowdsrouce program.optimization"
 

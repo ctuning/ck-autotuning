@@ -154,24 +154,27 @@ def autotune(i):
 
                (skip_stat_analysis)               - if 'yes', just flatten array and add #min
 
+                                      
+               (features)              - extra features
+               (meta)                  - extra meta
 
-               (features)             - extra features
-               (meta)                 - extra meta
+               (record_dict)           - extra dict when recording experiments (useful to set subview_uoa, for example)
 
-               (record_dict)          - extra dict when recording experiments (useful to set subview_uoa, for example)
+               (state)                 - pre-load state preserved across iterations
 
-               (state)                - pre-load state preserved across iterations
+               (save_to_file)          - if !='', save output dictionary to this file
 
-               (save_to_file)         - if !='', save output dictionary to this file
+               (skip_done)             - if 'yes', do not print 'done' at the end of autotuning
 
-               (skip_done)            - if 'yes', do not print 'done' at the end of autotuning
-
-               (sleep)                - set sleep before iterations ...
+               (sleep)                 - set sleep before iterations ...
 
                (force_pipeline_update) - if 'yes', re-check pipeline preparation - 
                                          useful for replay not to ask for choices between statistical repetitions
 
                (ask_enter_after_each_iteration) - if 'yes', ask to press Enter after each iteration
+
+               (tmp_dir)              - (default 'tmp') - if !='', use this tmp directory to clean, compile and run
+
             }
 
     Output: {
@@ -195,6 +198,8 @@ def autotune(i):
     o=i.get('out','')
     oo=''
     if o=='con': oo='con'
+
+    tmp_dir=i.get('tmp_dir','')
 
     ic=copy.deepcopy(i)
     ic['module_uoa']=''
@@ -308,6 +313,8 @@ def autotune(i):
 
        # Force pipeline update (for example, since changing dataset may change available files)
        force_pipeline_update=True
+
+    pipeline['tmp_dir']=tmp_dir
 
     # If pipeline meta is not defined, set up pipeline ...
     fpu=i.get('force_pipeline_update','')
@@ -493,6 +500,7 @@ def autotune(i):
             pipeline1['meta']=meta
             pipeline1['autotuning_iteration']=m
             pipeline1['statistical_repetition_number']=sr
+            pipeline1['tmp_dir']=tmp_dir
 
             rr=ck.access(pipeline1)
             if rr['return']>0: return rr

@@ -2206,6 +2206,7 @@ def pipeline(i):
 
 
               (dependencies)         - compilation dependencies
+              (force_resolve_deps)   - if 'yes', force resolve deps (useful for crowd-tuning)
 
               (choices)              - exposed choices (if any)
               (choices_order)        - vector of flattened choices (useful if optimizations need order 
@@ -2303,6 +2304,7 @@ def pipeline(i):
     random=ck.get_from_dicts(i, 'random', '', None)
     if random=='yes':
        from random import randint
+    frd=ck.get_from_dicts(i, 'force_resolve_deps', '', None)
 
     ruoa=ck.get_from_dicts(i, 'repo_uoa', '', None)
     duoa=ck.get_from_dicts(i, 'data_uoa', '', choices)
@@ -2336,6 +2338,7 @@ def pipeline(i):
 
     grtd=ck.get_from_dicts(i, 'generate_rnd_tmp_dir','', None)
     tdir=ck.get_from_dicts(i, 'tmp_dir','', None)
+
     sca=ck.get_from_dicts(i, 'skip_clean_after', '', choices) # I add it here to be able to debug across all iterations
 
     pp_uoa=ck.get_from_dicts(i, 'post_process_script_uoa','', choices)
@@ -2829,8 +2832,13 @@ def pipeline(i):
        ceuoa=rx['data_uid']
 
     if no_compile!='yes':
-       if len(cdeps)==0 or ceuoa!='': 
-          cdeps=meta.get('compile_deps',{})
+       if len(cdeps)==0 or ceuoa!='' or frd=='yes': 
+          if len(cdeps)==0:
+             cdeps=meta.get('compile_deps',{})
+          elif frd=='yes':
+             xcdeps=cdeps
+             cdeps=meta.get('compile_deps',{})
+             cdeps.update(xcdeps)
 
           if len(cdeps)>0:
              if o=='con':
@@ -2909,7 +2917,7 @@ def pipeline(i):
           if r['return']>0: return r
 
           misc=r['misc']
-          tdir=misc.get('tmp_dir','')
+          if tdir=='': tdir=misc.get('tmp_dir','')
           if tdir!='': state['tmp_dir']=tdir
 
           features['compiler_version']={'list':misc.get('compiler_detected_ver_list',[]),
@@ -3863,3 +3871,46 @@ def crowdtune(i):
     i['module_uoa']=m
 
     return ck.access(i)
+
+##############################################################################
+# clean all tmp directories
+
+def clean_tmp(i):
+    """
+    Input:  {
+            }
+
+    Output: {
+              return       - return code =  0, if successful
+                                         >  0, if error
+              (error)      - error text if return > 0
+            }
+
+    """
+
+    import os
+    import shutil
+
+    duoa=i.get('data_uoa','')
+    ruoa=i.get('repo_uoa','')
+
+    ii={'action':'search',
+        'module_uoa':work['self_module_uid'],
+        'data_uoa':duoa,
+        'repo_uoa':ruoa}
+    r=ck.access(ii)
+    if r['return']>0: return r
+
+    lst=r['lst']
+    for q in lst:
+        p=q['path']
+        ck.out('Cleaning tmp* dirs in '+p+' ...')
+
+        px=os.listdir(p)
+        for xx in px:
+            pp=os.path.join(p,xx)
+            if os.path.isdir(pp) and xx.startswith('tmp'):
+               ck.out('  * '+xx)
+               shutil.rmtree(pp, ignore_errors=True)
+
+    return {'return':0}
