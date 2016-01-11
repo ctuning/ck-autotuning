@@ -1988,12 +1988,12 @@ def process_in_dir(i):
           ck.out(x)
 
     # Check to clean random directory
-    if grtd=='yes' and sca!='yes':
-       os.chdir(odir)
-       try:
-          shutil.rmtree(cdir, ignore_errors=True)
-       except Exception as e:
-          pass
+    #if grtd=='yes' and sca!='yes':
+    #   os.chdir(odir)
+    #   try:
+    #      shutil.rmtree(cdir, ignore_errors=True)
+    #   except Exception as e:
+    #      pass
 
     return {'return':0, 'tmp_dir':rcdir, 'misc':misc, 'characteristics':ccc, 'deps':deps}
 
