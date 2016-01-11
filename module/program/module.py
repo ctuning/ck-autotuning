@@ -2071,6 +2071,11 @@ def pipeline(i):
               (program_uoa)          - useful if univeral pipeline is used, i.e. ck run pipeline:program program_uoa=...
                  or taken from .cm/meta.json from current directory
 
+              (random)               - if 'yes', random selection of program, cmd, dataset uoa and dataset file
+                                       (to support collaborative program optimization)
+
+              (skip_local)           - if 'yes', skip detection of program in a local path
+
               (program_tags)         - select programs by these tags
 
               (program_dir)          - force program directory
@@ -2294,6 +2299,10 @@ def pipeline(i):
     ati=ck.get_from_dicts(i, 'autotuning_iteration', '', None)
     if ati=='': ati=0
     else: ati=int(ati)
+
+    random=ck.get_from_dicts(i, 'random', '', None)
+    if random=='yes':
+       from random import randint
 
     ruoa=ck.get_from_dicts(i, 'repo_uoa', '', None)
     duoa=ck.get_from_dicts(i, 'data_uoa', '', choices)
@@ -2521,7 +2530,7 @@ def pipeline(i):
 
     # First, if duoa is not defined, try to get from current directory
     if len(meta)==0:
-       if duoa=='':
+       if duoa=='' and i.get('skip_local','')!='yes':
           # First, try to detect CID in current directory
           r=ck.cid({})
           if r['return']==0:
@@ -2575,22 +2584,28 @@ def pipeline(i):
           duid=lst[0]['data_uid']
           duoa=lst[0]['data_uoa']
        else:
-          # SELECTOR *************************************
-          choices_desc['##program_uoa']={'type':'uoa',
-                                         'has_choice':'yes',
-                                         'choices':lst,
-                                         'tags':['setup'],
-                                         'sort':1000}
+          if random=='yes':
+             rb=randint(0,len(lst)-1)
 
-          if o=='con' and si!='yes':
-             ck.out('************ Selecting program/benchmark/kernel ...')
-             ck.out('')
-             r=ck.select_uoa({'choices':lst})
-             if r['return']>0: return r
-             duoa=r['choice']
-             ck.out('')
+             duid=lst[rb]['data_uid']
+             duoa=lst[rb]['data_uoa']
           else:
-             return finalize_pipeline(i)
+             # SELECTOR *************************************
+             choices_desc['##program_uoa']={'type':'uoa',
+                                            'has_choice':'yes',
+                                            'choices':lst,
+                                            'tags':['setup'],
+                                            'sort':1000}
+
+             if o=='con' and si!='yes':
+                ck.out('************ Selecting program/benchmark/kernel ...')
+                ck.out('')
+                r=ck.select_uoa({'choices':lst})
+                if r['return']>0: return r
+                duoa=r['choice']
+                ck.out('')
+             else:
+                return finalize_pipeline(i)
 
     if len(meta)==0 and duoa=='':
        return {'return':0, 'error':'no programs found for this pipeline'}
@@ -2648,34 +2663,38 @@ def pipeline(i):
     zrt={}
     if kcmd=='':
        if len(krun_cmds)>1:
-          xchoices=[]
-          dchoices=[]
-          for z in sorted(krun_cmds):
-              xchoices.append(z)
-
-              zrt=run_cmds[z].get('run_time',{})
-              zcmd=zrt.get('run_cmd_main','')
-              dchoices.append(zcmd)
-
-          # SELECTOR *************************************
-          choices_desc['##cmd_key']={'type':'text',
-                                     'has_choice':'yes',
-                                     'choices':xchoices,
-                                     'tags':['setup'],
-                                     'sort':1100}
-
-          if o=='con' and si!='yes':
-             ck.out('************ Selecting command line ...')
-             ck.out('')
-             r=ck.access({'action':'select_list',
-                          'module_uoa':cfg['module_deps']['choice'],
-                          'choices':xchoices,
-                          'desc':dchoices})
-             if r['return']>0: return r
-             kcmd=r['choice']
-             ck.out('')
+          if random=='yes':
+             rb=randint(0,len(krun_cmds)-1)
+             kcmd=krun_cmds[rb]
           else:
-             return finalize_pipeline(i)
+             xchoices=[]
+             dchoices=[]
+             for z in sorted(krun_cmds):
+                 xchoices.append(z)
+
+                 zrt=run_cmds[z].get('run_time',{})
+                 zcmd=zrt.get('run_cmd_main','')
+                 dchoices.append(zcmd)
+
+             # SELECTOR *************************************
+             choices_desc['##cmd_key']={'type':'text',
+                                        'has_choice':'yes',
+                                        'choices':xchoices,
+                                        'tags':['setup'],
+                                        'sort':1100}
+
+             if o=='con' and si!='yes':
+                ck.out('************ Selecting command line ...')
+                ck.out('')
+                r=ck.access({'action':'select_list',
+                             'module_uoa':cfg['module_deps']['choice'],
+                             'choices':xchoices,
+                             'desc':dchoices})
+                if r['return']>0: return r
+                kcmd=r['choice']
+                ck.out('')
+             else:
+                return finalize_pipeline(i)
 
        else:
           kcmd=krun_cmds[0]
@@ -2721,22 +2740,28 @@ def pipeline(i):
              dduid=lst[0]['data_uid']
              dduoa=lst[0]['data_uoa']
           else:
-             # SELECTOR *************************************
-             choices_desc['##dataset_uoa']={'type':'uoa',
-                                            'has_choice':'yes',
-                                            'choices':xchoices,
-                                            'tags':['setup', 'dataset'],
-                                            'sort':1200}
+             if random=='yes':
+                rb=randint(0,len(lst)-1)
 
-             if o=='con' and si!='yes':
-                ck.out('************ Selecting data set ...')
-                ck.out('')
-                r=ck.select_uoa({'choices':lst})
-                if r['return']>0: return r
-                dduoa=r['choice']
-                ck.out('')
+                dduid=lst[rb]['data_uid']
+                dduoa=lst[rb]['data_uoa']
              else:
-                return finalize_pipeline(i)
+                # SELECTOR *************************************
+                choices_desc['##dataset_uoa']={'type':'uoa',
+                                               'has_choice':'yes',
+                                               'choices':xchoices,
+                                               'tags':['setup', 'dataset'],
+                                               'sort':1200}
+
+                if o=='con' and si!='yes':
+                   ck.out('************ Selecting data set ...')
+                   ck.out('')
+                   r=ck.select_uoa({'choices':lst})
+                   if r['return']>0: return r
+                   dduoa=r['choice']
+                   ck.out('')
+                else:
+                   return finalize_pipeline(i)
 
        if dduoa=='':
           return {'return':1, 'error':'no datasets found for this pipeline'}
@@ -2772,18 +2797,22 @@ def pipeline(i):
        if len(ddfiles)==1:
           ddfile=ddfiles[0]
        elif len(ddfiles)>0:
-          if o=='con' and si!='yes':
-             ck.out('************ Selecting dataset file ...')
-             ck.out('')
-             r=ck.access({'action':'select_list',
-                          'module_uoa':cfg['module_deps']['choice'],
-                          'choices':ddfiles,
-                          'desc':ddfiles})
-             if r['return']>0: return r
-             ddfile=r['choice']
-             ck.out('')
+          if random=='yes':
+             rb=randint(0,len(ddfiles)-1)
+             ddfile=ddfiles[rb]
           else:
-             return finalize_pipeline(i)
+             if o=='con' and si!='yes':
+                ck.out('************ Selecting dataset file ...')
+                ck.out('')
+                r=ck.access({'action':'select_list',
+                             'module_uoa':cfg['module_deps']['choice'],
+                             'choices':ddfiles,
+                             'desc':ddfiles})
+                if r['return']>0: return r
+                ddfile=r['choice']
+                ck.out('')
+             else:
+                return finalize_pipeline(i)
 
     choices['dataset_file']=ddfile
 
