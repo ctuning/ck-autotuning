@@ -83,3 +83,65 @@ def import_all_files(i):
     if r['return']>0: return r
 
     return {'return':0}
+
+##############################################################################
+# TBD: generate new data sets to cover unseen behavior
+# See https://scholar.google.com/citations?view_op=view_citation&citation_for_view=IwcnpkwAAAAJ:hqOjcs7Dif8C
+#     http://arxiv.org/abs/1506.06256
+
+def generate(i):
+    """
+    Input:  {
+            }
+
+    Output: {
+              return       - return code =  0, if successful
+                                         >  0, if error
+              (error)      - error text if return > 0
+            }
+
+    """
+
+    print ('TBD: generate new data sets to cover unseen behavior')
+
+    ck.out('')
+    ck.out('Command line: ')
+    ck.out('')
+
+    import json
+    cmd=json.dumps(i, indent=2)
+
+    ck.out(cmd)
+
+    return {'return':0}
+
+##############################################################################
+# TBD: prune data sets to find minimal representative data set covering behavior
+# See https://scholar.google.com/citations?view_op=view_citation&citation_for_view=IwcnpkwAAAAJ:hqOjcs7Dif8C
+#     http://arxiv.org/abs/1506.06256
+
+def prune(i):
+    """
+    Input:  {
+            }
+
+    Output: {
+              return       - return code =  0, if successful
+                                         >  0, if error
+              (error)      - error text if return > 0
+            }
+
+    """
+
+    print ('prune data sets to find minimal representative data set covering behavior')
+
+    ck.out('')
+    ck.out('Command line: ')
+    ck.out('')
+
+    import json
+    cmd=json.dumps(i, indent=2)
+
+    ck.out(cmd)
+
+    return {'return':0}

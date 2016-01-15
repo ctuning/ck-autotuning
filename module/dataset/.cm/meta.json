@@ -1,6 +1,12 @@
 {
   "actions": {
-    "import_all_files": {}
+    "generate": {
+      "desc": "TBD: generate new data sets to cover unseen behavior"
+    }, 
+    "import_all_files": {}, 
+    "prune": {
+      "desc": "prune data sets to find minimal representative data set covering behavior"
+    }
   }, 
   "copyright": "See CK COPYRIGHT.txt for copyright details", 
   "desc": "datasets", 
