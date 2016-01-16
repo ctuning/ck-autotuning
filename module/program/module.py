@@ -1897,8 +1897,15 @@ def process_in_dir(i):
                 ck.out('  (reading fine grain timers from '+fgtf+' ...)')
                 ck.out('')
 
+
              rq=ck.load_json_file({'json_file':fgtf})
-             if rq['return']>0: return rq
+             if rq['return']>0: 
+                misc['run_success']='no'
+                misc['run_success_bool']=False
+                misc['fail_reason']=rq['error']
+
+                return {'return':0, 'tmp_dir':rcdir, 'misc':misc, 'characteristics':ccc, 'deps':deps}
+
              drq=rq['dict']
              ccc.update(drq)
              et=drq.get('execution_time','')
@@ -1939,13 +1946,21 @@ def process_in_dir(i):
              ck.out('### Calibration: time='+str(exec_time)+'; CT_REPEAT_MAIN='+str(orepeat)+'; new CT_REPEAT_MAIN='+str(repeat))
 
           if cn>=cn_max:
-             return {'return':1, 'error':'calibration failed'}
+             misc['run_success']='no'
+             misc['run_success_bool']=False
+             misc['fail_reason']='calibration failed'
+
+             return {'return':0, 'tmp_dir':rcdir, 'misc':misc, 'characteristics':ccc, 'deps':deps}
 
           cn+=1
 
        if sc!='yes' and repeat!=-1 and 'CT_REPEAT_MAIN' in env1:
           if calibrate_success==False:
-             return {'return':1, 'error':'calibration problem'}
+             misc['run_success']='no'
+             misc['run_success_bool']=False
+             misc['fail_reason']='calibration problem'
+
+             return {'return':0, 'tmp_dir':rcdir, 'misc':misc, 'characteristics':ccc, 'deps':deps}
 
        xrepeat=repeat
        if xrepeat<1: xrepeat=1

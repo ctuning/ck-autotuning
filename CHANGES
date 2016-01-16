@@ -1,3 +1,12 @@
+* 2016.01.15 * returning added or deleted points/sub-points during autotuning
+               (for crowd-tuning)
+             * Adding margins when comparing values on Pareto frontier 
+               (used to monitor only significant speedups for when crowdsourcing autotuning
+                particularly across mobile devices)
+             * Fixing small bug in RTL for older MILEPOST project extracted codelets
+               (to crowd-tune them and them use to speed up optimization and modeling
+                large apps based on these codelets - see our papers)
+
 * 2016.01.11 * adding support to select program, cmd, dataset and dataset file randomly
                to support program multi-objective crowdtuning
              * adding 'ck clean_tmp program:*' to clean tmp dirs in all program entries

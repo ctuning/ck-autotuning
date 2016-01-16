@@ -89,7 +89,7 @@ def autotune(i):
 
                (pipeline_update)      - update pipeline with this dict (useful to update already prepared pipeline from file)
 
-               (iterations)           - limit number of iterations, otherwise infinite (default=50)
+               (iterations)           - limit number of iterations, otherwise infinite (default=10)
                                         if -1, infinite (or until all choices are explored)
                (start_from_iteration) - skip all iterations before this number
                (repetitions)          - statistical repetitions (default=4)
@@ -146,6 +146,9 @@ def autotune(i):
                (frontier_keys_reverse)            - list of values associated with above keys. If True, reverse sorting for a give key
                                                     (by default descending)
 
+               (frontier_margins)                 - list of margins when comparing values, i.e. Vold/Vnew < this number (such as 1.10 instead of 1).
+                                                    will be used if !=None  
+
                (frontier_features_keys_to_ignore) - list of keys to ignore from 'features_keys_to_process' 
                                                     when detecting subset of points to detect frontier
                                                     (usually removing optimization dimensions, such as compiler flags)
@@ -185,6 +188,10 @@ def autotune(i):
               last_iteration_output - output of last iteration
               last_stat_analysis    - flat dict with stat analysis
               experiment_desc       - dict with experiment description
+
+              recorded_info         - {'points':{}, 
+                                       'deleted_points':{},
+                                       'recorded_uid'}
             }
 
     """
@@ -224,6 +231,7 @@ def autotune(i):
 
     fk=ck.get_from_dicts(ic, 'frontier_keys', [], None)
     fkr=ck.get_from_dicts(ic, 'frontier_keys_reverse', [], None)
+    fmar=ck.get_from_dicts(ic, 'frontier_margins', [], None)
 
     record=ck.get_from_dicts(ic, 'record', '', None)
     record_uoa=ck.get_from_dicts(ic, 'record_uoa', '', None)
@@ -345,7 +353,7 @@ def autotune(i):
 
     # Check some vars ...
     ni=i.get('iterations','')
-    if ni=='': ni=50
+    if ni=='': ni=4
     try: ni=int(ni)
     except Exception as e: pass
 
@@ -545,6 +553,8 @@ def autotune(i):
         # Recording experiment if needed
         stat_dict={}
 
+        recorded_info={'points':[], 'deleted_points':[], 'recorded_uid':''}
+
         iec={'module_uoa':cfg['module_deps']['experiment'],
 
              'repo_uoa': record_repo,
@@ -588,6 +598,12 @@ def autotune(i):
 
               rx=ck.access(ie)
               if rx['return']>0: return rx
+
+              jp=rx.get('point','')
+              juid=rx.get('recorded_uid','')
+
+              if jp!='': recorded_info['points'].append(jp)
+              if juid!='': recorded_info['recorded_uid']=juid
 
               stat_dict=rx['dict_flat']
               rrr=rx['stat_analysis']
@@ -677,11 +693,19 @@ def autotune(i):
                          'points':points,
                          'frontier_keys':fk,
                          'reverse_keys':fkr,
+                         'margins':fmar,
                          'out':oo})
            if rx['return']>0: return rx
 
            points=rx['points']
            dpoints=rx['deleted_points']
+
+           recorded_info['points']=[]
+
+           for l in points: 
+               recorded_info['points'].append(xpoints[ypoints[l]]['point_uid'])
+           for l in dpoints: 
+               recorded_info['deleted_points'].append(xpoints[ypoints[l]]['point_uid'])
 
            # Delete filtered if record
            if record=='yes':
@@ -711,7 +735,7 @@ def autotune(i):
        ck.out(sep)
        ck.out('Done!')
 
-    rz={'return':0, 'last_iteration_output':rr, 'last_stat_analysis': rrr, 'experiment_desc':dd}
+    rz={'return':0, 'last_iteration_output':rr, 'last_stat_analysis': rrr, 'experiment_desc':dd, 'recorded_info':recorded_info}
 
     if stf!='':
        rx=ck.save_json_to_file({'json_file':stf, 'dict':rz, 'sort_keys':'yes'})
