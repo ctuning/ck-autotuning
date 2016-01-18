@@ -564,6 +564,9 @@ def autotune(i):
              'features_keys_to_process':fkp}
         fft={}
 
+#        ck.out('\n\nDEBUG: '+record_uoa)
+#        raw_input('xyz')
+
         if record=='yes' and only_filter!='yes':
            # Will be reused for frontier
            fft={} # flat features
@@ -629,7 +632,9 @@ def autotune(i):
 
         # Check if need to leave only points on frontier 
         #   (our frontier is not 'Pareto efficient' since we have discreet characteristics)
-        if len(fk)>0 and (len(stat_dict)>0 or only_filter=='yes'):
+
+#        if len(fk)>0 and (len(stat_dict)>0 or only_filter=='yes'): - otherwise doesn't work if last point is error
+        if len(fk)>0 or only_filter=='yes':
            # If data was recorded to repo, reload all points 
            if record=='yes':
               if o=='con':
@@ -725,6 +730,8 @@ def autotune(i):
         if i.get('ask_enter_after_each_iteration','')=='yes':
            ck.out('')
            ck.inp({'text':'Press Enter to continue autotuning or DSE ...'})
+
+#        raw_input('xyz')
 
     # Mention, if all iterations were performed, or autotuning rached max number of iterations
     if finish:

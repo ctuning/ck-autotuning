@@ -3929,3 +3929,75 @@ def clean_tmp(i):
                shutil.rmtree(pp, ignore_errors=True)
 
     return {'return':0}
+
+##############################################################################
+# autotune program (redirecting to crowdsource program.optimization from ck-crowdtuning while using local repo)
+
+def autotune(i):
+    """
+    Input:  {
+               See 'crowdsource program.optimization'
+
+               (iterations) - change iterations
+
+               Force:
+ 
+               local                = yes
+               only_one_run         = yes
+               keep_tmp             = yes
+               skip_exchange        = yes
+               change_user          = -
+               skip_welcome         = yes
+               program_tags         = ' '
+               ask_pipeline_choices = yes
+               speedup_threshold    = 1.03
+
+            }
+
+    Output: {
+              return       - return code =  0, if successful
+                                         >  0, if error
+              (error)      - error text if return > 0
+            }
+
+    """
+
+    o=i.get('out','')
+
+    m=cfg['module_program_optimization']
+
+    # Check if module exists
+    r=ck.access({'action':'find', 'module_uoa':'module', 'data_uoa':m})
+    if r['return']>0:
+       if o=='con':
+          ck.out('WARNING: this function uses module "program.optimization" but can\'t find it')
+          ck.out('')
+          ck.out('Please, try to install shared repository "ck-crowdtuning"')
+          ck.out('  $ ck pull repo:ck-crowdtuning')
+          ck.out('')
+
+       return r
+
+    # Redirecting to crowdsource program.optimization
+    i['action']='crowdsource'
+    i['module_uoa']=m
+    i['local']='yes'
+    i['only_one_run']='yes'
+    i['keep_tmp']='yes'
+    i['skip_welcome']='yes'
+    i['program_tags']=' '
+    i['ask_pipeline_choices']='yes'
+    
+    se=i.get('skip_exchange','')
+    if se=='': se='yes'
+    i['skip_exchange']=se
+
+    cu=i.get('change_user','')
+    if cu=='': cu='-'
+    i['change_user']=cu
+
+    st=i.get('speedup_threshold','')
+    if st=='': st=1.03
+    i['speedup_threshold']=st
+
+    return ck.access(i)
