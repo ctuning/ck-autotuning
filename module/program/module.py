@@ -2626,7 +2626,7 @@ def pipeline(i):
                 return finalize_pipeline(i)
 
     if len(meta)==0 and duoa=='':
-       return {'return':0, 'error':'no programs found for this pipeline'}
+       return {'return':1, 'error':'no programs found for this pipeline'}
 
     if pdir=='' and duoa!='':
        rx=ck.access({'action':'load',
@@ -3982,7 +3982,7 @@ def autotune(i):
     i['action']='crowdsource'
     i['module_uoa']=m
     i['local']='yes'
-    i['only_one_run']='yes'
+    i['once']='yes'
     i['keep_tmp']='yes'
     i['skip_welcome']='yes'
     i['program_tags']=' '
