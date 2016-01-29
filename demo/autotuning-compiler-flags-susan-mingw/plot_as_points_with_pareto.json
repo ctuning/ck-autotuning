@@ -5,7 +5,7 @@
 
   "flat_keys_list":[
     "##characteristics#compile#obj_size#min",
-    "##characteristics#run#execution_time_kernel_0#exp"
+    "##characteristics#run#execution_time_kernel_0#min"
   ],
 
   "plot_type":"mpl_2d_scatter",

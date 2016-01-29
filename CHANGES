@@ -1,3 +1,9 @@
+* 2016.01.29 * general improvements
+             * adding calculation of multi-dimensional improvements
+             * adding universal conditions on solutions during auto-tuning
+               (such as improve energy without sacrificing execution time,
+                or improve execution time without increasing code size ...)
+
 * 2016.01.15 * returning added or deleted points/sub-points during autotuning
                (for crowd-tuning)
              * Adding margins when comparing values on Pareto frontier 
@@ -12,7 +18,7 @@
              * adding 'ck clean_tmp program:*' to clean tmp dirs in all program entries
                (to clean up results of crowd-tuning)
 
-* 2016.01.04 * adding crowdtune action -> redirecting to "ck crowdsrouce program.optimization"
+* 2016.01.04 * adding crowdtune action -> redirecting to "ck crowdsource program.optimization"
 
 * 2015.12.31 * adding dummy "program.output" to check program output during benchmarking/tuning
 
@@ -27,7 +33,7 @@
              * recording extra info for reproducibility in flat array (pipeline_state 
                with statistical repetition number and with pipeline fail and reason)
 
-* 2015.12.12 * failing autotuning pipeline if postprocessing scripts fails
+* 2015.12.12 * failing autotuning pipeline if post-processing scripts fails
 
 * 2015.12.07 * fixing compiler flag autotuning demo (small API change)
              * fixing a bug in scatter graphs (found when plotting results of multi-objective optimization)
@@ -45,7 +51,7 @@
 * 2015.11.16 * adding correct selection of default parameters for the first iteration of random autotuning 
                (noticed during dgemmbench OpenCL autotuning)
 
-* 2015.11.10 * adding "sleep" parameter to autotune pipeline (set delay between interations)
+* 2015.11.10 * adding "sleep" parameter to autotune pipeline (set delay between iterations)
              * fixing error in exhaustive exploration when using "loop" with "choices" 
              * adding extra_dataset_files to dataset module to support more files
                when sending to Android (such as OpenCL autotuning via mobile phones)
@@ -59,12 +65,12 @@
 
 * 2015.10.22 * adding support to compile via scripts 
                     (useful for PENCILCC from CARP project and LLVM LNT)
-                  * adding "add_extra_env_for_compliation" in compilation meta
+                  * adding "add_extra_env_for_compilation" in compilation meta
                     (useful for PENCILBENCH)
 
 * 2015.09.25 * fixing xopenme.h for Windows 
 
-* 2015.09.22 * fixing pipeline update when dataset is changed (i.e. updating related datset files)
+* 2015.09.22 * fixing pipeline update when dataset is changed (i.e. updating related dataset files)
                     (reported by Anton)
                   * taking statistical repeat from pipeline if exists (to properly replay experiments) 
 

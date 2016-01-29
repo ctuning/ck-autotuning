@@ -130,6 +130,7 @@ def autotune(i):
                (record_only_failed)               - if 'yes', record only failed experiments
                                                     (useful to crowdsource experiments when searching only 
                                                      for compiler/program/architecture bugs)...
+               (record_permanent)                 - if 'yes', mark recorded points as permanent (will not be deleted by Pareto filter)
                (record_ignore_update)             - (default=yes), if 'yes', skip recording date/author info for each update
                (tags)                             - record these tags to the entry description
                (subtags)                          - record these subtags to the point description
@@ -158,25 +159,27 @@ def autotune(i):
                (skip_stat_analysis)               - if 'yes', just flatten array and add #min
 
                                       
-               (features)              - extra features
-               (meta)                  - extra meta
+               (features)                         - extra features
+               (meta)                             - extra meta
 
-               (record_dict)           - extra dict when recording experiments (useful to set subview_uoa, for example)
+               (record_dict)                      - extra dict when recording experiments (useful to set subview_uoa, for example)
 
-               (state)                 - pre-load state preserved across iterations
+               (state)                            - pre-load state preserved across iterations
 
-               (save_to_file)          - if !='', save output dictionary to this file
+               (save_to_file)                     - if !='', save output dictionary to this file
 
-               (skip_done)             - if 'yes', do not print 'done' at the end of autotuning
+               (skip_done)                        - if 'yes', do not print 'done' at the end of autotuning
 
-               (sleep)                 - set sleep before iterations ...
+               (sleep)                            - set sleep before iterations ...
 
-               (force_pipeline_update) - if 'yes', re-check pipeline preparation - 
-                                         useful for replay not to ask for choices between statistical repetitions
+               (force_pipeline_update)            - if 'yes', re-check pipeline preparation - 
+                                                    useful for replay not to ask for choices between statistical repetitions
 
-               (ask_enter_after_each_iteration) - if 'yes', ask to press Enter after each iteration
+               (ask_enter_after_each_iteration)   - if 'yes', ask to press Enter after each iteration
 
-               (tmp_dir)              - (default 'tmp') - if !='', use this tmp directory to clean, compile and run
+               (tmp_dir)                          - (default 'tmp') - if !='', use this tmp directory to clean, compile and run
+
+               (flat_dict_for_improvements)       - add dict from previous experiment to compare improvements 
 
             }
 
@@ -233,6 +236,8 @@ def autotune(i):
     fkr=ck.get_from_dicts(ic, 'frontier_keys_reverse', [], None)
     fmar=ck.get_from_dicts(ic, 'frontier_margins', [], None)
 
+    fdfi=ck.get_from_dicts(ic, 'flat_dict_for_improvements', [], None)
+
     record=ck.get_from_dicts(ic, 'record', '', None)
     record_uoa=ck.get_from_dicts(ic, 'record_uoa', '', None)
     record_repo=ck.get_from_dicts(ic, 'record_repo', '', None)
@@ -247,6 +252,8 @@ def autotune(i):
     record_ignore_update=ic.get('record_ignore_update','')
     if record_ignore_update=='': record_ignore_update='yes'
     if 'record_ignore_update' in ic: del(ic['record_ignore_update'])
+
+    record_permanent=ck.get_from_dicts(ic, 'record_permanent', '', None)
 
     # Check if repo remote (to save in json rather than to out)
     remote='no'
@@ -428,8 +435,8 @@ def autotune(i):
           ck.out('Random seed: '+str(seed))
           ck.out('')
 
-    # Keep best points if finding best points (possibly with Pareto)
-    points={}
+    points={} # Keep best points if finding best points (possibly with Pareto)
+    ppoint={} # Permanent (default point) to calculate improvements ...
 
     # Start iterations
     rr={'return':0}
@@ -561,11 +568,10 @@ def autotune(i):
              'experiment_repo_uoa': record_experiment_repo,
              'experiment_uoa':record_uoa,
 
+             'record_permanent':record_permanent,
+
              'features_keys_to_process':fkp}
         fft={}
-
-#        ck.out('\n\nDEBUG: '+record_uoa)
-#        raw_input('xyz')
 
         if record=='yes' and only_filter!='yes':
            # Will be reused for frontier
@@ -584,6 +590,9 @@ def autotune(i):
 
               if remote=='yes': ie['out']=''
               else: ie['out']=oo
+
+              if len(fdfi)>0: 
+                 dd['dict_to_compare']=fdfi
 
               ie['action']='add'
               ie['ignore_update']=record_ignore_update
@@ -618,12 +627,13 @@ def autotune(i):
                  ck.out('Recorded successfully in '+('%.2f'%tt)+' secs.')
 
         ##########################################################################################
-        # If was not performed via recording, prform statistical analysis  here
+        # If was not performed via recording, perform statistical analysis  here
         if fail!='yes' and len(stat_dict)==0:
            ii={'action':'multi_stat_analysis',
                'module_uoa':cfg['module_deps']['experiment'],
                'dict':stat_dict,
                'dict_to_add':dd,
+               'dict_to_compare':fdfi,
                'process_multi_keys':pmk,
                'skip_stat_analysis':ssa}
            rrr=ck.access(ii)
@@ -636,6 +646,7 @@ def autotune(i):
 #        if len(fk)>0 and (len(stat_dict)>0 or only_filter=='yes'): - otherwise doesn't work if last point is error
         if len(fk)>0 or only_filter=='yes':
            # If data was recorded to repo, reload all points 
+           opoints={} # original points with all info (used later to delete correct points)
            if record=='yes':
               if o=='con':
                  ck.out('')
@@ -646,16 +657,18 @@ def autotune(i):
 
               ie['action']='get'
 
-              if only_filter!='yes':
+              if only_filter=='yes':
+                 ie['get_all_points']='yes'
+              else:
                  # NOTE - I currently do not search points by features, i.e. all points are taken for Paretto
                  # should improve in the future ...
                  ie['flat_features']=fft
-                 ie['features_keys_to_ignore']=ffki # Ignore parts of fetures to be able to create subset for frontier ...
+                 ie['features_keys_to_ignore']=ffki # Ignore parts of features to be able to create subset for frontier ...
                  if 'features_keys_to_process' in ie: del(ie['features_keys_to_process'])
                  ie['skip_processing']='yes'
-              else:
-                 ie['get_all_points']='yes'
-              ie['load_json_files']=['flat']
+
+              ie['separate_permanent_points']='yes'
+              ie['load_json_files']=['flat','features']
               ie['get_keys_from_json_files']=fk
               ie['out']='con'
 
@@ -663,18 +676,18 @@ def autotune(i):
               if rx['return']>0: return rx
 
               xpoints=rx['points']
-              ypoints={}
+              opoints=copy.deepcopy(xpoints) # original points
+
               points={}
 
-              ip=0
-              for q in xpoints:
-                  rx=ck.gen_uid({})
-                  if rx['return']>0: return rx
-                  uid=rx['data_uid']
+              ppoints=rx['ppoints']
+              ppoint={}
+              if len(ppoints)>0:
+                 ppoint=ppoints[0]
 
+              for q in xpoints:
+                  uid=q['point_uid']
                   points[uid]=q.get('flat',{})
-                  ypoints[uid]=ip
-                  ip+=1
            else:
               rx=ck.gen_uid({})
               if rx['return']>0: return rx
@@ -705,33 +718,34 @@ def autotune(i):
            points=rx['points']
            dpoints=rx['deleted_points']
 
-           recorded_info['points']=[]
+           recorded_info['deleted_points']=list(dpoints.keys())
 
-           for l in points: 
-               recorded_info['points'].append(xpoints[ypoints[l]]['point_uid'])
-           for l in dpoints: 
-               recorded_info['deleted_points'].append(xpoints[ypoints[l]]['point_uid'])
+           recorded_info['points']=list(points.keys())
+           if len(ppoint)>0:
+               recorded_info['points'].append(ppoint['point_uid'])
 
            # Delete filtered if record
            if record=='yes':
-              # Clean original points
-              ddpoints=[]
+              xdpoints=[]
               for q in dpoints:
-                  ip=ypoints[q]
-                  ddpoints.append(xpoints[ip])
+                  found=False
+                  for qq in opoints:
+                      if qq['point_uid']==q:
+                         found=True
+                         break
+                  if found:
+                     xdpoints.append(qq)
 
-              # Attempt to delete points
+              # Attempt to delete non-optimal solutions
               rx=ck.access({'action':'delete_points',
                             'module_uoa':cfg['module_deps']['experiment'],
-                            'points':ddpoints,
+                            'points':xdpoints,
                             'out':oo})
               if rx['return']>0: return rx
 
         if i.get('ask_enter_after_each_iteration','')=='yes':
            ck.out('')
            ck.inp({'text':'Press Enter to continue autotuning or DSE ...'})
-
-#        raw_input('xyz')
 
     # Mention, if all iterations were performed, or autotuning rached max number of iterations
     if finish:
