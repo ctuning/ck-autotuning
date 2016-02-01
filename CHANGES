@@ -1,3 +1,6 @@
+* 2016.02.01 * added mode to skip recording pipeline/desc info to experiment 
+               (to avoid sending huge files between servers during optimization crowdsourcing)
+
 * 2016.01.29 * general improvements
              * adding calculation of multi-dimensional improvements
              * adding universal conditions on solutions during auto-tuning

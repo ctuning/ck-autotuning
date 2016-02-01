@@ -135,6 +135,9 @@ def autotune(i):
                (tags)                             - record these tags to the entry description
                (subtags)                          - record these subtags to the point description
 
+               (skip_record_pipeline)             - if 'yes', do not record pipeline (to avoid saving too much stuff during crowd-tuning)
+               (skip_record_desc)                 - if 'yes', do not record desc (to avoid saving too much stuff during crowd-tuning)
+
                (record_params)                    - extra record parameters (to 'add experiment' function)
 
                (features_keys_to_process)         - list of keys for features (and choices) to process/search 
@@ -252,6 +255,9 @@ def autotune(i):
     record_ignore_update=ic.get('record_ignore_update','')
     if record_ignore_update=='': record_ignore_update='yes'
     if 'record_ignore_update' in ic: del(ic['record_ignore_update'])
+
+    srp=ck.get_from_dicts(ic, 'skip_record_pipeline','', None)
+    srd=ck.get_from_dicts(ic, 'skip_record_desc','', None)
 
     record_permanent=ck.get_from_dicts(ic, 'record_permanent', '', None)
 
@@ -600,6 +606,9 @@ def autotune(i):
               ie['record_all_subpoints']='yes'
               ie['process_multi_keys']=pmk
               ie['dict']=dd
+
+              if srp!='': ie['skip_record_pipeline']=srp
+              if srd!='': ie['skip_record_desc']=srd
 
               if ssa!='': ie['skip_stat_analysis']=ssa
 
