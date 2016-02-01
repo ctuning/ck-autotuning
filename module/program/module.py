@@ -1613,7 +1613,7 @@ def process_in_dir(i):
        if ee!='':
           sb+='\n'+no+ee+'\n\n'
 
-       sb+='\necho executing\n'
+       sb+='\necho   (executing code ...)\n'
 
        if remote!='yes' and cons!='yes':
           if rco1!='': c+=' '+stro+' '+rco1
@@ -3983,7 +3983,7 @@ def autotune(i):
     i['module_uoa']=m
     i['local']='yes'
     i['once']='yes'
-    i['keep_tmp']='yes'
+    i['keep_experiments']='yes'
     i['skip_welcome']='yes'
     i['program_tags']=' '
     i['ask_pipeline_choices']='yes'
