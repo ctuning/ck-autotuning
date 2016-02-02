@@ -3950,7 +3950,6 @@ def autotune(i):
                skip_welcome         = yes
                program_tags         = ' '
                ask_pipeline_choices = yes
-               speedup_threshold    = 1.03
 
             }
 
@@ -3987,6 +3986,7 @@ def autotune(i):
     i['skip_welcome']='yes'
     i['program_tags']=' '
     i['ask_pipeline_choices']='yes'
+    i['local_autotuning']='yes'
     
     se=i.get('skip_exchange','')
     if se=='': se='yes'
@@ -3995,9 +3995,5 @@ def autotune(i):
     cu=i.get('change_user','')
     if cu=='': cu='-'
     i['change_user']=cu
-
-    st=i.get('speedup_threshold','')
-    if st=='': st=1.03
-    i['speedup_threshold']=st
 
     return ck.access(i)
