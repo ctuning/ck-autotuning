@@ -2537,8 +2537,8 @@ def pipeline(i):
 
     if o=='con':
        ck.out(sep)
-       ck.out('  Selected host platform: '+hos)
-       ck.out('  Selected target platform: '+tos)
+       ck.out('  Selected host platform:    '+hos)
+       ck.out('  Selected target platform:  '+tos)
        if tdid!='':
           ck.out('  Selected target device ID: '+tdid)
 
@@ -2668,7 +2668,7 @@ def pipeline(i):
     # we are not recording repo_uoa for reproducibility (can be different across users) ...   
 
     if o=='con':
-       ck.out('  Selected program: '+duoa+' ('+duid+')')
+       ck.out('  Selected program:          '+duoa+' ('+duid+')')
 
     ###############################################################################################################
     # PIPELINE SECTION: Command line selection 
@@ -2723,7 +2723,7 @@ def pipeline(i):
     choices['cmd_key']=kcmd
 
     if o=='con':
-       ck.out('  Selected command line: '+kcmd)
+       ck.out('  Selected command line:     '+kcmd)
 
     ###############################################################################################################
     # PIPELINE SECTION: dataset selection 
@@ -2799,7 +2799,7 @@ def pipeline(i):
        choices['dataset_uoa']=dduoa
 
        if o=='con':
-          ck.out('  Selected data set: '+dduoa+' ('+dduid+')')
+          ck.out('  Selected data set:         '+dduoa+' ('+dduid+')')
 
     ###############################################################################################################
     # PIPELINE SECTION: dataset file selection (if more than one in one entry)
@@ -2835,7 +2835,7 @@ def pipeline(i):
     choices['dataset_file']=ddfile
 
     if ddfile!='' and o=='con':
-       ck.out('  Selected dataset file: '+ddfile)
+       ck.out('  Selected dataset file:     '+ddfile)
 
     ###############################################################################################################
     # PIPELINE SECTION: resolve compile dependencies 
@@ -2894,7 +2894,7 @@ def pipeline(i):
 
        else:
           if o=='con':
-             ck.out('  Selected dependencies: ')
+             ck.out('  Selected dependencies:     ')
              for dp in cdeps:
                  dpx=cdeps[dp]
                  tags=dpx.get('dict',{}).get('tags',[])
