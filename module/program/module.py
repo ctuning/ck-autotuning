@@ -1613,7 +1613,7 @@ def process_in_dir(i):
        if ee!='':
           sb+='\n'+no+ee+'\n\n'
 
-       sb+='\necho   (executing code ...)\n'
+       sb+='\necho    executing code ...\n'
 
        if remote!='yes' and cons!='yes':
           if rco1!='': c+=' '+stro+' '+rco1
