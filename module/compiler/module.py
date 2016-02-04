@@ -862,7 +862,8 @@ def html_viewer(i):
           h+='  <td><b>Tags</b></td>\n'
           h+=' </tr>\n'
 
-          for k in sorted(list(acfd.keys())):
+          ll=list(acfd.keys())
+          for k in sorted(ll, key=lambda j: (int(acfd[j].get('sort',0)))):
               v=acfd[k]
 
               tags=v.get('tags',[])
