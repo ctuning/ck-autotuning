@@ -2394,6 +2394,8 @@ def pipeline(i):
     xcto=ck.get_from_dicts(i, 'compile_timeout','',choices)
     xrto=ck.get_from_dicts(i, 'run_timeout','',choices)
 
+    cdu=ck.get_from_dicts(i, 'compiler_description_uoa','',choices)
+
     ###############################################################################################################
     # PIPELINE SECTION: Host and target platform selection
     if o=='con':
@@ -2943,7 +2945,6 @@ def pipeline(i):
     # PIPELINE SECTION: get compiler description for flag options
     cflags_desc=choices_desc.get('##compiler_flags',{})
 
-    cdu=i.get('compiler_description_uoa','')
     if no_compile!='yes' and cdu=='' and i.get('no_compiler_description','')!='yes':
        cdt=cdeps.get('compiler',{}).get('dict',{}).get('tags',[])
 
@@ -2995,6 +2996,8 @@ def pipeline(i):
              ck.out('Most close found compiler description: '+xruoa+' ('+xruid+')')
 
     if cdu!='':
+       choices['compiler_description_uoa']=cdu
+
        rx=ck.access({'action':'load',
                      'module_uoa':cfg['module_deps']['compiler'],
                      'data_uoa':cdu})

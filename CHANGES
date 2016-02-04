@@ -1,3 +1,5 @@
+* 2016.02.03 * adding detected compiler description to choices
+
 * 2016.02.01 * added mode to skip recording pipeline/desc info to experiment 
                (to avoid sending huge files between servers during optimization crowdsourcing)
 
