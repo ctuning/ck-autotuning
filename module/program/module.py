@@ -2950,19 +2950,26 @@ def pipeline(i):
 
        # Substitute with real compiler version
        creal=features.get('compiler_version',{}).get('list',[])
-       if len(creal)>0:
+
+       al=[]
+       icreal={}
+       j=0
+       for qi in creal:
+           try:
+              jj=int(qi)
+              icreal[str(j)]=jj
+              j+=1
+           except Exception:
+              break
+
+       if len(icreal)>0:
+          al.append(icreal)
           cdt1=[]
           for q in cdt:
               if not q.startswith('v'): cdt1.append(q)
-          qq=''
-          for q in creal:
-              if qq=='': qq='v'
-              else: qq+='.'
-              qq+=q
-              cdt1.append(qq)
 
           # Find most close
-          ii={'action':'list',
+          ii={'action':'search',
               'module_uoa':cfg['module_deps']['compiler'],
               'add_meta':'yes',
               'tags':'auto'}
@@ -2981,18 +2988,41 @@ def pipeline(i):
               for qi in cdt1:
                   if qi in qdt:
                      rx+=1
-              if rx>xrmax:
-                 xrmax=rx
-                 xruid=q['data_uid']
-                 xruoa=q['data_uoa']
+              if rx>1:
+                 vv=''
+                 for qi in qdt:
+                     if qi.startswith('v') and len(qi)>len(vv):
+                        vv=qi
+                 vx=vv[1:].split('.')
 
-          if xrmax==0:
-             return {'return':1, 'error':'can\'t find most close compiler description by tags ('+json.dumps(cdt1)+')'}
+                 j=0
+                 icreal1={'uid':q['data_uid'], 'uoa':q['data_uoa']}
+                 for qi in vx:
+                     try:
+                        jj=int(qi)
+                        icreal1[str(j)]=jj
+                        j+=1
+                     except Exception:
+                        break
+
+                 al.append(icreal1)
+
+          # Sorting
+          al1=sorted(al, key=lambda v: (int(v.get('0',0)), int(v.get('1',0)), int(v.get('2',0))))
+          for qi in al1:
+              if qi.get('uid','')!='':
+                 xruid=qi['uid']
+                 xruoa=qi['uoa']
+              else:
+                 break
+
+          if xruid=='':
+             return {'return':1, 'error':'can\'t find most close compiler description by tags ('+ \
+                      json.dumps(cdt1)+') with version '+json.dumps(creal)}
 
           cdu=xruoa
 
           if o=='con':
-             ck.out('')
              ck.out('Most close found compiler description: '+xruoa+' ('+xruid+')')
 
     if cdu!='':
