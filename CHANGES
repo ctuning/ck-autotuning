@@ -1,4 +1,5 @@
 * 2016.02.05 * started adding pipeline key descriptions (user-friendly info)
+             * various small fixes and enhancements for experiment replay
 
 * 2016.02.04 * improving search for the most close compiler description (version)
              * adding GCC v5.3 and v6.0 descriptions

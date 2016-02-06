@@ -93,7 +93,6 @@ def autotune(i):
                                         if -1, infinite (or until all choices are explored)
                (start_from_iteration) - skip all iterations before this number
                (repetitions)          - statistical repetitions (default=4)
-                                        (if 'repeat' exists in choices, take it instead - useful for replay)
 
                (seed)                 - if !='', use as random seed (to reproduce experiments)
 
@@ -539,6 +538,7 @@ def autotune(i):
                   dd['choices_order']=rr.get('choices_order',[])
                   dd['choices_desc']=rr.get('choices_desc',{})
                   dd['features']=rr.get('features',{})
+                  dd['features']['statistical_repetitions']=srm
                   dd['features_desc']=rr.get('features_desc',{})
                   dd['dependencies']=rr.get('dependencies',{})
                   dd['characteristics_desc']=rr.get('characteristics_desc',{})

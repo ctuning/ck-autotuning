@@ -2251,7 +2251,7 @@ def pipeline(i):
               ready        - if 'yes', pipeline is ready (all obligatory choices are set)
                              if 'no', clean/compile/run program is postponed
 
-              state        - should be preserved across autotuning, learning, exploration, validation iterations
+              state        - should be preserved across autotuning, active (online) learning, exploration, validation iterations
             }
 
     """

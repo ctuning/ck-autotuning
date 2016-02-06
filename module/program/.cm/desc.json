@@ -32,6 +32,10 @@
       "desc": "Main kernel execution time (sec.) [min]", 
       "type": "float"
     }, 
+    "##characteristics#run#execution_time_kernel_0#max": {
+      "desc": "Main kernel execution time (sec.) [max]", 
+      "type": "float"
+    }, 
     "##characteristics#run#execution_time_kernel_0#min_imp": {
       "desc": "Main kernel execution time speedup [min]", 
       "type": "float"
