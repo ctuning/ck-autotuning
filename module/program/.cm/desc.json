@@ -1,1 +1,16 @@
-{}
+{
+  "pipeline_desc": {
+    "##characteristics#run#execution_time_kernel_0#min_imp": {
+      "desc": "Main kernel execution time speedup", 
+      "type": "float"
+    },
+    "##characteristics#compile#obj_size#min_imp": {
+      "desc": "Code size improvement", 
+      "type": "float"
+    },
+    "##characteristics#compile#md5_sum#min_imp": {
+      "desc": "Code size MD5 change (0 - changed)", 
+      "type": "integer"
+    }
+  }
+}
