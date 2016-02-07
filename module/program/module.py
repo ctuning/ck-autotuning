@@ -3319,7 +3319,7 @@ def pipeline(i):
                 i['fail_reason']='frequency changed during experiments'
                 i['fail']='yes'
              else:
-                ck.out('CPU frequency stays the same ...')
+                ck.out('CPU frequency did not change ...')
                 ck.out('')
 
     ###############################################################################################################
