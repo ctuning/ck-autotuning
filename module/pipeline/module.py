@@ -183,6 +183,12 @@ def autotune(i):
 
                (flat_dict_for_improvements)       - add dict from previous experiment to compare improvements 
 
+               (pause_if_fail)                    - if pipeline fails, ask to press Enter
+                                                    (useful to analyze which flags fail during compiler flag autotuning)
+
+               (aggregate_failed_cases)           - if pipeline fails, aggregate failed cases (to produce report 
+                                                    during crowdtuning or automatic compiler bug detection)
+
             }
 
     Output: {
@@ -197,6 +203,8 @@ def autotune(i):
               recorded_info         - {'points':{}, 
                                        'deleted_points':{},
                                        'recorded_uid'}
+
+              (failed_cases)        - failed cases if aggregate_failed_cases=yes
             }
 
     """
@@ -218,6 +226,12 @@ def autotune(i):
     ic['action']=''
     ic['cid']=''
     ic['data_uoa']=''
+
+    pifail=ck.get_from_dicts(ic, 'pause_if_fail', '', None)
+
+    afc=ck.get_from_dicts(ic, 'aggregate_failed_cases', '', None)
+
+    failed_cases=[]
 
     dsleep=3
     if i.get('sleep','')!='':
@@ -504,6 +518,7 @@ def autotune(i):
 
         fail='no'
         fail_reason=''
+        rr={}
         for sr in range(0, srm):
             if only_filter=='yes': continue
 
@@ -561,6 +576,17 @@ def autotune(i):
 
         # Record list of characteristics (from multiple reptitions)
         dd['characteristics_list']=ddcl
+
+        if afc=='yes':
+           failed_cases.append({'choices':rr.get('choices',{}),
+                                'choices_order':rr.get('choices_order',[]),
+                                'features':rr.get('features',{}),
+                                'characteristics':rr.get('characteristics',{}),
+                                'pipeline_state':dd.get('pipeline_state',{})})
+
+        if fail_bool and pifail=='yes':
+           ck.out('')
+           ck.inp({'text':'Press Enter to continue ...'})
 
         ##########################################################################################
         # Recording experiment if needed
@@ -765,7 +791,7 @@ def autotune(i):
        ck.out(sep)
        ck.out('Done!')
 
-    rz={'return':0, 'last_iteration_output':rr, 'last_stat_analysis': rrr, 'experiment_desc':dd, 'recorded_info':recorded_info}
+    rz={'return':0, 'last_iteration_output':rr, 'last_stat_analysis': rrr, 'experiment_desc':dd, 'recorded_info':recorded_info, 'failed_cases':failed_cases}
 
     if stf!='':
        rx=ck.save_json_to_file({'json_file':stf, 'dict':rz, 'sort_keys':'yes'})

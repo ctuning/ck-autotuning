@@ -1,5 +1,6 @@
 * 2016.02.08 * preparing LLVM descriptions
              * fixing detection of the most close compiler description (for autotuning/crowdtuning)
+             * adding aggregation of failed cases (to automatically/manually detect compiler bugs)
 
 * 2016.02.05 * started adding pipeline key descriptions (user-friendly info)
              * various small fixes and enhancements for experiment replay
