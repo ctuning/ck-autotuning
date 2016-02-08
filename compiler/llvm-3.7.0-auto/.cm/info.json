@@ -1,0 +1,27 @@
+{
+  "backup_data_uid": "5a9ccb5e6f15176c", 
+  "backup_module_uid": "36ebc331048475bb", 
+  "backup_module_uoa": "compiler", 
+  "cm_outdated": {
+    "cm_access_control": {
+      "read_groups": "all", 
+      "write_groups": "owner"
+    }, 
+    "powered_by": {
+      "name": "Collective Mind Engine", 
+      "version": "1.0.1977.beta"
+    }
+  }, 
+  "control": {
+    "author_uoa": "74c2480dcec9e85d", 
+    "engine": "CM", 
+    "iso_datetime": "2016-02-08T11:57:35.959000", 
+    "version": [
+      "1", 
+      "6", 
+      "12x"
+    ]
+  }, 
+  "data_name": "llvm-3.7.0-auto", 
+  "description": ""
+}

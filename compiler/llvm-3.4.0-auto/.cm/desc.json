@@ -1,0 +1,1430 @@
+{
+  "all_compiler_flags_desc": {
+    "##aa_eval": {
+      "can_omit": "yes", 
+      "choice": [
+        "-aa-eval", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -aa-eval", 
+      "sort": 10060, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##adce": {
+      "can_omit": "yes", 
+      "choice": [
+        "-adce", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -adce", 
+      "sort": 10070, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##always_inline": {
+      "can_omit": "yes", 
+      "choice": [
+        "-always-inline", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -always-inline", 
+      "sort": 10080, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##argpromotion": {
+      "can_omit": "yes", 
+      "choice": [
+        "-argpromotion", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -argpromotion", 
+      "sort": 10090, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##base_opt": {
+      "choice": [
+        "-O3", 
+        "-O1", 
+        "-O2"
+      ], 
+      "default": "", 
+      "desc": "base compiler flag", 
+      "sort": 10000, 
+      "tags": [
+        "base", 
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##basicaa": {
+      "can_omit": "yes", 
+      "choice": [
+        "-basicaa", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -basicaa", 
+      "sort": 10110, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##basiccg": {
+      "can_omit": "yes", 
+      "choice": [
+        "-basiccg", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -basiccg", 
+      "sort": 10120, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bb_vectorize": {
+      "can_omit": "yes", 
+      "choice": [
+        "-bb-vectorize", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -bb-vectorize", 
+      "sort": 10130, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##block_freq": {
+      "can_omit": "yes", 
+      "choice": [
+        "-block-freq", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -block-freq", 
+      "sort": 10140, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##block_placement": {
+      "can_omit": "yes", 
+      "choice": [
+        "-block-placement", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -block-placement", 
+      "sort": 10150, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##branch_prob": {
+      "can_omit": "yes", 
+      "choice": [
+        "-branch-prob", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -branch-prob", 
+      "sort": 10160, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##break_crit_edges": {
+      "can_omit": "yes", 
+      "choice": [
+        "-break-crit-edges", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -break-crit-edges", 
+      "sort": 10170, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##codegenprepare": {
+      "can_omit": "yes", 
+      "choice": [
+        "-codegenprepare", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -codegenprepare", 
+      "sort": 10180, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##constmerge": {
+      "can_omit": "yes", 
+      "choice": [
+        "-constmerge", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -constmerge", 
+      "sort": 10190, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##constprop": {
+      "can_omit": "yes", 
+      "choice": [
+        "-constprop", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -constprop", 
+      "sort": 10200, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##correlated_propagation": {
+      "can_omit": "yes", 
+      "choice": [
+        "-correlated-propagation", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -correlated-propagation", 
+      "sort": 10210, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##count_aa": {
+      "can_omit": "yes", 
+      "choice": [
+        "-count-aa", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -count-aa", 
+      "sort": 10220, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##dce": {
+      "can_omit": "yes", 
+      "choice": [
+        "-dce", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -dce", 
+      "sort": 10230, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##deadargelim": {
+      "can_omit": "yes", 
+      "choice": [
+        "-deadargelim", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -deadargelim", 
+      "sort": 10240, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##die": {
+      "can_omit": "yes", 
+      "choice": [
+        "-die", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -die", 
+      "sort": 10250, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##disable_inlining": {
+      "can_omit": "yes", 
+      "choice": [
+        "-disable-inlining", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -disable-inlining", 
+      "sort": 10010, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##disable_simplify_libcalls": {
+      "can_omit": "yes", 
+      "choice": [
+        "-disable-simplify-libcalls", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -disable-simplify-libcalls", 
+      "sort": 10020, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##domfrontier": {
+      "can_omit": "yes", 
+      "choice": [
+        "-domfrontier", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -domfrontier", 
+      "sort": 10260, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##domtree": {
+      "can_omit": "yes", 
+      "choice": [
+        "-domtree", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -domtree", 
+      "sort": 10270, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##dse": {
+      "can_omit": "yes", 
+      "choice": [
+        "-dse", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -dse", 
+      "sort": 10280, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##early_cse": {
+      "can_omit": "yes", 
+      "choice": [
+        "-early-cse", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -early-cse", 
+      "sort": 10290, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##functionattrs": {
+      "can_omit": "yes", 
+      "choice": [
+        "-functionattrs", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -functionattrs", 
+      "sort": 10300, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##funit_at_a_time": {
+      "can_omit": "yes", 
+      "choice": [
+        "-funit-at-a-time", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -funit-at-a-time", 
+      "sort": 10030, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##globaldce": {
+      "can_omit": "yes", 
+      "choice": [
+        "-globaldce", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -globaldce", 
+      "sort": 10310, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##globalopt": {
+      "can_omit": "yes", 
+      "choice": [
+        "-globalopt", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -globalopt", 
+      "sort": 10320, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##globalsmodref_aa": {
+      "can_omit": "yes", 
+      "choice": [
+        "-globalsmodref-aa", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -globalsmodref-aa", 
+      "sort": 10330, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##gvn": {
+      "can_omit": "yes", 
+      "choice": [
+        "-gvn", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -gvn", 
+      "sort": 10340, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##indvars": {
+      "can_omit": "yes", 
+      "choice": [
+        "-indvars", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -indvars", 
+      "sort": 10350, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##inline": {
+      "can_omit": "yes", 
+      "choice": [
+        "-inline", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -inline", 
+      "sort": 10360, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##instcombine": {
+      "can_omit": "yes", 
+      "choice": [
+        "-instcombine", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -instcombine", 
+      "sort": 10370, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##instcount": {
+      "can_omit": "yes", 
+      "choice": [
+        "-instcount", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -instcount", 
+      "sort": 10380, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##instnamer": {
+      "can_omit": "yes", 
+      "choice": [
+        "-instnamer", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -instnamer", 
+      "sort": 10390, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##instsimplify": {
+      "can_omit": "yes", 
+      "choice": [
+        "-instsimplify", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -instsimplify", 
+      "sort": 10400, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##internalize": {
+      "can_omit": "yes", 
+      "choice": [
+        "-internalize", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -internalize", 
+      "sort": 10410, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##intervals": {
+      "can_omit": "yes", 
+      "choice": [
+        "-intervals", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -intervals", 
+      "sort": 10420, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ipconstprop": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ipconstprop", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ipconstprop", 
+      "sort": 10430, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##ipsccp": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ipsccp", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ipsccp", 
+      "sort": 10440, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##iv_users": {
+      "can_omit": "yes", 
+      "choice": [
+        "-iv-users", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -iv-users", 
+      "sort": 10450, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##lazy_value_info": {
+      "can_omit": "yes", 
+      "choice": [
+        "-lazy-value-info", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -lazy-value-info", 
+      "sort": 10460, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##lcssa": {
+      "can_omit": "yes", 
+      "choice": [
+        "-lcssa", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -lcssa", 
+      "sort": 10470, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##lda": {
+      "can_omit": "yes", 
+      "choice": [
+        "-lda", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -lda", 
+      "sort": 10480, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##libcall_aa": {
+      "can_omit": "yes", 
+      "choice": [
+        "-libcall-aa", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -libcall-aa", 
+      "sort": 10490, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##licm": {
+      "can_omit": "yes", 
+      "choice": [
+        "-licm", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -licm", 
+      "sort": 10500, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##lint": {
+      "can_omit": "yes", 
+      "choice": [
+        "-lint", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -lint", 
+      "sort": 10510, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##loop_deletion": {
+      "can_omit": "yes", 
+      "choice": [
+        "-loop-deletion", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -loop-deletion", 
+      "sort": 10520, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##loop_extract": {
+      "can_omit": "yes", 
+      "choice": [
+        "-loop-extract", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -loop-extract", 
+      "sort": 10530, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##loop_extract_single": {
+      "can_omit": "yes", 
+      "choice": [
+        "-loop-extract-single", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -loop-extract-single", 
+      "sort": 10540, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##loop_idiom": {
+      "can_omit": "yes", 
+      "choice": [
+        "-loop-idiom", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -loop-idiom", 
+      "sort": 10550, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##loop_instsimplify": {
+      "can_omit": "yes", 
+      "choice": [
+        "-loop-instsimplify", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -loop-instsimplify", 
+      "sort": 10560, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##loop_reduce": {
+      "can_omit": "yes", 
+      "choice": [
+        "-loop-reduce", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -loop-reduce", 
+      "sort": 10570, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##loop_rotate": {
+      "can_omit": "yes", 
+      "choice": [
+        "-loop-rotate", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -loop-rotate", 
+      "sort": 10580, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##loop_simplify": {
+      "can_omit": "yes", 
+      "choice": [
+        "-loop-simplify", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -loop-simplify", 
+      "sort": 10590, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##loop_unroll": {
+      "can_omit": "yes", 
+      "choice": [
+        "-loop-unroll", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -loop-unroll", 
+      "sort": 10600, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##loop_unswitch": {
+      "can_omit": "yes", 
+      "choice": [
+        "-loop-unswitch", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -loop-unswitch", 
+      "sort": 10610, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##lower_expect": {
+      "can_omit": "yes", 
+      "choice": [
+        "-lower-expect", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -lower-expect", 
+      "sort": 10620, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##loweratomic": {
+      "can_omit": "yes", 
+      "choice": [
+        "-loweratomic", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -loweratomic", 
+      "sort": 10630, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##lowerinvoke": {
+      "can_omit": "yes", 
+      "choice": [
+        "-lowerinvoke", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -lowerinvoke", 
+      "sort": 10640, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##lowerswitch": {
+      "can_omit": "yes", 
+      "choice": [
+        "-lowerswitch", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -lowerswitch", 
+      "sort": 10650, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##mem2reg": {
+      "can_omit": "yes", 
+      "choice": [
+        "-mem2reg", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -mem2reg", 
+      "sort": 10660, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##memcpyopt": {
+      "can_omit": "yes", 
+      "choice": [
+        "-memcpyopt", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -memcpyopt", 
+      "sort": 10670, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##memdep": {
+      "can_omit": "yes", 
+      "choice": [
+        "-memdep", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -memdep", 
+      "sort": 10680, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##mergefunc": {
+      "can_omit": "yes", 
+      "choice": [
+        "-mergefunc", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -mergefunc", 
+      "sort": 10690, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##mergereturn": {
+      "can_omit": "yes", 
+      "choice": [
+        "-mergereturn", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -mergereturn", 
+      "sort": 10700, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##module_debuginfo": {
+      "can_omit": "yes", 
+      "choice": [
+        "-module-debuginfo", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -module-debuginfo", 
+      "sort": 10710, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##partial_inliner": {
+      "can_omit": "yes", 
+      "choice": [
+        "-partial-inliner", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -partial-inliner", 
+      "sort": 10720, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##postdomtree": {
+      "can_omit": "yes", 
+      "choice": [
+        "-postdomtree", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -postdomtree", 
+      "sort": 10730, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##preverify": {
+      "can_omit": "yes", 
+      "choice": [
+        "-preverify", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -preverify", 
+      "sort": 10740, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##prune_eh": {
+      "can_omit": "yes", 
+      "choice": [
+        "-prune-eh", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -prune-eh", 
+      "sort": 10750, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##reassociate": {
+      "can_omit": "yes", 
+      "choice": [
+        "-reassociate", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -reassociate", 
+      "sort": 10760, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##reg2mem": {
+      "can_omit": "yes", 
+      "choice": [
+        "-reg2mem", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -reg2mem", 
+      "sort": 10770, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##regions": {
+      "can_omit": "yes", 
+      "choice": [
+        "-regions", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -regions", 
+      "sort": 10780, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##scalar_evolution": {
+      "can_omit": "yes", 
+      "choice": [
+        "-scalar-evolution", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -scalar-evolution", 
+      "sort": 10790, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##scalarrepl": {
+      "can_omit": "yes", 
+      "choice": [
+        "-scalarrepl", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -scalarrepl", 
+      "sort": 10800, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##scalarrepl_ssa": {
+      "can_omit": "yes", 
+      "choice": [
+        "-scalarrepl-ssa", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -scalarrepl-ssa", 
+      "sort": 10810, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##sccp": {
+      "can_omit": "yes", 
+      "choice": [
+        "-sccp", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -sccp", 
+      "sort": 10820, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##scev_aa": {
+      "can_omit": "yes", 
+      "choice": [
+        "-scev-aa", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -scev-aa", 
+      "sort": 10830, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##simplify_libcalls": {
+      "can_omit": "yes", 
+      "choice": [
+        "-simplify-libcalls", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -simplify-libcalls", 
+      "sort": 10840, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##simplifycfg": {
+      "can_omit": "yes", 
+      "choice": [
+        "-simplifycfg", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -simplifycfg", 
+      "sort": 10850, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##sink": {
+      "can_omit": "yes", 
+      "choice": [
+        "-sink", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -sink", 
+      "sort": 10860, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##std_compile_opts": {
+      "can_omit": "yes", 
+      "choice": [
+        "-std-compile-opts", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -std-compile-opts", 
+      "sort": 10040, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##std_link_opts": {
+      "can_omit": "yes", 
+      "choice": [
+        "-std-link-opts", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -std-link-opts", 
+      "sort": 10050, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##strip": {
+      "can_omit": "yes", 
+      "choice": [
+        "-strip", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -strip", 
+      "sort": 10870, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##strip_dead_debug_info": {
+      "can_omit": "yes", 
+      "choice": [
+        "-strip-dead-debug-info", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -strip-dead-debug-info", 
+      "sort": 10880, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##strip_dead_prototypes": {
+      "can_omit": "yes", 
+      "choice": [
+        "-strip-dead-prototypes", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -strip-dead-prototypes", 
+      "sort": 10890, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##strip_debug_declare": {
+      "can_omit": "yes", 
+      "choice": [
+        "-strip-debug-declare", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -strip-debug-declare", 
+      "sort": 10900, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##strip_nondebug": {
+      "can_omit": "yes", 
+      "choice": [
+        "-strip-nondebug", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -strip-nondebug", 
+      "sort": 10910, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##tailcallelim": {
+      "can_omit": "yes", 
+      "choice": [
+        "-tailcallelim", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -tailcallelim", 
+      "sort": 10920, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##targetlibinfo": {
+      "can_omit": "yes", 
+      "choice": [
+        "-targetlibinfo", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -targetlibinfo", 
+      "sort": 10940, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##tbaa": {
+      "can_omit": "yes", 
+      "choice": [
+        "-tbaa", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -tbaa", 
+      "sort": 10950, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##vectorize": {
+      "can_omit": "yes", 
+      "choice": [
+        "-vectorize", 
+        ""
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -vectorize", 
+      "sort": 10960, 
+      "tags": [
+        "basic", 
+        "optimization"
+      ], 
+      "type": "text"
+    }
+  }
+}
