@@ -2259,6 +2259,7 @@ def pipeline(i):
     import os
     import json
     import sys
+    import time
 
     o=i.get('out','')
     oo=''
@@ -3009,12 +3010,24 @@ def pipeline(i):
 
           # Sorting
           al1=sorted(al, key=lambda v: (int(v.get('0',0)), int(v.get('1',0)), int(v.get('2',0))))
+          jj=0
           for qi in al1:
               if qi.get('uid','')!='':
                  xruid=qi['uid']
                  xruoa=qi['uoa']
               else:
+                 # Check if exact match with next one
+                 if jj+1<len(al1):
+                    qii=al1[jj+1]
+
+                    if qi.get('0',None)==qii.get('0',None) and \
+                       qi.get('1',None)==qii.get('1',None) and \
+                       qi.get('2',None)==qii.get('2',None):
+                       xruid=qii['uid']
+                       xruoa=qii['uoa']
+
                  break
+              jj+=1
 
           if xruid=='':
              return {'return':1, 'error':'can\'t find most close compiler description by tags ('+ \
@@ -3024,6 +3037,8 @@ def pipeline(i):
 
           if o=='con':
              ck.out('Most close found compiler description: '+xruoa+' ('+xruid+')')
+             time.sleep(1)
+
 
     if cdu!='':
        choices['compiler_description_uoa']=cdu

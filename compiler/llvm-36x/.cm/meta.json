@@ -3,7 +3,6 @@
     "compiler", 
     "llvm", 
     "v3", 
-    "v3.6",
-    "auto"
+    "v3.6"
   ]
 }
