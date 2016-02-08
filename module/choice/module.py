@@ -214,12 +214,16 @@ def make(i):
                            ln=my_random.randrange(0, lcqx)
                            dv=yhc[ln]
                         elif yestart!='':
-                             y=my_random.randrange(0,rx)
+                             if (type(rx)==int or type(x)==ck.type_long) and rx>0:
+                                y=my_random.randrange(0,rx)
+                             else:
+                                # alternatively should print inconsistency
+                                y=0
                              dv=r1+(y*rs)
 
                      if tp=='random-with-next':
                         nupdate=True
-   
+
                   elif tp=='parallel-random': # Change all dimensions at the same time (if explorable)!
                        if yestart!='':
                           if dvsame=='':

@@ -2967,8 +2967,8 @@
     "##param--falign-functions[=": {
       "can_omit": "yes",
       "default": "",
-      "desc": "compiler flag: -falign-functions[=]",
-      "explore_prefix": "-falign-functions[=]",
+      "desc": "compiler flag: -falign-functions=",
+      "explore_prefix": "-falign-functions=",
       "explore_start": 0,
       "explore_step": 1,
       "explore_stop": 0,
@@ -2983,8 +2983,8 @@
     "##param--falign-jumps[=": {
       "can_omit": "yes",
       "default": "",
-      "desc": "compiler flag: -falign-jumps[=]",
-      "explore_prefix": "-falign-jumps[=]",
+      "desc": "compiler flag: -falign-jumps=",
+      "explore_prefix": "-falign-jumps=",
       "explore_start": 0,
       "explore_step": 1,
       "explore_stop": 0,
@@ -2999,8 +2999,8 @@
     "##param--falign-labels[=": {
       "can_omit": "yes",
       "default": "",
-      "desc": "compiler flag: -falign-labels[=]",
-      "explore_prefix": "-falign-labels[=]",
+      "desc": "compiler flag: -falign-labels=",
+      "explore_prefix": "-falign-labels=",
       "explore_start": 0,
       "explore_step": 1,
       "explore_stop": 0,
@@ -3015,8 +3015,8 @@
     "##param--falign-loops[=": {
       "can_omit": "yes",
       "default": "",
-      "desc": "compiler flag: -falign-loops[=]",
-      "explore_prefix": "-falign-loops[=]",
+      "desc": "compiler flag: -falign-loops=",
+      "explore_prefix": "-falign-loops=",
       "explore_start": 0,
       "explore_step": 1,
       "explore_stop": 0,
@@ -3031,34 +3031,35 @@
     "##param--fexcess-precision=": {
       "can_omit": "yes",
       "default": "",
-      "desc": "compiler flag: -fexcess-precision=@var{style}",
-      "explore_prefix": "-fexcess-precision=@var{style}",
-      "explore_start": 0,
-      "explore_step": 1,
-      "explore_stop": 0,
+      "desc": "compiler flag: -fexcess-precision=",
       "sort": 30050,
       "tags": [
         "basic",
         "parametric",
         "optimization"
       ],
-      "type": "integer"
+      "type": "text",
+      "choice":[
+        "-fexcess-precision=fast",
+        "-fexcess-precision=standard"
+      ]
     },
     "##param--ffp-contract=": {
       "can_omit": "yes",
       "default": "",
-      "desc": "compiler flag: -ffp-contract=@var{style}",
-      "explore_prefix": "-ffp-contract=@var{style}",
-      "explore_start": 0,
-      "explore_step": 1,
-      "explore_stop": 0,
+      "desc": "compiler flag: -ffp-contract=",
       "sort": 30060,
       "tags": [
         "basic",
         "parametric",
         "optimization"
       ],
-      "type": "integer"
+      "type": "text",
+      "choice":[
+        "-ffp-contract=fast",
+        "-ffp-contract=off",
+        "-ffp-contract=on"
+      ]
     },
     "##param--finline-limit=": {
       "can_omit": "yes",
@@ -3079,34 +3080,35 @@
     "##param--fira-algorithm=": {
       "can_omit": "yes",
       "default": "",
-      "desc": "compiler flag: -fira-algorithm=@var{algorithm}",
-      "explore_prefix": "-fira-algorithm=@var{algorithm}",
-      "explore_start": 0,
-      "explore_step": 1,
-      "explore_stop": 0,
+      "choice": [
+        "-fira-algorithm=CB",
+        "-fira-algorithm=priority"
+      ],
+      "desc": "compiler flag: -fira-algorithm=",
       "sort": 30080,
       "tags": [
         "basic",
         "parametric",
         "optimization"
       ],
-      "type": "integer"
+      "type": "text"
     },
     "##param--fira-region=": {
       "can_omit": "yes",
       "default": "",
-      "desc": "compiler flag: -fira-region=@var{region}",
-      "explore_prefix": "-fira-region=@var{region}",
-      "explore_start": 0,
-      "explore_step": 1,
-      "explore_stop": 0,
+      "desc": "compiler flag: -fira-region=",
       "sort": 30090,
       "tags": [
         "basic",
         "parametric",
         "optimization"
       ],
-      "type": "integer"
+      "type": "text",
+      "choice": [
+        "-fira-region=all",
+        "-fira-region=mixed",
+        "-fira-region=one"
+      ]
     },
     "##param--fira-verbose=": {
       "can_omit": "yes",
@@ -3127,24 +3129,27 @@
     "##param--flto-partition=": {
       "can_omit": "yes",
       "default": "",
-      "desc": "compiler flag: -flto-partition=@var{alg}",
-      "explore_prefix": "-flto-partition=@var{alg}",
-      "explore_start": 0,
-      "explore_step": 1,
-      "explore_stop": 0,
+      "desc": "compiler flag: -flto-partition=",
       "sort": 30110,
       "tags": [
         "basic",
         "parametric",
         "optimization"
       ],
-      "type": "integer"
+      "type": "text",
+      "choice":[
+        "-flto-partition=1to1",
+        "-flto-partition=balanced",
+        "-flto-partition=max",
+        "-flto-partition=none",
+        "-flto-partition=one"
+      ]
     },
     "##param--fsched-stalled-insns-dep[=": {
       "can_omit": "yes",
       "default": "",
-      "desc": "compiler flag: -fsched-stalled-insns-dep[=]",
-      "explore_prefix": "-fsched-stalled-insns-dep[=]",
+      "desc": "compiler flag: -fsched-stalled-insns-dep=",
+      "explore_prefix": "-fsched-stalled-insns-dep=",
       "explore_start": 0,
       "explore_step": 1,
       "explore_stop": 0,
@@ -3159,8 +3164,8 @@
     "##param--fsched-stalled-insns[=": {
       "can_omit": "yes",
       "default": "",
-      "desc": "compiler flag: -fsched-stalled-insns[=]",
-      "explore_prefix": "-fsched-stalled-insns[=]",
+      "desc": "compiler flag: -fsched-stalled-insns=",
+      "explore_prefix": "-fsched-stalled-insns=",
       "explore_start": 0,
       "explore_step": 1,
       "explore_stop": 0,
@@ -4045,38 +4050,6 @@
       "explore_step": 1,
       "explore_stop": 2000,
       "sort": 31490,
-      "tags": [
-        "basic",
-        "parametric",
-        "optimization"
-      ],
-      "type": "integer"
-    },
-    "##param-loop-unroll-jam-depth": {
-      "can_omit": "yes",
-      "default": "",
-      "desc": "compiler flag: --param loop-unroll-jam-depth= (depth of unrolled loop for unroll-and-jam)",
-      "explore_prefix": "--param loop-unroll-jam-depth=",
-      "explore_start": 0,
-      "explore_step": 1,
-      "explore_stop": 4,
-      "sort": 31460,
-      "tags": [
-        "basic",
-        "parametric",
-        "optimization"
-      ],
-      "type": "integer"
-    },
-    "##param-loop-unroll-jam-size": {
-      "can_omit": "yes",
-      "default": "",
-      "desc": "compiler flag: --param loop-unroll-jam-size= (size of unrolling factor for unroll-and-jam)",
-      "explore_prefix": "--param loop-unroll-jam-size=",
-      "explore_start": 0,
-      "explore_step": 1,
-      "explore_stop": 8,
-      "sort": 31450,
       "tags": [
         "basic",
         "parametric",
@@ -5156,22 +5129,6 @@
       ],
       "type": "integer"
     },
-    "##param-min-nondebug-insn-uid": {
-      "can_omit": "yes",
-      "default": "",
-      "desc": "compiler flag: --param min-nondebug-insn-uid= (The minimum UID to be used for a nondebug insn)",
-      "explore_prefix": "--param min-nondebug-insn-uid=",
-      "explore_start": 0,
-      "explore_step": 1,
-      "explore_stop": 0,
-      "sort": 31590,
-      "tags": [
-        "basic",
-        "parametric",
-        "optimization"
-      ],
-      "type": "integer"
-    },
     "##param-min-size-for-stack-sharing": {
       "can_omit": "yes",
       "default": "",
@@ -5213,118 +5170,6 @@
       "explore_step": 1,
       "explore_stop": 2,
       "sort": 30280,
-      "tags": [
-        "basic",
-        "parametric",
-        "optimization"
-      ],
-      "type": "integer"
-    },
-    "##param-omega-eliminate-redundant-constraints": {
-      "can_omit": "yes",
-      "default": "",
-      "desc": "compiler flag: --param omega-eliminate-redundant-constraints= (When set to 1, use expensive methods to eliminate all redundant constraints)",
-      "explore_prefix": "--param omega-eliminate-redundant-constraints=",
-      "explore_start": 0,
-      "explore_step": 1,
-      "explore_stop": 1,
-      "sort": 30970,
-      "tags": [
-        "basic",
-        "parametric",
-        "optimization"
-      ],
-      "type": "integer"
-    },
-    "##param-omega-hash-table-size": {
-      "can_omit": "yes",
-      "default": "",
-      "desc": "compiler flag: --param omega-hash-table-size= (Bound on the size of the hash table in Omega constraint systems)",
-      "explore_prefix": "--param omega-hash-table-size=",
-      "explore_start": 0,
-      "explore_step": 1,
-      "explore_stop": 1100,
-      "sort": 30950,
-      "tags": [
-        "basic",
-        "parametric",
-        "optimization"
-      ],
-      "type": "integer"
-    },
-    "##param-omega-max-eqs": {
-      "can_omit": "yes",
-      "default": "",
-      "desc": "compiler flag: --param omega-max-eqs= (Bound on the number of equalities in Omega constraint systems)",
-      "explore_prefix": "--param omega-max-eqs=",
-      "explore_start": 0,
-      "explore_step": 1,
-      "explore_stop": 256,
-      "sort": 30930,
-      "tags": [
-        "basic",
-        "parametric",
-        "optimization"
-      ],
-      "type": "integer"
-    },
-    "##param-omega-max-geqs": {
-      "can_omit": "yes",
-      "default": "",
-      "desc": "compiler flag: --param omega-max-geqs= (Bound on the number of inequalities in Omega constraint systems)",
-      "explore_prefix": "--param omega-max-geqs=",
-      "explore_start": 0,
-      "explore_step": 1,
-      "explore_stop": 512,
-      "sort": 30920,
-      "tags": [
-        "basic",
-        "parametric",
-        "optimization"
-      ],
-      "type": "integer"
-    },
-    "##param-omega-max-keys": {
-      "can_omit": "yes",
-      "default": "",
-      "desc": "compiler flag: --param omega-max-keys= (Bound on the number of keys in Omega constraint systems)",
-      "explore_prefix": "--param omega-max-keys=",
-      "explore_start": 0,
-      "explore_step": 1,
-      "explore_stop": 1000,
-      "sort": 30960,
-      "tags": [
-        "basic",
-        "parametric",
-        "optimization"
-      ],
-      "type": "integer"
-    },
-    "##param-omega-max-vars": {
-      "can_omit": "yes",
-      "default": "",
-      "desc": "compiler flag: --param omega-max-vars= (Bound on the number of variables in Omega constraint systems)",
-      "explore_prefix": "--param omega-max-vars=",
-      "explore_start": 0,
-      "explore_step": 1,
-      "explore_stop": 256,
-      "sort": 30910,
-      "tags": [
-        "basic",
-        "parametric",
-        "optimization"
-      ],
-      "type": "integer"
-    },
-    "##param-omega-max-wild-cards": {
-      "can_omit": "yes",
-      "default": "",
-      "desc": "compiler flag: --param omega-max-wild-cards= (Bound on the number of wild cards in Omega constraint systems)",
-      "explore_prefix": "--param omega-max-wild-cards=",
-      "explore_start": 0,
-      "explore_step": 1,
-      "explore_stop": 36,
-      "sort": 30940,
       "tags": [
         "basic",
         "parametric",
