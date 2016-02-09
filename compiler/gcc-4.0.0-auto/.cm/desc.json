@@ -1895,7 +1895,7 @@
       "default": "", 
       "desc": "compiler flag: --param integer-share-limit= (The upper bound for sharing integer constants)", 
       "explore_prefix": "--param integer-share-limit=", 
-      "explore_start": 0, 
+      "explore_start": 2, 
       "explore_step": 1, 
       "explore_stop": 512, 
       "sort": 30660, 
