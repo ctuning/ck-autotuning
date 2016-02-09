@@ -1940,54 +1940,6 @@
       ], 
       "type": "text"
     }, 
-    "##bool-stack-protector": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fstack-protector", 
-        "-fno-stack-protector"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fstack-protector", 
-      "sort": 11270, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##bool-stack-protector-all": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fstack-protector-all", 
-        "-fno-stack-protector-all"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fstack-protector-all", 
-      "sort": 11280, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##bool-stack-protector-strong": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fstack-protector-strong", 
-        "-fno-stack-protector-strong"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fstack-protector-strong", 
-      "sort": 11290, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
     "##bool-strict-aliasing": {
       "can_omit": "yes", 
       "choice": [
@@ -2916,38 +2868,39 @@
       ], 
       "type": "integer"
     }, 
-    "##param--fexcess-precision=": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: -fexcess-precision=", 
-      "explore_prefix": "-fexcess-precision=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 0, 
-      "sort": 30050, 
+    "##bool--fexcess-precision=": {
+      "can_omit": "yes",
+      "default": "",
+      "desc": "compiler flag: -fexcess-precision=",
+      "sort": 30050,
       "tags": [
-        "basic", 
-        "parametric", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param--ffp-contract=": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: -ffp-contract=", 
-      "explore_prefix": "-ffp-contract=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 0, 
-      "sort": 30060, 
+      ],
+      "type": "text",
+      "choice":[
+        "-fexcess-precision=fast",
+        "-fexcess-precision=standard"
+      ]
+    },
+    "##bool--ffp-contract=": {
+      "can_omit": "yes",
+      "default": "",
+      "desc": "compiler flag: -ffp-contract=",
+      "sort": 30060,
       "tags": [
-        "basic", 
-        "parametric", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
-      "type": "integer"
-    }, 
+      ],
+      "type": "text",
+      "choice":[
+        "-ffp-contract=fast",
+        "-ffp-contract=on",
+        "-ffp-contract=off"
+      ]
+    },
     "##param--finline-limit=": {
       "can_omit": "yes", 
       "default": "", 
@@ -2964,70 +2917,39 @@
       ], 
       "type": "integer"
     }, 
-    "##param--fira-algorithm=": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: -fira-algorithm=", 
-      "explore_prefix": "-fira-algorithm=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 0, 
-      "sort": 30080, 
+    "##bool--fira-algorithm=": {
+      "can_omit": "yes",
+      "default": "",
+      "choice": [
+        "-fira-algorithm=CB",
+        "-fira-algorithm=priority"
+      ],
+      "desc": "compiler flag: -fira-algorithm=",
+      "sort": 30080,
       "tags": [
-        "basic", 
-        "parametric", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param--fira-region=": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: -fira-region=", 
-      "explore_prefix": "-fira-region=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 0, 
-      "sort": 30090, 
+      ],
+      "type": "text"
+    },
+    "##bool--fira-region=": {
+      "can_omit": "yes",
+      "default": "",
+      "desc": "compiler flag: -fira-region=",
+      "sort": 30090,
       "tags": [
-        "basic", 
-        "parametric", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param--fira-verbose=": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: -fira-verbose=", 
-      "explore_prefix": "-fira-verbose=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 0, 
-      "sort": 30100, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param--flto-partition=": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: -flto-partition=", 
-      "explore_prefix": "-flto-partition=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 0, 
-      "sort": 30110, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
+      ],
+      "type": "text",
+      "choice": [
+        "-fira-region=all",
+        "-fira-region=mixed",
+        "-fira-region=one"
+      ]
+    },
     "##param--fsched-stalled-insns-dep=": {
       "can_omit": "yes", 
       "default": "", 
@@ -3069,22 +2991,6 @@
       "explore_step": 1, 
       "explore_stop": 0, 
       "sort": 30140, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param--fuse-ld=": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: -fuse-ld=", 
-      "explore_prefix": "-fuse-ld=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 0, 
-      "sort": 30150, 
       "tags": [
         "basic", 
         "parametric", 
@@ -4925,22 +4831,6 @@
       "explore_step": 1, 
       "explore_stop": 18, 
       "sort": 31480, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param-min-nondebug-insn-uid": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param min-nondebug-insn-uid= (The minimum UID to be used for a nondebug insn)", 
-      "explore_prefix": "--param min-nondebug-insn-uid=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 0, 
-      "sort": 31530, 
       "tags": [
         "basic", 
         "parametric", 

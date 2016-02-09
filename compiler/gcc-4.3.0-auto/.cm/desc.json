@@ -1506,38 +1506,6 @@
       ], 
       "type": "text"
     }, 
-    "##bool-stack-protector": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fstack-protector", 
-        "-fno-stack-protector"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fstack-protector", 
-      "sort": 10990, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##bool-stack-protector-all": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fstack-protector-all", 
-        "-fno-stack-protector-all"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fstack-protector-all", 
-      "sort": 11000, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
     "##bool-strict-aliasing": {
       "can_omit": "yes", 
       "choice": [

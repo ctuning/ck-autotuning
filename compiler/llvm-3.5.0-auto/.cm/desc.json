@@ -129,22 +129,6 @@
       ],
       "type": "integer"
     },
-    "##fmax-type-align": {
-      "can_omit": "yes",
-      "default": "",
-      "desc": "compiler flag: -fmax-type-align=",
-      "explore_prefix": "-fmax-type-align=",
-      "explore_start": 1,
-      "explore_step": 32,
-      "explore_stop": 1,
-      "sort": 30002,
-      "tags": [
-        "basic",
-        "parametric",
-        "optimization"
-      ],
-      "type": "integer"
-    },
     "##fmodules-prune-interval": {
       "can_omit": "yes",
       "default": "",
@@ -314,22 +298,6 @@
       "default": "",
       "desc": "compiler flag: -fno-rtti",
       "sort": 10200,
-      "tags": [
-        "basic",
-        "boolean",
-        "optimization"
-      ],
-      "type": "text"
-    },
-    "##fno-sanitize-stats": {
-      "can_omit": "yes",
-      "choice": [
-        "-fno-sanitize-stats",
-        ""
-      ],
-      "default": "",
-      "desc": "compiler flag: -fno-sanitize-stats",
-      "sort": 10210,
       "tags": [
         "basic",
         "boolean",
@@ -577,39 +545,6 @@
       ],
       "type": "text"
     },
-    "##flto": {
-      "can_omit": "yes",
-      "choice": [
-        "-flto=full",
-        "-flto=thin",
-        "-fno-lto"
-      ],
-      "default": "",
-      "desc": "compiler flag: -flto",
-      "sort": 10468,
-      "tags": [
-        "basic",
-        "boolean",
-        "optimization"
-      ],
-      "type": "text"
-    },
-    "##trigraphs": {
-      "can_omit": "yes",
-      "choice": [
-        "-trigraphs",
-        "-no-trigraphs"
-      ],
-      "default": "",
-      "desc": "compiler flag: trigraphs",
-      "sort": 10466,
-      "tags": [
-        "basic",
-        "boolean",
-        "optimization"
-      ],
-      "type": "text"
-    },
     "##fvisibility-inlines-hidden": {
       "can_omit": "yes",
       "choice": [
@@ -683,22 +618,6 @@
       "default": "",
       "desc": "compiler flag: -fshort-wchar",
       "sort": 10903,
-      "tags": [
-        "basic",
-        "boolean",
-        "optimization"
-      ],
-      "type": "text"
-    },
-    "##fstrict-vtable-pointers": {
-      "can_omit": "yes",
-      "choice": [
-        "-fstrict-vtable-pointers",
-        ""
-      ],
-      "default": "",
-      "desc": "compiler flag: -fstrict-vtable-pointers",
-      "sort": 10904,
       "tags": [
         "basic",
         "boolean",

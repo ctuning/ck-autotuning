@@ -3120,6 +3120,7 @@ def pipeline(i):
         if '##compiler_flags#'+q not in choices_order:
            choices_order.append('##compiler_flags#'+q)
 
+    iflags=0 # number of selected compiler flags (only from choices - can minimize too)
     if len(compiler_flags)>0:
        # Check if compiler flags are not in order (to set some order for reproducibility)
        # At the same time clean up choices_order with non-used flags
@@ -3133,10 +3134,12 @@ def pipeline(i):
                     compiler_flags_used[qk]=qq
                     if flags!='': flags+=' '
                     flags+=str(qq)
+                    iflags+=1
        compiler_flags=compiler_flags_used
 
     # to be able to properly record info
     choices['compiler_flags']=compiler_flags
+    features['number_of_selected_compiler_flags']=iflags
 
     ###############################################################################################################
     # PIPELINE SECTION: use gprof for profiling

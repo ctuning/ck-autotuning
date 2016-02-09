@@ -3,7 +3,7 @@
      "cmd":"echo --dataset_size=\"NI=$#NI#$ NJ=$#NJ#$ NK=$#NK#$\"",
 
      "choices_desc": {
-       "##compiler_vars#DIM_LOCAL_WORK_GROUP_X": {
+       "##compiler_vars#LWS_X": {
          "default": 32, 
          "desc": "Local workgroup: block X", 
          "explore_start": 1, 
@@ -16,7 +16,7 @@
          ], 
          "type": "integer"
        }, 
-       "##compiler_vars#DIM_LOCAL_WORK_GROUP_Y": {
+       "##compiler_vars#LWS_Y": {
          "default": 8, 
          "desc": "Local workgroup: block Y", 
          "explore_start": 1, 

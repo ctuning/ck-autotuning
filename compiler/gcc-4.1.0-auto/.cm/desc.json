@@ -1234,38 +1234,6 @@
       ], 
       "type": "text"
     }, 
-    "##bool-stack-protector": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fstack-protector", 
-        "-fno-stack-protector"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fstack-protector", 
-      "sort": 10790, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##bool-stack-protector-all": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fstack-protector-all", 
-        "-fno-stack-protector-all"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fstack-protector-all", 
-      "sort": 10800, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
     "##bool-strength-reduce": {
       "can_omit": "yes", 
       "choice": [

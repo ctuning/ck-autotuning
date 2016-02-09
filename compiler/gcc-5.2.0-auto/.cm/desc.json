@@ -3028,14 +3028,14 @@
       ],
       "type": "integer"
     },
-    "##param--fexcess-precision=": {
+    "##bool--fexcess-precision=": {
       "can_omit": "yes",
       "default": "",
       "desc": "compiler flag: -fexcess-precision=",
       "sort": 30050,
       "tags": [
         "basic",
-        "parametric",
+        "boolean",
         "optimization"
       ],
       "type": "text",
@@ -3044,21 +3044,21 @@
         "-fexcess-precision=standard"
       ]
     },
-    "##param--ffp-contract=": {
+    "##bool--ffp-contract=": {
       "can_omit": "yes",
       "default": "",
       "desc": "compiler flag: -ffp-contract=",
       "sort": 30060,
       "tags": [
         "basic",
-        "parametric",
+        "boolean",
         "optimization"
       ],
       "type": "text",
       "choice":[
         "-ffp-contract=fast",
-        "-ffp-contract=off",
-        "-ffp-contract=on"
+        "-ffp-contract=on",
+        "-ffp-contract=off"
       ]
     },
     "##param--finline-limit=": {
@@ -3077,7 +3077,7 @@
       ],
       "type": "integer"
     },
-    "##param--fira-algorithm=": {
+    "##bool--fira-algorithm=": {
       "can_omit": "yes",
       "default": "",
       "choice": [
@@ -3088,19 +3088,19 @@
       "sort": 30080,
       "tags": [
         "basic",
-        "parametric",
+        "boolean",
         "optimization"
       ],
       "type": "text"
     },
-    "##param--fira-region=": {
+    "##bool--fira-region=": {
       "can_omit": "yes",
       "default": "",
       "desc": "compiler flag: -fira-region=",
       "sort": 30090,
       "tags": [
         "basic",
-        "parametric",
+        "boolean",
         "optimization"
       ],
       "type": "text",
@@ -3110,30 +3110,14 @@
         "-fira-region=one"
       ]
     },
-    "##param--fira-verbose=": {
-      "can_omit": "yes",
-      "default": "",
-      "desc": "compiler flag: -fira-verbose=",
-      "explore_prefix": "-fira-verbose=",
-      "explore_start": 0,
-      "explore_step": 1,
-      "explore_stop": 0,
-      "sort": 30100,
-      "tags": [
-        "basic",
-        "parametric",
-        "optimization"
-      ],
-      "type": "integer"
-    },
-    "##param--flto-partition=": {
+    "##bool--flto-partition=": {
       "can_omit": "yes",
       "default": "",
       "desc": "compiler flag: -flto-partition=",
       "sort": 30110,
       "tags": [
         "basic",
-        "parametric",
+        "boolean",
         "optimization"
       ],
       "type": "text",
@@ -3141,8 +3125,8 @@
         "-flto-partition=1to1",
         "-flto-partition=balanced",
         "-flto-partition=max",
-        "-flto-partition=none",
-        "-flto-partition=one"
+        "-flto-partition=one",
+        "-flto-partition=none"
       ]
     },
     "##param--fsched-stalled-insns-dep=": {
