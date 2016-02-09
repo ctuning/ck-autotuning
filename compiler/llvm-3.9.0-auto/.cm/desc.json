@@ -119,8 +119,8 @@
       "desc": "compiler flag: -mstack-alignment=",
       "explore_prefix": "-mstack-alignment=",
       "explore_start": 1,
-      "explore_step": 32,
-      "explore_stop": 1,
+      "explore_step": 1,
+      "explore_stop": 32,
       "sort": 30001,
       "tags": [
         "basic",
@@ -135,8 +135,8 @@
       "desc": "compiler flag: -fmax-type-align=",
       "explore_prefix": "-fmax-type-align=",
       "explore_start": 1,
-      "explore_step": 32,
-      "explore_stop": 1,
+      "explore_step": 1,
+      "explore_stop": 32,
       "sort": 30002,
       "tags": [
         "basic",

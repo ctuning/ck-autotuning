@@ -214,7 +214,7 @@ def make(i):
                            ln=my_random.randrange(0, lcqx)
                            dv=yhc[ln]
                         elif yestart!='':
-                             if (type(rx)==float or type(rx)==int or type(rx)==ck.type_long) and rx>0:
+                             if (type(rx)==float or type(rx)==int or type(rx)==ck.type_long) and rx>=1:
                                 y=my_random.randrange(0,int(rx))
                              else:
                                 # alternatively should print inconsistency
