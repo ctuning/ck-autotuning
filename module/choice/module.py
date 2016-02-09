@@ -152,7 +152,7 @@ def make(i):
                else: yco=qt.get('can_omit','')
 
                if len(zchoice)>0: yhc=zchoice
-               else:              
+               else:
                   yhc=qt.get('choice',[])
                   if len(yhc)==0:
                      yhc=qt.get('choices',[])
@@ -271,7 +271,6 @@ def make(i):
                   elif tp=='machine-learning-based' or tp=='model-based' or tp=='adaptive' or tp=='plugin-based' or tp=='customized': 
                        ck.out('TBD: need to add CK plugin ...')
                        exit(1)
-                         
 
 
 
@@ -281,7 +280,7 @@ def make(i):
 
                   else:
                      return {'return':1, 'error':'unknown autotuning type ('+tp+')'}
-                           
+
                if yep!='' and dv!='': dv=yep+str(dv)
                dc[c]=dv
 

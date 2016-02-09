@@ -6,7 +6,9 @@
         "-O0", 
         "-O1", 
         "-O2", 
-        "-Os}"
+        "-Os", 
+        "-Ofast", 
+        "-Og"
       ], 
       "default": "", 
       "desc": "base compiler flag", 
@@ -58,7 +60,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fno-branch-count-reg", 
-      "sort": 10750, 
+      "sort": 10810, 
       "tags": [
         "basic", 
         "boolean", 
@@ -162,6 +164,38 @@
       ], 
       "type": "text"
     }, 
+    "##bool-combine-stack-adjustments": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fcombine-stack-adjustments", 
+        "-fno-combine-stack-adjustments"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fcombine-stack-adjustments", 
+      "sort": 10090, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-compare-elim": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fcompare-elim", 
+        "-fno-compare-elim"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fcompare-elim", 
+      "sort": 10110, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
     "##bool-conserve-stack": {
       "can_omit": "yes", 
       "choice": [
@@ -170,7 +204,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fconserve-stack", 
-      "sort": 10090, 
+      "sort": 10100, 
       "tags": [
         "basic", 
         "boolean", 
@@ -186,7 +220,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fcprop-registers", 
-      "sort": 10100, 
+      "sort": 10120, 
       "tags": [
         "basic", 
         "boolean", 
@@ -202,7 +236,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fcrossjumping", 
-      "sort": 10110, 
+      "sort": 10130, 
       "tags": [
         "basic", 
         "boolean", 
@@ -218,7 +252,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fcse-follow-jumps", 
-      "sort": 10120, 
+      "sort": 10140, 
       "tags": [
         "basic", 
         "boolean", 
@@ -234,7 +268,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fcse-skip-blocks", 
-      "sort": 10130, 
+      "sort": 10150, 
       "tags": [
         "basic", 
         "boolean", 
@@ -250,7 +284,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fcx-fortran-rules", 
-      "sort": 10140, 
+      "sort": 10160, 
       "tags": [
         "basic", 
         "boolean", 
@@ -266,7 +300,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fcx-limited-range", 
-      "sort": 10150, 
+      "sort": 10170, 
       "tags": [
         "basic", 
         "boolean", 
@@ -282,7 +316,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fdata-sections", 
-      "sort": 10160, 
+      "sort": 10180, 
       "tags": [
         "basic", 
         "boolean", 
@@ -298,23 +332,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fdce", 
-      "sort": 10180, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##bool-default-inline": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fdefault-inline", 
-        "-fno-default-inline"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fno-default-inline", 
-      "sort": 10760, 
+      "sort": 10190, 
       "tags": [
         "basic", 
         "boolean", 
@@ -330,7 +348,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fno-defer-pop", 
-      "sort": 10770, 
+      "sort": 10820, 
       "tags": [
         "basic", 
         "boolean", 
@@ -346,7 +364,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fdelayed-branch", 
-      "sort": 10190, 
+      "sort": 10200, 
       "tags": [
         "basic", 
         "boolean", 
@@ -362,7 +380,55 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fdelete-null-pointer-checks", 
-      "sort": 10200, 
+      "sort": 10210, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-devirtualize": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fdevirtualize", 
+        "-fno-devirtualize"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fdevirtualize", 
+      "sort": 10220, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-devirtualize-at-ltrans": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fdevirtualize-at-ltrans", 
+        "-fno-devirtualize-at-ltrans"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fdevirtualize-at-ltrans", 
+      "sort": 10240, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-devirtualize-speculatively": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fdevirtualize-speculatively", 
+        "-fno-devirtualize-speculatively"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fdevirtualize-speculatively", 
+      "sort": 10230, 
       "tags": [
         "basic", 
         "boolean", 
@@ -378,7 +444,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fdse", 
-      "sort": 10220, 
+      "sort": 10250, 
       "tags": [
         "basic", 
         "boolean", 
@@ -394,7 +460,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fearly-inlining", 
-      "sort": 10230, 
+      "sort": 10260, 
       "tags": [
         "basic", 
         "boolean", 
@@ -410,7 +476,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fexpensive-optimizations", 
-      "sort": 10250, 
+      "sort": 10280, 
       "tags": [
         "basic", 
         "boolean", 
@@ -426,7 +492,23 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -ffast-math", 
-      "sort": 10260, 
+      "sort": 10300, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-fat-lto-objects": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ffat-lto-objects", 
+        "-fno-fat-lto-objects"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ffat-lto-objects", 
+      "sort": 10290, 
       "tags": [
         "basic", 
         "boolean", 
@@ -442,7 +524,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -ffinite-math-only", 
-      "sort": 10270, 
+      "sort": 10310, 
       "tags": [
         "basic", 
         "boolean", 
@@ -458,7 +540,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -ffloat-store", 
-      "sort": 10280, 
+      "sort": 10320, 
       "tags": [
         "basic", 
         "boolean", 
@@ -474,7 +556,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fforward-propagate", 
-      "sort": 10290, 
+      "sort": 10330, 
       "tags": [
         "basic", 
         "boolean", 
@@ -490,7 +572,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fno-function-cse", 
-      "sort": 10780, 
+      "sort": 10830, 
       "tags": [
         "basic", 
         "boolean", 
@@ -506,7 +588,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -ffunction-sections", 
-      "sort": 10300, 
+      "sort": 10340, 
       "tags": [
         "basic", 
         "boolean", 
@@ -522,7 +604,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fgcse", 
-      "sort": 10310, 
+      "sort": 10350, 
       "tags": [
         "basic", 
         "boolean", 
@@ -538,7 +620,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fgcse-after-reload", 
-      "sort": 10320, 
+      "sort": 10360, 
       "tags": [
         "basic", 
         "boolean", 
@@ -554,7 +636,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fgcse-las", 
-      "sort": 10330, 
+      "sort": 10370, 
       "tags": [
         "basic", 
         "boolean", 
@@ -570,7 +652,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fgcse-lm", 
-      "sort": 10340, 
+      "sort": 10380, 
       "tags": [
         "basic", 
         "boolean", 
@@ -586,7 +668,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fgcse-sm", 
-      "sort": 10350, 
+      "sort": 10400, 
       "tags": [
         "basic", 
         "boolean", 
@@ -602,7 +684,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fgraphite-identity", 
-      "sort": 10600, 
+      "sort": 10390, 
       "tags": [
         "basic", 
         "boolean", 
@@ -618,7 +700,23 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fno-guess-branch-probability", 
-      "sort": 10790, 
+      "sort": 10840, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-hoist-adjacent-loads": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fhoist-adjacent-loads", 
+        "-fno-hoist-adjacent-loads"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fhoist-adjacent-loads", 
+      "sort": 10410, 
       "tags": [
         "basic", 
         "boolean", 
@@ -634,7 +732,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fif-conversion", 
-      "sort": 10360, 
+      "sort": 10420, 
       "tags": [
         "basic", 
         "boolean", 
@@ -650,7 +748,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fif-conversion2", 
-      "sort": 10370, 
+      "sort": 10430, 
       "tags": [
         "basic", 
         "boolean", 
@@ -666,7 +764,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -findirect-inlining", 
-      "sort": 10380, 
+      "sort": 10440, 
       "tags": [
         "basic", 
         "boolean", 
@@ -682,7 +780,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fno-inline", 
-      "sort": 10800, 
+      "sort": 10850, 
       "tags": [
         "basic", 
         "boolean", 
@@ -698,7 +796,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -finline-functions", 
-      "sort": 10390, 
+      "sort": 10450, 
       "tags": [
         "basic", 
         "boolean", 
@@ -714,7 +812,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -finline-functions-called-once", 
-      "sort": 10400, 
+      "sort": 10460, 
       "tags": [
         "basic", 
         "boolean", 
@@ -730,7 +828,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -finline-small-functions", 
-      "sort": 10410, 
+      "sort": 10470, 
       "tags": [
         "basic", 
         "boolean", 
@@ -746,7 +844,23 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fipa-cp", 
-      "sort": 10420, 
+      "sort": 10480, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-ipa-cp-alignment": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fipa-cp-alignment", 
+        "-fno-ipa-cp-alignment"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fipa-cp-alignment", 
+      "sort": 10500, 
       "tags": [
         "basic", 
         "boolean", 
@@ -762,7 +876,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fipa-cp-clone", 
-      "sort": 10430, 
+      "sort": 10490, 
       "tags": [
         "basic", 
         "boolean", 
@@ -770,15 +884,15 @@
       ], 
       "type": "text"
     }, 
-    "##bool-ipa-matrix-reorg": {
+    "##bool-ipa-icf": {
       "can_omit": "yes", 
       "choice": [
-        "-fipa-matrix-reorg", 
-        "-fno-ipa-matrix-reorg"
+        "-fipa-icf", 
+        "-fno-ipa-icf"
       ], 
       "default": "", 
-      "desc": "compiler flag: -fipa-matrix-reorg", 
-      "sort": 10440, 
+      "desc": "compiler flag: -fipa-icf", 
+      "sort": 10540, 
       "tags": [
         "basic", 
         "boolean", 
@@ -794,7 +908,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fipa-pta", 
-      "sort": 10450, 
+      "sort": 10510, 
       "tags": [
         "basic", 
         "boolean", 
@@ -810,7 +924,23 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fipa-pure-const", 
-      "sort": 10460, 
+      "sort": 10520, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-ipa-ra": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fipa-ra", 
+        "-fno-ipa-ra"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fipa-ra", 
+      "sort": 11850, 
       "tags": [
         "basic", 
         "boolean", 
@@ -826,7 +956,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fipa-reference", 
-      "sort": 10470, 
+      "sort": 10530, 
       "tags": [
         "basic", 
         "boolean", 
@@ -842,7 +972,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fipa-sra", 
-      "sort": 10240, 
+      "sort": 10270, 
       "tags": [
         "basic", 
         "boolean", 
@@ -850,47 +980,15 @@
       ], 
       "type": "text"
     }, 
-    "##bool-ipa-struct-reorg": {
+    "##bool-ira-hoist-pressure": {
       "can_omit": "yes", 
       "choice": [
-        "-fipa-struct-reorg", 
-        "-fno-ipa-struct-reorg"
+        "-fira-hoist-pressure", 
+        "-fno-ira-hoist-pressure"
       ], 
       "default": "", 
-      "desc": "compiler flag: -fipa-struct-reorg", 
-      "sort": 10480, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##bool-ipa-type-escape": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fipa-type-escape", 
-        "-fno-ipa-type-escape"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fipa-type-escape", 
-      "sort": 10490, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##bool-ira-coalesce": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fira-coalesce", 
-        "-fno-ira-coalesce"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fira-coalesce", 
-      "sort": 10500, 
+      "desc": "compiler flag: -fira-hoist-pressure", 
+      "sort": 10550, 
       "tags": [
         "basic", 
         "boolean", 
@@ -906,7 +1004,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fira-loop-pressure", 
-      "sort": 10510, 
+      "sort": 10560, 
       "tags": [
         "basic", 
         "boolean", 
@@ -922,7 +1020,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fno-ira-share-save-slots", 
-      "sort": 10520, 
+      "sort": 10570, 
       "tags": [
         "basic", 
         "boolean", 
@@ -938,7 +1036,39 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fno-ira-share-spill-slots", 
-      "sort": 10530, 
+      "sort": 10580, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-isolate-erroneous-paths-attribute": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fisolate-erroneous-paths-attribute", 
+        "-fno-isolate-erroneous-paths-attribute"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fisolate-erroneous-paths-attribute", 
+      "sort": 10600, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-isolate-erroneous-paths-dereference": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fisolate-erroneous-paths-dereference", 
+        "-fno-isolate-erroneous-paths-dereference"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fisolate-erroneous-paths-dereference", 
+      "sort": 10590, 
       "tags": [
         "basic", 
         "boolean", 
@@ -954,7 +1084,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fivopts", 
-      "sort": 10540, 
+      "sort": 10610, 
       "tags": [
         "basic", 
         "boolean", 
@@ -970,7 +1100,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fkeep-inline-functions", 
-      "sort": 10550, 
+      "sort": 10620, 
       "tags": [
         "basic", 
         "boolean", 
@@ -986,7 +1116,23 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fkeep-static-consts", 
-      "sort": 10560, 
+      "sort": 10630, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-live-range-shrinkage": {
+      "can_omit": "yes", 
+      "choice": [
+        "-flive-range-shrinkage", 
+        "-fno-live-range-shrinkage"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -flive-range-shrinkage", 
+      "sort": 10640, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1002,7 +1148,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -floop-block", 
-      "sort": 10570, 
+      "sort": 10650, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1018,7 +1164,23 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -floop-interchange", 
-      "sort": 10580, 
+      "sort": 10660, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-loop-nest-optimize": {
+      "can_omit": "yes", 
+      "choice": [
+        "-floop-nest-optimize", 
+        "-fno-loop-nest-optimize"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -floop-nest-optimize", 
+      "sort": 10690, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1034,7 +1196,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -floop-parallelize-all", 
-      "sort": 10610, 
+      "sort": 10700, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1050,7 +1212,39 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -floop-strip-mine", 
-      "sort": 10590, 
+      "sort": 10670, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-loop-unroll-and-jam": {
+      "can_omit": "yes", 
+      "choice": [
+        "-floop-unroll-and-jam", 
+        "-fno-loop-unroll-and-jam"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -floop-unroll-and-jam", 
+      "sort": 10680, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-lra-remat": {
+      "can_omit": "yes", 
+      "choice": [
+        "-flra-remat", 
+        "-fno-lra-remat"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -flra-remat", 
+      "sort": 10710, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1066,39 +1260,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -flto", 
-      "sort": 10620, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##bool-ltrans": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fltrans", 
-        "-fno-ltrans"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fltrans", 
-      "sort": 10650, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##bool-ltrans-output-list": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fltrans-output-list", 
-        "-fno-ltrans-output-list"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fltrans-output-list", 
-      "sort": 10660, 
+      "sort": 10720, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1114,7 +1276,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fno-math-errno", 
-      "sort": 10810, 
+      "sort": 10860, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1130,7 +1292,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fmerge-all-constants", 
-      "sort": 10670, 
+      "sort": 10760, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1146,7 +1308,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fmerge-constants", 
-      "sort": 10680, 
+      "sort": 10770, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1162,7 +1324,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fmodulo-sched", 
-      "sort": 10690, 
+      "sort": 10780, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1178,7 +1340,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fmodulo-sched-allow-regmoves", 
-      "sort": 10700, 
+      "sort": 10790, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1194,55 +1356,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fmove-loop-invariants", 
-      "sort": 10710, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##bool-mudflap": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fmudflap", 
-        "-fno-mudflap"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fmudflap", 
-      "sort": 10720, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##bool-mudflapir": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fmudflapir", 
-        "-fno-mudflapir"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fmudflapir", 
-      "sort": 10730, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##bool-mudflapth": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fmudflapth", 
-        "-fno-mudflapth"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fmudflapth", 
-      "sort": 10740, 
+      "sort": 10800, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1258,23 +1372,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fomit-frame-pointer", 
-      "sort": 10900, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##bool-optimize-register-move": {
-      "can_omit": "yes", 
-      "choice": [
-        "-foptimize-register-move", 
-        "-fno-optimize-register-move"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -foptimize-register-move", 
-      "sort": 10910, 
+      "sort": 10950, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1290,7 +1388,23 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -foptimize-sibling-calls", 
-      "sort": 10920, 
+      "sort": 10960, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-partial-inlining": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fpartial-inlining", 
+        "-fno-partial-inlining"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fpartial-inlining", 
+      "sort": 10970, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1306,7 +1420,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fpeel-loops", 
-      "sort": 10930, 
+      "sort": 10980, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1322,7 +1436,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fno-peephole", 
-      "sort": 10820, 
+      "sort": 10870, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1338,7 +1452,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fno-peephole2", 
-      "sort": 10830, 
+      "sort": 10880, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1354,7 +1468,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fpredictive-commoning", 
-      "sort": 10940, 
+      "sort": 10990, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1370,7 +1484,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fprefetch-loop-arrays", 
-      "sort": 10950, 
+      "sort": 11000, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1386,7 +1500,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -freciprocal-math", 
-      "sort": 10960, 
+      "sort": 11010, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1394,15 +1508,15 @@
       ], 
       "type": "text"
     }, 
-    "##bool-regmove": {
+    "##bool-ree": {
       "can_omit": "yes", 
       "choice": [
-        "-fregmove", 
-        "-fno-regmove"
+        "-free", 
+        "-fno-ree"
       ], 
       "default": "", 
-      "desc": "compiler flag: -fregmove", 
-      "sort": 10970, 
+      "desc": "compiler flag: -free", 
+      "sort": 11020, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1418,7 +1532,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -frename-registers", 
-      "sort": 10980, 
+      "sort": 11030, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1434,7 +1548,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -freorder-blocks", 
-      "sort": 10990, 
+      "sort": 11040, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1450,7 +1564,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -freorder-blocks-and-partition", 
-      "sort": 11000, 
+      "sort": 11050, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1466,7 +1580,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -freorder-functions", 
-      "sort": 11010, 
+      "sort": 11060, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1482,7 +1596,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -frerun-cse-after-loop", 
-      "sort": 11020, 
+      "sort": 11070, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1498,7 +1612,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -freschedule-modulo-scheduled-loops", 
-      "sort": 11030, 
+      "sort": 11080, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1514,7 +1628,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -frounding-math", 
-      "sort": 11040, 
+      "sort": 11090, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1530,7 +1644,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fsched-critical-path-heuristic", 
-      "sort": 11100, 
+      "sort": 11150, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1546,7 +1660,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fsched-dep-count-heuristic", 
-      "sort": 11140, 
+      "sort": 11190, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1562,7 +1676,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fsched-group-heuristic", 
-      "sort": 11090, 
+      "sort": 11140, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1578,7 +1692,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fno-sched-interblock", 
-      "sort": 10840, 
+      "sort": 10890, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1594,7 +1708,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fsched-last-insn-heuristic", 
-      "sort": 11130, 
+      "sort": 11180, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1610,7 +1724,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fsched-pressure", 
-      "sort": 11060, 
+      "sort": 11110, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1626,7 +1740,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fsched-rank-heuristic", 
-      "sort": 11120, 
+      "sort": 11170, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1642,7 +1756,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fno-sched-spec", 
-      "sort": 10850, 
+      "sort": 10900, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1658,7 +1772,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fsched-spec-insn-heuristic", 
-      "sort": 11110, 
+      "sort": 11160, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1674,7 +1788,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fsched-spec-load", 
-      "sort": 11070, 
+      "sort": 11120, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1690,7 +1804,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fsched-spec-load-dangerous", 
-      "sort": 11080, 
+      "sort": 11130, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1706,7 +1820,23 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fsched2-use-superblocks", 
-      "sort": 11050, 
+      "sort": 11100, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-schedule-fusion": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fschedule-fusion", 
+        "-fno-schedule-fusion"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fschedule-fusion", 
+      "sort": 11200, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1722,7 +1852,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fschedule-insns", 
-      "sort": 11150, 
+      "sort": 11210, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1738,7 +1868,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fschedule-insns2", 
-      "sort": 11160, 
+      "sort": 11220, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1754,7 +1884,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fsection-anchors", 
-      "sort": 11170, 
+      "sort": 11230, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1770,7 +1900,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fsel-sched-pipelining", 
-      "sort": 11200, 
+      "sort": 11260, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1786,7 +1916,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fsel-sched-pipelining-outer-loops", 
-      "sort": 11210, 
+      "sort": 11270, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1802,7 +1932,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fselective-scheduling", 
-      "sort": 11180, 
+      "sort": 11240, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1818,7 +1948,39 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fselective-scheduling2", 
-      "sort": 11190, 
+      "sort": 11250, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-semantic-interposition": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fsemantic-interposition", 
+        "-fno-semantic-interposition"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fsemantic-interposition", 
+      "sort": 11280, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-shrink-wrap": {
+      "can_omit": "yes", 
+      "choice": [
+        "-fshrink-wrap", 
+        "-fno-shrink-wrap"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -fshrink-wrap", 
+      "sort": 11290, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1834,7 +1996,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fsignaling-nans", 
-      "sort": 11220, 
+      "sort": 11300, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1850,7 +2012,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fno-signed-zeros", 
-      "sort": 10860, 
+      "sort": 10910, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1866,7 +2028,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fsingle-precision-constant", 
-      "sort": 11230, 
+      "sort": 11310, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1882,7 +2044,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fsplit-ivs-in-unroller", 
-      "sort": 11240, 
+      "sort": 11320, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1898,7 +2060,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fsplit-wide-types", 
-      "sort": 11250, 
+      "sort": 11330, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1906,15 +2068,15 @@
       ], 
       "type": "text"
     }, 
-    "##bool-stack-protector": {
+    "##bool-ssa-phiopt": {
       "can_omit": "yes", 
       "choice": [
-        "-fstack-protector", 
-        "-fno-stack-protector"
+        "-fssa-phiopt", 
+        "-fno-ssa-phiopt"
       ], 
       "default": "", 
-      "desc": "compiler flag: -fstack-protector", 
-      "sort": 11260, 
+      "desc": "compiler flag: -fssa-phiopt", 
+      "sort": 11340, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1922,15 +2084,15 @@
       ], 
       "type": "text"
     }, 
-    "##bool-stack-protector-all": {
+    "##bool-stdarg-opt": {
       "can_omit": "yes", 
       "choice": [
-        "-fstack-protector-all", 
-        "-fno-stack-protector-all"
+        "-fstdarg-opt", 
+        "-fno-stdarg-opt"
       ], 
       "default": "", 
-      "desc": "compiler flag: -fstack-protector-all", 
-      "sort": 11270, 
+      "desc": "compiler flag: -fstdarg-opt", 
+      "sort": 11390, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1946,7 +2108,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fstrict-aliasing", 
-      "sort": 11280, 
+      "sort": 11400, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1962,7 +2124,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fstrict-overflow", 
-      "sort": 11290, 
+      "sort": 11410, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1978,7 +2140,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fthread-jumps", 
-      "sort": 11300, 
+      "sort": 11420, 
       "tags": [
         "basic", 
         "boolean", 
@@ -1994,7 +2156,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fno-toplevel-reorder", 
-      "sort": 10870, 
+      "sort": 10920, 
       "tags": [
         "basic", 
         "boolean", 
@@ -2010,7 +2172,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -ftracer", 
-      "sort": 11310, 
+      "sort": 11430, 
       "tags": [
         "basic", 
         "boolean", 
@@ -2026,7 +2188,23 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fno-trapping-math", 
-      "sort": 10880, 
+      "sort": 10930, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-tree-bit-ccp": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ftree-bit-ccp", 
+        "-fno-tree-bit-ccp"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ftree-bit-ccp", 
+      "sort": 11440, 
       "tags": [
         "basic", 
         "boolean", 
@@ -2042,7 +2220,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -ftree-builtin-call-dce", 
-      "sort": 11320, 
+      "sort": 11450, 
       "tags": [
         "basic", 
         "boolean", 
@@ -2058,7 +2236,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -ftree-ccp", 
-      "sort": 11330, 
+      "sort": 11460, 
       "tags": [
         "basic", 
         "boolean", 
@@ -2074,7 +2252,23 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -ftree-ch", 
-      "sort": 11340, 
+      "sort": 11470, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-tree-coalesce-vars": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ftree-coalesce-vars", 
+        "-fno-tree-coalesce-vars"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ftree-coalesce-vars", 
+      "sort": 11490, 
       "tags": [
         "basic", 
         "boolean", 
@@ -2090,7 +2284,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -ftree-copy-prop", 
-      "sort": 11350, 
+      "sort": 11500, 
       "tags": [
         "basic", 
         "boolean", 
@@ -2106,7 +2300,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -ftree-copyrename", 
-      "sort": 11360, 
+      "sort": 11510, 
       "tags": [
         "basic", 
         "boolean", 
@@ -2122,7 +2316,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -ftree-dce", 
-      "sort": 11370, 
+      "sort": 11520, 
       "tags": [
         "basic", 
         "boolean", 
@@ -2138,7 +2332,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -ftree-dominator-opts", 
-      "sort": 11380, 
+      "sort": 11530, 
       "tags": [
         "basic", 
         "boolean", 
@@ -2154,7 +2348,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -ftree-dse", 
-      "sort": 11390, 
+      "sort": 11540, 
       "tags": [
         "basic", 
         "boolean", 
@@ -2170,7 +2364,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -ftree-forwprop", 
-      "sort": 11400, 
+      "sort": 11550, 
       "tags": [
         "basic", 
         "boolean", 
@@ -2186,7 +2380,23 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -ftree-fre", 
-      "sort": 11410, 
+      "sort": 11560, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-tree-loop-distribute-patterns": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ftree-loop-distribute-patterns", 
+        "-fno-tree-loop-distribute-patterns"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ftree-loop-distribute-patterns", 
+      "sort": 11620, 
       "tags": [
         "basic", 
         "boolean", 
@@ -2202,7 +2412,39 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -ftree-loop-distribution", 
-      "sort": 11440, 
+      "sort": 11610, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-tree-loop-if-convert": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ftree-loop-if-convert", 
+        "-fno-tree-loop-if-convert"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ftree-loop-if-convert", 
+      "sort": 11570, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-tree-loop-if-convert-stores": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ftree-loop-if-convert-stores", 
+        "-fno-tree-loop-if-convert-stores"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ftree-loop-if-convert-stores", 
+      "sort": 11580, 
       "tags": [
         "basic", 
         "boolean", 
@@ -2218,7 +2460,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -ftree-loop-im", 
-      "sort": 11420, 
+      "sort": 11590, 
       "tags": [
         "basic", 
         "boolean", 
@@ -2234,7 +2476,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -ftree-loop-ivcanon", 
-      "sort": 11450, 
+      "sort": 11630, 
       "tags": [
         "basic", 
         "boolean", 
@@ -2250,7 +2492,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -ftree-loop-linear", 
-      "sort": 11460, 
+      "sort": 11640, 
       "tags": [
         "basic", 
         "boolean", 
@@ -2266,7 +2508,39 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -ftree-loop-optimize", 
-      "sort": 11470, 
+      "sort": 11650, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-tree-loop-vectorize": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ftree-loop-vectorize", 
+        "-fno-tree-loop-vectorize"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ftree-loop-vectorize", 
+      "sort": 11660, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-tree-partial-pre": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ftree-partial-pre", 
+        "-fno-tree-partial-pre"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ftree-partial-pre", 
+      "sort": 11680, 
       "tags": [
         "basic", 
         "boolean", 
@@ -2282,7 +2556,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -ftree-phiprop", 
-      "sort": 11430, 
+      "sort": 11600, 
       "tags": [
         "basic", 
         "boolean", 
@@ -2298,7 +2572,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -ftree-pre", 
-      "sort": 11480, 
+      "sort": 11670, 
       "tags": [
         "basic", 
         "boolean", 
@@ -2314,7 +2588,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -ftree-pta", 
-      "sort": 11490, 
+      "sort": 11690, 
       "tags": [
         "basic", 
         "boolean", 
@@ -2330,7 +2604,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -ftree-reassoc", 
-      "sort": 11500, 
+      "sort": 11700, 
       "tags": [
         "basic", 
         "boolean", 
@@ -2346,7 +2620,23 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -ftree-sink", 
-      "sort": 11510, 
+      "sort": 11710, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-tree-slsr": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ftree-slsr", 
+        "-fno-tree-slsr"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ftree-slsr", 
+      "sort": 11720, 
       "tags": [
         "basic", 
         "boolean", 
@@ -2362,7 +2652,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -ftree-sra", 
-      "sort": 11520, 
+      "sort": 11730, 
       "tags": [
         "basic", 
         "boolean", 
@@ -2378,7 +2668,23 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -ftree-switch-conversion", 
-      "sort": 11530, 
+      "sort": 11740, 
+      "tags": [
+        "basic", 
+        "boolean", 
+        "optimization"
+      ], 
+      "type": "text"
+    }, 
+    "##bool-tree-tail-merge": {
+      "can_omit": "yes", 
+      "choice": [
+        "-ftree-tail-merge", 
+        "-fno-tree-tail-merge"
+      ], 
+      "default": "", 
+      "desc": "compiler flag: -ftree-tail-merge", 
+      "sort": 11750, 
       "tags": [
         "basic", 
         "boolean", 
@@ -2394,23 +2700,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -ftree-ter", 
-      "sort": 11540, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##bool-tree-vect-loop-version": {
-      "can_omit": "yes", 
-      "choice": [
-        "-ftree-vect-loop-version", 
-        "-fno-tree-vect-loop-version"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -ftree-vect-loop-version", 
-      "sort": 11550, 
+      "sort": 11760, 
       "tags": [
         "basic", 
         "boolean", 
@@ -2426,7 +2716,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -ftree-vectorize", 
-      "sort": 11560, 
+      "sort": 11770, 
       "tags": [
         "basic", 
         "boolean", 
@@ -2442,7 +2732,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -ftree-vrp", 
-      "sort": 11570, 
+      "sort": 11780, 
       "tags": [
         "basic", 
         "boolean", 
@@ -2458,7 +2748,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -funit-at-a-time", 
-      "sort": 11580, 
+      "sort": 11790, 
       "tags": [
         "basic", 
         "boolean", 
@@ -2474,7 +2764,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -funroll-all-loops", 
-      "sort": 11590, 
+      "sort": 11800, 
       "tags": [
         "basic", 
         "boolean", 
@@ -2490,7 +2780,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -funroll-loops", 
-      "sort": 11600, 
+      "sort": 11810, 
       "tags": [
         "basic", 
         "boolean", 
@@ -2506,7 +2796,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -funsafe-loop-optimizations", 
-      "sort": 11610, 
+      "sort": 11820, 
       "tags": [
         "basic", 
         "boolean", 
@@ -2522,7 +2812,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -funsafe-math-optimizations", 
-      "sort": 11620, 
+      "sort": 11830, 
       "tags": [
         "basic", 
         "boolean", 
@@ -2538,7 +2828,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -funswitch-loops", 
-      "sort": 11630, 
+      "sort": 11840, 
       "tags": [
         "basic", 
         "boolean", 
@@ -2554,7 +2844,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fuse-linker-plugin", 
-      "sort": 11710, 
+      "sort": 11920, 
       "tags": [
         "basic", 
         "boolean", 
@@ -2570,7 +2860,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fvariable-expansion-in-unroller", 
-      "sort": 11640, 
+      "sort": 11860, 
       "tags": [
         "basic", 
         "boolean", 
@@ -2586,7 +2876,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fvect-cost-model", 
-      "sort": 11650, 
+      "sort": 11870, 
       "tags": [
         "basic", 
         "boolean", 
@@ -2602,7 +2892,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fvpt", 
-      "sort": 11660, 
+      "sort": 11880, 
       "tags": [
         "basic", 
         "boolean", 
@@ -2618,7 +2908,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fweb", 
-      "sort": 11670, 
+      "sort": 11890, 
       "tags": [
         "basic", 
         "boolean", 
@@ -2634,23 +2924,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fwhole-program", 
-      "sort": 11680, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##bool-whopr": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fwhopr", 
-        "-fno-whopr"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fwhopr", 
-      "sort": 11690, 
+      "sort": 11900, 
       "tags": [
         "basic", 
         "boolean", 
@@ -2666,7 +2940,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fwpa", 
-      "sort": 11700, 
+      "sort": 11910, 
       "tags": [
         "basic", 
         "boolean", 
@@ -2682,7 +2956,7 @@
       ], 
       "default": "", 
       "desc": "compiler flag: -fno-zero-initialized-in-bss", 
-      "sort": 10890, 
+      "sort": 10940, 
       "tags": [
         "basic", 
         "boolean", 
@@ -2690,11 +2964,11 @@
       ], 
       "type": "text"
     }, 
-    "##param--falign-functions=": {
+    "##param--falign-functions[=": {
       "can_omit": "yes", 
       "default": "", 
-      "desc": "compiler flag: -falign-functions=", 
-      "explore_prefix": "-falign-functions=", 
+      "desc": "compiler flag: -falign-functions[=]", 
+      "explore_prefix": "-falign-functions[=]", 
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 0, 
@@ -2706,11 +2980,11 @@
       ], 
       "type": "integer"
     }, 
-    "##param--falign-jumps=": {
+    "##param--falign-jumps[=": {
       "can_omit": "yes", 
       "default": "", 
-      "desc": "compiler flag: -falign-jumps=", 
-      "explore_prefix": "-falign-jumps=", 
+      "desc": "compiler flag: -falign-jumps[=]", 
+      "explore_prefix": "-falign-jumps[=]", 
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 0, 
@@ -2722,11 +2996,11 @@
       ], 
       "type": "integer"
     }, 
-    "##param--falign-labels=": {
+    "##param--falign-labels[=": {
       "can_omit": "yes", 
       "default": "", 
-      "desc": "compiler flag: -falign-labels=", 
-      "explore_prefix": "-falign-labels=", 
+      "desc": "compiler flag: -falign-labels[=]", 
+      "explore_prefix": "-falign-labels[=]", 
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 0, 
@@ -2738,11 +3012,11 @@
       ], 
       "type": "integer"
     }, 
-    "##param--falign-loops=": {
+    "##param--falign-loops[=": {
       "can_omit": "yes", 
       "default": "", 
-      "desc": "compiler flag: -falign-loops=", 
-      "explore_prefix": "-falign-loops=", 
+      "desc": "compiler flag: -falign-loops[=]", 
+      "explore_prefix": "-falign-loops[=]", 
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 0, 
@@ -2757,12 +3031,28 @@
     "##param--fexcess-precision=": {
       "can_omit": "yes", 
       "default": "", 
-      "desc": "compiler flag: -fexcess-precision=", 
-      "explore_prefix": "-fexcess-precision=", 
+      "desc": "compiler flag: -fexcess-precision=@var{style}", 
+      "explore_prefix": "-fexcess-precision=@var{style}", 
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 0, 
       "sort": 30050, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param--ffp-contract=": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -ffp-contract=@var{style}", 
+      "explore_prefix": "-ffp-contract=@var{style}", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 0, 
+      "sort": 30060, 
       "tags": [
         "basic", 
         "parametric", 
@@ -2778,7 +3068,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 0, 
-      "sort": 30060, 
+      "sort": 30070, 
       "tags": [
         "basic", 
         "parametric", 
@@ -2789,12 +3079,12 @@
     "##param--fira-algorithm=": {
       "can_omit": "yes", 
       "default": "", 
-      "desc": "compiler flag: -fira-algorithm=", 
-      "explore_prefix": "-fira-algorithm=", 
+      "desc": "compiler flag: -fira-algorithm=@var{algorithm}", 
+      "explore_prefix": "-fira-algorithm=@var{algorithm}", 
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 0, 
-      "sort": 30070, 
+      "sort": 30080, 
       "tags": [
         "basic", 
         "parametric", 
@@ -2805,12 +3095,12 @@
     "##param--fira-region=": {
       "can_omit": "yes", 
       "default": "", 
-      "desc": "compiler flag: -fira-region=", 
-      "explore_prefix": "-fira-region=", 
+      "desc": "compiler flag: -fira-region=@var{region}", 
+      "explore_prefix": "-fira-region=@var{region}", 
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 0, 
-      "sort": 30080, 
+      "sort": 30090, 
       "tags": [
         "basic", 
         "parametric", 
@@ -2826,22 +3116,6 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 0, 
-      "sort": 30090, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param--fsched-stalled-insns-dep=": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: -fsched-stalled-insns-dep=", 
-      "explore_prefix": "-fsched-stalled-insns-dep=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 0, 
       "sort": 30100, 
       "tags": [
         "basic", 
@@ -2850,15 +3124,47 @@
       ], 
       "type": "integer"
     }, 
-    "##param--fsched-stalled-insns=": {
+    "##param--flto-partition=": {
       "can_omit": "yes", 
       "default": "", 
-      "desc": "compiler flag: -fsched-stalled-insns=", 
-      "explore_prefix": "-fsched-stalled-insns=", 
+      "desc": "compiler flag: -flto-partition=@var{alg}", 
+      "explore_prefix": "-flto-partition=@var{alg}", 
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 0, 
       "sort": 30110, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param--fsched-stalled-insns-dep[=": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -fsched-stalled-insns-dep[=]", 
+      "explore_prefix": "-fsched-stalled-insns-dep[=]", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 0, 
+      "sort": 30120, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param--fsched-stalled-insns[=": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: -fsched-stalled-insns[=]", 
+      "explore_prefix": "-fsched-stalled-insns[=]", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 0, 
+      "sort": 30130, 
       "tags": [
         "basic", 
         "parametric", 
@@ -2874,7 +3180,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 0, 
-      "sort": 30120, 
+      "sort": 30140, 
       "tags": [
         "basic", 
         "parametric", 
@@ -2890,7 +3196,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 8, 
-      "sort": 30580, 
+      "sort": 30700, 
       "tags": [
         "basic", 
         "parametric", 
@@ -2906,7 +3212,199 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 200, 
-      "sort": 30570, 
+      "sort": 30690, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-allow-store-data-races": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param allow-store-data-races= (Allow new data races on stores to be introduced)", 
+      "explore_prefix": "--param allow-store-data-races=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 1, 
+      "sort": 31770, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-asan-globals": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param asan-globals= (Enable asan globals protection)", 
+      "explore_prefix": "--param asan-globals=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 1, 
+      "sort": 31850, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-asan-instrument-reads": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param asan-instrument-reads= (Enable asan load operations protection)", 
+      "explore_prefix": "--param asan-instrument-reads=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 1, 
+      "sort": 31870, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-asan-instrument-writes": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param asan-instrument-writes= (Enable asan store operations protection)", 
+      "explore_prefix": "--param asan-instrument-writes=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 1, 
+      "sort": 31860, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-asan-memintrin": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param asan-memintrin= (Enable asan builtin functions protection)", 
+      "explore_prefix": "--param asan-memintrin=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 1, 
+      "sort": 31880, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-asan-stack": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param asan-stack= (Enable asan stack protection)", 
+      "explore_prefix": "--param asan-stack=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 1, 
+      "sort": 31840, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-asan-use-after-return": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param asan-use-after-return= (Enable asan detection of use-after-return bugs)", 
+      "explore_prefix": "--param asan-use-after-return=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 1, 
+      "sort": 31890, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-builtin-expect-probability": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param builtin-expect-probability= (Set the estimated probability in percentage for builtin expect. The default value is 90% probability.)", 
+      "explore_prefix": "--param builtin-expect-probability=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 100, 
+      "sort": 30720, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-case-values-threshold": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param case-values-threshold= (The smallest number of different values for which it is best touse a jump-table instead of a tree of conditional branches,if 0, use the default for the machine)", 
+      "explore_prefix": "--param case-values-threshold=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 0, 
+      "sort": 31760, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-chkp-max-ctor-size": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param chkp-max-ctor-size= (Maximum number of statements to be included into a single staticconstructor generated by Pointer Bounds Checker)", 
+      "explore_prefix": "--param chkp-max-ctor-size=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 10000, 
+      "sort": 31920, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-comdat-sharing-probability": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param comdat-sharing-probability= (Probability that COMDAT function will be shared with different compilation unit)", 
+      "explore_prefix": "--param comdat-sharing-probability=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 40, 
+      "sort": 30250, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-cxx-max-namespaces-for-diagnostic-help": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param cxx-max-namespaces-for-diagnostic-help= (Maximum number of namespaces to search for alternatives whenname lookup fails)", 
+      "explore_prefix": "--param cxx-max-namespaces-for-diagnostic-help=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 2000, 
+      "sort": 31740, 
       "tags": [
         "basic", 
         "parametric", 
@@ -2921,8 +3419,8 @@
       "explore_prefix": "--param early-inlining-insns=", 
       "explore_start": 0, 
       "explore_step": 1, 
-      "explore_stop": 16, 
-      "sort": 30330, 
+      "explore_stop": 28, 
+      "sort": 30380, 
       "tags": [
         "basic", 
         "parametric", 
@@ -2938,7 +3436,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 20, 
-      "sort": 30380, 
+      "sort": 30440, 
       "tags": [
         "basic", 
         "parametric", 
@@ -2954,7 +3452,39 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 6, 
-      "sort": 30370, 
+      "sort": 30430, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-gcse-cost-distance-ratio": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param gcse-cost-distance-ratio= (Scaling factor in calculation of maximum distance an expression can be moved by GCSE optimizations)", 
+      "explore_prefix": "--param gcse-cost-distance-ratio=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 20, 
+      "sort": 30450, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-gcse-unrestricted-cost": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param gcse-unrestricted-cost= (Cost at which GCSE optimizations will not constraint the distance an expression can travel)", 
+      "explore_prefix": "--param gcse-unrestricted-cost=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 6, 
+      "sort": 30460, 
       "tags": [
         "basic", 
         "parametric", 
@@ -2970,7 +3500,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 200, 
-      "sort": 31240, 
+      "sort": 31480, 
       "tags": [
         "basic", 
         "parametric", 
@@ -2986,7 +3516,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 20, 
-      "sort": 31230, 
+      "sort": 31470, 
       "tags": [
         "basic", 
         "parametric", 
@@ -2994,15 +3524,15 @@
       ], 
       "type": "integer"
     }, 
-    "##param-hot-bb-count-fraction": {
+    "##param-hot-bb-count-ws-permille": {
       "can_omit": "yes", 
       "default": "", 
-      "desc": "compiler flag: --param hot-bb-count-fraction= (Select fraction of the maximal count of repetitions of basic block in program given basic block needs to have to be considered hot)", 
-      "explore_prefix": "--param hot-bb-count-fraction=", 
+      "desc": "compiler flag: --param hot-bb-count-ws-permille= (A basic block profile count is considered hot if it contributes tothe given permillage of the entire profiled execution)", 
+      "explore_prefix": "--param hot-bb-count-ws-permille=", 
       "explore_start": 0, 
       "explore_step": 1, 
-      "explore_stop": 20000, 
-      "sort": 30550, 
+      "explore_stop": 1000, 
+      "sort": 30660, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3018,7 +3548,23 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 2000, 
-      "sort": 30560, 
+      "sort": 30670, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-inline-min-speedup": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param inline-min-speedup= (The minimal estimated speedup allowing inliner to ignore inline-insns-single and inline-isnsns-auto)", 
+      "explore_prefix": "--param inline-min-speedup=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 20, 
+      "sort": 30160, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3033,8 +3579,8 @@
       "explore_prefix": "--param inline-unit-growth=", 
       "explore_start": 0, 
       "explore_step": 1, 
-      "explore_stop": 60, 
-      "sort": 30310, 
+      "explore_stop": 40, 
+      "sort": 30360, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3049,8 +3595,136 @@
       "explore_prefix": "--param integer-share-limit=", 
       "explore_start": 0, 
       "explore_step": 1, 
-      "explore_stop": 512, 
-      "sort": 31030, 
+      "explore_stop": 502, 
+      "sort": 31220, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-ipa-cp-array-index-hint-bonus": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param ipa-cp-array-index-hint-bonus= (Compile-time bonus IPA-CP assigns to candidates which make an arrayindex known.)", 
+      "explore_prefix": "--param ipa-cp-array-index-hint-bonus=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 96, 
+      "sort": 31700, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-ipa-cp-eval-threshold": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param ipa-cp-eval-threshold= (Threshold ipa-cp opportunity evaluation that is still consideredbeneficial to clone.)", 
+      "explore_prefix": "--param ipa-cp-eval-threshold=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 1000, 
+      "sort": 31650, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-ipa-cp-loop-hint-bonus": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param ipa-cp-loop-hint-bonus= (Compile-time bonus IPA-CP assigns to candidates which make loopbounds or strides known.)", 
+      "explore_prefix": "--param ipa-cp-loop-hint-bonus=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 128, 
+      "sort": 31690, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-ipa-cp-recursion-penalty": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param ipa-cp-recursion-penalty= (Percentage penalty the recursive functions will receive when theyare evaluated for cloning.)", 
+      "explore_prefix": "--param ipa-cp-recursion-penalty=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 100, 
+      "sort": 31660, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-ipa-cp-single-call-penalty": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param ipa-cp-single-call-penalty= (Percentage penalty functions containg a single call to anotherfunction will receive when they are evaluated for cloning.)", 
+      "explore_prefix": "--param ipa-cp-single-call-penalty=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 100, 
+      "sort": 31670, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-ipa-cp-value-list-size": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param ipa-cp-value-list-size= (Maximum size of a list of values associated with each parameter forinterprocedural constant propagation)", 
+      "explore_prefix": "--param ipa-cp-value-list-size=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 16, 
+      "sort": 31640, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-ipa-max-aa-steps": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param ipa-max-aa-steps= (Maximum number of statements that will be visited by IPA formalparameter analysis based on alias analysis in any given function)", 
+      "explore_prefix": "--param ipa-max-aa-steps=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 50000, 
+      "sort": 31710, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-ipa-max-agg-items": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param ipa-max-agg-items= (Maximum number of aggregate content items for a parameter injump functions and lattices)", 
+      "explore_prefix": "--param ipa-max-agg-items=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 32, 
+      "sort": 31680, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3066,7 +3740,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 4, 
-      "sort": 31310, 
+      "sort": 31600, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3082,7 +3756,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 20, 
-      "sort": 30320, 
+      "sort": 30370, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3098,7 +3772,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 4, 
-      "sort": 31200, 
+      "sort": 31400, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3114,7 +3788,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 2000, 
-      "sort": 31190, 
+      "sort": 31390, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3130,7 +3804,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 200, 
-      "sort": 31180, 
+      "sort": 31380, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3146,7 +3820,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 20, 
-      "sort": 30750, 
+      "sort": 30880, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3162,7 +3836,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 60, 
-      "sort": 30730, 
+      "sort": 30860, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3178,7 +3852,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 500, 
-      "sort": 30740, 
+      "sort": 30870, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3194,7 +3868,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 64, 
-      "sort": 31130, 
+      "sort": 31320, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3210,7 +3884,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 128, 
-      "sort": 31120, 
+      "sort": 31310, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3226,7 +3900,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 1024, 
-      "sort": 31140, 
+      "sort": 31330, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3242,7 +3916,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 200, 
-      "sort": 30290, 
+      "sort": 30340, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3258,7 +3932,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 5400, 
-      "sort": 30280, 
+      "sort": 30330, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3274,7 +3948,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 512, 
-      "sort": 30340, 
+      "sort": 30390, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3290,7 +3964,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 2000, 
-      "sort": 30350, 
+      "sort": 30400, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3306,7 +3980,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 20000, 
-      "sort": 30300, 
+      "sort": 30350, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3322,7 +3996,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 40, 
-      "sort": 30720, 
+      "sort": 30850, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3338,7 +4012,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 102, 
-      "sort": 31220, 
+      "sort": 31440, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3354,7 +4028,119 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 20000, 
-      "sort": 31250, 
+      "sort": 31500, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-loop-max-datarefs-for-datadeps": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param loop-max-datarefs-for-datadeps= (Maximum number of datarefs in loop for building loop data dependencies)", 
+      "explore_prefix": "--param loop-max-datarefs-for-datadeps=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 2000, 
+      "sort": 31490, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-loop-unroll-jam-depth": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param loop-unroll-jam-depth= (depth of unrolled loop for unroll-and-jam)", 
+      "explore_prefix": "--param loop-unroll-jam-depth=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 4, 
+      "sort": 31460, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-loop-unroll-jam-size": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param loop-unroll-jam-size= (size of unrolling factor for unroll-and-jam)", 
+      "explore_prefix": "--param loop-unroll-jam-size=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 8, 
+      "sort": 31450, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-lra-inheritance-ebb-probability-cutoff": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param lra-inheritance-ebb-probability-cutoff= (Minimal fall-through edge probability in percentage used to add BB to inheritance EBB in LRA)", 
+      "explore_prefix": "--param lra-inheritance-ebb-probability-cutoff=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 100, 
+      "sort": 31420, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-lra-max-considered-reload-pseudos": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param lra-max-considered-reload-pseudos= (The max number of reload pseudos which are considered during spilling a non-reload pseudo)", 
+      "explore_prefix": "--param lra-max-considered-reload-pseudos=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 1000, 
+      "sort": 31410, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-lto-min-partition": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param lto-min-partition= (Minimal size of a partition for LTO (in estimated instructions))", 
+      "explore_prefix": "--param lto-min-partition=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 2000, 
+      "sort": 31730, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-lto-partitions": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param lto-partitions= (Number of partitions the program should be split to)", 
+      "explore_prefix": "--param lto-partitions=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 64, 
+      "sort": 31720, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3370,7 +4156,23 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 160, 
-      "sort": 30400, 
+      "sort": 30490, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-max-combine-insns": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-combine-insns= (The maximum number of insns combine tries to combine)", 
+      "explore_prefix": "--param max-combine-insns=", 
+      "explore_start": 2, 
+      "explore_step": 1, 
+      "explore_stop": 4, 
+      "sort": 31210, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3386,7 +4188,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 16, 
-      "sort": 30470, 
+      "sort": 30570, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3402,7 +4204,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 32, 
-      "sort": 30450, 
+      "sort": 30550, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3417,8 +4219,8 @@
       "explore_prefix": "--param max-completely-peeled-insns=", 
       "explore_start": 0, 
       "explore_step": 1, 
-      "explore_stop": 800, 
-      "sort": 30440, 
+      "explore_stop": 400, 
+      "sort": 30540, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3434,7 +4236,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 200, 
-      "sort": 30660, 
+      "sort": 30790, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3450,7 +4252,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 2000, 
-      "sort": 30710, 
+      "sort": 30840, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3466,7 +4268,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 20, 
-      "sort": 30700, 
+      "sort": 30830, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3482,7 +4284,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 1000, 
-      "sort": 30860, 
+      "sort": 31010, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3498,7 +4300,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 200, 
-      "sort": 30250, 
+      "sort": 30290, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3514,7 +4316,23 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 666, 
-      "sort": 30260, 
+      "sort": 30300, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-max-dse-active-local-stores": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-dse-active-local-stores= (Maximum number of active local stores in RTL dead store elimination)", 
+      "explore_prefix": "--param max-dse-active-local-stores=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 10000, 
+      "sort": 31280, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3529,8 +4347,8 @@
       "explore_prefix": "--param max-early-inliner-iterations=", 
       "explore_start": 0, 
       "explore_step": 1, 
-      "explore_stop": 20, 
-      "sort": 30220, 
+      "explore_stop": 2, 
+      "sort": 30240, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3546,7 +4364,71 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 0, 
-      "sort": 31080, 
+      "sort": 31260, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-max-fsm-thread-length": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-fsm-thread-length= (Maximum number of basic blocks on a finite state automaton jump thread path)", 
+      "explore_prefix": "--param max-fsm-thread-length=", 
+      "explore_start": 1, 
+      "explore_step": 1, 
+      "explore_stop": 999999, 
+      "sort": 31940, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-max-fsm-thread-path-insns": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-fsm-thread-path-insns= (Maximum number of instructions to copy when duplicating blocks on a finite state automaton jump thread path)", 
+      "explore_prefix": "--param max-fsm-thread-path-insns=", 
+      "explore_start": 1, 
+      "explore_step": 1, 
+      "explore_stop": 999999, 
+      "sort": 31930, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-max-fsm-thread-paths": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-fsm-thread-paths= (Maximum number of new jump thread paths to create for a finite state automaton)", 
+      "explore_prefix": "--param max-fsm-thread-paths=", 
+      "explore_start": 1, 
+      "explore_step": 1, 
+      "explore_stop": 999999, 
+      "sort": 31950, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-max-gcse-insertion-ratio": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-gcse-insertion-ratio= (The maximum ratio of insertions to deletions of expressions in GCSE)", 
+      "explore_prefix": "--param max-gcse-insertion-ratio=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 40, 
+      "sort": 30420, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3562,7 +4444,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 16, 
-      "sort": 30690, 
+      "sort": 30820, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3578,7 +4460,23 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 16, 
-      "sort": 30680, 
+      "sort": 30810, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-max-hoist-depth": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-hoist-depth= (Maximum depth of search in the dominator tree for expressions to hoist)", 
+      "explore_prefix": "--param max-hoist-depth=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 60, 
+      "sort": 30470, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3593,8 +4491,8 @@
       "explore_prefix": "--param max-inline-insns-auto=", 
       "explore_start": 0, 
       "explore_step": 1, 
-      "explore_stop": 100, 
-      "sort": 30160, 
+      "explore_stop": 80, 
+      "sort": 30180, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3610,7 +4508,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 900, 
-      "sort": 30170, 
+      "sort": 30190, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3626,7 +4524,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 900, 
-      "sort": 30180, 
+      "sort": 30200, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3642,7 +4540,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 800, 
-      "sort": 30150, 
+      "sort": 30170, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3658,7 +4556,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 16, 
-      "sort": 30190, 
+      "sort": 30210, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3674,7 +4572,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 16, 
-      "sort": 30200, 
+      "sort": 30220, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3690,7 +4588,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 20, 
-      "sort": 30510, 
+      "sort": 30610, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3706,7 +4604,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 2000, 
-      "sort": 30500, 
+      "sort": 30600, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3722,7 +4620,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 30, 
-      "sort": 31070, 
+      "sort": 31250, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3738,7 +4636,23 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 20000, 
-      "sort": 31020, 
+      "sort": 31200, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-max-modulo-backtrack-attempts": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-modulo-backtrack-attempts= (The maximum number of backtrack attempts the scheduler should make when modulo scheduling a loop)", 
+      "explore_prefix": "--param max-modulo-backtrack-attempts=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 80, 
+      "sort": 30320, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3754,7 +4668,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 800, 
-      "sort": 30460, 
+      "sort": 30560, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3770,7 +4684,23 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 200, 
-      "sort": 31160, 
+      "sort": 31350, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-max-peel-branches": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-peel-branches= (The maximum number of branches on the path through the peeled sequence)", 
+      "explore_prefix": "--param max-peel-branches=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 64, 
+      "sort": 30530, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3786,7 +4716,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 32, 
-      "sort": 30430, 
+      "sort": 30520, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3801,8 +4731,8 @@
       "explore_prefix": "--param max-peeled-insns=", 
       "explore_start": 0, 
       "explore_step": 1, 
-      "explore_stop": 800, 
-      "sort": 30420, 
+      "explore_stop": 200, 
+      "sort": 30510, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3818,7 +4748,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 64, 
-      "sort": 30270, 
+      "sort": 30310, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3834,7 +4764,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 30, 
-      "sort": 30920, 
+      "sort": 31080, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3850,7 +4780,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 400, 
-      "sort": 30930, 
+      "sort": 31090, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3866,7 +4796,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 200, 
-      "sort": 30590, 
+      "sort": 30710, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3882,7 +4812,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 200, 
-      "sort": 30890, 
+      "sort": 31040, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3898,7 +4828,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 0, 
-      "sort": 30950, 
+      "sort": 31110, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3914,7 +4844,7 @@
       "explore_start": 1, 
       "explore_step": 1, 
       "explore_stop": 10, 
-      "sort": 30960, 
+      "sort": 31120, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3930,7 +4860,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 200, 
-      "sort": 31090, 
+      "sort": 31270, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3946,7 +4876,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 20, 
-      "sort": 30900, 
+      "sort": 31060, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3962,7 +4892,87 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 200, 
-      "sort": 30910, 
+      "sort": 31070, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-max-slsr-cand-scan": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-slsr-cand-scan= (Maximum length of candidate scans for straight-linestrength reduction)", 
+      "explore_prefix": "--param max-slsr-cand-scan=", 
+      "explore_start": 1, 
+      "explore_step": 1, 
+      "explore_stop": 999999, 
+      "sort": 31830, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-max-stores-to-sink": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-stores-to-sink= (Maximum number of conditional store pairs that can be sunk)", 
+      "explore_prefix": "--param max-stores-to-sink=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 4, 
+      "sort": 31750, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-max-tail-merge-comparisons": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-tail-merge-comparisons= (Maximum amount of similar bbs to compare a bb with)", 
+      "explore_prefix": "--param max-tail-merge-comparisons=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 20, 
+      "sort": 31790, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-max-tail-merge-iterations": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-tail-merge-iterations= (Maximum amount of iterations of the pass over a function)", 
+      "explore_prefix": "--param max-tail-merge-iterations=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 4, 
+      "sort": 31800, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-max-tracked-strlens": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-tracked-strlens= (Maximum number of strings for which strlen optimization pass willtrack string lengths)", 
+      "explore_prefix": "--param max-tracked-strlens=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 20000, 
+      "sort": 31810, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3978,7 +4988,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 16, 
-      "sort": 30410, 
+      "sort": 30500, 
       "tags": [
         "basic", 
         "parametric", 
@@ -3994,7 +5004,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 400, 
-      "sort": 30390, 
+      "sort": 30480, 
       "tags": [
         "basic", 
         "parametric", 
@@ -4010,7 +5020,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 100, 
-      "sort": 30480, 
+      "sort": 30580, 
       "tags": [
         "basic", 
         "parametric", 
@@ -4026,7 +5036,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 6, 
-      "sort": 30490, 
+      "sort": 30590, 
       "tags": [
         "basic", 
         "parametric", 
@@ -4042,7 +5052,39 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 2, 
-      "sort": 30230, 
+      "sort": 30270, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-max-vartrack-expr-depth": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-vartrack-expr-depth= (Max. recursion depth for expanding var tracking expressions)", 
+      "explore_prefix": "--param max-vartrack-expr-depth=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 24, 
+      "sort": 31570, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-max-vartrack-reverse-op-size": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param max-vartrack-reverse-op-size= (Max. size of loc list for which reverse ops should be added)", 
+      "explore_prefix": "--param max-vartrack-reverse-op-size=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 100, 
+      "sort": 31580, 
       "tags": [
         "basic", 
         "parametric", 
@@ -4058,7 +5100,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 100000000, 
-      "sort": 31290, 
+      "sort": 31560, 
       "tags": [
         "basic", 
         "parametric", 
@@ -4074,7 +5116,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 10, 
-      "sort": 30670, 
+      "sort": 30800, 
       "tags": [
         "basic", 
         "parametric", 
@@ -4090,7 +5132,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 20, 
-      "sort": 30210, 
+      "sort": 30230, 
       "tags": [
         "basic", 
         "parametric", 
@@ -4105,8 +5147,8 @@
       "explore_prefix": "--param min-insn-to-prefetch-ratio=", 
       "explore_start": 0, 
       "explore_step": 1, 
-      "explore_stop": 20, 
-      "sort": 31270, 
+      "explore_stop": 18, 
+      "sort": 31540, 
       "tags": [
         "basic", 
         "parametric", 
@@ -4122,7 +5164,23 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 0, 
-      "sort": 31300, 
+      "sort": 31590, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-min-size-for-stack-sharing": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param min-size-for-stack-sharing= (The minimum size of variables taking part in stack slot sharingwhen not optimizing)", 
+      "explore_prefix": "--param min-size-for-stack-sharing=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 64, 
+      "sort": 31240, 
       "tags": [
         "basic", 
         "parametric", 
@@ -4138,7 +5196,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 80, 
-      "sort": 30940, 
+      "sort": 31100, 
       "tags": [
         "basic", 
         "parametric", 
@@ -4154,23 +5212,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 2, 
-      "sort": 30240, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param-min-virtual-mappings": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param min-virtual-mappings= (Minimum number of virtual mappings to consider switching to full virtual renames)", 
-      "explore_prefix": "--param min-virtual-mappings=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 200, 
-      "sort": 31040, 
+      "sort": 30280, 
       "tags": [
         "basic", 
         "parametric", 
@@ -4186,7 +5228,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 1, 
-      "sort": 30830, 
+      "sort": 30970, 
       "tags": [
         "basic", 
         "parametric", 
@@ -4202,7 +5244,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 1100, 
-      "sort": 30810, 
+      "sort": 30950, 
       "tags": [
         "basic", 
         "parametric", 
@@ -4218,7 +5260,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 256, 
-      "sort": 30790, 
+      "sort": 30930, 
       "tags": [
         "basic", 
         "parametric", 
@@ -4234,7 +5276,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 512, 
-      "sort": 30780, 
+      "sort": 30920, 
       "tags": [
         "basic", 
         "parametric", 
@@ -4250,7 +5292,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 1000, 
-      "sort": 30820, 
+      "sort": 30960, 
       "tags": [
         "basic", 
         "parametric", 
@@ -4266,7 +5308,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 256, 
-      "sort": 30770, 
+      "sort": 30910, 
       "tags": [
         "basic", 
         "parametric", 
@@ -4282,7 +5324,23 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 36, 
-      "sort": 30800, 
+      "sort": 30940, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-partial-inlining-entry-probability": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param partial-inlining-entry-probability= (Maximum probability of the entry BB of split region (in percent relative to entry BB of the function) to make partial inlining happen)", 
+      "explore_prefix": "--param partial-inlining-entry-probability=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 140, 
+      "sort": 30260, 
       "tags": [
         "basic", 
         "parametric", 
@@ -4298,7 +5356,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 50, 
-      "sort": 30140, 
+      "sort": 30150, 
       "tags": [
         "basic", 
         "parametric", 
@@ -4314,7 +5372,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 400, 
-      "sort": 31100, 
+      "sort": 31290, 
       "tags": [
         "basic", 
         "parametric", 
@@ -4330,7 +5388,23 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 6, 
-      "sort": 31280, 
+      "sort": 31550, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-sccvn-max-alias-queries-per-access": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param sccvn-max-alias-queries-per-access= (Maximum number of disambiguations to perform per memory access)", 
+      "explore_prefix": "--param sccvn-max-alias-queries-per-access=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 2000, 
+      "sort": 31370, 
       "tags": [
         "basic", 
         "parametric", 
@@ -4346,7 +5420,23 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 20000, 
-      "sort": 31170, 
+      "sort": 31360, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-scev-max-expr-complexity": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param scev-max-expr-complexity= (Bound on the complexity of the expressions in the scalar evolutions analyzer)", 
+      "explore_prefix": "--param scev-max-expr-complexity=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 20, 
+      "sort": 30900, 
       "tags": [
         "basic", 
         "parametric", 
@@ -4361,8 +5451,24 @@
       "explore_prefix": "--param scev-max-expr-size=", 
       "explore_start": 0, 
       "explore_step": 1, 
-      "explore_stop": 40, 
-      "sort": 30760, 
+      "explore_stop": 200, 
+      "sort": 30890, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-sched-autopref-queue-depth": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param sched-autopref-queue-depth= (Hardware autoprefetcher scheduler model control flag.  Number of lookahead cycles the model looks into; at '0' only enable instruction sorting heuristic.  Disabled by default.)", 
+      "explore_prefix": "--param sched-autopref-queue-depth=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": -2, 
+      "sort": 31190, 
       "tags": [
         "basic", 
         "parametric", 
@@ -4378,7 +5484,23 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 2, 
-      "sort": 31010, 
+      "sort": 31180, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-sched-pressure-algorithm": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param sched-pressure-algorithm= (Which -fsched-pressure algorithm to apply)", 
+      "explore_prefix": "--param sched-pressure-algorithm=", 
+      "explore_start": 1, 
+      "explore_step": 1, 
+      "explore_stop": 2, 
+      "sort": 31820, 
       "tags": [
         "basic", 
         "parametric", 
@@ -4394,7 +5516,23 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 100, 
-      "sort": 30970, 
+      "sort": 31130, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-sched-state-edge-prob-cutoff": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param sched-state-edge-prob-cutoff= (The minimum probability an edge must have for the scheduler to save its state across it.)", 
+      "explore_prefix": "--param sched-state-edge-prob-cutoff=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 100, 
+      "sort": 31140, 
       "tags": [
         "basic", 
         "parametric", 
@@ -4410,7 +5548,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 4, 
-      "sort": 31000, 
+      "sort": 31170, 
       "tags": [
         "basic", 
         "parametric", 
@@ -4426,7 +5564,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 100, 
-      "sort": 30980, 
+      "sort": 31150, 
       "tags": [
         "basic", 
         "parametric", 
@@ -4442,7 +5580,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 4, 
-      "sort": 30990, 
+      "sort": 31160, 
       "tags": [
         "basic", 
         "parametric", 
@@ -4458,7 +5596,23 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 6, 
-      "sort": 31110, 
+      "sort": 31300, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-sink-frequency-threshold": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param sink-frequency-threshold= (Target block's relative execution frequency (as a percentage) required to sink a statement)", 
+      "explore_prefix": "--param sink-frequency-threshold=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 100, 
+      "sort": 31050, 
       "tags": [
         "basic", 
         "parametric", 
@@ -4474,7 +5628,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 2000, 
-      "sort": 31260, 
+      "sort": 31530, 
       "tags": [
         "basic", 
         "parametric", 
@@ -4490,7 +5644,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 0, 
-      "sort": 30530, 
+      "sort": 30640, 
       "tags": [
         "basic", 
         "parametric", 
@@ -4506,7 +5660,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 0, 
-      "sort": 30540, 
+      "sort": 30650, 
       "tags": [
         "basic", 
         "parametric", 
@@ -4522,7 +5676,55 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 200, 
-      "sort": 30520, 
+      "sort": 30620, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-sms-min-sc": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param sms-min-sc= (The minimum value of stage count that swing modulo scheduler will generate.)", 
+      "explore_prefix": "--param sms-min-sc=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 4, 
+      "sort": 30630, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-sra-max-scalarization-size-Osize": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param sra-max-scalarization-size-Osize= (Maximum size, in storage units, of an aggregate which should beconsidered for scalarization when compiling for size)", 
+      "explore_prefix": "--param sra-max-scalarization-size-Osize=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 0, 
+      "sort": 31630, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-sra-max-scalarization-size-Ospeed": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param sra-max-scalarization-size-Ospeed= (Maximum size, in storage units, of an aggregate which should beconsidered for scalarization when compiling for speed)", 
+      "explore_prefix": "--param sra-max-scalarization-size-Ospeed=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 0, 
+      "sort": 31620, 
       "tags": [
         "basic", 
         "parametric", 
@@ -4538,23 +5740,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 16, 
-      "sort": 31060, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param-struct-reorg-cold-struct-ratio": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param struct-reorg-cold-struct-ratio= (The threshold ratio between current and hottest structure counts)", 
-      "explore_prefix": "--param struct-reorg-cold-struct-ratio=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 100, 
-      "sort": 30130, 
+      "sort": 31230, 
       "tags": [
         "basic", 
         "parametric", 
@@ -4570,7 +5756,23 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 16, 
-      "sort": 31210, 
+      "sort": 31430, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-tm-max-aggregate-size": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param tm-max-aggregate-size= (Size in bytes after which thread-local aggregates should beinstrumented with the logging functions instead of save/restorepairs)", 
+      "explore_prefix": "--param tm-max-aggregate-size=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 18, 
+      "sort": 31610, 
       "tags": [
         "basic", 
         "parametric", 
@@ -4586,7 +5788,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 200, 
-      "sort": 30620, 
+      "sort": 30750, 
       "tags": [
         "basic", 
         "parametric", 
@@ -4602,7 +5804,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 100, 
-      "sort": 30650, 
+      "sort": 30780, 
       "tags": [
         "basic", 
         "parametric", 
@@ -4618,7 +5820,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 100, 
-      "sort": 30640, 
+      "sort": 30770, 
       "tags": [
         "basic", 
         "parametric", 
@@ -4634,7 +5836,55 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 100, 
-      "sort": 30630, 
+      "sort": 30760, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-tree-reassoc-width": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param tree-reassoc-width= (Set the maximum number of instructions executed in parallel inreassociated tree. If 0, use the target dependent heuristic.)", 
+      "explore_prefix": "--param tree-reassoc-width=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 0, 
+      "sort": 31780, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-uninit-control-dep-attempts": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param uninit-control-dep-attempts= (Maximum number of nested calls to search for control dependenciesduring uninitialized variable analysis)", 
+      "explore_prefix": "--param uninit-control-dep-attempts=", 
+      "explore_start": 0, 
+      "explore_step": 1, 
+      "explore_stop": 2000, 
+      "sort": 31910, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-unlikely-bb-count-fraction": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param unlikely-bb-count-fraction= (The minimum fraction of profile runs a given basic block execution count must be not to be considered unlikely)", 
+      "explore_prefix": "--param unlikely-bb-count-fraction=", 
+      "explore_start": 1, 
+      "explore_step": 1, 
+      "explore_stop": 10000, 
+      "sort": 30680, 
       "tags": [
         "basic", 
         "parametric", 
@@ -4650,7 +5900,23 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 1, 
-      "sort": 31150, 
+      "sort": 31340, 
+      "tags": [
+        "basic", 
+        "parametric", 
+        "optimization"
+      ], 
+      "type": "integer"
+    }, 
+    "##param-vect-max-peeling-for-alignment": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag: --param vect-max-peeling-for-alignment= (Max number of loop peels to enhancement alignment of data references in a loop)", 
+      "explore_prefix": "--param vect-max-peeling-for-alignment=", 
+      "explore_start": -1, 
+      "explore_step": 1, 
+      "explore_stop": 64, 
+      "sort": 31000, 
       "tags": [
         "basic", 
         "parametric", 
@@ -4666,7 +5932,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 20, 
-      "sort": 30850, 
+      "sort": 30990, 
       "tags": [
         "basic", 
         "parametric", 
@@ -4682,23 +5948,7 @@
       "explore_start": 0, 
       "explore_step": 1, 
       "explore_stop": 12, 
-      "sort": 30840, 
-      "tags": [
-        "basic", 
-        "parametric", 
-        "optimization"
-      ], 
-      "type": "integer"
-    }, 
-    "##param-virtual-mappings-ratio": {
-      "can_omit": "yes", 
-      "default": "", 
-      "desc": "compiler flag: --param virtual-mappings-ratio= (Ratio between virtual mappings and virtual symbols to do full virtual renames)", 
-      "explore_prefix": "--param virtual-mappings-ratio=", 
-      "explore_start": 0, 
-      "explore_step": 1, 
-      "explore_stop": 6, 
-      "sort": 31050, 
+      "sort": 30980, 
       "tags": [
         "basic", 
         "parametric", 

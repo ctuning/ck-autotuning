@@ -98,9 +98,9 @@ def extract_to_pipeline(i):
     if rx['return']>0: return rx
     d=rx['dict']
     dsc=rx.get('desc',{})
-    
+
     dx=dsc.get('all_compiler_flags_desc',{})
-   
+
     # Update pipeline
     ck.out('')
     ck.out('Updating pipeline choices with compiler flags ...')

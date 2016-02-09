@@ -417,11 +417,12 @@ def autotune(i):
         zz=csel[iq1]
         ztags=zz.get('tags','').split(',')
         znotags=zz.get('notags','').split(',')
+        zanytags=zz.get('anytags','').split(',')
         for q2 in q1:
             if '*' in q2 or '?' in q2:
                for k in sorted(cdesc, key=lambda v: cdesc[v].get('sort',0)):
                    if fnmatch.fnmatch(k,q2):
-                      # Check tags
+                      # Check tags (must have)
                       yy=cdesc[k].get('tags',[])
                       add=True
                       for j in ztags:
@@ -430,15 +431,25 @@ def autotune(i):
                              add=False
                              break
                       if add:
-                         for j in znotags:
-                             j=j.strip()
-                             if j!='' and j in yy:
-                                add=False
-                                break
+                         # Any of those
+                         if len(zanytags)>0:
+                            add=False
+                            for j in zanytags:
+                                j=j.strip()
+                                if j!='' and j in yy:
+                                   add=True
+                                   break
                          if add:
-                            dv.append(k)   
+                            # Check that none of those
+                            for j in znotags:
+                                j=j.strip()
+                                if j!='' and j in yy:
+                                   add=False
+                                   break
+                            if add:
+                               dv.append(k)
             else:
-               dv.append(q2)   
+               dv.append(q2)
         dv1.append(dv)
     corder=dv1
 

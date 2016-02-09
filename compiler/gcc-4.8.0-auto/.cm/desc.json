@@ -2868,7 +2868,7 @@
       ], 
       "type": "text"
     }, 
-    "##param--falign-functions[=": {
+    "##param--falign-functions=": {
       "can_omit": "yes", 
       "default": "", 
       "desc": "compiler flag: -falign-functions=", 
@@ -2884,7 +2884,7 @@
       ], 
       "type": "integer"
     }, 
-    "##param--falign-jumps[=": {
+    "##param--falign-jumps=": {
       "can_omit": "yes", 
       "default": "", 
       "desc": "compiler flag: -falign-jumps=", 
@@ -2900,7 +2900,7 @@
       ], 
       "type": "integer"
     }, 
-    "##param--falign-labels[=": {
+    "##param--falign-labels=": {
       "can_omit": "yes", 
       "default": "", 
       "desc": "compiler flag: -falign-labels=", 
@@ -2916,7 +2916,7 @@
       ], 
       "type": "integer"
     }, 
-    "##param--falign-loops[=": {
+    "##param--falign-loops=": {
       "can_omit": "yes", 
       "default": "", 
       "desc": "compiler flag: -falign-loops=", 
@@ -3044,7 +3044,7 @@
       ], 
       "type": "integer"
     }, 
-    "##param--fsched-stalled-insns-dep[=": {
+    "##param--fsched-stalled-insns-dep=": {
       "can_omit": "yes", 
       "default": "", 
       "desc": "compiler flag: -fsched-stalled-insns-dep=", 
@@ -3060,7 +3060,7 @@
       ], 
       "type": "integer"
     }, 
-    "##param--fsched-stalled-insns[=": {
+    "##param--fsched-stalled-insns=": {
       "can_omit": "yes", 
       "default": "", 
       "desc": "compiler flag: -fsched-stalled-insns=", 

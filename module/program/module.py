@@ -3009,7 +3009,10 @@ def pipeline(i):
                  al.append(icreal1)
 
           # Sorting
+#          import json
+#          print (json.dumps(al, indent=2, sort_keys=True))
           al1=sorted(al, key=lambda v: (int(v.get('0',0)), int(v.get('1',0)), int(v.get('2',0))))
+#          print (json.dumps(al1, indent=2, sort_keys=True))
           jj=0
           for qi in al1:
               if qi.get('uid','')!='':
@@ -3022,7 +3025,7 @@ def pipeline(i):
 
                     if qi.get('0',None)==qii.get('0',None) and \
                        qi.get('1',None)==qii.get('1',None) and \
-                       qi.get('2',None)==qii.get('2',None):
+                       (qii.get('2', None)==None or qi.get('2',None)==qii.get('2',None)):
                        xruid=qii['uid']
                        xruoa=qii['uoa']
 
@@ -3038,7 +3041,6 @@ def pipeline(i):
           if o=='con':
              ck.out('Most close found compiler description: '+xruoa+' ('+xruid+')')
              time.sleep(1)
-
 
     if cdu!='':
        choices['compiler_description_uoa']=cdu

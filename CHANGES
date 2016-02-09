@@ -1,3 +1,6 @@
+* 2016.02.09 * improving GCC compiler flag description
+             * adding support to explore compiler flags with various tags (boolean, parametric, arch-specific)
+
 * 2016.02.08 * preparing LLVM descriptions
              * fixing detection of the most close compiler description (for autotuning/crowdtuning)
              * adding aggregation of failed cases (to automatically/manually detect compiler bugs)
