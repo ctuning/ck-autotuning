@@ -3025,7 +3025,7 @@ def pipeline(i):
 
                     if qi.get('0',None)==qii.get('0',None) and \
                        qi.get('1',None)==qii.get('1',None) and \
-                       (qii.get('2', None)==None or qi.get('2',None)==qii.get('2',None)):
+                       (qi.get('2',None)==None or qii.get('2', None)==None or qi.get('2',None)==qii.get('2',None)):
                        xruid=qii['uid']
                        xruoa=qii['uoa']
 

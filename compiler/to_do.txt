@@ -1,0 +1,9 @@
+Fix in GCC autodetected description:
+ [=] -> =
+ @arg{style} -> empty
+ @var{algorithm} -> CB, priority
+ @var{region} -> all, mixed, one
+ @var{alg}
+ @var{linker}
+
+add arch specific flags
