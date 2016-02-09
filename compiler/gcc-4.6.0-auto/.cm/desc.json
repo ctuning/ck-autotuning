@@ -1219,22 +1219,6 @@
       ], 
       "type": "text"
     }, 
-    "##bool-mudflapth": {
-      "can_omit": "yes", 
-      "choice": [
-        "-fmudflapth", 
-        "-fno-mudflapth"
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -fmudflapth", 
-      "sort": 10730, 
-      "tags": [
-        "basic", 
-        "boolean", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
     "##bool-omit-frame-pointer": {
       "can_omit": "yes", 
       "choice": [
