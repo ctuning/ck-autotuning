@@ -1,1429 +1,869 @@
 {
   "all_compiler_flags_desc": {
-    "##aa_eval": {
-      "can_omit": "yes", 
-      "choice": [
-        "-aa-eval", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -aa-eval", 
-      "sort": 10060, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##adce": {
-      "can_omit": "yes", 
-      "choice": [
-        "-adce", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -adce", 
-      "sort": 10070, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##always_inline": {
-      "can_omit": "yes", 
-      "choice": [
-        "-always-inline", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -always-inline", 
-      "sort": 10080, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##argpromotion": {
-      "can_omit": "yes", 
-      "choice": [
-        "-argpromotion", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -argpromotion", 
-      "sort": 10090, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
     "##base_opt": {
       "choice": [
-        "-O3", 
-        "-O1", 
+        "-O3",
+        "-O1",
         "-O2"
-      ], 
-      "default": "", 
-      "desc": "base compiler flag", 
-      "sort": 10000, 
+      ],
+      "default": "",
+      "desc": "base compiler flag",
+      "sort": 10000,
       "tags": [
-        "base", 
-        "basic", 
+        "base",
+        "basic",
         "optimization"
-      ], 
+      ],
       "type": "text"
-    }, 
-    "##basicaa": {
-      "can_omit": "yes", 
+    },
+    "##fassociative-math": {
+      "can_omit": "yes",
       "choice": [
-        "-basicaa", 
+        "-fassociative-math",
         ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -basicaa", 
-      "sort": 10110, 
+      ],
+      "default": "",
+      "desc": "compiler flag: -fassociative-math",
+      "sort": 10010,
       "tags": [
-        "basic", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##basiccg": {
-      "can_omit": "yes", 
-      "choice": [
-        "-basiccg", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -basiccg", 
-      "sort": 10120, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##bb_vectorize": {
-      "can_omit": "yes", 
-      "choice": [
-        "-bb-vectorize", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -bb-vectorize", 
-      "sort": 10130, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##block_freq": {
-      "can_omit": "yes", 
-      "choice": [
-        "-block-freq", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -block-freq", 
-      "sort": 10140, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##block_placement": {
-      "can_omit": "yes", 
-      "choice": [
-        "-block-placement", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -block-placement", 
-      "sort": 10150, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##branch_prob": {
-      "can_omit": "yes", 
-      "choice": [
-        "-branch-prob", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -branch-prob", 
-      "sort": 10160, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##break_crit_edges": {
-      "can_omit": "yes", 
-      "choice": [
-        "-break-crit-edges", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -break-crit-edges", 
-      "sort": 10170, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##codegenprepare": {
-      "can_omit": "yes", 
-      "choice": [
-        "-codegenprepare", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -codegenprepare", 
-      "sort": 10180, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##constmerge": {
-      "can_omit": "yes", 
-      "choice": [
-        "-constmerge", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -constmerge", 
-      "sort": 10190, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##constprop": {
-      "can_omit": "yes", 
-      "choice": [
-        "-constprop", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -constprop", 
-      "sort": 10200, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##correlated_propagation": {
-      "can_omit": "yes", 
-      "choice": [
-        "-correlated-propagation", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -correlated-propagation", 
-      "sort": 10210, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##count_aa": {
-      "can_omit": "yes", 
-      "choice": [
-        "-count-aa", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -count-aa", 
-      "sort": 10220, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##dce": {
-      "can_omit": "yes", 
-      "choice": [
-        "-dce", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -dce", 
-      "sort": 10230, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##deadargelim": {
-      "can_omit": "yes", 
-      "choice": [
-        "-deadargelim", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -deadargelim", 
-      "sort": 10240, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##die": {
-      "can_omit": "yes", 
-      "choice": [
-        "-die", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -die", 
-      "sort": 10250, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##disable_inlining": {
-      "can_omit": "yes", 
-      "choice": [
-        "-disable-inlining", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -disable-inlining", 
-      "sort": 10010, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##disable_simplify_libcalls": {
-      "can_omit": "yes", 
-      "choice": [
-        "-disable-simplify-libcalls", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -disable-simplify-libcalls", 
-      "sort": 10020, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##domfrontier": {
-      "can_omit": "yes", 
-      "choice": [
-        "-domfrontier", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -domfrontier", 
-      "sort": 10260, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##domtree": {
-      "can_omit": "yes", 
-      "choice": [
-        "-domtree", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -domtree", 
-      "sort": 10270, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##dse": {
-      "can_omit": "yes", 
-      "choice": [
-        "-dse", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -dse", 
-      "sort": 10280, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##early_cse": {
-      "can_omit": "yes", 
-      "choice": [
-        "-early-cse", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -early-cse", 
-      "sort": 10290, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##functionattrs": {
-      "can_omit": "yes", 
-      "choice": [
-        "-functionattrs", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -functionattrs", 
-      "sort": 10300, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##funit_at_a_time": {
-      "can_omit": "yes", 
-      "choice": [
-        "-funit-at-a-time", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -funit-at-a-time", 
-      "sort": 10030, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##globaldce": {
-      "can_omit": "yes", 
-      "choice": [
-        "-globaldce", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -globaldce", 
-      "sort": 10310, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##globalopt": {
-      "can_omit": "yes", 
-      "choice": [
-        "-globalopt", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -globalopt", 
-      "sort": 10320, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##globalsmodref_aa": {
-      "can_omit": "yes", 
-      "choice": [
-        "-globalsmodref-aa", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -globalsmodref-aa", 
-      "sort": 10330, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##gvn": {
-      "can_omit": "yes", 
-      "choice": [
-        "-gvn", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -gvn", 
-      "sort": 10340, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##indvars": {
-      "can_omit": "yes", 
-      "choice": [
-        "-indvars", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -indvars", 
-      "sort": 10350, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##inline": {
-      "can_omit": "yes", 
-      "choice": [
-        "-inline", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -inline", 
-      "sort": 10360, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##instcombine": {
-      "can_omit": "yes", 
-      "choice": [
-        "-instcombine", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -instcombine", 
-      "sort": 10370, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##instcount": {
-      "can_omit": "yes", 
-      "choice": [
-        "-instcount", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -instcount", 
-      "sort": 10380, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##instnamer": {
-      "can_omit": "yes", 
-      "choice": [
-        "-instnamer", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -instnamer", 
-      "sort": 10390, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##instsimplify": {
-      "can_omit": "yes", 
-      "choice": [
-        "-instsimplify", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -instsimplify", 
-      "sort": 10400, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##internalize": {
-      "can_omit": "yes", 
-      "choice": [
-        "-internalize", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -internalize", 
-      "sort": 10410, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##intervals": {
-      "can_omit": "yes", 
-      "choice": [
-        "-intervals", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -intervals", 
-      "sort": 10420, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##ipconstprop": {
-      "can_omit": "yes", 
-      "choice": [
-        "-ipconstprop", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -ipconstprop", 
-      "sort": 10430, 
-      "tags": [
-        "basic", 
+      ],
+      "type": "text"
+    },
+    "##ffast-math": {
+      "can_omit": "yes",
+      "choice": [
+        "-ffast-math",
+        ""
+      ],
+      "default": "",
+      "desc": "compiler flag: -ffast-math",
+      "sort": 10020,
+      "tags": [
+        "basic",
+        "boolean",
+        "optimization"
+      ],
+      "type": "text"
+    },
+    "##ffinite-math-only": {
+      "can_omit": "yes",
+      "choice": [
+        "-ffinite-math-only",
+        ""
+      ],
+      "default": "",
+      "desc": "compiler flag: -ffinite-math-only",
+      "sort": 10030,
+      "tags": [
+        "basic",
+        "boolean",
+        "optimization"
+      ],
+      "type": "text"
+    },
+    "##ffp-contract": {
+      "can_omit": "yes",
+      "choice": [
+        "-ffp-contract=off",
+        "-ffp-contract=fast",
+        "-ffp-contract=on"
+      ],
+      "default": "",
+      "desc": "compiler flag: -ffp-contract",
+      "sort": 31000,
+      "tags": [
+        "basic",
+        "boolean",
+        "optimization"
+      ],
+      "type": "text"
+    },
+    "##fmerge-all-constants": {
+      "can_omit": "yes",
+      "choice": [
+        "-fmerge-all-constants",
+        ""
+      ],
+      "default": "",
+      "desc": "compiler flag: -fmerge-all-constants",
+      "sort": 10050,
+      "tags": [
+        "basic",
+        "boolean",
+        "optimization"
+      ],
+      "type": "text"
+    },
+    "##fmodules-prune-after": {
+      "can_omit": "yes",
+      "default": "",
+      "desc": "compiler flag: -fmodules-prune-after",
+      "explore_prefix": "-fmodules-prune-after=",
+      "explore_start": 10,
+      "explore_step": 1,
+      "explore_stop": 120,
+      "sort": 30000,
+      "tags": [
+        "basic",
+        "parametric",
+        "optimization"
+      ],
+      "type": "integer"
+    },
+    "##mstack-alignment": {
+      "can_omit": "yes",
+      "default": "",
+      "desc": "compiler flag: -mstack-alignment=",
+      "explore_prefix": "-mstack-alignment=",
+      "explore_start": 1,
+      "explore_step": 32,
+      "explore_stop": 1,
+      "sort": 30001,
+      "tags": [
+        "basic",
+        "parametric",
+        "optimization"
+      ],
+      "type": "integer"
+    },
+    "##fmax-type-align": {
+      "can_omit": "yes",
+      "default": "",
+      "desc": "compiler flag: -fmax-type-align=",
+      "explore_prefix": "-fmax-type-align=",
+      "explore_start": 1,
+      "explore_step": 32,
+      "explore_stop": 1,
+      "sort": 30002,
+      "tags": [
+        "basic",
+        "parametric",
+        "optimization"
+      ],
+      "type": "integer"
+    },
+    "##fmodules-prune-interval": {
+      "can_omit": "yes",
+      "default": "",
+      "desc": "compiler flag: -fmodules-prune-interval",
+      "explore_prefix": "-fmodules-prune-interval=",
+      "explore_start": 10,
+      "explore_step": 1,
+      "explore_stop": 120,
+      "sort": 30010,
+      "tags": [
+        "basic",
+        "parametric",
         "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##ipsccp": {
-      "can_omit": "yes", 
-      "choice": [
-        "-ipsccp", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -ipsccp", 
-      "sort": 10440, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##iv_users": {
-      "can_omit": "yes", 
-      "choice": [
-        "-iv-users", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -iv-users", 
-      "sort": 10450, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##lazy_value_info": {
-      "can_omit": "yes", 
-      "choice": [
-        "-lazy-value-info", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -lazy-value-info", 
-      "sort": 10460, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##lcssa": {
-      "can_omit": "yes", 
-      "choice": [
-        "-lcssa", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -lcssa", 
-      "sort": 10470, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##lda": {
-      "can_omit": "yes", 
-      "choice": [
-        "-lda", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -lda", 
-      "sort": 10480, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##libcall_aa": {
-      "can_omit": "yes", 
-      "choice": [
-        "-libcall-aa", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -libcall-aa", 
-      "sort": 10490, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##licm": {
-      "can_omit": "yes", 
-      "choice": [
-        "-licm", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -licm", 
-      "sort": 10500, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##lint": {
-      "can_omit": "yes", 
-      "choice": [
-        "-lint", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -lint", 
-      "sort": 10510, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##loop_deletion": {
-      "can_omit": "yes", 
-      "choice": [
-        "-loop-deletion", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -loop-deletion", 
-      "sort": 10520, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##loop_extract": {
-      "can_omit": "yes", 
-      "choice": [
-        "-loop-extract", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -loop-extract", 
-      "sort": 10530, 
-      "tags": [
-        "basic", 
-        "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##loop_extract_single": {
-      "can_omit": "yes", 
+      ],
+      "type": "integer"
+    },
+    "##fno-assume-sane-operator-new": {
+      "can_omit": "yes",
       "choice": [
-        "-loop-extract-single", 
+        "-fno-assume-sane-operator-new",
         ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -loop-extract-single", 
-      "sort": 10540, 
+      ],
+      "default": "",
+      "desc": "compiler flag: -fno-assume-sane-operator-new",
+      "sort": 10060,
       "tags": [
-        "basic", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
+      ],
       "type": "text"
-    }, 
-    "##loop_idiom": {
-      "can_omit": "yes", 
+    },
+    "##fno-autolink": {
+      "can_omit": "yes",
       "choice": [
-        "-loop-idiom", 
+        "-fno-autolink",
         ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -loop-idiom", 
-      "sort": 10550, 
+      ],
+      "default": "",
+      "desc": "compiler flag: -fno-autolink",
+      "sort": 10070,
       "tags": [
-        "basic", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
+      ],
       "type": "text"
-    }, 
-    "##loop_instsimplify": {
-      "can_omit": "yes", 
+    },
+    "##fno-builtin": {
+      "can_omit": "yes",
       "choice": [
-        "-loop-instsimplify", 
+        "-fno-builtin",
         ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -loop-instsimplify", 
-      "sort": 10560, 
+      ],
+      "default": "",
+      "desc": "compiler flag: -fno-builtin",
+      "sort": 10080,
       "tags": [
-        "basic", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
+      ],
       "type": "text"
-    }, 
-    "##loop_reduce": {
-      "can_omit": "yes", 
+    },
+    "##fno-constant-cfstrings": {
+      "can_omit": "yes",
       "choice": [
-        "-loop-reduce", 
+        "-fno-constant-cfstrings",
         ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -loop-reduce", 
-      "sort": 10570, 
+      ],
+      "default": "",
+      "desc": "compiler flag: -fno-constant-cfstrings",
+      "sort": 10100,
       "tags": [
-        "basic", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
+      ],
       "type": "text"
-    }, 
-    "##loop_rotate": {
-      "can_omit": "yes", 
+    },
+    "##fno-diagnostics-fixit-info": {
+      "can_omit": "yes",
       "choice": [
-        "-loop-rotate", 
+        "-fno-diagnostics-fixit-info",
         ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -loop-rotate", 
-      "sort": 10580, 
+      ],
+      "default": "",
+      "desc": "compiler flag: -fno-diagnostics-fixit-info",
+      "sort": 10110,
       "tags": [
-        "basic", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
+      ],
       "type": "text"
-    }, 
-    "##loop_simplify": {
-      "can_omit": "yes", 
+    },
+    "##fno-elide-constructors": {
+      "can_omit": "yes",
       "choice": [
-        "-loop-simplify", 
+        "-fno-elide-constructors",
         ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -loop-simplify", 
-      "sort": 10590, 
+      ],
+      "default": "",
+      "desc": "compiler flag: -fno-elide-constructors",
+      "sort": 10130,
       "tags": [
-        "basic", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
+      ],
       "type": "text"
-    }, 
-    "##loop_unroll": {
-      "can_omit": "yes", 
+    },
+    "##fno-inline": {
+      "can_omit": "yes",
       "choice": [
-        "-loop-unroll", 
+        "-fno-inline",
         ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -loop-unroll", 
-      "sort": 10600, 
+      ],
+      "default": "",
+      "desc": "compiler flag: -fno-inline",
+      "sort": 10150,
       "tags": [
-        "basic", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
+      ],
       "type": "text"
-    }, 
-    "##loop_unswitch": {
-      "can_omit": "yes", 
+    },
+    "##fno-lax-vector-conversions": {
+      "can_omit": "yes",
       "choice": [
-        "-loop-unswitch", 
+        "-fno-lax-vector-conversions",
         ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -loop-unswitch", 
-      "sort": 10610, 
+      ],
+      "default": "",
+      "desc": "compiler flag: -fno-lax-vector-conversions",
+      "sort": 10160,
       "tags": [
-        "basic", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
+      ],
       "type": "text"
-    }, 
-    "##lower_expect": {
-      "can_omit": "yes", 
+    },
+    "##fno-merge-all-constants": {
+      "can_omit": "yes",
       "choice": [
-        "-lower-expect", 
+        "-fno-merge-all-constants",
         ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -lower-expect", 
-      "sort": 10620, 
+      ],
+      "default": "",
+      "desc": "compiler flag: -fno-merge-all-constants",
+      "sort": 10180,
       "tags": [
-        "basic", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
+      ],
       "type": "text"
-    }, 
-    "##loweratomic": {
-      "can_omit": "yes", 
+    },
+    "##fno-rtti": {
+      "can_omit": "yes",
       "choice": [
-        "-loweratomic", 
+        "-fno-rtti",
         ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -loweratomic", 
-      "sort": 10630, 
+      ],
+      "default": "",
+      "desc": "compiler flag: -fno-rtti",
+      "sort": 10200,
       "tags": [
-        "basic", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
+      ],
       "type": "text"
-    }, 
-    "##lowerinvoke": {
-      "can_omit": "yes", 
+    },
+    "##fno-sanitize-stats": {
+      "can_omit": "yes",
       "choice": [
-        "-lowerinvoke", 
+        "-fno-sanitize-stats",
         ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -lowerinvoke", 
-      "sort": 10640, 
+      ],
+      "default": "",
+      "desc": "compiler flag: -fno-sanitize-stats",
+      "sort": 10210,
       "tags": [
-        "basic", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
+      ],
       "type": "text"
-    }, 
-    "##lowerswitch": {
-      "can_omit": "yes", 
+    },
+    "##fno-signed-char": {
+      "can_omit": "yes",
       "choice": [
-        "-lowerswitch", 
+        "-fno-signed-char",
         ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -lowerswitch", 
-      "sort": 10650, 
+      ],
+      "default": "",
+      "desc": "compiler flag: -fno-signed-char",
+      "sort": 10240,
       "tags": [
-        "basic", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
+      ],
       "type": "text"
-    }, 
-    "##mem2reg": {
-      "can_omit": "yes", 
+    },
+    "##fno-signed-zeros": {
+      "can_omit": "yes",
       "choice": [
-        "-mem2reg", 
+        "-fno-signed-zeros",
         ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -mem2reg", 
-      "sort": 10660, 
+      ],
+      "default": "",
+      "desc": "compiler flag: -fno-signed-zeros",
+      "sort": 10250,
       "tags": [
-        "basic", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
+      ],
       "type": "text"
-    }, 
-    "##memcpyopt": {
-      "can_omit": "yes", 
+    },
+    "##fno-unroll-loops": {
+      "can_omit": "yes",
       "choice": [
-        "-memcpyopt", 
+        "-fno-unroll-loops",
         ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -memcpyopt", 
-      "sort": 10670, 
+      ],
+      "default": "",
+      "desc": "compiler flag: -fno-unroll-loops",
+      "sort": 10290,
       "tags": [
-        "basic", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
+      ],
       "type": "text"
-    }, 
-    "##memdep": {
-      "can_omit": "yes", 
+    },
+    "##fomit-frame-pointer ": {
+      "can_omit": "yes",
       "choice": [
-        "-memdep", 
+        "-fomit-frame-pointer ",
         ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -memdep", 
-      "sort": 10680, 
+      ],
+      "default": "",
+      "desc": "compiler flag: -fomit-frame-pointer ",
+      "sort": 10330,
       "tags": [
-        "basic", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
+      ],
       "type": "text"
-    }, 
-    "##mergefunc": {
-      "can_omit": "yes", 
+    },
+    "##foptimize-sibling-calls": {
+      "can_omit": "yes",
       "choice": [
-        "-mergefunc", 
+        "-foptimize-sibling-calls",
         ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -mergefunc", 
-      "sort": 10690, 
+      ],
+      "default": "",
+      "desc": "compiler flag: -foptimize-sibling-calls",
+      "sort": 10340,
       "tags": [
-        "basic", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
+      ],
       "type": "text"
-    }, 
-    "##mergereturn": {
-      "can_omit": "yes", 
+    },
+    "##fsched-interblock": {
+      "can_omit": "yes",
       "choice": [
-        "-mergereturn", 
+        "-fsched-interblock",
         ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -mergereturn", 
-      "sort": 10700, 
+      ],
+      "default": "",
+      "desc": "compiler flag: -fsched-interblock",
+      "sort": 10380,
       "tags": [
-        "basic", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
+      ],
       "type": "text"
-    }, 
-    "##module_debuginfo": {
-      "can_omit": "yes", 
+    },
+    "##fshort-enums": {
+      "can_omit": "yes",
       "choice": [
-        "-module-debuginfo", 
+        "-fshort-enums",
         ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -module-debuginfo", 
-      "sort": 10710, 
+      ],
+      "default": "",
+      "desc": "compiler flag: -fshort-enums",
+      "sort": 10390,
       "tags": [
-        "basic", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
+      ],
       "type": "text"
-    }, 
-    "##partial_inliner": {
-      "can_omit": "yes", 
+    },
+    "##fstrict-aliasing": {
+      "can_omit": "yes",
       "choice": [
-        "-partial-inliner", 
+        "-fstrict-aliasing",
         ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -partial-inliner", 
-      "sort": 10720, 
+      ],
+      "default": "",
+      "desc": "compiler flag: -fstrict-aliasing",
+      "sort": 10400,
       "tags": [
-        "basic", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
+      ],
       "type": "text"
-    }, 
-    "##postdomtree": {
-      "can_omit": "yes", 
+    },
+    "##fstrict-enums": {
+      "can_omit": "yes",
       "choice": [
-        "-postdomtree", 
+        "-fstrict-enums",
         ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -postdomtree", 
-      "sort": 10730, 
+      ],
+      "default": "",
+      "desc": "compiler flag: -fstrict-enums",
+      "sort": 10410,
       "tags": [
-        "basic", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
+      ],
       "type": "text"
-    }, 
-    "##preverify": {
-      "can_omit": "yes", 
-      "choice": [
-        "-preverify", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -preverify", 
-      "sort": 10740, 
+    },
+    "##ftemplate-backtrace-limit": {
+      "can_omit": "yes",
+      "default": "",
+      "desc": "compiler flag: -ftemplate-backtrace-limit",
+      "explore_prefix": "-ftemplate-backtrace-limit=",
+      "explore_start": 200,
+      "explore_step": 1,
+      "explore_stop": 800,
+      "sort": 30020,
       "tags": [
-        "basic", 
+        "basic",
+        "parametric",
         "optimization"
-      ], 
-      "type": "text"
-    }, 
-    "##prune_eh": {
-      "can_omit": "yes", 
+      ],
+      "type": "integer"
+    },
+    "##ftree-slp-vectorize": {
+      "can_omit": "yes",
       "choice": [
-        "-prune-eh", 
+        "-ftree-slp-vectorize",
         ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -prune-eh", 
-      "sort": 10750, 
+      ],
+      "default": "",
+      "desc": "compiler flag: -ftree-slp-vectorize",
+      "sort": 10430,
       "tags": [
-        "basic", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
+      ],
       "type": "text"
-    }, 
-    "##reassociate": {
-      "can_omit": "yes", 
+    },
+    "##ftree-vectorize": {
+      "can_omit": "yes",
       "choice": [
-        "-reassociate", 
+        "-ftree-vectorize",
         ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -reassociate", 
-      "sort": 10760, 
+      ],
+      "default": "",
+      "desc": "compiler flag: -ftree-vectorize",
+      "sort": 10440,
       "tags": [
-        "basic", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
+      ],
       "type": "text"
-    }, 
-    "##reg2mem": {
-      "can_omit": "yes", 
+    },
+    "##funroll-loops": {
+      "can_omit": "yes",
       "choice": [
-        "-reg2mem", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -reg2mem", 
-      "sort": 10770, 
+        "-funroll-loops",
+        "-fno-unroll-loops"
+      ],
+      "default": "",
+      "desc": "compiler flag: -funroll-loops",
+      "sort": 10460,
       "tags": [
-        "basic", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
+      ],
       "type": "text"
-    }, 
-    "##regions": {
-      "can_omit": "yes", 
+    },
+    "##freroll-loops": {
+      "can_omit": "yes",
       "choice": [
-        "-regions", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -regions", 
-      "sort": 10780, 
+        "-freroll-loops",
+        "-fno-reroll-loops"
+      ],
+      "default": "",
+      "desc": "compiler flag: -freroll-loops",
+      "sort": 10465,
       "tags": [
-        "basic", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
+      ],
       "type": "text"
-    }, 
-    "##scalar_evolution": {
-      "can_omit": "yes", 
+    },
+    "##fvectorize": {
+      "can_omit": "yes",
       "choice": [
-        "-scalar-evolution", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -scalar-evolution", 
-      "sort": 10790, 
+        "-fvectorize",
+        "-fno-vectorize"
+      ],
+      "default": "",
+      "desc": "compiler flag: -fvectorize",
+      "sort": 10467,
       "tags": [
-        "basic", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
+      ],
       "type": "text"
-    }, 
-    "##scalarrepl": {
-      "can_omit": "yes", 
+    },
+    "##flto": {
+      "can_omit": "yes",
       "choice": [
-        "-scalarrepl", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -scalarrepl", 
-      "sort": 10800, 
+        "-flto=full",
+        "-flto=thin",
+        "-fno-lto"
+      ],
+      "default": "",
+      "desc": "compiler flag: -flto",
+      "sort": 10468,
       "tags": [
-        "basic", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
+      ],
       "type": "text"
-    }, 
-    "##scalarrepl_ssa": {
-      "can_omit": "yes", 
+    },
+    "##trigraphs": {
+      "can_omit": "yes",
       "choice": [
-        "-scalarrepl-ssa", 
-        ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -scalarrepl-ssa", 
-      "sort": 10810, 
+        "-trigraphs",
+        "-no-trigraphs"
+      ],
+      "default": "",
+      "desc": "compiler flag: trigraphs",
+      "sort": 10466,
       "tags": [
-        "basic", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
+      ],
       "type": "text"
-    }, 
-    "##sccp": {
-      "can_omit": "yes", 
+    },
+    "##fvisibility-inlines-hidden": {
+      "can_omit": "yes",
       "choice": [
-        "-sccp", 
+        "-fvisibility-inlines-hidden",
         ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -sccp", 
-      "sort": 10820, 
+      ],
+      "default": "",
+      "desc": "compiler flag: -fvisibility-inlines-hidden",
+      "sort": 10490,
       "tags": [
-        "basic", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
+      ],
       "type": "text"
-    }, 
-    "##scev_aa": {
-      "can_omit": "yes", 
+    },
+    "##fwrapv": {
+      "can_omit": "yes",
       "choice": [
-        "-scev-aa", 
+        "-fwrapv",
         ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -scev-aa", 
-      "sort": 10830, 
+      ],
+      "default": "",
+      "desc": "compiler flag: -fwrapv",
+      "sort": 10500,
       "tags": [
-        "basic", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
+      ],
       "type": "text"
-    }, 
-    "##simplify_libcalls": {
-      "can_omit": "yes", 
+    },
+    "##fslp-vectorize-aggressive": {
+      "can_omit": "yes",
       "choice": [
-        "-simplify-libcalls", 
+        "-fslp-vectorize-aggressive",
         ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -simplify-libcalls", 
-      "sort": 10840, 
+      ],
+      "default": "",
+      "desc": "compiler flag: -fslp-vectorize-aggressive",
+      "sort": 10901,
       "tags": [
-        "basic", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
+      ],
       "type": "text"
-    }, 
-    "##simplifycfg": {
-      "can_omit": "yes", 
+    },
+    "##fslp-vectorize": {
+      "can_omit": "yes",
       "choice": [
-        "-simplifycfg", 
+        "-fslp-vectorize",
         ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -simplifycfg", 
-      "sort": 10850, 
+      ],
+      "default": "",
+      "desc": "compiler flag: -fslp-vectorize",
+      "sort": 10902,
       "tags": [
-        "basic", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
+      ],
       "type": "text"
-    }, 
-    "##sink": {
-      "can_omit": "yes", 
+    },
+    "##fshort-wchar": {
+      "can_omit": "yes",
       "choice": [
-        "-sink", 
+        "-fshort-wchar",
         ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -sink", 
-      "sort": 10860, 
+      ],
+      "default": "",
+      "desc": "compiler flag: -fshort-wchar",
+      "sort": 10903,
       "tags": [
-        "basic", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
+      ],
       "type": "text"
-    }, 
-    "##std_compile_opts": {
-      "can_omit": "yes", 
+    },
+    "##fstrict-vtable-pointers": {
+      "can_omit": "yes",
       "choice": [
-        "-std-compile-opts", 
+        "-fstrict-vtable-pointers",
         ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -std-compile-opts", 
-      "sort": 10040, 
+      ],
+      "default": "",
+      "desc": "compiler flag: -fstrict-vtable-pointers",
+      "sort": 10904,
       "tags": [
-        "basic", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
+      ],
       "type": "text"
-    }, 
-    "##std_link_opts": {
-      "can_omit": "yes", 
+    },
+    "##mglobal-merge": {
+      "can_omit": "yes",
       "choice": [
-        "-std-link-opts", 
+        "-mglobal-merge",
         ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -std-link-opts", 
-      "sort": 10050, 
+      ],
+      "default": "",
+      "desc": "compiler flag: -mglobal-merge",
+      "sort": 10905,
       "tags": [
-        "basic", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
+      ],
       "type": "text"
-    }, 
-    "##strip": {
-      "can_omit": "yes", 
+    },
+    "##mlong-calls": {
+      "can_omit": "yes",
       "choice": [
-        "-strip", 
+        "-mlong-calls",
         ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -strip", 
-      "sort": 10870, 
+      ],
+      "default": "",
+      "desc": "compiler flag: -mlong-calls",
+      "sort": 10906,
       "tags": [
-        "basic", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
+      ],
       "type": "text"
-    }, 
-    "##strip_dead_debug_info": {
-      "can_omit": "yes", 
+    },
+    "##mno-long-calls": {
+      "can_omit": "yes",
       "choice": [
-        "-strip-dead-debug-info", 
+        "-mno-long-calls",
         ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -strip-dead-debug-info", 
-      "sort": 10880, 
+      ],
+      "default": "",
+      "desc": "compiler flag: -mno-long-calls",
+      "sort": 10907,
       "tags": [
-        "basic", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
+      ],
       "type": "text"
-    }, 
-    "##strip_dead_prototypes": {
-      "can_omit": "yes", 
+    },
+    "##mno-implicit-float": {
+      "can_omit": "yes",
       "choice": [
-        "-strip-dead-prototypes", 
+        "-mno-implicit-float",
         ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -strip-dead-prototypes", 
-      "sort": 10890, 
+      ],
+      "default": "",
+      "desc": "compiler flag: -mno-implicit-float",
+      "sort": 10908,
       "tags": [
-        "basic", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
+      ],
       "type": "text"
-    }, 
-    "##strip_debug_declare": {
-      "can_omit": "yes", 
+    },
+    "##mrelax-all": {
+      "can_omit": "yes",
       "choice": [
-        "-strip-debug-declare", 
+        "-mrelax-all",
         ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -strip-debug-declare", 
-      "sort": 10900, 
+      ],
+      "default": "",
+      "desc": "compiler flag: -mrelax-all",
+      "sort": 10909,
       "tags": [
-        "basic", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
+      ],
       "type": "text"
-    }, 
-    "##strip_nondebug": {
-      "can_omit": "yes", 
+    },
+    "##msoft-float": {
+      "can_omit": "yes",
       "choice": [
-        "-strip-nondebug", 
+        "-msoft-float",
         ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -strip-nondebug", 
-      "sort": 10910, 
+      ],
+      "default": "",
+      "desc": "compiler flag: -msoft-float",
+      "sort": 10911,
       "tags": [
-        "basic", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
+      ],
       "type": "text"
-    }, 
-    "##tailcallelim": {
-      "can_omit": "yes", 
+    },
+    "##mstackrealign": {
+      "can_omit": "yes",
       "choice": [
-        "-tailcallelim", 
+        "-mstackrealign",
         ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -tailcallelim", 
-      "sort": 10920, 
+      ],
+      "default": "",
+      "desc": "compiler flag: -mstackrealign",
+      "sort": 10912,
       "tags": [
-        "basic", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
+      ],
       "type": "text"
-    }, 
-    "##targetlibinfo": {
-      "can_omit": "yes", 
+    },
+    "##mno-global-merge": {
+      "can_omit": "yes",
       "choice": [
-        "-targetlibinfo", 
+        "-mno-global-merge",
         ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -targetlibinfo", 
-      "sort": 10940, 
+      ],
+      "default": "",
+      "desc": "compiler flag: -mno-global-merge",
+      "sort": 10550,
       "tags": [
-        "basic", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
+      ],
       "type": "text"
-    }, 
-    "##tbaa": {
-      "can_omit": "yes", 
+    },
+    "##msoft-float": {
+      "can_omit": "yes",
       "choice": [
-        "-tbaa", 
+        "-msoft-float",
         ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -tbaa", 
-      "sort": 10950, 
+      ],
+      "default": "",
+      "desc": "compiler flag: -msoft-float",
+      "sort": 10580,
       "tags": [
-        "basic", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
+      ],
       "type": "text"
-    }, 
-    "##vectorize": {
-      "can_omit": "yes", 
+    },
+    "##mstrict-align": {
+      "can_omit": "yes",
       "choice": [
-        "-vectorize", 
+        "-mstrict-align",
         ""
-      ], 
-      "default": "", 
-      "desc": "compiler flag: -vectorize", 
-      "sort": 10960, 
+      ],
+      "default": "",
+      "desc": "compiler flag: -mstrict-align",
+      "sort": 10590,
       "tags": [
-        "basic", 
+        "basic",
+        "boolean",
         "optimization"
-      ], 
+      ],
       "type": "text"
     }
   }
