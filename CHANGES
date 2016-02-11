@@ -1,3 +1,5 @@
+* 2016.02.10 * adding ARM and general CPU specific flags for GCC and LLVM
+
 * 2016.02.09 * improving GCC compiler flag description
              * adding support to explore compiler flags with various tags (boolean, parametric, arch-specific)
 

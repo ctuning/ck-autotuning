@@ -509,6 +509,10 @@ def autotune(i):
            finish=True
            break
 
+        if i.get('ask_enter_after_choices','')=='yes':
+           ck.out('')
+           ck.inp({'text':'Press Enter to continue ...'})
+
         time.sleep(dsleep) # wait to see selection ...
 
         # Check if pass this iteration

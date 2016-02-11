@@ -95,26 +95,31 @@
       "type": "text"
     }
 
-
-
-  -mstack-probe-size=<value>
-                          Set the stack probe size
-
   -munaligned-access      Allow memory accesses to be unaligned (AArch32/AArch64 only)
+  -mno-unaligned-access   Force all memory accesses to be aligned (AArch32/AArch64 only)
+
+  -mcrc                   Allow use of CRC instructions (ARM only)
+  -mnocrc                 Disallow use of CRC instructions (ARM only)
+
 
   -mno-movt               Disallow use of movt/movw pairs (ARM only)
-  -mno-restrict-it        Allow generation of deprecated IT blocks for ARMv8. It is off by default for ARMv8 Thumb mode
   -ffixed-r9              Reserve the r9 register (ARM only)
-  -ffixed-x18             Reserve the x18 register (AArch64 only)
-  -mno-unaligned-access   Force all memory accesses to be aligned (AArch32/AArch64 only)
-  -mnocrc                 Disallow use of CRC instructions (ARM only)
-  -mno-hvx-double         Disable Hexagon Double Vector eXtensions
-  -mno-hvx                Disable Hexagon Vector eXtensions
-  -mno-fix-cortex-a53-835769
-                          Don't workaround Cortex-A53 erratum 835769 (AArch64 only)
+
+
+  -mno-restrict-it        Allow generation of deprecated IT blocks for ARMv8. It is off by default for ARMv8 Thumb mode
+
+
   -mhvx-double            Enable Hexagon Double Vector eXtensions
+  -mno-hvx-double         Disable Hexagon Double Vector eXtensions
+
   -mhvx                   Enable Hexagon Vector eXtensions
-  -mcrc                   Allow use of CRC instructions (ARM only)
+  -mno-hvx                Disable Hexagon Vector eXtensions
+
   -meabi <value>          Set EABI type, e.g. 4, 5 or gnu (default depends on triple)
+
   -mfix-cortex-a53-835769 Workaround Cortex-A53 erratum 835769 (AArch64 only)
   -mgeneral-regs-only     Generate code which only uses the general purpose registers (AArch64 only)
+  -mno-fix-cortex-a53-835769 Don't workaround Cortex-A53 erratum 835769 (AArch64 only)
+  -ffixed-x18             Reserve the x18 register (AArch64 only)
+
+  -mstack-probe-size=<value> Set the stack probe size

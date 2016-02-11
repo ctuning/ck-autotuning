@@ -784,6 +784,86 @@
         "optimization"
       ],
       "type": "text"
+    },
+    "##arch-mtune-native": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag (CPU specific): -mtune=native", 
+      "sort": 30991, 
+      "tags": [
+        "basic", 
+        "optimization",
+        "arch-specific"
+      ], 
+      "choice": [
+        "-mtune=native",
+        ""
+      ],
+      "type": "text"
+    },
+    "##arch-munaligned-access": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag (ARM specific): -munaligned-access", 
+      "sort": 30992, 
+      "tags": [
+        "basic", 
+        "optimization",
+        "arm-specific"
+      ], 
+      "choice": [
+        "-munaligned-access",
+        "-mno-unaligned-access"
+      ],
+      "type": "text"
+    },
+    "##arch-mcrc": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag (ARM specific): -mcrc", 
+      "sort": 30993, 
+      "tags": [
+        "basic", 
+        "optimization",
+        "arm-specific"
+      ], 
+      "choice": [
+        "-mcrc",
+        "-mno-crc"
+      ],
+      "type": "text"
+    },
+    "##arch-mno-movt": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag (ARM specific): -mno-movt", 
+      "sort": 30995, 
+      "tags": [
+        "basic", 
+        "optimization",
+        "arm-specific"
+      ], 
+      "choice": [
+        "-mno-movt",
+        ""
+      ],
+      "type": "text"
+    },
+    "##arch-ffixed-r9": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag (ARM specific): -ffixed-r9", 
+      "sort": 30996, 
+      "tags": [
+        "basic", 
+        "optimization",
+        "arm-specific"
+      ], 
+      "choice": [
+        "-ffixed-r9",
+        ""
+      ],
+      "type": "text"
     }
   }
 }

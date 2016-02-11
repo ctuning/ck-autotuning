@@ -5573,6 +5573,38 @@
         "optimization"
       ], 
       "type": "integer"
+    },
+    "##arch-arm-mfpu-neon": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag (ARM specific): -mfpu=neon", 
+      "sort": 30990, 
+      "tags": [
+        "basic", 
+        "optimization",
+        "arm-neon"
+      ], 
+      "choice": [
+        "-mfpu=neon",
+        ""
+      ],
+      "type": "text"
+    },
+    "##arch-mtune-native": {
+      "can_omit": "yes", 
+      "default": "", 
+      "desc": "compiler flag (CPU specific): -mtune=native", 
+      "sort": 30991, 
+      "tags": [
+        "basic", 
+        "optimization",
+        "arch-specific"
+      ], 
+      "choice": [
+        "-mtune=native",
+        ""
+      ],
+      "type": "text"
     }
   }
 }
