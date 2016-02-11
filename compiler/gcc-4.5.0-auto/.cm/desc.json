@@ -4651,7 +4651,7 @@
       "tags": [
         "basic", 
         "optimization",
-        "arch-specific"
+        "cpu-specific"
       ], 
       "choice": [
         "-mtune=native",
