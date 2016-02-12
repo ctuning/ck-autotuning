@@ -207,6 +207,8 @@ def autotune(i):
                                        'recorded_uid'}
 
               (failed_cases)        - failed cases if aggregate_failed_cases=yes
+
+              (solutions)           - updated solutions with reactions to optimizations (needed for classification of a given computing species)
             }
 
     """
@@ -407,7 +409,7 @@ def autotune(i):
 
     # Check choices descriptions and dimensions
     cdesc=pipeline.get('choices_desc',{})
-    corder=i.get('choices_order',[])
+    corder=copy.deepcopy(i.get('choices_order',[]))
     csel=i.get('choices_selection',{})
     ccur=[]
 
@@ -500,52 +502,56 @@ def autotune(i):
 
         # Check if there is a pre-selection
         al=''
-        if isols>0 and m<isols:
-           if o=='con':
-              x=''
+        if isols>0:
+           if m<isols:
+              if o=='con':
+                 x=''
+                 if rs=='yes':
+                    x=' reference'
+
+                 ck.out('')
+                 ck.out('  Checking pre-existing'+x+' solution ...')
+                 ck.out('')
+
+              # Find choices (iterate over solutions since there can be more 
+              #  than one point in each solution due to Pareto)
+
               if rs=='yes':
-                 x=' reference'
+                 sol=sols[0]
+                 corder1=sol.get('ref_choices_order',[])
+                 cx1=sol.get('ref_choices',{})
+              else:
+                 sol={}
+                 bb=0
+                 for b in sols:
+                     bp=b.get('points',[])
+                     for bx in bp:
+                         if m==bb:
+                            sol=bx
+                            break
+                         bb+=1
+                     if len(sol)>0:
+                        break
 
-              ck.out('')
-              ck.out('  Checking pre-existing'+x+' solution ...')
-              ck.out('')
+                 corder1=sol.get('pruned_choices_order',[])
+                 cx1=sol.get('pruned_choices',{})
 
-           # Find choices (iterate over solutions since there can be more 
-           #  than one point in each solution due to Pareto)
+              corder2=[]
+              ccur2=[]
+              for b in corder1:
+                  ccur2.append(cx1[b])
+                  if b.startswith('##choices#'):
+                     b='#'+b[9:]
+                  corder2.append(b)
 
-           if rs=='yes':
-              sol=sols[0]
-              corder1=sol.get('ref_choices_order',[])
-              cx1=sol.get('ref_choices',{})
-           else:
-              sol={}
-              bb=0
-              for b in sols:
-                  bp=b.get('points',[])
-                  for bx in bp:
-                      if m==bb:
-                         sol=bx
-                         break
-                      bb+=1
-                  if len(sol)>0:
-                     break
+              corder=[corder2]
+              ccur=[ccur2]
 
-              corder1=sol.get('pruned_choices_order',[])
-              cx1=sol.get('pruned_choices',{})
+              al='yes'
+           elif m==isols:
+              corder=copy.deepcopy(i.get('choices_order',[]))
+              ccur=[]
 
-           corder2=[]
-           ccur2=[]
-           for b in corder1:
-               ccur2.append(cx1[b])
-               if b.startswith('##choices#'):
-                  b='#'+b[9:]
-               corder2.append(b)
-
-           corder=[corder2]
-           ccur=[ccur2]
-
-           al='yes'
-           
         # Make selection
         jj={'module_uoa':cfg['module_deps']['choice'],
             'action':'make',
@@ -752,6 +758,30 @@ def autotune(i):
         #   (our frontier is not 'Pareto efficient' since we have discreet characteristics)
 
 #        if len(fk)>0 and (len(stat_dict)>0 or only_filter=='yes'): - otherwise doesn't work if last point is error
+
+        # If checking pre-recoreded solutions, add result
+        if isols>0 and m<isols:
+           if o=='con':
+              ck.out('')
+              ck.out('Recording reaction to optimizations to a pre-existing solution (for automatic classification of computational species) ...')
+              ck.out('')
+
+           reaction=False
+           bb=0
+           for jb in range(0, len(sols)):
+               b=sols[jb]
+               bp=b.get('points',[])
+               for by in range(0, len(bp)):
+                   if m==bb:
+                      bp[by]['reaction_raw_flat']=copy.deepcopy(stat_dict)
+                      bp[by]['reaction_info']={'fail':fail, 'fail_reason':fail_reason}
+                      reaction=True
+                      break
+                   bb+=1
+               if reaction:
+                  sols[jb]['points']=bp
+                  break
+
         if len(fk)>0 or only_filter=='yes':
            # If data was recorded to repo, reload all points 
            opoints={} # original points with all info (used later to delete correct points)
@@ -865,6 +895,9 @@ def autotune(i):
        ck.out('Done!')
 
     rz={'return':0, 'last_iteration_output':rr, 'last_stat_analysis': rrr, 'experiment_desc':dd, 'recorded_info':recorded_info, 'failed_cases':failed_cases}
+
+    if len(sols)>0:
+       rz['solutions']=sols
 
     if stf!='':
        rx=ck.save_json_to_file({'json_file':stf, 'dict':rz, 'sort_keys':'yes'})

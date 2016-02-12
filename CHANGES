@@ -1,5 +1,6 @@
 * 2016.02.12 * adding support to check pre-selection solutions (found during crowdtuning)
                during autotuning (preparation for clustering and optimization reactions)
+             * recording characteristics to pre-selected solutions
 
 * 2016.02.10 * adding ARM and general CPU specific flags for GCC and LLVM
              * changing arch-specific to cpu-specific tags 
