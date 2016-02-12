@@ -189,6 +189,8 @@ def autotune(i):
                (aggregate_failed_cases)           - if pipeline fails, aggregate failed cases (to produce report 
                                                     during crowdtuning or automatic compiler bug detection)
 
+               (solutions)                        - check solutions
+               (ref_solution)                     - if 'yes', choose reference solution from above list
             }
 
     Output: {
@@ -232,6 +234,10 @@ def autotune(i):
     afc=ck.get_from_dicts(ic, 'aggregate_failed_cases', '', None)
 
     failed_cases=[]
+
+    sols=ck.get_from_dicts(ic, 'solutions', [], None) # Check existing solutions
+    isols=len(sols)
+    rs=ck.get_from_dicts(ic, 'ref_solution', '', None) # Check existing solutions
 
     dsleep=3
     if i.get('sleep','')!='':
@@ -492,17 +498,69 @@ def autotune(i):
         if m==0 or mm>=sfi:
            pipeline=copy.deepcopy(pipelinec)
 
+        # Check if there is a pre-selection
+        al=''
+        if isols>0 and m<isols:
+           if o=='con':
+              x=''
+              if rs=='yes':
+                 x=' reference'
+
+              ck.out('')
+              ck.out('  Checking pre-existing'+x+' solution ...')
+              ck.out('')
+
+           # Find choices (iterate over solutions since there can be more 
+           #  than one point in each solution due to Pareto)
+
+           if rs=='yes':
+              sol=sols[0]
+              corder1=sol.get('ref_choices_order',[])
+              cx1=sol.get('ref_choices',{})
+           else:
+              sol={}
+              bb=0
+              for b in sols:
+                  bp=b.get('points',[])
+                  for bx in bp:
+                      if m==bb:
+                         sol=bx
+                         break
+                      bb+=1
+                  if len(sol)>0:
+                     break
+
+              corder1=sol.get('pruned_choices_order',[])
+              cx1=sol.get('pruned_choices',{})
+
+           corder2=[]
+           ccur2=[]
+           for b in corder1:
+               ccur2.append(cx1[b])
+               if b.startswith('##choices#'):
+                  b='#'+b[9:]
+               corder2.append(b)
+
+           corder=[corder2]
+           ccur=[ccur2]
+
+           al='yes'
+           
         # Make selection
-        r=ck.access({'module_uoa':cfg['module_deps']['choice'],
-                     'action':'make',
-                     'choices_desc':cdesc,
-                     'choices_order':corder,
-                     'choices_selection':csel,
-                     'choices_current':ccur,
-                     'custom_explore':cexp,
-                     'pipeline':pipeline,
-                     'random_module':my_random,
-                     'out':o})
+        jj={'module_uoa':cfg['module_deps']['choice'],
+            'action':'make',
+            'choices_desc':cdesc,
+            'choices_order':corder,
+            'choices_selection':csel,
+            'choices_current':ccur,
+            'custom_explore':cexp,
+            'pipeline':pipeline,
+            'random_module':my_random,
+            'out':o}
+
+        if al!='': jj['all']=al
+
+        r=ck.access(jj)
         if r['return']>0: return r
 
         if r['finish']:

@@ -46,6 +46,8 @@ def make(i):
               (random_module)    - if !=None, random module with seed
               (pipeline)         - if set, update it with current choices
               (custom_explore)   - enforce exploration params from command line
+
+              (all)              - if 'yes', select all
             }
 
     Output: {
@@ -82,6 +84,8 @@ def make(i):
 
     cd=len(corder)
 
+    al=i.get('all','')
+
     # Init current choices
     if len(ccur)==0:
        for c in range(0, cd):
@@ -98,10 +102,14 @@ def make(i):
         cc=corder[cx]
         dc=ccur[cx]
 
-        t=csel[cx]
-
-        tp=t.get('type','')
-        if cexp.get('type','')!='': tp=cexp['type']
+        t={}
+        if al=='yes': 
+           tp='pre-selected'
+        elif cexp.get('type','')!='':
+           tp=cexp['type']
+        else:
+           t=csel[cx]
+           tp=t.get('type','')
 
         ti=t.get('iterations','')
         top=t.get('omit_probability','')
@@ -168,7 +176,9 @@ def make(i):
 
                dcc=dc[c]
                if yep!='' and dcc.startswith(yep):
-                  dcc=int(dcc[len(yep):])
+                  dcc=dcc[len(yep):]
+                  if ytp=='float': dcc=float(dcc)
+                  else: dcc=int(dcc)
 
                if zestart!='': yestart=zestart
                else: yestart=qt.get('explore_start','')
@@ -198,7 +208,9 @@ def make(i):
                elif len(yhc)>0:
                     dv=yhc[0]
 
-               if ci!=0 or (tp=='random' or tp=='random-with-next'):
+               if tp=='pre-selected': 
+                  dv=dcc
+               elif ci!=0 or (tp=='random' or tp=='random-with-next'):
                   lcqx=len(yhc)
                   if tp=='random' or tp=='random-with-next':
                      omit=False
