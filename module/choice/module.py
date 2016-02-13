@@ -311,6 +311,10 @@ def make(i):
           ck.out('')
           ck.out('  Vector of flattened and updated choices:')
 
+
+       ll=0
+       prt=[]
+
        for q in range(0, len(corder)):
            qq=corder[q]
            vq=ccur[q]
@@ -323,7 +327,8 @@ def make(i):
 
                if o=='con':
                   if vq1!='':
-                     ck.out('    '+qq1+'='+str(vq1))
+                     if len(qq1)>ll: ll=len(qq1)
+                     prt.append({'k':qq1, 'v':vq1})
 
                rx=ck.set_by_flat_key({'dict':pipeline, 'key':qq1, 'value':vq1})
                if rx['return']>0: return rx
@@ -334,6 +339,17 @@ def make(i):
            # Will be decoded by a given pipeline, if needed 
            pipeline['choices_order']=corder1
 #           pipeline['choices']=ccur1   
+
+       if o=='con' and len(prt)>0:
+          for q in prt:
+              k=q['k']
+              v=q['v']
+
+              j=ll-len(k)
+
+              x=' '*j
+
+              ck.out('    '+k+x+' : '+str(v))
 
     return {'return':0, 'choices_current':ccur, 'choices_order':corder1, 'choices':ccur1, 'pipeline':pipeline, 'finish':finish}
 

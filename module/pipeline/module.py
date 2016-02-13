@@ -191,6 +191,8 @@ def autotune(i):
 
                (solutions)                        - check solutions
                (ref_solution)                     - if 'yes', choose reference solution from above list
+
+               (prune)                            - prune solution (find minimal choices that give the same result)
             }
 
     Output: {
@@ -240,6 +242,8 @@ def autotune(i):
     sols=ck.get_from_dicts(ic, 'solutions', [], None) # Check existing solutions
     isols=len(sols)
     rs=ck.get_from_dicts(ic, 'ref_solution', '', None) # Check existing solutions
+
+    prune=ck.get_from_dicts(ic, 'prune', '', None) # Prune existing solutions
 
     dsleep=3
     if i.get('sleep','')!='':
@@ -461,6 +465,9 @@ def autotune(i):
         dv1.append(dv)
     corder=dv1
 
+    # Save original
+    ocorder=copy.deepcopy(corder)
+
     # Check seed
     seed=i.get('seed','')
     if seed=='':
@@ -482,6 +489,7 @@ def autotune(i):
     rrr={'return':0}
     dd={}
     finish=False
+    all_solutions=False
 
     m=-1
     while True:
@@ -503,7 +511,7 @@ def autotune(i):
         # Check if there is a pre-selection
         al=''
         if isols>0:
-           if m<isols:
+           if not all_solutions:
               if o=='con':
                  x=''
                  if rs=='yes':
@@ -511,7 +519,6 @@ def autotune(i):
 
                  ck.out('')
                  ck.out('  Checking pre-existing'+x+' solution ...')
-                 ck.out('')
 
               # Find choices (iterate over solutions since there can be more 
               #  than one point in each solution due to Pareto)
@@ -533,24 +540,35 @@ def autotune(i):
                      if len(sol)>0:
                         break
 
-                 corder1=sol.get('pruned_choices_order',[])
-                 cx1=sol.get('pruned_choices',{})
+                 if len(sol)==0:
+                    all_solutions=True
+                 else:
+                    corder1=sol.get('pruned_choices_order',[])
+                    cx1=sol.get('pruned_choices',{})
 
-              corder2=[]
-              ccur2=[]
-              for b in corder1:
-                  ccur2.append(cx1[b])
-                  if b.startswith('##choices#'):
-                     b='#'+b[9:]
-                  corder2.append(b)
+              if all_solutions:
+                 # If checked all solutions, reset original choices and start (random) exploration
+                 corder=copy.deepcopy(ocorder)
+                 ccur=[]
+                 al=''
 
-              corder=[corder2]
-              ccur=[ccur2]
+                 if o=='con':
+                    ck.out('')
+                    ck.out('  ALL pre-existing solutions validated - restarting extra exploration ...')
 
-              al='yes'
-           elif m==isols:
-              corder=copy.deepcopy(i.get('choices_order',[]))
-              ccur=[]
+              else:
+                 corder2=[]
+                 ccur2=[]
+                 for b in corder1:
+                     ccur2.append(cx1[b])
+                     if b.startswith('##choices#'):
+                        b='#'+b[9:]
+                     corder2.append(b)
+
+                 corder=[corder2]
+                 ccur=[ccur2]
+
+                 al='yes'
 
         # Make selection
         jj={'module_uoa':cfg['module_deps']['choice'],

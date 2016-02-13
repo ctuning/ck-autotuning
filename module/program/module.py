@@ -2239,6 +2239,8 @@ def pipeline(i):
                                        (repeat)     - kernel repeat ...
                                        (features.platform.cpu) - CPU features/properties obtained during iterations 
                                                                  to check that state didn't change ...
+
+              (quiet)                - if 'yes', automatically provide default answer to all questions when resolving dependencies ... 
             }
 
     Output: {
@@ -2308,6 +2310,8 @@ def pipeline(i):
 
     meta=ck.get_from_dicts(i, 'program_meta', {}, choices) # program meta if needed
     desc=ck.get_from_dicts(i, 'program_desc', {}, choices) # program desc if needed
+
+    quiet=ck.get_from_dicts(i, 'quiet', '', None)
 
     srn=ck.get_from_dicts(i, 'statistical_repetition_number', '', None)
     if srn=='': srn=0
@@ -2879,6 +2883,7 @@ def pipeline(i):
                  'device_id':tdid,
                  'deps':cdeps,
                  'add_customize':'yes',
+                 'quiet':quiet,
                  'out':oo}
 
              rx=ck.access(ii)

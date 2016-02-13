@@ -1,3 +1,5 @@
+* 2016.02.13 * improving checking of pre-existing solutions. Started implementing automatic pruning of choices ...
+
 * 2016.02.12 * adding support to check pre-selection solutions (found during crowdtuning)
                during autotuning (preparation for clustering and optimization reactions)
              * recording characteristics to pre-selected solutions
