@@ -2241,6 +2241,12 @@ def pipeline(i):
                                                                  to check that state didn't change ...
 
               (quiet)                - if 'yes', automatically provide default answer to all questions when resolving dependencies ... 
+
+              (last_md5)             - if !='', check if MD5 and fail if didn't change!
+              (last_md5_fail_text)   - to recognize that pipeline failure is not really a failure, 
+                                       but MD5 is the same (useful when pruning compiler flags found 
+                                       during collaborative autotuning, particularly via mobile devices
+                                       (less time to prune results))
             }
 
     Output: {
@@ -2320,6 +2326,9 @@ def pipeline(i):
     ati=ck.get_from_dicts(i, 'autotuning_iteration', '', None)
     if ati=='': ati=0
     else: ati=int(ati)
+
+    last_md5=ck.get_from_dicts(i, 'last_md5', '', None)
+    last_md5_fail_text=ck.get_from_dicts(i, 'last_md5_fail_text', '', None)
 
     random=ck.get_from_dicts(i, 'random', '', None)
     if random=='yes':
@@ -3200,7 +3209,7 @@ def pipeline(i):
        env['CK_GPU_FREQUENCY']=sgpuf
 
        ii={'action':'set_freq',
-           'module_uoa':cfg['module_deps']['platform.accelerator'],
+           'module_uoa':cfg['module_deps']['platform.gpu'],
            'value':sgpuf,
            'host_os':hos,
            'target_os':tos,
@@ -3411,12 +3420,17 @@ def pipeline(i):
              i['fail_reason']=x
              i['fail']='yes'
 
+          if last_md5!='':
+             md5=cch.get('md5_sum','')
+             if md5!='' and md5==last_md5:
+                i['fail_reason']=last_md5_fail_text
+                i['fail']='yes'
+
     ###############################################################################################################
     # PIPELINE SECTION: Check if dataset is the same
     sdc='no'
     if tsd=='yes' and (ati!=0 or srn!=0):
        sdc='yes'
-
 
     ###############################################################################################################
     # PIPELINE SECTION: perf

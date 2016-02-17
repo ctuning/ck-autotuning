@@ -193,6 +193,13 @@ def autotune(i):
                (ref_solution)                     - if 'yes', choose reference solution from above list
 
                (prune)                            - prune solution (find minimal choices that give the same result)
+               (prune_ignore_choices)             - list of choices to ignore (such as base flag, for example)
+               (prune_md5)                        - if 'yes', check if MD5 doesn't change
+               (prune_invert)                     - if 'yes', prune all (switch off even unused - useful for collaborative machine learning)
+               (prune_invert_add_iters)           - if 'yes', add extra needed iterations
+               (prune_result_conditions)          - list of extra conditions to accept result (variation, performance/energy/code size constraints, etc)
+
+               (result_conditions)                - check results for condition
             }
 
     Output: {
@@ -244,6 +251,16 @@ def autotune(i):
     rs=ck.get_from_dicts(ic, 'ref_solution', '', None) # Check existing solutions
 
     prune=ck.get_from_dicts(ic, 'prune', '', None) # Prune existing solutions
+    prune_md5=ck.get_from_dicts(ic, 'prune_md5', '', None) # if 'yes', prune if MD5 doesn't change
+    prune_ignore_choices=ck.get_from_dicts(ic, 'prune_ignore_choices', [], None) # Prune existing solutions
+    prune_invert=ck.get_from_dicts(ic, 'prune_invert', [], None) # Prune existing solutions
+    prune_invert_add_iters=ck.get_from_dicts(ic, 'prune_invert_add_iters', '', None)
+    prune_result_conditions=ck.get_from_dicts(ic, 'prune_result_conditions', [], None)
+    number_of_original_choices=0
+    started_prune_invert=False
+
+    condition_objective=ck.get_from_dicts(ic, 'condition_objective', '', None)
+    result_conditions=ck.get_from_dicts(ic, 'result_conditions', [], None)
 
     dsleep=3
     if i.get('sleep','')!='':
@@ -264,7 +281,7 @@ def autotune(i):
     fkr=ck.get_from_dicts(ic, 'frontier_keys_reverse', [], None)
     fmar=ck.get_from_dicts(ic, 'frontier_margins', [], None)
 
-    fdfi=ck.get_from_dicts(ic, 'flat_dict_for_improvements', [], None)
+    fdfi=ck.get_from_dicts(ic, 'flat_dict_for_improvements', {}, None)
 
     record=ck.get_from_dicts(ic, 'record', '', None)
     record_uoa=ck.get_from_dicts(ic, 'record_uoa', '', None)
@@ -416,6 +433,10 @@ def autotune(i):
     corder=copy.deepcopy(i.get('choices_order',[]))
     csel=i.get('choices_selection',{})
     ccur=[]
+    pccur={} # pruned choices, if needed
+
+    ref_stat_dict={} # if check with reference, save it
+    keys=[]          # keys to check for conditions or during pruning
 
     # most likely just one iteration - then set defaults
     if len(corder)==1 and len(csel)==0:
@@ -491,6 +512,18 @@ def autotune(i):
     finish=False
     all_solutions=False
 
+    removing_key=''
+    removing_value=''
+    last_md5=''
+    last_md5_fail_text='compilation returned object file with the same MD5'
+    pruned_influence={}
+    pruned_chars=[]
+    prune_checked_keys=[]
+    pruned_inversed_flags={}
+    prune_check_all=[]
+
+    increased_iterations=False
+
     m=-1
     while True:
         m+=1
@@ -503,6 +536,8 @@ def autotune(i):
         if ni!=-1: x+=' of '+str(ni) 
 
         ck.out(x)
+
+        time.sleep(0.5)
 
         # Copy original
         if m==0 or mm>=sfi:
@@ -523,28 +558,127 @@ def autotune(i):
               # Find choices (iterate over solutions since there can be more 
               #  than one point in each solution due to Pareto)
 
+              nz=[] # remaining keys to select from (if 0, stop)
+
               if rs=='yes':
                  sol=sols[0]
                  corder1=sol.get('ref_choices_order',[])
                  cx1=sol.get('ref_choices',{})
               else:
-                 sol={}
-                 bb=0
-                 for b in sols:
-                     bp=b.get('points',[])
-                     for bx in bp:
-                         if m==bb:
-                            sol=bx
-                            break
-                         bb+=1
-                     if len(sol)>0:
-                        break
+                 if prune=='yes':
+                    if len(pccur)>0:
+                       if o=='con':
+                          ck.out('')
+                          ck.out('  Pruning solution ...')
 
-                 if len(sol)==0:
-                    all_solutions=True
-                 else:
-                    corder1=sol.get('pruned_choices_order',[])
-                    cx1=sol.get('pruned_choices',{})
+                       # Check non-zero ones:
+                       if not started_prune_invert:
+                          for g in range(0, len(corder1)):
+                              k=corder1[g]
+                              v=pccur.get(k, None)
+                              if v!='' and v!=None and k not in prune_ignore_choices and k not in prune_checked_keys:
+                                 nz.append(k)
+
+                       # Remove one (random or one by one)
+                       if len(nz)==0:
+                          if not started_prune_invert:
+                             if o=='con':
+                                ck.out('')
+                                ck.out('  ALL choices have been checked - main pruning finished !')
+                           
+                          if prune_invert!='yes':
+                             break
+
+                          if not started_prune_invert:
+                             ck.out('  ***')
+                             ck.out('  Starting pruning all possible choices ...')
+
+                             for q in ocorder[0]:
+                                 if q not in corder1:
+                                    corder1.append(q)
+
+                             for q in corder1:
+                                 if q not in prune_checked_keys and q not in pccur and q in cdesc:
+                                    cddx=cdesc[q]
+                                    if 'boolean' in cddx.get('tags',[]):
+                                       prune_check_all.append(q)
+
+                             started_prune_invert=True
+
+                          if len(prune_check_all)==0:
+                             ck.out('')
+                             ck.out('  Pruning finished !')
+
+                             break
+
+                          # Switching off key
+                          y=my_random.randrange(0,len(prune_check_all))
+
+                          removing_key=prune_check_all[y]
+                          del(prune_check_all[y])
+
+                          cddx=cdesc.get(removing_key,{})
+                          cccx=cddx.get('choice',[])
+
+                          v=''
+                          if len(cccx)>0:
+                             v=cccx[len(cccx)-1]
+
+                          removing_value=v
+                          pccur[removing_key]=v
+
+                          cx1=copy.deepcopy(pccur)
+
+                          if o=='con':
+                             ck.out('')
+                             ck.out('    Trying to invert key '+removing_key+' to default ('+v+') ...')
+
+                       else:
+                          y=my_random.randrange(0,len(nz))
+
+                          removing_key=nz[y]
+                          removing_value=pccur[removing_key]
+
+                          del(nz[y])
+
+                          pccur[removing_key]=''
+
+                          prune_checked_keys.append(removing_key)
+
+                          cx1=copy.deepcopy(pccur)
+
+                          if o=='con':
+                             ck.out('')
+                             ck.out('    Trying to remove key '+removing_key+' ('+str(removing_value)+') ...')
+
+                    # Increase iterations if check all
+                    if len(nz)==0 and prune_invert_add_iters=='yes' and prune_invert=='yes' and not increased_iterations:
+                       increased_iterations=True
+                       for q in ocorder[0]:
+                           if q not in prune_checked_keys and q not in pccur and q in cdesc:
+                              cddx=cdesc[q]
+                              if 'boolean' in cddx.get('tags',[]):
+                                 ni+=1
+
+                 if prune!='yes' or len(pccur)==0:
+                    sol={}
+                    bb=0
+                    for b in sols:
+                        bp=b.get('points',[])
+                        for bx in bp:
+                            if m==bb:
+                               sol=bx
+                               break
+                            bb+=1
+                        if len(sol)>0:
+                           keys=list(sol.get('improvements',{}).keys())
+                           break
+
+                    if len(sol)==0:
+                       all_solutions=True
+                    else:
+                       corder1=sol.get('pruned_choices_order',[])
+                       cx1=sol.get('pruned_choices',{})
 
               if all_solutions:
                  # If checked all solutions, reset original choices and start (random) exploration
@@ -559,16 +693,20 @@ def autotune(i):
               else:
                  corder2=[]
                  ccur2=[]
+
                  for b in corder1:
-                     ccur2.append(cx1[b])
-                     if b.startswith('##choices#'):
-                        b='#'+b[9:]
-                     corder2.append(b)
+                     v=cx1.get(b,None)
+                     if v!='' and v!=None:
+                        ccur2.append(v)
+                        corder2.append(b)
 
                  corder=[corder2]
                  ccur=[ccur2]
 
                  al='yes'
+
+                 if prune=='yes' and len(pccur)==0:
+                    pccur=copy.deepcopy(cx1)
 
         # Make selection
         jj={'module_uoa':cfg['module_deps']['choice'],
@@ -616,6 +754,7 @@ def autotune(i):
         fail='no'
         fail_reason=''
         rr={}
+        last_orders_from_pipeline=[]
         for sr in range(0, srm):
             if only_filter=='yes': continue
 
@@ -634,10 +773,20 @@ def autotune(i):
             pipeline1['statistical_repetition_number']=sr
             pipeline1['tmp_dir']=tmp_dir
 
+            if prune_md5=='yes':
+               if o=='con':
+                  ck.out('')
+                  ck.out('      Checking MD5: '+last_md5)
+
+               pipeline1['last_md5']=last_md5
+               pipeline1['last_md5_fail_text']=last_md5_fail_text
+
             rr=ck.access(pipeline1)
             if rr['return']>0: return rr
 
             state=rr.get('state',{})
+
+            last_orders_from_pipeline=rr.get('choices_order',[])
 
             fail=rr.get('fail','')
             fail_reason=rr.get('fail_reason','')
@@ -687,6 +836,9 @@ def autotune(i):
 
         ##########################################################################################
         # Recording experiment if needed
+        current_point=''
+        current_record_uid=''
+
         stat_dict={}
 
         recorded_info={'points':[], 'deleted_points':[], 'recorded_uid':''}
@@ -743,11 +895,11 @@ def autotune(i):
               rx=ck.access(ie)
               if rx['return']>0: return rx
 
-              jp=rx.get('point','')
-              juid=rx.get('recorded_uid','')
+              current_point=rx.get('point','')
+              current_record_uid=rx.get('recorded_uid','')
 
-              if jp!='': recorded_info['points'].append(jp)
-              if juid!='': recorded_info['recorded_uid']=juid
+              if current_point!='': recorded_info['points'].append(current_point)
+              if current_record_uid!='': recorded_info['recorded_uid']=current_record_uid
 
               stat_dict=rx['dict_flat']
               rrr=rx['stat_analysis']
@@ -761,6 +913,10 @@ def autotune(i):
         ##########################################################################################
         # If was not performed via recording, perform statistical analysis  here
         if fail!='yes' and len(stat_dict)==0:
+           if o=='con':
+              ck.out('')
+              ck.out('Performing explicit statistical analysis of experiments ...')
+
            ii={'action':'multi_stat_analysis',
                'module_uoa':cfg['module_deps']['experiment'],
                'dict':stat_dict,
@@ -772,13 +928,176 @@ def autotune(i):
            if rrr['return']>0: return rrr
            stat_dict=rrr['dict_flat']
 
+        ##########################################################################################
+        # Check conditions
+        if len(result_conditions)>0:
+           # Check conditions
+           ii={'action':'check',
+               'module_uoa':cfg['module_deps']['math.conditions'],
+               'new_points':['0'],
+               'results':[{'point_uid':'0', 'flat':stat_dict}],
+               'conditions':result_conditions,
+               'middle_key':condition_objective,
+               'out':oo}
+           ry=ck.access(ii)
+           if ry['return']>0: return ry 
+
+           xdpoints=ry['points_to_delete']
+           if len(xdpoints)>0 and current_point!='':
+              if o=='con':
+                 ck.out('')
+                 ck.out('    WARNING: conditions on characteristics were not met!')
+
+              # Delete point and fail
+              rx=ck.access({'action':'delete_points',
+                            'module_uoa':cfg['module_deps']['experiment'],
+                            'points':[{'module_uid':cfg['module_deps']['experiment'], 
+                                       'data_uid':current_record_uid,
+                                       'point_uid':current_point}],
+                            'out':oo})
+              if rx['return']>0: return rx
+
+              rr['fail']='yes'
+              rr['fail_reason']='conditions were not met'
+
+              fail=rr.get('fail','')
+              fail_reason=rr.get('fail_reason','')
+
         # Check if need to leave only points on frontier 
         #   (our frontier is not 'Pareto efficient' since we have discreet characteristics)
 
 #        if len(fk)>0 and (len(stat_dict)>0 or only_filter=='yes'): - otherwise doesn't work if last point is error
 
+        # If checking pruning (that results didn't change much)
+        if prune=='yes':
+           # Rebuild list of current choices from last choices dict (since pipeline may change choices, such as base flag)
+           if len(fft)>0:
+              pccur={}
+              for q in last_orders_from_pipeline:
+                  q1='##choices'+q[1:]
+                  v=fft.get(q1,'')
+                  if v!='' and v!=None:
+                     pccur[q]=v
+
+           if m==0:
+              # Saving reference stats
+              ref_stat_dict=copy.deepcopy(stat_dict)
+              fdfi=ref_stat_dict
+              last_md5=stat_dict.get('##characteristics#compile#md5_sum#min',None)
+
+              for q in pccur:
+                  if q!=None and q!='':
+                     number_of_original_choices+=1
+
+              if o=='con':
+                 ck.out('')
+                 ck.out('Preserving reference statistics to compare against during solution pruning ...')
+                 ck.out('')
+
+           else:
+              if o=='con':
+                 ck.out('')
+                 ck.out('Checking if results have changed during pruning ...')
+                 ck.out('')
+
+                 result_the_same=False
+                 if fail=='yes' and fail_reason==last_md5_fail_text:
+                    result_the_same=True
+
+                 if not result_the_same and fail!='yes':
+                    # Check conditions
+                    ii={'action':'check',
+                        'module_uoa':cfg['module_deps']['math.conditions'],
+                        'new_points':['0'],
+                        'results':[{'point_uid':'0', 'flat':stat_dict}],
+                        'conditions':prune_result_conditions,
+                        'middle_key':condition_objective,
+                        'out':oo}
+                    ry=ck.access(ii)
+                    if ry['return']>0: return ry 
+
+                    gpoints=ry['good_points']
+                    dpoints=ry['points_to_delete']
+                    pruned_chars=ry['keys']
+
+                    if len(dpoints)==0:
+                       result_the_same=True
+
+                 if o=='con':
+                    if result_the_same:
+                       ck.out('    *** Result did not change!')
+                    else:
+                       ck.out('    *** Result changed!')
+
+                 if started_prune_invert:
+                    # We are in inverting mode ######################################################
+                    if result_the_same:
+                       if o=='con':
+                          ck.out('')
+                          ck.out('    Keeping default key "'+removing_key+'" ...')
+
+                       pccur[removing_key]=removing_value
+
+                       # If new compilation MD5 and new stats, make a new referneces point
+                       if not (fail=='yes' and fail_reason==last_md5_fail_text):
+                          if o=='con':
+                             ck.out('')
+                             ck.out('         NEW REFERENCE POINT!')
+
+                          ref_stat_dict=copy.deepcopy(stat_dict)
+                          fdfi=ref_stat_dict
+                          last_md5=stat_dict.get('##characteristics#compile#md5_sum#min',None)
+
+                    else:
+                       if o=='con':
+                          ck.out('')
+                          ck.out('    Removing key "'+removing_key+'" from choices ...')
+
+                       pccur[removing_key]=''
+
+                       pruned_inversed_flags[removing_key]=removing_value
+
+                 else:
+                    # We are in standard pruning mode ###############################################
+                    if result_the_same:
+                       if o=='con':
+                          ck.out('')
+                          ck.out('    Removing key "'+removing_key+'" from choices ...')
+
+                       pccur[removing_key]=''
+
+                       pruned_inversed_flags[removing_key]=removing_value
+
+                       # If new compilation MD5 and new stats, make a new referneces point
+                       if not (fail=='yes' and fail_reason==last_md5_fail_text):
+                          if o=='con':
+                             ck.out('')
+                             ck.out('         NEW REFERENCE POINT!')
+
+                          ref_stat_dict=copy.deepcopy(stat_dict)
+                          fdfi=ref_stat_dict
+                          last_md5=stat_dict.get('##characteristics#compile#md5_sum#min',None)
+
+                    else:
+                       if o=='con':
+                          ck.out('')
+                          ck.out('    Keeping key "'+removing_key+'" ...')
+
+                       pccur[removing_key]=removing_value
+
+                 # Record influential optimization
+                 if not result_the_same:
+                    kky={}
+                    if len(pruned_chars)>0:
+                       for q in pruned_chars:
+                           kky[q]=stat_dict.get(q,None)
+                    pruned_influence[removing_key]=kky
+
+#        print ('last md5=',last_md5)
+#        raw_input('xyz')
+
         # If checking pre-recoreded solutions, add result
-        if isols>0 and m<isols:
+        if prune!='yes' and isols>0 and m<isols:
            if o=='con':
               ck.out('')
               ck.out('Recording reaction to optimizations to a pre-existing solution (for automatic classification of computational species) ...')
@@ -800,7 +1119,7 @@ def autotune(i):
                   sols[jb]['points']=bp
                   break
 
-        if len(fk)>0 or only_filter=='yes':
+        if prune!='yes' and (len(fk)>0 or only_filter=='yes'):
            # If data was recorded to repo, reload all points 
            opoints={} # original points with all info (used later to delete correct points)
            if record=='yes':
@@ -908,11 +1227,83 @@ def autotune(i):
        ck.out('')
        ck.out('All iterations are done!')
 
+    rz={'return':0, 'last_iteration_output':rr, 'last_stat_analysis': rrr, 'experiment_desc':dd, 'recorded_info':recorded_info, 'failed_cases':failed_cases}
+
+    # If pruning, print last results
+    if prune=='yes' and o=='con':
+       ll=0
+       lx=0
+       for k in corder1:
+           if len(k)>ll: 
+              ll=len(k)
+           v=pccur.get(k, None)
+           if v!='' and v!=None:
+              lx+=1
+
+       x=str(lx)
+       if prune_invert!='yes':
+          x+=' vs '+str(number_of_original_choices)
+
+       ck.out('')
+       ck.out('  Final pruned choices ('+x+') :')
+       ck.out('')
+
+       ck.out('        Characteristic changes (in brackets):')
+       for q in range(0, len(pruned_chars)):
+           ck.out('           '+str(q)+' = '+pruned_chars[q])
+       ck.out('')
+
+
+       keys=[]
+       pruned={}
+       pruned_order=[]
+
+       for k in corder1:
+           v=pccur.get(k,None)
+           if v!='' and v!=None:
+              pruned_order.append(k)
+              pruned[k]=v
+              keys.append(k)
+
+       for k in pruned_influence:
+           if k not in keys:
+              keys.append(k)
+
+       for k in keys:
+           v=pccur.get(k,None)
+           v1=pruned_influence.get(k,None)
+
+           j=ll-len(k)
+
+           x=' '*j
+
+           y=''
+           if v1!=None:
+              for q in pruned_chars:
+                  v1x=v1.get(q,0.0)
+                  if v1x==None: v1x=0.0
+                  if y!='': y+=';'
+                  v2=float(v1x)
+                  y+=('%1.3f' % v2)
+           else:
+              y='                 '
+           ck.out('    '+k+x+' ('+y+') : '+str(v))
+
+       # Embedd to first solution:
+       b=sols[0]['points'][0]
+
+       b['pruned_choices_order']=pruned_order
+       b['pruned_choices']=pruned
+
+       b['pruned_influence']=pruned_influence
+       b['pruned_chars']=pruned_chars
+       b['pruned_inversed_flags']=pruned_inversed_flags
+
+       sols[0]['points'][0]=b
+
     if m>0 and i.get('skip_done','')!='yes':
        ck.out(sep)
        ck.out('Done!')
-
-    rz={'return':0, 'last_iteration_output':rr, 'last_stat_analysis': rrr, 'experiment_desc':dd, 'recorded_info':recorded_info, 'failed_cases':failed_cases}
 
     if len(sols)>0:
        rz['solutions']=sols

@@ -1,3 +1,8 @@
+* 2016.02.17 * adding dimension reduction to pipeline 
+               (leaving only influential optimizations + inverting and turning off all if needed)
+               very important for proper collaborative machine learning
+             * changed platform.accelerator -> platform.gpu
+
 * 2016.02.13 * improving checking of pre-existing solutions. Started implementing automatic pruning of choices ...
 
 * 2016.02.12 * adding support to check pre-selection solutions (found during crowdtuning)
