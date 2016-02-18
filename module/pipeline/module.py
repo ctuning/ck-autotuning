@@ -823,7 +823,7 @@ def autotune(i):
         # Record list of characteristics (from multiple reptitions)
         dd['characteristics_list']=ddcl
 
-        if afc=='yes':
+        if afc=='yes' and fail_bool:
            failed_cases.append({'choices':rr.get('choices',{}),
                                 'choices_order':rr.get('choices_order',[]),
                                 'features':rr.get('features',{}),
