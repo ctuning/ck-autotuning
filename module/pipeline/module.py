@@ -545,6 +545,7 @@ def autotune(i):
 
         # Check if there is a pre-selection
         al=''
+        suid=''
         if isols>0:
            if not all_solutions:
               if o=='con':
@@ -564,6 +565,7 @@ def autotune(i):
                  sol=sols[0]
                  corder1=sol.get('ref_choices_order',[])
                  cx1=sol.get('ref_choices',{})
+                 suid=sol.get('solution_uid','')
               else:
                  if prune=='yes':
                     if len(pccur)>0:
@@ -665,6 +667,7 @@ def autotune(i):
                     bb=0
                     for b in sols:
                         bp=b.get('points',[])
+                        suid=b.get('solution_uid','')
                         for bx in bp:
                             if m==bb:
                                sol=bx
@@ -676,6 +679,7 @@ def autotune(i):
 
                     if len(sol)==0:
                        all_solutions=True
+                       suid=''
                     else:
                        corder1=sol.get('pruned_choices_order',[])
                        cx1=sol.get('pruned_choices',{})
@@ -800,6 +804,8 @@ def autotune(i):
                   dd['choices_desc']=rr.get('choices_desc',{})
                   dd['features']=rr.get('features',{})
                   dd['features']['statistical_repetitions']=srm
+                  if suid!='':
+                     dd['features']['solution_uid']=suid
                   dd['features_desc']=rr.get('features_desc',{})
                   dd['dependencies']=rr.get('dependencies',{})
                   dd['characteristics_desc']=rr.get('characteristics_desc',{})
