@@ -969,6 +969,30 @@ def autotune(i):
               fail=rr.get('fail','')
               fail_reason=rr.get('fail_reason','')
 
+        ##########################################################################################
+        # If checking pre-recoreded solutions, add result
+        if prune!='yes' and isols>0 and m<isols:
+           if o=='con':
+              ck.out('')
+              ck.out('Recording reaction to optimizations to a pre-existing solution (for automatic classification of computational species) ...')
+              ck.out('')
+
+           # Prepare improvements/degradations
+           reaction=False
+           bb=0
+           for jb in range(0, len(sols)):
+               b=sols[jb]
+               bp=b.get('points',[])
+               for by in range(0, len(bp)):
+                   if m==bb:
+                      bp[by]['reaction_raw_flat']=copy.deepcopy(stat_dict)
+                      bp[by]['reaction_info']={'fail':fail, 'fail_reason':fail_reason}
+                      reaction=True
+                   bb+=1
+               if reaction:
+                  sols[jb]['points']=bp
+                  break
+
         # Check if need to leave only points on frontier 
         #   (our frontier is not 'Pareto efficient' since we have discreet characteristics)
 
@@ -1098,32 +1122,6 @@ def autotune(i):
                        for q in pruned_chars:
                            kky[q]=stat_dict.get(q,None)
                     pruned_influence[removing_key]=kky
-
-#        print ('last md5=',last_md5)
-#        raw_input('xyz')
-
-        # If checking pre-recoreded solutions, add result
-        if prune!='yes' and isols>0 and m<isols:
-           if o=='con':
-              ck.out('')
-              ck.out('Recording reaction to optimizations to a pre-existing solution (for automatic classification of computational species) ...')
-              ck.out('')
-
-           reaction=False
-           bb=0
-           for jb in range(0, len(sols)):
-               b=sols[jb]
-               bp=b.get('points',[])
-               for by in range(0, len(bp)):
-                   if m==bb:
-                      bp[by]['reaction_raw_flat']=copy.deepcopy(stat_dict)
-                      bp[by]['reaction_info']={'fail':fail, 'fail_reason':fail_reason}
-                      reaction=True
-                      break
-                   bb+=1
-               if reaction:
-                  sols[jb]['points']=bp
-                  break
 
         if prune!='yes' and (len(fk)>0 or only_filter=='yes'):
            # If data was recorded to repo, reload all points 
