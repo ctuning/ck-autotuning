@@ -256,6 +256,7 @@ def autotune(i):
     prune_invert=ck.get_from_dicts(ic, 'prune_invert', [], None) # Prune existing solutions
     prune_invert_add_iters=ck.get_from_dicts(ic, 'prune_invert_add_iters', '', None)
     prune_result_conditions=ck.get_from_dicts(ic, 'prune_result_conditions', [], None)
+
     number_of_original_choices=0
     started_prune_invert=False
 
@@ -684,6 +685,9 @@ def autotune(i):
                        corder1=sol.get('pruned_choices_order',[])
                        cx1=sol.get('pruned_choices',{})
 
+                    if suid!='' and o=='con':
+                       ck.out('     Solution UID: '+suid+' ...')
+
               if all_solutions:
                  # If checked all solutions, reset original choices and start (random) exploration
                  corder=copy.deepcopy(ocorder)
@@ -987,6 +991,13 @@ def autotune(i):
                    if m==bb:
                       bp[by]['reaction_raw_flat']=copy.deepcopy(stat_dict)
                       bp[by]['reaction_info']={'fail':fail, 'fail_reason':fail_reason}
+
+                      imp=copy.deepcopy(bp[by].get('improvements',{}))
+                      if len(imp)>0:
+                         for k in imp:
+                             imp[k]=stat_dict.get(k,None)
+                         bp[by]['improvements_reaction']=imp
+
                       reaction=True
                    bb+=1
                if reaction:
