@@ -437,6 +437,7 @@ def autotune(i):
     pccur={} # pruned choices, if needed
 
     ref_stat_dict={} # if check with reference, save it
+    ref_stat_out={}  # last iteration output for the reference
     keys=[]          # keys to check for conditions or during pruning
 
     # most likely just one iteration - then set defaults
@@ -1023,6 +1024,7 @@ def autotune(i):
            if m==0:
               # Saving reference stats
               ref_stat_dict=copy.deepcopy(stat_dict)
+              ref_stat_out=copy.deepcopy(rr)
               fdfi=ref_stat_dict
               last_md5=stat_dict.get('##characteristics#compile#md5_sum#min',None)
 
@@ -1086,6 +1088,7 @@ def autotune(i):
                              ck.out('         NEW REFERENCE POINT!')
 
                           ref_stat_dict=copy.deepcopy(stat_dict)
+                          ref_stat_out=copy.deepcopy(rr)
                           fdfi=ref_stat_dict
                           last_md5=stat_dict.get('##characteristics#compile#md5_sum#min',None)
 
@@ -1116,6 +1119,7 @@ def autotune(i):
                              ck.out('         NEW REFERENCE POINT!')
 
                           ref_stat_dict=copy.deepcopy(stat_dict)
+                          ref_stat_out=copy.deepcopy(rr)
                           fdfi=ref_stat_dict
                           last_md5=stat_dict.get('##characteristics#compile#md5_sum#min',None)
 
@@ -1246,6 +1250,9 @@ def autotune(i):
 
     # If pruning, print last results
     if prune=='yes' and o=='con':
+       rz['last_stat_analysis']=ref_stat_dict
+       rz['last_iteration_output']=ref_stat_out
+
        ll=0
        lx=0
        for k in corder1:
