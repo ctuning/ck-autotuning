@@ -526,6 +526,8 @@ def autotune(i):
 
     increased_iterations=False
 
+    last_record_uid=''
+
     m=-1
     while True:
         m+=1
@@ -910,7 +912,9 @@ def autotune(i):
               current_record_uid=rx.get('recorded_uid','')
 
               if current_point!='': recorded_info['points'].append(current_point)
-              if current_record_uid!='': recorded_info['recorded_uid']=current_record_uid
+              if current_record_uid!='': 
+                 recorded_info['recorded_uid']=current_record_uid
+                 last_record_uid=current_record_uid
 
               stat_dict=rx['dict_flat']
               rrr=rx['stat_analysis']
@@ -1246,9 +1250,11 @@ def autotune(i):
        ck.out('')
        ck.out('All iterations are done!')
 
+    recorded_info['last_recorded_uid']=last_record_uid
     rz={'return':0, 'last_iteration_output':rr, 'last_stat_analysis': rrr, 'experiment_desc':dd, 'recorded_info':recorded_info, 'failed_cases':failed_cases}
 
     # If pruning, print last results
+    report=''
     if prune=='yes' and o=='con':
        rz['last_stat_analysis']=ref_stat_dict
        rz['last_iteration_output']=ref_stat_out
@@ -1266,15 +1272,12 @@ def autotune(i):
        if prune_invert!='yes':
           x+=' vs '+str(number_of_original_choices)
 
-       ck.out('')
-       ck.out('  Final pruned choices ('+x+') :')
-       ck.out('')
+       report='\n  Final pruned choices ('+x+') :\n'
 
-       ck.out('        Characteristic changes (in brackets):')
+       report+='        Characteristic changes (in brackets):\n'
        for q in range(0, len(pruned_chars)):
-           ck.out('           '+str(q)+' = '+pruned_chars[q])
-       ck.out('')
-
+           report+='           '+str(q)+' = '+pruned_chars[q]+'\n'
+       report+='\n'
 
        keys=[]
        pruned={}
@@ -1309,7 +1312,12 @@ def autotune(i):
                   y+=('%1.3f' % v2)
            else:
               y='                 '
-           ck.out('    '+k+x+' ('+y+') : '+str(v))
+           report+='    '+k+x+' ('+y+') : '+str(v)+'\n'
+
+       if o=='con':
+          ck.out(report)
+
+       rz['report']=report
 
        # Embedd to first solution:
        b=sols[0]['points'][0]
