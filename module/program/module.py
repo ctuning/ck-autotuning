@@ -4069,3 +4069,35 @@ def autotune(i):
     i['change_user']=cu
 
     return ck.access(i)
+
+##############################################################################
+# crowdtune programs via list
+
+def xcrowdtune(i):
+    """
+    Input:  {
+              workloads    - list of dicts to update input
+            }
+
+    Output: {
+              return       - return code =  0, if successful
+                                         >  0, if error
+              (error)      - error text if return > 0
+            }
+
+    """
+
+    import copy
+
+    l=i.get('workloads',[])
+
+    i['action']='crowdtune'
+    ii=copy.deepcopy(i)
+
+    for q in l:
+        iii=copy.deepcopy(ii)
+        iii.update(q)
+        r=ck.access(iii)
+        if r['return']>0: return r
+
+    return {'return':0}
