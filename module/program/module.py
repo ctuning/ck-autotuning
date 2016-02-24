@@ -4092,6 +4092,7 @@ def xcrowdtune(i):
     l=i.get('workloads',[])
 
     i['action']='crowdtune'
+    i['once']='yes'
     ii=copy.deepcopy(i)
 
     for q in l:
