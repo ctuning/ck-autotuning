@@ -266,6 +266,8 @@ def process_in_dir(i):
 
               (compile_timeout)               - (sec.) - kill compile job if too long
               (run_timeout)                   - (sec.) - kill run job if too long
+
+              (add_rnd_extension_to_bin)      - if 'yes', add random extension to binary and record list
             }
 
     Output: {
@@ -304,6 +306,8 @@ def process_in_dir(i):
     ccc=i.get('characteristics',{})
     env=i.get('env',{})
     deps=i.get('deps',{})
+
+    are=i.get('add_rnd_extension_to_bin','')
 
     rof=i.get('run_output_files',[])
     eppc=i.get('extra_post_process_cmd','')
@@ -461,8 +465,16 @@ def process_in_dir(i):
     target_exe=meta.get('target_file','')
     if target_exe=='':
        target_exe=cfg.get('target_file','')
+
+    if are=='yes':
+       rx=ck.gen_uid({})
+       if rx['return']>0: return rx
+       target_exe+='-'+rx['data_uid']
+
     if meta.get('skip_bin_ext','')!='yes':
        target_exe+=se
+
+    misc['target_exe']=target_exe
 
     # If muoa=='' assume program
     if muoa=='':
@@ -2109,9 +2121,10 @@ def pipeline(i):
               (skip_device_init)     - if 'yes', skip device init
               (skip_info_collection) - if 'yes', skip info collection
 
+              (skip_device_info)     - if 'yes', skip any device info - 
+                                       useful to prepare experiment crowdsourcing packs for remote devices
+
                  Pipeline sections' settings:
-
-
 
               (no_platform_features)    - if 'yes', do not collect full platform features
               (no_dataset_features)     - if 'yes', do not search and extract data set features
@@ -2247,6 +2260,8 @@ def pipeline(i):
                                        but MD5 is the same (useful when pruning compiler flags found 
                                        during collaborative autotuning, particularly via mobile devices
                                        (less time to prune results))
+
+              (add_rnd_extension_to_bin) - if 'yes', add random extension to binary and record list
             }
 
     Output: {
@@ -2362,9 +2377,13 @@ def pipeline(i):
     pdir=ck.get_from_dicts(i, 'program_dir', '', None) # Do not save, otherwise can't reproduce by other people
     if pdir!='': os.chdir(pdir)
 
-    sdi=ck.get_from_dicts(i, 'skip_device_init', '', choices)
-    sic=ck.get_from_dicts(i, 'skip_info_collection', '', choices)
+    sdi=i.get('skip_device_init', '')
+    sic=i.get('skip_info_collection', '')
 
+    sdf=i.get('skip_device_info', '')
+
+    are=i.get('add_rnd_extension_to_bin', '')
+    
     grtd=ck.get_from_dicts(i, 'generate_rnd_tmp_dir','', None)
     tdir=ck.get_from_dicts(i, 'tmp_dir','', None)
 
@@ -2431,7 +2450,13 @@ def pipeline(i):
 
     # Get some info about platforms
     ox=oo
+
+    if sdf=='yes':
+       sdi='yes'
+       sic='yes'
+
     if sdi=='yes' and sic=='yes': ox=''
+
     ii={'action':'detect',
         'module_uoa':cfg['module_deps']['platform.os'],
         'host_os':hos,
@@ -3177,7 +3202,7 @@ def pipeline(i):
 
     ###############################################################################################################
     # PIPELINE SECTION: set CPU frequency
-    if scpuf!='':
+    if scpuf!='' and sic!='yes':
        if o=='con':
           ck.out(sep)
           ck.out('Setting CPU frequency to '+str(scpuf)+' (if supported) ...')
@@ -3200,7 +3225,7 @@ def pipeline(i):
 
     ###############################################################################################################
     # PIPELINE SECTION: set GPU frequency
-    if sgpuf!='':
+    if sgpuf!='' and sic!='yes':
        if o=='con':
           ck.out(sep)
           ck.out('Setting GPU frequency to '+str(sgpuf)+' (if supported) ...')
@@ -3224,7 +3249,7 @@ def pipeline(i):
     ###############################################################################################################
     # PIPELINE SECTION: get target platform features
     npf=i.get('no_platform_features','')
-    if i.get('platform_features','')!='yes' and npf!='yes':
+    if i.get('platform_features','')!='yes' and npf!='yes' and sic!='yes':
        if o=='con':
           ck.out(sep)
           ck.out('Detecting all target platform features ...')
@@ -3398,6 +3423,7 @@ def pipeline(i):
               'remove_compiler_vars':rcv,
               'extra_env_for_compilation':eefc,
               'compile_timeout':xcto,
+              'add_rnd_extension_to_bin':are,
               'out':oo}
           r=process_in_dir(ii)
           if r['return']>0: return r
@@ -3425,6 +3451,9 @@ def pipeline(i):
              if md5!='' and md5==last_md5:
                 i['fail_reason']=last_md5_fail_text
                 i['fail']='yes'
+
+          texe=misc.get('target_exe','')
+          state['target_exe']=texe
 
     ###############################################################################################################
     # PIPELINE SECTION: Check if dataset is the same

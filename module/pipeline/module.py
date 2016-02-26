@@ -382,6 +382,7 @@ def autotune(i):
 
     # If pipeline meta is not defined, set up pipeline ...
     fpu=i.get('force_pipeline_update','')
+
     if len(pipeline)==0 or force_pipeline_update or fpu=='yes':
        if force_pipeline_update or fpu=='yes':
           ii=copy.deepcopy(pipeline)
@@ -774,6 +775,7 @@ def autotune(i):
             ck.out('')
 
             pipeline1=copy.deepcopy(pipeline)
+
             pipeline1['prepare']='no'
             pipeline1['module_uoa']=puoa
             pipeline1['action']='pipeline'

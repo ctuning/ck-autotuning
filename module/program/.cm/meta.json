@@ -46,8 +46,8 @@
   "clean_vars_in_output": [
     "skip_device_init", 
     "skip_info_collection", 
-    "static", 
-    "dynamic", 
+    "static",
+    "dynamic",
     "cid", 
     "cids", 
     "xcids", 
