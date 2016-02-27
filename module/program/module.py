@@ -567,21 +567,21 @@ def process_in_dir(i):
 
        if i.get('clean','')=='yes':
           if td!='' and os.path.isdir(td):
-             cxx1=os.getcwd()
-             os.chdir(os.path.join(p,td))
+#             cxx1=os.getcwd()
+#             os.chdir(os.path.join(p,td))
 
-             cmd=cfg.get('clean_cmds',{}).get(hplat)
+#             cmd=cfg.get('clean_cmds',{}).get(hplat)
 
-             if o=='con':
-                ck.out(cmd)
-                ck.out('')
+#             if o=='con':
+#                ck.out(cmd)
+#                ck.out('')
 
-             if ubtr!='': cmd=ubtr.replace('$#cmd#$',cmd)
-             rx=os.system(cmd)
+#             if ubtr!='': cmd=ubtr.replace('$#cmd#$',cmd)
+#             rx=os.system(cmd)
 
-             os.chdir(cxx1)
+#             os.chdir(cxx1)
 
-#             shutil.rmtree(td, ignore_errors=True)
+             shutil.rmtree(td, ignore_errors=True)
 
        if tdx=='' and grtd=='yes':
           # Generate tmp dir
