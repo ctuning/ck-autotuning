@@ -40,8 +40,8 @@
   "calibration_max": "10", 
   "calibration_time": "4.0", 
   "clean_cmds": {
-    "linux": "rm -rf tmp* *.out *.exe *.manifest *.obj *.o *.lib *.a *.dll *.so *.s *.asm *.i *.I *.tmp *.bc *.ll tmp* *.class *.jar", 
-    "win": "del /F /Q tmp* *.out *.exe *.manifest *.obj *.o *.lib *.a *.dll *.so *.s *.asm *.i *.I *.tmp *.bc *.ll tmp* *.class *.jar"
+    "linux": "rm -rf tmp* *.out *.exe *.manifest *.obj *.o *.lib *.a *.dll *.so *.s *.asm *.i *.I *.tmp *.bc *.ll *.class *.jar", 
+    "win": "del /F /Q tmp* *.out *.exe *.manifest *.obj *.o *.lib *.a *.dll *.so *.s *.asm *.i *.I *.tmp *.bc *.ll *.class *.jar"
   }, 
   "clean_vars_in_output": [
     "skip_device_init", 

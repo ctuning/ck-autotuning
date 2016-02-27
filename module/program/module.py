@@ -268,6 +268,7 @@ def process_in_dir(i):
               (run_timeout)                   - (sec.) - kill run job if too long
 
               (add_rnd_extension_to_bin)      - if 'yes', add random extension to binary and record list
+              (add_save_extension_to_bin)      - if 'yes', add '.save' to bin to save during cleaning ...
             }
 
     Output: {
@@ -308,6 +309,7 @@ def process_in_dir(i):
     deps=i.get('deps',{})
 
     are=i.get('add_rnd_extension_to_bin','')
+    ase=i.get('add_save_extension_to_bin','')
 
     rof=i.get('run_output_files',[])
     eppc=i.get('extra_post_process_cmd','')
@@ -474,6 +476,9 @@ def process_in_dir(i):
     if meta.get('skip_bin_ext','')!='yes':
        target_exe+=se
 
+    if ase=='yes':
+       target_exe+='.save'
+
     misc['target_exe']=target_exe
 
     # If muoa=='' assume program
@@ -535,11 +540,15 @@ def process_in_dir(i):
        if ubtr!='': cmd=ubtr.replace('$#cmd#$',cmd)
        rx=os.system(cmd)
 
-       # Removing tmp directories
+       # Removing only 1 tmp directory. If there are multiple - may be used for crowdtuning - do not delete
        curdir=os.getcwd()
-       for q in os.listdir(curdir):
-           if not os.path.isfile(q) and q.startswith('tmp'):
-              shutil.rmtree(q, ignore_errors=True)
+       q=os.path.join(curdir, 'tmp')
+       if os.path.isdir(q):
+          shutil.rmtree(q, ignore_errors=True)
+
+#       for q in os.listdir(curdir):
+#           if not os.path.isfile(q) and q.startswith('tmp'):
+#              shutil.rmtree(q, ignore_errors=True)
 
        return {'return':0}
 
@@ -558,7 +567,21 @@ def process_in_dir(i):
 
        if i.get('clean','')=='yes':
           if td!='' and os.path.isdir(td):
-             shutil.rmtree(td, ignore_errors=True)
+             cxx1=os.getcwd()
+             os.chdir(os.path.join(p,td))
+
+             cmd=cfg.get('clean_cmds',{}).get(hplat)
+
+             if o=='con':
+                ck.out(cmd)
+                ck.out('')
+
+             if ubtr!='': cmd=ubtr.replace('$#cmd#$',cmd)
+             rx=os.system(cmd)
+
+             os.chdir(cxx1)
+
+#             shutil.rmtree(td, ignore_errors=True)
 
        if tdx=='' and grtd=='yes':
           # Generate tmp dir
@@ -2262,6 +2285,7 @@ def pipeline(i):
                                        (less time to prune results))
 
               (add_rnd_extension_to_bin) - if 'yes', add random extension to binary and record list
+              (add_save_extension_to_bin)      - if 'yes', add '.save' to bin to save during cleaning ...
             }
 
     Output: {
@@ -2383,6 +2407,7 @@ def pipeline(i):
     sdf=i.get('skip_device_info', '')
 
     are=i.get('add_rnd_extension_to_bin', '')
+    ase=i.get('add_save_extension_to_bin','')
     
     grtd=ck.get_from_dicts(i, 'generate_rnd_tmp_dir','', None)
     tdir=ck.get_from_dicts(i, 'tmp_dir','', None)
@@ -3424,6 +3449,7 @@ def pipeline(i):
               'extra_env_for_compilation':eefc,
               'compile_timeout':xcto,
               'add_rnd_extension_to_bin':are,
+              'add_save_extension_to_bin':ase,
               'out':oo}
           r=process_in_dir(ii)
           if r['return']>0: return r
