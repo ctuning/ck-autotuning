@@ -67,8 +67,7 @@
     "program", 
     "milepost", 
     "small", 
-    "codelet", 
-    "crowd-tuning"
+    "codelet"
   ], 
   "target_file": "a"
 }
