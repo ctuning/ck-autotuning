@@ -1,3 +1,5 @@
+* 2016.03.07 * adding support for pre processing scripts (improving OpenCL/CUDA/MPI autotuning)
+
 * 2016.02.26 * adding preliminary support to crowdsource program optimization using Android mobile phones
 
 * 2016.02.17 * adding dimension reduction to pipeline 

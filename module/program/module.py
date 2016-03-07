@@ -1340,6 +1340,7 @@ def process_in_dir(i):
 
        # Add env
        sb+='\n'
+       sbenv=''
        for k in sorted(env):
            v=str(env[k])
 
@@ -1347,8 +1348,8 @@ def process_in_dir(i):
               if v.find(' ')>=0 and not v.startswith(eifs):
                  v=eifs+v+eifs
 
-           sb+=no+etset+' '+k+'='+str(v)+'\n'
-       sb+='\n'
+           sbenv+=no+etset+' '+k+'='+str(v)+'\n'
+       sb+=sbenv+'\n'
 
        if tosd.get('extra_env','')!='':
           sb+=no+tosd['extra_env']+'\n'
@@ -1667,6 +1668,75 @@ def process_in_dir(i):
           sb+='\n'
 
        fn=''
+
+       # Check pre-processing scripts
+       lppc0=rt.get('pre_process_cmds',[])
+       ppc0=rt.get('pre_process_cmd','')
+       if ppc0!='': lppc0.append(ppc0)
+
+       # Check if pre-processing script
+       srx=0 # script exit code
+       if len(lppc0)>0:
+          sbu=sbenv+'\n\n'
+
+          for ppc in lppc0:
+              ppc=ppc.replace('$#src_path_local#$', src_path_local).replace('$#src_path#$', src_path)
+
+#             Pre-processing is performed on the local machine, so dataset path should be local, not remote!
+              ppc=ppc.replace('$#dataset_path#$',dp+sdirs)
+
+              r9=substitute_some_ck_keys({'string':ppc})
+              if r9['return']>0: return r9
+              ppc=r9['string']
+
+              # Substitute dataset file if needed
+              for k in range(0, len(dfiles)):
+                  df=dfiles[k]
+                  if dfile!='' and k==0: df=dfile
+                  kk='$#dataset_filename'
+                  if k>0: kk+='_'+str(k)
+                  kk+='#$'
+                  ppc=ppc.replace(kk, df)
+
+              sbu+=ppc+'\n'
+
+          if o=='con':
+              ck.out('')
+              ck.out('  (pre processing:"')
+              ck.out('')
+              ck.out(sbu)
+              ck.out('  )')
+
+          # Record to tmp batch and run
+          rx=ck.gen_tmp_file({'prefix':'tmp-', 'suffix':sext, 'remove_dir':'yes'})
+          if rx['return']>0: return rx
+          fn=rx['file_name']
+
+          rx=ck.save_text_file({'text_file':fn, 'string':sbu})
+          if rx['return']>0: return rx
+
+          y=''
+          if sexe!='':
+             y+=sexe+' '+sbp+fn+envsep
+
+          yy=scall+' '+sbp+fn
+          y+=' '+yy
+
+          srx=os.system(y)
+
+          if sca!='yes' and os.path.isfile(fn): 
+             os.remove(fn)
+
+          # If error code > 0, set as the error code of the main program and quit
+          if srx>0:
+             misc['run_success']='no'
+             misc['run_success_bool']=False
+             misc['fail_reason']='pre-processing script failed'
+
+             if o=='con':
+                ck.out('  (pre processing script failed!)')
+
+             return {'return':0, 'tmp_dir':rcdir, 'misc':misc, 'characteristics':ccc, 'deps':deps}
 
        # Check post-processing scripts
        lppc=rt.get('post_process_cmds',[])
