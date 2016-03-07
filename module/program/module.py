@@ -1397,6 +1397,12 @@ def process_in_dir(i):
 
        # Check if takes datasets from CK
        dtags=vcmd.get('dataset_tags',[])
+
+       edtags=i.get('extra_dataset_tags', [])
+       if len(edtags)>0:
+          for q in edtags:
+              dtags.append(q)
+
        dmuoa=cfg['module_deps']['dataset']
        dduoa=i.get('dataset_uoa','')
        if dduoa!='' or len(dtags)>0:
@@ -2256,6 +2262,7 @@ def pipeline(i):
               (cmd_key)              - CMD key
               (dataset_uoa)          - UOA of a dataset
               (dataset_file)         - dataset filename (if more than one inside one entry - suggest to have a UID in name)
+              (extra_dataset_tags)   - list of extra data set tags (useful to set "small" during mobile phone crowdtuning)
 
               (compiler_env_uoa)     - env of a compiler  
 
@@ -2466,6 +2473,7 @@ def pipeline(i):
     kcmd=ck.get_from_dicts(i, 'cmd_key', '', choices)
     dduoa=ck.get_from_dicts(i, 'dataset_uoa', '', choices)
     ddfile=ck.get_from_dicts(i, 'dataset_file', '', choices)
+    edtags=ck.get_from_dicts(i, 'extra_dataset_tags', [], choices)
     druoa=ck.get_from_dicts(i, 'dataset_repo_uoa', '', None)
 
     ceuoa=ck.get_from_dicts(i, 'compiler_env_uoa', '', choices)
@@ -2878,6 +2886,11 @@ def pipeline(i):
     vcmd=run_cmds[kcmd]
 
     dtags=vcmd.get('dataset_tags',[])
+
+    if len(edtags)>0:
+       for q in edtags:
+           dtags.append(q)
+
     dmuoa=cfg['module_deps']['dataset']
     dduid=''
 

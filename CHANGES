@@ -1,4 +1,5 @@
 * 2016.03.07 * adding support for pre processing scripts (improving OpenCL/CUDA/MPI autotuning)
+             * adding extra tags to select datasets (useful for mobile phone crowdtuning to select small datasets)
 
 * 2016.02.26 * adding preliminary support to crowdsource program optimization using Android mobile phones
 
