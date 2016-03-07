@@ -1360,6 +1360,8 @@ def process_in_dir(i):
           return {'return':1, 'error':'cmd is not defined'}
        c=c.replace('$<<',svarb+svarb1).replace('>>$',svare1+svare)
 
+       c=c.replace('$#script_ext#$',sext)
+
        # Add extra before CMD if there ...
        c=prcmd+' '+c
 
