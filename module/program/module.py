@@ -465,21 +465,22 @@ def process_in_dir(i):
     duoa=i.get('data_uoa', '')
 
     target_exe=meta.get('target_file','')
-    if target_exe=='':
+    if target_exe=='' and meta.get('no_target_file','')!='yes':
        target_exe=cfg.get('target_file','')
 
-    if are=='yes':
+    if are=='yes' and target_exe!='':
        rx=ck.gen_uid({})
        if rx['return']>0: return rx
        target_exe+='-'+rx['data_uid']
 
-    if meta.get('skip_bin_ext','')!='yes':
+    if meta.get('skip_bin_ext','')!='yes' and target_exe!='':
        target_exe+=se
 
-    if ase=='yes':
+    if ase=='yes' and target_exe!='':
        target_exe+='.save'
 
-    misc['target_exe']=target_exe
+    if target_exe!='':
+       misc['target_exe']=target_exe
 
     # If muoa=='' assume program
     if muoa=='':
@@ -929,7 +930,9 @@ def process_in_dir(i):
           elif ctype=='static':
              slfb+=' '+svarb+'CK_FLAGS_STATIC_BIN'+svare
 
-          slfa=' '+svarb+svarb1+'CK_FLAGS_OUTPUT'+svare1+svare+target_exe
+          slfa=''
+          if target_exe!='':
+             slfa=' '+svarb+svarb1+'CK_FLAGS_OUTPUT'+svare1+svare+target_exe
           slfa+=' '+svarb+'CK_LD_FLAGS_MISC'+svare
           slfa+=' '+svarb+'CK_LD_FLAGS_EXTRA'+svare
 
@@ -1057,7 +1060,9 @@ def process_in_dir(i):
                 elif ctype=='static':
                    slfb+=' '+svarb+'CK_FLAGS_STATIC_BIN'+svare
 
-                slfa=' '+svarb+svarb1+'CK_FLAGS_OUTPUT'+svare1+svare+target_exe
+                slfa=''
+                if target_exe!='':
+                   slfa=' '+svarb+svarb1+'CK_FLAGS_OUTPUT'+svare1+svare+target_exe
                 slfa+=' '+svarb+'CK_LD_FLAGS_MISC'+svare
                 slfa+=' '+svarb+'CK_LD_FLAGS_EXTRA'+svare
 
@@ -1086,15 +1091,16 @@ def process_in_dir(i):
                 sb+=no+sqie+'\n'
 
           # Add objdump
-          sb+='\n'+no+svarb+'CK_OBJDUMP'+svare+' '+target_exe+' '+stro+' '+target_exe+'.dump'+'\n'
+          if target_exe!='':
+             sb+='\n'+no+svarb+'CK_OBJDUMP'+svare+' '+target_exe+' '+stro+' '+target_exe+'.dump'+'\n'
 
-          # Add md5sum
-          x='<'
-          if hplat=='win':x='' 
-          sb+='\n'+no+md5sum+' '+x+' '+target_exe+'.dump '+stro+' '+target_exe+'.md5'+'\n'
+             # Add md5sum
+             x='<'
+             if hplat=='win':x='' 
+             sb+='\n'+no+md5sum+' '+x+' '+target_exe+'.dump '+stro+' '+target_exe+'.md5'+'\n'
 
-          # Add git hash (if supported)
-          sb+='\n'+no+'git rev-parse HEAD '+stro+' '+target_exe+'.git_hash'+'\n'
+             # Add git hash (if supported)
+             sb+='\n'+no+'git rev-parse HEAD '+stro+' '+target_exe+'.git_hash'+'\n'
 
           # Stop energy monitor, if needed and if supported
           if me=='yes' and sspm2!='':
@@ -1550,6 +1556,7 @@ def process_in_dir(i):
 
        # Loading dataset
        dp=''
+       dfiles=[]
        if dduoa!='':
           rx=ck.access({'action':'load',
                         'module_uoa':dmuoa,
@@ -1680,6 +1687,9 @@ def process_in_dir(i):
        srx=0 # script exit code
        if len(lppc0)>0:
           sbu=sbenv+'\n\n'
+
+          if ee!='':
+             sbu+='\n'+no+ee+'\n\n'
 
           for ppc in lppc0:
               ppc=ppc.replace('$#src_path_local#$', src_path_local).replace('$#src_path#$', src_path)
