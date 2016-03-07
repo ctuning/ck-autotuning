@@ -1,5 +1,8 @@
 {
   "actions": {
+    "check_size": {
+      "desc": "check size of all data sets and if less than threshold, add tag \"small\""
+    }, 
     "generate": {
       "desc": "TBD: generate new data sets to cover unseen behavior"
     }, 

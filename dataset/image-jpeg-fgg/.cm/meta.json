@@ -6,6 +6,7 @@
     "dataset", 
     "image", 
     "jpeg", 
-    "jpg"
+    "jpg", 
+    "small"
   ]
 }
