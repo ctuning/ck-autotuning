@@ -42,6 +42,7 @@ Modules from this repository will be used to unify:
 Publications
 ============
 * http://hal.inria.fr/hal-01054763
+* http://arxiv.org/abs/1506.06256
 * https://hal.inria.fr/inria-00436029
 * http://arxiv.org/abs/1407.4075
 
