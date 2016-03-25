@@ -1,3 +1,5 @@
+* 2016.03.25 - adding support to extract MILEPOST/cTuning cc static program features (legacy)
+
 * 2016.03.21 - adding universal OpenCL stubs package (1.2) targeting Android devices
 
 * 2016.03.07 * adding support for pre processing scripts (improving OpenCL/CUDA/MPI autotuning)

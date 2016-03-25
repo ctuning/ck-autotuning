@@ -2335,6 +2335,8 @@ def pipeline(i):
               (perf)                    - if 'yes', use perf to collect hardware counters
               (vtune)                   - if 'yes', use Intel vtune to collect hardware counters
 
+              (milepost)                - if 'yes', attempt to extract static program features using Milepost GCC and cTuning CC
+
               (opencl_dvdt_profiler)    - if 'yes', attempt to use opencl_dvdt_profiler when running code ...
 
               (compile_timeout)         - (sec.) - kill compile job if too long
@@ -2396,6 +2398,7 @@ def pipeline(i):
     import json
     import sys
     import time
+    import copy
 
     o=i.get('out','')
     oo=''
@@ -2485,6 +2488,7 @@ def pipeline(i):
     gprof=ck.get_from_dicts(i, 'gprof', '', choices)
     perf=ck.get_from_dicts(i, 'perf', '', choices)
     vtune=ck.get_from_dicts(i, 'vtune', '', choices)
+    milepost=ck.get_from_dicts(i, 'milepost', '', choices)
 
     prcmd=''
 
@@ -2498,7 +2502,7 @@ def pipeline(i):
 
     are=i.get('add_rnd_extension_to_bin', '')
     ase=i.get('add_save_extension_to_bin','')
-    
+
     grtd=ck.get_from_dicts(i, 'generate_rnd_tmp_dir','', None)
     tdir=ck.get_from_dicts(i, 'tmp_dir','', None)
 
@@ -2763,6 +2767,9 @@ def pipeline(i):
 
              duid=lst[rb]['data_uid']
              duoa=lst[rb]['data_uoa']
+          elif quiet=='yes':
+             duid=lst[0]['data_uid']
+             duoa=lst[0]['data_uoa']
           else:
              # SELECTOR *************************************
              choices_desc['##program_uoa']={'type':'uoa',
@@ -2840,6 +2847,8 @@ def pipeline(i):
           if random=='yes':
              rb=randint(0,len(krun_cmds)-1)
              kcmd=krun_cmds[rb]
+          elif quiet=='yes':
+             kcmd=krun_cmds[0]
           else:
              xchoices=[]
              dchoices=[]
@@ -2924,6 +2933,9 @@ def pipeline(i):
 
                 dduid=lst[rb]['data_uid']
                 dduoa=lst[rb]['data_uoa']
+             elif quiet=='yes':
+                dduid=lst[0]['data_uid']
+                dduoa=lst[0]['data_uoa']
              else:
                 # SELECTOR *************************************
                 choices_desc['##dataset_uoa']={'type':'uoa',
@@ -2979,6 +2991,8 @@ def pipeline(i):
           if random=='yes':
              rb=randint(0,len(ddfiles)-1)
              ddfile=ddfiles[rb]
+          elif quiet=='yes':
+             ddfile=ddfiles[0]
           else:
              if o=='con' and si!='yes':
                 ck.out('************ Selecting dataset file ...')
@@ -3502,6 +3516,104 @@ def pipeline(i):
                 ck.out('')
 
     ###############################################################################################################
+    # PIPELINE SECTION: Extract cTuning/MILEPOST static program features
+    cs='yes'
+    if i.get('fail','')!='yes' and milepost=='yes' and \
+       (compile_only_once!='yes' or ai==0) and \
+       (srn==0 or (srn>0 and i.get('repeat_compilation','')=='yes')):
+       if o=='con':
+          ck.out(sep)
+          ck.out('Extract MILEPOST/cTuning static program features ...')
+          ck.out('')
+
+       # Set milepost tag to compiler deps
+       mcdeps=copy.deepcopy(cdeps)
+       mcdeps['compiler']={
+        "local": "yes", 
+        "sort": 1, 
+        "tags": "compiler,lang-c,ctuning-cc"}
+
+       mflags=flags
+       if mflags!='': mflags+=' '
+       mflags='-O3 --ct-extract-features'
+
+       cl=i.get('clean','')
+       if cl=='' and i.get('no_clean','')!='yes' and srn==0: cl='yes'
+
+       if meta.get('no_compile','')!='yes' and no_compile!='yes':
+          if o=='con' and cl=='yes':
+             ck.out('Cleaning working directory ...')
+             ck.out('')
+
+          ii={'sub_action':'compile',
+              'host_os':hos,
+              'target_os':tos,
+              'deviced_id':tdid,
+              'path':pdir,
+              'meta':meta,
+              'deps':mcdeps,
+              'generate_rnd_tmp_dir':grtd,
+              'tmp_dir':tdir,
+              'clean':cl,
+              'skip_clean_after':sca,
+              'compile_type':ctype,
+              'flags':mflags,
+              'lflags':lflags,
+              'statistical_repetition':srn,
+              'autotuning_iteration':ati,
+              'console':cons,
+              'env':env,
+              'extra_env':eenv,
+              'compiler_vars':cv,
+              'remove_compiler_vars':rcv,
+              'extra_env_for_compilation':eefc,
+              'compile_timeout':xcto,
+              'add_rnd_extension_to_bin':are,
+              'add_save_extension_to_bin':ase,
+              'out':oo}
+          r=process_in_dir(ii)
+          if r['return']>0: return r
+
+          misc=r['misc']
+          tdir=misc.get('tmp_dir','')
+
+          cs=misc.get('compilation_success','')
+          if cs=='no': 
+             x='MILEPOST feature extraction failed'
+             if misc.get('fail_reason','')!='': x+=' - '+misc['fail_reason']
+             i['fail_reason']=x
+             i['fail']='yes'
+
+          # Process features
+          if o=='con' and cl=='yes':
+             ck.out('')
+             ck.out('Converting MILEPOST/cTuning features to JSON ...')
+             ck.out('')
+
+          feat={}
+
+          x1=os.path.join(pdir, tdir)
+          x=os.listdir(x1)
+          for y in x:
+              if os.path.isfile(y) and y.startswith('ici_features_function.') and y.endswith('.fre.ft'):
+                 fun=y[22:-7]
+                 feat1={}
+
+                 rz=ck.load_text_file({'text_file':y})
+                 if rz['return']==0:
+                    x2=rz['string'].strip().split(',')
+                    for z in x2:
+                        z1=z.split('=')
+                        if len(z1)>1:
+                           zk=z1[0].strip()[2:]
+                           zv=z1[1].strip()
+                           feat1[zk]=float(zv)
+
+                 feat[fun]=feat1
+
+          features['program_static_milepost_features']=feat
+
+    ###############################################################################################################
     # PIPELINE SECTION: Compile program
     cs='yes'
     if i.get('fail','')!='yes' and no_compile!='yes' and \
@@ -3515,11 +3627,11 @@ def pipeline(i):
        cl=i.get('clean','')
        if cl=='' and i.get('no_clean','')!='yes' and srn==0: cl='yes'
 
-       if o=='con' and cl=='yes':
-          ck.out('Cleaning working directory ...')
-          ck.out('')
-
        if meta.get('no_compile','')!='yes' and no_compile!='yes':
+          if o=='con' and cl=='yes':
+             ck.out('Cleaning working directory ...')
+             ck.out('')
+
           ii={'sub_action':'compile',
               'host_os':hos,
               'target_os':tos,
