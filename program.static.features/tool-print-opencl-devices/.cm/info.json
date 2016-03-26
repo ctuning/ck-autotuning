@@ -1,0 +1,20 @@
+{
+  "backup_data_uid": "e34164a6a31352e2", 
+  "backup_module_uid": "92a02f0445148203", 
+  "backup_module_uoa": "program.static.features", 
+  "control": {
+    "author": "cTuning foundation", 
+    "author_email": "admin@cTuning.org", 
+    "author_webpage": "http://cTuning.org", 
+    "copyright": "See CK COPYRIGHT.txt for copyright details", 
+    "engine": "CK", 
+    "iso_datetime": "2016-03-25T22:54:52.106927", 
+    "license": "See CK LICENSE.txt for licensing details", 
+    "version": [
+      "1", 
+      "6", 
+      "14x"
+    ]
+  }, 
+  "data_name": "tool-print-opencl-devices"
+}

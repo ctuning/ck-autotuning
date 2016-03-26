@@ -105,41 +105,45 @@ def extract(i):
             'skip_info_collection':'yes',
             'no_run':'yes'}
         r=ck.access(ii)
-        if r['return']>0: return r
+        if r['return']>0:
+           if o=='con':
+              ck.out('')
+              ck.out('CK WARNING: pipeline failed ('+r['error']+')')
+              ck.out('')
+        else:
+           feat=r.get('features',{}).get('program_static_milepost_features',{})
 
-        feat=r.get('features',{}).get('program_static_milepost_features',{})
+           if len(feat)>0:
 
-        if len(feat)>0:
+              ddd={}
 
-           ddd={}
+              found=False
+              ry=ck.access({'action':'load',
+                            'module_uoa':work['self_module_uid'],
+                            'data_uoa':duid})
+              if ry['return']==0: 
+                 ddd=ry['dict']
+                 found=True
 
-           found=False
-           ry=ck.access({'action':'load',
-                         'module_uoa':work['self_module_uid'],
-                         'data_uoa':duid})
-           if ry['return']==0: 
-              ddd=ry['dict']
-              found=True
+              feat1=ddd.get('features',{}).get('program_static_milepost_features',{})
+              rz=ck.merge_dicts({'dict1':feat1, 'dict2':feat})
+              if rz['return']>0: return rz
+              feat1=rz['dict1']
 
-           feat1=ddd.get('features',{}).get('program_static_milepost_features',{})
-           rz=ck.merge_dicts({'dict1':feat1, 'dict2':feat})
-           if rz['return']>0: return rz
-           feat1=rz['dict1']
+              if 'features' not in ddd: ddd['features']={}
 
-           if 'features' not in ddd: ddd['features']={}
+              ddd['features']['program_static_milepost_features']=feat1
 
-           ddd['features']['program_static_milepost_features']=feat1
-
-           ii={}
-           ii['action']='add'
-           if found: ii['action']='update'
-           ii['module_uoa']=work['self_module_uid']
-           ii['data_uoa']=duoa
-           ii['data_uid']=duid
-           ii['repo_uoa']=xtruoa
-           ii['dict']=ddd
-           ii['substitute']='yes'
-           ry=ck.access(ii)
-           if ry['return']>0: return ry
+              ii={}
+              ii['action']='add'
+              if found: ii['action']='update'
+              ii['module_uoa']=work['self_module_uid']
+              ii['data_uoa']=duoa
+              ii['data_uid']=duid
+              ii['repo_uoa']=xtruoa
+              ii['dict']=ddd
+              ii['substitute']='yes'
+              ry=ck.access(ii)
+              if ry['return']>0: return ry
 
     return {'return':0, 'dict':{'features':feat1}}
