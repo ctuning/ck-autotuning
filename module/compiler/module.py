@@ -567,12 +567,13 @@ def extract_opts_new(i):
     if o=='con':
        ck.out('')
        ck.out('Executing prepared batch file '+fbat+' ...')
+       ck.out('')
 
     sys.stdout.flush()
     rx=os.system(y)
 
     os.remove(fbat)
-    
+
     # Load opt file
     rx=ck.load_text_file({'text_file':fout1,
                           'split_to_list':'yes', 
@@ -587,7 +588,7 @@ def extract_opts_new(i):
     if r['return']>0: return r
 
     fpar=r['string'].strip()
-    
+
     lparams=[]
     if fpar!='':
        rx=ck.load_text_file({'text_file':fpar,

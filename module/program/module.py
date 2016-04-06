@@ -611,7 +611,6 @@ def process_in_dir(i):
     if o=='con':
        ck.out(sep)
        ck.out('Current directory: '+cdir)
-       ck.out('')
 
     odir=os.getcwd()
 
@@ -1133,6 +1132,7 @@ def process_in_dir(i):
           if o=='con':
              ck.out('')
              ck.out('Executing prepared batch file '+fn+' ...')
+             ck.out('')
 
           sys.stdout.flush()
           start_time1=time.time()
