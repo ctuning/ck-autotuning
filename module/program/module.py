@@ -381,6 +381,9 @@ def process_in_dir(i):
     tosx=r['os_uoa']
     tosd=r['os_dict']
 
+    host_add_path_string=r.get('host_add_path_string','')
+    target_add_path_string=r.get('target_add_path_string','')
+
     bhos=hosd.get('base_uid','')
     if bhos=='': bhos=hos
     bhosx=hosd.get('base_uoa','')
@@ -608,6 +611,13 @@ def process_in_dir(i):
 
     sb='' # Batch
 
+    # If extra paths
+    if host_add_path_string!='' and (remote!='yes' or sa!='run'):
+       sb+=host_add_path_string+'\n\n'
+
+    if sa=='run' and target_add_path_string!='':
+       sb+=target_add_path_string+'\n\n'
+    
     if o=='con':
        ck.out(sep)
        ck.out('Current directory: '+cdir)
