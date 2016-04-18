@@ -160,7 +160,6 @@ def autotune(i):
 
                (skip_stat_analysis)               - if 'yes', just flatten array and add #min
 
-                                      
                (features)                         - extra features
                (meta)                             - extra meta
 
@@ -451,9 +450,12 @@ def autotune(i):
         dv=[]
         q1=corder[iq1]
         zz=csel[iq1]
-        ztags=zz.get('tags','').split(',')
-        znotags=zz.get('notags','').split(',')
-        zanytags=zz.get('anytags','').split(',')
+        ztags=[]
+        if zz.get('tags','')!='': ztags=zz['tags'].split(',')
+        znotags=[]
+        if zz.get('notags','')!='': znotags=zz['notags'].split(',')
+        zanytags=[]
+        if zz.get('anytags','')!='': zanytags=zz['anytags'].split(',')
         for q2 in q1:
             if '*' in q2 or '?' in q2:
                for k in sorted(cdesc, key=lambda v: cdesc[v].get('sort',0)):
@@ -592,7 +594,7 @@ def autotune(i):
                              if o=='con':
                                 ck.out('')
                                 ck.out('  ALL choices have been checked - main pruning finished !')
-                           
+
                           if prune_invert!='yes':
                              break
 

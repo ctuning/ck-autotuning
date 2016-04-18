@@ -237,11 +237,19 @@ def make(i):
                         nupdate=True
 
                   elif tp=='parallel-random': # Change all dimensions at the same time (if explorable)!
-                       if yestart!='':
-                          if dvsame=='':
-                             y=my_random.randrange(0,rx)
-                             dvsame=r1+(y*rs)
-                          dv=dvsame
+                       lcqx=len(yhc)
+                       if dvsame=='':
+                          if lcqx>0:
+                             ln=my_random.randrange(0, lcqx)
+                             dvsame=yhc[ln]
+                          elif yestart!='':
+                               if (type(rx)==float or type(rx)==int or type(rx)==ck.type_long) and rx>=1:
+                                  y=my_random.randrange(0,int(rx))
+                               else:
+                                  # alternatively should print inconsistency
+                                  y=0
+                               dvsame=r1+(y*rs)
+                       dv=dvsame
 
                   elif tp=='parallel-loop' or tp=='loop':
                        dv=dcc
