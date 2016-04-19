@@ -874,7 +874,8 @@ def process_in_dir(i):
              scfb+=' '+svarb+'CK_FLAGS_DYNAMIC_BIN'+svare
           elif ctype=='static':
              scfb+=' '+svarb+'CK_FLAGS_STATIC_BIN'+svare
-          scfb+=' '+svarb+svarb1+'CK_FLAG_PREFIX_INCLUDE'+svare1+svare+sfprefix
+          if meta.get('skip_local_include','')!='yes':
+             scfb+=' '+svarb+svarb1+'CK_FLAG_PREFIX_INCLUDE'+svare1+svare+sfprefix
 
           scfa=''
 
@@ -1101,12 +1102,14 @@ def process_in_dir(i):
 
           # Add objdump
           if target_exe!='':
-             sb+='\n'+no+svarb+'CK_OBJDUMP'+svare+' '+target_exe+' '+stro+' '+target_exe+'.dump'+'\n'
+             if meta.get('skip_objdump','')!='yes':
+                sb+='\n'+no+svarb+'CK_OBJDUMP'+svare+' '+target_exe+' '+stro+' '+target_exe+'.dump'+'\n'
 
              # Add md5sum
-             x='<'
-             if hplat=='win':x='' 
-             sb+='\n'+no+md5sum+' '+x+' '+target_exe+'.dump '+stro+' '+target_exe+'.md5'+'\n'
+             if meta.get('skip_md5sum','')!='yes':
+                x='<'
+                if hplat=='win':x='' 
+                sb+='\n'+no+md5sum+' '+x+' '+target_exe+'.dump '+stro+' '+target_exe+'.md5'+'\n'
 
              # Add git hash (if supported)
              sb+='\n'+no+'git rev-parse HEAD '+stro+' '+target_exe+'.git_hash'+'\n'
