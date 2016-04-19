@@ -199,6 +199,8 @@ def autotune(i):
                (prune_result_conditions)          - list of extra conditions to accept result (variation, performance/energy/code size constraints, etc)
 
                (result_conditions)                - check results for condition
+
+               (custom_autotuner)                 - dictionary to customize autotuner (exploration, DSE, etc)
             }
 
     Output: {
@@ -221,6 +223,7 @@ def autotune(i):
 
     """
 
+    import os
     import copy
     import fnmatch
     import json
@@ -379,6 +382,43 @@ def autotune(i):
 
     pipeline['tmp_dir']=tmp_dir
 
+    # Check customized autotuner
+    cat=ck.get_from_dicts(ic, 'custom_autotuner', {}, None) # Check existing solutions
+    cats=None # script
+
+    if len(cat)>0:
+       cmuoa=cat.get('module_uoa','')
+       if cmuoa=='':
+          x=cat.get('module_uoa_from_pipeline_key','')
+          if x!='':
+             rx=ck.get_by_flat_key({'dict':pipeline, 'key':x})
+             if rx['return']>0: return rx
+             cmuoa=rx['value']
+
+       cduoa=cat.get('data_uoa','')
+       if cduoa=='':
+          x=cat.get('data_uoa_from_pipeline_key','')
+          if x!='':
+             rx=ck.get_by_flat_key({'dict':pipeline, 'key':x})
+             if rx['return']>0: return rx
+             cduoa=rx['value']
+
+       pcat=os.getcwd()
+       if cmuoa!='' and cduoa!='':
+          rx=ck.access({'action':'find',
+                        'module_uoa':cmuoa,
+                        'data_uoa':cduoa})
+          if rx['return']>0: return rx
+          pcat=rx['path']
+
+       cscr=cat.get('script','')
+
+       # Check if has custom script
+       rx=ck.load_module_from_path({'path':pcat, 'module_code_name':cscr, 'skip_init':'yes'})
+       if rx['return']==0: 
+          if 'make' in dir(rx['code']):
+             cats=rx['code']
+
     # If pipeline meta is not defined, set up pipeline ...
     fpu=i.get('force_pipeline_update','')
 
@@ -529,6 +569,7 @@ def autotune(i):
 
     increased_iterations=False
 
+    recorded_info={}
     last_record_uid=''
 
     m=-1
@@ -733,13 +774,24 @@ def autotune(i):
             'pipeline':pipeline,
             'random_module':my_random,
             'out':o}
-
         if al!='': jj['all']=al
 
-        r=ck.access(jj)
-        if r['return']>0: return r
+        if cats!=None:
+           # custom selection
+           jj['ck_kernel']=ck
+           r=cats.make(jj)
+        else:
+           # CK-based selection 
+#        rii=ck.save_json_to_file({'json_file':'d:\\xyz1.json','dict':jj, 'sort_keys':'yes'})
+#        raw_input('xyz1')
 
-        if r['finish']:
+           r=ck.access(jj)
+           if r['return']>0: return r
+
+#        ck.save_json_to_file({'json_file':'d:\\xyz2.json','dict':r, 'sort_keys':'yes'})
+#        raw_input('xyz2')
+
+        if r.get('finish',True):
            finish=True
            break
 
