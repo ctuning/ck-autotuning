@@ -779,7 +779,27 @@ def autotune(i):
         if cats!=None:
            # custom selection
            jj['ck_kernel']=ck
+
            r=cats.make(jj)
+           if r['return']>0: return r
+
+           # Print keys and update pipeline!
+           ks=r.get('keys',[])
+           if len(ks)>0:
+              if o=='con': 
+                 ck.out('')
+
+              for k in sorted(ks):
+                  v=ks[k]
+                  if o=='con': 
+                     ck.out(' * '+k+' = '+str(v))
+
+                  rx=ck.set_by_flat_key({'dict':pipeline, 'key':k, 'value':v})
+                  if rx['return']>0: return rx
+
+              if o=='con': 
+                 ck.out('')
+
         else:
            # CK-based selection 
 #        rii=ck.save_json_to_file({'json_file':'d:\\xyz1.json','dict':jj, 'sort_keys':'yes'})
