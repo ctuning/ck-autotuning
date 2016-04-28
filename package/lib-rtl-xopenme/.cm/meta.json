@@ -1,8 +1,7 @@
 {
   "customize": {
     "extra_dir": "", 
-    "version": "0.3", 
-    "version_int": 3
+    "version": "0.3"
   }, 
   "deps": {
     "compiler": {
@@ -11,19 +10,23 @@
       "tags": "compiler,lang-c"
     }
   }, 
+  "end_full_path": {
+    "android": "lib$#sep#$librtlxopenme.a", 
+    "linux": "lib/librtlxopenme.a", 
+    "mingw": "lib\\librtlxopenme.a", 
+    "win": "lib\\librtlxopenme.lib"
+  }, 
   "process_script": "process", 
   "soft_uoa": "673507878d649b4a", 
   "suggested_path": "lib-rtl-xopenme", 
   "tags": [
     "lib", 
-    "rtl",
+    "rtl", 
     "xopenme", 
     "lang-c", 
     "lang-cpp", 
     "lang-f77", 
     "lang-f90", 
-    "lang-f95", 
-    "v0.3", 
-    "v0"
+    "lang-f95"
   ]
 }

@@ -1,14 +1,19 @@
 {
   "customize": {
     "extra_dir": "", 
-    "version": "2012", 
-    "version_int": 2012
+    "version": "2012"
   }, 
   "deps": {
     "compiler": {
       "local": "yes", 
       "tags": "compiler,lang-c"
     }
+  }, 
+  "end_full_path": {
+    "android": "lib$#sep#$librtlpolybench.a", 
+    "linux": "lib/librtlpolybench.a", 
+    "mingw": "lib\\librtlpolybench.a", 
+    "win": "lib\\librtlpolybench.lib"
   }, 
   "process_script": "process", 
   "soft_uoa": "ac25cef24e429b24", 

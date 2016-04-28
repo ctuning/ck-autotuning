@@ -6,11 +6,6 @@
       "local": "yes", 
       "sort": 20, 
       "tags": "compiler,lang-c-cuda"
-    }, 
-    "compiler_cl": {
-      "local": "yes", 
-      "sort": 10, 
-      "tags": "compiler,lang-c"
     }
   }, 
   "compiler_env": "CK_CC", 

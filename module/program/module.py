@@ -725,9 +725,12 @@ def process_in_dir(i):
        # Try to detect version
        csd=deps.get('compiler',{}).get('dict',{})
        csuoa=csd.get('soft_uoa','')
+       fp=csd.get('customize',{}).get('full_path','')
+       cver=''
        if csuoa!='':
           r=ck.access({'action':'detect',
                        'module_uoa':cfg['module_deps']['soft'],
+                       'tool':fp,
                        'uoa':csuoa,
                        'env':cb,
                        'con':o})
@@ -3094,11 +3097,6 @@ def pipeline(i):
     ###############################################################################################################
     # PIPELINE SECTION: Detect compiler version
     if no_compile!='yes' and i.get('no_detect_compiler_version','')!='yes' and len(features.get('compiler_version',{}))==0:
-       if o=='con':
-          ck.out(sep)
-          ck.out('Detecting compiler version ...')
-          ck.out('')
-
        if no_compile!='yes':
           ii={'sub_action':'get_compiler_version',
               'host_os':hos,

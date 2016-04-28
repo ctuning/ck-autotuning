@@ -1,3 +1,6 @@
+* 2016.04.28 - major update to packages and environment to automate detection of already 
+               installed software (for Windows, Linux and partially Android).
+
 * 2016.04.19 - fixing bug with parallel-random choice selection (during autotuning);
                found when working on OpenCL crowdtuning for BLAS ...
              - added possibility to use customized autotuner (directly changes pipeline)

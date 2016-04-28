@@ -1,14 +1,19 @@
 {
   "customize": {
     "extra_dir": "", 
-    "version": "1.5", 
-    "version_int": 105
+    "version": "1.5"
   }, 
   "deps": {
     "compiler": {
       "local": "yes", 
       "tags": "compiler,lang-c"
     }
+  }, 
+  "end_full_path": {
+    "android": "lib$#sep#$plugin-openme-ctuning-1.5.so", 
+    "linux": "lib/plugin-openme-ctuning-1.5.so", 
+    "mingw": "lib\\plugin-openme-ctuning-1.5.so", 
+    "win": "lib\\plugin-openme-ctuning-1.5.dll"
   }, 
   "process_script": "process", 
   "soft_uoa": "77a2104b4b828802", 
@@ -17,7 +22,6 @@
     "plugin", 
     "openme", 
     "ctuning", 
-    "auto-tuning", 
-    "v1.5"
+    "auto-tuning"
   ]
 }

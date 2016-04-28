@@ -1,4 +1,4 @@
-# Find cTuning (auto-tuning) plugin and set environment
+rem Find cTuning (auto-tuning) plugin and set environment
 call ck set env tags=plugin,openme,ctuning,target-os-android5-arm bat_file=tmp-ck-env.bat --bat_new --print && call tmp-ck-env.bat && del /Q tmp-ck-env.bat
 if %errorlevel% neq 0 exit /b %errorlevel%
 
