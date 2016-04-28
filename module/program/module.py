@@ -189,6 +189,8 @@ def process_in_dir(i):
               (compiler_vars)        - dict with set up compiler flags (-D var)
                                        they will update the ones defined as default in program description ...
 
+              (compiler_tags)        - extra compiler tags
+
               (remove_compiler_vars) - list of compiler vars to remove
 
               (extra_env_for_compilation) - set environment variables before compiling program
@@ -330,6 +332,7 @@ def process_in_dir(i):
     flags=i.get('flags','')
     lflags=i.get('lflags','')
     cv=i.get('compiler_vars',{})
+    ctags=i.get('compiler_tags','')
     rcv=i.get('remove_compiler_vars',[])
     eefc=i.get('extra_env_for_compilation',{})
 
@@ -650,6 +653,14 @@ def process_in_dir(i):
     if len(deps)>0:
        if o=='con':
           ck.out(sep)
+
+       # Add extra compiler flags
+       if ctags!='' and 'compiler' in deps:
+          xctags=deps['compiler'].get('tags','')
+          if xctags!='':
+             xctags+=','
+          xctags+=ctags
+          deps['compiler']['tags']=xctags
 
        ii={'action':'resolve',
            'module_uoa':cfg['module_deps']['env'],
