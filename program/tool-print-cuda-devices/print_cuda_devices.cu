@@ -15,6 +15,19 @@ int main(int argc, char *argv[])
   cudaDeviceProp deviceProp;
   error = cudaGetDevice(&devID);
 
+  int runtimeVersion=0;
+  int driverVersion=0;
+
+  error=cudaRuntimeGetVersion(&runtimeVersion);
+  if (error == cudaSuccess) {
+    printf("CUDA runtime version: %d\n", runtimeVersion);
+  }
+
+  error=cudaDriverGetVersion(&driverVersion);
+  if (error == cudaSuccess) {
+    printf("CUDA driver version: %d\n", driverVersion);
+  }
+
   cudaGetDeviceProperties(&deviceProp, GPU_DEVICE);
   if (error == cudaSuccess) {
     printf("GPU Device ID: %d\n", devID);
