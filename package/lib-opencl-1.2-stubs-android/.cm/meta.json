@@ -8,6 +8,7 @@
   "deps": {
     "compiler": {
       "local": "yes", 
+      "name": "C compiler", 
       "sort": 10, 
       "tags": "compiler,lang-c"
     }

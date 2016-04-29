@@ -4,12 +4,21 @@
   "compile_deps": {
     "compiler": {
       "local": "yes", 
+      "name": "CUDA compiler", 
       "sort": 20, 
       "tags": "compiler,lang-c-cuda"
     }
   }, 
   "compiler_env": "CK_CC", 
   "data_name": "tool-print-cuda-devices", 
+  "deps": {
+    "compiler": {
+      "local": "yes", 
+      "name": "CUDA compiler", 
+      "sort": 20, 
+      "tags": "compiler,lang-c-cuda"
+    }
+  }, 
   "main_language": "c", 
   "process_in_tmp": "yes", 
   "program": "yes", 

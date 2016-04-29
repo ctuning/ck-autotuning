@@ -16,7 +16,7 @@
   "suggested_path": "gcc", 
   "tags": [
     "compiler", 
-    "gcc",
+    "gcc", 
     "lang-c", 
     "lang-cpp", 
     "lang-f77", 

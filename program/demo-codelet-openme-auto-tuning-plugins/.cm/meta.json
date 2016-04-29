@@ -6,22 +6,45 @@
   "compile_deps": {
     "compiler": {
       "local": "yes", 
+      "name": "C compiler", 
       "sort": 10, 
       "tags": "compiler,lang-c"
     }, 
     "lib_openme": {
       "local": "yes", 
+      "name": "OpenME library", 
       "sort": 30, 
       "tags": "lib,plugins,openme,lang-c"
     }, 
     "rtl_milepost_codelet": {
       "local": "yes", 
+      "name": "Milepost Codelet Run Time Library", 
       "sort": 20, 
       "tags": "lib,rtl,milepost,codelet"
     }
   }, 
   "compiler_env": "CK_CC", 
   "data_name": "demo-codelet-openme-auto-tuning-plugins", 
+  "deps": {
+    "compiler": {
+      "local": "yes", 
+      "name": "C compiler", 
+      "sort": 10, 
+      "tags": "compiler,lang-c"
+    }, 
+    "lib-openme": {
+      "local": "yes", 
+      "name": "OpenME library", 
+      "sort": 30, 
+      "tags": "lib,plugins,openme,lang-c"
+    }, 
+    "rtl-milepost-codelet": {
+      "local": "yes", 
+      "name": "Milepost Codelet Run Time Library", 
+      "sort": 20, 
+      "tags": "lib,rtl,milepost,codelet"
+    }
+  }, 
   "extra_ld_vars": "$<<CK_EXTRA_LIB_M>>$ $<<CK_EXTRA_LIB_DL>>$", 
   "main_language": "c", 
   "process_in_tmp": "yes", 

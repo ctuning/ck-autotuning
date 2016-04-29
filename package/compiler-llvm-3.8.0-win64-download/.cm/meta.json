@@ -16,8 +16,8 @@
   "suggested_path": "llvm", 
   "tags": [
     "compiler", 
-    "llvm",
+    "llvm", 
     "lang-c", 
-    "lang-cpp" 
+    "lang-cpp"
   ]
 }

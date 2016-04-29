@@ -4,17 +4,33 @@
   "compile_deps": {
     "compiler": {
       "local": "yes", 
+      "name": "C compiler", 
       "sort": 10, 
       "tags": "compiler,lang-c"
     }, 
     "lib_opencl": {
       "local": "yes", 
+      "name": "OpenCL library", 
       "sort": 20, 
       "tags": "lib,opencl"
     }
   }, 
   "compiler_env": "CK_CC", 
   "data_name": "tool-print-opencl-devices", 
+  "deps": {
+    "compiler": {
+      "local": "yes", 
+      "name": "C compiler", 
+      "sort": 10, 
+      "tags": "compiler,lang-c"
+    }, 
+    "lib-opencl": {
+      "local": "yes", 
+      "name": "OpenCL library", 
+      "sort": 20, 
+      "tags": "lib,opencl"
+    }
+  }, 
   "main_language": "c", 
   "process_in_tmp": "yes", 
   "program": "yes", 
