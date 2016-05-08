@@ -1350,6 +1350,7 @@ def process_in_dir(i):
        rifo={}
 
        # Check if dynamic and remote to copy .so to devices (but for the 1st autotuning and statistical iteration!)
+       #  unless explicitly forbidden (such as libOpenCL ...)
        if ctype=='dynamic' and remote=='yes':
           if srn==0 and ati==0:
              for q in deps:
