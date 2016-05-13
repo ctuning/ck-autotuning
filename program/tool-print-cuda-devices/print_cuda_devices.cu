@@ -54,15 +54,19 @@ int main(int argc, char *argv[])
      printf("CUDA runtime version: %d.%d\n", rtver/1000, (rtver%100)/10);
 
      printf("Global memory: %llu\n", (unsigned long long) features.totalGlobalMem);
-     printf("Max clock rate: %.0f MHz\n", features.clockRate * 0.001);
+     printf("Max clock rate: %f MHz\n", features.clockRate * 0.001);
 
      printf("Total amount of shared memory per block: %lu\n", features.sharedMemPerBlock);
      printf("Total number of registers available per block: %d\n", features.regsPerBlock);
      printf("Warp size: %d\n", features.warpSize);
      printf("Maximum number of threads per multiprocessor:  %d\n", features.maxThreadsPerMultiProcessor);
      printf("Maximum number of threads per block: %d\n", features.maxThreadsPerBlock);
-     printf("Max dimension size of a thread block (x,y,z): (%d, %d, %d)\n", features.maxThreadsDim[0], features.maxThreadsDim[1], features.maxThreadsDim[2]);
-     printf("Max dimension size of a grid size (x,y,z): (%d, %d, %d)\n", features.maxGridSize[0], features.maxGridSize[1], features.maxGridSize[2]);
+     printf("Max dimension size of a thread block X: %d\n", features.maxThreadsDim[0]);
+     printf("Max dimension size of a thread block Y: %d\n", features.maxThreadsDim[1]);
+     printf("Max dimension size of a thread block Z: %d\n", features.maxThreadsDim[2]);
+     printf("Max dimension size of a grid size X: %d\n", features.maxGridSize[0]);
+     printf("Max dimension size of a grid size Y: %d\n", features.maxGridSize[1]);
+     printf("Max dimension size of a grid size Z: %d\n", features.maxGridSize[2]);
   }
 
   return error;

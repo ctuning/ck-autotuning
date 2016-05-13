@@ -63,8 +63,8 @@ int main(int argc, char *argv[]) {
             if (fout!=NULL) fprintf(fout, "    \"%u\":{\n", d);
 
             printf("\n");
-            printf("PlatformID: %u\n", p);
-            printf("DeviceID: %u\n", d);
+            printf("Platform ID: %u\n", p);
+            printf("Device ID: %u\n", d);
 
             // print device name
             {
