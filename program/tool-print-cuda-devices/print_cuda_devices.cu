@@ -27,7 +27,6 @@ int main(int argc, char *argv[])
   {
      cudaSetDevice(id);
 
-     printf("\n");
      printf("GPU Device ID: %d\n", id);
 
      cudaGetDeviceProperties(&features, id);
@@ -68,6 +67,7 @@ int main(int argc, char *argv[])
      printf("Max dimension size of a grid size X: %d\n", features.maxGridSize[0]);
      printf("Max dimension size of a grid size Y: %d\n", features.maxGridSize[1]);
      printf("Max dimension size of a grid size Z: %d\n", features.maxGridSize[2]);
+     printf("\n");
   }
 
   return error;

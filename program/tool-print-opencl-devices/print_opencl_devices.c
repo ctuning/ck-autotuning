@@ -62,7 +62,6 @@ int main(int argc, char *argv[]) {
  
             if (fout!=NULL) fprintf(fout, "    \"%u\":{\n", d);
 
-            printf("\n");
             printf("Platform ID: %u\n", p);
             printf("Device ID: %u\n", d);
 
@@ -126,6 +125,8 @@ int main(int argc, char *argv[]) {
                 printf("Parallel compute units: %d\n", maxComputeUnits);
                 if (fout!=NULL) fprintf(fout, "      \"parallel_compute_units\":\"%d\"\n", maxComputeUnits);
             }
+
+            printf("\n");
 
             if (fout!=NULL) {
                fprintf(fout, "    }");

@@ -190,11 +190,43 @@ def detect(i):
                  ll=r['lst']
 
                  for l in ll:
-                     if tp=='cuda':
-                        print (l)
-                     else:
-                        print (l)
+                     if l=='':
+                        # Process if features are not empty
+                        if len(prop_id)>0:
+                           print (prop_id)
+                           print (prop)
+                           print (prop_all)
 
+                        # Refresh
+                        prop={}
+                        prop_id={}
+                        prop_all={}
+
+                     # Process features
+                     lx=[]
+                     if l!='':
+                        lx=split(l,':')
+                        
+                     if len(lx)>1:
+                        k=lx[0].trim().lower()
+                        v=lx[1].trim()
+
+                        if tp=='cuda':
+                           if k=='gpu device id':
+                              prop_id['gpgpu_device_id']=v
+                           elif k=='gpu name':
+                              prop['name']=v
+                           else:
+                              prop_all[k]=v
+                        else:
+                           if k=='platform id':
+                              prop_id['gpgpu_platform_id']=v
+                           elif k=='device id':
+                              prop_id['gpgpu_device_id']=v
+                           elif k=='device':
+                              prop['name']=v
+                           else:
+                              prop_all[k]=v
            
 
     exit(1)
