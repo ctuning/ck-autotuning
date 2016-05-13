@@ -77,6 +77,19 @@ int main(int argc, char *argv[]) {
                 if (fout!=NULL) fprintf(fout, "      \"device_name\":\"%s\",\n", value);
                 free(value);
             }
+
+            // print device name
+            {
+                err = clGetDeviceInfo(devices[d], CL_DEVICE_VENDOR, 0, NULL, &valueSize);
+                assert(CL_SUCCESS == err);
+                value = (char*) malloc(valueSize);
+                assert(value);
+                err = clGetDeviceInfo(devices[d], CL_DEVICE_VENDOR, valueSize, value, NULL);
+                assert(CL_SUCCESS == err);
+                printf("Vendor: %s\n", value);
+                if (fout!=NULL) fprintf(fout, "      \"device_vendor\":\"%s\",\n", value);
+                free(value);
+            }
  
             // print hardware device version
             {

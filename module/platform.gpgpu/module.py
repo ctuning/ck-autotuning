@@ -268,6 +268,8 @@ def detect(i):
                            elif k=='device':
                               prop['name']=v
                               prop['type']=tp
+                           elif k=='vendor':
+                              prop['vendor']=tp
                            else:
                               prop_all[k]=v
            
@@ -305,6 +307,9 @@ def show(i):
     h+=' <tr style="background-color:#cfcfff;">\n'
     h+='  <td><b>\n'
     h+='   #\n'
+    h+='  </b></td>\n'
+    h+='  <td><b>\n'
+    h+='   Vendor\n'
     h+='  </b></td>\n'
     h+='  <td><b>\n'
     h+='   Name\n'
@@ -345,11 +350,15 @@ def show(i):
         ft=meta.get('features',{})
         
         name=ft.get('name','')
+        vendor=ft.get('vendor','')
         tp=ft.get('type','')
 
         h+=' <tr>\n'
         h+='  <td valign="top">\n'
         h+='   '+str(num)+'\n'
+        h+='  </td>\n'
+        h+='  <td valign="top">\n'
+        h+='   '+vendor+'\n'
         h+='  </td>\n'
         h+='  <td valign="top">\n'
         h+='   '+name+'\n'
