@@ -168,7 +168,10 @@ def detect(i):
                         'target_os':tos,
                         'device_id':tdid,
                         'out':oo})
-           if r['return']==0:
+           if r['return']>0:
+              if o=='con':
+                 ck.out('Warning: tool compilation failed ('+r['error']+')')
+           else:
               # Try to run program
               rx=ck.gen_tmp_file({'prefix':'tmp-', 'suffix':'.tmp'})
               if rx['return']>0: return rx
