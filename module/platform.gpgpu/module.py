@@ -269,7 +269,7 @@ def detect(i):
                               prop['name']=v
                               prop['type']=tp
                            elif k=='vendor':
-                              prop['vendor']=tp
+                              prop['vendor']=v
                            else:
                               prop_all[k]=v
            
