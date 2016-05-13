@@ -62,10 +62,13 @@ def detect(i):
                                          >  0, if error
               (error)      - error text if return > 0
 
-              features = {
-                gpgpu          - GPGPU features (properties), unified
-                gpgpu_misc     - assorted GPGPU features (properties), platform dependent
-              }
+              features = [
+                {
+                  gpgpu          - GPGPU features (properties), unified
+                  gpgpu_misc     - assorted GPGPU features (properties), platform dependent
+                  gpgpu_id       - local ID {'platform_id', 'device_id'}
+                }
+              ]
             }
 
     """
@@ -143,6 +146,9 @@ def detect(i):
     if tp!='': types=[tp]
 
     for tp in types:
+        prop={}
+        prop_all={}
+
         if o=='con':
            ck.out('************************************************')
            ck.out('Detecting GPGPU type: '+tp)
@@ -178,232 +184,16 @@ def detect(i):
                  ll=r['lst']
 
                  for l in ll:
-                     print (l)
+                     if tp=='cuda':
+                        print (l)
+                     else:
+                        print (l)
+
            
 
     exit(1)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    # Get info about GPGPU ######################################################
-    if remote=='yes':
-       # Get all params
-       params={}
-
-       rx=ck.gen_tmp_file({'prefix':'tmp-ck-'})
-       if rx['return']>0: return rx
-       fn=rx['file_name']
-
-       # Get GPGPU
-       x=tosd.get('adb_dumpsys','').replace('$#device#$',dv)
-       x=x.replace('$#category#$','SurfaceFlinger')
-       x=x.replace('$#redirect_stdout#$', ro)
-       x=x.replace('$#output_file#$', fn)
-
-       if o=='con' and pdv=='yes':
-          ck.out('')
-          ck.out('Receiving all parameters:')
-          ck.out('  '+x)
-
-       rx=os.system(x)
-       if rx!=0:
-          if o=='con':
-             ck.out('')
-             ck.out('Non-zero return code :'+str(rx)+' - likely failed')
-       else:
-          # Read and parse file
-          rx=ck.load_text_file({'text_file':fn, 'split_to_list':'yes', 'delete_after_read':'yes'})
-          if rx['return']>0: return rx
-          ll=rx['lst']
-
-          for s in ll:
-              s1=s.strip()
-              q2=s1.find('GLES: ')
-              if q2>=0:
-                 x=s1[6:].strip().split(',')
-
-                 if len(x)>0: 
-                    target_gpgpu_vendor=x[0].strip()
-                    target_gpgpu_name+=target_gpgpu_vendor
-                 if len(x)>1: target_gpgpu_name+=' '+x[1].strip()
-
-                 prop['name']=target_gpgpu_name
-                 prop['vendor']=target_gpgpu_vendor
-                 prop['possibly_related_cpu_name']=''
-
-                 break
-    else:
-       if win=='yes':
-          r=ck.access({'action':'get_from_wmic',
-                       'module_uoa':cfg['module_deps']['platform'],
-                       'group':'cpu'})
-          if r['return']>0: return r
-          info_cpu=r['dict']
-
-          target_cpu=info_cpu.get('Name','')
-
-          r=ck.access({'action':'get_from_wmic',
-                       'module_uoa':cfg['module_deps']['platform'],
-                       'cmd':'path Win32_VideoController get Name'})
-          if r['return']>0: return r
-          target_gpgpu_name=r['value']
-
-          x=target_gpgpu_name.split(' ')
-          if len(x)>0:
-             target_gpgpu_vendor=x[0].strip()
-
-          prop['name']=target_gpgpu_name
-          prop['vendor']=target_gpgpu_vendor
-          prop['possibly_related_cpu_name']=target_cpu
-
-       else:
-          # Get devices
-          rx=ck.gen_tmp_file({'prefix':'tmp-ck-'})
-          if rx['return']>0: return rx
-          fn=rx['file_name']
-
-          x='lspci '+ro+' '+fn
-
-          if o=='con':
-             ck.out('')
-             ck.out('Executing: '+x)
-
-          rx=os.system(x)
-          if rx==0:
-             # Read and parse file
-             rx=ck.load_text_file({'text_file':fn, 'split_to_list':'yes', 'delete_after_read':'yes'})
-             if rx['return']==0: 
-                ll=rx['lst']
-
-                for q in ll:
-                    x1=q.find('VGA ')
-                    if x1>=0:
-                       x2=q.find(':', x1+1)
-                       if x2>=0:
-                          target_gpgpu_name=q[x2+1:].strip()
-                          break
-
-          x=target_gpgpu_name.split(' ')
-          if len(x)>0:
-             target_gpgpu_vendor=x[0].strip()
-
-          prop['name']=target_gpgpu_name
-          prop['vendor']=target_gpgpu_vendor
-
-    if o=='con' and prop.get('name','')!='':
-       ck.out('')
-       ck.out('GPGPU name:   '+prop.get('name',''))
-       ck.out('GPGPU vendor: '+prop.get('vendor',''))
-
-    # Check frequency via script
-    if win!='yes':
-       rx=ck.gen_tmp_file({'prefix':'tmp-ck-'})
-       if rx['return']>0: return rx
-       fn=rx['file_name']
-
-       cmd=tosd.get('script_get_gpgpu_frequency','')
-       if cmd!='':
-          cmd+=' '+ro+fn
-
-          # Check path to scripts from env
-          path_to_scripts=''
-
-          pi_uoa=os.environ.get('CK_PLATFORM_INIT_UOA','')
-          if pi_uoa=='':
-             dcfg={}
-             ii={'action':'load',
-                 'module_uoa':cfg['module_deps']['cfg'],
-                 'data_uoa':cfg['lcfg_uoa']}
-             r=ck.access(ii)
-             if r['return']>0 and r['return']!=16: return r
-             if r['return']!=16:
-                pi_key=tosx
-                if remote=='yes' and tdid!='': pi_key+='-'+tdid
-
-                dcfg=r['dict']
-                pi_uoa=dcfg.get('platform_init_uoa',{}).get(pi_key,'')
-
-          if pi_uoa!='' and remote!='yes':
-             rx=ck.access({'action':'find',
-                           'module_uoa':cfg['module_deps']['platform.init'],
-                           'data_uoa':pi_uoa})
-             if rx['return']==0:
-                path_to_scripts=rx['path']
-
-          if path_to_scripts=='':
-             path_to_scripts=tosd.get('path_to_scripts','')
-
-          if path_to_scripts!='': cmd=path_to_scripts+stdirs+cmd
-
-          if remote=='yes':
-             # Execute script
-             cmd=tosd.get('remote_shell','').replace('$#device#$',dv)+' '+cmd
-
-          if o=='con':
-             ck.out('')
-             ck.out('Trying to read GPGPU frequency:')
-             ck.out('  '+cmd)
-
-          rx=os.system(cmd)
-          if rx!=0:
-             if o=='con':
-                ck.out('')
-                ck.out('Non-zero return code :'+str(rx)+' - likely failed')
-                ck.out('')
-          else:
-             # Read and parse file
-             rx=ck.load_text_file({'text_file':fn, 'split_to_list':'yes', 'delete_after_read':'yes'})
-             if rx['return']>0: return rx
-             ll=rx['lst']
-
-             cur_freq=''
-             freqs=[]
-
-             jl=len(ll)
-             for j in range(0,jl):
-                 s=ll[j]
-                 if s.lower().startswith('*** current GPGPU frequency:'):
-                    if (j+1)<jl:
-                       cur_freq=ll[j+1]
-
-                 if s.lower().startswith('*** available GPGPU frequencies:'):
-                    while s!='' and j<jl:
-                       j+=1
-                       if j<jl:
-                          s=ll[j]
-                          if s!='':
-                             freqs.append(s)
-                    break
-
-             prop['current_freq']=cur_freq
-             prop['all_freqs']=freqs
-
-             if o=='con' and cur_freq!='':
-                ck.out('')
-                ck.out('Current GPGPU frequency:')
-                ck.out('  '+str(cur_freq))
-                if len(freqs)>0:
-                   ck.out('')
-                   ck.out('All frequencies:')
-                   for q in freqs:
-                       ck.out(' '+q)
+    prop['name']=target_gpgpu_name
+    prop['vendor']=''
 
     fuoa=''
     fuid=''
