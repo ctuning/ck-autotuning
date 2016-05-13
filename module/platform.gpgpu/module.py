@@ -302,10 +302,10 @@ def show(i):
     h+='   #\n'
     h+='  </b></td>\n'
     h+='  <td><b>\n'
-    h+='   Vendor\n'
+    h+='   Name\n'
     h+='  </b></td>\n'
     h+='  <td><b>\n'
-    h+='   Name\n'
+    h+='   Type\n'
     h+='  </b></td>\n'
     h+='  <td><b>\n'
     h+='   <a href="'+url0+'wcid='+work['self_module_uoa']+':">CK UID</a>\n'
@@ -339,24 +339,23 @@ def show(i):
         meta=q['meta']
         ft=meta.get('features',{})
         
-        vendor=ft.get('vendor','')
         name=ft.get('name','')
+        tp=ft.get('type','')
 
         h+=' <tr>\n'
         h+='  <td valign="top">\n'
         h+='   '+str(num)+'\n'
         h+='  </td>\n'
         h+='  <td valign="top">\n'
-        h+='   '+vendor+'\n'
+        h+='   '+name+'\n'
         h+='  </td>\n'
         h+='  <td valign="top">\n'
-        h+='   '+name+'\n'
+        h+='   '+tp+'\n'
         h+='  </td>\n'
         h+='  <td valign="top">\n'
         h+='   <a href="'+url0+'wcid='+work['self_module_uoa']+':'+duid+'">'+duid+'</a>\n'
         h+='  </td>\n'
         h+=' </tr>\n'
-
 
     h+='</table><br><br>\n'
 
