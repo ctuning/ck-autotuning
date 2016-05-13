@@ -55,6 +55,7 @@ def detect(i):
               (extra_info)           - extra info about author, etc (see add from CK kernel)
 
               (type)                 - cuda or opencl
+              (quiet)                - select default dependencies
             }
 
     Output: {
@@ -66,7 +67,7 @@ def detect(i):
                 {
                   gpgpu          - GPGPU features (properties), unified
                   gpgpu_misc     - assorted GPGPU features (properties), platform dependent
-                  gpgpu_id       - local ID {'platform_id', 'device_id'}
+                  gpgpu_id       - local ID {'gpgpu_platform_id', 'gpgpu_device_id'}
                 }
               ]
             }
@@ -79,6 +80,8 @@ def detect(i):
 
     oo=''
     if o=='con': oo=o
+
+    quiet=i.get('quiet','')
 
     # Various params
     hos=i.get('host_os','')
@@ -147,6 +150,7 @@ def detect(i):
 
     for tp in types:
         prop={}
+        prop_id={}
         prop_all={}
 
         if o=='con':
@@ -164,6 +168,7 @@ def detect(i):
            r=ck.access({'action':'compile',
                         'module_uoa':cfg['module_deps']['program'],
                         'data_uoa':puoa,
+                        'quiet':quiet,
                         'out':oo})
            if r['return']==0:
               # Try to run program
@@ -175,6 +180,7 @@ def detect(i):
                            'module_uoa':cfg['module_deps']['program'],
                            'data_uoa':puoa,
                            'extra_run_cmd':'> '+ftmp,
+                           'quiet':quiet,
                            'out':oo})
               if r['return']>0:
                  return r

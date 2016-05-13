@@ -270,7 +270,9 @@ def process_in_dir(i):
               (run_timeout)                   - (sec.) - kill run job if too long
 
               (add_rnd_extension_to_bin)      - if 'yes', add random extension to binary and record list
-              (add_save_extension_to_bin)      - if 'yes', add '.save' to bin to save during cleaning ...
+              (add_save_extension_to_bin)     - if 'yes', add '.save' to bin to save during cleaning ...
+
+              (quiet)                         - if 'yes', automatically provide default answer to all questions when resolving dependencies ... 
             }
 
     Output: {
@@ -304,6 +306,8 @@ def process_in_dir(i):
     sca=i.get('skip_clean_after','')
 
     grtd=i.get('generate_rnd_tmp_dir','')
+
+    quiet=i.get('quiet','')
 
     misc=i.get('misc',{})
     ccc=i.get('characteristics',{})
@@ -668,7 +672,8 @@ def process_in_dir(i):
            'target_os':tos,
            'device_id':tdid,
            'deps':deps,
-           'add_customize':'yes'}
+           'add_customize':'yes',
+           'quiet':quiet}
        if o=='con': ii['out']='con'
 
        rx=ck.access(ii)
