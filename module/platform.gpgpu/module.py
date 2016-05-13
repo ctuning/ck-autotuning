@@ -205,11 +205,11 @@ def detect(i):
                      # Process features
                      lx=[]
                      if l!='':
-                        lx=split(l,':')
+                        lx=l.split(':')
                         
                      if len(lx)>1:
-                        k=lx[0].trim().lower()
-                        v=lx[1].trim()
+                        k=lx[0].strip().lower()
+                        v=lx[1].strip()
 
                         if tp=='cuda':
                            if k=='gpu device id':
