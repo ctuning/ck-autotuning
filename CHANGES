@@ -1,3 +1,5 @@
+* 2016.05.13 - moving platform.gpgpu here from ck-env repository to prepare for CUDA/OpenCL crowd-tuning
+
 * 2016.05.06 - adding dummy JULIA language meta info (optimizations), after MIT visit
 
 * 2016.04.28 - major update to packages and environment to automate detection of already 
