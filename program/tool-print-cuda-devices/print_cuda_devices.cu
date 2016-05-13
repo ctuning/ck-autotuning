@@ -27,7 +27,8 @@ int main(int argc, char *argv[])
   {
      cudaSetDevice(id);
 
-     printf("* GPU Device ID: %d\n", id);
+     printf("\n");
+     printf("GPU Device ID: %d\n", id);
 
      cudaGetDeviceProperties(&features, id);
      if (error != cudaSuccess) {
