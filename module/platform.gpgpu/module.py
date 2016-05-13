@@ -164,6 +164,9 @@ def detect(i):
                         'module_uoa':cfg['module_deps']['program'],
                         'data_uoa':puoa,
                         'quiet':quiet,
+                        'host_os':hos,
+                        'target_os':tos,
+                        'device_id':tdid,
                         'out':oo})
            if r['return']==0:
               # Try to run program
@@ -176,6 +179,9 @@ def detect(i):
                            'data_uoa':puoa,
                            'extra_run_cmd':'> '+ftmp,
                            'quiet':quiet,
+                           'host_os':hos,
+                           'target_os':tos,
+                           'device_id':tdid,
                            'out':oo})
               if r['return']>0:
                  return r
