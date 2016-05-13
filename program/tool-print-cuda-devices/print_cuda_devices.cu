@@ -3,39 +3,67 @@
 #endif
 
 #include <stdio.h>
-
 #include <cuda.h>
-
-#define GPU_DEVICE 0
 
 int main(int argc, char *argv[])
 {
-  int devID = 0;
+  int ndev=0;
+  int id=0;
   cudaError_t error;
-  cudaDeviceProp deviceProp;
-  error = cudaGetDevice(&devID);
+  cudaDeviceProp features;
 
-  int runtimeVersion=0;
-  int driverVersion=0;
+  int rtver=0;
+  int dver=0;
 
-  error=cudaRuntimeGetVersion(&runtimeVersion);
-  if (error == cudaSuccess) {
-    printf("CUDA runtime version: %d\n", runtimeVersion);
+  /* Get number of devices */
+  error = cudaGetDeviceCount(&ndev);
+  if (error != cudaSuccess) {
+    printf("Error: problem obtaining number of CUDA devices: %d\n", error);
+    return 1;
   }
 
-  error=cudaDriverGetVersion(&driverVersion);
-  if (error == cudaSuccess) {
-    printf("CUDA driver version: %d\n", driverVersion);
-  }
+  /* Iterating over devices */
+  for (id=0; id<ndev; id++)
+  {
+     cudaSetDevice(id);
 
-  cudaGetDeviceProperties(&deviceProp, GPU_DEVICE);
-  if (error == cudaSuccess) {
-    printf("GPU Device ID: %d\n", devID);
-    printf("GPU Name: %s\n", deviceProp.name);
-    printf("GPU compute capability: %d.%d\n", deviceProp.major, deviceProp.minor);
-  }
-  else {
-    printf("Can't initialize CUDA device, return code: %d\n", error);
+     printf("* GPU Device ID: %d\n", id);
+
+     cudaGetDeviceProperties(&features, id);
+     if (error != cudaSuccess) {
+       printf("Error: problem obtaining features of CUDA devices: %d\n", error);
+       return 1;
+     }
+
+     printf("GPU Name: %s\n", features.name);
+     printf("GPU compute capability: %d.%d\n", features.major, features.minor);
+
+     error=cudaDriverGetVersion(&dver);
+     if (error != cudaSuccess) {
+       printf("Error: problem obtaining CUDA driver version: %d\n", error);
+       return 1;
+     }
+
+     error=cudaRuntimeGetVersion(&rtver);
+     if (error == cudaSuccess) {
+       printf("Error: problem obtaining CUDA run-time version: %d\n", error);
+       return 1;
+     }
+
+     printf("CUDA driver version: %d.%d\n", dver/1000, (dver%100)/10);
+     printf("CUDA runtime version: %d.%d\n", rtver/1000, (rtver%100)/10);
+
+     printf("Global memory: %llu\n", (unsigned long long) features.totalGlobalMem);
+     printf("Max clock rate: %.0f MHz\n", features.clockRate * 0.001);
+
+     printf("Total amount of shared memory per block: %lu\n", features.sharedMemPerBlock);
+     printf("Total number of registers available per block: %d\n", features.regsPerBlock);
+     printf("Warp size: %d\n", features.warpSize);
+     printf("Maximum number of threads per multiprocessor:  %d\n", features.maxThreadsPerMultiProcessor);
+     printf("Maximum number of threads per block: %d\n", features.maxThreadsPerBlock);
+     printf("Max dimension size of a thread block (x,y,z): (%d, %d, %d)\n", features.maxThreadsDim[0], features.maxThreadsDim[1], features.maxThreadsDim[2]);
+     printf("Max dimension size of a grid size (x,y,z): (%d, %d, %d)\n", features.maxGridSize[0], features.maxGridSize[1], features.maxGridSize[2]);
+
   }
 
   return error;
