@@ -147,6 +147,7 @@ def detect(i):
         prop={}
         prop_id={}
         prop_all={}
+        deps={}
 
         if o=='con':
            ck.out('************************************************')
@@ -188,6 +189,8 @@ def detect(i):
                            'out':oo})
               if r['return']>0:
                  return r
+
+              deps=r['deps']
 
               r=ck.load_text_file({'text_file':ftmp, 'split_to_list':'yes', 'delete_after_read':'yes'})
               if r['return']==0:
@@ -236,7 +239,7 @@ def detect(i):
                               if o=='con' and r.get('found','')=='yes':
                                  ck.out('  GPGPU CK entry already exists ('+fuid+') - loading latest meta (features) ...')
 
-                           props.append({"gpgpu":prop, "gpgpu_id":prop_id, "gpgpu_misc":prop_all})
+                           props.append({"gpgpu":prop, "gpgpu_id":prop_id, "gpgpu_misc":prop_all, "gpgpu_deps":deps})
 
                         # Refresh
                         prop={}
