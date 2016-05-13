@@ -268,10 +268,6 @@ def detect(i):
                            else:
                               prop_all[k]=v
            
-    if fuoa!='' or fuid!='':
-       rr['features']['gpgpu_uoa']=fuoa
-       rr['features']['gpgpu_misc_uid']=fuid
-
     return {'return':0, 'features':{'gpgpu':props}}
 
 ##############################################################################
