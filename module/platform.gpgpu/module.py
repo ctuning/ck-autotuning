@@ -131,12 +131,7 @@ def detect(i):
     dv=''
     if tdid!='': dv=' -s '+tdid
 
-    # Init
-    prop={}
-    prop_all={}
-
-    target_gpgpu_name=''
-    target_gpgpu_vendor=''
+    props=[]
 
     # Check if program to get CUDA device exists
     types=['cuda','opencl']
@@ -193,9 +188,13 @@ def detect(i):
                      if l=='':
                         # Process if features are not empty
                         if len(prop_id)>0:
-                           print (prop_id)
-                           print (prop)
-                           print (prop_all)
+                           props.append({"gpgpu":prop, "gpgpu_id":prop_id, "gpgpu_misc":prop_all})
+
+
+
+
+
+
 
                         # Refresh
                         prop={}
@@ -229,9 +228,10 @@ def detect(i):
                               prop_all[k]=v
            
 
+    import json
+    print (json.dumps(props, indent=2))
+
     exit(1)
-    prop['name']=target_gpgpu_name
-    prop['vendor']=''
 
     fuoa=''
     fuid=''
@@ -318,8 +318,7 @@ def detect(i):
 
     rr={'return':0, 'features':{}}
 
-    rr['features']['gpgpu']=prop
-    rr['features']['gpgpu_misc']=prop_all
+    rr['features']['gpgpu']=props
 
     if fuoa!='' or fuid!='':
        rr['features']['gpgpu_uoa']=fuoa
