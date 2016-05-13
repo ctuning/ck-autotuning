@@ -188,13 +188,46 @@ def detect(i):
                      if l=='':
                         # Process if features are not empty
                         if len(prop_id)>0:
+                           fuoa=''
+                           fuid=''
+
+                           # Exchanging info #################################################################
+                           if ex=='yes':
+                              xn=prop.get('name','')
+
+                              if xn!='':
+                                 if o=='con':
+                                    ck.out('')
+                                    ck.out('Exchanging information with repository ...')
+
+                              er=i.get('exchange_repo','')
+                              esr=i.get('exchange_subrepo','')
+                              if er=='': 
+                                 er=ck.cfg['default_exchange_repo_uoa']
+                                 esr=ck.cfg['default_exchange_subrepo_uoa']
+
+                              ii={'action':'exchange',
+                                  'module_uoa':cfg['module_deps']['platform'],
+                                  'sub_module_uoa':work['self_module_uid'],
+                                  'repo_uoa':er,
+                                  'data_name':prop.get('name',''),
+                                  'extra_info':einf,
+                                  'all':'yes',
+                                  'dict':{'features':prop, 'features_misc':prop_all}} 
+                              if esr!='': ii['remote_repo_uoa']=esr
+                              r=ck.access(ii)
+                              if r['return']>0: return r
+
+                              fuoa=r.get('data_uoa','')
+                              fuid=r.get('data_uid','')
+
+                              prop=r['dict'].get('features',{})
+                              prop_all=r['dict'].get('features_misc',{})
+
+                              if o=='con' and r.get('found','')=='yes':
+                                 ck.out('  GPGPU CK entry already exists ('+fuid+') - loading latest meta (features) ...')
+
                            props.append({"gpgpu":prop, "gpgpu_id":prop_id, "gpgpu_misc":prop_all})
-
-
-
-
-
-
 
                         # Refresh
                         prop={}
@@ -215,6 +248,7 @@ def detect(i):
                               prop_id['gpgpu_device_id']=v
                            elif k=='gpu name':
                               prop['name']=v
+                              prop['type']=tp
                            else:
                               prop_all[k]=v
                         else:
@@ -224,213 +258,15 @@ def detect(i):
                               prop_id['gpgpu_device_id']=v
                            elif k=='device':
                               prop['name']=v
+                              prop['type']=tp
                            else:
                               prop_all[k]=v
            
-
-    import json
-    print (json.dumps(props, indent=2))
-
-    exit(1)
-
-    fuoa=''
-    fuid=''
-
-    # Exchanging info #################################################################
-    if ex=='yes':
-       if o=='con':
-          ck.out('')
-          ck.out('Exchanging information with repository ...')
-
-       xn=prop.get('name','')
-       if xn=='':
-          # Check if exists in configuration
-
-          dcfg={}
-          ii={'action':'load',
-              'module_uoa':cfg['module_deps']['cfg'],
-              'data_uoa':cfg['cfg_uoa']}
-          r=ck.access(ii)
-          if r['return']>0 and r['return']!=16: return r
-          if r['return']!=16:
-             dcfg=r['dict']
-
-          dx=dcfg.get('platform_gpgpu_name',{}).get(tos,{})
-          x=tdid
-          if x=='': x='default'
-          xn=dx.get(x,'')
-
-          if (xn=='' and o=='con'):
-             r=ck.inp({'text':'Enter your GPGPU name (for example ARM MALI-T860, Nvidia Tesla K80): '})
-             xxn=r['string'].strip()
-
-             if xxn!=xn:
-                xn=xxn
-
-                if 'platform_gpgpu_name' not in dcfg: dcfg['platform_gpgpu_name']={}
-                if tos not in dcfg['platform_gpgpu_name']: dcfg['platform_gpgpu_name'][tos]={}
-                dcfg['platform_gpgpu_name'][tos][x]=xn
-
-                ii={'action':'update',
-                    'module_uoa':cfg['module_deps']['cfg'],
-                    'data_uoa':cfg['cfg_uoa'],
-                    'dict':dcfg}
-                r=ck.access(ii)
-                if r['return']>0: return r
-
-          if xn=='':
-             return {'return':1, 'error':'can\'t exchange information where main name is empty'}
-
-          ixn=xn.find(' ')
-          if ixn>0: 
-             xx=xn[:ixn].strip()
-             prop['vendor']=xx
-             xn=xn[ixn+1:].strip()
-
-          prop['name']=xn
-
-       er=i.get('exchange_repo','')
-       esr=i.get('exchange_subrepo','')
-       if er=='': 
-          er=ck.cfg['default_exchange_repo_uoa']
-          esr=ck.cfg['default_exchange_subrepo_uoa']
-
-       ii={'action':'exchange',
-           'module_uoa':cfg['module_deps']['platform'],
-           'sub_module_uoa':work['self_module_uid'],
-           'repo_uoa':er,
-           'data_name':prop.get('name',''),
-           'extra_info':einf,
-           'all':'yes',
-           'dict':{'features':prop}} # Later we should add more properties from prop_all,
-                                     # but should be careful to remove any user-specific info
-       if esr!='': ii['remote_repo_uoa']=esr
-       r=ck.access(ii)
-       if r['return']>0: return r
-
-       fuoa=r.get('data_uoa','')
-       fuid=r.get('data_uid','')
-
-       prop=r['dict'].get('features',{})
-
-       if o=='con' and r.get('found','')=='yes':
-          ck.out('  GPGPU CK entry already exists ('+fuid+') - loading latest meta (features) ...')
-
-    rr={'return':0, 'features':{}}
-
-    rr['features']['gpgpu']=props
-
     if fuoa!='' or fuid!='':
        rr['features']['gpgpu_uoa']=fuoa
        rr['features']['gpgpu_misc_uid']=fuid
 
-    return rr
-
-##############################################################################
-# set frequency
-
-def set_freq(i):
-    """
-    Input:  {
-              (host_os)              - host OS (detect, if omitted)
-              (os) or (target_os)    - OS module to check (if omitted, analyze host)
-
-              (device_id)            - device id if remote (such as adb)
-
-              (value) = "max" (default)
-                        "min"
-                        int value
-            }
-
-    Output: {
-              return       - return code =  0, if successful
-                                         >  0, if error
-              (error)      - error text if return > 0
-            }
-
-    """
-
-    import os
-
-    o=i.get('out','')
-    oo=''
-    if o=='con': oo=o
-
-    v=i.get('value','')
-    if v=='': v='max'
-
-    # Various params
-    hos=i.get('host_os','')
-    tos=i.get('target_os','')
-    if tos=='': tos=i.get('os','')
-    tdid=i.get('device_id','')
-
-    # Get OS info
-    import copy
-    ii=copy.deepcopy(i)
-    ii['out']=''
-    ii['action']='detect'
-    ii['module_uoa']=cfg['module_deps']['platform.os']
-    ii['skip_info_collection']='yes'
-    ii['skip_device_init']='yes'
-    rr=ck.access(ii)
-    if rr['return']>0: return rr
-
-    hos=rr['host_os_uid']
-    hosx=rr['host_os_uoa']
-    hosd=rr['host_os_dict']
-
-    tos=rr['os_uid']
-    tosx=rr['os_uoa']
-    tosd=rr['os_dict']
-
-    tbits=tosd.get('bits','')
-
-    tdid=rr['device_id']
-
-    dir_sep=tosd.get('dir_sep','')
-
-    remote=tosd.get('remote','')
-
-    # Prepare scripts
-    cmd=''
-    if v=='min':
-       cmd=tosd.get('script_set_min_gpgpu_freq','')
-    elif v=='max':
-       cmd=tosd.get('script_set_max_gpgpu_freq','')
-    else:
-       cmd=tosd.get('script_set_gpgpu_freq','').replace('$#freq#$',str(v))
-
-    if cmd!='':
-       path_to_scripts=tosd.get('path_to_scripts','')
-       if path_to_scripts!='': cmd=path_to_scripts+dir_sep+cmd
-
-       if o=='con':
-          ck.out('')
-          ck.out('CMD to set GPGPU frequency:')
-          ck.out('  '+cmd)
-
-       # Get all params
-       if remote=='yes':
-          dv=''
-          if tdid!='': dv=' -s '+tdid
-
-          x=tosd.get('remote_shell','').replace('$#device#$',dv)+' '+cmd
-
-          rx=os.system(x)
-          if rx!=0:
-             if o=='con':
-                ck.out('')
-                ck.out('Non-zero return code :'+str(rx)+' - likely failed')
-
-       else:
-             rx=os.system(cmd)
-             if rx!=0:
-                if o=='con':
-                   ck.out('')
-                   ck.out('  Warning: setting frequency possibly failed - return code '+str(rx))
-
-    return {'return':0}
+    return {'return':0, 'features':{'gpgpu':props}}
 
 ##############################################################################
 # viewing entries as html
