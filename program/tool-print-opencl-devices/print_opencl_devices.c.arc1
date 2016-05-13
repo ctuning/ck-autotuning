@@ -47,6 +47,9 @@ int main(int argc, char *argv[]) {
  
     for (p = 0; p < platformCount; p++) {
  
+        printf("*******************************************\n");
+        printf("Platform: %u\n\n", p);
+
         if (fout!=NULL) fprintf(fout, "  \"%u\":{\n", p);
 
         // get all devices
@@ -62,10 +65,6 @@ int main(int argc, char *argv[]) {
  
             if (fout!=NULL) fprintf(fout, "    \"%u\":{\n", d);
 
-            printf("\n");
-            printf("PlatformID: %u\n", p);
-            printf("DeviceID: %u\n", d);
-
             // print device name
             {
                 err = clGetDeviceInfo(devices[d], CL_DEVICE_NAME, 0, NULL, &valueSize);
@@ -74,7 +73,7 @@ int main(int argc, char *argv[]) {
                 assert(value);
                 err = clGetDeviceInfo(devices[d], CL_DEVICE_NAME, valueSize, value, NULL);
                 assert(CL_SUCCESS == err);
-                printf("Device: %s\n", value);
+                printf("%d. Device: %s\n", d, value);
                 if (fout!=NULL) fprintf(fout, "      \"device_name\":\"%s\",\n", value);
                 free(value);
             }
@@ -87,7 +86,7 @@ int main(int argc, char *argv[]) {
                 assert(value);
                 err = clGetDeviceInfo(devices[d], CL_DEVICE_VERSION, valueSize, value, NULL);
                 assert(CL_SUCCESS == err);
-                printf("Hardware (device) version: %s\n", value);
+                printf(" %d.%d Hardware (device) version: %s\n", d, 1, value);
                 if (fout!=NULL) fprintf(fout, "      \"hardware_version\":\"%s\",\n", value);
                 free(value);
             }
@@ -100,7 +99,7 @@ int main(int argc, char *argv[]) {
                 assert(value);
                 err = clGetDeviceInfo(devices[d], CL_DRIVER_VERSION, valueSize, value, NULL);
                 assert(CL_SUCCESS == err);
-                printf("Software (driver) version: %s\n", value);
+                printf(" %d.%d Software (driver) version: %s\n", d, 2, value);
                 if (fout!=NULL) fprintf(fout, "      \"software_version\":\"%s\",\n", value);
                 free(value);
             }
@@ -113,7 +112,7 @@ int main(int argc, char *argv[]) {
                 assert(value);
                 err = clGetDeviceInfo(devices[d], CL_DEVICE_OPENCL_C_VERSION, valueSize, value, NULL);
                 assert(CL_SUCCESS == err);
-                printf("OpenCL C version: %s\n", value);
+                printf(" %d.%d OpenCL C version: %s\n", d, 3, value);
                 if (fout!=NULL) fprintf(fout, "      \"opencl_c_version\":\"%s\",\n", value);
                 free(value);
             }
@@ -123,7 +122,7 @@ int main(int argc, char *argv[]) {
                 err = clGetDeviceInfo(devices[d], CL_DEVICE_MAX_COMPUTE_UNITS,
                         sizeof(maxComputeUnits), &maxComputeUnits, NULL);
                 assert(CL_SUCCESS == err);
-                printf("Parallel compute units: %d\n", maxComputeUnits);
+                printf(" %d.%d Parallel compute units: %d\n", d, 4, maxComputeUnits);
                 if (fout!=NULL) fprintf(fout, "      \"parallel_compute_units\":\"%d\"\n", maxComputeUnits);
             }
 

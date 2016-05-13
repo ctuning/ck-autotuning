@@ -23,7 +23,6 @@ int main(int argc, char *argv[])
   }
 
   /* Iterating over devices */
-  printf("*** start ***\n");
   for (id=0; id<ndev; id++)
   {
      cudaSetDevice(id);
@@ -65,7 +64,6 @@ int main(int argc, char *argv[])
      printf("Max dimension size of a thread block (x,y,z): (%d, %d, %d)\n", features.maxThreadsDim[0], features.maxThreadsDim[1], features.maxThreadsDim[2]);
      printf("Max dimension size of a grid size (x,y,z): (%d, %d, %d)\n", features.maxGridSize[0], features.maxGridSize[1], features.maxGridSize[2]);
   }
-  printf("*** end ***\n");
 
   return error;
 }
