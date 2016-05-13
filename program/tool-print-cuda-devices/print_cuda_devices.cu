@@ -23,6 +23,7 @@ int main(int argc, char *argv[])
   }
 
   /* Iterating over devices */
+  printf("*** start ***\n");
   for (id=0; id<ndev; id++)
   {
      cudaSetDevice(id);
@@ -45,7 +46,7 @@ int main(int argc, char *argv[])
      }
 
      error=cudaRuntimeGetVersion(&rtver);
-     if (error == cudaSuccess) {
+     if (error != cudaSuccess) {
        printf("Error: problem obtaining CUDA run-time version: %d\n", error);
        return 1;
      }
@@ -63,8 +64,8 @@ int main(int argc, char *argv[])
      printf("Maximum number of threads per block: %d\n", features.maxThreadsPerBlock);
      printf("Max dimension size of a thread block (x,y,z): (%d, %d, %d)\n", features.maxThreadsDim[0], features.maxThreadsDim[1], features.maxThreadsDim[2]);
      printf("Max dimension size of a grid size (x,y,z): (%d, %d, %d)\n", features.maxGridSize[0], features.maxGridSize[1], features.maxGridSize[2]);
-
   }
+  printf("*** end ***\n");
 
   return error;
 }
