@@ -1,3 +1,6 @@
+* 2016.05.16 - adding 'program.behavior' module to crowd-benchmark/crowd-tune program behavior
+               across diverse data sets and hardware
+
 * 2016.05.13 - moving platform.gpgpu here from ck-env repository to prepare for CUDA/OpenCL crowd-tuning
 
 * 2016.05.06 - adding dummy JULIA language meta info (optimizations), after MIT visit
