@@ -1,5 +1,10 @@
 {
-  "actions": {}, 
+  "actions": {
+    "show": {
+      "desc": "dashboard", 
+      "for_web": "yes"
+    }
+  }, 
   "copyright": "See CK COPYRIGHT.txt for copyright details", 
   "desc": "program behavior", 
   "developer": "Grigori Fursin", 

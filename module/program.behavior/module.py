@@ -29,3 +29,23 @@ def init(i):
 
     """
     return {'return':0}
+
+##############################################################################
+# dashboard
+
+def show(i):
+    """
+    Input:  {
+            }
+
+    Output: {
+              return       - return code =  0, if successful
+                                         >  0, if error
+              (error)      - error text if return > 0
+            }
+
+    """
+
+    h='TBD'
+
+    return {'return':0, 'html':h}
