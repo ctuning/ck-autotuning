@@ -224,6 +224,7 @@ def process_in_dir(i):
               (misc)                 - misc  dict
               (characteristics)      - characteristics/features/properties
               (env)                  - preset environment
+              (env.{KEY})            - set env[KEY]=value (user-friendly interface via CMD)
 
               (post_process_script_uoa) - run script from this UOA
               (post_process_subscript)  - subscript name
@@ -313,6 +314,11 @@ def process_in_dir(i):
     ccc=i.get('characteristics',{})
     env=i.get('env',{})
     deps=i.get('deps',{})
+
+    # Check user-friendly env
+    for q in i:
+        if q.startswith('env.'):
+           env[q[4:]]=i[q]
 
     are=i.get('add_rnd_extension_to_bin','')
     ase=i.get('add_save_extension_to_bin','')
@@ -509,6 +515,16 @@ def process_in_dir(i):
     os.chdir(cdir)
 
     ########################################################################
+    # Check if need to add paths to CK entries as env
+    qq=meta.get('ck_to_env',{})
+    for q in qq:
+        qc=qq[q]
+        r=ck.access({'action':'find',
+                     'cid':qc})
+        if r['return']>0: return r
+        env[q]=r['path']
+
+    ########################################################################
     # Check affinity
     aff=i.get('affinity','')
     if aff!='':
@@ -624,7 +640,7 @@ def process_in_dir(i):
 
     if sa=='run' and target_add_path_string!='':
        sb+=target_add_path_string+'\n\n'
-    
+
     if o=='con':
        ck.out(sep)
        ck.out('Current directory: '+cdir)
@@ -722,6 +738,16 @@ def process_in_dir(i):
           os.remove(target_exe)
 
     if sa=='compile' or sa=='get_compiler_version':
+       env1=meta.get('compile_vars',{})
+       for q in env1:
+           if q not in env:
+              x=env1[q]
+              try:
+                 x=x.replace('$#src_path#$', src_path)
+              except Exception as e: # need to detect if not string (not to crash)
+                 pass
+              env[q]=x
+
        # Add compiler dep again, if there
        cb=deps.get('compiler',{}).get('bat','')
        if cb!='' and not sb.endswith(cb):
@@ -730,6 +756,7 @@ def process_in_dir(i):
        # Add env
        for k in sorted(env):
            v=str(env[k])
+           v=v.replace('$<<',svarb).replace('>>$',svare)
 
            if eifs!='' and wb!='yes':
               if v.find(' ')>=0 and not v.startswith(eifs):
@@ -869,6 +896,9 @@ def process_in_dir(i):
              return {'return':1, 'error':'compile CMD is not found'}
 
           sccmd=sccmd.replace('$#script_ext#$',sext)
+          sccmd=sccmd.replace('$#dir_sep#$',stdirs)
+
+          sccmd=sccmd.replace('$<<',svarb).replace('>>$',svare)
 
           # Source files
           sfs=meta.get('source_files',[])
@@ -1382,6 +1412,7 @@ def process_in_dir(i):
        sbenv=''
        for k in sorted(env):
            v=str(env[k])
+           v=v.replace('$<<',svarb).replace('>>$',svare)
 
            if eifs!='' and wb!='yes':
               if v.find(' ')>=0 and not v.startswith(eifs):
