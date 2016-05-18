@@ -3068,11 +3068,12 @@ def pipeline(i):
     # PIPELINE SECTION: dataset file selection (if more than one in one entry)
     ddfiles=ddmeta.get('dataset_files',[])
 
-    choices_desc['##dataset_file']={'type':'text',
-                                    'has_choice':'yes',
-                                    'choices':ddfiles,
-                                    'tags':['setup'],
-                                    'sort':1100}
+    if len(ddfiles)>0:
+       choices_desc['##dataset_file']={'type':'text',
+                                       'has_choice':'yes',
+                                       'choices':ddfiles,
+                                       'tags':['setup'],
+                                       'sort':1100}
 
     if ddfile=='':
        if len(ddfiles)==1:
