@@ -933,13 +933,15 @@ def process_in_dir(i):
 
           # Check build -D flags
           sbcv=''
-          bcv=meta.get('build_compiler_vars',{})
+          bcv={}
 
-          if nvc!='yes':
+          if ncv!='yes':
+             bcv=meta.get('build_compiler_vars',{})
+
              for q in rcv:
                  if q in bcv: del(bcv[q])
 
-             bcv.update(cv)
+          bcv.update(cv)
 
           # Update env if energy meter
           if me=='yes':
@@ -1766,6 +1768,15 @@ def process_in_dir(i):
              sbu+='\n'+no+ee+'\n\n'
 
           for ppc in lppc0:
+              while ppc.find('$<<')>=0:
+                 j1=ppc.find('$<<')
+                 j2=ppc.find('>>$')
+                 if j2>0:
+                    j3=ppc[j1+3:j2]
+                    ppc=ppc[:j1]+env.get(j3,'')+ppc[j2+3:]
+
+              ppc=ppc.replace('$<<',svarb).replace('>>$',svare)
+              ppc=ppc.replace('$#dir_sep#$',stdirs)
               ppc=ppc.replace('$#src_path_local#$', src_path_local).replace('$#src_path#$', src_path)
 
 #             Pre-processing is performed on the local machine, so dataset path should be local, not remote!
@@ -2054,6 +2065,15 @@ def process_in_dir(i):
           srx=0 # script exit code
           if len(lppc)>0:
              for ppc in lppc:
+                 while ppc.find('$<<')>=0:
+                    j1=ppc.find('$<<')
+                    j2=ppc.find('>>$')
+                    if j2>0:
+                       j3=ppc[j1+3:j2]
+                       ppc=ppc[:j1]+env.get(j3,'')+ppc[j2+3:]
+
+                 ppc=ppc.replace('$<<',svarb).replace('>>$',svare)
+                 ppc=ppc.replace('$#dir_sep#$',stdirs)
                  ppc=ppc.replace('$#src_path_local#$', src_path_local).replace('$#src_path#$', src_path)
 
 #                Post-processing is performed on the local machine, so dataset path should be local, not remote!
