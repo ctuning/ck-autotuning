@@ -189,6 +189,8 @@ def process_in_dir(i):
               (compiler_vars)        - dict with set up compiler flags (-D var)
                                        they will update the ones defined as default in program description ...
 
+              (no_vars)              - skip compiler vars (if you want to use default ones from the sources) ...
+
               (compiler_tags)        - extra compiler tags
 
               (remove_compiler_vars) - list of compiler vars to remove
@@ -342,6 +344,7 @@ def process_in_dir(i):
     flags=i.get('flags','')
     lflags=i.get('lflags','')
     cv=i.get('compiler_vars',{})
+    ncv=i.get('no_vars',{})
     ctags=i.get('compiler_tags','')
     rcv=i.get('remove_compiler_vars',[])
     eefc=i.get('extra_env_for_compilation',{})
@@ -932,10 +935,11 @@ def process_in_dir(i):
           sbcv=''
           bcv=meta.get('build_compiler_vars',{})
 
-          for q in rcv:
-              if q in bcv: del(bcv[q])
+          if nvc!='yes':
+             for q in rcv:
+                 if q in bcv: del(bcv[q])
 
-          bcv.update(cv)
+             bcv.update(cv)
 
           # Update env if energy meter
           if me=='yes':
