@@ -2366,6 +2366,8 @@ def pipeline(i):
               (compiler_vars)        - dict with set up compiler flags (-Dvar=value) -> 
                                        they will update the ones defined as default in program description ...
 
+              (no_vars)              - skip compiler vars (if you want to use default ones from the sources) ...
+
               (remove_compiler_vars) - list of compiler vars to remove
 
               (extra_env_for_compilation) - set environment variables before compiling program
@@ -3334,6 +3336,7 @@ def pipeline(i):
         choices_desc['##compiler_vars#'+q1]=qq
 
     cv=ck.get_from_dicts(i,'compiler_vars',{},choices)
+    ncv=ck.get_from_dicts(i,'no_vars',{},choices)
     rcv=ck.get_from_dicts(i,'remove_compiler_vars',[],choices)
     eefc=ck.get_from_dicts(i,'extra_env_for_compilation',{},choices)
 
@@ -3648,6 +3651,7 @@ def pipeline(i):
               'env':env,
               'extra_env':eenv,
               'compiler_vars':cv,
+              'no_vars':ncv,
               'remove_compiler_vars':rcv,
               'extra_env_for_compilation':eefc,
               'compile_timeout':xcto,
@@ -3735,6 +3739,7 @@ def pipeline(i):
               'env':env,
               'extra_env':eenv,
               'compiler_vars':cv,
+              'no_vars':ncv,
               'remove_compiler_vars':rcv,
               'extra_env_for_compilation':eefc,
               'compile_timeout':xcto,
@@ -3886,6 +3891,7 @@ def pipeline(i):
            'extra_post_process_cmd':eppc,
            'run_cmd_substitutes':rcsub,
            'compiler_vars':cv,
+           'no_vars':ncv,
            'remove_compiler_vars':rcv,
            'extra_env_for_compilation':eefc,
            'run_timeout':xrto,
