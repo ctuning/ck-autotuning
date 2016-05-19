@@ -200,7 +200,10 @@ def autotune(i):
 
                (result_conditions)                - check results for condition
 
+               (collect_all)                      - collect all experiments and record to 
+
                (custom_autotuner)                 - dictionary to customize autotuner (exploration, DSE, machine learning based tuning, etc)
+               (custom_autotuner_vars)            - extra vars to customize autotuner (for example, set default vs. random)
             }
 
     Output: {
@@ -219,6 +222,8 @@ def autotune(i):
               (failed_cases)        - failed cases if aggregate_failed_cases=yes
 
               (solutions)           - updated solutions with reactions to optimizations (needed for classification of a given computing species)
+
+              (all)                 - if i['collect_all']=='yes', list of results of all iterations [{experiment_desc ..},...]
             }
 
     """
@@ -381,6 +386,9 @@ def autotune(i):
        force_pipeline_update=True
 
     pipeline['tmp_dir']=tmp_dir
+
+    call=ck.get_from_dicts(ic, 'collect_all', {}, None) # Collect all experiemnts
+    ae=[]
 
     # Check customized autotuner
     cat=ck.get_from_dicts(ic, 'custom_autotuner', {}, None) # Check existing solutions
@@ -786,6 +794,8 @@ def autotune(i):
            jj['autotuning_iteration']=m
            jj['tmp_dir']=tmp_dir
 
+           jj['vars']=i.get('custom_autotuner_vars',{})
+
            r=cats.make(jj)
            if r['return']>0: return r
 
@@ -924,6 +934,11 @@ def autotune(i):
            ck.inp({'text':'Press Enter to continue ...'})
 
         ##########################################################################################
+        # Collect all results if needed to be processed by user (customized crowd-tuning, for example)
+        if call=='yes':
+           ae.append(dd)
+
+        ##########################################################################################
         # Recording experiment if needed
         current_point=''
         current_record_uid=''
@@ -1003,7 +1018,7 @@ def autotune(i):
 
         ##########################################################################################
         # If was not performed via recording, perform statistical analysis  here
-        if fail!='yes' and len(stat_dict)==0:
+        if ssa!='yes' and fail!='yes' and len(stat_dict)==0:
            if o=='con':
               ck.out('')
               ck.out('Performing explicit statistical analysis of experiments ...')
@@ -1328,6 +1343,9 @@ def autotune(i):
 
     recorded_info['last_recorded_uid']=last_record_uid
     rz={'return':0, 'last_iteration_output':rr, 'last_stat_analysis': rrr, 'experiment_desc':dd, 'recorded_info':recorded_info, 'failed_cases':failed_cases}
+
+    if call=='yes':
+       rz['all']=ae
 
     # If pruning, print last results
     report=''
