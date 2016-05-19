@@ -200,7 +200,7 @@ def autotune(i):
 
                (result_conditions)                - check results for condition
 
-               (custom_autotuner)                 - dictionary to customize autotuner (exploration, DSE, etc)
+               (custom_autotuner)                 - dictionary to customize autotuner (exploration, DSE, machine learning based tuning, etc)
             }
 
     Output: {
@@ -777,8 +777,14 @@ def autotune(i):
         if al!='': jj['all']=al
 
         if cats!=None:
-           # custom selection
+           # customized autotuning via external module (exploration)
+           # specialize our autotuner to a given program (domain)
+
            jj['ck_kernel']=ck
+           jj['state']=state
+           jj['meta']=meta
+           jj['autotuning_iteration']=m
+           jj['tmp_dir']=tmp_dir
 
            r=cats.make(jj)
            if r['return']>0: return r
@@ -802,14 +808,8 @@ def autotune(i):
 
         else:
            # CK-based selection 
-#        rii=ck.save_json_to_file({'json_file':'d:\\xyz1.json','dict':jj, 'sort_keys':'yes'})
-#        raw_input('xyz1')
-
            r=ck.access(jj)
            if r['return']>0: return r
-
-#        ck.save_json_to_file({'json_file':'d:\\xyz2.json','dict':r, 'sort_keys':'yes'})
-#        raw_input('xyz2')
 
         if r.get('finish',True):
            finish=True
