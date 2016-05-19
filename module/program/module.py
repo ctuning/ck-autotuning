@@ -275,6 +275,8 @@ def process_in_dir(i):
               (add_rnd_extension_to_bin)      - if 'yes', add random extension to binary and record list
               (add_save_extension_to_bin)     - if 'yes', add '.save' to bin to save during cleaning ...
 
+              (skip_print_timers)             - if 'yes', skip printing fine-grain timers after execution
+
               (quiet)                         - if 'yes', automatically provide default answer to all questions when resolving dependencies ... 
             }
 
@@ -951,7 +953,7 @@ def process_in_dir(i):
              ck.out(sep)
              ck.out('Compiler vars:')
 
-          for k in bcv:
+          for k in sorted(bcv):
               kv=bcv[k]
 
               if sbcv!='': sbcv+=' '
@@ -2108,7 +2110,6 @@ def process_in_dir(i):
                 ck.out('  (reading fine grain timers from '+fgtf+' ...)')
                 ck.out('')
 
-
              rq=ck.load_json_file({'json_file':fgtf})
              if rq['return']>0: 
                 misc['run_success']='no'
@@ -2124,7 +2125,7 @@ def process_in_dir(i):
              if et!='':
                 exec_time=float(et)
 
-             if o=='con':
+             if o=='con' and i.get('skip_print_timers','')!='yes':
                 import json
                 ck.out(json.dumps(drq, indent=2, sort_keys=True))
                 ck.out('')
@@ -2465,8 +2466,10 @@ def pipeline(i):
                                        during collaborative autotuning, particularly via mobile devices
                                        (less time to prune results))
 
-              (add_rnd_extension_to_bin) - if 'yes', add random extension to binary and record list
-              (add_save_extension_to_bin)      - if 'yes', add '.save' to bin to save during cleaning ...
+              (skip_print_timers)          - if 'yes', skip printing fine-grain timers after execution
+
+              (add_rnd_extension_to_bin)   - if 'yes', add random extension to binary and record list
+              (add_save_extension_to_bin)  - if 'yes', add '.save' to bin to save during cleaning ...
             }
 
     Output: {
@@ -2595,6 +2598,8 @@ def pipeline(i):
 
     grtd=ck.get_from_dicts(i, 'generate_rnd_tmp_dir','', None)
     tdir=ck.get_from_dicts(i, 'tmp_dir','', None)
+
+    sptimers=ck.get_from_dicts(i, 'skip_print_timers','', choices)
 
     sca=ck.get_from_dicts(i, 'skip_clean_after', '', choices) # I add it here to be able to debug across all iterations
 
@@ -3893,6 +3898,7 @@ def pipeline(i):
            'run_cmd_substitutes':rcsub,
            'compiler_vars':cv,
            'no_vars':ncv,
+           'skip_print_timers':sptimers,
            'remove_compiler_vars':rcv,
            'extra_env_for_compilation':eefc,
            'run_timeout':xrto,
