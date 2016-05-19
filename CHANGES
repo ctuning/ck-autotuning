@@ -1,3 +1,5 @@
+* 2016.05.18 - calculating compute capability for GPGPU ...
+
 * 2016.05.17 - adding '--no_vars' to skip default -D variables and hence use default vars from the sources
 
 * 2016.05.16 - adding 'program.behavior' module to crowd-benchmark/crowd-tune program behavior

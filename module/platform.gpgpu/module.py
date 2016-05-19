@@ -239,6 +239,41 @@ def detect(i):
                               if o=='con' and r.get('found','')=='yes':
                                  ck.out('  GPGPU CK entry already exists ('+fuid+') - loading latest meta (features) ...')
 
+                           if tp=='cuda':
+                              cc=prop_all.get('gpu compute capability','')
+                              cc1=''
+                              cc2=''
+                              if cc=='2.0': 
+                                 cc1='compute_20'
+                                 cc2='sm_20'
+                              elif cc=='2.1': 
+                                 cc1='compute_20'
+                                 cc2='sm_21'
+                              elif cc=='3.0': 
+                                 cc1='compute_30'
+                                 cc2='sm_30'
+                              elif cc=='3.2': 
+                                 cc1='compute_32'
+                                 cc2='sm_32'
+                              elif cc=='3.5': 
+                                 cc1='compute_35'
+                                 cc2='sm_35'
+                              elif cc=='3.7': 
+                                 cc1='compute_37'
+                                 cc2='sm_37'
+                              elif cc=='5.0': 
+                                 cc1='compute_50'
+                                 cc2='sm_50'
+                              elif cc=='5.2': 
+                                 cc1='compute_52'
+                                 cc2='sm_52'
+                              elif cc=='5.3': 
+                                 cc1='compute_53'
+                                 cc2='sm_53'
+
+                              prop_all['compute_capability1']=cc1
+                              prop_all['compute_capability2']=cc2
+
                            props.append({"gpgpu":prop, "gpgpu_id":prop_id, "gpgpu_misc":prop_all, "gpgpu_deps":deps})
 
                         # Refresh
@@ -250,7 +285,7 @@ def detect(i):
                      lx=[]
                      if l!='':
                         lx=l.split(':')
-                        
+
                      if len(lx)>1:
                         k=lx[0].strip().lower()
                         v=lx[1].strip()
@@ -275,7 +310,7 @@ def detect(i):
                               prop['vendor']=v
                            else:
                               prop_all[k]=v
-           
+
     return {'return':0, 'features':{'gpgpu':props}}
 
 ##############################################################################
