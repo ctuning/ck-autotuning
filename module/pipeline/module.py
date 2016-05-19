@@ -100,20 +100,16 @@ def autotune(i):
                (start)
                (stop)
                (step)
-               (explore_type)         = random, parallel-random, loop, parallel-loop, 
-                                        machine-learning-based, model-based, adaptive, 
-                                        plugin-based, customized
+               (explore_type)         = random, parallel-random, loop, parallel-loop 
+                                        Note: machine learning-based or customized autotuners 
+                                        are now moved to external plugins 
+                                        (see "custom_autotuner" vars below)
 
                     or
                (random)
                (parallel-random)
                (loop)
                (parallel-loop)
-               (machine-learning-based)
-               (model-based)
-               (adaptive)
-               (plugin-based)
-               (customized)
 
                (process_multi_keys)               - list of keys (starts with) to perform stat analysis on flat array,
                                                        by default ['##characteristics#*', '##features#*' '##choices#*'],
@@ -329,11 +325,6 @@ def autotune(i):
     elif i.get('loop','')=='yes': jtype='loop'
     elif i.get('parallel-loop','')=='yes': jtype='parallel-loop'
     elif i.get('parallel-random','')=='yes': jtype='parallel-random'
-    elif i.get('machine-learning-based','')=='yes' or \
-         i.get('model-based','')=='yes' or \
-         i.get('adaptive','')=='yes' or \
-         i.get('plugin-based','')=='yes' or \
-         i.get('customized','')=='yes': jtype='customized' 
     cexp={'type':jtype, 
           'omit_probability':i.get('omit_probability',''),
           'start':i.get('start',''),

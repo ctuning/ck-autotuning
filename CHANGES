@@ -2,6 +2,8 @@
              - passing more internal vars to customized autotuner
              - add possibility to collect raw results of all autotuning iterations
                to be processed externally (useful for customized crowd-tuning)
+             - moving machine learning based and customizer autotuning
+               to external plugins
 
 * 2016.05.17 - adding '--no_vars' to skip default -D variables and hence use default vars from the sources
 

@@ -288,15 +288,9 @@ def make(i):
                   # Machine learning based probabilistic adaptive sampling of multi-dimensional 
                   # design and optimization speaces via external plugin
                   # See our work on Collective Mind (2014/2015)
-                  elif tp=='machine-learning-based' or tp=='model-based' or tp=='adaptive' or tp=='plugin-based' or tp=='customized': 
-                       ck.out('TBD: need to add CK plugin ...')
-                       exit(1)
-
-
-
-
-
-
+                  #
+                  # NOTE: moved to external customized autotuner plugins (see autotune pipeline --custom_autotuner)
+#                  elif tp=='machine-learning-based' or tp=='model-based' or tp=='adaptive' or tp=='plugin-based' or tp=='customized': 
 
                   else:
                      return {'return':1, 'error':'unknown autotuning type ('+tp+')'}
