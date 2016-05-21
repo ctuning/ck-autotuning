@@ -3,6 +3,7 @@
   "build_compiler_vars": {}, 
   "compile_deps": {
     "compiler": {
+      "env_key": "COMPILER", 
       "local": "yes", 
       "name": "CUDA compiler", 
       "sort": 20, 
