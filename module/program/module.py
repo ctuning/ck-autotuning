@@ -2381,6 +2381,7 @@ def pipeline(i):
 
               (best_base_flag)       - if 'yes', try to select best flag if available ...
               (speed)                - the same as above
+              (env_speed)            - use environment flag for best optimization (CK_OPT_SPEED)
 
               (select_best_base_flag_for_first_iteration) - if 'yes' and autotuning_iteration=0
 
@@ -2582,6 +2583,8 @@ def pipeline(i):
     perf=ck.get_from_dicts(i, 'perf', '', choices)
     vtune=ck.get_from_dicts(i, 'vtune', '', choices)
     milepost=ck.get_from_dicts(i, 'milepost', '', choices)
+
+    espeed=ck.get_from_dicts(i, 'env_speed', '', choices)
 
     prcmd=''
 
@@ -3661,6 +3664,7 @@ def pipeline(i):
               'remove_compiler_vars':rcv,
               'extra_env_for_compilation':eefc,
               'compile_timeout':xcto,
+              'speed':espeed,
               'add_rnd_extension_to_bin':are,
               'add_save_extension_to_bin':ase,
               'out':oo}
@@ -3743,6 +3747,7 @@ def pipeline(i):
               'autotuning_iteration':ati,
               'console':cons,
               'env':env,
+              'speed':espeed,
               'extra_env':eenv,
               'compiler_vars':cv,
               'no_vars':ncv,
@@ -3874,6 +3879,7 @@ def pipeline(i):
            'tmp_dir':tdir,
            'skip_clean_after':sca,
            'compile_type':ctype,
+           'speed':espeed,
            'sudo':isd,
            'energy':sme,
            'affinity':aff,
