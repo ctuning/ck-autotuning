@@ -133,6 +133,9 @@ def detect(i):
 
     props=[]
 
+    fuid=''
+    fuoa=''
+
     # Check if program to get CUDA device exists
     types=['cuda','opencl']
     tp=i.get('type','')
@@ -274,7 +277,13 @@ def detect(i):
                               prop_all['compute_capability1']=cc1
                               prop_all['compute_capability2']=cc2
 
-                           props.append({"gpgpu":prop, "gpgpu_id":prop_id, "gpgpu_misc":prop_all, "gpgpu_deps":deps})
+                           jj={"gpgpu":prop, "gpgpu_id":prop_id, "gpgpu_misc":prop_all, "gpgpu_deps":deps}
+
+                           if fuoa!='' or fuid!='':
+                              jj['gpgpu_uoa']=fuoa
+                              jj['gpgpu_misc_uid']=fuid
+
+                           props.append(jj)
 
                         # Refresh
                         prop={}
