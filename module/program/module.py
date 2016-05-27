@@ -2052,7 +2052,7 @@ def process_in_dir(i):
 
           # Check if print files
           pfar=meta.get('print_files_after_run',[])
-          if len(pfar)>0 and spf!='yes' and o=='con':
+          if len(pfar)>0 and sfp!='yes' and o=='con':
              ck.out('')
              ck.out(' (printing output files) ')
 
