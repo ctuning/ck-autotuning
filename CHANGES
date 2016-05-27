@@ -1,3 +1,5 @@
+* 2016.05.27 - adding support to print various files after run
+
 * 2016.05.18 - calculating compute capability for GPGPU ...
              - passing more internal vars to customized autotuner
              - add possibility to collect raw results of all autotuning iterations

@@ -277,6 +277,8 @@ def process_in_dir(i):
 
               (skip_print_timers)             - if 'yes', skip printing fine-grain timers after execution
 
+              (skip_file_print)               - skip file printing (if 'print_files_after_run' list is in program meta)
+
               (quiet)                         - if 'yes', automatically provide default answer to all questions when resolving dependencies ... 
             }
 
@@ -335,6 +337,8 @@ def process_in_dir(i):
     for q in unparsed:
         if sunparsed!='': sunparsed+=' '
         sunparsed+=q
+
+    sfp=i.get('skip_file_print','')
 
     ee=i.get('extra_env','')
     ercmd=i.get('extra_run_cmd','')
@@ -1865,7 +1869,6 @@ def process_in_dir(i):
        if xcn_max=='': xcn_max=cfg['calibration_max']
        cn_max=int(xcn_max)
 
-
        for g in rt.get('run_output_files',[]):
            rof.append(g)
 
@@ -2047,11 +2050,34 @@ def process_in_dir(i):
                     if ry>0:
                        return {'return':1, 'error':'pulling from remote device failed'}
 
+          # Check if print files
+          pfar=meta.get('print_files_after_run',[])
+          if len(pfar)>0 and spf!='yes' and o=='con':
+             ck.out('')
+             ck.out(' (printing output files) ')
+
+             for q in pfar:
+                 ck.out('')
+                 ck.out('    * '+q)
+                 ck.out('')
+
+                 rz=ck.load_text_file({'text_file':q, 'split_to_list':'yes'})
+                 if rz['return']==0:
+                    lxx=rz['lst']
+                    for q1 in lxx:
+                        ck.out('      '+q1)
+
+             if o=='con':
+                ck.out('')
+                ck.out('  (post processing from script '+pp_uoa+' / '+pp_name+' ... )"')
+                ck.out('')
+
+
           # Check if post-processing script from CMD
           if pp_uoa!='':
              if o=='con':
                 ck.out('')
-                ck.out('  (post processing from script ('+pp_uoa+' / '+pp_name+')..."')
+                ck.out('  (post processing from script '+pp_uoa+' / '+pp_name+' ... )"')
                 ck.out('')
 
              iz={'action':'run',
