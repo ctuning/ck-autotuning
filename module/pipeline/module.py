@@ -775,7 +775,7 @@ def autotune(i):
             'out':o}
         if al!='': jj['all']=al
 
-        if cats!=None:
+        if cats!=None and al!='yes':
            # customized autotuning via external module (exploration)
            # specialize our autotuner to a given program (domain)
 
