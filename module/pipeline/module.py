@@ -579,6 +579,8 @@ def autotune(i):
 
         mm=m+1
         ck.out(sep)
+        ck.out(sep)
+        ck.out(sep)
         x='Pipeline iteration: '+str(mm)
         if ni!=-1: x+=' of '+str(ni) 
 
