@@ -714,6 +714,7 @@ def autotune(i):
                  if prune!='yes' or len(pccur)==0:
                     sol={}
                     bb=0
+                    if iref=='yes': bb=1
                     for b in sols:
                         bp=b.get('points',[])
                         suid=b.get('solution_uid','')
