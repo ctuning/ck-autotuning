@@ -1,3 +1,5 @@
+* 2016.05.30 * support for new CK web server
+
 * 2016.05.29 - added 'exchange_locally' mode to GPGPU detection and info exchange
              - added support to replay experiments even when customized autotuner ...
 
