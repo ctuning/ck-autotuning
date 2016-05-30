@@ -186,6 +186,7 @@ def autotune(i):
 
                (solutions)                        - check solutions
                (ref_solution)                     - if 'yes', choose reference solution from above list
+               (internal_ref)                     - if 'yes', try internal reference before checking solutions ...
 
                (prune)                            - prune solution (find minimal choices that give the same result)
                (prune_ignore_choices)             - list of choices to ignore (such as base flag, for example)
@@ -251,7 +252,8 @@ def autotune(i):
 
     sols=ck.get_from_dicts(ic, 'solutions', [], None) # Check existing solutions
     isols=len(sols)
-    rs=ck.get_from_dicts(ic, 'ref_solution', '', None) # Check existing solutions
+    rs=ck.get_from_dicts(ic, 'ref_solution', '', None) 
+    iref=ck.get_from_dicts(ic, 'internal_ref', '', None) 
 
     prune=ck.get_from_dicts(ic, 'prune', '', None) # Prune existing solutions
     prune_md5=ck.get_from_dicts(ic, 'prune_md5', '', None) # if 'yes', prune if MD5 doesn't change
@@ -382,7 +384,7 @@ def autotune(i):
     ae=[]
 
     # Check customized autotuner
-    cat=ck.get_from_dicts(ic, 'custom_autotuner', {}, None) # Check existing solutions
+    cat=ck.get_from_dicts(ic, 'custom_autotuner', {}, None) 
     cats=None # script
 
     if len(cat)>0:
@@ -594,7 +596,7 @@ def autotune(i):
         al=''
         suid=''
         if isols>0:
-           if not all_solutions:
+           if not (iref=='yes' and m==0) and not all_solutions:
               if o=='con':
                  x=''
                  if rs=='yes':
