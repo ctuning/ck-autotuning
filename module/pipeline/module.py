@@ -568,10 +568,14 @@ def autotune(i):
     pruned_inversed_flags={}
     prune_check_all=[]
 
+    sol={}
+
     increased_iterations=False
 
     recorded_info={}
     last_record_uid=''
+
+    ref_keys={}
 
     m=-1
     while True:
@@ -757,6 +761,13 @@ def autotune(i):
                         ccur2.append(v)
                         corder2.append(b)
 
+                 # Check if reuse ref choices
+                 if sol.get('preset_ref_choices','')=='yes' and len(ref_keys)>0:
+                    for k in sorted(ref_keys):
+                        if k not in corder2:
+                           corder2.append(k)
+                           ccur2.append(ref_keys[k])
+
                  corder=[corder2]
                  ccur=[ccur2]
 
@@ -794,7 +805,7 @@ def autotune(i):
            if r['return']>0: return r
 
            # Print keys and update pipeline!
-           ks=r.get('keys',[])
+           ks=r.get('keys',{})
            if len(ks)>0:
               if o=='con': 
                  ck.out('')
@@ -809,6 +820,10 @@ def autotune(i):
 
               if o=='con': 
                  ck.out('')
+
+              # Save ref choices just in case
+              if m==0:
+                 ref_keys=copy.deepcopy(ks)
 
         else:
            # CK-based selection 
