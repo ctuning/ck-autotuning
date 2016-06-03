@@ -1463,9 +1463,6 @@ def process_in_dir(i):
        c=c.replace('$#env1#$',svarb)
        c=c.replace('$#env2#$',svare)
 
-       if ercmd!='':
-          c+=' '+ercmd
-
        # Update keys in run cmd (useful for CMD autotuning)
        for k in rcsub:
            xv=rcsub[k]
@@ -1743,6 +1740,7 @@ def process_in_dir(i):
        sb+='\necho    executing code ...\n'
 
        if remote!='yes' and cons!='yes':
+          if ercmd!='': c+=' '+ercmd
           if rco1!='': c+=' '+stro+' '+rco1
           if rco2!='': c+=' '+stre+' '+rco2
        sb+=no+c+'\n'
@@ -1951,6 +1949,7 @@ def process_in_dir(i):
              y=rs+' '+eifsx+tosd['change_dir']+' '+rdir+envtsep+' '+y+eifsx+' '+rse
 
              if cons!='yes':
+                if ercmd!='': y+=' '+ercmd
                 if rco1!='': y+=' '+stro+' '+rco1
                 if rco2!='': y+=' '+stre+' '+rco2
 

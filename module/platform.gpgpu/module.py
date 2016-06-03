@@ -196,6 +196,14 @@ def detect(i):
 
               deps=r['deps']
 
+              er=i.get('exchange_repo','')
+              esr=i.get('exchange_subrepo','')
+              el=i.get('exchange_locally','')
+              if el!='yes' and er=='': 
+                 er=ck.cfg['default_exchange_repo_uoa']
+                 esr=ck.cfg['default_exchange_subrepo_uoa']
+              xn=prop.get('name','')
+
               r=ck.load_text_file({'text_file':ftmp, 'split_to_list':'yes', 'delete_after_read':'yes'})
               if r['return']==0:
                  ll=r['lst']
@@ -209,19 +217,9 @@ def detect(i):
 
                            # Exchanging info #################################################################
                            if ex=='yes':
-                              xn=prop.get('name','')
-
-                              if xn!='':
-                                 if o=='con':
-                                    ck.out('')
-                                    ck.out('Exchanging information with repository ...')
-
-                              er=i.get('exchange_repo','')
-                              esr=i.get('exchange_subrepo','')
-                              el=i.get('exchange_locally','')
-                              if el!='yes' and er=='': 
-                                 er=ck.cfg['default_exchange_repo_uoa']
-                                 esr=ck.cfg['default_exchange_subrepo_uoa']
+                              if o=='con':
+                                 ck.out('')
+                                 ck.out('Exchanging information with repository ...')
 
                               ii={'action':'exchange',
                                   'module_uoa':cfg['module_deps']['platform'],
