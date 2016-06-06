@@ -679,6 +679,9 @@ def process_in_dir(i):
     if len(deps)==0: 
        deps=meta.get('compile_deps',{})
 
+    if len(deps)==0:
+       deps=meta.get('deps',{})
+
     if len(deps)>0:
        if o=='con':
           ck.out(sep)
