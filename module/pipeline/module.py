@@ -798,6 +798,7 @@ def autotune(i):
            jj['meta']=meta
            jj['autotuning_iteration']=m
            jj['tmp_dir']=tmp_dir
+           jj['custom_autotuner_meta']=cat
 
            jj['vars']=i.get('custom_autotuner_vars',{})
 

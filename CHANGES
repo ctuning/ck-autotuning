@@ -1,3 +1,5 @@
+* 2016.06.08 * passing custom autotuner meta from program to custom autotuning script
+
 * 2016.05.30 * support for new CK web server
              * added possibility to run internal reference autotuning iterations
                when checking pre-existing solutions (useful for experiment replay/reproducibility)
