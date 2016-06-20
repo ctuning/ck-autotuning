@@ -1,3 +1,5 @@
+* 2016.06.20 * improving execution on remote device (using .sh instead of CMD which may become too long and fail)
+
 * 2016.06.08 * passing custom autotuner meta from program to custom autotuning script
 
 * 2016.05.30 * support for new CK web server

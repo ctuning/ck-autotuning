@@ -443,7 +443,7 @@ def autotune(i):
           return {'return':1, 'error':'pipeline is not ready'}
        del(pipeline['return'])
 
-   # Clean and copy pipeline before choice selection
+    # Clean and copy pipeline before choice selection
     for q in cfg['clean_pipeline']:
         if q in pipeline: del(pipeline[q])
     pipelinec=copy.deepcopy(pipeline)

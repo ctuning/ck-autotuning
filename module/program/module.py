@@ -447,6 +447,7 @@ def process_in_dir(i):
     hplat=rx['platform']
 
     bbp=hosd.get('batch_bash_prefix','')
+    bbpt=tosd.get('batch_bash_prefix','')
     rem=hosd.get('rem','')
     eset=hosd.get('env_set','')
     etset=tosd.get('env_set','')
@@ -1931,20 +1932,51 @@ def process_in_dir(i):
 
           if o=='con':  ck.out(sep)
 
+          # Prepare tmp batch file with run instructions
+          rx=ck.gen_tmp_file({'prefix':'tmp-', 'suffix':sext, 'remove_dir':'yes'})
+          if rx['return']>0: return rx
+          fn=rx['file_name']
+
+          xbbp=bbp
+          if remote=='yes':
+             xbbp=bbpt
+
+          if xbbp!='':
+             sb=bbp+'\n\n'+sb
+
+          rx=ck.save_text_file({'text_file':fn, 'string':sb})
+          if rx['return']>0: return rx
+
           # Prepare execution
           if remote=='yes':
-             # Prepare command as one line
+             # Copy above batch file to remote device
+             y=tosd.get('remote_push','').replace('$#device#$',xtdid)
+             y=y.replace('$#file1#$', fn)
+             y=y.replace('$#file2#$', rdir+fn)
+
+             if o=='con':
+                ck.out(sep)
+                ck.out(y)
+                ck.out('')
+
+             ry=os.system(y)
+             if ry>0:
+                return {'return':1, 'error':'copying to remote device failed'}
+
+             # Prepare command line for remote device
              y=''
 
              if isd=='yes': 
                 y+=sudo_init+' '+envtsep
-                y+=sudo_pre+' '
+                y+=sudo_pre+' '+envtsep
 
-             x=sb.split('\n')
-             for q in x:
-                 if q!='':
-                    if y!='': y+=envtsep
-                    y+=' '+q
+             y+=tosd.get('interpreter','')+' '+stbp+fn
+
+#             x=sb.split('\n')
+#             for q in x:
+#                 if q!='':
+#                    if y!='': y+=envtsep
+#                    y+=' '+q
 
              if isd=='yes': y=y+' '+envtsep+' '+sudo_post
 
@@ -1960,16 +1992,6 @@ def process_in_dir(i):
                 ck.out(y)
 
           else:
-             # Record to tmp batch and run
-             rx=ck.gen_tmp_file({'prefix':'tmp-', 'suffix':sext, 'remove_dir':'yes'})
-             if rx['return']>0: return rx
-             fn=rx['file_name']
-
-             sb=bbp+'\n\n'+sb
-
-             rx=ck.save_text_file({'text_file':fn, 'string':sb})
-             if rx['return']>0: return rx
-
              y=''
              if sexe!='':
                 y+=sexe+' '+sbp+fn+envsep
@@ -2009,6 +2031,8 @@ def process_in_dir(i):
              rx=ry['return_code']
 
           exec_time=time.time()-start_time1
+          # Hack to fix occasional strange effect when time.time() is 0
+          if exec_time<0: exec_time=-exec_time
 
           if sca!='yes':
              if fn!='' and os.path.isfile(fn): os.remove(fn)
@@ -4405,7 +4429,7 @@ def autotune(i):
                (iterations) - change iterations
 
                Force:
- 
+
                local                = yes
                only_one_run         = yes
                keep_tmp             = yes
