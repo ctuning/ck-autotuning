@@ -1,3 +1,5 @@
+* 2016.06.22 * added possibility to run postprocess script via CK (i.e. with the possibility to reuse all CK functions)
+
 * 2016.06.20 * improving execution on remote device (using .sh instead of CMD which may become too long and fail)
 
 * 2016.06.08 * passing custom autotuner meta from program to custom autotuning script

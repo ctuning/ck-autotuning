@@ -2145,12 +2145,56 @@ def process_in_dir(i):
                     ck.out('  (post processing: "'+ppc+'"')
                     ck.out('')
 
-                 srx=os.system(ppc)
-                 # If error code > 0, set as the error code of the main program and quit
-                 if srx>0:
-                    if o=='con':
-                       ck.out('  (post processing script failed!)')
-                    break
+                 # Check if has CK standard, otherwise run as system
+                 as_cmd=True
+                 ppcs=ppc.split()
+                 if len(ppcs)>1:
+                    if ppcs[0].startswith('python'):
+                       ppcm=ppcs[1]
+                       ppcm1=os.path.basename(ppcm)
+                       ppcm2=os.path.dirname(ppcm)
+
+                       if ppcm1.endswith('.py'):
+                          ppcm1=ppcm1[:-3]
+
+                       # Check if has custom script
+                       cdd=os.getcwd()
+
+                       cs=None
+                       rxx=ck.load_module_from_path({'path':ppcm2, 'module_code_name':ppcm1, 'skip_init':'yes'})
+                       if rxx['return']==0: 
+                          cs=rxx['code']
+
+                       os.chdir(cdd) # restore current dir from above operation
+
+                       if cs!=None and 'ck_postprocess' in dir(cs):
+                          as_cmd=False
+
+                          # Call customized script
+                          ii={"host_os_uoa":hosx,
+                              "host_os_uid":hos,
+                              "host_os_dict":hosd,
+                              "target_os_uoa":tosx,
+                              "target_os_uid":tos,
+                              "target_os_dict":tosd,
+                              "target_device_id":tdid,
+                              "ck_kernel":ck
+                             }
+
+                          rxx=cs.ck_postprocess(ii)
+                          srx=rxx['return']
+                          if srx>0:
+                             if o=='con':
+                                ck.out('  (post processing script failed: '+rxx['error']+'!)')
+                             break
+
+                 if as_cmd:
+                    srx=os.system(ppc)
+                    # If error code > 0, set as the error code of the main program and quit
+                    if srx>0:
+                       if o=='con':
+                          ck.out('  (post processing script failed!)')
+                       break
 
           # If script failed, exit
           if srx>0: break
