@@ -2161,7 +2161,6 @@ def process_in_dir(i):
                           # Check if has custom script
                           cdd=os.getcwd()
 
-                          print ('xyz1')
                           cs=None
                           rxx=ck.load_module_from_path({'path':ppcm2, 'module_code_name':ppcm1, 'skip_init':'yes'})
                           if rxx['return']>0:
