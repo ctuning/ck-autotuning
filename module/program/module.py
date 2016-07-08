@@ -1647,11 +1647,14 @@ def process_in_dir(i):
           if rx['return']>0: return rx
           dd=rx['dict']
           dp=rx['path']
+          xdp=dp+sdirs
 
           if remote=='yes':
              c=c.replace('$#dataset_path#$','')
           else:
-             c=c.replace('$#dataset_path#$',dp+sdirs)
+             c=c.replace('$#dataset_path#$',xdp)
+
+          sb+='\n'+no+eset+' CK_DATASET_PATH='+xdp+'\n'
 
           dfiles=dd.get('dataset_files',[])
           if len(dfiles)>0:
@@ -1673,12 +1676,17 @@ def process_in_dir(i):
                    if r['return']>0: return r
                    dfile=r['choice']
 
+             if dfile!='':
+                sb+='\n'+no+eset+' CK_DATASET_FILENAME='+dfile+'\n'
+
              for k in range(0, len(dfiles)):
                  df=dfiles[k]
                  if dfile!='' and k==0: df=dfile
+
                  kk='$#dataset_filename'
                  if k>0: kk+='_'+str(k)
                  kk+='#$'
+
                  c=c.replace(kk, df)
 
                  if remote=='yes' and srn==0 and sdi!='yes' and sdc!='yes':
@@ -1762,12 +1770,80 @@ def process_in_dir(i):
 
        fn=''
 
+       # Check if pre-processing script via CK
+       pvck=rt.get('pre_process_via_ck',{})
+       if len(pvck)>0:
+
+          pvckp=src_path
+
+          pvckm=pvck.get('module_uoa','')
+          if pvckm=='': pvckm=work['self_module_uid']
+          pvckd=pvck.get('data_uoa','')
+
+          if pvckd!='':
+             rp=ck.access({'action':'find',
+                           'module_uoa':pvckm,
+                           'data_uoa':pvckd})
+             if rp['return']>0: return rp
+             pvckp=rp['path']
+
+          pvckc=pvck.get('script_name','')
+          if pvckc=='': pvckc='preprocess'
+
+          if o=='con':
+             ck.out('')
+             ck.out('  (pre processing via CK ('+pvckp+', '+pvckc+')')
+             ck.out('')
+
+          # Check if has custom script
+          cdd=os.getcwd()
+
+          cs=None
+          rxx=ck.load_module_from_path({'path':ppcm2, 'module_code_name':ppcm1, 'skip_init':'yes'})
+
+          cs=rxx.get('code', None)
+          if cs==None:
+             rxx['return']=1
+             rxx['error']='no python code found'
+
+          if rxx['return']>0:
+             if o=='con':
+                ck.out('  (loading pre processing script via CK failed: '+rxx['error']+'!)')
+             break
+
+          os.chdir(cdd) # restore current dir from above operation
+
+          # Call customized script
+          ii={"host_os_uoa":hosx,
+              "host_os_uid":hos,
+              "host_os_dict":hosd,
+              "target_os_uoa":tosx,
+              "target_os_uid":tos,
+              "target_os_dict":tosd,
+              "target_device_id":tdid,
+              "ck_kernel":ck,
+              "meta":meta,
+              "run_time":rt
+             }
+
+          rxx=cs.ck_preprocess(ii)
+          srx=rxx['return']
+          if srx>0:
+             misc['run_success']='no'
+             misc['run_success_bool']=False
+             misc['fail_reason']='pre-processing script via CK failed ('+rxx['error']+')'
+
+             if o=='con':
+                ck.out('  (pre processing script via CK failed: '+rxx['error']+')')
+
+             return {'return':0, 'tmp_dir':rcdir, 'misc':misc, 'characteristics':ccc, 'deps':deps}
+
        # Check pre-processing scripts
        lppc0=rt.get('pre_process_cmds',[])
        ppc0=rt.get('pre_process_cmd','')
        if ppc0!='': lppc0.append(ppc0)
 
-       # Check if pre-processing script
+       # Check if traditional pre-processing script
        srx=0 # script exit code
        if len(lppc0)>0:
           sbu=sbenv+'\n\n'
