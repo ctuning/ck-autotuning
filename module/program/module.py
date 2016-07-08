@@ -1788,7 +1788,6 @@ def process_in_dir(i):
                  "ck_kernel":ck,
                  "meta":meta,
                  "deps":deps,
-                 "params":pvck.get('params',{}),
                  "run_time":rt
                 }
 
@@ -2262,7 +2261,10 @@ def process_in_dir(i):
                                  "target_os_uid":tos,
                                  "target_os_dict":tosd,
                                  "target_device_id":tdid,
-                                 "ck_kernel":ck
+                                 "ck_kernel":ck,
+                                 "meta":meta,
+                                 "deps":deps,
+                                 "run_time":rt
                                 }
 
                              rxx=cs.ck_postprocess(ii)
