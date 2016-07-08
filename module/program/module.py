@@ -1819,6 +1819,7 @@ def process_in_dir(i):
                  "target_device_id":tdid,
                  "ck_kernel":ck,
                  "meta":meta,
+                 "deps":deps,
                  "run_time":rt
                 }
 
