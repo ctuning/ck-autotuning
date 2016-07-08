@@ -1799,36 +1799,32 @@ def process_in_dir(i):
           cdd=os.getcwd()
 
           cs=None
-          rxx=ck.load_module_from_path({'path':ppcm2, 'module_code_name':ppcm1, 'skip_init':'yes'})
+          rxx=ck.load_module_from_path({'path':pvckp, 'module_code_name':pvckc, 'skip_init':'yes'})
 
           cs=rxx.get('code', None)
           if cs==None:
              rxx['return']=1
              rxx['error']='no python code found'
 
+          if rxx['return']==0:
+             os.chdir(cdd) # restore current dir from above operation
+
+             # Call customized script
+             ii={"host_os_uoa":hosx,
+                 "host_os_uid":hos,
+                 "host_os_dict":hosd,
+                 "target_os_uoa":tosx,
+                 "target_os_uid":tos,
+                 "target_os_dict":tosd,
+                 "target_device_id":tdid,
+                 "ck_kernel":ck,
+                 "meta":meta,
+                 "run_time":rt
+                }
+
+             rxx=cs.ck_preprocess(ii)
+
           if rxx['return']>0:
-             if o=='con':
-                ck.out('  (loading pre processing script via CK failed: '+rxx['error']+'!)')
-             break
-
-          os.chdir(cdd) # restore current dir from above operation
-
-          # Call customized script
-          ii={"host_os_uoa":hosx,
-              "host_os_uid":hos,
-              "host_os_dict":hosd,
-              "target_os_uoa":tosx,
-              "target_os_uid":tos,
-              "target_os_dict":tosd,
-              "target_device_id":tdid,
-              "ck_kernel":ck,
-              "meta":meta,
-              "run_time":rt
-             }
-
-          rxx=cs.ck_preprocess(ii)
-          srx=rxx['return']
-          if srx>0:
              misc['run_success']='no'
              misc['run_success_bool']=False
              misc['fail_reason']='pre-processing script via CK failed ('+rxx['error']+')'
