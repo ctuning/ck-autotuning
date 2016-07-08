@@ -1738,38 +1738,6 @@ def process_in_dir(i):
 
           misc['dataset_uoa']=dduoa
 
-       # Check if has unparsed
-       if sunparsed!='':
-          c+=' '+sunparsed
-
-       # Check if redirect output
-       rco1=rt.get('run_cmd_out1','')
-       rco2=rt.get('run_cmd_out2','')
-
-       if ee!='':
-          sb+='\n'+no+ee+'\n\n'
-
-       sb+='\necho    executing code ...\n'
-
-       if remote!='yes' and cons!='yes':
-          if ercmd!='': c+=' '+ercmd
-          if rco1!='': c+=' '+stro+' '+rco1
-          if rco2!='': c+=' '+stre+' '+rco2
-       sb+=no+c+'\n'
-
-       # Stop energy monitor, if needed and if supported
-       if me=='yes' and sspm2!='':
-          if o=='con':
-             ck.out('')
-             ck.out('Adding energy monitor')
-             ck.out('')
-
-          sb+='\n'
-          sb+=scall+' '+sspm2+'\n'
-          sb+='\n'
-
-       fn=''
-
        # Check if pre-processing script via CK
        pvck=rt.get('pre_process_via_ck',{})
        if len(pvck)>0:
@@ -1820,10 +1788,16 @@ def process_in_dir(i):
                  "ck_kernel":ck,
                  "meta":meta,
                  "deps":deps,
+                 "params":pvck.get('params',{}),
                  "run_time":rt
                 }
 
              rxx=cs.ck_preprocess(ii)
+
+             if rxx['return']==0:
+                psb=rxx.get('bat','')
+                if psb!='':
+                   sb+='\n'+psb+'\n'
 
           if rxx['return']>0:
              misc['run_success']='no'
@@ -1834,6 +1808,38 @@ def process_in_dir(i):
                 ck.out('  (pre processing script via CK failed: '+rxx['error']+')')
 
              return {'return':0, 'tmp_dir':rcdir, 'misc':misc, 'characteristics':ccc, 'deps':deps}
+
+       # Check if has unparsed
+       if sunparsed!='':
+          c+=' '+sunparsed
+
+       # Check if redirect output
+       rco1=rt.get('run_cmd_out1','')
+       rco2=rt.get('run_cmd_out2','')
+
+       if ee!='':
+          sb+='\n'+no+ee+'\n\n'
+
+       sb+='\necho    executing code ...\n'
+
+       if remote!='yes' and cons!='yes':
+          if ercmd!='': c+=' '+ercmd
+          if rco1!='': c+=' '+stro+' '+rco1
+          if rco2!='': c+=' '+stre+' '+rco2
+       sb+=no+c+'\n'
+
+       # Stop energy monitor, if needed and if supported
+       if me=='yes' and sspm2!='':
+          if o=='con':
+             ck.out('')
+             ck.out('Adding energy monitor')
+             ck.out('')
+
+          sb+='\n'
+          sb+=scall+' '+sspm2+'\n'
+          sb+='\n'
+
+       fn=''
 
        # Check pre-processing scripts
        lppc0=rt.get('pre_process_cmds',[])
