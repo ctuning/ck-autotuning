@@ -1788,6 +1788,7 @@ def process_in_dir(i):
                  "ck_kernel":ck,
                  "meta":meta,
                  "deps":deps,
+                 "env":env,     # env has to be updated via returned bat file, but it can be updated for the reproducibility
                  "run_time":rt
                 }
 
