@@ -237,3 +237,69 @@ def check_size(i):
         ck.out('  Size: '+str(sz)+x)
 
     return {'return':0}
+
+##############################################################################
+# add file to a given dataset
+
+def add_file_to(i):
+    """
+    Input:  {
+              data_uoa   - dataset entry to add file to
+              (repo_uoa) - repository of the entry
+              file       - file to add
+            }
+
+    Output: {
+              return       - return code =  0, if successful
+                                         >  0, if error
+              (error)      - error text if return > 0
+            }
+
+    """
+
+    import shutil
+    import os
+
+    o=i.get('out','')
+
+    duoa=i.get('data_uoa','')
+    muoa=i.get('module_uoa','')
+    ruoa=i.get('repo_uoa','')
+
+    fn=i.get('file','')
+
+    if duoa=='' or fn=='':
+       return {'return':1, 'error':'usage - ck add_file_to dataset:{dataset UOA} --file={filename}'}
+
+    # Load entry
+    r=ck.access({'action':'load',
+                 'module_uoa':muoa,
+                 'data_uoa':duoa,
+                 'repo_uoa':ruoa})
+    if r['return']>0: return r
+    p=r['path']
+    d=r['dict']
+
+    # Copy file
+    pn=os.path.join(p,fn)
+
+    if o=='con':
+       ck.out('Copying file '+fn+' to '+pn+' ...')
+
+    shutil.copyfile(fn,pn)
+
+    # Adding to dataset list
+    df=d.get('dataset_files',[])
+    df.append(fn)
+    d['dataset_files']=df
+
+    # Updating entry
+    r=ck.access({'action':'update',
+                 'module_uoa':muoa,
+                 'data_uoa':duoa,
+                 'repo_uoa':ruoa,
+                 'dict':d,
+                 'sort_keys':'yes'})
+    if r['return']>0: return r
+
+    return {'return':0}
