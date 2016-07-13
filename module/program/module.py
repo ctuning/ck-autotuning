@@ -662,7 +662,7 @@ def process_in_dir(i):
 
     # If run and dynamic or reuse compile deps, check deps prepared by compiler
     fdeps=cfg.get('deps_file','')
-    if len(deps)==0 and sa=='run' and (rcd=='yes' or ctype=='dynamic'):
+    if meta.get('skip_tmp_deps','')!='yes' and len(deps)==0 and sa=='run' and (rcd=='yes' or ctype=='dynamic'):
        if os.path.isfile(fdeps):
           if o=='con':
              ck.out('')
