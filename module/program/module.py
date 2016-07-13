@@ -1638,6 +1638,7 @@ def process_in_dir(i):
                     return {'return':1, 'error':'copying to remote device failed'}
 
        # Loading dataset
+       dset={}
        dp=''
        dfiles=[]
        if dduoa!='':
@@ -1655,6 +1656,7 @@ def process_in_dir(i):
              c=c.replace('$#dataset_path#$',xdp)
 
           sb+='\n'+no+eset+' CK_DATASET_PATH='+xdp+'\n'
+          dset['path']=xdp
 
           dfiles=dd.get('dataset_files',[])
           if len(dfiles)>0:
@@ -1678,6 +1680,7 @@ def process_in_dir(i):
 
              if dfile!='':
                 sb+='\n'+no+eset+' CK_DATASET_FILENAME='+dfile+'\n'
+                dset['file']=dfile
 
              for k in range(0, len(dfiles)):
                  df=dfiles[k]
@@ -1789,7 +1792,8 @@ def process_in_dir(i):
                  "meta":meta,
                  "deps":deps,
                  "env":env,     # env has to be updated via returned bat file, but it can be updated for the reproducibility
-                 "run_time":rt
+                 "run_time":rt,
+                 "dataset_meta":dset
                 }
 
              rxx=cs.ck_preprocess(ii)
