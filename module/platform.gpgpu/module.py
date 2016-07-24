@@ -320,6 +320,16 @@ def detect(i):
                            else:
                               prop_all[k]=v
 
+    if o=='con':
+       r=ck.dumps_json({'dict':props})
+       if r['return']>0: return r
+       s=r['string']
+
+       ck.out('')
+       ck.out('GPU features (properties):'
+       ck.out('')
+       ck.out(s)
+
     return {'return':0, 'features':{'gpgpu':props}}
 
 ##############################################################################
