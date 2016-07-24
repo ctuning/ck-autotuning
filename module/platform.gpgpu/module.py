@@ -326,7 +326,7 @@ def detect(i):
        s=r['string']
 
        ck.out('')
-       ck.out('GPU features (properties):'
+       ck.out('GPU features (properties):')
        ck.out('')
        ck.out(s)
 
