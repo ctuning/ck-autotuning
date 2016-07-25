@@ -244,44 +244,111 @@ def detect(i):
 
                            if tp=='cuda':
                               cc=prop_all.get('gpu compute capability','')
+
                               cc1=''
                               cc2=''
-                              if cc=='2.0': 
+                              cc3=''
+
+                              if cc=='1.0': 
+                                 cc1='compute_10'
+                                 cc2='sm_10'
+                                 cc3='Tesla'
+                              elif cc=='1.1': 
+                                 cc1='compute_11'
+                                 cc2='sm_11'
+                                 cc3='Tesla'
+                              elif cc=='1.2': 
+                                 cc1='compute_12'
+                                 cc2='sm_12'
+                                 cc3='Tesla'
+                              elif cc=='1.3': 
+                                 cc1='compute_13'
+                                 cc2='sm_13'
+                                 cc3='Tesla'
+                              elif cc=='2.0': 
                                  cc1='compute_20'
                                  cc2='sm_20'
+                                 cc3='Fermi'
                               elif cc=='2.1': 
                                  cc1='compute_20'
                                  cc2='sm_21'
+                                 cc3='Fermi'
                               elif cc=='3.0': 
                                  cc1='compute_30'
                                  cc2='sm_30'
+                                 cc3='Kepler'
                               elif cc=='3.2': 
                                  cc1='compute_32'
                                  cc2='sm_32'
+                                 cc3='Kepler'
                               elif cc=='3.5': 
                                  cc1='compute_35'
                                  cc2='sm_35'
+                                 cc3='Kepler'
                               elif cc=='3.7': 
                                  cc1='compute_37'
                                  cc2='sm_37'
+                                 cc3='Kepler'
                               elif cc=='5.0': 
                                  cc1='compute_50'
                                  cc2='sm_50'
+                                 cc3='Maxwell'
                               elif cc=='5.2': 
                                  cc1='compute_52'
                                  cc2='sm_52'
+                                 cc3='Maxwell'
                               elif cc=='5.3': 
                                  cc1='compute_53'
                                  cc2='sm_53'
+                                 cc3='Maxwell'
+                              elif cc=='6.0': 
+                                 cc1='compute_60'
+                                 cc2='sm_60'
+                                 cc3='Pascal'
+                              elif cc=='6.1': 
+                                 cc1='compute_61'
+                                 cc2='sm_61'
+                                 cc3='Pascal'
+                              elif cc=='6.2': 
+                                 cc1='compute_62'
+                                 cc2='sm_62'
+                                 cc3='Pascal'
+                              elif cc=='7.0': 
+                                 cc1='compute_70'
+                                 cc2='sm_70'
+                                 cc3='Volta'
+                              elif cc=='7.1': 
+                                 cc1='compute_71'
+                                 cc2='sm_71'
+                                 cc3='Volta'
+                              else:
+                                 return {'return':1, 'error':'Compute capability of your CUDA device is not recognized ('+cc+') - please report to the authors or update module:platform.gpgpu'}
 
                               prop_all['compute_capability1']=cc1
                               prop_all['compute_capability2']=cc2
+                              prop_all['compute_capability3']=cc3
 
-                           jj={"gpgpu":prop, "gpgpu_id":prop_id, "gpgpu_misc":prop_all, "gpgpu_deps":deps}
+                              prop['microarchitecture']=cc3
+
+                           jj={"gpgpu":prop, "gpgpu_id":prop_id, "gpgpu_misc":prop_all}
 
                            if fuoa!='' or fuid!='':
                               jj['gpgpu_uoa']=fuoa
                               jj['gpgpu_misc_uid']=fuid
+
+                           # Print without deps if needed
+                           if o=='con':
+                              ck.out('')
+                              ck.out('Features (properties) in JSON:')
+
+                              r=ck.dumps_json({'dict':jj})
+                              if r['return']>0: return r
+                              s=r['string']
+
+                              ck.out('')
+                              ck.out(s)
+
+                           jj['gpgpu_deps']=deps
 
                            props.append(jj)
 
@@ -319,16 +386,6 @@ def detect(i):
                               prop['vendor']=v
                            else:
                               prop_all[k]=v
-
-    if o=='con':
-       r=ck.dumps_json({'dict':props})
-       if r['return']>0: return r
-       s=r['string']
-
-       ck.out('')
-       ck.out('GPU features (properties):')
-       ck.out('')
-       ck.out(s)
 
     return {'return':0, 'features':{'gpgpu':props}}
 
