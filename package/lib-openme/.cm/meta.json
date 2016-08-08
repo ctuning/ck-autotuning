@@ -1,7 +1,9 @@
 {
   "customize": {
     "extra_dir": "", 
-    "version": "2015"
+    "version": "2015",
+    "use_git_revision":"yes",
+    "git_src_dir":"openme"
   }, 
   "deps": {
     "compiler": {

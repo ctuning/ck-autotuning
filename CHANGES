@@ -1,3 +1,5 @@
+* 2016.08.08 * added Git info for OpenME
+
 * 2016.07.20 * added support for CUDA compute 6.x (Pascal) and 7.x (Volta)
 
 * 2016.07.13 * added 'add_file_to' dataset -> to add dataset files and register them in the entry meta
