@@ -2269,6 +2269,7 @@ def process_in_dir(i):
                                  "ck_kernel":ck,
                                  "meta":meta,
                                  "deps":deps,
+                                 "env":env,
                                  "run_time":rt
                                 }
 

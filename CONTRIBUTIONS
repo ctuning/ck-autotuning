@@ -29,3 +29,9 @@ E: engrwahidmemon@gmail.com
 O: 
 C: checking how to convert GCC optimization flags to CK format for autotuning
 W: 
+
+N: Harry Plumley, STFC Hartree Centre, 2016
+E:
+O: STFC Hartree Centre
+C: suggested to pass CK environment to post processing scripts
+W: 2016
