@@ -1476,7 +1476,7 @@ def process_in_dir(i):
        dtags=vcmd.get('dataset_tags',[])
 
        edtags=i.get('extra_dataset_tags', [])
-       if len(edtags)>0:
+       if len(dtags)>0 and len(edtags)>0:
           for q in edtags:
               dtags.append(q)
 
@@ -3182,7 +3182,7 @@ def pipeline(i):
 
     dtags=vcmd.get('dataset_tags',[])
 
-    if len(edtags)>0:
+    if len(dtags)>0 and len(edtags)>0:
        for q in edtags:
            dtags.append(q)
 

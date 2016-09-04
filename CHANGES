@@ -1,3 +1,5 @@
+* 2016.09.04 * fixed selection of wrong dataset when extra dataset tags are present
+
 * 2016.08.08 * added Git info for OpenME
 
 * 2016.07.20 * added support for CUDA compute 6.x (Pascal) and 7.x (Volta)
