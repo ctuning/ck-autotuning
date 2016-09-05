@@ -2813,8 +2813,8 @@ def pipeline(i):
     # Check user-friendly env
     for q in i:
         if q.startswith('env.'):
-           del(i[q])
            env[q[4:]]=i[q]
+           del(i[q])
 
     eenv=ck.get_from_dicts(i, 'extra_env','',choices)
     ercmd=ck.get_from_dicts(i, 'extra_run_cmd','',choices)
