@@ -2811,7 +2811,7 @@ def pipeline(i):
     env=ck.get_from_dicts(i,'env',{},choices)
 
     # Check user-friendly env
-    for q in i:
+    for q in list(i.keys()):
         if q.startswith('env.'):
            env[q[4:]]=i[q]
            del(i[q])
@@ -3556,7 +3556,7 @@ def pipeline(i):
         elif q.startswith('#'):q1=q[1:]
         choices_desc['##env#'+q1]=qq
 
-    env=ck.get_from_dicts(i,'env',{},choices)
+#    env=ck.get_from_dicts(i,'env',{},choices)
 
     ###############################################################################################################
     # Pipeline ready for compile/run
