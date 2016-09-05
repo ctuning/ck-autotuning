@@ -2575,6 +2575,8 @@ def pipeline(i):
 
 
               (env)                  - preset environment
+              (env.{KEY})            - set env[KEY]=value (user-friendly interface via CMD)
+
               (extra_env)            - extra environment as string
               (extra_run_cmd)        - extra CMD (can use $#key#$ for autotuning)
               (run_cmd_substitutes)  - dict with substs ($#key#$=value) in run CMD (useful for CMD autotuning)
@@ -2807,6 +2809,13 @@ def pipeline(i):
     no_state_check=ck.get_from_dicts(i, 'no_state_check', '', choices)
 
     env=ck.get_from_dicts(i,'env',{},choices)
+
+    # Check user-friendly env
+    for q in i:
+        if q.startswith('env.'):
+           del(i[q])
+           env[q[4:]]=i[q]
+
     eenv=ck.get_from_dicts(i, 'extra_env','',choices)
     ercmd=ck.get_from_dicts(i, 'extra_run_cmd','',choices)
     rcsub=ck.get_from_dicts(i, 'run_cmd_substitutes',{},choices)

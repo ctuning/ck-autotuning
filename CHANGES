@@ -1,4 +1,5 @@
 * 2016.09.04 * fixed selection of wrong dataset when extra dataset tags are present
+             * added --env.{KEY} to pipeline program
 
 * 2016.08.08 * added Git info for OpenME
 
