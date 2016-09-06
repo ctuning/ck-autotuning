@@ -784,7 +784,7 @@ def process_in_dir(i):
        fp=csd.get('customize',{}).get('full_path','')
        cver=''
        if csuoa!='':
-          r=ck.access({'action':'detect',
+          r=ck.access({'action':'internal_detect',
                        'module_uoa':cfg['module_deps']['soft'],
                        'tool':fp,
                        'uoa':csuoa,

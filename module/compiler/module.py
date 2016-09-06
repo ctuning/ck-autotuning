@@ -529,7 +529,7 @@ def extract_opts_new(i):
     bat=r['bat']
 
     # Detect version
-    ii={'action':'detect',
+    ii={'action':'internal_detect',
         'module_uoa':cfg['module_deps']['soft'],
         'host_os':hos,
         'target_os':tos,

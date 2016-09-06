@@ -1,3 +1,5 @@
+* 2016.09.05 * changed soft functions 'detect' to 'internal_detect' and 'check' to 'detect'
+
 * 2016.09.04 * fixed selection of wrong dataset when extra dataset tags are present
              * added --env.{KEY} to pipeline program
 
