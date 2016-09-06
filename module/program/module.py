@@ -2366,7 +2366,7 @@ def process_in_dir(i):
        if xrepeat<1: xrepeat=1
 
        ccc['return_code']=rx
-       ccc['execution_time']=exec_time/repeat
+       ccc['execution_time']=exec_time/abs(repeat)
        ccc['total_execution_time']=exec_time
        ccc['repeat']=xrepeat
        misc['calibration_success']=calibrate_success
@@ -2399,7 +2399,7 @@ def process_in_dir(i):
           ck.out('')
           x='Execution time: '+('%.3f'%exec_time)+' sec.'
           if repeat>1:
-             x+='; Repetitions: '+str(repeat)+'; Normalized execution time: '+('%.9f'%(exec_time/repeat))+' sec.'
+             x+='; Repetitions: '+str(abs(repeat))+'; Normalized execution time: '+('%.9f'%(exec_time/abs(repeat)))+' sec.'
           ck.out(x)
 
     # Check to clean random directory
