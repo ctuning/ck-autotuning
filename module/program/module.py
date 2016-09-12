@@ -2619,7 +2619,7 @@ def pipeline(i):
 
               (milepost)                - if 'yes', attempt to extract static program features using Milepost GCC and cTuning CC
 
-              (opencl_dvdt_profiler)    - if 'yes', attempt to use opencl_dvdt_profiler when running code ...
+              (dvdt_prof)            - if 'yes', run program under dividiti's OpenCL profiler
 
               (compile_timeout)         - (sec.) - kill compile job if too long
               (run_timeout)             - (sec.) - kill run job if too long
@@ -2836,7 +2836,7 @@ def pipeline(i):
 
     tsd=ck.get_from_dicts(i, 'the_same_dataset', '', choices)
 
-    odp=ck.get_from_dicts(i, 'opencl_dvdt_profiler','',choices)
+    odp=ck.get_from_dicts(i, 'dvdt_prof','',choices)
 
     xcto=ck.get_from_dicts(i, 'compile_timeout','',choices)
     xrto=ck.get_from_dicts(i, 'run_timeout','',choices)
@@ -4035,17 +4035,17 @@ def pipeline(i):
        eppc+='\namplxe-cl -report hw-events -r r000 -report-output='+vtune_tmp+' -format csv -csv-delimiter=comma -filter module=$#ONLY_BIN_FILE#$'
 
     ###############################################################################################################
-    # PIPELINE SECTION: Check OpenCL DVDT profiler
+    # PIPELINE SECTION: Preload dividiti's OpenCL profiler.
     if odp=='yes':
        if hplat=='win':
-          return {'return':1, 'error':'OpenCL DVDT profiler currently does not support Windows'}
+          return {'return':1, 'error':'dividiti\'s OpenCL profiler is currently not supported under Windows'}
 
-       if 'opencl_dvdt_profiler' not in cdeps:
-          cdeps['opencl_dvdt_profiler']={'local':'yes', 'tags':'plugin,opencl,dvdt,profiler'}
+       if 'dvdt_prof' not in cdeps:
+          cdeps['dvdt_prof']={'local':'yes', 'tags':'tool,opencl,dvdt,prof'}
 
-       eenv='export LD_PRELOAD="${CK_ENV_PLUGIN_OPENCL_DVDT_PROFILER_DYNAMIC_NAME_FULL}"; '+eenv
+       eenv='export LD_PRELOAD="${CK_ENV_TOOL_DVDT_PROF_DYNAMIC_NAME_FULL}"; '+eenv
 
-       fodp='tmp-opencl-dvdt-output.json'
+       fodp='tmp-dvdt-prof-output.json'
        if os.path.isfile(fodp): os.remove(fodp)
 
     ###############################################################################################################
@@ -4284,17 +4284,17 @@ def pipeline(i):
           chars['run']['gprof_list']=glst
 
     ###############################################################################################################
-    # PIPELINE SECTION: Check OpenCL DVDT profiler
+    # PIPELINE SECTION: Post-processs output from dividiti's OpenCL profiler.
     if odp=='yes':
-       y=xdeps.get('opencl_dvdt_profiler',{}).get('bat','').rstrip()+' '+envsep
+       y=xdeps.get('dvdt_prof',{}).get('bat','').rstrip()+' '+envsep
 
-       y+=' \\'+svarb+svarb1+'CK_ENV_PLUGIN_OPENCL_DVDT_PROFILER_CONVERT_TO_CK'+svare1+svare+' '+vcmd.get('run_time',{}).get('run_cmd_out1','')+' '+fodp
+       y+=' \\'+svarb+svarb1+'CK_ENV_TOOL_DVDT_PROF_CONVERT_TO_CK'+svare1+svare+' '+vcmd.get('run_time',{}).get('run_cmd_out1','')+' '+fodp
 
        if ubtr!='': y=ubtr.replace('$#cmd#$',y)
 
        if o=='con':
           ck.out('')
-          ck.out('  (post processing OpenCL DVDT profiler ...)')
+          ck.out('  (post processing output of dividiti\'s OpenCL profiler ...)')
           ck.out('')
           ck.out(y)
           ck.out('')
@@ -4303,7 +4303,7 @@ def pipeline(i):
 
        rx=ck.load_json_file({'json_file':fodp})
        if rx['return']>0: return rx
-       chars['run']['opencl_dvdt_profiler']=rx['dict']
+       chars['run']['dvdt_prof']=rx['dict']
 
     ###############################################################################################################
     # Deinit remote device, if needed
