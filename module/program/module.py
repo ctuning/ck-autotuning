@@ -1535,9 +1535,9 @@ def process_in_dir(i):
        misc['dataset_uoa']=dduoa
 
        # If remote
-       if remote=='yes':
-          if target_exe=='':
-             return {'return':1, 'error':'currently can\'t run benchmarks without defined executable on remote platform'}
+       if remote=='yes' and target_exe!='':
+#          if target_exe=='':
+#             return {'return':1, 'error':'currently can\'t run benchmarks without defined executable on remote platform'}
 
           rs=tosd['remote_shell'].replace('$#device#$',xtdid)
           rse=tosd.get('remote_shell_end','')+' '
