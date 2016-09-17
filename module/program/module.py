@@ -1973,7 +1973,7 @@ def process_in_dir(i):
           for df in rofx:
               if o=='con': ck.out('    '+df)
 
-              if remote=='yes':
+              if remote=='yes' and meta.get('run_via_third_party','')!='yes':
                  # Clean data files on device
                  y=rs+' '+tosd['delete_file']+ ' '+rdir+stdirs+df+' '+rse
                  if o=='con':
@@ -2032,7 +2032,7 @@ def process_in_dir(i):
           if rx['return']>0: return rx
 
           # Prepare execution
-          if remote=='yes':
+          if remote=='yes' and meta.get('run_via_third_party','')!='yes':
              # Copy above batch file to remote device
              y=tosd.get('remote_push','').replace('$#device#$',xtdid)
              y=y.replace('$#file1#$', fn)
