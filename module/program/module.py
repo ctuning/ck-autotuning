@@ -406,15 +406,6 @@ def process_in_dir(i):
     host_add_path_string=r.get('host_add_path_string','')
     target_add_path_string=r.get('target_add_path_string','')
 
-    bhos=hosd.get('base_uid','')
-    if bhos=='': bhos=hos
-    bhosx=hosd.get('base_uoa','')
-    if bhosx=='': bhosx=hosx
-    btos=tosd.get('base_uid','')
-    if btos=='': btos=tos
-    btosx=tosd.get('base_uoa','')
-    if btosx=='': btosx=tosx
-
     if r['device_id']!='': tdid=r['device_id']
     xtdid=''
     if tdid!='': xtdid=' -s '+tdid
