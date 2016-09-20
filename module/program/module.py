@@ -1285,8 +1285,13 @@ def process_in_dir(i):
           ccc['compilation_time_with_module']=time.time()-start_time
 
           if o=='con':
+             s='Compilation time: '+('%.3f'%comp_time)+' sec.'
+
+             if meta.get('no_target_file','')!='yes' and meta.get('no_compile','')!='yes':
+                s+='; Object size: '+str(ofs)+'; MD5: '+md5
+
              ck.out(sep)
-             ck.out('Compilation time: '+('%.3f'%comp_time)+' sec.; Object size: '+str(ofs)+'; MD5: '+md5)
+             ck.out(s)
              if misc.get('compilation_success','')=='no':
                 ck.out('Warning: compilation failed!')
 
