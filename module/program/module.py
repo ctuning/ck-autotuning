@@ -228,6 +228,10 @@ def process_in_dir(i):
               (module_uoa)           - program module UOA
               (data_uoa)             - program data UOA
 
+              (params)               - dictionary with parameters passed via pre/post processing to third-party tools
+                                       for example, to configure ARM Workload Automation
+              (params.{KEY})         - set params[KEY]=value (user-friendly interface via CMD)
+
               (misc)                 - misc  dict
               (characteristics)      - characteristics/features/properties
               (env)                  - preset environment
@@ -311,6 +315,8 @@ def process_in_dir(i):
     sys.stdout.flush()
 
     o=i.get('out','')
+    oo=''
+    if o=='con': oo='con'
 
     sa=i['sub_action']
 
@@ -325,12 +331,15 @@ def process_in_dir(i):
     misc=i.get('misc',{})
     ccc=i.get('characteristics',{})
     env=i.get('env',{})
+    xparams=i.get('params',{})
     deps=i.get('deps',{})
 
     # Check user-friendly env
     for q in i:
         if q.startswith('env.'):
            env[q[4:]]=i[q]
+        elif q.startswith('params.'):
+           xparams[q[7:]]=i[q]
 
     are=i.get('add_rnd_extension_to_bin','')
     ase=i.get('add_save_extension_to_bin','')
@@ -537,6 +546,11 @@ def process_in_dir(i):
     # Check if compile in tmp dir
     cdir=p
     os.chdir(cdir)
+
+    # Prepare params (if needed - for example, for ARM Workload Automation)
+    params=meta.get('default_params',{})
+    r=ck.merge_dicts({'dict1':params, 'dict2':xparams})
+    if r['return']>0: return r
 
     ########################################################################
     # Check if need to add paths to CK entries as env
@@ -1813,7 +1827,9 @@ def process_in_dir(i):
                  "env":env,     # env has to be updated via returned bat file, but it can be updated for the reproducibility
                  "run_time":rt,
                  "dataset_meta":dset,
-                 "device_cfg":device_cfg
+                 "params":params,
+                 "device_cfg":device_cfg,
+                 "out":oo
                 }
 
              rxx=cs.ck_preprocess(ii)
@@ -2301,7 +2317,9 @@ def process_in_dir(i):
                                  "deps":deps,
                                  "env":env,
                                  "run_time":rt,
-                                 "device_cfg":device_cfg
+                                 "params":params,
+                                 "device_cfg":device_cfg,
+                                 "out":oo
                                 }
 
                              rxx=cs.ck_postprocess(ii)
@@ -2608,6 +2626,10 @@ def pipeline(i):
               (env)                  - preset environment
               (env.{KEY})            - set env[KEY]=value (user-friendly interface via CMD)
 
+              (params)               - dictionary with parameters passed via pre/post processing to third-party tools
+                                       for example, to configure ARM Workload Automation
+              (params.{KEY})         - set params[KEY]=value (user-friendly interface via CMD)
+
               (extra_env)            - extra environment as string
               (extra_run_cmd)        - extra CMD (can use $#key#$ for autotuning)
               (run_cmd_substitutes)  - dict with substs ($#key#$=value) in run CMD (useful for CMD autotuning)
@@ -2804,6 +2826,14 @@ def pipeline(i):
     perf=ck.get_from_dicts(i, 'perf', '', choices)
     vtune=ck.get_from_dicts(i, 'vtune', '', choices)
     milepost=ck.get_from_dicts(i, 'milepost', '', choices)
+
+    params=ck.get_from_dicts(i, 'params',{},choices)
+
+    # Check user-friendly env
+    for q in list(i.keys()):
+        if q.startswith('params.'):
+           params[q[7:]]=i[q]
+           del(i[q])
 
     espeed=ck.get_from_dicts(i, 'env_speed', '', choices)
 
@@ -3976,6 +4006,7 @@ def pipeline(i):
               'console':cons,
               'env':env,
               'speed':espeed,
+              'params':params,
               'extra_env':eenv,
               'compiler_vars':cv,
               'no_vars':ncv,
@@ -4119,6 +4150,7 @@ def pipeline(i):
            'skip_calibration':rsc,
            'calibration_time':rct,
            'calibration_max':rcm,
+           'params':params,
            'post_process_script_uoa':pp_uoa,
            'post_process_subscript':pp_name,
            'post_process_params':pp_params,
