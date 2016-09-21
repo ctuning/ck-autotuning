@@ -164,7 +164,7 @@ def process(i):
         r=process_in_dir(ii)
         if r['return']>0: return r
 
-    return r      
+    return r
 
 ##############################################################################
 # compile program  (called from universal function here)
@@ -179,6 +179,11 @@ def process_in_dir(i):
               (host_os)              - host OS (detect, if omitted)
               (target_os)            - OS module to check (if omitted, analyze host)
               (device_id)            - device id if remote (such as adb)
+
+              (target)               - target device added via 'ck add device' with prepared target description
+                                       (useful to create farms of devices for crowd-benchmarking and crowd-tuning using CK)
+
+              (device_cfg)           - extra device cfg (if empty, will be filled in from 'device' description)
 
               path                   - path
               meta                   - program description
@@ -299,6 +304,7 @@ def process_in_dir(i):
     import sys
     import shutil
     import time
+    import copy
 
     start_time=time.time()
 
@@ -370,6 +376,18 @@ def process_in_dir(i):
     pp_uoa=i.get('post_process_script_uoa','')
     pp_name=i.get('post_process_subscript','')
     pp_params=i.get('post_process_params','')
+
+    # Check if need to initialize device and directly update input i !
+    r=ck.access({'action':'find',
+                 'module_uoa':cfg['module_deps']['module'],
+                 'data_uoa':cfg['module_deps']['device']})
+    if r['return']==0:
+       r=ck.access({'action':'init',
+                    'module_uoa':cfg['module_deps']['device'],
+                    'input':i})
+       if r['return']>0: return r
+
+    device_cfg=i.get('device_cfg',{})
 
     # Check host/target OS/CPU
     hos=i.get('host_os','')
@@ -480,6 +498,11 @@ def process_in_dir(i):
     ruoa=i.get('repo_uoa', '')
     muoa=i.get('module_uoa', '')
     duoa=i.get('data_uoa', '')
+
+    # Check if need specific device access type
+    dat=meta.get('required_device_access_type',[])
+    if len(dat)>0 and device_cfg.get('access_type','') not in dat:
+       return {'return':1, 'error':'This program can not be used with the specified device target (need '+str(dat)+')'}
 
     target_exe=meta.get('target_file','')
     if target_exe=='' and meta.get('no_target_file','')!='yes':
@@ -1789,7 +1812,8 @@ def process_in_dir(i):
                  "deps":deps,
                  "env":env,     # env has to be updated via returned bat file, but it can be updated for the reproducibility
                  "run_time":rt,
-                 "dataset_meta":dset
+                 "dataset_meta":dset,
+                 "device_cfg":device_cfg
                 }
 
              rxx=cs.ck_preprocess(ii)
@@ -1822,7 +1846,7 @@ def process_in_dir(i):
 
        sb+='\necho    executing code ...\n'
 
-       if remote!='yes' and cons!='yes':
+       if (remote!='yes' or meta.get('run_via_third_party','')=='yes') and cons!='yes':
           if ercmd!='': c+=' '+ercmd
           if rco1!='': c+=' '+stro+' '+rco1
           if rco2!='': c+=' '+stre+' '+rco2
@@ -1964,7 +1988,7 @@ def process_in_dir(i):
               rofx.append(df)
 
           if o=='con' and len(rofx)>0:
-             ck.out('  Cleaning output files:')
+             ck.out('  Cleaning output files and directories:')
 
           for df in rofx:
               if o=='con': ck.out('    '+df)
@@ -1990,6 +2014,16 @@ def process_in_dir(i):
 
               if os.path.isfile(df): 
                  os.remove(df)
+
+          # Delete global directories locally (needed for ARM WA)
+          for df in meta.get('clean_dirs',[]):
+              if df!='':
+                 if o=='con':
+                    ck.out('')
+                    ck.out('  Removing directory '+df+' ...')
+                    ck.out('')
+
+                 shutil.rmtree(df,ignore_errors=True)
 
           if o=='con': ck.out('')
 
@@ -2266,7 +2300,8 @@ def process_in_dir(i):
                                  "meta":meta,
                                  "deps":deps,
                                  "env":env,
-                                 "run_time":rt
+                                 "run_time":rt,
+                                 "device_cfg":device_cfg
                                 }
 
                              rxx=cs.ck_postprocess(ii)
@@ -4280,7 +4315,7 @@ def pipeline(i):
           chars['run']['gprof_list']=glst
 
     ###############################################################################################################
-    # PIPELINE SECTION: Post-processs output from dividiti's OpenCL profiler.
+    # PIPELINE SECTION: Post-process output from dividiti's OpenCL profiler.
     if odp=='yes':
        y=xdeps.get('dvdt_prof',{}).get('bat','').rstrip()+' '+envsep
 
