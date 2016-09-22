@@ -223,6 +223,7 @@ def process_in_dir(i):
 
               (clean)                - if 'yes', clean tmp directory before using
               (skip_clean_after)     - if 'yes', do not remove run batch
+              (keep)                 - the same as skip_clean_after
 
               (repo_uoa)             - program repo UOA
               (module_uoa)           - program module UOA
@@ -323,6 +324,8 @@ def process_in_dir(i):
     sdi=i.get('skip_device_init','')
 
     sca=i.get('skip_clean_after','')
+    if sca=='':
+       sca=i.get('keep','')
 
     grtd=i.get('generate_rnd_tmp_dir','')
 
@@ -710,6 +713,14 @@ def process_in_dir(i):
 
     if len(deps)==0:
        deps=meta.get('deps',{})
+
+    if remote=='yes' and 'android' in tosd.get('tags',[]) and 'adb' not in deps:
+       deps['adb']={
+                    "local": "yes", 
+                    "name": "adb tool", 
+                    "sort": -10, 
+                    "tags": "tool,adb"
+                   }
 
     if len(deps)>0:
        if o=='con':
@@ -2544,6 +2555,9 @@ def pipeline(i):
 
               (program_dir)          - force program directory
 
+              (target)               - target device added via 'ck add device' with prepared target description
+                                       (useful to create farms of devices for crowd-benchmarking and crowd-tuning using CK)
+
               (host_os)              - host OS (detect, if omitted)
               (target_os)            - OS module to check (if omitted, analyze host)
               (device_id)            - device id if remote (such as adb)
@@ -2581,6 +2595,7 @@ def pipeline(i):
               (tmp_dir)              - if !='', use this tmp_dir
 
               (skip_clean_after)     - if 'yes', do not remove run batch
+              (keep)                 - the same as skip_clean_after
 
               (console)              - if 'yes', output from program goes to console rather than file
                                           (usually for testing/demos)
@@ -2856,6 +2871,8 @@ def pipeline(i):
     sptimers=ck.get_from_dicts(i, 'skip_print_timers','', choices)
 
     sca=ck.get_from_dicts(i, 'skip_clean_after', '', choices) # I add it here to be able to debug across all iterations
+    if sca=='':
+       sca=ck.get_from_dicts(i, 'keep', '', choices)
 
     pp_uoa=ck.get_from_dicts(i, 'post_process_script_uoa','', choices)
     pp_name=ck.get_from_dicts(i, 'post_process_subscript','', choices)
@@ -2905,11 +2922,203 @@ def pipeline(i):
     cdu=ck.get_from_dicts(i, 'compiler_description_uoa','',choices)
 
     ###############################################################################################################
+    # PIPELINE SECTION: PROGRAM AND DIRECTORY SELECTION 
+    #                   (either as CID or CK descrpition from current directory or return that should be selected)
+
+    # First, if duoa is not defined, try to get from current directory
+    if len(meta)==0:
+       if duoa=='' and i.get('skip_local','')!='yes':
+          # First, try to detect CID in current directory
+          r=ck.cid({})
+          if r['return']==0:
+             xruoa=r.get('repo_uoa','')
+             xmuoa=r.get('module_uoa','')
+             xduoa=r.get('data_uoa','')
+
+             rx=ck.access({'action':'load',
+                           'module_uoa':xmuoa,
+                           'data_uoa':xduoa,
+                           'repo_uoa':xruoa})
+             if rx['return']>0: return rx
+             xmeta=rx['dict']
+             xdesc=rx.get('disc',{})
+
+             if xmeta.get('program','')=='yes':
+                duoa=xduoa
+                muoa=xmuoa
+                ruoa=xruoa
+                meta=xmeta
+                desc=xdesc
+
+          if duoa=='':
+             # Attempt to load configuration from the current directory
+             pc=os.path.join(state['cur_dir'], ck.cfg['subdir_ck_ext'], ck.cfg['file_meta'])
+             if os.path.isfile(pc):
+                r=ck.load_json_file({'json_file':pc})
+                if r['return']==0:
+                   xmeta=r['dict']
+                   if xmeta.get('program','')=='yes':
+                      meta=xmeta
+
+             px=os.path.join(state['cur_dir'], ck.cfg['subdir_ck_ext'], ck.cfg['file_desc'])
+             if os.path.isfile(px):
+                r=ck.load_json_file({'json_file':px})
+                if r['return']==0:
+                   xdesc=r['dict']
+
+    # Second, if duoa is not detected or defined, prepare selection 
+    duid=''
+    if len(meta)==0:
+       if duoa=='': duoa='*'
+
+       r=ck.search({'repo_uoa':ruoa, 'module_uoa':muoa, 'data_uoa':duoa, 'add_info':'yes', 'tags':ptags})
+       if r['return']>0: return r
+
+       lst=r['lst']
+       if len(lst)==0:
+          duoa=''
+       elif len(lst)==1:
+          duid=lst[0]['data_uid']
+          duoa=lst[0]['data_uoa']
+       else:
+          if random=='yes':
+             rb=randint(0,len(lst)-1)
+
+             duid=lst[rb]['data_uid']
+             duoa=lst[rb]['data_uoa']
+          elif quiet=='yes':
+             duid=lst[0]['data_uid']
+             duoa=lst[0]['data_uoa']
+          else:
+             # SELECTOR *************************************
+             choices_desc['##program_uoa']={'type':'uoa',
+                                            'has_choice':'yes',
+                                            'choices':lst,
+                                            'tags':['setup'],
+                                            'sort':1000}
+
+             if o=='con' and si!='yes':
+                ck.out('************ Selecting program/benchmark/kernel ...')
+                ck.out('')
+                r=ck.select_uoa({'choices':lst})
+                if r['return']>0: return r
+                duoa=r['choice']
+                ck.out('')
+             else:
+                return finalize_pipeline(i)
+
+    if len(meta)==0 and duoa=='':
+       return {'return':1, 'error':'no programs found for this pipeline'}
+
+    if pdir=='' and duoa!='':
+       rx=ck.access({'action':'load',
+                     'module_uoa':muoa,
+                     'data_uoa':duoa,
+                     'repo_uoa':ruoa})
+       if rx['return']>0: return rx
+       if len(meta)==0: 
+          meta=rx['dict']
+       if len(desc)==0:
+          desc=rx.get('desc',{})
+
+       pdir=rx['path']
+       duid=rx['data_uid']
+       duoa=rx['data_uoa']
+
+       # Check if base_uoa suggests to use another program path
+       buoa=meta.get('base_uoa','')
+       if buoa!='':
+          rx=ck.access({'action':'find',
+                        'module_uoa':muoa,
+                        'data_uoa':buoa})
+          if rx['return']>0:
+             return {'return':1, 'error':'problem finding base entry '+buoa+' ('+rx['error']+')'}
+
+          pdir=rx['path']
+
+    if pdir=='': pdir=state['cur_dir']
+
+    if duid=='': 
+        # Write program meta and desc only if no program UID, otherwise can restore from program entry
+       i['program_meta']=meta
+       i['program_desc']=desc
+
+    if duid=='' and meta.get('backup_data_uid','')!='': duid=meta['backup_data_uid']
+
+    if duoa!='': choices['data_uoa']=duoa
+    if muoa!='': choices['module_uoa']=muoa
+    # we are not recording repo_uoa for reproducibility (can be different across users) ...   
+
+    if o=='con':
+       ck.out('  Selected program:          '+duoa+' ('+duid+')')
+
+    ###############################################################################################################
     # PIPELINE SECTION: Host and target platform selection
     if o=='con':
        ck.out(sep)
        ck.out('Obtaining platform parameters and checking other obligatory choices for the pipeline ...')
        ck.out('')
+
+    # Check via --target first (however, for compatibility, check that module exists first)
+    r=ck.access({'action':'find',
+                 'module_uoa':cfg['module_deps']['module'],
+                 'data_uoa':cfg['module_deps']['device']})
+    if r['return']==0:
+       target=i.get('target','')
+
+       r=ck.search({'module_uoa':cfg['module_deps']['device'], 'data_uoa':target, 'add_meta':'yes'})
+       if r['return']>0: return r
+
+       dlst=r['lst']
+
+       # Prune search by only required devices
+       rdat=meta.get('required_device_access_type',[])
+
+       lst=[]
+
+       if len(rdat)==0:
+          lst=dlst
+       else:
+          for q in dlst:
+              if q.get('meta',{}).get('access_type','') in rdat:
+                 lst.append(q)
+
+       if len(lst)==0:
+          if len(rdat)>0:
+             return {'return':1, 'error':'no target devices found for this pipeline (use "ck add device")'}
+          # otherwide device is not strictly necessary for this program
+       elif len(lst)==1:
+          i['target']=lst[0]['data_uoa']
+       else:
+          if random=='yes':
+             rb=randint(0,len(lst)-1)
+
+             i['target']=lst[rb]['data_uoa']
+          elif quiet=='yes':
+             i['target']=lst[0]['data_uoa']
+          else:
+             # SELECTOR *************************************
+             choices_desc['##device_uoa']={'type':'uoa',
+                                           'has_choice':'yes',
+                                           'choices':lst,
+                                           'sort':1}
+
+             if o=='con' and si!='yes':
+                ck.out('************ Selecting target device ...')
+                ck.out('')
+                r=ck.select_uoa({'choices':lst})
+                if r['return']>0: return r
+                i['target']=r['choice']
+                ck.out('')
+             else:
+                return finalize_pipeline(i)
+
+       r=ck.access({'action':'init',
+                    'module_uoa':cfg['module_deps']['device'],
+                    'input':i})
+       if r['return']>0: return r
+
+    target=ck.get_from_dicts(i, 'target', '', choices)
 
     hos=ck.get_from_dicts(i, 'host_os', '', choices)
     tos=ck.get_from_dicts(i, 'target_os', '', choices)
@@ -2918,6 +3127,7 @@ def pipeline(i):
 
     # Useful when replaying experiments, to retarget them to a local platform
     if i.get('local_platform','')=='yes':
+       target=''
        hos=''
        tos=''
        tbits=''
@@ -3053,141 +3263,12 @@ def pipeline(i):
 
     if o=='con':
        ck.out(sep)
+       if target!='':
+          ck.out('  Selected target platform:  '+target)
        ck.out('  Selected host platform:    '+hos)
        ck.out('  Selected target platform:  '+tos)
        if tdid!='':
           ck.out('  Selected target device ID: '+tdid)
-
-    ###############################################################################################################
-    # PIPELINE SECTION: PROGRAM AND DIRECTORY SELECTION 
-    #                   (either as CID or CK descrpition from current directory or return that should be selected)
-
-    # First, if duoa is not defined, try to get from current directory
-    if len(meta)==0:
-       if duoa=='' and i.get('skip_local','')!='yes':
-          # First, try to detect CID in current directory
-          r=ck.cid({})
-          if r['return']==0:
-             xruoa=r.get('repo_uoa','')
-             xmuoa=r.get('module_uoa','')
-             xduoa=r.get('data_uoa','')
-
-             rx=ck.access({'action':'load',
-                           'module_uoa':xmuoa,
-                           'data_uoa':xduoa,
-                           'repo_uoa':xruoa})
-             if rx['return']>0: return rx
-             xmeta=rx['dict']
-             xdesc=rx.get('disc',{})
-
-             if xmeta.get('program','')=='yes':
-                duoa=xduoa
-                muoa=xmuoa
-                ruoa=xruoa
-                meta=xmeta
-                desc=xdesc
-
-          if duoa=='':
-             # Attempt to load configuration from the current directory
-             pc=os.path.join(state['cur_dir'], ck.cfg['subdir_ck_ext'], ck.cfg['file_meta'])
-             if os.path.isfile(pc):
-                r=ck.load_json_file({'json_file':pc})
-                if r['return']==0:
-                   xmeta=r['dict']
-                   if xmeta.get('program','')=='yes':
-                      meta=xmeta
-
-             px=os.path.join(state['cur_dir'], ck.cfg['subdir_ck_ext'], ck.cfg['file_desc'])
-             if os.path.isfile(px):
-                r=ck.load_json_file({'json_file':px})
-                if r['return']==0:
-                   xdesc=r['dict']
-
-    # Second, if duoa is not detected or defined, prepare selection 
-    duid=''
-    if len(meta)==0:
-       if duoa=='': duoa='*'
-
-       r=ck.search({'repo_uoa':ruoa, 'module_uoa':muoa, 'data_uoa':duoa, 'add_info':'yes', 'tags':ptags})
-       if r['return']>0: return r
-
-       lst=r['lst']
-       if len(lst)==0:
-          duoa=''
-       elif len(lst)==1:
-          duid=lst[0]['data_uid']
-          duoa=lst[0]['data_uoa']
-       else:
-          if random=='yes':
-             rb=randint(0,len(lst)-1)
-
-             duid=lst[rb]['data_uid']
-             duoa=lst[rb]['data_uoa']
-          elif quiet=='yes':
-             duid=lst[0]['data_uid']
-             duoa=lst[0]['data_uoa']
-          else:
-             # SELECTOR *************************************
-             choices_desc['##program_uoa']={'type':'uoa',
-                                            'has_choice':'yes',
-                                            'choices':lst,
-                                            'tags':['setup'],
-                                            'sort':1000}
-
-             if o=='con' and si!='yes':
-                ck.out('************ Selecting program/benchmark/kernel ...')
-                ck.out('')
-                r=ck.select_uoa({'choices':lst})
-                if r['return']>0: return r
-                duoa=r['choice']
-                ck.out('')
-             else:
-                return finalize_pipeline(i)
-
-    if len(meta)==0 and duoa=='':
-       return {'return':1, 'error':'no programs found for this pipeline'}
-
-    if pdir=='' and duoa!='':
-       rx=ck.access({'action':'load',
-                     'module_uoa':muoa,
-                     'data_uoa':duoa,
-                     'repo_uoa':ruoa})
-       if rx['return']>0: return rx
-       if len(meta)==0: 
-          meta=rx['dict']
-       if len(desc)==0:
-          desc=rx.get('desc',{})
-
-       pdir=rx['path']
-       duid=rx['data_uid']
-       duoa=rx['data_uoa']
-
-       # Check if base_uoa suggests to use another program path
-       buoa=meta.get('base_uoa','')
-       if buoa!='':
-          rx=ck.access({'action':'find',
-                        'module_uoa':muoa,
-                        'data_uoa':buoa})
-          if rx['return']>0:
-             return {'return':1, 'error':'problem finding base entry '+buoa+' ('+rx['error']+')'}
-
-          pdir=rx['path']
-
-    if pdir=='': pdir=state['cur_dir']
-
-    if duid=='': 
-        # Write program meta and desc only if no program UID, otherwise can restore from program entry
-       i['program_meta']=meta
-       i['program_desc']=desc
-
-    if duid=='' and meta.get('backup_data_uid','')!='': duid=meta['backup_data_uid']
-
-    if duoa!='': choices['data_uoa']=duoa
-    if muoa!='': choices['module_uoa']=muoa
-    # we are not recording repo_uoa for reproducibility (can be different across users) ...   
-
-    if o=='con':
-       ck.out('  Selected program:          '+duoa+' ('+duid+')')
 
     ###############################################################################################################
     # PIPELINE SECTION: Command line selection 
@@ -3440,9 +3521,8 @@ def pipeline(i):
     if no_compile!='yes' and i.get('no_detect_compiler_version','')!='yes' and len(features.get('compiler_version',{}))==0:
        if no_compile!='yes':
           ii={'sub_action':'get_compiler_version',
+              'target':target,
               'host_os':hos,
-              'target_os':tos,
-              'deviced_id':tdid,
               'path':pdir,
               'meta':meta,
               'deps':cdeps,
@@ -3456,6 +3536,9 @@ def pipeline(i):
               'env':env,
               'extra_env':eenv,
               'out':oo}
+          if target=='':
+             ii['target_os']=tos
+             ii['deviced_id']=tdid
           r=process_in_dir(ii)
           if r['return']>0: return r
 
@@ -3899,9 +3982,8 @@ def pipeline(i):
              ck.out('')
 
           ii={'sub_action':'compile',
+              'target':target,
               'host_os':hos,
-              'target_os':tos,
-              'deviced_id':tdid,
               'path':pdir,
               'meta':meta,
               'deps':mcdeps,
@@ -3926,6 +4008,10 @@ def pipeline(i):
               'add_rnd_extension_to_bin':are,
               'add_save_extension_to_bin':ase,
               'out':oo}
+          if target=='':
+             ii['target_os']=tos
+             ii['deviced_id']=tdid
+
           r=process_in_dir(ii)
           if r['return']>0: return r
 
@@ -3988,9 +4074,8 @@ def pipeline(i):
              ck.out('')
 
           ii={'sub_action':'compile',
+              'target':target,
               'host_os':hos,
-              'target_os':tos,
-              'deviced_id':tdid,
               'path':pdir,
               'meta':meta,
               'deps':cdeps,
@@ -4016,6 +4101,9 @@ def pipeline(i):
               'add_rnd_extension_to_bin':are,
               'add_save_extension_to_bin':ase,
               'out':oo}
+          if target=='':
+             ii['target_os']=tos
+             ii['deviced_id']=tdid
           r=process_in_dir(ii)
           if r['return']>0: return r
 
@@ -4124,9 +4212,8 @@ def pipeline(i):
               rcsub[k]=choices[k]
 
        ii={'sub_action':'run',
+           'target':target,
            'host_os':hos,
-           'target_os':tos,
-           'deviced_id':tdid,
            'path':pdir,
            'console':cons,
            'meta':meta,
@@ -4169,6 +4256,9 @@ def pipeline(i):
            'extra_env_for_compilation':eefc,
            'run_timeout':xrto,
            'out':oo}
+       if target=='':
+          ii['target_os']=tos
+          ii['deviced_id']=tdid
        r=process_in_dir(ii)
        if r['return']>0: return r
 

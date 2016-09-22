@@ -1,3 +1,6 @@
+* 2016.09.22 * added 'device' support to program pipeline (with selector)
+             * added adb soft dependency to android remote hosts
+
 * 2016.09.21 * added support for --params in module "program" to pass parameters
                to pre and post processing scripts, for example to customize ARM Workload Automation
 
