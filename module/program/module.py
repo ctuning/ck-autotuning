@@ -712,6 +712,7 @@ def process_in_dir(i):
        deps=meta.get('compile_deps',{})
 
     if len(deps)==0:
+       deps=meta.get('deps',{})
 
     if remote=='yes' and sa=='run' and 'android' in tosd.get('tags',[]) and 'adb' not in deps:
        deps['adb']={
