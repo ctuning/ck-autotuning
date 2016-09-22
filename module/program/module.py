@@ -1833,6 +1833,7 @@ def process_in_dir(i):
                  "target_os_dict":tosd,
                  "target_device_id":tdid,
                  "ck_kernel":ck,
+                 "misc":misc,
                  "meta":meta,
                  "deps":deps,
                  "env":env,     # env has to be updated via returned bat file, but it can be updated for the reproducibility
@@ -2324,6 +2325,7 @@ def process_in_dir(i):
                                  "target_os_dict":tosd,
                                  "target_device_id":tdid,
                                  "ck_kernel":ck,
+                                 "misc":misc,
                                  "meta":meta,
                                  "deps":deps,
                                  "env":env,
@@ -4108,6 +4110,11 @@ def pipeline(i):
           if r['return']>0: return r
 
           misc=r['misc']
+
+          state.update(misc.get('add_to_state',{}))
+          features.update(misc.get('add_to_features',{}))
+          choices.update(misc.get('add_to_choices',{}))
+
           tdir=misc.get('tmp_dir','')
           if tdir!='': state['tmp_dir']=tdir
 
@@ -4263,6 +4270,11 @@ def pipeline(i):
        if r['return']>0: return r
 
        misc=r['misc']
+
+       state.update(misc.get('add_to_state',{}))
+       features.update(misc.get('add_to_features',{}))
+       choices.update(misc.get('add_to_choices',{}))
+
        tdir=misc.get('tmp_dir','')
        if tdir!='': state['tmp_dir']=tdir
 
@@ -4270,6 +4282,10 @@ def pipeline(i):
        chars['run']=rch
 
        xdeps=r.get('deps',{})
+       if len(xdeps)>0:
+          if 'dependencies' not in i:
+             i['dependencies']={}
+          i['dependencies'].update(xdeps)
 
        csuc=misc.get('calibration_success',True)
        rs=misc.get('run_success','')
