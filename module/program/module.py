@@ -3271,6 +3271,7 @@ def pipeline(i):
        ck.out('  Selected target platform:  '+tos)
        if tdid!='':
           ck.out('  Selected target device ID: '+tdid)
+          ck.out('')
 
     ###############################################################################################################
     # PIPELINE SECTION: Command line selection 
