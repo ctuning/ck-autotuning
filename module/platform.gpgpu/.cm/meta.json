@@ -20,6 +20,7 @@
   "lcfg_uoa": "local-platform", 
   "license": "See CK LICENSE.txt for licensing details", 
   "module_deps": {
+    "device":"5add622b07468cb6",
     "cfg": "b34231a3467566f8", 
     "platform": "707ccdfe444cafac", 
     "platform.cpu": "aa6b542a420b8db9", 

@@ -185,6 +185,9 @@ def process_in_dir(i):
 
               (device_cfg)           - extra device cfg (if empty, will be filled in from 'device' description)
 
+              (gpgpu_platform_id)    - if !='', set env['CK_GPGPU_PLATFORM_ID']
+              (gpgpu_device_id)      - if !='', set env['CK_GPGPU_DEVICE_ID']
+
               path                   - path
               meta                   - program description
 
@@ -1462,6 +1465,48 @@ def process_in_dir(i):
        if len(rte)>0:
           env.update(rte)
 
+       # Check GPGPU
+       gpgpu_platform_id=i.get('gpgpu_platform_id','')
+       gpgpu_device_id=i.get('gpgpu_device_id','')
+
+       # Check if need to select GPGPU
+       ngd=rt.get('need_gpgpu_device','')
+       if ngd!='':
+           if o=='con':
+              ck.out(sep)
+              ck.out('Detecting GPGPU targets ...')
+              ck.out('')
+
+           r=ck.access({'action':'detect',
+                        'module_uoa':cfg['module_deps']['platform.gpgpu'],
+                        'host_os':hos,
+                        'target_os':tos,
+                        'device_id':tdid,
+                        'gpgpu_platform_id':gpgpu_platform_id,
+                        'gpgpu_device_id':gpgpu_device_id,
+                        ngd:'yes',
+                        'deps':deps,
+                        'select':'yes',
+                        'out':oo,
+                        'quiet':quiet})
+           if r['return']>0: return r
+
+           gpgpu_platform_id=r.get('choices',{}).get('gpgpu_platform_id','')
+           gpgpu_device_id=r.get('choices',{}).get('gpgpu_device_id','')
+
+           if 'add_to_features' not in misc: misc['add_to_features']={}
+           misc['add_to_features']['gpgpu']=r.get('features',{}).get('gpgpu',{})
+
+           if 'add_to_choices' not in misc: misc['add_to_choices']={}
+           misc['add_to_choices']['gpgpu_platform_id']=gpgpu_platform_id
+           misc['add_to_choices']['gpgpu_device_id']=gpgpu_device_id
+
+       # Finish GPGPU selection, if needed
+       if gpgpu_platform_id!='':
+           env['CK_GPGPU_PLATFORM_ID']=gpgpu_platform_id
+       if gpgpu_device_id!='':
+           env['CK_GPGPU_DEVICE_ID']=gpgpu_device_id
+
        # Add compiler dep again, if there (otherwise some libs can set another compiler)
        x=deps.get('compiler',{}).get('bat','')
        if remote!='yes' and x!='' and not sb.endswith(x):
@@ -2130,8 +2175,8 @@ def process_in_dir(i):
                 if rco1!='': y+=' '+stro+' '+rco1
                 if rco2!='': y+=' '+stre+' '+rco2
 
-             if o=='con':
-                ck.out(y)
+#             if o=='con':
+#                ck.out(y)
 
           else:
              y=''
@@ -2144,14 +2189,15 @@ def process_in_dir(i):
                 yy=scall+' '+sbp+fn
              y+=' '+yy
 
-             if o=='con':
-                ck.out('Prepared script:')
-                ck.out('')
-                ck.out(sb)
-                ck.out(sep)
-                ck.out('  ('+y.strip()+')')
-
           if remote!='yes' and ubtr!='': y=ubtr.replace('$#cmd#$',y)
+
+          if o=='con':
+             ck.out(sep)
+             ck.out('Prepared script:')
+             ck.out('')
+             ck.out(sb)
+             ck.out(sep)
+             ck.out('  ('+y.strip()+')')
 
           if o=='con':
              ck.out('')
@@ -3067,6 +3113,15 @@ def pipeline(i):
                  'data_uoa':cfg['module_deps']['device']})
     if r['return']==0:
        target=i.get('target','')
+       if target=='': 
+          target=choices.get('target','')
+          i['target']=target
+       device_cfg=i.get('device_cfg',{})
+       if len(device_cfg)==0: i['device_cfg']=choices.get('device_cfg',{})
+       tos=i.get('target_os','')
+       if tos=='': i['target_os']=choices.get('target_os','')
+       tdid=i.get('device_id','')
+       if tdid=='': i['device_id']=choices.get('tdid','')
 
        r=ck.search({'module_uoa':cfg['module_deps']['device'], 'data_uoa':target, 'add_meta':'yes'})
        if r['return']>0: return r
@@ -3121,6 +3176,7 @@ def pipeline(i):
        if r['return']>0: return r
 
     target=ck.get_from_dicts(i, 'target', '', choices)
+    device_cfg=ck.get_from_dicts(i, 'device_cfg', '', choices)
 
     hos=ck.get_from_dicts(i, 'host_os', '', choices)
     tos=ck.get_from_dicts(i, 'target_os', '', choices)
@@ -3525,6 +3581,8 @@ def pipeline(i):
        if no_compile!='yes':
           ii={'sub_action':'get_compiler_version',
               'target':target,
+              'target_os':tos,
+              'device_id':tdid,
               'host_os':hos,
               'path':pdir,
               'meta':meta,
@@ -3539,9 +3597,6 @@ def pipeline(i):
               'env':env,
               'extra_env':eenv,
               'out':oo}
-          if target=='':
-             ii['target_os']=tos
-             ii['deviced_id']=tdid
           r=process_in_dir(ii)
           if r['return']>0: return r
 
@@ -3620,10 +3675,7 @@ def pipeline(i):
                  al.append(icreal1)
 
           # Sorting
-#          import json
-#          print (json.dumps(al, indent=2, sort_keys=True))
           al1=sorted(al, key=lambda v: (int(v.get('0',0)), int(v.get('1',0)), int(v.get('2',0))))
-#          print (json.dumps(al1, indent=2, sort_keys=True))
           jj=0
           for qi in al1:
               if qi.get('uid','')!='':
@@ -3986,6 +4038,8 @@ def pipeline(i):
 
           ii={'sub_action':'compile',
               'target':target,
+              'target_os':tos,
+              'device_id':tdid,
               'host_os':hos,
               'path':pdir,
               'meta':meta,
@@ -4011,9 +4065,6 @@ def pipeline(i):
               'add_rnd_extension_to_bin':are,
               'add_save_extension_to_bin':ase,
               'out':oo}
-          if target=='':
-             ii['target_os']=tos
-             ii['deviced_id']=tdid
 
           r=process_in_dir(ii)
           if r['return']>0: return r
@@ -4078,6 +4129,8 @@ def pipeline(i):
 
           ii={'sub_action':'compile',
               'target':target,
+              'target_os':tos,
+              'device_id':tdid,
               'host_os':hos,
               'path':pdir,
               'meta':meta,
@@ -4104,9 +4157,6 @@ def pipeline(i):
               'add_rnd_extension_to_bin':are,
               'add_save_extension_to_bin':ase,
               'out':oo}
-          if target=='':
-             ii['target_os']=tos
-             ii['deviced_id']=tdid
           r=process_in_dir(ii)
           if r['return']>0: return r
 
@@ -4227,6 +4277,8 @@ def pipeline(i):
 
        ii={'sub_action':'run',
            'target':target,
+           'target_os':tos,
+           'device_id':tdid,
            'host_os':hos,
            'path':pdir,
            'console':cons,
@@ -4270,9 +4322,6 @@ def pipeline(i):
            'extra_env_for_compilation':eefc,
            'run_timeout':xrto,
            'out':oo}
-       if target=='':
-          ii['target_os']=tos
-          ii['deviced_id']=tdid
        r=process_in_dir(ii)
        if r['return']>0: return r
 

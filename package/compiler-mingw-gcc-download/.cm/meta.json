@@ -18,9 +18,6 @@
     "compiler", 
     "gcc", 
     "lang-c", 
-    "lang-cpp", 
-    "lang-f77", 
-    "lang-f90", 
-    "lang-f95"
+    "lang-cpp" 
   ]
 }

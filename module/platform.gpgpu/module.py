@@ -36,6 +36,8 @@ def init(i):
 def detect(i):
     """
     Input:  {
+              (target)               - if specified, use info from 'device' module
+
               (host_os)              - host OS (detect, if omitted)
               (os) or (target_os)    - OS module to check (if omitted, analyze host)
 
@@ -59,6 +61,7 @@ def detect(i):
               (quiet)                - select default dependencies
 
               (select)               - if 'yes', select specific platform and device (only when one type, i.e. opencl or cuda)
+              (deps)                 - pre-set dependencies when used inside 'program' module (to reuse already selected compilers and libs)
               (gpgpu_platform_id')   - pre-select platform ID
               (gpgpu_device_id')     - pre-select device ID
             }
@@ -80,13 +83,23 @@ def detect(i):
     """
 
     import os
+    import copy
 
     o=i.get('out','')
 
     oo=''
     if o=='con': oo=o
 
+    pcur=os.getcwd()
+
     quiet=i.get('quiet','')
+
+    # Check if target
+    if i.get('target','')!='':
+       r=ck.access({'action':'init',
+                    'module_uoa':cfg['module_deps']['device'],
+                    'input':i})
+       if r['return']>0: return r
 
     # Various params
     hos=i.get('host_os','')
@@ -105,7 +118,6 @@ def detect(i):
     if einf=='': einf={}
 
     # Get OS info
-    import copy
     ii=copy.deepcopy(i)
     ii['out']=oo
     if i.get('skip_print_os_info','')=='yes': ii['out']=''
@@ -168,6 +180,13 @@ def detect(i):
                      'module_uoa':cfg['module_deps']['program'],
                      'data_uoa':puoa})
         if r['return']==0:
+           deps=r['dict'].get('compile_deps',{})
+
+           odeps=i.get('deps',{})
+           for k in odeps:
+               if k in deps:
+                  deps[k]=copy.deepcopy(odeps[k]) 
+
            # Try to compile program
            r=ck.access({'action':'compile',
                         'module_uoa':cfg['module_deps']['program'],
@@ -176,6 +195,7 @@ def detect(i):
                         'host_os':hos,
                         'target_os':tos,
                         'device_id':tdid,
+                        'deps':deps,
                         'out':oo})
            if r['return']>0:
               if o=='con':
@@ -194,6 +214,7 @@ def detect(i):
                            'host_os':hos,
                            'target_os':tos,
                            'device_id':tdid,
+                           'deps':deps,
                            'out':oo})
               if r['return']>0:
                  return r
@@ -462,6 +483,8 @@ def detect(i):
 
         if d_id!='':
             rr['choices']['gpgpu_device_id']=d_id
+
+    os.chdir(pcur)
 
     return rr
 
