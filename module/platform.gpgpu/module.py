@@ -57,6 +57,10 @@ def detect(i):
 
               (type)                 - cuda or opencl
               (quiet)                - select default dependencies
+
+              (select)               - if 'yes', select specific platform and device (only when one type, i.e. opencl or cuda)
+              (gpgpu_platform_id')   - pre-select platform ID
+              (gpgpu_device_id')     - pre-select device ID
             }
 
     Output: {
@@ -387,7 +391,79 @@ def detect(i):
                            else:
                               prop_all[k]=v
 
-    return {'return':0, 'features':{'gpgpu':props}}
+    # Check if need to select device and platform
+    rr={'return':0, 'features':{'gpgpu':props}}
+
+    if i.get('select','')=='yes' and tp!='':
+        # Get Cartesian product of devies and platforms
+        platform_ids=[]
+        device_ids=[]
+        targets=[]
+        choices=[]
+
+        # Check if pre-selected
+        p_id=i.get('gpgpu_platform_id','')
+        d_id=i.get('gpgpu_device_id','')
+
+        for p in props:
+            xp_id=p.get('gpgpu_id',{}).get('gpgpu_platform_id','')
+            xd_id=p.get('gpgpu_id',{}).get('gpgpu_device_id','')
+
+            if xp_id!='' and xp_id not in platform_ids:
+                platform_ids.append(xp_id)
+
+            if xd_id!='' and xd_id not in device_ids:
+                device_ids.append(xd_id)
+
+            if (p_id=='' or p_id==xp_id) and (d_id=='' or d_id==xd_id):
+                targets.append(p)
+
+                s=p.get('gpgpu',{}).get('name','')
+
+                x=p.get('gpgpu_misc',{}).get('parallel compute units','')
+                if x!='':
+                   s+=' ; '+x+' compute units '
+
+                x=p.get('gpgpu_misc',{}).get('hardware (device) version','')
+                if x!='':
+                   s+=' ; '+x
+
+                choices.append(s)
+
+        # Check what to select
+        if len(choices)==0:
+            return {'return':1, 'error':'can\'t find GPGPU target with specified IDs'}
+        elif len(choices)==1 or quiet=='yes' or o!='con':
+            ch=0
+        else:
+            ck.out('')
+            ck.out('Multiple GPGPU targets available:')
+            ck.out('')
+
+            r=ck.access({'action':'select_list',
+                         'module_uoa':cfg['module_deps']['choice'],
+                         'choices':choices})
+            if r['return']>0: return r
+            ch=r['position']
+
+        ich=int(ch)
+
+        p_id=targets[ich].get('gpgpu_id',{}).get('gpgpu_platform_id','')
+        d_id=targets[ich].get('gpgpu_id',{}).get('gpgpu_device_id','')
+
+        if o=='con':
+            ck.out('')
+            ck.out('Selected GPGPU target: '+choices[ich])
+
+        rr['choices']={}
+
+        if p_id!='':
+            rr['choices']['gpgpu_platform_id']=p_id
+
+        if d_id!='':
+            rr['choices']['gpgpu_device_id']=d_id
+
+    return rr
 
 ##############################################################################
 # viewing entries as html

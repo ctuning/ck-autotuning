@@ -1,3 +1,5 @@
+* 2016.09.23 * added selection of GPGPU target to 'ck detect platform.gpgpu' widget
+
 * 2016.09.22 * added 'device' support to program pipeline (with selector)
              * added adb soft dependency to android remote hosts
 

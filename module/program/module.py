@@ -4112,9 +4112,15 @@ def pipeline(i):
 
           misc=r['misc']
 
-          state.update(misc.get('add_to_state',{}))
-          features.update(misc.get('add_to_features',{}))
-          choices.update(misc.get('add_to_choices',{}))
+          if 'add_to_state' in misc:
+              state.update(misc['add_to_state'])
+              del(misc['add_to_state'])
+          if 'add_to_features' in misc:
+              features.update(misc['add_to_features'])
+              del(misc['add_to_features'])
+          if 'add_to_choices' in misc:
+              choices.update(misc['add_to_choices'])
+              del(misc['add_to_choices'])
 
           tdir=misc.get('tmp_dir','')
           if tdir!='': state['tmp_dir']=tdir
@@ -4272,9 +4278,15 @@ def pipeline(i):
 
        misc=r['misc']
 
-       state.update(misc.get('add_to_state',{}))
-       features.update(misc.get('add_to_features',{}))
-       choices.update(misc.get('add_to_choices',{}))
+       if 'add_to_state' in misc:
+           state.update(misc['add_to_state'])
+           del(misc['add_to_state'])
+       if 'add_to_features' in misc:
+           features.update(misc['add_to_features'])
+           del(misc['add_to_features'])
+       if 'add_to_choices' in misc:
+           choices.update(misc['add_to_choices'])
+           del(misc['add_to_choices'])
 
        tdir=misc.get('tmp_dir','')
        if tdir!='': state['tmp_dir']=tdir

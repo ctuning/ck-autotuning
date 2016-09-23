@@ -367,10 +367,11 @@ def select_list(i):
             }
 
     Output: {
-              return  - return code =  0, if successful
-                                    >  0, if error
-              (error) - error text if return > 0
-              choice  - selected text
+              return   - return code =  0, if successful
+                                     >  0, if error
+              (error)  - error text if return > 0
+              choice   - selected text
+              position - selected position in the choice list
             }
 
     """
@@ -411,4 +412,4 @@ def select_list(i):
 
     dduoa=zz[x]
 
-    return {'return':0, 'choice':dduoa}
+    return {'return':0, 'choice':dduoa, 'position':x}
