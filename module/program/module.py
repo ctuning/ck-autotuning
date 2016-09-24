@@ -397,10 +397,15 @@ def process_in_dir(i):
                  'module_uoa':cfg['module_deps']['module'],
                  'data_uoa':cfg['module_deps']['device']})
     if r['return']==0:
-       r=ck.access({'action':'init',
-                    'module_uoa':cfg['module_deps']['device'],
-                    'input':i})
-       if r['return']>0: return r
+        ii={'action':'init',
+            'module_uoa':cfg['module_deps']['device'],
+            'input':i}
+
+        if sa=='run':
+            ii['check']='yes'
+
+        r=ck.access(ii)
+        if r['return']>0: return r
 
     device_cfg=i.get('device_cfg',{})
 
@@ -3102,16 +3107,16 @@ def pipeline(i):
 
     ###############################################################################################################
     # PIPELINE SECTION: Host and target platform selection
-    if o=='con':
-       ck.out(sep)
-       ck.out('Obtaining platform parameters and checking other obligatory choices for the pipeline ...')
-       ck.out('')
-
     # Check via --target first (however, for compatibility, check that module exists first)
     r=ck.access({'action':'find',
                  'module_uoa':cfg['module_deps']['module'],
                  'data_uoa':cfg['module_deps']['device']})
-    if r['return']==0:
+    if r['return']==0 and i.get('skip_target','')!='yes':
+       if o=='con':
+          ck.out(sep)
+          ck.out('Obtaining platform parameters and checking other obligatory choices for the pipeline ...')
+          ck.out('')
+
        target=i.get('target','')
        if target=='': 
           target=choices.get('target','')
@@ -3170,9 +3175,14 @@ def pipeline(i):
              else:
                 return finalize_pipeline(i)
 
-       r=ck.access({'action':'init',
-                    'module_uoa':cfg['module_deps']['device'],
-                    'input':i})
+       ii={'action':'init',
+           'module_uoa':cfg['module_deps']['device'],
+           'input':i}
+
+       if no_run!='yes':
+           ii['check']='yes'
+
+       r=ck.access(ii)
        if r['return']>0: return r
 
     target=ck.get_from_dicts(i, 'target', '', choices)
