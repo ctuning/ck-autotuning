@@ -185,8 +185,8 @@ def process_in_dir(i):
 
               (device_cfg)           - extra device cfg (if empty, will be filled in from 'device' description)
 
-              (gpgpu_platform_id)    - if !='', set env['CK_GPGPU_PLATFORM_ID']
-              (gpgpu_device_id)      - if !='', set env['CK_GPGPU_DEVICE_ID']
+              (compute_platform_id)  - if !='', set env['CK_COMPUTE_PLATFORM_ID']
+              (compute_device_id)    - if !='', set env['CK_COMPUTE_DEVICE_ID']
 
               path                   - path
               meta                   - program description
@@ -1466,11 +1466,11 @@ def process_in_dir(i):
           env.update(rte)
 
        # Check GPGPU
-       gpgpu_platform_id=i.get('gpgpu_platform_id','')
-       gpgpu_device_id=i.get('gpgpu_device_id','')
+       compute_platform_id=i.get('compute_platform_id','')
+       compute_device_id=i.get('compute_device_id','')
 
        # Check if need to select GPGPU
-       ngd=rt.get('need_gpgpu_device','')
+       ngd=rt.get('need_compute_device','')
        if ngd!='':
            if o=='con':
               ck.out(sep)
@@ -1482,8 +1482,8 @@ def process_in_dir(i):
                         'host_os':hos,
                         'target_os':tos,
                         'device_id':tdid,
-                        'gpgpu_platform_id':gpgpu_platform_id,
-                        'gpgpu_device_id':gpgpu_device_id,
+                        'compute_platform_id':compute_platform_id,
+                        'compute_device_id':compute_device_id,
                         ngd:'yes',
                         'deps':deps,
                         'select':'yes',
@@ -1491,21 +1491,21 @@ def process_in_dir(i):
                         'quiet':quiet})
            if r['return']>0: return r
 
-           gpgpu_platform_id=r.get('choices',{}).get('gpgpu_platform_id','')
-           gpgpu_device_id=r.get('choices',{}).get('gpgpu_device_id','')
+           compute_platform_id=r.get('choices',{}).get('compute_platform_id','')
+           compute_device_id=r.get('choices',{}).get('compute_device_id','')
 
            if 'add_to_features' not in misc: misc['add_to_features']={}
            misc['add_to_features']['gpgpu']=r.get('features',{}).get('gpgpu',{})
 
            if 'add_to_choices' not in misc: misc['add_to_choices']={}
-           misc['add_to_choices']['gpgpu_platform_id']=gpgpu_platform_id
-           misc['add_to_choices']['gpgpu_device_id']=gpgpu_device_id
+           misc['add_to_choices']['compute_platform_id']=compute_platform_id
+           misc['add_to_choices']['compute_device_id']=compute_device_id
 
        # Finish GPGPU selection, if needed
-       if gpgpu_platform_id!='':
-           env['CK_GPGPU_PLATFORM_ID']=gpgpu_platform_id
-       if gpgpu_device_id!='':
-           env['CK_GPGPU_DEVICE_ID']=gpgpu_device_id
+       if compute_platform_id!='':
+           env['CK_COMPUTE_PLATFORM_ID']=compute_platform_id
+       if compute_device_id!='':
+           env['CK_COMPUTE_DEVICE_ID']=compute_device_id
 
        # Add compiler dep again, if there (otherwise some libs can set another compiler)
        x=deps.get('compiler',{}).get('bat','')

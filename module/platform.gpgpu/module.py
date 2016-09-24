@@ -62,8 +62,9 @@ def detect(i):
 
               (select)               - if 'yes', select specific platform and device (only when one type, i.e. opencl or cuda)
               (deps)                 - pre-set dependencies when used inside 'program' module (to reuse already selected compilers and libs)
-              (gpgpu_platform_id')   - pre-select platform ID
-              (gpgpu_device_id')     - pre-select device ID
+
+              (compute_platform_id') - pre-select platform ID
+              (compute_device_id')   - pre-select device ID
             }
 
     Output: {
@@ -78,6 +79,11 @@ def detect(i):
                   gpgpu_id       - local ID {'gpgpu_platform_id', 'gpgpu_device_id'}
                 }
               ]
+
+              choices = {
+                  (compute_platform_id)
+                  (compute_device_id)
+              }
             }
 
     """
@@ -423,8 +429,8 @@ def detect(i):
         choices=[]
 
         # Check if pre-selected
-        p_id=i.get('gpgpu_platform_id','')
-        d_id=i.get('gpgpu_device_id','')
+        p_id=i.get('compute_platform_id','')
+        d_id=i.get('compute_device_id','')
 
         for p in props:
             xp_id=p.get('gpgpu_id',{}).get('gpgpu_platform_id','')
@@ -479,10 +485,10 @@ def detect(i):
         rr['choices']={}
 
         if p_id!='':
-            rr['choices']['gpgpu_platform_id']=p_id
+            rr['choices']['compute_platform_id']=p_id
 
         if d_id!='':
-            rr['choices']['gpgpu_device_id']=d_id
+            rr['choices']['compute_device_id']=d_id
 
     os.chdir(pcur)
 
