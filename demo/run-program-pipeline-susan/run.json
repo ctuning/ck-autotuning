@@ -1,0 +1,6 @@
+{
+  "pipeline":{
+    "data_uoa":"cbench-automotive-susan",
+    "no_state_check":"yes"
+  }
+}
