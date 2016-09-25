@@ -216,8 +216,8 @@ def detect(i):
             remote_dir=tosd.get('remote_dir','')
 
             os.system(remote_init)
-            
-            target_exe=os.path.basename(pf)                             
+
+            target_exe=os.path.basename(pf)
             pff=remote_dir+'/'+target_exe
 
             s=remote_push.replace('$#file1#$',pf).replace('$#file2#$',pff)
@@ -229,6 +229,9 @@ def detect(i):
             s=remote_shell+' '+pff
         else:
             s=r['bat'].rstrip('\n')+' '+hosd.get('env_separator','')+' '+pf
+
+            if tosd.get('use_bash_to_run','')!='':
+               s=tosd['use_bash_to_run'].replace('$#cmd#$', s)
 
         s+=' > '+ftmp
         os.system(s)
