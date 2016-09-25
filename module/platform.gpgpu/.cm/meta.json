@@ -22,6 +22,7 @@
   "module_deps": {
     "device":"5add622b07468cb6",
     "cfg": "b34231a3467566f8", 
+    "env": "9b9b3208ac44b891",
     "platform": "707ccdfe444cafac", 
     "platform.cpu": "aa6b542a420b8db9", 
     "platform.init": "38a2f5438d8555b6", 
@@ -29,6 +30,14 @@
     "choice": "e4564d6f984400d7",
     "program": "b0ac08fe1d3c2615"
   }, 
+  "tool_tags": {
+    "cuda": "tool,show-cuda-devices",
+    "opencl": "tool,show-opencl-devices"
+  },
+  "tool_env_key": {
+    "cuda": "CK_ENV_TOOL_SHOW_CUDA_DEVICES_FULL",
+    "opencl": "CK_ENV_TOOL_SHOW_OPENCL_DEVICES_FULL"
+  },
   "program": {
     "cuda": "1cda86b1074513a7", 
     "opencl": "e34164a6a31352e2"

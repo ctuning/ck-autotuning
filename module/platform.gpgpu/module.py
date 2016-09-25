@@ -144,6 +144,8 @@ def detect(i):
 
     tdid=rr['device_id']
 
+    remote=tosd.get('remote','')
+
     # Some params
     ro=tosd.get('redirect_stdout','')
     remote=tosd.get('remote','')
@@ -180,243 +182,247 @@ def detect(i):
            ck.out('Detecting GPGPU type: '+tp)
            ck.out('')
 
-        puoa=cfg['program'][tp]
+        tags=cfg['tool_tags'][tp]
 
-        r=ck.access({'action':'load',
-                     'module_uoa':cfg['module_deps']['program'],
-                     'data_uoa':puoa})
+        # Get tool env
+        ii={'action':'set',
+            'module_uoa':cfg['module_deps']['env'],
+            'host_os':hos,
+            'target_os':tos,
+            'device_id':tdid,
+            'tags':tags,
+            'out':oo}
+        r=ck.access(ii)
+        if r['return']>0: return r
+
+        env=r['env']
+        deps=r['dict']['deps']
+
+        # Try to run program
+        rx=ck.gen_tmp_file({'prefix':'tmp-', 'suffix':'.tmp'})
+        if rx['return']>0: return rx
+        ftmp=rx['file_name']
+
+        pf=env[cfg['tool_env_key'][tp]]
+
+        if remote=='yes':
+            dv=''
+            if tdid!='': dv=' -s '+tdid
+
+            remote_init=tosd.get('remote_init','').replace('$#device#$',dv)
+            remote_push=tosd.get('remote_push','').replace('$#device#$',dv)
+            remote_shell=tosd.get('remote_shell','').replace('$#device#$',dv)
+
+            remote_dir=tosd.get('remote_dir','')
+
+            os.system(remote_init)
+            
+            target_exe=os.path.basename(pf)                             
+            pff=remote_dir+'/'+target_exe
+
+            s=remote_push.replace('$#file1#$',pf).replace('$#file2#$',pff)
+            os.system(s)
+
+            s=remote_shell+' '+tosd.get('set_executable','')+' '+pff
+            os.system(s)
+
+            s=remote_shell+' '+pff
+        else:
+            s=r['bat'].rstrip('\n')+' '+hosd.get('env_separator','')+' '+pf
+
+        s+=' > '+ftmp
+        os.system(s)
+
+        er=i.get('exchange_repo','')
+        esr=i.get('exchange_subrepo','')
+        el=i.get('exchange_locally','')
+        if el!='yes' and er=='': 
+           er=ck.cfg['default_exchange_repo_uoa']
+           esr=ck.cfg['default_exchange_subrepo_uoa']
+        xn=prop.get('name','')
+
+        r=ck.load_text_file({'text_file':ftmp, 'split_to_list':'yes', 'delete_after_read':'yes'})
         if r['return']==0:
-           deps=r['dict'].get('compile_deps',{})
+           ll=r['lst']
 
-           odeps=i.get('deps',{})
-           for k in odeps:
-               if k in deps:
-                  deps[k]=copy.deepcopy(odeps[k]) 
+           for l in ll:
+               if l=='':
+                  # Process if features are not empty
+                  if len(prop_id)>0:
+                     fuoa=''
+                     fuid=''
 
-           # Try to compile program
-           r=ck.access({'action':'compile',
-                        'module_uoa':cfg['module_deps']['program'],
-                        'data_uoa':puoa,
-                        'quiet':quiet,
-                        'host_os':hos,
-                        'target_os':tos,
-                        'device_id':tdid,
-                        'deps':deps,
-                        'out':oo})
-           if r['return']>0:
-              if o=='con':
-                 ck.out('Warning: tool compilation failed ('+r['error']+')')
-           else:
-              # Try to run program
-              rx=ck.gen_tmp_file({'prefix':'tmp-', 'suffix':'.tmp'})
-              if rx['return']>0: return rx
-              ftmp=rx['file_name']
+                     # Exchanging info #################################################################
+                     if ex=='yes':
+                        if o=='con':
+                           ck.out('')
+                           ck.out('Exchanging information with repository ...')
 
-              r=ck.access({'action':'run',
-                           'module_uoa':cfg['module_deps']['program'],
-                           'data_uoa':puoa,
-                           'extra_run_cmd':'> '+ftmp,
-                           'quiet':quiet,
-                           'host_os':hos,
-                           'target_os':tos,
-                           'device_id':tdid,
-                           'deps':deps,
-                           'out':oo})
-              if r['return']>0:
-                 return r
+                        ii={'action':'exchange',
+                            'module_uoa':cfg['module_deps']['platform'],
+                            'sub_module_uoa':work['self_module_uid'],
+                            'repo_uoa':er,
+                            'data_name':prop.get('name',''),
+                            'extra_info':einf,
+                            'all':'yes',
+                            'dict':{'features':prop, 'features_misc':prop_all}} 
+                        if esr!='': ii['remote_repo_uoa']=esr
+                        r=ck.access(ii)
+                        if r['return']>0: return r
 
-              deps=r['deps']
+                        fuoa=r.get('data_uoa','')
+                        fuid=r.get('data_uid','')
 
-              er=i.get('exchange_repo','')
-              esr=i.get('exchange_subrepo','')
-              el=i.get('exchange_locally','')
-              if el!='yes' and er=='': 
-                 er=ck.cfg['default_exchange_repo_uoa']
-                 esr=ck.cfg['default_exchange_subrepo_uoa']
-              xn=prop.get('name','')
+                        prop=r['dict'].get('features',{})
+                        prop_all=r['dict'].get('features_misc',{})
 
-              r=ck.load_text_file({'text_file':ftmp, 'split_to_list':'yes', 'delete_after_read':'yes'})
-              if r['return']==0:
-                 ll=r['lst']
+                        if o=='con' and r.get('found','')=='yes':
+                           ck.out('  GPGPU CK entry already exists ('+fuid+') - loading latest meta (features) ...')
 
-                 for l in ll:
-                     if l=='':
-                        # Process if features are not empty
-                        if len(prop_id)>0:
-                           fuoa=''
-                           fuid=''
+                     if tp=='cuda':
+                        cc=prop_all.get('gpu compute capability','')
 
-                           # Exchanging info #################################################################
-                           if ex=='yes':
-                              if o=='con':
-                                 ck.out('')
-                                 ck.out('Exchanging information with repository ...')
+                        cc1=''
+                        cc2=''
+                        cc3=''
 
-                              ii={'action':'exchange',
-                                  'module_uoa':cfg['module_deps']['platform'],
-                                  'sub_module_uoa':work['self_module_uid'],
-                                  'repo_uoa':er,
-                                  'data_name':prop.get('name',''),
-                                  'extra_info':einf,
-                                  'all':'yes',
-                                  'dict':{'features':prop, 'features_misc':prop_all}} 
-                              if esr!='': ii['remote_repo_uoa']=esr
-                              r=ck.access(ii)
-                              if r['return']>0: return r
-
-                              fuoa=r.get('data_uoa','')
-                              fuid=r.get('data_uid','')
-
-                              prop=r['dict'].get('features',{})
-                              prop_all=r['dict'].get('features_misc',{})
-
-                              if o=='con' and r.get('found','')=='yes':
-                                 ck.out('  GPGPU CK entry already exists ('+fuid+') - loading latest meta (features) ...')
-
-                           if tp=='cuda':
-                              cc=prop_all.get('gpu compute capability','')
-
-                              cc1=''
-                              cc2=''
-                              cc3=''
-
-                              if cc=='1.0': 
-                                 cc1='compute_10'
-                                 cc2='sm_10'
-                                 cc3='Tesla'
-                              elif cc=='1.1': 
-                                 cc1='compute_11'
-                                 cc2='sm_11'
-                                 cc3='Tesla'
-                              elif cc=='1.2': 
-                                 cc1='compute_12'
-                                 cc2='sm_12'
-                                 cc3='Tesla'
-                              elif cc=='1.3': 
-                                 cc1='compute_13'
-                                 cc2='sm_13'
-                                 cc3='Tesla'
-                              elif cc=='2.0': 
-                                 cc1='compute_20'
-                                 cc2='sm_20'
-                                 cc3='Fermi'
-                              elif cc=='2.1': 
-                                 cc1='compute_20'
-                                 cc2='sm_21'
-                                 cc3='Fermi'
-                              elif cc=='3.0': 
-                                 cc1='compute_30'
-                                 cc2='sm_30'
-                                 cc3='Kepler'
-                              elif cc=='3.2': 
-                                 cc1='compute_32'
-                                 cc2='sm_32'
-                                 cc3='Kepler'
-                              elif cc=='3.5': 
-                                 cc1='compute_35'
-                                 cc2='sm_35'
-                                 cc3='Kepler'
-                              elif cc=='3.7': 
-                                 cc1='compute_37'
-                                 cc2='sm_37'
-                                 cc3='Kepler'
-                              elif cc=='5.0': 
-                                 cc1='compute_50'
-                                 cc2='sm_50'
-                                 cc3='Maxwell'
-                              elif cc=='5.2': 
-                                 cc1='compute_52'
-                                 cc2='sm_52'
-                                 cc3='Maxwell'
-                              elif cc=='5.3': 
-                                 cc1='compute_53'
-                                 cc2='sm_53'
-                                 cc3='Maxwell'
-                              elif cc=='6.0': 
-                                 cc1='compute_60'
-                                 cc2='sm_60'
-                                 cc3='Pascal'
-                              elif cc=='6.1': 
-                                 cc1='compute_61'
-                                 cc2='sm_61'
-                                 cc3='Pascal'
-                              elif cc=='6.2': 
-                                 cc1='compute_62'
-                                 cc2='sm_62'
-                                 cc3='Pascal'
-                              elif cc=='7.0': 
-                                 cc1='compute_70'
-                                 cc2='sm_70'
-                                 cc3='Volta'
-                              elif cc=='7.1': 
-                                 cc1='compute_71'
-                                 cc2='sm_71'
-                                 cc3='Volta'
-                              else:
-                                 return {'return':1, 'error':'Compute capability of your CUDA device is not recognized ('+cc+') - please report to the authors or update module:platform.gpgpu'}
-
-                              prop_all['compute_capability1']=cc1
-                              prop_all['compute_capability2']=cc2
-                              prop_all['compute_capability3']=cc3
-
-                              prop['microarchitecture']=cc3
-
-                           jj={"gpgpu":prop, "gpgpu_id":prop_id, "gpgpu_misc":prop_all}
-
-                           if fuoa!='' or fuid!='':
-                              jj['gpgpu_uoa']=fuoa
-                              jj['gpgpu_misc_uid']=fuid
-
-                           # Print without deps if needed
-                           if o=='con':
-                              ck.out('')
-                              ck.out('Features (properties) in JSON:')
-
-                              r=ck.dumps_json({'dict':jj})
-                              if r['return']>0: return r
-                              s=r['string']
-
-                              ck.out('')
-                              ck.out(s)
-
-                           jj['gpgpu_deps']=deps
-
-                           props.append(jj)
-
-                        # Refresh
-                        prop={}
-                        prop_id={}
-                        prop_all={}
-
-                     # Process features
-                     lx=[]
-                     if l!='':
-                        lx=l.split(':')
-
-                     if len(lx)>1:
-                        k=lx[0].strip().lower()
-                        v=lx[1].strip()
-
-                        if tp=='cuda':
-                           if k=='gpu device id':
-                              prop_id['gpgpu_device_id']=v
-                           elif k=='gpu name':
-                              prop['name']=v
-                              prop['type']=tp
-                           else:
-                              prop_all[k]=v
+                        if cc=='1.0': 
+                           cc1='compute_10'
+                           cc2='sm_10'
+                           cc3='Tesla'
+                        elif cc=='1.1': 
+                           cc1='compute_11'
+                           cc2='sm_11'
+                           cc3='Tesla'
+                        elif cc=='1.2': 
+                           cc1='compute_12'
+                           cc2='sm_12'
+                           cc3='Tesla'
+                        elif cc=='1.3': 
+                           cc1='compute_13'
+                           cc2='sm_13'
+                           cc3='Tesla'
+                        elif cc=='2.0': 
+                           cc1='compute_20'
+                           cc2='sm_20'
+                           cc3='Fermi'
+                        elif cc=='2.1': 
+                           cc1='compute_20'
+                           cc2='sm_21'
+                           cc3='Fermi'
+                        elif cc=='3.0': 
+                           cc1='compute_30'
+                           cc2='sm_30'
+                           cc3='Kepler'
+                        elif cc=='3.2': 
+                           cc1='compute_32'
+                           cc2='sm_32'
+                           cc3='Kepler'
+                        elif cc=='3.5': 
+                           cc1='compute_35'
+                           cc2='sm_35'
+                           cc3='Kepler'
+                        elif cc=='3.7': 
+                           cc1='compute_37'
+                           cc2='sm_37'
+                           cc3='Kepler'
+                        elif cc=='5.0': 
+                           cc1='compute_50'
+                           cc2='sm_50'
+                           cc3='Maxwell'
+                        elif cc=='5.2': 
+                           cc1='compute_52'
+                           cc2='sm_52'
+                           cc3='Maxwell'
+                        elif cc=='5.3': 
+                           cc1='compute_53'
+                           cc2='sm_53'
+                           cc3='Maxwell'
+                        elif cc=='6.0': 
+                           cc1='compute_60'
+                           cc2='sm_60'
+                           cc3='Pascal'
+                        elif cc=='6.1': 
+                           cc1='compute_61'
+                           cc2='sm_61'
+                           cc3='Pascal'
+                        elif cc=='6.2': 
+                           cc1='compute_62'
+                           cc2='sm_62'
+                           cc3='Pascal'
+                        elif cc=='7.0': 
+                           cc1='compute_70'
+                           cc2='sm_70'
+                           cc3='Volta'
+                        elif cc=='7.1': 
+                           cc1='compute_71'
+                           cc2='sm_71'
+                           cc3='Volta'
                         else:
-                           if k=='platform id':
-                              prop_id['gpgpu_platform_id']=v
-                           elif k=='device id':
-                              prop_id['gpgpu_device_id']=v
-                           elif k=='device':
-                              prop['name']=v
-                              prop['type']=tp
-                           elif k=='vendor':
-                              prop['vendor']=v
-                           else:
-                              prop_all[k]=v
+                           return {'return':1, 'error':'Compute capability of your CUDA device is not recognized ('+cc+') - please report to the authors or update module:platform.gpgpu'}
+
+                        prop_all['compute_capability1']=cc1
+                        prop_all['compute_capability2']=cc2
+                        prop_all['compute_capability3']=cc3
+
+                        prop['microarchitecture']=cc3
+
+                     jj={"gpgpu":prop, "gpgpu_id":prop_id, "gpgpu_misc":prop_all}
+
+                     if fuoa!='' or fuid!='':
+                        jj['gpgpu_uoa']=fuoa
+                        jj['gpgpu_misc_uid']=fuid
+
+                     # Print without deps if needed
+                     if o=='con':
+                        ck.out('')
+                        ck.out('Features (properties) in JSON:')
+
+                        r=ck.dumps_json({'dict':jj})
+                        if r['return']>0: return r
+                        s=r['string']
+
+                        ck.out('')
+                        ck.out(s)
+
+                     jj['gpgpu_deps']=deps
+
+                     props.append(jj)
+
+                  # Refresh
+                  prop={}
+                  prop_id={}
+                  prop_all={}
+
+               # Process features
+               lx=[]
+               if l!='':
+                  lx=l.split(':')
+
+               if len(lx)>1:
+                  k=lx[0].strip().lower()
+                  v=lx[1].strip()
+
+                  if tp=='cuda':
+                     if k=='gpu device id':
+                        prop_id['gpgpu_device_id']=v
+                     elif k=='gpu name':
+                        prop['name']=v
+                        prop['type']=tp
+                     else:
+                        prop_all[k]=v
+                  else:
+                     if k=='platform id':
+                        prop_id['gpgpu_platform_id']=v
+                     elif k=='device id':
+                        prop_id['gpgpu_device_id']=v
+                     elif k=='device':
+                        prop['name']=v
+                        prop['type']=tp
+                     elif k=='vendor':
+                        prop['vendor']=v
+                     else:
+                        prop_all[k]=v
 
     # Check if need to select device and platform
     rr={'return':0, 'features':{'gpgpu':props}}
