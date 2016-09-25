@@ -137,6 +137,13 @@ def setup(i):
     except Exception as e: 
         return {'return':1, 'error':'Copying file to installation directory failed'}
 
+    # Check if need to set executable
+    se=hosd.get('set_executable','')
+    if se!='':
+       se+=' '+pt
+
+       os.system(se)
+
     rr['soft_cfg']['skip_device_info_collection']='yes'
-    
+
     return rr
