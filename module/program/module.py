@@ -180,10 +180,10 @@ def process_in_dir(i):
               (target_os)            - OS module to check (if omitted, analyze host)
               (device_id)            - device id if remote (such as adb)
 
-              (target)               - target device added via 'ck add device' with prepared target description
-                                       (useful to create farms of devices for crowd-benchmarking and crowd-tuning using CK)
+              (target)               - target machine added via 'ck add machine' with prepared target description
+                                       (useful to create farms of machines for crowd-benchmarking and crowd-tuning using CK)
 
-              (device_cfg)           - extra device cfg (if empty, will be filled in from 'device' description)
+              (device_cfg)           - extra device cfg (if empty, will be filled in from 'machine' module description)
 
               (compute_platform_id)  - if !='', set env['CK_COMPUTE_PLATFORM_ID']
               (compute_device_id)    - if !='', set env['CK_COMPUTE_DEVICE_ID']
@@ -395,10 +395,10 @@ def process_in_dir(i):
     # Check if need to initialize device and directly update input i !
     r=ck.access({'action':'find',
                  'module_uoa':cfg['module_deps']['module'],
-                 'data_uoa':cfg['module_deps']['device']})
+                 'data_uoa':cfg['module_deps']['machine']})
     if r['return']==0:
         ii={'action':'init',
-            'module_uoa':cfg['module_deps']['device'],
+            'module_uoa':cfg['module_deps']['machine'],
             'input':i}
 
         if sa=='run':
@@ -2608,8 +2608,8 @@ def pipeline(i):
 
               (program_dir)          - force program directory
 
-              (target)               - target device added via 'ck add device' with prepared target description
-                                       (useful to create farms of devices for crowd-benchmarking and crowd-tuning using CK)
+              (target)               - target machine added via 'ck add machine' with prepared target description
+                                       (useful to create farms of machines for crowd-benchmarking and crowd-tuning using CK)
 
               (host_os)              - host OS (detect, if omitted)
               (target_os)            - OS module to check (if omitted, analyze host)
@@ -3110,7 +3110,7 @@ def pipeline(i):
     # Check via --target first (however, for compatibility, check that module exists first)
     r=ck.access({'action':'find',
                  'module_uoa':cfg['module_deps']['module'],
-                 'data_uoa':cfg['module_deps']['device']})
+                 'data_uoa':cfg['module_deps']['machine']})
     if r['return']==0 and i.get('skip_target','')!='yes':
        if o=='con':
           ck.out(sep)
@@ -3128,7 +3128,7 @@ def pipeline(i):
        tdid=i.get('device_id','')
        if tdid=='': i['device_id']=choices.get('tdid','')
 
-       r=ck.search({'module_uoa':cfg['module_deps']['device'], 'data_uoa':target, 'add_meta':'yes'})
+       r=ck.search({'module_uoa':cfg['module_deps']['machine'], 'data_uoa':target, 'add_meta':'yes'})
        if r['return']>0: return r
 
        dlst=r['lst']
@@ -3176,7 +3176,7 @@ def pipeline(i):
                 return finalize_pipeline(i)
 
        ii={'action':'init',
-           'module_uoa':cfg['module_deps']['device'],
+           'module_uoa':cfg['module_deps']['machine'],
            'input':i}
 
        if no_run!='yes':

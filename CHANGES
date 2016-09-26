@@ -1,3 +1,5 @@
+* 2016.09.26 * changing 'device' to 'machine'
+
 * 2016.09.25 * added packages "tool-show-cuda-devices" and "tool-show-opencl-devices"
 
 * 2016.09.23 * added selection of GPGPU target to 'ck detect platform.gpgpu' widget
