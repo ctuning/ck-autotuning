@@ -107,6 +107,8 @@ def detect(i):
                     'input':i})
        if r['return']>0: return r
 
+    device_cfg=i.get('device_cfg',{})
+
     # Various params
     hos=i.get('host_os','')
     tos=i.get('target_os','')
@@ -139,6 +141,8 @@ def detect(i):
     tos=rr['os_uid']
     tosx=rr['os_uoa']
     tosd=rr['os_dict']
+
+    tosd.update(device_cfg.get('update_target_os_dict',{}))
 
     tbits=tosd.get('bits','')
 

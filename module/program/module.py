@@ -419,6 +419,7 @@ def process_in_dir(i):
         'module_uoa':cfg['module_deps']['platform.os'],
         'host_os':hos,
         'target_os':tos,
+        'device_cfg':device_cfg,
         'device_id':tdid,
         'skip_device_init':sdi}
 
@@ -3215,6 +3216,7 @@ def pipeline(i):
         'host_os':hos,
         'target_os':tos,
         'device_id':tdid,
+        'device_cfg':device_cfg,
         'skip_device_init':sdi,
         'skip_info_collection':sic,
         'out':ox}
