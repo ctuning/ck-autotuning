@@ -1836,6 +1836,12 @@ def process_in_dir(i):
 
           misc['dataset_uoa']=dduoa
 
+       # Check if need to add env with current path
+       if remote=='yes' and len(tosd.get('remote_env_set',[]))>0:
+           for q in tosd['remote_env_set']:
+               sb+=q+'\n'
+           sb+='\n'
+
        # Check if pre-processing script via CK
        pvck=rt.get('pre_process_via_ck',{})
        if len(pvck)>0:
@@ -2173,8 +2179,13 @@ def process_in_dir(i):
 
              if isd=='yes': y=y+' '+envtsep+' '+sudo_post
 
-             if eifsx!='': y=y.replace('"','\\"')
-             y=rs+' '+eifsx+tosd['change_dir']+' '+rdir+envtsep+' '+y+eifsx+' '+rse
+             eifsx1=eifsx
+             if rs.endswith('"'):
+                 eifsx1=''
+             elif eifsx!='': 
+                 y=y.replace('"','\\"')
+
+             y=rs+' '+eifsx1+tosd['change_dir']+' '+rdir+envtsep+' '+y+eifsx1+' '+rse
 
              if cons!='yes':
                 if ercmd!='': y+=' '+ercmd
