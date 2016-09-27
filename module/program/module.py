@@ -450,6 +450,7 @@ def process_in_dir(i):
     if tdid!='': xtdid=' -s '+tdid
 
     remote=tosd.get('remote','')
+    remote_ssh=tosd.get('remote_ssh','')
 
     tbits=tosd.get('bits','')
 
@@ -1361,10 +1362,12 @@ def process_in_dir(i):
        if remote=='yes':
           rdir=tosd.get('remote_dir','')
           if rdir!='' and not rdir.endswith(stdirs): rdir+=stdirs
+          if td!='': rdir+=td
+          if rdir!='' and not rdir.endswith(stdirs): rdir+=stdirs
 
        src_path_local=p+sdirs
-       if remote=='yes':
-          src_path=rdir+stdirs
+       if remote=='yes' and remote_ssh!='yes':
+          src_path=rdir
        else:
           src_path=src_path_local
 
@@ -1557,6 +1560,12 @@ def process_in_dir(i):
 
        c=c.replace('$#BIN_FILE#$', te)
        c=c.replace('$#os_dir_separator#$', stdirs)
+
+       x=''
+       if remote_ssh!='yes':
+          x='..'+stdirs
+       c=c.replace('$#previous_dir#$', x)
+
        c=c.replace('$#src_path#$', src_path)
 
        c=c.replace('$#env1#$',svarb)
@@ -1645,6 +1654,15 @@ def process_in_dir(i):
                           'device_id':tdid,
                           'out':o})
              if r['return']>0: return r
+
+          # Try to create directories
+          x=rs+tosd['make_dir']+rdir+rse
+
+          if o=='con':
+             ck.out('')
+             ck.out('Executing: '+x)
+
+          r=os.system(x)
 
           if srn==0:
              # Copy exe
