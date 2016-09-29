@@ -884,7 +884,7 @@ def process_in_dir(i):
               for pl2 in els:
                   if pl2!='':
                      if sll!='': sll+=' '
-                     if ctype=='dynamic' and (remote=='yes' or (pl1d!='' and wb!='yes')) and csd.get('customize',{}).get('can_strip_dynamic_lib','')=='yes':
+                     if ctype=='dynamic' and wb!='yes' and (remote=='yes' or pl1d!='') and csd.get('customize',{}).get('can_strip_dynamic_lib','')=='yes':
                         pl2x=os.path.splitext(pl2)[0]
                         if pl2x.startswith('lib'): pl2x=pl2x[3:]
                         if not path_added:
@@ -2203,7 +2203,11 @@ def process_in_dir(i):
              elif eifsx!='': 
                  y=y.replace('"','\\"')
 
-             y=rs+' '+eifsx1+tosd['change_dir']+' '+rdir+envtsep+' '+y+eifsx1+' '+rse
+             yrdir=rdir
+             if tosd.get('remote_dir_full','')!='':
+                 yrdir=tosd['remote_dir_full']+stdirs+rdir
+
+             y=rs+' '+eifsx1+tosd['change_dir']+' '+yrdir+envtsep+' '+y+eifsx1+' '+rse
 
              if cons!='yes':
                 if ercmd!='': y+=' '+ercmd
@@ -2447,6 +2451,11 @@ def process_in_dir(i):
                 misc['run_success_bool']=False
                 misc['fail_reason']=rq['error']
 
+                if o=='con':
+                    ck.out('')
+                    ck.out('Program execution likely failed (can\'t find fine grain timers)!')
+                    ck.out('')
+
                 return {'return':0, 'tmp_dir':rcdir, 'misc':misc, 'characteristics':ccc, 'deps':deps}
 
              drq=rq['dict']
@@ -2493,6 +2502,11 @@ def process_in_dir(i):
              misc['run_success_bool']=False
              misc['fail_reason']='calibration failed'
 
+             if o=='con':
+                ck.out('')
+                ck.out('Program execution likely failed ('+misc['fail_reason']+')!')
+                ck.out('')
+
              return {'return':0, 'tmp_dir':rcdir, 'misc':misc, 'characteristics':ccc, 'deps':deps}
 
           cn+=1
@@ -2502,6 +2516,11 @@ def process_in_dir(i):
              misc['run_success']='no'
              misc['run_success_bool']=False
              misc['fail_reason']='calibration problem'
+
+             if o=='con':
+                ck.out('')
+                ck.out('Program execution likely failed ('+misc['fail_reason']+')!')
+                ck.out('')
 
              return {'return':0, 'tmp_dir':rcdir, 'misc':misc, 'characteristics':ccc, 'deps':deps}
 
@@ -2552,6 +2571,11 @@ def process_in_dir(i):
     #      shutil.rmtree(cdir, ignore_errors=True)
     #   except Exception as e:
     #      pass
+
+    if misc.get('run_success','')=='no' and o=='con':
+       ck.out('')
+       ck.out('Program execution likely failed ('+misc.get('fail_reason','')+')!')
+       ck.out('')
 
     return {'return':0, 'tmp_dir':rcdir, 'misc':misc, 'characteristics':ccc, 'deps':deps}
 
