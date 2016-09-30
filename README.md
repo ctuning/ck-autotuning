@@ -8,7 +8,7 @@ multi-dimensional, multi-objective SW/HW autotuning
 across Linux, Android, MacOS and Windows-based machines
 via Collective Knowledge Framework.
 
-See related [Android app](https://play.google.com/store/apps/details?id=openscience.crowdsource.experiments Android app)
+See related [Android app](https://play.google.com/store/apps/details?id=openscience.crowdsource.experiments)
 to let you participate in GCC/LLVM crowd-tuning using
 spare Android mobile phones, tables and other devices.
 
