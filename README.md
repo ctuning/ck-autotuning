@@ -3,9 +3,16 @@ Universal, customizable and multi-objective software and hardware autotuning
 
 Status
 ======
-This is a relatively stable repository for universal,
-customizable, multi-dimensional, multi-objective 
-SW/HW autotuning.
+This is a stable repository for universal, customizable, 
+multi-dimensional, multi-objective SW/HW autotuning 
+across Linux, Android, MacOS and Windows-based machines
+via Collective Knowledge Framework.
+
+See related [Android app](https://play.google.com/store/apps/details?id=openscience.crowdsource.experiments Android app)
+to let you participate in GCC/LLVM crowd-tuning using
+spare Android mobile phones, tables and other devices.
+
+Further details are available at [CK wiki](https://github.com/ctuning/ck/wiki)
 
 Prerequisites
 =============
@@ -41,6 +48,7 @@ Publications
 ============
 * http://hal.inria.fr/hal-01054763
 * http://arxiv.org/abs/1506.06256
+* http://bit.ly/ck-date16
 * https://hal.inria.fr/inria-00436029
 * http://arxiv.org/abs/1407.4075
 
