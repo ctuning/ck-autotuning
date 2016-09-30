@@ -12,7 +12,7 @@ See related [Android app](https://play.google.com/store/apps/details?id=openscie
 to let you participate in GCC/LLVM crowd-tuning using
 spare Android mobile phones, tables and other devices.
 
-Further details are available at [CK wiki](https://github.com/ctuning/ck/wiki)
+Further details are available at [CK wiki](https://github.com/ctuning/ck/wiki).
 
 Prerequisites
 =============
