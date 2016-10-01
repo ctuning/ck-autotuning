@@ -495,7 +495,7 @@ def detect(i):
             ck.out('')
             ck.out('Selected GPGPU target: '+choices[ich])
 
-        rr['choices']={}
+        rr['choices']={'compute_number':ich}
 
         if p_id!='':
             rr['choices']['compute_platform_id']=p_id
