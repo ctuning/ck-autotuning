@@ -726,6 +726,7 @@ def process_in_dir(i):
 
     if remote=='yes' and sa=='run' and 'android' in tosd.get('tags',[]) and 'adb' not in deps:
        deps['adb']={
+                    "force_target_as_host": "yes",
                     "local": "yes", 
                     "name": "adb tool", 
                     "sort": -10, 
