@@ -28,10 +28,28 @@ N: Abdul Wahid Memon
 E: engrwahidmemon@gmail.com
 O: 
 C: checking how to convert GCC optimization flags to CK format for autotuning
-W: 
+W: 2015
 
-N: Harry Plumley, STFC Hartree Centre, 2016
+N: Michael Mcgeagh
 E:
-O: STFC Hartree Centre
-C: suggested to pass CK environment to post processing scripts
+O: ARM, UK
+C: discussing farms of CK-powered machines for ARM Workload Automation Framework
+W: 2016
+
+N: Dmitry Savenko 
+E:
+O: 
+C: fixed various problems with crowdtuning on MacOS
+W: 2016
+
+N: Milos Puzovic 
+E:
+O: The Hartree Centre, UK (http://www.hartree.stfc.ac.uk/hartree)
+C: discussing farms of CK-powered machines
+W: 2016
+
+N: Harry Plumley 
+E:
+O: The Hartree Centre, UK (http://www.hartree.stfc.ac.uk/hartree)
+C: discussing farms of CK-powered machines, improving post processing scripts in 'program' module
 W: 2016
