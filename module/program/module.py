@@ -2393,6 +2393,11 @@ def process_in_dir(i):
                           if rxx['return']>0:
                              if o=='con':
                                 ck.out('  (post processing script failed: '+rxx['error']+'!)')
+
+                             misc['run_success']='no'
+                             misc['run_success_bool']=False
+                             misc['fail_reason']=rxx['error']
+
                              break
 
                           cs=rxx['code']
@@ -2426,6 +2431,11 @@ def process_in_dir(i):
                              if srx>0:
                                 if o=='con':
                                    ck.out('  (post processing script failed: '+rxx['error']+'!)')
+
+                                misc['run_success']='no'
+                                misc['run_success_bool']=False
+                                misc['fail_reason']=rxx['error']
+
                                 break
 
                  else:
@@ -2434,6 +2444,11 @@ def process_in_dir(i):
                     if srx>0:
                        if o=='con':
                           ck.out('  (post processing script failed!)')
+
+                       misc['run_success']='no'
+                       misc['run_success_bool']=False
+                       misc['fail_reason']='post processing script failed'
+
                        break
 
           # If script failed, exit
