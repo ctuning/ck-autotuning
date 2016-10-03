@@ -1657,7 +1657,7 @@ def process_in_dir(i):
              if r['return']>0: return r
 
           # Try to create directories
-          x=rs+tosd['make_dir']+rdir+rse
+          x=rs+' '+tosd['make_dir']+rdir+rse
 
           if o=='con':
              ck.out('')
