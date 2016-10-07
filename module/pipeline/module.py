@@ -156,6 +156,8 @@ def autotune(i):
 
                (skip_stat_analysis)               - if 'yes', just flatten array and add #min
 
+               (stat_flat_dict)                   - pre-load flat dict from previous experiments to aggregate for stat analysis
+
                (features)                         - extra features
                (meta)                             - extra meta
 
@@ -459,6 +461,7 @@ def autotune(i):
        ni=1
 
     ssa=ck.get_from_dicts(ic, 'skip_stat_analysis', '', None)
+    sfd=ck.get_from_dicts(ic, 'stat_flat_dict', {}, None)
 
     sfi=i.get('start_from_iteration','')
     if sfi=='': sfi=1
@@ -1036,6 +1039,7 @@ def autotune(i):
            ii={'action':'multi_stat_analysis',
                'module_uoa':cfg['module_deps']['experiment'],
                'dict':stat_dict,
+               'flat_dict':sfd,
                'dict_to_add':dd,
                'dict_to_compare':fdfi,
                'process_multi_keys':pmk,
