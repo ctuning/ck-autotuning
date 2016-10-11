@@ -1535,7 +1535,13 @@ def process_in_dir(i):
            ix.update(apk)
 
            r=ck.access(ix)
-           if r['return']>0: return r
+           if r['return']>0: 
+               if r['return']==16:
+                   misc['run_success']='no'
+                   misc['run_success_bool']=False
+                   misc['fail_reason']=r['error']
+
+               return r
 
            if 'add_to_features' not in misc: misc['add_to_features']={}
            misc['add_to_features']['apk']=r.get('params',{})
