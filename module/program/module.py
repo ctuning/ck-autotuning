@@ -4621,24 +4621,22 @@ def pipeline(i):
     ###############################################################################################################
     # PIPELINE SECTION: Post-process output from dividiti's OpenCL profiler.
     if odp=='yes':
-       y=xdeps.get('dvdt_prof',{}).get('bat','').rstrip()+' '+envsep
-
-       y+=' \\'+svarb+svarb1+'CK_ENV_TOOL_DVDT_PROF_CONVERT_TO_CK'+svare1+svare+' '+vcmd.get('run_time',{}).get('run_cmd_out1','')+' '+fodp
-
-       if ubtr!='': y=ubtr.replace('$#cmd#$',y)
-
-       if o=='con':
-          ck.out('')
-          ck.out('  (post processing output of dividiti\'s OpenCL profiler ...)')
-          ck.out('')
-          ck.out(y)
-          ck.out('')
-
-       rx=os.system(y)
-
-       rx=ck.load_json_file({'json_file':fodp})
-       if rx['return']>0: return rx
-       chars['run']['dvdt_prof']=rx['dict']
+        dvdt_prof=xdeps.get('dvdt_prof',{})
+        with open('tmp-dvdt-prof-deps.json', 'w') as f:
+            json.dump(dvdt_prof, f, indent=2)
+        # Load output.
+        r=ck.load_text_file({
+            'text_file':vcmd.get('run_time',{}).get('run_cmd_out1',''),
+            'split_to_list':'no'
+        })
+        if r['return']>0: return r
+        # Locate profiler parser.
+        dvdt_prof_dir=dvdt_prof['dict']['env']['CK_ENV_TOOL_DVDT_PROF']
+        dvdt_prof_src_python=os.path.join(dvdt_prof_dir,'src','python')
+        sys.path.append(dvdt_prof_src_python)
+        from prof_parser import prof_parse
+        # Parse profiler output.
+        chars['run']['dvdt_prof']=prof_parse(r['string'])
 
     ###############################################################################################################
     # Deinit remote device, if needed
