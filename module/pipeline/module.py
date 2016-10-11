@@ -13,6 +13,7 @@ ck=None # Will be updated by CK (initialized CK kernel)
 
 # Local settings
 sep='***************************************************************************************'
+sep1='---------------------------------------------------------------------------------------'
 
 ##############################################################################
 # Initialize module
@@ -587,7 +588,7 @@ def autotune(i):
            break
 
         mm=m+1
-        ck.out(sep+sep)
+        ck.out(sep1)
         x='Pipeline iteration: '+str(mm)
         if ni!=-1: x+=' of '+str(ni) 
 

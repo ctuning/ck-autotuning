@@ -1517,6 +1517,29 @@ def process_in_dir(i):
        if compute_device_id!='':
            env['CK_COMPUTE_DEVICE_ID']=compute_device_id
 
+       # Check APK
+       apk=meta.get('apk',{})
+       if len(apk)>0:
+           if o=='con':
+               ck.out(sep)
+               ck.out('Detecting/installing required APK ...')
+               ck.out('')
+
+           ix={'action':'install',
+               'module_uoa':cfg['module_deps']['apk'],
+               'host_os':hos,
+               'target_os':tos,
+               'device_id':tdid,
+               'out':oo}
+
+           ix.update(apk)
+
+           r=ck.access(ix)
+           if r['return']>0: return r
+
+           if 'add_to_features' not in misc: misc['add_to_features']={}
+           misc['add_to_features']['apk']=r.get('params',{})
+
        # Add compiler dep again, if there (otherwise some libs can set another compiler)
        x=deps.get('compiler',{}).get('bat','')
        if remote!='yes' and x!='' and not sb.endswith(x):

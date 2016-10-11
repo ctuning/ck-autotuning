@@ -77,6 +77,7 @@
     }
   }, 
   "module_deps": {
+    "apk": "eb4ec9907982260a",
     "choice": "e4564d6f984400d7", 
     "compiler": "36ebc331048475bb", 
     "dataset": "8a7141c59cd335f5", 
