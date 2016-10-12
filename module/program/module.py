@@ -1540,6 +1540,7 @@ def process_in_dir(i):
                    misc['run_success']='no'
                    misc['run_success_bool']=False
                    misc['fail_reason']=r['error']
+                   return {'return':0, 'tmp_dir':rcdir, 'misc':misc, 'characteristics':ccc, 'deps':deps}
 
                return r
 
