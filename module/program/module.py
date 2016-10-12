@@ -855,7 +855,7 @@ def process_in_dir(i):
           # Check linking libs + include paths for all deps
           sll=''
           sin=''
-          for k in deps:
+          for k in sorted(deps, key=lambda kk: deps[kk].get('sort',0)):
               depsk=deps[k]
               kv=depsk.get('cus',{})
 
