@@ -3247,7 +3247,7 @@ def pipeline(i):
 
        if len(lst)==0:
           if len(rdat)>0:
-             return {'return':1, 'error':'no target devices found for this pipeline (use "ck add device")'}
+             return {'return':1, 'error':'no target devices found for this pipeline (use "ck add machine")'}
           # otherwide device is not strictly necessary for this program
        elif len(lst)==1:
           i['target']=lst[0]['data_uoa']
