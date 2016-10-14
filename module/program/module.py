@@ -2428,7 +2428,8 @@ def process_in_dir(i):
                              misc['run_success_bool']=False
                              misc['fail_reason']=rxx['error']
 
-                             break
+#                             break
+                             return {'return':0, 'tmp_dir':rcdir, 'misc':misc, 'characteristics':ccc, 'deps':deps}
 
                           cs=rxx['code']
 
@@ -2466,7 +2467,8 @@ def process_in_dir(i):
                                 misc['run_success_bool']=False
                                 misc['fail_reason']=rxx['error']
 
-                                break
+#                                break
+                                return {'return':0, 'tmp_dir':rcdir, 'misc':misc, 'characteristics':ccc, 'deps':deps}
 
                  else:
                     srx=os.system(ppc)
@@ -2479,10 +2481,13 @@ def process_in_dir(i):
                        misc['run_success_bool']=False
                        misc['fail_reason']='post processing script failed'
 
-                       break
+#                       break
+                       return {'return':0, 'tmp_dir':rcdir, 'misc':misc, 'characteristics':ccc, 'deps':deps}
 
           # If script failed, exit
-          if srx>0: break
+          if srx>0: 
+#              break
+              return {'return':0, 'tmp_dir':rcdir, 'misc':misc, 'characteristics':ccc, 'deps':deps}
 
           # Check if fine-grain time
           if fgtf!='':
