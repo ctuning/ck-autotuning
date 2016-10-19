@@ -112,8 +112,6 @@ def autotune(i):
                (loop)
                (parallel-loop)
 
-               (choices)                          - force choices from external sources (to be able to separate experiments)
-
                (process_multi_keys)               - list of keys (starts with) to perform stat analysis on flat array,
                                                        by default ['##characteristics#*', '##features#*' '##choices#*'],
                                                        if empty, no stat analysis
