@@ -113,7 +113,7 @@ def make(i):
 
         ti=t.get('iterations','')
         top=t.get('omit_probability','')
-        if cexp.get('omit_probability','')!='': zestart=cexp['omit_probability']
+        if cexp.get('omit_probability','')!='': top=cexp['omit_probability']
         if top=='': top=0.0
         else: top=float(top)
 
