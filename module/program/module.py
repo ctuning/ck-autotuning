@@ -738,7 +738,7 @@ def process_in_dir(i):
           ck.out(sep)
 
        # Add extra compiler flags
-       if ctags!='' and 'compiler' in deps:
+       if meta.get('do_not_add_compiler_to_tags','')!='yes' and ctags!='' and 'compiler' in deps:
           xctags=deps['compiler'].get('tags','')
           if xctags!='':
              xctags+=','
