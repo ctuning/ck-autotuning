@@ -96,7 +96,11 @@ def detect(i):
     oo=''
     if o=='con': oo=o
 
-    pcur=os.getcwd()
+    try:
+        pcur=os.getcwd()
+    except OSError:
+        os.chdir('..')
+        pcur=os.getcwd()
 
     quiet=i.get('quiet','')
 

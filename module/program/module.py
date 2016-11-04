@@ -101,7 +101,11 @@ def process(i):
 
        if duoa=='':
           # Attempt to load configuration from the current directory
-          p=os.getcwd()
+          try:
+              p=os.getcwd()
+          except OSError:
+              os.chdir('..')
+              p=os.getcwd()
 
           pc=os.path.join(p, ck.cfg['subdir_ck_ext'], ck.cfg['file_meta'])
           if os.path.isfile(pc):
@@ -619,7 +623,12 @@ def process_in_dir(i):
        rx=os.system(cmd)
 
        # Removing only 1 tmp directory. If there are multiple - may be used for crowdtuning - do not delete
-       curdir=os.getcwd()
+       try:
+           curdir=os.getcwd()
+       except OSError:
+           os.chdir('..')
+           curdir=os.getcwd()
+
        q=os.path.join(curdir, 'tmp')
        if os.path.isdir(q):
           shutil.rmtree(q, ignore_errors=True)
@@ -696,10 +705,19 @@ def process_in_dir(i):
        ck.out(sep)
        ck.out('Current directory: '+cdir)
 
-    odir=os.getcwd()
+    try:
+        odir=os.getcwd()
+    except OSError:
+        os.chdir('..')
+        odir=os.getcwd()
 
     os.chdir(cdir)
-    rcdir=os.getcwd()
+
+    try:
+        rcdir=os.getcwd()
+    except OSError:
+        os.chdir('..')
+        rcdir=os.getcwd()
 
     # If run and dynamic or reuse compile deps, check deps prepared by compiler
     fdeps=cfg.get('deps_file','')
@@ -1917,7 +1935,11 @@ def process_in_dir(i):
              ck.out('')
 
           # Check if has custom script
-          cdd=os.getcwd()
+          try:
+              cdd=os.getcwd()
+          except OSError:
+              os.chdir('..')
+              cdd=os.getcwd()
 
           cs=None
           rxx=ck.load_module_from_path({'path':pvckp, 'module_code_name':pvckc, 'skip_init':'yes'})
@@ -2416,7 +2438,11 @@ def process_in_dir(i):
                              ppcm1=ppcm1[:-3]
 
                           # Check if has custom script
-                          cdd=os.getcwd()
+                          try:
+                              cdd=os.getcwd()
+                          except OSError:
+                              os.chdir('..')
+                              cdd=os.getcwd()
 
                           cs=None
                           rxx=ck.load_module_from_path({'path':ppcm2, 'module_code_name':ppcm1, 'skip_init':'yes'})
@@ -2920,7 +2946,13 @@ def pipeline(i):
     if 'state' not in i: i['state']={}
     state=i['state']
 
-    state['cur_dir']=os.getcwd()
+    try:
+        x=os.getcwd()
+    except OSError:
+        os.chdir('..')
+        xr=os.getcwd()
+
+    state['cur_dir']=x
 
     if 'choices' not in i: i['choices']={}
     choices=i['choices']

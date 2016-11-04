@@ -407,7 +407,12 @@ def autotune(i):
              if rx['return']>0: return rx
              cduoa=rx['value']
 
-       pcat=os.getcwd()
+       try:
+           pcat=os.getcwd()
+       except OSError:
+           os.chdir('..')
+           pcat=os.getcwd()
+
        if cmuoa!='' and cduoa!='':
           rx=ck.access({'action':'find',
                         'module_uoa':cmuoa,
