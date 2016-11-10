@@ -1,6 +1,7 @@
 * 2016.11.10 * added gflags package for Android 
              * added glog package for Android (with patch)
              * added lmdb package for Android
+             * added opencv package for Android
 
 * 2016.11.04 * making os.getcwd() safer
 

@@ -1,0 +1,43 @@
+{
+  "customize": {
+    "extra_dir": "",
+    "git_src_dir": "src",
+    "install_env": {
+      "PACKAGE_URL": "https://github.com/opencv/opencv"
+    },
+    "use_git_revision": "yes",
+    "version": "development"
+  },
+  "deps": {
+    "cmake": {
+      "local": "yes",
+      "name": "cmake",
+      "sort": 5,
+      "tags": "tool,cmake"
+    },
+    "compiler": {
+      "local": "yes",
+      "name": "C++ compiler",
+      "sort": 10,
+      "tags": "compiler,lang-cpp"
+    }
+  },
+  "end_full_path": {
+    "android": "install$#sep#$sdk$#sep#$native$#sep#$libs$#sep#$$#abi#$$#sep#$libopencv_core.a"
+  },
+  "need_cpu_info": "yes",
+  "only_for_host_os_tags": [
+    "linux"
+  ],
+  "only_for_target_os_tags": [
+    "android"
+  ],
+  "process_script": "install",
+  "soft_uoa": "18eb79fe079438fb",
+  "suggested_path": "lib-opencv",
+  "tags": [
+    "lib",
+    "opencv",
+    "vtrunk"
+  ]
+}
