@@ -1,0 +1,43 @@
+{
+  "customize": {
+    "extra_dir": "",
+    "install_env": {
+      "PACKAGE_URL": "https://github.com/gflags/gflags"
+    },
+    "version": "development",
+    "use_git_revision":"yes",
+    "git_src_dir":"src"
+  },
+  "deps": {
+    "cmake": {
+      "local": "yes",
+      "name": "cmake",
+      "sort": 5,
+      "tags": "tool,cmake"
+    },
+    "compiler": {
+      "local": "yes",
+      "name": "C++ compiler",
+      "sort": 10,
+      "tags": "compiler,lang-cpp"
+    }
+  },
+  "end_full_path": {
+    "android": "install$#sep#$lib$#sep#$libgflags.a"
+  },
+  "need_cpu_info": "yes",
+  "only_for_host_os_tags": [
+    "linux"
+  ],
+  "only_for_target_os_tags": [
+    "android"
+  ],
+  "process_script": "install",
+  "soft_uoa": "64abac44465943ea",
+  "suggested_path": "lib-gflags",
+  "tags": [
+    "lib",
+    "gflags",
+    "vtrunk"
+  ]
+}
