@@ -64,8 +64,8 @@ cmake -DCMAKE_TOOLCHAIN_FILE="${PACKAGE_DIR}/misc/android.toolchain.cmake" \
       -DCMAKE_BUILD_TYPE=Release \
       -DANDROID_ABI="${CK_ANDROID_ABI}" \
       -DANDROID_NATIVE_API_LEVEL=${CK_ANDROID_API_LEVEL} \
-      -DGFLAGS_INCLUDE_DIR="${CK_ENV_LIB_GFLAGS_INCLUDE}/include" \
-      -DGFLAGS_LIBRARY="${CK_ENV_LIB_GFLAGS_LIB}/lib/libgflags.a" \
+      -DGFLAGS_INCLUDE_DIR="${CK_ENV_LIB_GFLAGS_INCLUDE}" \
+      -DGFLAGS_LIBRARY="${CK_ENV_LIB_GFLAGS_LIB}/libgflags.a" \
       -DCMAKE_INSTALL_PREFIX="${INSTALL_DIR}/install" \
       ../src
 

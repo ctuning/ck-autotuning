@@ -33,11 +33,11 @@
     "linux"
   ],
   "process_script": "install",
-  "soft_uoa": "c535adb7ab476da6",
-  "suggested_path": "lib-protobuf",
+  "soft_uoa": "57c5f409aaf1ceed",
+  "suggested_path": "lib-protobuf-host",
   "tags": [
     "lib",
-    "protobuf",
+    "protobuf-host",
     "vtrunk"
   ]
 }

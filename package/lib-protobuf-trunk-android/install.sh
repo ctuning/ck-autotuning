@@ -24,10 +24,10 @@ rm -rf src
 
 git clone ${PACKAGE_URL} src
 
-#if [ "${?}" != "0" ] ; then
-#  echo "Error: cloning package failed!"
-#  exit 1
-#fi
+if [ "${?}" != "0" ] ; then
+  echo "Error: cloning package failed!"
+  exit 1
+fi
 
 ############################################################
 echo ""
