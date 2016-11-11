@@ -899,7 +899,12 @@ def process_in_dir(i):
               if x=='' and ctype=='dynamic' and kv.get('dynamic_lib','')!='': x=kv['dynamic_lib']
               els.append(x)
 
+              # Check if force to add library path (-L)
               path_added=False
+              if depsk.get('force_add_static_lib_path','')=='yes':
+                  sll+=' '+svarb+svarb1+'CK_FLAG_PREFIX_LIB_DIR'+svare1+svare+eifsc+pl1d+eifsc
+                  path_added=True
+
               for pl2 in els:
                   if pl2!='':
                      if sll!='': sll+=' '
