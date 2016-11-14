@@ -1487,11 +1487,18 @@ def process_in_dir(i):
              for q in deps:
                  qq=deps[q].get('cus','')
                  qdl=qq.get('dynamic_lib','')
-                 if qdl!='' and qq.get('skip_copy_to_remote','')!='yes':
-                    qpl=qq.get('path_lib','')
-                    qq1=os.path.join(qpl,qdl)
-                    rif.append(qq1)
-                    rifo[qq1]='yes' # if pushing to external, do not use current path
+
+                 if qq.get('skip_copy_to_remote','')!='yes':
+                     if qdl!='':
+                         qpl=qq.get('path_lib','')
+                         qq1=os.path.join(qpl,qdl)
+                         rif.append(qq1)
+                         rifo[qq1]='yes' # if pushing to external, do not use current path
+
+                     aef=qq.get('adb_extra_files',[])
+                     for qq1 in aef:
+                         rif.append(qq1)
+                         rifo[qq1]='yes' # if pushing to external, do not use current path
 
        # Check if run_time env is also defined
        rte=rt.get('run_set_env2',{})

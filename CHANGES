@@ -1,3 +1,6 @@
+* 2016.11.14 * added support to copy extra files to Android
+               (useful for CrystaX NDK to copy libcrystax.so)
+
 * 2016.11.10 * added gflags package for Android 
              * added glog package for Android (with patch)
              * added lmdb package for Android
