@@ -31,7 +31,6 @@
     "linux"
   ],
   "only_for_target_os_tags": [
-    "linux",
     "android"
   ],
   "process_script": "install",
