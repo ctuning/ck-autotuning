@@ -23,13 +23,15 @@
     }
   },
   "end_full_path": {
-    "android": "install$#sep#$lib$#sep#$libgflags.a"
+    "android": "install$#sep#$lib$#sep#$libgflags.a",
+    "linux": "install$#sep#$lib$#sep#$libgflags.a"
   },
   "need_cpu_info": "yes",
   "only_for_host_os_tags": [
     "linux"
   ],
   "only_for_target_os_tags": [
+    "linux",
     "android"
   ],
   "process_script": "install",
@@ -39,5 +41,9 @@
     "lib",
     "gflags",
     "vtrunk"
-  ]
+  ],
+  "use_preprocess_scripts_from_another_entry": {
+    "module_uoa": "84e27ad9dd12e734",
+    "data_uoa": "fd44428fbc77f77f"
+  }
 }

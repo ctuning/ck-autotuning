@@ -29,7 +29,8 @@
     }
   },
   "end_full_path": {
-    "android": "install$#sep#$lib$#sep#$libglog.a"
+    "android": "install$#sep#$lib$#sep#$libglog.a",
+    "linux": "install$#sep#$lib$#sep#$libglog.a"
   },
   "need_cpu_info": "yes",
   "only_for_host_os_tags": [
@@ -45,5 +46,9 @@
     "lib",
     "glog",
     "vtrunk"
-  ]
+  ],
+  "use_preprocess_scripts_from_another_entry": {
+    "module_uoa": "84e27ad9dd12e734",
+    "data_uoa": "fd44428fbc77f77f"
+  }
 }

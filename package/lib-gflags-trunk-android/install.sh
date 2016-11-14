@@ -24,10 +24,10 @@ rm -rf src
 
 git clone ${PACKAGE_URL} src
 
-#if [ "${?}" != "0" ] ; then
-#  echo "Error: cloning package failed!"
-#  exit 1
-#fi
+if [ "${?}" != "0" ] ; then
+  echo "Error: cloning package failed!"
+  exit 1
+fi
 
 ############################################################
 echo ""
@@ -47,11 +47,11 @@ cd obj
 echo ""
 echo "Executing cmake ..."
 
-cmake -DCMAKE_TOOLCHAIN_FILE="${PACKAGE_DIR}/misc/android.toolchain.cmake" \
-      -DANDROID_NDK="${CK_ANDROID_NDK_ROOT_DIR}" \
-      -DCMAKE_BUILD_TYPE=Release \
-      -DANDROID_ABI="${CK_ANDROID_ABI}" \
-      -DANDROID_NATIVE_API_LEVEL=${CK_ANDROID_API_LEVEL} \
+cmake -DCMAKE_BUILD_TYPE=${CK_ENV_CMAKE_BUILD_TYPE:-Release} \
+      -DCMAKE_C_COMPILER="${CK_CC_PATH_FOR_CMAKE}" \
+      -DCMAKE_CXX_COMPILER="${CK_CXX_PATH_FOR_CMAKE}" \
+      -DCMAKE_C_FLAGS="${CK_CC_FLAGS_FOR_CMAKE}" \
+      -DCMAKE_CXX_FLAGS="${CK_CXX_FLAGS_FOR_CMAKE}" \
       -DCMAKE_INSTALL_PREFIX="${INSTALL_DIR}/install" \
       ../src
 
@@ -74,7 +74,7 @@ fi
 echo ""
 echo "Installing package ..."
 
-make install/strip
+make install
 if [ "${?}" != "0" ] ; then
   echo "Error: installation failed!"
   exit 1
