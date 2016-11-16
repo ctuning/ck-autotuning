@@ -1,0 +1,29 @@
+{
+  "check_exit_status": "yes",
+  "customize": {
+    "install_env": {
+      "PACKAGE_FILE": "clang+llvm-3.9.0-x86_64-linux-gnu-ubuntu-16.04.tar.xz",
+      "PACKAGE_URL": "http://llvm.org/releases",
+      "PACKAGE_VERSION": "3.9.0"
+    },
+    "version": "3.9.0"
+  },
+  "end_full_path": {
+    "linux": "bin$#sep#$clang-3.9"
+  },
+  "only_for_host_os_tags": [
+    "linux"
+  ],
+  "only_for_target_os_tags": [
+    "linux"
+  ],
+  "process_script": "install",
+  "soft_uoa": "1c2eb494b8ae3bc4",
+  "suggested_path": "llvm",
+  "tags": [
+    "compiler",
+    "llvm",
+    "lang-c",
+    "lang-cpp"
+  ]
+}
