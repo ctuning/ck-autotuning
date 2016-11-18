@@ -1,3 +1,5 @@
+* 2016.11.18 * redirected git stderr output to null to avoid misunderstandings during compilation
+
 * 2016.11.16 * added clang 3.9.0 as installable package for Linux, Android
 
 * 2016.11.14 * added support to copy extra files to Android
