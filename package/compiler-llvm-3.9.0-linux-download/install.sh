@@ -18,6 +18,13 @@ cd ${INSTALL_DIR}
 ############################################################
 # Check which file to download
 
+MACHINE=$(uname -m)
+if [ "${MACHINE}" == "armv7l" ]; then
+  PACKAGE_FILE=${PACKAGE_FILE_ARMV7A}
+elif [ "${MACHINE}" == "aarch64" ]; then
+  PACKAGE_FILE=${PACKAGE_FILE_ARM64}
+fi
+
 URL=${PACKAGE_URL}/${PACKAGE_VERSION}/${PACKAGE_FILE}
 
 ############################################################

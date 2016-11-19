@@ -3,6 +3,8 @@
   "customize": {
     "install_env": {
       "PACKAGE_FILE": "clang+llvm-3.9.0-x86_64-linux-gnu-ubuntu-16.04.tar.xz",
+      "PACKAGE_FILE_ARM64":"clang+llvm-3.9.0-aarch64-linux-gnu.tar.xz",
+      "PACKAGE_FILE_ARMV7A":"clang+llvm-3.9.0-armv7a-linux-gnueabihf.tar.xz",
       "PACKAGE_URL": "http://llvm.org/releases",
       "PACKAGE_VERSION": "3.9.0"
     },
