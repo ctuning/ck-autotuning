@@ -1250,7 +1250,7 @@ def process_in_dir(i):
                 sb+='\n'+no+md5sum+' '+x+' '+target_exe+'.dump '+stro+' '+target_exe+'.md5'+'\n'
 
              # Add git hash (if supported)
-             sb+='\n'+no+'git rev-parse HEAD '+stro+' '+target_exe+'.git_hash'+'\n'
+             sb+='\n'+no+'git rev-parse HEAD '+stro+' '+target_exe+'.git_hash'+' '+stre+'null\n'
 
           # Stop energy monitor, if needed and if supported
           if me=='yes' and sspm2!='':
