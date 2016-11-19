@@ -65,7 +65,7 @@ echo ""
 echo "Configuring ..."
 
 export CPPFLAGS="-P"
-../${PACKAGE_SRC}/configure
+../${PACKAGE_SRC}/configure --with-shared --enable-widec
 
 if [ "${?}" != "0" ] ; then
   echo "Error: configuring failed!"
