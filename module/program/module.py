@@ -2497,7 +2497,18 @@ def process_in_dir(i):
 
                              rxx=cs.ck_postprocess(ii)
                              srx=rxx['return']
-                             if srx>0:
+                             if srx==0:
+                                xchars=rxx.get('characteristics',{})
+                                if len(xchars)>0:
+                                   et=xchars.get('execution_time','')
+                                   if et!='':
+                                      exec_time=float(et)
+                                   ccc.update(xchars)
+
+                                if len(rxx.get('misc',{}))>0:
+                                   misc.update(rxx['misc'])
+
+                             else:
                                 if o=='con':
                                    ck.out('  (post processing script failed: '+rxx['error']+'!)')
 
