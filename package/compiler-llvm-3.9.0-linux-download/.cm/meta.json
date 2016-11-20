@@ -8,7 +8,7 @@
       "PACKAGE_URL": "http://llvm.org/releases",
       "PACKAGE_VERSION": "3.9.0"
     },
-    "version": "3.9.0"
+    "version": ""
   },
   "end_full_path": {
     "linux": "bin$#sep#$clang-3.9"
@@ -21,7 +21,7 @@
   ],
   "process_script": "install",
   "soft_uoa": "1c2eb494b8ae3bc4",
-  "suggested_path": "llvm",
+  "suggested_path": "llvm-3.9.0",
   "tags": [
     "compiler",
     "llvm",
