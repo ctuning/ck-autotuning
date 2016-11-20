@@ -26,6 +26,10 @@
     "compiler",
     "llvm",
     "lang-c",
-    "lang-cpp"
+    "lang-cpp",
+    "v3.9.0-ck-package",
+    "v3.9.0",
+    "v3.9",
+    "v3"
   ]
 }
