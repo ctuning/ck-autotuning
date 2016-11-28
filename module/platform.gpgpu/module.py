@@ -65,6 +65,8 @@ def detect(i):
 
               (compute_platform_id') - pre-select platform ID
               (compute_device_id')   - pre-select device ID
+
+              (sudo)                 - force SUDO use ...
             }
 
     Output: {
@@ -177,6 +179,8 @@ def detect(i):
        if i.get('opencl','')=='yes': tp='opencl'
        elif i.get('cuda','')=='yes': tp='cuda'
 
+    tpo=tp # to quit later if a specific type needs to be detected but env doesn't exist in the CK
+
     if tp!='': types=[tp]
 
     for tp in types:
@@ -201,7 +205,10 @@ def detect(i):
             'tags':tags,
             'out':oo}
         r=ck.access(ii)
-        if r['return']>0: return r
+        if r['return']>0: 
+           # Fail only if a given type (CUDA/OpenCL) is specified, otherwise continue!
+           if tpo=='': continue
+           return r
 
         env=r['env']
         deps=r['dict']['deps']
@@ -242,6 +249,10 @@ def detect(i):
                s=tosd['use_bash_to_run'].replace('$#cmd#$', s)
 
         s+=' > '+ftmp
+
+        if i.get('sudo','')=='yes':
+           s=hosd.get('sudo_pre','')+s
+
         os.system(s)
 
         er=i.get('exchange_repo','')
@@ -437,6 +448,10 @@ def detect(i):
 
     # Check if need to select device and platform
     rr={'return':0, 'features':{'gpgpu':props}}
+
+    if len(props)==0 and o=='con':
+       ck.out('')
+       ck.out('WARNING: no CK-enabled GPGPU devices found ...')
 
     if i.get('select','')=='yes' and tp!='':
         # Get Cartesian product of devies and platforms

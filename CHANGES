@@ -1,3 +1,6 @@
+* 2016.11.28 * improved GPGPU detection and added --sudo
+               (do not fail if OpenCL lib not found; print no CK-enabled GPGPU devices found)
+
 * 2016.11.20 * added possibility to change characteristics directly from the postprocess script
 
 * 2016.11.18 * redirected git stderr output to null to avoid misunderstandings during compilation
