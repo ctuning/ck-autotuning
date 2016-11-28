@@ -1527,6 +1527,7 @@ def process_in_dir(i):
                         ngd:'yes',
                         'deps':deps,
                         'select':'yes',
+                        'sudo':isd,
                         'out':oo,
                         'quiet':quiet})
            if r['return']>0: return r
