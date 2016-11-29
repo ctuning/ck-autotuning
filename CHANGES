@@ -1,3 +1,5 @@
+* 2016.11.29 * added gflags 2.1.2 for Android (otherwise trunk is not compiling anymore)
+
 * 2016.11.28 * improved GPGPU detection and added --sudo
                (do not fail if OpenCL lib not found; print no CK-enabled GPGPU devices found)
 
