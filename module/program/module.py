@@ -4678,13 +4678,24 @@ def pipeline(i):
                  if g=='':
                     break
 
-                 gg=g.replace('  ','').split(' ')
+                 gg1=g.strip().split(' ')
+                 gg=[]
+                 for g1 in gg1:
+                     g1x=g1.strip()
+                     if g1x!='': gg.append(g1x)
+
                  igg=len(gg)
+
                  if igg>0:
-                    cgprof[gg[igg-1]]=gg
+                    x1=gg[igg-1]
+                    cgprof[x1]=gg
+                    ck.out(' * '+str(x1)+' : '+str(gg[0])+' % ')
 
           chars['run']['gprof']=cgprof
           chars['run']['gprof_list']=glst
+       else:
+          ck.out('WARNING: gprof output was not found ...')
+          ck.out('')
 
     ###############################################################################################################
     # PIPELINE SECTION: Post-process output from dividiti's OpenCL profiler.
@@ -4698,11 +4709,13 @@ def pipeline(i):
             'split_to_list':'no'
         })
         if r['return']>0: return r
+
         # Locate profiler parser.
         dvdt_prof_dir=dvdt_prof['dict']['env']['CK_ENV_TOOL_DVDT_PROF']
         dvdt_prof_src_python=os.path.join(dvdt_prof_dir,'src','python')
         sys.path.append(dvdt_prof_src_python)
         from prof_parser import prof_parse
+
         # Parse profiler output.
         chars['run']['dvdt_prof']=prof_parse(r['string'])
 
