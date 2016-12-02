@@ -15,9 +15,9 @@
       "sort": 5,
       "tags": "tool,cmake"
     },
-    "compiler": {
+    "host-compiler": {
       "local": "yes",
-      "name": "C++ compiler",
+      "name": "HOST C++ compiler",
       "sort": 10,
       "tags": "compiler,lang-cpp"
     }
