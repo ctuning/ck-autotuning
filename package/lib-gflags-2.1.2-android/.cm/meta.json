@@ -19,7 +19,7 @@
       "local": "yes",
       "name": "C++ compiler",
       "sort": 10,
-      "tags": "compiler,lang-cpp"
+      "tags": "compiler,lang-cpp,gcc"
     }
   },
   "end_full_path": {
@@ -39,7 +39,9 @@
   "tags": [
     "lib",
     "gflags",
-    "vtrunk"
+    "v2.1.2",
+    "v2.1",
+    "v2"
   ],
   "use_preprocess_scripts_from_another_entry": {
     "data_uoa": "fd44428fbc77f77f",
