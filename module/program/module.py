@@ -548,6 +548,9 @@ def process_in_dir(i):
     if target_exe!='':
        misc['target_exe']=target_exe
 
+    if meta.get('version','')!='':
+       misc['program_version']=meta['version']
+
     # If muoa=='' assume program
     if muoa=='':
        muoa=work['self_module_uid']

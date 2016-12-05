@@ -1,3 +1,5 @@
+* 2016.12.05 * recording program version (to distinguish species during crowd-tuning)
+
 * 2016.11.30 * improved gprof output (for RPi project)
 
 * 2016.11.29 * added gflags 2.1.2 for Android (otherwise trunk is not compiling anymore)
