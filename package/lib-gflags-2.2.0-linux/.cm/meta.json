@@ -3,11 +3,11 @@
     "extra_dir": "", 
     "git_src_dir": "src", 
     "install_env": {
-      "PACKAGE_URL": "https://github.com/gflags/gflags/archive",
-      "PACKAGE_NAME": "v2.2.0.tar.gz",
-      "PACKAGE_NAME1": "v2.2.0.tar",
-      "PACKAGE_SUB_DIR": "gflags-2.2.0",
-      "PACKAGE_CONFIGURE_FLAGS": "-DBUILD_SHARED_LIBS=ON -DGFLAGS_NAMESPACE=google"
+      "PACKAGE_CONFIGURE_FLAGS": "-DBUILD_SHARED_LIBS=ON -DGFLAGS_NAMESPACE=google", 
+      "PACKAGE_NAME": "v2.2.0.tar.gz", 
+      "PACKAGE_NAME1": "v2.2.0.tar", 
+      "PACKAGE_SUB_DIR": "gflags-2.2.0", 
+      "PACKAGE_URL": "https://github.com/gflags/gflags/archive"
     }, 
     "version": "2.2.0"
   }, 
@@ -44,9 +44,9 @@
     "v2.2.0", 
     "v2.2", 
     "v2"
-  ],
+  ], 
   "use_scripts_from_another_entry": {
-    "module_uoa":"script",
-    "data_uoa": "cd9ccc74060b3d18"
+    "data_uoa": "cd9ccc74060b3d18", 
+    "module_uoa": "script"
   }
 }
