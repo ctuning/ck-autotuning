@@ -1527,7 +1527,7 @@ def process_in_dir(i):
                         'device_id':tdid,
                         'compute_platform_id':compute_platform_id,
                         'compute_device_id':compute_device_id,
-                        ngd:'yes',
+                        'type':ngd,
                         'deps':deps,
                         'select':'yes',
                         'sudo':isd,
@@ -2790,6 +2790,9 @@ def pipeline(i):
 
                  Pipeline sections' settings:
 
+              (compute_platform_id)  - if !='', set env['CK_COMPUTE_PLATFORM_ID']
+              (compute_device_id)    - if !='', set env['CK_COMPUTE_DEVICE_ID']
+
               (no_platform_features)    - if 'yes', do not collect full platform features
               (no_dataset_features)     - if 'yes', do not search and extract data set features
               (no_clean)                - if 'yes', do not clean directory before compile/run
@@ -3139,6 +3142,9 @@ def pipeline(i):
     xrto=ck.get_from_dicts(i, 'run_timeout','',choices)
 
     cdu=ck.get_from_dicts(i, 'compiler_description_uoa','',choices)
+
+    compute_platform_id=ck.get_from_dicts(i, 'compute_platform_id','',choices)
+    compute_device_id=ck.get_from_dicts(i, 'compute_device_id','',choices)
 
     ###############################################################################################################
     # PIPELINE SECTION: PROGRAM AND DIRECTORY SELECTION 
@@ -4331,6 +4337,8 @@ def pipeline(i):
               'remove_compiler_vars':rcv,
               'extra_env_for_compilation':eefc,
               'compile_timeout':xcto,
+              'compute_platform_id':compute_platform_id,
+              'compute_device_id':compute_device_id,
               'add_rnd_extension_to_bin':are,
               'add_save_extension_to_bin':ase,
               'out':oo}
@@ -4486,6 +4494,8 @@ def pipeline(i):
            'post_process_params':pp_params,
            'statistical_repetition':srn,
            'autotuning_iteration':ati,
+           'compute_platform_id':compute_platform_id,
+           'compute_device_id':compute_device_id,
            'skip_dataset_copy':sdc,
            'env':env,
            'extra_env':eenv,
