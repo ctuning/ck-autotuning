@@ -1,3 +1,5 @@
+* 2016.12.10 * added gflags-2.2.0-linux (to be able to install stable gflags if it is not installed)
+
 * 2016.12.05 * recording program version (to distinguish species during crowd-tuning)
 
 * 2016.11.30 * improved gprof output (for RPi project)
