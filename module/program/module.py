@@ -1703,11 +1703,8 @@ def process_in_dir(i):
 
        misc['dataset_uoa']=dduoa
 
-       # If remote
-       if remote=='yes' and target_exe!='':
-#          if target_exe=='':
-#             return {'return':1, 'error':'currently can\'t run benchmarks without defined executable on remote platform'}
-
+       # If remote, init
+       if remote=='yes':
           rs=tosd['remote_shell'].replace('$#device#$',xtdid)
           rse=tosd.get('remote_shell_end','')+' '
 
@@ -1728,6 +1725,11 @@ def process_in_dir(i):
              ck.out('Executing: '+x)
 
           r=os.system(x)
+
+       # If remote and target exe
+       if remote=='yes' and target_exe!='':
+#          if target_exe=='':
+#             return {'return':1, 'error':'currently can\'t run benchmarks without defined executable on remote platform'}
 
           if srn==0:
              # Copy exe

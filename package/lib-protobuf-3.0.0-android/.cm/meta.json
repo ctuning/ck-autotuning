@@ -1,0 +1,50 @@
+{
+ "customize": {
+    "extra_dir": "",
+    "install_env": {
+      "PACKAGE_URL": "https://github.com/google/protobuf/archive",
+      "PACKAGE_FILE":"v3.0.0.tar.gz",
+      "PACKAGE_FILE1":"v3.0.0.tar",
+      "PACKAGE_SUBDIR":"protobuf-3.0.0"
+    },
+    "version": "3.0.0"
+  },
+   "deps": {
+    "cmake": {
+      "local": "yes",
+      "name": "cmake",
+      "sort": 5,
+      "tags": "tool,cmake"
+    },
+    "compiler": {
+      "local": "yes",
+      "name": "C++ compiler",
+      "sort": 10,
+      "tags": "compiler,lang-cpp,gcc"
+    }
+  },
+  "end_full_path": {
+    "android": "install$#sep#$lib$#sep#$libprotobuf.a"
+  },
+  "need_cpu_info": "yes",
+  "only_for_host_os_tags": [
+    "linux"
+  ],
+  "only_for_target_os_tags": [
+    "android"
+  ],
+  "process_script": "install",
+  "soft_uoa": "c535adb7ab476da6",
+  "suggested_path": "lib-protobuf",
+  "tags": [
+    "lib",
+    "protobuf",
+    "v3.0.0",
+    "v3.0",
+    "v3"
+  ],
+  "use_preprocess_scripts_from_another_entry": {
+    "module_uoa": "84e27ad9dd12e734",
+    "data_uoa": "fd44428fbc77f77f"
+  }
+}
