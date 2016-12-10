@@ -5,7 +5,7 @@
       "PACKAGE_URL": "https://github.com/google/protobuf/archive",
       "PACKAGE_FILE":"v3.0.0.tar.gz",
       "PACKAGE_FILE1":"v3.0.0.tar",
-      "PACKAGE_SUBDIR":"protobuf-3.0.0"
+      "PACKAGE_SUB_DIR":"protobuf-3.0.0"
     },
     "version": "3.0.0"
   },

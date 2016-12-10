@@ -37,7 +37,7 @@ echo "Ungzipping and untarring ..."
 rm -f ${PACKAGE_FILE1}
 gzip -d ${PACKAGE_FILE}
 
-rm -rf ${PACKAGE_SUBDIR}
+rm -rf ${PACKAGE_SUB_DIR}
 tar xvf ${PACKAGE_FILE1}
 
 ############################################################
@@ -77,7 +77,7 @@ cmake -DCMAKE_TOOLCHAIN_FILE="${PACKAGE_DIR}/misc/${CK_TOOLCHAIN}" \
       -DANDROID_NATIVE_API_LEVEL=${CK_ANDROID_API_LEVEL} \
       -Dprotobuf_BUILD_TESTS=OFF \
       -DCMAKE_INSTALL_PREFIX="${INSTALL_DIR}/install" \
-      ../${PACKAGE_SUBDIR}/cmake
+      ../${PACKAGE_SUB_DIR}/cmake
 
 if [ "${?}" != "0" ] ; then
   echo "Error: cmake failed!"
