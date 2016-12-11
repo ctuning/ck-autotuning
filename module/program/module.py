@@ -3494,7 +3494,7 @@ def pipeline(i):
                     iz+=1
 
                 ck.out('')
-                rx=ck.inp({'text':'Select UOA (or press Enter for 0)'})
+                rx=ck.inp({'text':'Select UOA (or press Enter for 0): '})
                 x=rx['string'].strip()
                 if x=='': x='0' 
 
@@ -4113,6 +4113,11 @@ def pipeline(i):
                         'out':oo,
                         'quiet':quiet})
            if r['return']>0: return r
+
+           gpgpu_num=r.get('choices',{}).get('compute_number',0)
+           gpgpu_ft=r.get('features',{}).get('gpgpu',[])
+           if gpgpu_num<len(gpgpu_ft):
+              features['gpgpu']=gpgpu_ft[gpgpu_num]
 
            compute_platform_id=r.get('choices',{}).get('compute_platform_id','')
            compute_device_id=r.get('choices',{}).get('compute_device_id','')
