@@ -1,3 +1,5 @@
+* 2016.12.11 * added output check (for now binary comparison)
+
 * 2016.12.10 * added gflags-2.2.0-linux (to be able to install stable gflags if it is not installed)
              * added glog-0.3.4-linux
              * added protobuf-3.1.0-linux
