@@ -3729,9 +3729,10 @@ def pipeline(i):
     if o=='con':
        ck.out('  Selected command line:     '+kcmd)
 
+    vcmd=run_cmds[kcmd]
+
     ###############################################################################################################
     # PIPELINE SECTION: dataset selection 
-    vcmd=run_cmds[kcmd]
 
     dtags=vcmd.get('dataset_tags',[])
 
@@ -4087,6 +4088,37 @@ def pipeline(i):
     ncv=ck.get_from_dicts(i,'no_vars',{},choices)
     rcv=ck.get_from_dicts(i,'remove_compiler_vars',[],choices)
     eefc=ck.get_from_dicts(i,'extra_env_for_compilation',{},choices)
+
+    ###############################################################################################################
+    # PIPELINE SECTION: compute device if needed 
+
+    # Check if need to select GPGPU
+    ngd=vcmd.get('run_time',{}).get('need_compute_device','')
+    if no_run!='yes' and ngd!='':
+        if compute_platform_id=='' and compute_device_id=='':
+           if o=='con':
+              ck.out('************ Detecting GPGPU targets ...')
+              ck.out('')
+
+           xdeps=copy.deepcopy(cdeps)
+           r=ck.access({'action':'detect',
+                        'module_uoa':cfg['module_deps']['platform.gpgpu'],
+                        'host_os':hos,
+                        'target_os':tos,
+                        'device_id':tdid,
+                        'type':ngd,
+                        'deps':xdeps,
+                        'select':'yes',
+                        'sudo':isd,
+                        'out':oo,
+                        'quiet':quiet})
+           if r['return']>0: return r
+
+           compute_platform_id=r.get('choices',{}).get('compute_platform_id','')
+           compute_device_id=r.get('choices',{}).get('compute_device_id','')
+
+           choices['compute_platform_id']=compute_platform_id
+           choices['compute_device_id']=compute_device_id
 
     ###############################################################################################################
     # PIPELINE SECTION: get run vars (preset environment)
