@@ -85,6 +85,7 @@
     "machine":"84be34883a81b2a9",
     "env": "9b9b3208ac44b891", 
     "module":"032630d041b4fd8a",
+    "program.output": "e4c1d9d3f0acf094", 
     "platform": "707ccdfe444cafac", 
     "platform.cpu": "aa6b542a420b8db9", 
     "platform.gpu": "55ec7775f4afaabd", 

@@ -1,8 +1,5 @@
 {
   "actions": {
-    "check": {
-      "desc": "check program output"
-    }
   }, 
   "copyright": "See CK COPYRIGHT.txt for copyright details", 
   "desc": "check program output", 

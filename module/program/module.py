@@ -296,6 +296,12 @@ def process_in_dir(i):
 
               (skip_file_print)               - skip file printing (if 'print_files_after_run' list is in program meta)
 
+              (skip_output_validation)        - skip validation of output (dangerous during auto-tuning - 
+                                                  some optimizations may break semantics or change accuracy)
+              (output_validation_repo)        - output validation repo UOA (when recording new output)
+
+              (overwrite_reference_output)    - if 'yes', overwrite reference output (useful if broken)
+
               (quiet)                         - if 'yes', automatically provide default answer to all questions when resolving dependencies ... 
             }
 
@@ -523,7 +529,7 @@ def process_in_dir(i):
 
     ruoa=i.get('repo_uoa', '')
     muoa=i.get('module_uoa', '')
-    duoa=i.get('data_uoa', '')
+    duoa=i.get('data_uoa', '') # There will be data UID (not alias) from 'process' function from this module!
 
     # Check if need specific device access type
     dat=meta.get('required_device_access_type',[])
@@ -1651,6 +1657,7 @@ def process_in_dir(i):
 
        dmuoa=cfg['module_deps']['dataset']
        dduoa=i.get('dataset_uoa','')
+       dfile=''
        if dduoa!='' or len(dtags)>0:
           if dduoa=='':
              misc['dataset_tags']=dtags
@@ -2663,12 +2670,128 @@ def process_in_dir(i):
 
        ccc['execution_time_with_module']=time.time()-start_time
 
+       # Check output correctness, if needed
+       rcof=rt.get('run_correctness_output_files',[])
+       if ccc['run_success_bool'] and len(rcof)>0 and i.get('skip_output_validation','')!='yes':
+          ck.out('')
+          ck.out('  (checking output correctness ...)')
+
+          # Prepare directory with output files
+          po=kcmd+'-'+dduoa
+          if dfile!='':
+             po+='-'+dfile
+          if rt.get('output_invariant_of_repeat','')!='yes':
+             po+='-'+str(xrepeat)
+
+          oruoa=i.get('output_validation_repo','')
+          pox=''
+          found=False
+
+          if i.get('overwrite_reference_output','')!='yes':
+
+             if o=='con':
+                ck.out('     * Searching directory with reference output "'+po+'" ...')
+
+             # Search related entries
+             rx=ck.access({'action':'search',
+                           'module_uoa':cfg['module_deps']['program.output'],
+                           'data_uoa':'program-uid-'+duoa})
+             if rx['return']>0: return rx
+             dslst=rx['lst']
+
+             for q in dslst:
+                 pox=os.path.join(q['path'],po)
+                 if os.path.isdir(pox):
+                    found=True
+                    break
+
+          vfail=False
+          vo={}
+
+          if found:
+             if o=='con':
+                ck.out('     * Reference output found - validating ...')
+
+             for fz in rcof:
+                 p1=os.path.join(cdir,fz)
+                 p2=os.path.join(pox,fz)
+
+                 # If reference file doesn't exist (for example, we later updated meta),
+                 # copy it to the reference ..
+                 if not os.path.isfile(p2):
+                    shutil.copyfile(p1,p2)
+
+                 else:
+                    import filecmp
+                    vx=filecmp.cmp(p1,p2)
+
+                    if not vx: 
+                       vfail=True
+
+                       vr='exact match failed'
+
+                       if o=='con':
+                          ck.out('       - check failed on "'+fz+'" ('+vr+')')
+
+                       vo[fz]={'fail_reason':vr}
+
+             # If at least one failed, fail pipeline
+             if vfail:
+                misc['run_success']='no'
+                misc['run_success_bool']=False
+                misc['fail_reason']='output is not matching with the reference one: '+str(vo)
+
+                ccc['run_success']=misc['run_success']
+                ccc['run_success_bool']=misc['run_success_bool']
+                ccc['fail_reason']=misc['fail_reason']
+
+          else:
+             if o=='con':
+                ck.out('     * Recording rerefence output ...')
+
+             # First create / update entry
+             ii={'action':'update',
+                 'module_uoa':cfg['module_deps']['program.output'],
+                 'data_uoa':'program-uid-'+duoa,
+                 'repo_uoa':oruoa,
+                 'ignore_update':'yes'}
+             r=ck.access(ii)
+             if r['return']>0: return r
+             pd=r['path']
+
+             # Create sub-directory to hold correct output
+             pd1=os.path.join(pd,po)
+             if not os.path.isdir(pd1):
+                os.makedirs(pd1)
+
+             for fz in rcof:
+                 p1=os.path.join(cdir,fz)
+                 p2=os.path.join(pd,po,fz)
+
+                 shutil.copyfile(p1,p2)
+
+          # Update stats with output check
+          svfail='no'
+          if vfail: svfail='yes'
+
+          misc['output_check_failed']=svfail
+          misc['output_check_failed_bool']=vfail
+
+          ccc['output_check_failed']=svfail
+          ccc['output_check_failed_bool']=vfail
+
+          if len(vo)>0:
+             misc['output_check_failures']=vo
+             ccc['output_check_failures']=vo
+
+       # Output final execution time
        if o=='con':
           ck.out('')
           x='Execution time: '+('%.3f'%exec_time)+' sec.'
           if repeat>1:
              x+='; Repetitions: '+str(abs(repeat))+'; Normalized execution time: '+('%.9f'%(exec_time/abs(repeat)))+' sec.'
           ck.out(x)
+
 
     # Check to clean random directory
     #if grtd=='yes' and sca!='yes':
@@ -2930,6 +3053,12 @@ def pipeline(i):
                                        (features.platform.cpu) - CPU features/properties obtained during iterations 
                                                                  to check that state didn't change ...
 
+              (skip_output_validation)        - skip validation of output (dangerous during auto-tuning - 
+                                                  some optimizations may break semantics or change accuracy)
+              (output_validation_repo)        - output validation repo UOA (when recording new output)
+
+              (overwrite_reference_output)    - if 'yes', overwrite reference output (useful if broken)
+
               (quiet)                - if 'yes', automatically provide default answer to all questions when resolving dependencies ... 
 
               (last_md5)             - if !='', check if MD5 and fail if didn't change!
@@ -3139,6 +3268,10 @@ def pipeline(i):
     xrto=ck.get_from_dicts(i, 'run_timeout','',choices)
 
     cdu=ck.get_from_dicts(i, 'compiler_description_uoa','',choices)
+
+    vout_skip=ck.get_from_dicts(i, 'skip_output_validation','',choices)
+    vout_repo=ck.get_from_dicts(i, 'output_validation_repo','',choices)
+    vout_over=ck.get_from_dicts(i, 'overwrite_reference_output','',choices)
 
     ###############################################################################################################
     # PIPELINE SECTION: PROGRAM AND DIRECTORY SELECTION 

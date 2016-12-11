@@ -29,32 +29,3 @@ def init(i):
 
     """
     return {'return':0}
-
-##############################################################################
-# check program output
-
-def check(i):
-    """
-    Input:  {
-            }
-
-    Output: {
-              return       - return code =  0, if successful
-                                         >  0, if error
-              (error)      - error text if return > 0
-            }
-
-    """
-
-    print ('check program output')
-
-    ck.out('')
-    ck.out('Command line: ')
-    ck.out('')
-
-    import json
-    cmd=json.dumps(i, indent=2)
-
-    ck.out(cmd)
-
-    return {'return':0}
