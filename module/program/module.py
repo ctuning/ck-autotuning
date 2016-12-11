@@ -2670,11 +2670,17 @@ def process_in_dir(i):
 
        ccc['execution_time_with_module']=time.time()-start_time
 
-       # Check output correctness, if needed
+       # Check output correctness, if needed *****************************************************
        rcof=rt.get('run_correctness_output_files',[])
+       if len(rcof)==0:
+          rcof=meta.get('run_correctness_output_files',[])
+
        if ccc['run_success_bool'] and len(rcof)>0 and i.get('skip_output_validation','')!='yes':
           ck.out('')
           ck.out('  (checking output correctness ...)')
+
+#          print (p)
+#          exit(1)
 
           # Prepare directory with output files
           po=kcmd+'-'+dduoa
@@ -3436,7 +3442,7 @@ def pipeline(i):
        r=ck.search({'module_uoa':cfg['module_deps']['machine'], 'data_uoa':target, 'add_meta':'yes'})
        if r['return']>0: return r
 
-       dlst=r['lst']
+       dlst=sorted(r['lst'], key=lambda v: v.get('meta',{}).get('access_type','')!='host')
 
        # Prune search by only required devices
        rdat=meta.get('required_device_access_type',[])
@@ -3473,9 +3479,30 @@ def pipeline(i):
              if o=='con' and si!='yes':
                 ck.out('************ Selecting target device ...')
                 ck.out('')
-                r=ck.select_uoa({'choices':lst})
-                if r['return']>0: return r
-                i['target']=r['choice']
+
+                zz={}
+                iz=0
+                for z1 in lst:
+                    z=z1['data_uid']
+                    zu=z1['data_uoa']
+
+                    zs=str(iz)
+                    zz[zs]=z
+
+                    ck.out(zs+') '+zu+' ('+z+')')
+
+                    iz+=1
+
+                ck.out('')
+                rx=ck.inp({'text':'Select UOA (or press Enter for 0)'})
+                x=rx['string'].strip()
+                if x=='': x='0' 
+
+                if x not in zz:
+                   return {'return':1, 'error':'choice is not recognized ('+str(x)+')'}
+
+                i['target']=zz[x]
+
                 ck.out('')
              else:
                 return finalize_pipeline(i)
