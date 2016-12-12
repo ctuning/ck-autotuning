@@ -5309,6 +5309,7 @@ def benchmark(i):
 
     """
 
+    o=i.get('out','')
     duoa=i.get('data_uoa','')
 
     i['action']='run'
@@ -5332,4 +5333,50 @@ def benchmark(i):
     if len(up)>0:
        i['pipeline_update']=up
 
-    return ck.access(i)
+    r=ck.access(i)
+    if r['return']>0: return r
+
+    if o=='con':
+       ck.out(sep)
+       ck.out('Some statistics:')
+
+       lio=r.get('last_iteration_output',{})
+
+       fail=lio.get('fail','')
+       fail_reason=lio.get('fail_reason','')
+
+       ck.out('')
+       ck.out('* Failed: '+fail)
+       if fail=='yes':
+          ck.out('* Reason: '+fail_reason)
+
+       flat=r.get('last_stat_analysis',{}).get('dict_flat','')
+
+       bs=flat.get('##characteristics#compile#binary_size#min',0)
+       os=flat.get('##characteristics#compile#obj_size#min',0)
+
+       ck.out('')
+       ck.out('* Binary size: '+str(bs))
+       ck.out('* Object size: '+str(os))
+
+       repeat=flat.get('##characteristics#run#repeat#max',0)
+       ck.out('')
+       ck.out('* Kernel repeat: '+str(repeat))
+
+       tmin=flat.get('##characteristics#run#total_execution_time#min',0)
+       tmax=flat.get('##characteristics#run#total_execution_time#max',0)
+
+       ntmin=flat.get('##characteristics#run#execution_time#min',0)
+       ntmax=flat.get('##characteristics#run#execution_time#max',0)
+
+       ck.out('')
+       ck.out('* Normalized time in sec. (min): '+str(ntmin))
+       ck.out('* Normalized time in sec. (max): '+str(ntmax))
+
+       ck.out('')
+       ck.out('* Total time in sec. (min): '+str(tmin))
+       ck.out('* Total time in sec. (max): '+str(tmax))
+
+       ck.out('')
+
+    return r
