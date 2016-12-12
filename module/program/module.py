@@ -5292,3 +5292,44 @@ def xcrowdtune(i):
         if r['return']>0: return r
 
     return {'return':0}
+
+##############################################################################
+# benchmark program (run autotune with 1 iteration and full environment setup)
+
+def benchmark(i):
+    """
+    Input:  {
+            }
+
+    Output: {
+              return       - return code =  0, if successful
+                                         >  0, if error
+              (error)      - error text if return > 0
+            }
+
+    """
+
+    duoa=i.get('data_uoa','')
+
+    i['action']='run'
+    i['module_uoa']=cfg['module_deps']['pipeline']
+    i['data_uoa']=work['self_module_uid']
+    i['cid']=''
+
+    up=i.get('pipeline_update',{})
+    if duoa!='': 
+       up['program_uoa']=duoa
+
+    # Get all extra input to pipeline
+    ik=ck.cfg.get('internal_keys',[])
+    if len(ik)==0: # older CK kernel doesn't have it ...
+       ik=cfg['internal_keys']
+
+    for k in i:
+        if k not in ik:
+           up[k]=i[k]
+
+    if len(up)>0:
+       i['pipeline_update']=up
+
+    return ck.access(i)

@@ -1,3 +1,5 @@
+* 2016.12.12 * added "ck benchmark program:XYZ" to automatically set up env, freq, and run autotune with 1 iteration
+
 * 2016.12.11 * added output check (for now binary comparison)
              * sorted machine choices (host is first one to be able to press Enter to select it)
              * added support to select GPGPU to program pipeline
