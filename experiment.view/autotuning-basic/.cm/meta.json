@@ -6,13 +6,16 @@
     "##features#platform#cpu#sub_name", 
     "##features#platform#cpu#num_proc", 
     "##features#compiler_version#raw@0", 
+    "##choices#data_uoa",
+    "##choices#cmd_key", 
     "##choices#dataset_uoa", 
+    "##choices#dataset_file", 
     "##characteristics#run#repeat", 
     "##characteristics#run#execution_time_kernel_0", 
     "##characteristics#run#run_time_state#energy_a15_mem_gpu", 
     "##characteristics#run#run_time_state#energy_a7_mem_gpu", 
     "##characteristics#compile#obj_size", 
-    "##characteristics#current_freq#0", 
+    "##features#platform#cpu#current_freq#0", 
     "##choices#gpu_freq", 
     "##characteristics#run#accuracy", 
     "##characteristics#run#faults", 
@@ -43,9 +46,20 @@
       "desc": "Raw compiler name"
     }, 
     {
+      "desc": "Program UOA", 
+      "module_uoa": "b0ac08fe1d3c2615", 
+      "type": "uoa"
+    }, 
+    {
+      "desc": "CMD key"
+    }, 
+    {
       "desc": "Dataset UOA", 
       "module_uoa": "8a7141c59cd335f5", 
       "type": "uoa"
+    }, 
+    {
+      "desc": "Dataset file"
     }, 
     {
       "desc": "Calibration"
