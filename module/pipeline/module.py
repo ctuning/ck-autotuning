@@ -890,7 +890,7 @@ def autotune(i):
             pipeline1['tmp_dir']=tmp_dir
 
             if prune_md5=='yes':
-               if o=='con':
+               if o=='con' and last_md5!='':
                   ck.out('')
                   ck.out('      Checking MD5: '+last_md5)
 
@@ -900,7 +900,7 @@ def autotune(i):
             rr=ck.access(pipeline1)
             if rr['return']>0: return rr
 
-            cur_md5=pipeline1.get('characteristics',{}).get('compile',{}).get('md5_sum',None)
+            cur_md5=pipeline1.get('characteristics',{}).get('compile',{}).get('md5_sum','')
 
             state=rr.get('state',{})
 
