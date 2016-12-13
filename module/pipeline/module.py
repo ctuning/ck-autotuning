@@ -900,6 +900,8 @@ def autotune(i):
             rr=ck.access(pipeline1)
             if rr['return']>0: return rr
 
+            cur_md5=pipeline1.get('characteristics',{}).get('compile',{}).get('md5_sum',None)
+
             state=rr.get('state',{})
 
             last_orders_from_pipeline=rr.get('choices_order',[])
@@ -1141,7 +1143,7 @@ def autotune(i):
               ref_stat_dict=copy.deepcopy(stat_dict)
               ref_stat_out=copy.deepcopy(rr)
               fdfi=ref_stat_dict
-              last_md5=stat_dict.get('##characteristics#compile#md5_sum#min',None)
+              last_md5=cur_md5 #stat_dict.get('##characteristics#compile#md5_sum#min',None)
 
               for q in pccur:
                   if q!=None and q!='':
@@ -1198,14 +1200,14 @@ def autotune(i):
 
                        # If new compilation MD5 and new stats, make a new referneces point
                        if not (fail=='yes' and fail_reason==last_md5_fail_text):
-                          if o=='con':
-                             ck.out('')
-                             ck.out('         NEW REFERENCE POINT!')
-
                           ref_stat_dict=copy.deepcopy(stat_dict)
                           ref_stat_out=copy.deepcopy(rr)
                           fdfi=ref_stat_dict
-                          last_md5=stat_dict.get('##characteristics#compile#md5_sum#min',None)
+                          last_md5=cur_md5
+
+                          if o=='con':
+                             ck.out('')
+                             ck.out('         NEW REFERENCE POINT (MD5='+last_md5+')!')
 
                     else:
                        if o=='con':
@@ -1229,14 +1231,14 @@ def autotune(i):
 
                        # If new compilation MD5 and new stats, make a new referneces point
                        if not (fail=='yes' and fail_reason==last_md5_fail_text):
-                          if o=='con':
-                             ck.out('')
-                             ck.out('         NEW REFERENCE POINT!')
-
                           ref_stat_dict=copy.deepcopy(stat_dict)
                           ref_stat_out=copy.deepcopy(rr)
                           fdfi=ref_stat_dict
-                          last_md5=stat_dict.get('##characteristics#compile#md5_sum#min',None)
+                          last_md5=cur_md5 #stat_dict.get('##characteristics#compile#md5_sum#min',None)
+
+                          if o=='con':
+                             ck.out('')
+                             ck.out('         NEW REFERENCE POINT (MD5='+last_md5+')!')
 
                     else:
                        if o=='con':
