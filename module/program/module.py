@@ -2003,6 +2003,14 @@ def process_in_dir(i):
              rxx=cs.ck_preprocess(ii)
 
              if rxx['return']==0:
+                nenv=rxx.get('new_env',{})
+                for zk in nenv:
+                    zv=str(nenv[zk])
+                    env[zk]=zv
+                    if zv.find(' ')>=0 and not zv.startswith(eifs):
+                       zv=eifs+zv+eifs
+                    sb+=no+eset+' '+zk+'='+str(zv)+'\n'
+
                 psb=rxx.get('bat','')
                 if psb!='':
                    sb+='\n'+psb+'\n'
