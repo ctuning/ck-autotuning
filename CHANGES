@@ -1,3 +1,5 @@
+* 2016.12.20 * adding to program module pruning of command lines by deps and vice versa ...
+
 * 2016.12.15 * now pass dataset_uoa, dataset_file, dataset_path to pre and post processing scripts
                (useful for GEMMBENCH and universal tuning)
 

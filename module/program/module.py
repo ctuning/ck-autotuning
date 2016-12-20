@@ -1446,31 +1446,82 @@ def process_in_dir(i):
        kcmd=i.get('cmd_key','')
        if kcmd=='':
           if len(krun_cmds)>1:
-             ck.out('')
-             ck.out('More than one commmand line is found to run this program:')
-             ck.out('')
              zz={}
              iz=0
              for z in sorted(krun_cmds):
-                 zcmd=run_cmds[z].get('run_time',{}).get('run_cmd_main','')
+                 add=True
 
-                 zs=str(iz)
-                 zz[zs]=z
+                 # Check if skip by deps tags
+                 skp=run_cmds[z].get('skip_if_deps_tags',[])
 
-                 if zcmd!='': z+=' ('+zcmd+')'
-                 ck.out(zs+') '+z)
+                 for sk in skp:
+                     if len(sk)>0:
+                        for skx in deps:
+                            sktags=deps[skx].get('dict',{}).get('tags',[])
+                            found=True
+                            for skt in sk:
+                                if skt not in sktags:
+                                   found=False
+                                   break
+                            if found:
+                               add=False
+                               break
 
-                 iz+=1
+                        if not add:
+                           break
 
-             ck.out('')
-             rx=ck.inp({'text':'Select command line (or Enter to select 0): '})
-             x=rx['string'].strip()
-             if x=='': x='0'
+                 if add:
+                    # Check if add only by deps tags
+                    aif=run_cmds[z].get('add_only_if_deps_tags',[])
 
-             if x not in zz:
-                return {'return':1, 'error':'command line number is not recognized'}
+                    if len(aif)>0:
+                       add=False
+                       for sk in aif:
+                           if len(sk)>0:
+                              for skx in deps:
+                                  sktags=deps[skx].get('dict',{}).get('tags',[])
+                                  found=True
+                                  for skt in sk:
+                                      if skt not in sktags:
+                                         found=False
+                                         break
+                                  if found:
+                                     add=True
+                                     break
 
-             kcmd=zz[x]
+                              if add:
+                                 break
+
+                 if add:
+                    zcmd=run_cmds[z].get('run_time',{}).get('run_cmd_main','')
+
+                    zs=str(iz)
+                    zz[zs]=z
+
+                    if zcmd!='': z+=' ('+zcmd+')'
+                    ck.out(zs+') '+z)
+
+                    iz+=1
+
+             if len(zz)>0:
+                if len(zz)==1:
+                   x='0'
+                else:
+                   ck.out('')
+                   ck.out('More than one commmand line is found to run this program:')
+                   ck.out('')
+
+                   ck.out('')
+                   rx=ck.inp({'text':'Select command line (or Enter to select 0): '})
+                   x=rx['string'].strip()
+                   if x=='': x='0'
+
+                   if x not in zz:
+                      return {'return':1, 'error':'command line number is not recognized'}
+
+                kcmd=zz[x]
+             else:
+                return {'return':1, 'error':'no CMD for run for these software dependencies'}
 
           else:
              kcmd=krun_cmds[0]
@@ -3688,6 +3739,18 @@ def pipeline(i):
           ck.out('')
 
     ###############################################################################################################
+    # PIPELINE SECTION: Load deps
+
+    if no_compile!='yes':
+       if len(cdeps)==0 or ceuoa!='' or frd=='yes': 
+          if len(cdeps)==0:
+             cdeps=meta.get('compile_deps',{})
+          elif frd=='yes':
+             xcdeps=cdeps
+             cdeps=meta.get('compile_deps',{})
+             cdeps.update(xcdeps)
+
+    ###############################################################################################################
     # PIPELINE SECTION: Command line selection 
 
     run_cmds=meta.get('run_cmds',{})
@@ -3745,6 +3808,26 @@ def pipeline(i):
        ck.out('  Selected command line:     '+kcmd)
 
     vcmd=run_cmds[kcmd]
+
+    ### Update dependencies if needed
+    update_deps=vcmd.get('update_deps',{})
+    if len(update_deps)>0:
+       if o=='con':
+          ck.out('')
+          ck.out('  Updating deps based on selected command line ...')
+
+       for kd in update_deps:
+           if kd in cdeps:
+              new_tags=update_deps[kd].get('tags','')
+              if new_tags!='':
+                 old_tags=cdeps[kd].get('tags','')
+                 if old_tags!='': old_tags+=','
+                 cdeps[kd]['tags']=old_tags+new_tags
+              new_tags=update_deps[kd].get('no_tags','')
+              if new_tags!='':
+                 old_tags=cdeps[kd].get('no_tags','')
+                 if old_tags!='': old_tags+=','
+                 cdeps[kd]['no_tags']=old_tags+new_tags
 
     ###############################################################################################################
     # PIPELINE SECTION: dataset selection 
@@ -3879,13 +3962,6 @@ def pipeline(i):
 
     if no_compile!='yes':
        if len(cdeps)==0 or ceuoa!='' or frd=='yes': 
-          if len(cdeps)==0:
-             cdeps=meta.get('compile_deps',{})
-          elif frd=='yes':
-             xcdeps=cdeps
-             cdeps=meta.get('compile_deps',{})
-             cdeps.update(xcdeps)
-
           if len(cdeps)>0:
              if o=='con':
                 ck.out(sep)
