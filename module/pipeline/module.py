@@ -372,6 +372,7 @@ def autotune(i):
        pipeline=r['dict']
 
     pipeline_update=i.get('pipeline_update',{})
+
     force_pipeline_update=False
     if len(pipeline_update)!=0:
        r=ck.merge_dicts({'dict1':pipeline, 'dict2':pipeline_update})

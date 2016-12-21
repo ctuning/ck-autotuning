@@ -1533,6 +1533,23 @@ def process_in_dir(i):
        vcmd=run_cmds[kcmd]
        misc['cmd_key']=kcmd
 
+       # Check run-time deps 
+       rx=update_run_time_deps({'host_os':hos,
+                                'target_os':tos,
+                                'target_id':tdid,
+                                'deps':deps,
+                                'meta':meta,
+                                'cmd_key':kcmd,
+                                'cmd_meta':vcmd,
+                                'out':oo,
+                                'quiet':quiet})
+       if rx['return']>0: return rx
+
+       if rx.get('resolve',{}).get('bat','')!='':
+          if remote!='yes':
+             sb+=no+rx['resolve']['bat']
+
+       ##################################################
        c=''
 
        rt=vcmd.get('run_time',{})
@@ -1585,7 +1602,7 @@ def process_in_dir(i):
                         'compute_platform_id':compute_platform_id,
                         'compute_device_id':compute_device_id,
                         'type':ngd,
-                        'deps':deps,
+#                        'deps':xdeps,
                         'select':'yes',
                         'sudo':isd,
                         'out':oo,
@@ -3809,25 +3826,21 @@ def pipeline(i):
 
     vcmd=run_cmds[kcmd]
 
-    ### Update dependencies if needed
-    update_deps=vcmd.get('update_deps',{})
-    if len(update_deps)>0:
-       if o=='con':
-          ck.out('')
-          ck.out('  Updating deps based on selected command line ...')
+    ###############################################################################################################
+    # PIPELINE SECTION: expose and resolve run-time deps if needed
 
-       for kd in update_deps:
-           if kd in cdeps:
-              new_tags=update_deps[kd].get('tags','')
-              if new_tags!='':
-                 old_tags=cdeps[kd].get('tags','')
-                 if old_tags!='': old_tags+=','
-                 cdeps[kd]['tags']=old_tags+new_tags
-              new_tags=update_deps[kd].get('no_tags','')
-              if new_tags!='':
-                 old_tags=cdeps[kd].get('no_tags','')
-                 if old_tags!='': old_tags+=','
-                 cdeps[kd]['no_tags']=old_tags+new_tags
+    rx=update_run_time_deps({'host_os':hos,
+                             'target_os':tos,
+                             'target_id':tdid,
+                             'deps':cdeps,
+                             'meta':meta,
+                             'cmd_key':kcmd,
+                             'cmd_meta':vcmd,
+                             'out':oo,
+                             'quiet':quiet})
+    if rx['return']>0: return rx
+
+    i['dependencies']=cdeps
 
     ###############################################################################################################
     # PIPELINE SECTION: dataset selection 
@@ -5340,7 +5353,7 @@ def autotune(i):
     i['program_tags']=' '
     i['ask_pipeline_choices']='yes'
     i['local_autotuning']='yes'
-    
+
     se=i.get('skip_exchange','')
     if se=='': se='yes'
     i['skip_exchange']=se
@@ -5409,8 +5422,28 @@ def benchmark(i):
     i['cid']=''
 
     up=i.get('pipeline_update',{})
-    if duoa!='': 
-       up['program_uoa']=duoa
+    if duoa=='':
+       # Try to get from current CID (as module!)
+       r=ck.cid({})
+       if r['return']==0:
+          duoa=r.get('data_uoa','')
+
+    if duoa=='':
+       return {'return':1, 'error':'program is not defined'}
+
+    up['program_uoa']=duoa
+
+    cf=i.get('cpu_freq','')
+    if cf=='': cf='max'
+    up['cpu_freq']=cf
+
+    gf=i.get('gpu_freq','')
+    if gf=='': gf='max'
+    up['gpu_freq']=gf
+
+    nsc=i.get('no_state_check','')
+    if nsc=='': nsc='yes'
+    up['no_state_check']=nsc
 
     # Get all extra input to pipeline
     ik=ck.cfg.get('internal_keys',[])
@@ -5441,7 +5474,7 @@ def benchmark(i):
        if fail=='yes':
           ck.out('* Reason: '+fail_reason)
 
-       flat=r.get('last_stat_analysis',{}).get('dict_flat','')
+       flat=r.get('last_stat_analysis',{}).get('dict_flat',{})
 
        bs=flat.get('##characteristics#compile#binary_size#min',0)
        os=flat.get('##characteristics#compile#obj_size#min',0)
@@ -5471,3 +5504,108 @@ def benchmark(i):
        ck.out('')
 
     return r
+
+##############################################################################
+# Update run-time deps 
+
+def update_run_time_deps(i):
+    """
+    Input:  {
+              (host_os)
+              (target_os)
+              (target_id)
+
+              (deps)     - possibly resolved deps
+              (meta)     - program meta
+              (cmd_key)  - command line key
+              (cmd_meta) - meta for a given command line key
+
+              (out)      - where to output
+              (quiet)    - quiet mode
+            }
+
+    Output: {
+              return       - return code =  0, if successful
+                                         >  0, if error
+              (error)      - error text if return > 0
+
+              (resolve)    - output from 'resolve env' for run-time deps if used
+            }
+    """
+
+    deps=i.get('deps',{})
+    meta=i.get('meta',{})
+
+    kcmd=i.get('cmd_key','')
+    vcmd=i.get('cmd_meta',{})
+
+    hos=i.get('host_os','')
+    tos=i.get('target_os','')
+    tdid=i.get('target_id','')
+
+    quiet=i.get('quiet','')
+
+    o=i.get('out','')
+    oo=''
+    if o=='con': oo=o
+
+    # Finding already prepared run-time deps in global deps
+    rdeps={}
+
+    for kd in deps:
+        if deps[kd].get('for_run_time','')=='yes':
+           rdeps[kd]=deps[kd]
+
+    # If run time deps was not already set up, prepare them now
+    rr={'return':0}
+
+    if len(rdeps)==0:
+       rdeps.update(meta.get('run_deps',{}))
+       rdeps.update(vcmd.get('run_deps',{}))
+
+       # Prune if needed
+       for kd in list(rdeps.keys()):
+           kdd=rdeps[kd].get('only_for_cmd',[])
+           if len(kdd)>0 and kcmd not in kdd:
+              del(rdeps[kd])
+
+       ### Update dependencies if needed
+       update_deps=vcmd.get('update_deps',{})
+       if len(update_deps)>0:
+          if o=='con':
+             ck.out('')
+             ck.out('  Updating deps based on selected command line ...')
+
+          for kd in update_deps:
+              if kd in rdeps:
+                 new_tags=update_deps[kd].get('tags','')
+                 if new_tags!='':
+                    old_tags=rdeps[kd].get('tags','')
+                    if old_tags!='': old_tags+=','
+                    rdeps[kd]['tags']=old_tags+new_tags
+                 new_tags=update_deps[kd].get('no_tags','')
+                 if new_tags!='':
+                    old_tags=rdeps[kd].get('no_tags','')
+                    if old_tags!='': old_tags+=','
+                    rdeps[kd]['no_tags']=old_tags+new_tags
+
+       ii={'action':'resolve',
+           'module_uoa':cfg['module_deps']['env'],
+           'host_os':hos,
+           'target_os':tos,
+           'device_id':tdid,
+           'deps':rdeps,
+           'add_customize':'yes',
+           'quiet':quiet,
+           'out':oo}
+       rx=ck.access(ii)
+       if rx['return']>0: return rx
+
+       rr['resolve']=rx
+
+       # Add run deps back to global deps and mark for run_time (to reuse further in pipeline)
+       for kd in rdeps:
+           deps[kd]=rdeps[kd]
+           deps[kd]['for_run_time']='yes'
+
+    return rr
