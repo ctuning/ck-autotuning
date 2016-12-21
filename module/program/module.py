@@ -838,10 +838,20 @@ def process_in_dir(i):
                  pass
               env[q]=x
 
+       # Update env from deps
+       for kkd in sorted(deps, key=lambda kk: deps[kk].get('sort',0)):
+           for kkd1 in deps[kkd].get('dict',{}).get('env',{}):
+               if kkd1 not in env:
+                  env[kkd1]=deps[kkd]['dict']['env'][kkd1]
+
        # Add compiler dep again, if there
        cb=deps.get('compiler',{}).get('bat','')
        if cb!='' and not sb.endswith(cb):
           sb+='\n'+no+cb.strip()+' 1\n' # We set 1 to tell environment that it should set again even if it was set before
+
+          for kkd1 in deps['compiler'].get('dict',{}).get('env',{}):
+              if kkd1 not in env:
+                 env[kkd1]=deps['compiler']['dict']['env'][kkd1]
 
        # Add env
        for k in sorted(env):
@@ -1655,10 +1665,20 @@ def process_in_dir(i):
            if 'add_to_features' not in misc: misc['add_to_features']={}
            misc['add_to_features']['apk']=r.get('params',{})
 
+       # Update env from deps
+       for kkd in sorted(deps, key=lambda kk: deps[kk].get('sort',0)):
+           for kkd1 in deps[kkd].get('dict',{}).get('env',{}):
+               if kkd1 not in env:
+                  env[kkd1]=deps[kkd]['dict']['env'][kkd1]
+
        # Add compiler dep again, if there (otherwise some libs can set another compiler)
        x=deps.get('compiler',{}).get('bat','')
        if remote!='yes' and x!='' and not sb.endswith(x):
           sb+='\n'+no+x.strip()+' 1\n' # We set 1 to tell environment that it should set again even if it was set before
+
+          for kkd1 in deps['compiler'].get('dict',{}).get('env',{}):
+              if kkd1 not in env:
+                 env[kkd1]=deps['compiler']['dict']['env'][kkd1]
 
        # Add env
        sb+='\n'
