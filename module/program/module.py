@@ -531,6 +531,17 @@ def process_in_dir(i):
     muoa=i.get('module_uoa', '')
     duoa=i.get('data_uoa', '') # There will be data UID (not alias) from 'process' function from this module!
 
+    ########################################################################
+    # Check if correct target OS
+    r=ck.access({'action':'check_target',
+                 'module_uoa':cfg['module_deps']['soft'],
+                 'dict':meta,
+                 'host_os_uoa':hos,
+                 'host_os_dict':hosd,
+                 'target_os_uoa':tos,
+                 'target_os_dict':tosd})
+    if r['return']>0: return r
+
     # Check if need specific device access type
     dat=meta.get('required_device_access_type',[])
     if len(dat)>0 and device_cfg.get('access_type','') not in dat:
@@ -1386,10 +1397,14 @@ def process_in_dir(i):
           ccc['compilation_time_with_module']=time.time()-start_time
 
           if o=='con':
-             s='Compilation time: '+('%.3f'%comp_time)+' sec.'
+             s=''
+             if meta.get('no_compile','')=='yes':
+                s='Warning: This program doesn\'t require compilation ...'
+             else:
+                s='Compilation time: '+('%.3f'%comp_time)+' sec.'
 
-             if meta.get('no_target_file','')!='yes' and meta.get('no_compile','')!='yes':
-                s+='; Object size: '+str(ofs)+'; MD5: '+md5
+                if meta.get('no_target_file','')!='yes':
+                   s+='; Object size: '+str(ofs)+'; MD5: '+md5
 
              ck.out(sep)
              ck.out(s)
