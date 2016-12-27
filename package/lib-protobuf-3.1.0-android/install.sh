@@ -17,12 +17,13 @@
 cd ${INSTALL_DIR}
 
 ############################################################
+PF=${PACKAGE_URL}/${PACKAGE_FILE}
+
 echo ""
-echo "Cloning package from '${PACKAGE_URL}' ..."
+echo "Downloading package from '${PF}' ..."
 
-rm -rf src
-
-git clone ${PACKAGE_URL} src
+rm -f ${PACKAGE_FILE}
+wget ${PF}
 
 if [ "${?}" != "0" ] ; then
   echo "Error: cloning package failed!"
@@ -31,16 +32,25 @@ fi
 
 ############################################################
 echo ""
+echo "Ungzipping and untarring ..."
+
+rm -f ${PACKAGE_FILE1}
+gzip -d ${PACKAGE_FILE}
+
+rm -rf ${PACKAGE_SUB_DIR}
+tar xvf ${PACKAGE_FILE1}
+
+############################################################
+echo ""
 echo "Patching ..."
 
-cd src
+cd ${PACKAGE_SUB_DIR}
 patch -p1 < ${PACKAGE_DIR}/misc/patch
 
 if [ "${?}" != "0" ] ; then
   echo "Error: cloning package failed!"
   exit 1
 fi
-
 
 ############################################################
 echo ""
@@ -66,7 +76,7 @@ cmake -DCMAKE_BUILD_TYPE=${CK_ENV_CMAKE_BUILD_TYPE:-Release} \
       -Dprotobuf_WITH_ZLIB=OFF \
       -Dprotobuf_BUILD_TESTS=OFF \
       -DCMAKE_INSTALL_PREFIX="${INSTALL_DIR}/install" \
-      ../src/cmake
+      ../${PACKAGE_SUB_DIR}/cmake
 
 if [ "${?}" != "0" ] ; then
   echo "Error: cmake failed!"

@@ -1,3 +1,5 @@
+* 2016.12.27 * added Android support for protobuf 3.1.0 and trunk (with patch) to make Caffe work on Android
+
 * 2016.12.23 * now checks if program supports a given host and target (similar to package)
 
 * 2016.12.21 * major update (added run-time SW deps handling)
