@@ -1,4 +1,5 @@
 * 2016.12.29 * major update to support compilation of Caffe deps for Android fully via CK
+             * added pre-process script for compilation (mainly to customize various ARM features for Android)
 
 * 2016.12.27 * added Android support for protobuf 3.1.0 and trunk (with patch) to make Caffe work on Android
 

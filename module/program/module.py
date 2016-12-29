@@ -839,6 +839,61 @@ def process_in_dir(i):
           os.remove(target_exe)
 
     if sa=='compile' or sa=='get_compiler_version':
+       # Check if pre-process script
+       x=meta.get('use_preprocess_compilation_scripts',{})
+       if len(x)>0:
+          xam=x.get('module_uoa','')
+          if xam=='': xam=work['self_module_uid']
+          xad=x.get('data_uoa','')
+          r=ck.access({'action':'find',
+                       'module_uoa':xam,
+                       'data_uoa':xad})
+          if r['return']>0: return r
+          ppp1=r['path']
+
+          # Check if has custom script
+          cs=None
+          csn=x.get('script_name','')
+          if csn=='': csn='custom'
+
+          rx=ck.load_module_from_path({'path':ppp1, 'module_code_name':csn, 'skip_init':'yes'})
+          if rx['return']>0: return rx
+          cs=rx['code']
+
+          csf=x.get('script_func','')
+          if csf=='': csf='setup'
+
+          if csf not in dir(cs):
+             return {'return':1, 'error':'function '+csf+' not found in script '+csn+' in path '+ppp1}
+
+          # Call customized script
+          ii={"host_os_uoa":hosx,
+              "host_os_uid":hos,
+              "host_os_dict":hosd,
+              "target_os_uoa":tosx,
+              "target_os_uid":tos,
+              "target_os_dict":tosd,
+              "target_device_id":tdid,
+              "meta":meta,
+              "env":env,
+              "deps":deps,
+              "self_cfg":cfg,
+              "ck_kernel":ck
+             }
+
+          if o=='con': ii['interactive']='yes'
+          if i.get('quiet','')=='yes': ii['interactive']=''
+
+          script_func=getattr(cs, csf)
+          rx=script_func(ii)
+          if rx['return']>0: return rx
+
+          # Update install env from customized script (if needed)
+          new_env=rx.get('install_env',{})
+          if len(new_env)>0:
+             env.update(new_env)
+
+       # Process compile vars
        env1=meta.get('compile_vars',{})
        for q in env1:
            if q not in env:
@@ -863,6 +918,7 @@ def process_in_dir(i):
 #          for kkd1 in deps['compiler'].get('dict',{}).get('env',{}):
 #              if kkd1 not in env:
 #                 env[kkd1]=deps['compiler']['dict']['env'][kkd1]
+
 
        # Add env
        for k in sorted(env):
