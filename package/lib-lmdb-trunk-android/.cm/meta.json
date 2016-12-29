@@ -19,7 +19,7 @@
       "local": "yes",
       "name": "C++ compiler",
       "sort": 10,
-      "tags": "compiler,lang-cpp,gcc"
+      "tags": "compiler,lang-cpp"
     }
   },
   "end_full_path": {
