@@ -1650,8 +1650,9 @@ def process_in_dir(i):
                      if qdl!='':
                          qpl=qq.get('path_lib','')
                          qq1=os.path.join(qpl,qdl)
-                         rif.append(qq1)
-                         rifo[qq1]='yes' # if pushing to external, do not use current path
+                         if not qq1.endswith('.a'):
+                            rif.append(qq1)
+                            rifo[qq1]='yes' # if pushing to external, do not use current path
 
                      aef=qq.get('adb_extra_files',[])
                      for qq1 in aef:
@@ -1776,6 +1777,11 @@ def process_in_dir(i):
 
        c=c.replace('$#script_ext#$',sext)
 
+       up_dir=''
+       if remote!='yes': up_dir='../'
+
+       c=c.replace('$#up_dir#$',up_dir)
+
        # Add extra before CMD if there ...
        c=prcmd+' '+c
 
@@ -1893,40 +1899,15 @@ def process_in_dir(i):
           r=os.system(x)
 
        # If remote and target exe
-       if remote=='yes' and target_exe!='':
-#          if target_exe=='':
-#             return {'return':1, 'error':'currently can\'t run benchmarks without defined executable on remote platform'}
-
+       if remote=='yes' and target_exe!='' and srn==0:
           if srn==0:
-             # Copy exe
-             y=tosd.get('remote_push_pre','').replace('$#device#$',xtdid)
-             if y!='':
-                y=y.replace('$#file1#$', target_exe)
-                y=y.replace('$#file1s#$', target_exe)
-                y=y.replace('$#file2#$', rdir+target_exe)
-
-                if o=='con':
-                   ck.out(sep)
-                   ck.out(y)
-                   ck.out('')
-
-                ry=os.system(y)
-                if ry>0:
-                   return {'return':1, 'error':'copying to remote device failed'}
-
-             y=tosd['remote_push'].replace('$#device#$',xtdid)
-             y=y.replace('$#file1#$', target_exe)
-             y=y.replace('$#file1s#$', target_exe)
-             y=y.replace('$#file2#$', rdir+target_exe)
-
-             if o=='con':
-                ck.out(sep)
-                ck.out(y)
-                ck.out('')
-
-             ry=os.system(y)
-             if ry>0:
-                return {'return':1, 'error':'copying to remote device failed'}
+             # Copy exe to remote
+             ry=copy_file_to_remote({'target_os_dict':tosd,
+                                     'device_id':tdid,
+                                     'file1':target_exe,
+                                     'file2':rdir+target_exe,
+                                     'out':oo})
+             if ry['return']>0: return ry
 
              # Set chmod
              se=tosd.get('set_executable','')
@@ -1940,48 +1921,6 @@ def process_in_dir(i):
                 ry=os.system(y)
                 if ry>0:
                    return {'return':1, 'error':'making binary executable failed on remote device'}
-
-          if sdi!='yes' and srn==0 or ati==0:
-             # Copy explicit input files, if first time
-             for df in rif:
-                 df0, df1 = os.path.split(df)
-
-                 # Push data files to device
-                 y=tosd.get('remote_push_pre','').replace('$#device#$',xtdid)
-
-                 if df in rifo:
-                    dfx=df
-                    dfy=rdir+stdirs+df1
-                 else:
-                    dfx=os.path.join(p,df)
-                    dfy=rdir+stdirs+df
-
-                 if y!='':
-                    y=y.replace('$#file1#$', dfx)
-                    y=y.replace('$#file1s#$', df1)
-                    y=y.replace('$#file2#$', dfy)
-
-                    if o=='con':
-                       ck.out(sep)
-                       ck.out(y)
-                       ck.out('')
-
-                    ry=os.system(y)
-                    if ry>0:
-                       return {'return':1, 'error':'copying to remote device failed'}
-
-                 y=tosd['remote_push'].replace('$#device#$',xtdid)
-                 y=y.replace('$#file1#$', dfx)
-                 y=y.replace('$#file1s#$', df1)
-                 y=y.replace('$#file2#$', dfy)
-                 if o=='con':
-                    ck.out(sep)
-                    ck.out(y)
-                    ck.out('')
-
-                 ry=os.system(y)
-                 if ry>0:
-                    return {'return':1, 'error':'copying to remote device failed'}
 
        # Loading dataset
        dset={}
@@ -2183,6 +2122,32 @@ def process_in_dir(i):
                 ck.out('  (pre processing script via CK failed: '+rxx['error']+')')
 
              return {'return':0, 'tmp_dir':rcdir, 'misc':misc, 'characteristics':ccc, 'deps':deps}
+
+       # If remote and target exe
+       if remote=='yes' and target_exe!='':
+          if sdi!='yes' and srn==0 or ati==0:
+             # Copy explicit input files, if first time
+             for df in rif:
+                 if df.startswith('$<<') and df.endswith('>>$'):
+                    df=env.get(df[3:-3],'')
+                    rifo[df]='yes'
+
+                 df0, df1 = os.path.split(df)
+
+                 if df in rifo:
+                    dfx=df
+                    dfy=rdir+stdirs+df1
+                 else:
+                    dfx=os.path.join(p,df)
+                    dfy=rdir+stdirs+df
+
+                 ry=copy_file_to_remote({'target_os_dict':tosd,
+                                         'device_id':tdid,
+                                         'file1':dfx,
+                                         'file1s':df1,
+                                         'file2':dfy,
+                                         'out':oo})
+                 if ry['return']>0: return ry
 
        # Check if has unparsed
        if sunparsed!='':
@@ -5700,3 +5665,96 @@ def update_run_time_deps(i):
            deps[kd]['for_run_time']='yes'
 
     return rr
+
+##############################################################################
+# Copy file to remote
+
+def copy_file_to_remote(i):
+    """
+    Input:  {
+              target_os_dict
+              device_id
+              file1
+              (file1s)
+              file2
+            }
+
+    Output: {
+              return       - return code =  0, if successful
+                                         >  0, if error
+              (error)      - error text if return > 0
+            }
+    """
+
+    import os
+
+    o=i.get('out','')
+
+    tosd=i['target_os_dict']
+
+    tdid=i.get('device_id','')
+
+    xtdid=''
+    if tdid!='': xtdid=' -s '+tdid
+
+    file1=i['file1']
+    file1s=i.get('file1s','')
+    if file1s=='': file1s=file1
+    file2=i['file2']
+
+    if file1=='':
+       return {'return':1, 'error':'file to be sent to remote device is not specified'}
+
+    if not os.path.isfile(file1):
+       return {'return':1, 'error':'file to be sent to remote device ('+file1+') is not found'}
+
+    # Check params of remote file
+    rs=tosd['remote_shell'].replace('$#device#$',xtdid)
+    rse=tosd.get('remote_shell_end','')+' '
+
+    # Try to create directories
+    x=rs+' ls -l '+file2+rse
+
+    ry=ck.run_and_get_stdout({'cmd':x, 'shell':'no'})
+    if ry['return']>0: return ry
+
+    so=ry['stdout'].lower()
+
+    skip=False
+    if 'no such file or directory' not in so:
+       sso=so.strip().strip('\t').split(' ')
+       if len(sso)>4:
+          fsize=ck.safe_int(sso[-4],-1)
+          if fsize!=-1 and fsize==os.path.getsize(file1):
+             if o=='con':
+                ck.out(sep)
+                ck.out('Skiped copying file '+file1+' to remote (the same size)')
+             skip=True
+
+    if not skip:
+       y=tosd.get('remote_push_pre','').replace('$#device#$',xtdid)
+       if y!='':
+          y=y.replace('$#file1#$', file1).replace('$#file1s#$', file1s).replace('$#file2#$', file2)
+
+          if o=='con':
+             ck.out(sep)
+             ck.out(y)
+             ck.out('')
+
+          ry=os.system(y)
+          if ry>0:
+             return {'return':1, 'error':'copying to remote device failed'}
+
+       y=tosd['remote_push'].replace('$#device#$',xtdid)
+       y=y.replace('$#file1#$', file1).replace('$#file1s#$', file1s).replace('$#file2#$', file2)
+
+       if o=='con':
+          ck.out(sep)
+          ck.out(y)
+          ck.out('')
+
+       ry=os.system(y)
+       if ry>0:
+          return {'return':1, 'error':'copying to remote device failed'}
+
+    return {'return':0}

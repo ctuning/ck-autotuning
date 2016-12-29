@@ -1,3 +1,6 @@
+* 2016.12.30 * do not copy files with the same size to remote device (Android)
+               useful not to copy large DNN models to the remote device
+
 * 2016.12.29 * major update to support compilation of Caffe deps for Android fully via CK
              * added pre-process script for compilation (mainly to customize various ARM features for Android)
 
