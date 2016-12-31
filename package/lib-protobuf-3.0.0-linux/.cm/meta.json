@@ -35,13 +35,17 @@
     }
   },
   "end_full_path": {
+    "android": "install$#sep#$lib$#sep#$libprotobuf.a",
+    "win": "install\\lib\\libprotobuf.lib",
     "linux": "install$#sep#$lib$#sep#$libprotobuf.a"
   },
   "need_cpu_info": "yes",
   "only_for_host_os_tags": [
+    "windows",
     "linux"
   ],
   "only_for_target_os_tags": [
+    "windows",
     "linux"
   ],
   "process_script": "install",

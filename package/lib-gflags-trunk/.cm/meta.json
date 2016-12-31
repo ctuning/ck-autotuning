@@ -3,9 +3,10 @@
     "extra_dir": "",
     "install_env": {
       "PACKAGE_BUILD_TYPE": "cmake",
-      "PACKAGE_CONFIGURE_FLAGS": "-DBUILD_SHARED_LIBS=ON -DGFLAGS_NAMESPACE=google", 
-      "PACKAGE_CONFIGURE_FLAGS_WINDOWS": "", 
-      "PACKAGE_CONFIGURE_FLAGS_LINUX": "-DBUILD_STATIC_LIBS=ON", 
+      "PACKAGE_CONFIGURE_FLAGS": "-DGFLAGS_NAMESPACE=google", 
+      "PACKAGE_CONFIGURE_FLAGS_WINDOWS": "-DBUILD_SHARED_LIBS=ON", 
+      "PACKAGE_CONFIGURE_FLAGS_LINUX": "-DBUILD_SHARED_LIBS=ON -DBUILD_STATIC_LIBS=ON", 
+      "PACKAGE_CONFIGURE_FLAGS_ANDROID": "-DBUILD_STATIC_LIBS=ON -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF",
       "PACKAGE_GIT": "YES",
       "PACKAGE_SUB_DIR": "src", 
       "PACKAGE_SUB_DIR1":"src",
@@ -21,6 +22,7 @@
     "cmake": {
       "local": "yes",
       "name": "cmake",
+      "force_target_as_host": "yes",
       "sort": 5,
       "tags": "tool,cmake"
     },

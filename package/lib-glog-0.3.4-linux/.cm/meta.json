@@ -20,6 +20,7 @@
       "local": "yes", 
       "name": "cmake", 
       "sort": 5, 
+      "force_target_as_host": "yes",
       "tags": "tool,cmake"
     }, 
     "compiler": {
