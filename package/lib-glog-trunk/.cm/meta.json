@@ -1,0 +1,62 @@
+{
+  "customize": {
+    "extra_dir": "",
+    "install_env": {
+      "PACKAGE_CONFIGURE_FLAGS": "-Dgflags_LIBRARIES=$<<CK_ENV_LIB_GFLAGS_LIB>>$/$<<CK_ENV_LIB_GFLAGS_STATIC_NAME>>$ -Dgflags_INCLUDE_DIR=$<<CK_ENV_LIB_GFLAGS_INCLUDE>>$",
+      "PACKAGE_GIT":"yes",
+      "PACKAGE_SUB_DIR":"src",
+      "PACKAGE_SUB_DIR1":"src",
+      "PACKAGE_URL": "https://github.com/google/glog",
+      "CMAKE_CONFIG":"Release"
+    },
+    "version": "development",
+    "use_git_revision":"yes",
+    "git_src_dir":"src"
+  },
+  "deps": {
+    "cmake": {
+      "local": "yes",
+      "name": "cmake",
+      "sort": 5,
+      "tags": "tool,cmake"
+    },
+    "compiler": {
+      "local": "yes",
+      "name": "C++ compiler",
+      "sort": 10,
+      "tags": "compiler,lang-cpp"
+    },
+    "gflags": {
+      "local": "yes",
+      "name": "GFlags library",
+      "sort": 20,
+      "tags": "lib,gflags"
+    }
+  },
+  "end_full_path": {
+    "win": "install\\lib\\glog.lib",
+    "linux": "install/lib/libglog.a"
+  },
+  "need_cpu_info": "yes",
+  "only_for_host_os_tags": [
+    "linux",
+    "windows"
+  ],
+  "only_for_target_os_tags": [
+    "linux",
+    "windows"
+  ],
+  "process_script": "install",
+  "soft_uoa": "d42a1422abbcbb6a",
+  "suggested_path": "lib-glog",
+  "tags": [
+    "lib",
+    "glog",
+    "vtrunk",
+    "vmaster"
+  ],
+  "use_scripts_from_another_entry": {
+    "data_uoa": "cd9ccc74060b3d18", 
+    "module_uoa": "script"
+  }
+}

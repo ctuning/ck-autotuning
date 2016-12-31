@@ -4,6 +4,11 @@
     "git_src_dir": "src", 
     "install_env": {
       "PACKAGE_CONFIGURE_FLAGS": "-DBUILD_SHARED_LIBS=ON -DGFLAGS_NAMESPACE=google", 
+      "PACKAGE_WGET": "yes",
+      "PACKAGE_UNGZIP": "yes",
+      "PACKAGE_UNTAR": "yes",
+      "PACKAGE_UNTAR_SKIP_ERROR_WIN": "yes",
+      "PACKAGE_RENAME": "yes",
       "PACKAGE_NAME": "v2.2.0.tar.gz", 
       "PACKAGE_NAME1": "v2.2.0.tar", 
       "PACKAGE_NAME2": "v2.2.0",
@@ -29,8 +34,8 @@
     }
   }, 
   "end_full_path": {
-    "win": "obj$#sep#$lib$#sep#$Release$#sep#$gflags.lib",
-    "linux": "install$#sep#$lib$#sep#$libgflags.a"
+    "win": "install\\Lib\\gflags.lib",
+    "linux": "install/lib/libgflags.a"
   }, 
   "need_cpu_info": "yes", 
   "only_for_host_os_tags": [

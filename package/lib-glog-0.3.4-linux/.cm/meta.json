@@ -7,7 +7,8 @@
       "PACKAGE_NAME": "v0.3.4.tar.gz", 
       "PACKAGE_NAME1": "v0.3.4.tar", 
       "PACKAGE_SUB_DIR": "glog-0.3.4", 
-      "PACKAGE_URL": "https://github.com/google/glog/archive"
+      "PACKAGE_URL": "https://github.com/google/glog/archive",
+      "CMAKE_CONFIG":"Release"
     }, 
     "version": "0.3.4"
   }, 
