@@ -2,7 +2,7 @@
   "customize": {
     "extra_dir": "",
     "install_env": {
-      "PACKAGE_CONFIGURE_FLAGS": "-Dgflags_LIBRARIES=$<<CK_ENV_LIB_GFLAGS_LIB>>$/$<<CK_ENV_LIB_GFLAGS_STATIC_NAME>>$ -Dgflags_INCLUDE_DIR=$<<CK_ENV_LIB_GFLAGS_INCLUDE>>$",
+      "PACKAGE_CONFIGURE_FLAGS": "-Dgflags_LIBRARIES=$<<CK_ENV_LIB_GFLAGS_LIB>>$/$<<CK_ENV_LIB_GFLAGS_STATIC_NAME>>$ -Dgflags_INCLUDE_DIR=$<<CK_ENV_LIB_GFLAGS_INCLUDE>>$ -DBUILD_TESTING=OFF",
       "PACKAGE_GIT":"YES",
       "PACKAGE_SUB_DIR":"src",
       "PACKAGE_SUB_DIR1":"src",
@@ -35,6 +35,7 @@
     }
   },
   "end_full_path": {
+    "android": "install$#sep#$lib$#sep#$libglog.a",
     "win": "install\\lib\\glog.lib",
     "linux": "install/lib/libglog.a"
   },
@@ -45,7 +46,8 @@
   ],
   "only_for_target_os_tags": [
     "linux",
-    "windows"
+    "windows",
+    "android"
   ],
   "process_script": "install",
   "soft_uoa": "d42a1422abbcbb6a",

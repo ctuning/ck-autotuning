@@ -2,7 +2,15 @@
   "customize": {
     "extra_dir": "",
     "install_env": {
-      "PACKAGE_URL": "https://github.com/gflags/gflags"
+      "PACKAGE_CONFIGURE_FLAGS": "-DBUILD_SHARED_LIBS=ON -DGFLAGS_NAMESPACE=google", 
+      "PACKAGE_CONFIGURE_FLAGS_WINDOWS": "", 
+      "PACKAGE_CONFIGURE_FLAGS_LINUX": "-DBUILD_STATIC_LIBS=ON", 
+      "PACKAGE_GIT": "YES",
+      "PACKAGE_SUB_DIR": "src", 
+      "PACKAGE_SUB_DIR1":"src",
+      "PACKAGE_URL": "https://github.com/gflags/gflags",
+      "PACKAGE_SKIP_CLEAN_SRC_DIR":"YES",
+      "CMAKE_CONFIG":"Release"
     },
     "version": "development",
     "use_git_revision":"yes",
@@ -24,13 +32,17 @@
   },
   "end_full_path": {
     "android": "install$#sep#$lib$#sep#$libgflags.a",
+    "win": "install\\Lib\\gflags.lib",
     "linux": "install$#sep#$lib$#sep#$libgflags.a"
   },
   "need_cpu_info": "yes",
   "only_for_host_os_tags": [
-    "linux"
+    "linux",
+    "windows"
   ],
   "only_for_target_os_tags": [
+    "linux",
+    "windows",
     "android"
   ],
   "process_script": "install",
@@ -41,6 +53,10 @@
     "gflags",
     "vtrunk"
   ],
+  "use_scripts_from_another_entry": {
+    "data_uoa": "cd9ccc74060b3d18", 
+    "module_uoa": "script"
+  },
   "use_preprocess_scripts_from_another_entry": {
     "module_uoa": "84e27ad9dd12e734",
     "data_uoa": "fd44428fbc77f77f"

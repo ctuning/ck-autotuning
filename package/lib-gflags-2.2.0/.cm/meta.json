@@ -37,7 +37,8 @@
   }, 
   "end_full_path": {
     "win": "install\\Lib\\gflags.lib",
-    "linux": "install/lib/libgflags.a"
+    "linux": "install/lib/libgflags.a",
+    "android": "install$#sep#$lib$#sep#$libgflags.a",
   }, 
   "need_cpu_info": "yes", 
   "only_for_host_os_tags": [
@@ -46,7 +47,8 @@
   ], 
   "only_for_target_os_tags": [
     "linux",
-    "windows"
+    "windows",
+    "android"
   ], 
   "process_script": "install", 
   "soft_uoa": "64abac44465943ea", 
