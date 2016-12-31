@@ -3,7 +3,7 @@
     "extra_dir": "", 
     "git_src_dir": "src", 
     "install_env": {
-      "PACKAGE_CONFIGURE_FLAGS": "-DBUILD_SHARED_LIBS=ON -DGFLAGS_NAMESPACE=google", 
+      "PACKAGE_CONFIGURE_FLAGS": "-DBUILD_STATIC_LIBS=ON -DGFLAGS_NAMESPACE=google", 
       "PACKAGE_WGET": "yes",
       "PACKAGE_UNGZIP": "yes",
       "PACKAGE_UNTAR": "yes",
