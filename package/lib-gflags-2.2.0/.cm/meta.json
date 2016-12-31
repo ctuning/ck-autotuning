@@ -6,11 +6,11 @@
       "PACKAGE_CONFIGURE_FLAGS": "-DBUILD_SHARED_LIBS=ON -DGFLAGS_NAMESPACE=google", 
       "PACKAGE_CONFIGURE_FLAGS_WINDOWS": "", 
       "PACKAGE_CONFIGURE_FLAGS_LINUX": "-DBUILD_STATIC_LIBS=ON", 
-      "PACKAGE_WGET": "yes",
-      "PACKAGE_UNGZIP": "yes",
-      "PACKAGE_UNTAR": "yes",
-      "PACKAGE_UNTAR_SKIP_ERROR_WIN": "yes",
-      "PACKAGE_RENAME": "yes",
+      "PACKAGE_WGET": "YES",
+      "PACKAGE_UNGZIP": "YES",
+      "PACKAGE_UNTAR": "YES",
+      "PACKAGE_UNTAR_SKIP_ERROR_WIN": "YES",
+      "PACKAGE_RENAME": "YES",
       "PACKAGE_NAME": "v2.2.0.tar.gz", 
       "PACKAGE_NAME1": "v2.2.0.tar", 
       "PACKAGE_NAME2": "v2.2.0",
@@ -61,5 +61,9 @@
   "use_scripts_from_another_entry": {
     "data_uoa": "cd9ccc74060b3d18", 
     "module_uoa": "script"
+  },
+  "use_preprocess_scripts_from_another_entry": {
+    "module_uoa": "84e27ad9dd12e734",
+    "data_uoa": "fd44428fbc77f77f"
   }
 }

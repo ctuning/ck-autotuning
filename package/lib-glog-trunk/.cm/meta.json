@@ -3,11 +3,12 @@
     "extra_dir": "",
     "install_env": {
       "PACKAGE_CONFIGURE_FLAGS": "-Dgflags_LIBRARIES=$<<CK_ENV_LIB_GFLAGS_LIB>>$/$<<CK_ENV_LIB_GFLAGS_STATIC_NAME>>$ -Dgflags_INCLUDE_DIR=$<<CK_ENV_LIB_GFLAGS_INCLUDE>>$",
-      "PACKAGE_GIT":"yes",
+      "PACKAGE_GIT":"YES",
       "PACKAGE_SUB_DIR":"src",
       "PACKAGE_SUB_DIR1":"src",
       "PACKAGE_URL": "https://github.com/google/glog",
-      "CMAKE_CONFIG":"Release"
+      "CMAKE_CONFIG":"Release",
+      "PACKAGE_SKIP_CLEAN_SRC_DIR":"YES"
     },
     "version": "development",
     "use_git_revision":"yes",
