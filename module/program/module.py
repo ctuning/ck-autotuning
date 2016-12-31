@@ -5632,6 +5632,7 @@ def update_run_time_deps(i):
              ck.out('')
              ck.out('  Updating deps based on selected command line ...')
 
+          print (update_deps)
           for kd in update_deps:
               if kd in rdeps:
                  new_tags=update_deps[kd].get('tags','')

@@ -30,7 +30,7 @@
   }, 
   "end_full_path": {
     "win": "obj$#sep#$lib$#sep#$Release$#sep#$gflags.lib",
-    "linux": "install$#sep#$lib$#sep#$libgflags.a"
+    "linux": "install$#sep#$lib$#sep#$libgflags.so"
   }, 
   "need_cpu_info": "yes", 
   "only_for_host_os_tags": [
