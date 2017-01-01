@@ -1,5 +1,6 @@
 {
   "customize": {
+    "add_to_path":"yes",
     "extra_dir": "",
     "install_env": {
       "PACKAGE_AUTOGEN": "NO",
@@ -10,6 +11,7 @@
       "PACKAGE_RENAME": "YES",
       "PACKAGE_SUB_DIR": "protobuf-3.1.0",
       "PACKAGE_SUB_DIR1": "protobuf-3.1.0/cmake",
+      "PACKAGE_FLAGS_LINUX":"-fPIC",
       "PACKAGE_UNGZIP": "YES",
       "PACKAGE_UNTAR": "YES",
       "PACKAGE_UNTAR_SKIP_ERROR_WIN": "YES",
