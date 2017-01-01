@@ -43,6 +43,7 @@
     "linux"
   ],
   "only_for_target_os_tags": [
+    "windows",
     "linux"
   ],
   "process_script": "install",
