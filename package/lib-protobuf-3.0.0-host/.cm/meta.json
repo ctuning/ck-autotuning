@@ -1,5 +1,6 @@
 {
   "customize": {
+    "add_to_path":"yes",
     "extra_dir": "",
     "install_env": {
       "CMAKE_CONFIG": "Release",

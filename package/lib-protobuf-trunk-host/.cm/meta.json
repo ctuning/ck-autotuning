@@ -1,5 +1,6 @@
 {
   "customize": {
+    "add_to_path":"yes",
     "extra_dir": "",
     "git_src_dir": "src",
     "install_env": {
