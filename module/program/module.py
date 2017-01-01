@@ -1643,14 +1643,14 @@ def process_in_dir(i):
        if ctype=='dynamic' and remote=='yes':
           if srn==0 and ati==0:
              for q in deps:
-                 qq=deps[q].get('cus','')
+                 qq=deps[q].get('cus',{})
                  qdl=qq.get('dynamic_lib','')
 
                  if qq.get('skip_copy_to_remote','')!='yes':
                      if qdl!='':
                          qpl=qq.get('path_lib','')
                          qq1=os.path.join(qpl,qdl)
-                         if not qq1.endswith('.a'):
+                         if os.path.isfile(qq1) and not qq1.endswith('.a'):
                             rif.append(qq1)
                             rifo[qq1]='yes' # if pushing to external, do not use current path
 
