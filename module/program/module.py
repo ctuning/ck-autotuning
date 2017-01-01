@@ -1643,7 +1643,7 @@ def process_in_dir(i):
        if ctype=='dynamic' and remote=='yes':
           if srn==0 and ati==0:
              for q in deps:
-                 qq=deps[q].get('cus','')
+                 qq=deps[q].get('cus',{})
                  qdl=qq.get('dynamic_lib','')
 
                  if qq.get('skip_copy_to_remote','')!='yes':
