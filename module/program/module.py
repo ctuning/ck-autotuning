@@ -1650,7 +1650,7 @@ def process_in_dir(i):
                      if qdl!='':
                          qpl=qq.get('path_lib','')
                          qq1=os.path.join(qpl,qdl)
-                         if not qq1.endswith('.a'):
+                         if os.path.isfile(qq1) and not qq1.endswith('.a'):
                             rif.append(qq1)
                             rifo[qq1]='yes' # if pushing to external, do not use current path
 
