@@ -37,7 +37,8 @@
     }
   },
   "end_full_path": {
-    "linux": "install$#sep#$lib$#sep#$libprotobuf.a"
+    "linux": "install$#sep#$lib$#sep#$libprotobuf.a",
+    "win": "install\\lib\\libprotobuf.lib"
   },
   "need_cpu_info": "yes",
   "only_for_host_os_tags": [
