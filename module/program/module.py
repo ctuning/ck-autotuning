@@ -1633,6 +1633,8 @@ def process_in_dir(i):
                                 'cmd_key':kcmd,
                                 'cmd_meta':vcmd,
                                 'out':oo,
+                                'install_to_env':iev,
+                                'safe':safe,
                                 'quiet':quiet})
        if rx['return']>0: return rx
 
@@ -3911,6 +3913,8 @@ def pipeline(i):
                              'cmd_key':kcmd,
                              'cmd_meta':vcmd,
                              'out':oo,
+                             'install_to_env':iev,
+                             'safe':safe,
                              'quiet':quiet})
     if rx['return']>0: return rx
 
@@ -5598,6 +5602,11 @@ def update_run_time_deps(i):
 
               (out)      - where to output
               (quiet)    - quiet mode
+
+              (install_to_env)       - install dependencies to env instead of CK-TOOLS (to keep it clean)!
+
+              (safe)                 - safe mode when searching packages first instead of detecting already installed soft
+                                       (to have more deterministic build)
             }
 
     Output: {
@@ -5620,6 +5629,9 @@ def update_run_time_deps(i):
     tdid=i.get('target_id','')
 
     quiet=i.get('quiet','')
+
+    iev=i.get('install_to_env','')
+    safe=i.get('safe','')
 
     o=i.get('out','')
     oo=''
