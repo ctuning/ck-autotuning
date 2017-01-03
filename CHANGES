@@ -1,3 +1,5 @@
+* 2017.01.03 - added '--safe' mode to check environment (will first search for CK packages and only then detecting soft)
+
 * 2016.12.30 * do not copy files with the same size to remote device (Android)
                useful not to copy large DNN models to the remote device
 

@@ -303,6 +303,11 @@ def process_in_dir(i):
               (overwrite_reference_output)    - if 'yes', overwrite reference output (useful if broken)
 
               (quiet)                         - if 'yes', automatically provide default answer to all questions when resolving dependencies ... 
+
+              (install_to_env)       - install dependencies to env instead of CK-TOOLS (to keep it clean)!
+
+              (safe)                 - safe mode when searching packages first instead of detecting already installed soft
+                                       (to have more deterministic build)
             }
 
     Output: {
@@ -343,6 +348,9 @@ def process_in_dir(i):
     grtd=i.get('generate_rnd_tmp_dir','')
 
     quiet=i.get('quiet','')
+
+    iev=i.get('install_to_env','')
+    safe=i.get('safe','')
 
     misc=i.get('misc',{})
     ccc=i.get('characteristics',{})
@@ -790,7 +798,9 @@ def process_in_dir(i):
            'device_id':tdid,
            'deps':deps,
            'add_customize':'yes',
-           'quiet':quiet}
+           'quiet':quiet,
+           'install_to_env':iev,
+           'safe':safe}
        if o=='con': ii['out']='con'
 
        rx=ck.access(ii)
@@ -3219,6 +3229,11 @@ def pipeline(i):
 
               (add_rnd_extension_to_bin)   - if 'yes', add random extension to binary and record list
               (add_save_extension_to_bin)  - if 'yes', add '.save' to bin to save during cleaning ...
+
+              (install_to_env)       - install dependencies to env instead of CK-TOOLS (to keep it clean)!
+
+              (safe)                 - safe mode when searching packages first instead of detecting already installed soft
+                                       (to have more deterministic build)
             }
 
     Output: {
@@ -3347,6 +3362,9 @@ def pipeline(i):
            del(i[q])
 
     espeed=ck.get_from_dicts(i, 'env_speed', '', choices)
+
+    iev=ck.get_from_dicts(i, 'install_to_env', '', None)
+    safe=ck.get_from_dicts(i, 'safe', '', choices)
 
     prcmd=''
 
@@ -4053,6 +4071,8 @@ def pipeline(i):
                  'deps':cdeps,
                  'add_customize':'yes',
                  'quiet':quiet,
+                 'install_to_env':iev,
+                 'safe':safe,
                  'out':oo}
 
              rx=ck.access(ii)
@@ -5654,6 +5674,8 @@ def update_run_time_deps(i):
            'deps':rdeps,
            'add_customize':'yes',
            'quiet':quiet,
+           'install_to_env':iev,
+           'safe':safe,
            'out':oo}
        rx=ck.access(ii)
        if rx['return']>0: return rx
