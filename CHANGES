@@ -1,3 +1,5 @@
+* 2017.01.05 - added '--skip_exec' to skip execution of a program but still run postprocessing - useful for debugging
+
 * 2017.01.03 - added '--safe' mode to check environment (will first search for CK packages and only then detecting soft)
 
 * 2016.12.30 * do not copy files with the same size to remote device (Android)

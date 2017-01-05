@@ -308,6 +308,9 @@ def process_in_dir(i):
 
               (safe)                 - safe mode when searching packages first instead of detecting already installed soft
                                        (to have more deterministic build)
+
+              (skip_exec)            - if 'yes', do not clean output files and skip exec to be able to continue 
+                                       post-processing during debuging
             }
 
     Output: {
@@ -351,6 +354,7 @@ def process_in_dir(i):
 
     iev=i.get('install_to_env','')
     safe=i.get('safe','')
+    skip_exec=i.get('skip_exec','')
 
     misc=i.get('misc',{})
     ccc=i.get('characteristics',{})
@@ -2318,21 +2322,13 @@ def process_in_dir(i):
           if o=='con' and len(rofx)>0:
              ck.out('  Cleaning output files and directories:')
 
-          for df in rofx:
-              if o=='con': ck.out('    '+df)
+          if skip_exec!='yes':
+             for df in rofx:
+                 if o=='con': ck.out('    '+df)
 
-              if remote=='yes' and meta.get('run_via_third_party','')!='yes':
-                 # Clean data files on device
-                 y=rs+' '+tosd['delete_file']+ ' '+rdir+stdirs+df+' '+rse
-                 if o=='con':
-                    ck.out('')
-                    ck.out(y)
-                    ck.out('')
-
-                 ry=os.system(y)
-
-                 if tosd.get('delete_file_extra','')!='':
-                    y=tosd['delete_file_extra']+df+' '+rse
+                 if remote=='yes' and meta.get('run_via_third_party','')!='yes':
+                    # Clean data files on device
+                    y=rs+' '+tosd['delete_file']+ ' '+rdir+stdirs+df+' '+rse
                     if o=='con':
                        ck.out('')
                        ck.out(y)
@@ -2340,18 +2336,27 @@ def process_in_dir(i):
 
                     ry=os.system(y)
 
-              if os.path.isfile(df): 
-                 os.remove(df)
+                    if tosd.get('delete_file_extra','')!='':
+                       y=tosd['delete_file_extra']+df+' '+rse
+                       if o=='con':
+                          ck.out('')
+                          ck.out(y)
+                          ck.out('')
 
-          # Delete global directories locally (needed for ARM WA)
-          for df in meta.get('clean_dirs',[]):
-              if df!='':
-                 if o=='con':
-                    ck.out('')
-                    ck.out('  Removing directory '+df+' ...')
-                    ck.out('')
+                       ry=os.system(y)
 
-                 shutil.rmtree(df,ignore_errors=True)
+                 if os.path.isfile(df): 
+                    os.remove(df)
+
+             # Delete global directories locally (needed for ARM WA)
+             for df in meta.get('clean_dirs',[]):
+                 if df!='':
+                    if o=='con':
+                       ck.out('')
+                       ck.out('  Removing directory '+df+' ...')
+                       ck.out('')
+
+                    shutil.rmtree(df,ignore_errors=True)
 
           if o=='con': ck.out('')
 
@@ -2475,12 +2480,17 @@ def process_in_dir(i):
           start_time1=time.time()
 
           rx=0
-          ry=ck.system_with_timeout({'cmd':y, 'timeout':xrto})
-          rry=ry['return']
-          if rry>0:
-             if rry!=8: return ry
-          else:
-             rx=ry['return_code']
+          rry=0
+          if skip_exec!='yes':
+             ry=ck.system_with_timeout({'cmd':y, 'timeout':xrto})
+             rry=ry['return']
+             if rry>0:
+                if rry!=8: return ry
+             else:
+                rx=ry['return_code']
+          elif o=='con':
+             ck.out('')
+             ck.out('      * skiped execution ... *')
 
           exec_time=time.time()-start_time1
           # Hack to fix occasional strange effect when time.time() is 0
@@ -3236,6 +3246,9 @@ def pipeline(i):
 
               (safe)                 - safe mode when searching packages first instead of detecting already installed soft
                                        (to have more deterministic build)
+
+              (skip_exec)            - if 'yes', do not clean output files and skip exec to be able to continue 
+                                       post-processing during debuging
             }
 
     Output: {
@@ -3367,6 +3380,7 @@ def pipeline(i):
 
     iev=ck.get_from_dicts(i, 'install_to_env', '', None)
     safe=ck.get_from_dicts(i, 'safe', '', choices)
+    skip_exec=ck.get_from_dicts(i, 'skip_exec', '', None)
 
     prcmd=''
 
@@ -4593,7 +4607,7 @@ def pipeline(i):
        mflags='-O3 --ct-extract-features'
 
        cl=i.get('clean','')
-       if cl=='' and i.get('no_clean','')!='yes' and srn==0: cl='yes'
+       if cl=='' and i.get('no_clean','')!='yes' and skip_exec!='yes' and srn==0: cl='yes'
 
        if meta.get('no_compile','')!='yes' and no_compile!='yes':
           if o=='con' and cl=='yes':
@@ -4684,7 +4698,7 @@ def pipeline(i):
           ck.out('')
 
        cl=i.get('clean','')
-       if cl=='' and i.get('no_clean','')!='yes' and srn==0: cl='yes'
+       if cl=='' and i.get('no_clean','')!='yes' and skip_exec!='yes' and srn==0: cl='yes'
 
        if meta.get('no_compile','')!='yes' and no_compile!='yes':
           if o=='con' and cl=='yes':
@@ -4881,6 +4895,7 @@ def pipeline(i):
            'output_validation_repo':vout_repo,
            'overwrite_reference_output':vout_over,
            'skip_dataset_copy':sdc,
+           'skip_exec':skip_exec,
            'env':env,
            'extra_env':eenv,
            'extra_run_cmd':ercmd,
