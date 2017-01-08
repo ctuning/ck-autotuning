@@ -464,6 +464,8 @@ def process_in_dir(i):
     tosx=r['os_uoa']
     tosd=r['os_dict']
 
+    tplat=tosd.get('ck_name','')
+
     host_add_path_string=r.get('host_add_path_string','')
     target_add_path_string=r.get('target_add_path_string','')
 
@@ -1001,7 +1003,7 @@ def process_in_dir(i):
 
               # Check if force to add library path (-L)
               path_added=False
-              if depsk.get('force_add_static_lib_path','')=='yes':
+              if tplat!='win' and depsk.get('force_add_static_lib_path','')=='yes':
                   sll+=' '+svarb+svarb1+'CK_FLAG_PREFIX_LIB_DIR'+svare1+svare+eifsc+pl1d+eifsc
                   path_added=True
 
