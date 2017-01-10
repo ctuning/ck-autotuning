@@ -537,6 +537,12 @@ def process_in_dir(i):
 
     md5sum=hosd.get('md5sum','')
 
+    # env for targets
+    tsvarb=tosd.get('env_var_start','')
+    tsvarb1=tosd.get('env_var_extra1','')
+    tsvare=tosd.get('env_var_stop','')
+    tsvare1=tosd.get('env_var_extra2','')
+
     ########################################################################
     p=i['path']
     meta=i['meta']
@@ -946,6 +952,7 @@ def process_in_dir(i):
                  v=eifs+v+eifs
 
            sb+=no+eset+' '+k+'='+str(v)+'\n'
+
        sb+='\n'
 
        # Try to detect version
@@ -1785,11 +1792,11 @@ def process_in_dir(i):
        sbenv=''
        for k in sorted(env):
            v=str(env[k])
-           v=v.replace('$<<',svarb).replace('>>$',svare)
+           v=v.replace('$<<',tsvarb).replace('>>$',tsvare)
 
-           if eifs!='' and wb!='yes':
-              if v.find(' ')>=0 and not v.startswith(eifs):
-                 v=eifs+v+eifs
+           if eifsx!='' and wb!='yes':
+              if v.find(' ')>=0 and not v.startswith(eifsx):
+                 v=eifsx+v+eifsx
 
            sbenv+=no+etset+' '+k+'='+str(v)+'\n'
        sb+=sbenv+'\n'
@@ -1971,7 +1978,7 @@ def process_in_dir(i):
           else:
              c=c.replace('$#dataset_path#$',xdp)
 
-          sb+='\n'+no+eset+' CK_DATASET_PATH='+xdp+'\n'
+          sb+='\n'+no+etset+' CK_DATASET_PATH='+xdp+'\n'
           dset['path']=xdp
 
           dfiles=dd.get('dataset_files',[])
@@ -2136,9 +2143,9 @@ def process_in_dir(i):
                 for zk in nenv:
                     zv=str(nenv[zk])
                     env[zk]=zv
-                    if zv.find(' ')>=0 and not zv.startswith(eifs):
-                       zv=eifs+zv+eifs
-                    sb+=no+eset+' '+zk+'='+str(zv)+'\n'
+                    if zv.find(' ')>=0 and not zv.startswith(eifsx):
+                       zv=eifsx+zv+eifsx
+                    sb+=no+etset+' '+zk+'='+str(zv)+'\n'
 
                 psb=rxx.get('bat','')
                 if psb!='':
