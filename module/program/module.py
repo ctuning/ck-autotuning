@@ -1186,6 +1186,11 @@ def process_in_dir(i):
           slfa+=' '+svarb+'CK_LD_FLAGS_MISC'+svare
           slfa+=' '+svarb+'CK_LD_FLAGS_EXTRA'+svare
 
+          evrf=meta.get('extra_ld_vars_first','')
+          if evrf!='':
+             evrf=evrf.replace('$<<',svarb).replace('>>$',svare)
+             slfa+=' '+evrf
+
           if sll!='': slfa+=' '+sll
 
           evr=meta.get('extra_ld_vars','')
@@ -1315,6 +1320,11 @@ def process_in_dir(i):
                    slfa=' '+svarb+svarb1+'CK_FLAGS_OUTPUT'+svare1+svare+target_exe
                 slfa+=' '+svarb+'CK_LD_FLAGS_MISC'+svare
                 slfa+=' '+svarb+'CK_LD_FLAGS_EXTRA'+svare
+
+                evrf=meta.get('extra_ld_vars_first','')
+                if evrf!='':
+                   evrf=evrf.replace('$<<',svarb).replace('>>$',svare)
+                   slfa+=' '+evrf
 
                 if sll!='': slfa+=' '+sll
 
@@ -1791,7 +1801,10 @@ def process_in_dir(i):
        c=rt.get('run_cmd_main','')
        if c=='':
           return {'return':1, 'error':'cmd is not defined'}
-       c=c.replace('$<<',svarb+svarb1).replace('>>$',svare1+svare)
+       if remote=='yes':
+          c=c.replace('$<<','${').replace('>>$','}')
+       else:
+          c=c.replace('$<<',svarb+svarb1).replace('>>$',svare1+svare)
 
        c=c.replace('$#script_ext#$',sext)
 
