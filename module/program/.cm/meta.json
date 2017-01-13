@@ -18,6 +18,9 @@
     "cp": {
       "desc": "copy program"
     }, 
+    "copy": {
+      "desc": "copy program"
+    }, 
     "crowdtune": {
       "desc": "crowdtune program"
     }, 

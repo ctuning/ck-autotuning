@@ -1,3 +1,5 @@
+* 2017.01.13 - changing data_name when copying program ...
+
 * 2017.01.08 - a few fixes to support Caffe on Windows and Android
 
 * 2017.01.05 - added '--skip_exec' to skip execution of a program but still run postprocessing - useful for debugging

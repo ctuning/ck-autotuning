@@ -39,7 +39,7 @@ W: 2016
 N: Dmitry Savenko 
 E:
 O: 
-C: fixed various problems with crowdtuning on MacOS
+C: fixed various problems with crowdtuning on MacOS, etc ...
 W: 2016
 
 N: Milos Puzovic 
@@ -71,3 +71,4 @@ E:
 O: Xored, Russia
 C: fixing a few bugs
 W:
+

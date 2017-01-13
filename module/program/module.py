@@ -5317,9 +5317,12 @@ def cp(i):
     ruid=r['repo_uid']
     muid=r['module_uid']
     duid=r['data_uid']
+    duoa=r['data_uoa']
+
     d=r['dict']
 
     d['backup_data_uid']=duid
+    d['data_name']=duoa
 
     ii={'action':'update',
         'module_uoa':muid,
@@ -5330,6 +5333,18 @@ def cp(i):
         'sort_keys':'yes'}
 
     return ck.access(ii)
+
+##############################################################################
+# Common action: copy (or move) data entry
+
+def copy(i):
+    """
+    Input:  { See 'cp' function }
+    Output: { See 'cp' function }
+
+    """
+
+    return cp(i)
 
 ##############################################################################
 # crowdtune program (redirecting to crowdsource program.optimization from ck-crowdtuning)
