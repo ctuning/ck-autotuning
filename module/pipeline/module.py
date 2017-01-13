@@ -428,6 +428,8 @@ def autotune(i):
        if rx['return']==0: 
           if 'make' in dir(rx['code']):
              cats=rx['code']
+       else:
+          return rx
 
     # If pipeline meta is not defined, set up pipeline ...
     fpu=i.get('force_pipeline_update','')
