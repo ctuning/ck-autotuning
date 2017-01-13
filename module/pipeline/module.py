@@ -428,6 +428,8 @@ def autotune(i):
        if rx['return']==0: 
           if 'make' in dir(rx['code']):
              cats=rx['code']
+          else:
+             return {'return':1, 'error':'autotuner plugin does not have function "make" to make choices'}
        else:
           return rx
 
@@ -787,6 +789,10 @@ def autotune(i):
 
                  if prune=='yes' and len(pccur)==0:
                     pccur=copy.deepcopy(cx1)
+
+        print (cats)
+        print (al)
+        exit(1)
 
         # Make selection
         jj={'module_uoa':cfg['module_deps']['choice'],
