@@ -1,3 +1,5 @@
+* 2017.01.14 - improved replay support (for OpenCL kernels from Lift/CLBlast during crowd-tuning)
+
 * 2017.01.13 - changing data_name when copying program ...
 
 * 2017.01.08 - a few fixes to support Caffe on Windows and Android

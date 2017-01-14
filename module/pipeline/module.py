@@ -204,6 +204,8 @@ def autotune(i):
 
                (custom_autotuner)                 - dictionary to customize autotuner (exploration, DSE, machine learning based tuning, etc)
                (custom_autotuner_vars)            - extra vars to customize autotuner (for example, set default vs. random)
+
+               (preserve_deps_after_first_run)    - if 'yes', save deps after first run (useful for replay)
             }
 
     Output: {
@@ -257,6 +259,8 @@ def autotune(i):
     isols=len(sols)
     rs=ck.get_from_dicts(ic, 'ref_solution', '', None) 
     iref=ck.get_from_dicts(ic, 'internal_ref', '', None) 
+
+    pdafr=ck.get_from_dicts(ic, 'preserve_deps_after_first_run', '', None)
 
     prune=ck.get_from_dicts(ic, 'prune', '', None) # Prune existing solutions
     prune_md5=ck.get_from_dicts(ic, 'prune_md5', '', None) # if 'yes', prune if MD5 doesn't change
@@ -790,10 +794,6 @@ def autotune(i):
                  if prune=='yes' and len(pccur)==0:
                     pccur=copy.deepcopy(cx1)
 
-        print (cats)
-        print (al)
-        exit(1)
-
         # Make selection
         jj={'module_uoa':cfg['module_deps']['choice'],
             'action':'make',
@@ -908,6 +908,10 @@ def autotune(i):
 
             rr=ck.access(pipeline1)
             if rr['return']>0: return rr
+
+            if pdafr=='yes' and m==0 and sr==0:
+               # Preserve resolved deps (useful for replay)
+               pipeline['dependencies']=copy.deepcopy(pipeline1.get('dependencies',{}))
 
             cur_md5=pipeline1.get('characteristics',{}).get('compile',{}).get('md5_sum','')
 
