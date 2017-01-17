@@ -30,6 +30,8 @@
     "lib", 
     "opencl", 
     "lang-c", 
-    "lang-cpp"
+    "lang-cpp",
+    "v1.1",
+    "v1"
   ]
 }
