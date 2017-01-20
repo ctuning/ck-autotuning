@@ -986,6 +986,21 @@ def process_in_dir(i):
               depsk=deps[k]
               kv=depsk.get('cus',{})
 
+              # Process include
+              pl3l=kv.get('path_include','')
+              pl3ll=kv.get('path_includes',[])
+              if pl3l not in pl3ll:
+                 pl3ll.append(pl3l)
+
+              for pl3 in pl3ll:
+                  if pl3!='':
+                     if sin!='': sin+=' '
+                     sin+=svarb+svarb1+'CK_FLAG_PREFIX_INCLUDE'+svare1+svare+eifsc+pl3+eifsc
+
+              # Process lib (if not skipped)
+              if depsk.get('skip_linking','')=='yes':
+                 continue
+
               pl1=kv.get('path_lib','')
               if pl1=='': pl1=kv.get('path_static_lib','')
               pl1d=kv.get('path_dynamic_lib','')
@@ -1030,16 +1045,6 @@ def process_in_dir(i):
                            sll+=pl1+sdirs
                         sll+=pl2
                         sll+=eifsc
-
-              pl3l=kv.get('path_include','')
-              pl3ll=kv.get('path_includes',[])
-              if pl3l not in pl3ll:
-                 pl3ll.append(pl3l)
-
-              for pl3 in pl3ll:
-                  if pl3!='':
-                     if sin!='': sin+=' '
-                     sin+=svarb+svarb1+'CK_FLAG_PREFIX_INCLUDE'+svare1+svare+eifsc+pl3+eifsc
 
           # Check if local includes
           linc=meta.get('include_dirs',[])
