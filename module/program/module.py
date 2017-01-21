@@ -1612,14 +1612,7 @@ def process_in_dir(i):
                                  break
 
                  if add:
-                    zcmd=run_cmds[z].get('run_time',{}).get('run_cmd_main','')
-
-                    zs=str(iz)
-                    zz[zs]=z
-
-                    if zcmd!='': z+=' ('+zcmd+')'
-                    ck.out(zs+') '+z)
-
+                    zz[str(iz)]=z
                     iz+=1
 
              if len(zz)>0:
@@ -1629,6 +1622,14 @@ def process_in_dir(i):
                    ck.out('')
                    ck.out('More than one commmand line is found to run this program:')
                    ck.out('')
+
+                   for iz in range(0, len(zz)):
+                       zs=str(iz)
+                       z=zz[zs]
+                       zcmd=run_cmds[z].get('run_time',{}).get('run_cmd_main','')
+
+                       if zcmd!='': z+=' ('+zcmd+')'
+                       ck.out(zs+') '+z)
 
                    ck.out('')
                    rx=ck.inp({'text':'Select command line (or Enter to select 0): '})
