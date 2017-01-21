@@ -576,7 +576,7 @@ def process_in_dir(i):
        if rx['return']>0: return rx
        target_exe+='-'+rx['data_uid']
 
-    if meta.get('skip_bin_ext','')!='yes' and target_exe!='':
+    if (meta.get('skip_bin_ext','')!='yes' or tplat=='win') and target_exe!='':
        target_exe+=se
 
     if ase=='yes' and target_exe!='':
@@ -1370,7 +1370,7 @@ def process_in_dir(i):
              # Add md5sum
              if meta.get('skip_md5sum','')!='yes':
                 x='<'
-                if hplat=='win':x='' 
+#                if hplat=='win':x='' 
                 sb+='\n'+no+md5sum+' '+x+' '+target_exe+'.dump '+stro+' '+target_exe+'.md5'+'\n'
 
              # Add git hash (if supported)
