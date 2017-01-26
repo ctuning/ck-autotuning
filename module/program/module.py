@@ -251,6 +251,7 @@ def process_in_dir(i):
 
               (deps)                 - already resolved deps (useful for auto-tuning)
 
+              (cmd_key)              - CMD key
               (dataset_uoa)          - UOA of a dataset
               (dataset_file)         - dataset filename (if more than one inside one entry - suggest to have a UID in name)
 
@@ -365,7 +366,7 @@ def process_in_dir(i):
     xparams=i.get('params',{})
     deps=i.get('deps',{})
 
-    # Check user-friendly env
+    # Check user-friendly env and params
     for q in i:
         if q.startswith('env.'):
            env[q[4:]]=i[q]
@@ -805,6 +806,13 @@ def process_in_dir(i):
              xctags+=','
           xctags+=ctags
           deps['compiler']['tags']=xctags
+
+       # Check user-friendly deps
+       for q in i:
+           if q.startswith('deps.'):
+              qq=q[5:]
+              if qq in deps:
+                 deps[qq]['uoa']=i[q]
 
        ii={'action':'resolve',
            'module_uoa':cfg['module_deps']['env'],
@@ -1666,6 +1674,7 @@ def process_in_dir(i):
                                 'cmd_meta':vcmd,
                                 'out':oo,
                                 'install_to_env':iev,
+                                'original_input':i,
                                 'safe':safe,
                                 'quiet':quiet})
        if rx['return']>0: return rx
@@ -5668,6 +5677,8 @@ def update_run_time_deps(i):
 
               (safe)                 - safe mode when searching packages first instead of detecting already installed soft
                                        (to have more deterministic build)
+
+              (original_input) - to detect --deps.KEY ...
             }
 
     Output: {
@@ -5723,7 +5734,7 @@ def update_run_time_deps(i):
        if len(update_deps)>0:
           if o=='con':
              ck.out('')
-             ck.out('  Updating deps based on selected command line ...')
+             ck.out('  Updating deps based on selected command line key ...')
 
           for kd in update_deps:
               if kd in rdeps:
@@ -5737,6 +5748,14 @@ def update_run_time_deps(i):
                     old_tags=rdeps[kd].get('no_tags','')
                     if old_tags!='': old_tags+=','
                     rdeps[kd]['no_tags']=old_tags+new_tags
+
+       # Check user-friendly deps
+       oi=i.get('original_input',{})
+       for q in oi:
+           if q.startswith('deps.'):
+              qq=q[5:]
+              if qq in rdeps:
+                 rdeps[qq]['uoa']=oi[q]
 
        ii={'action':'resolve',
            'module_uoa':cfg['module_deps']['env'],
