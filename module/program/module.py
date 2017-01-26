@@ -245,6 +245,9 @@ def process_in_dir(i):
               (env)                  - preset environment
               (env.{KEY})            - set env[KEY]=value (user-friendly interface via CMD)
 
+              (deps.{KEY})           - set deps[KEY]["uoa']=value (user-friendly interface via CMD to set any given dependency)
+              (preset_deps)          - dict with {"KEY":"UOA"} to preset dependencies
+
               (post_process_script_uoa) - run script from this UOA
               (post_process_subscript)  - subscript name
               (post_process_params)     - (string) add params to CMD
@@ -367,11 +370,14 @@ def process_in_dir(i):
     deps=i.get('deps',{})
 
     # Check user-friendly env and params
+    preset_deps=i.get('preset_deps', {})
     for q in i:
         if q.startswith('env.'):
            env[q[4:]]=i[q]
         elif q.startswith('params.'):
            xparams[q[7:]]=i[q]
+        elif q.startswith('deps.'):
+           preset_deps[q[5:]]=i[q]
 
     are=i.get('add_rnd_extension_to_bin','')
     ase=i.get('add_save_extension_to_bin','')
@@ -808,11 +814,9 @@ def process_in_dir(i):
           deps['compiler']['tags']=xctags
 
        # Check user-friendly deps
-       for q in i:
-           if q.startswith('deps.'):
-              qq=q[5:]
-              if qq in deps:
-                 deps[qq]['uoa']=i[q]
+       for q in preset_deps:
+           if q in deps:
+              deps[q]['uoa']=preset_deps[q]
 
        ii={'action':'resolve',
            'module_uoa':cfg['module_deps']['env'],
@@ -1674,7 +1678,7 @@ def process_in_dir(i):
                                 'cmd_meta':vcmd,
                                 'out':oo,
                                 'install_to_env':iev,
-                                'original_input':i,
+                                'preset_deps':preset_deps,
                                 'safe':safe,
                                 'quiet':quiet})
        if rx['return']>0: return rx
@@ -3187,6 +3191,9 @@ def pipeline(i):
               (env)                  - preset environment
               (env.{KEY})            - set env[KEY]=value (user-friendly interface via CMD)
 
+              (deps.{KEY})           - set deps[KEY]["uoa']=value (user-friendly interface via CMD to set any given dependency)
+              (preset_deps)          - dict with {"KEY":"UOA"} to preset dependencies
+
               (params)               - dictionary with parameters passed via pre/post processing to third-party tools
                                        for example, to configure ARM Workload Automation
               (params.{KEY})         - set params[KEY]=value (user-friendly interface via CMD)
@@ -3458,10 +3465,14 @@ def pipeline(i):
 
     env=ck.get_from_dicts(i,'env',{},choices)
 
-    # Check user-friendly env
+    # Check user-friendly env and deps
+    preset_deps=ck.get_from_dicts(i, 'preset_deps', {}, choices)
     for q in list(i.keys()):
         if q.startswith('env.'):
            env[q[4:]]=i[q]
+           del(i[q])
+        elif q.startswith('deps.'):
+           preset_deps[q[5:]]=i[q]
            del(i[q])
 
     eenv=ck.get_from_dicts(i, 'extra_env','',choices)
@@ -3897,6 +3908,10 @@ def pipeline(i):
              cdeps=meta.get('compile_deps',{})
              cdeps.update(xcdeps)
 
+    for q in preset_deps:
+        if q in cdeps:
+           cdeps[q]['uoa']=preset_deps[q]
+
     ###############################################################################################################
     # PIPELINE SECTION: Command line selection 
 
@@ -3968,6 +3983,7 @@ def pipeline(i):
                              'cmd_meta':vcmd,
                              'out':oo,
                              'install_to_env':iev,
+                             'preset_deps':preset_deps,
                              'safe':safe,
                              'quiet':quiet})
     if rx['return']>0: return rx
@@ -5678,7 +5694,7 @@ def update_run_time_deps(i):
               (safe)                 - safe mode when searching packages first instead of detecting already installed soft
                                        (to have more deterministic build)
 
-              (original_input) - to detect --deps.KEY ...
+              (preset_deps)          - to preset deps
             }
 
     Output: {
@@ -5750,12 +5766,10 @@ def update_run_time_deps(i):
                     rdeps[kd]['no_tags']=old_tags+new_tags
 
        # Check user-friendly deps
-       oi=i.get('original_input',{})
-       for q in oi:
-           if q.startswith('deps.'):
-              qq=q[5:]
-              if qq in rdeps:
-                 rdeps[qq]['uoa']=oi[q]
+       pd=i.get('preset_deps',{})
+       for q in pd:
+           if q in rdeps:
+              rdeps[q]['uoa']=pd[q]
 
        ii={'action':'resolve',
            'module_uoa':cfg['module_deps']['env'],
