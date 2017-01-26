@@ -251,6 +251,9 @@ def process_in_dir(i):
 
               (deps)                 - already resolved deps (useful for auto-tuning)
 
+              (dataset_uoa)          - UOA of a dataset
+              (dataset_file)         - dataset filename (if more than one inside one entry - suggest to have a UID in name)
+
               (extra_env)            - extra environment before running code as string
               (pre_run_cmd)          - pre CMD for binary
               (extra_run_cmd)        - extra CMD (can use $#key#$ for autotuning)
