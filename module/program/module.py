@@ -2329,6 +2329,8 @@ def process_in_dir(i):
        if ppc!='': lppc.append(ppc)
 
        fgtf=rt.get('fine_grain_timer_file','')
+       if env.get('XOPENME_TIME_FILE','')!='':
+          fgtf=env['XOPENME_TIME_FILE']
 
        # Check if extra post_process
        if eppc!='':
