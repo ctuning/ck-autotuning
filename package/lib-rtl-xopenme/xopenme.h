@@ -30,6 +30,7 @@
 #define __XOPENME_H_
 
 #define XOPENME_DEBUG "XOPENME_DEBUG"
+#define XOPENME_TIME_FILE "XOPENME_TIME_FILE"
 #define XOPENME_FILES "XOPENME_FILES"
 #define XOPENME_ENERGY "CK_MONITOR_ENERGY" /* If 1, monitor energy from files */
 

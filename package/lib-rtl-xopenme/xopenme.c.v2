@@ -84,9 +84,6 @@ void xopenme_init(int ntimers, int nvars)
   int kl=0;
   int nf=0;
 
-  if ((env = getenv(XOPENME_TIME_FILE)) != NULL)
-    ck_time_file=env;
-
   if ( ((env = getenv(XOPENME_DEBUG)) != NULL) && (atoi(env)==1) )
     printf("XOPENME event: start program\n");
 

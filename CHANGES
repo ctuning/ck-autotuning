@@ -1,3 +1,6 @@
+* 2017.01.29 - added "XOPENME_TIME_FILE" var to change tmp-ck-timer.json output file
+               (for example for parallel processing of Caffe classification)
+
 * 2017.01.26 - added --deps.KEY=UOA
 
 * 2017.01.17 - added OpenCL 1.1 stubs. Also added tags for v1.2 and v1.1 for stabs to specialize deps ...
