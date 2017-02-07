@@ -9,7 +9,7 @@
 
 cfg={}  # Will be updated by CK (meta description of this module)
 work={} # Will be updated by CK (temporal data)
-ck=None # Will be updated by CK (initialized CK kernel) 
+ck=None # Will be updated by CK (initialized CK kernel)
 
 # Local settings
 sep='***************************************************************************************'
@@ -47,7 +47,7 @@ def process(i):
               (target_os)      - OS module to check (if omitted, analyze host)
               (device_id)      - device id if remote (such as adb)
 
-              (process_in_tmp)       - (default 'yes') - if 'yes', clean, compile and run in the tmp directory 
+              (process_in_tmp)       - (default 'yes') - if 'yes', clean, compile and run in the tmp directory
               (tmp_dir)              - (default 'tmp') - if !='', use this tmp directory to clean, compile and run
               (generate_rnd_tmp_dir) - if 'yes', generate random tmp directory
 
@@ -222,7 +222,7 @@ def process_in_dir(i):
 
               (repeat)               - repeat kernel via environment CT_REPEAT_MAIN if supported
 
-              (sudo)                 - if 'yes', force using sudo 
+              (sudo)                 - if 'yes', force using sudo
                                        (if not set up in OS, use ${CK_SUDO_INIT}, ${CK_SUDO_PRE}, ${CK_SUDO_POST})
 
               (affinity)             - set processor affinity for tihs program run (if supported by OS - see "affinity" in OS)
@@ -271,7 +271,7 @@ def process_in_dir(i):
               (calibration_time)     - calibration time in string, 4.0 sec. by default
               (calibration_max)      - max number of iterations for calibration, 10 by default
 
-              (pull_only_timer_files) - if 'yes', pull only timer files, but not output files 
+              (pull_only_timer_files) - if 'yes', pull only timer files, but not output files
                                         (useful for remove devices during statistical repetition)
 
               (energy)                - if 'yes', start energy monitoring (if supported) using script ck-set-power-sensors
@@ -303,20 +303,20 @@ def process_in_dir(i):
 
               (skip_file_print)               - skip file printing (if 'print_files_after_run' list is in program meta)
 
-              (skip_output_validation)        - skip validation of output (dangerous during auto-tuning - 
+              (skip_output_validation)        - skip validation of output (dangerous during auto-tuning -
                                                   some optimizations may break semantics or change accuracy)
               (output_validation_repo)        - output validation repo UOA (when recording new output)
 
               (overwrite_reference_output)    - if 'yes', overwrite reference output (useful if broken)
 
-              (quiet)                         - if 'yes', automatically provide default answer to all questions when resolving dependencies ... 
+              (quiet)                         - if 'yes', automatically provide default answer to all questions when resolving dependencies ...
 
               (install_to_env)       - install dependencies to env instead of CK-TOOLS (to keep it clean)!
 
               (safe)                 - safe mode when searching packages first instead of detecting already installed soft
                                        (to have more deterministic build)
 
-              (skip_exec)            - if 'yes', do not clean output files and skip exec to be able to continue 
+              (skip_exec)            - if 'yes', do not clean output files and skip exec to be able to continue
                                        post-processing during debuging
             }
 
@@ -455,7 +455,7 @@ def process_in_dir(i):
         'device_id':tdid,
         'skip_device_init':sdi}
 
-    if sa=='run': 
+    if sa=='run':
        x='no'
        if i.get('skip_info_collection','')!='': x=i['skip_info_collection']
        ii['skip_info_collection']=x
@@ -498,7 +498,7 @@ def process_in_dir(i):
     ctype=i.get('compile_type','')
     if i.get('static','')=='yes': ctype='static'
     if i.get('dynamic','')=='yes': ctype='dynamic'
-    # On default Android-32, use static by default 
+    # On default Android-32, use static by default
     # (old platforms has problems with dynamic)
     if ctype=='':
        if tosd.get('default_compile_type','')!='':
@@ -643,7 +643,7 @@ def process_in_dir(i):
     sudo_pre=tosd.get('sudo_pre','')
     if sudo_pre=='': sudo_pre=svarb+svarb1+'CK_SUDO_PRE'+svare1+svare
 #    sudo_post=tosd.get('sudo_post','')
-#    if sudo_post=='': 
+#    if sudo_post=='':
     sudo_post=svarb+svarb1+'CK_SUDO_POST'+svare1+svare
 
     isd=i.get('sudo','')
@@ -781,12 +781,12 @@ def process_in_dir(i):
           if rx['return']>0: return rx
           deps=rx['dict']
 
-    # If compile type is dynamic, reuse deps even for run (to find specific DLLs) 
+    # If compile type is dynamic, reuse deps even for run (to find specific DLLs)
     # (REMOTE PLATFORMS ARE NOT SUPPORTED AT THE MOMENT, USE STATIC COMPILATION)
 #    if (ctype=='dynamic' or sa=='compile' or rcd=='yes'):
        # Resolve deps (unless should be explicitly ignored, such as when installing local version with all dependencies set)
 
-    if len(deps)==0: 
+    if len(deps)==0:
        deps=meta.get('compile_deps',{})
 
     if len(deps)==0:
@@ -795,9 +795,9 @@ def process_in_dir(i):
     if remote=='yes' and sa=='run' and 'android' in tosd.get('tags',[]) and 'adb' not in deps:
        deps['adb']={
                     "force_target_as_host": "yes",
-                    "local": "yes", 
-                    "name": "adb tool", 
-                    "sort": -10, 
+                    "local": "yes",
+                    "name": "adb tool",
+                    "sort": -10,
                     "tags": "tool,adb"
                    }
 
@@ -1032,7 +1032,7 @@ def process_in_dir(i):
                   x=cus_extra_libs.get(el,'')
                   if x=='':
                      return {'return':1, 'error':'library '+el+'is not defined in dependencies'}
-                  els.append(x) 
+                  els.append(x)
 
               x=kv.get('static_lib','')
               if x=='' and ctype=='dynamic' and kv.get('dynamic_lib','')!='': x=kv['dynamic_lib']
@@ -1056,7 +1056,7 @@ def process_in_dir(i):
                         sll+=' -l'+pl2x
                      else:
                         sll+=eifsc
-                        if pl1!='': 
+                        if pl1!='':
                            sll+=pl1+sdirs
                         sll+=pl2
                         sll+=eifsc
@@ -1082,7 +1082,7 @@ def process_in_dir(i):
                  if sin!='': sin+=' '
                  sin+=svarb+svarb1+'CK_FLAG_PREFIX_INCLUDE'+svare1+svare+eifsc+x+eifsc
 
-          # Check if includes as environment var (we search in env settings, 
+          # Check if includes as environment var (we search in env settings,
           #    not in real env, otherwise, can have problems, when concatenating -I with empty string)
           line=meta.get('compiler_add_include_as_env_from_deps',[])
           if len(line)>0:
@@ -1280,7 +1280,7 @@ def process_in_dir(i):
                     rb=ck.access({'action':'load',
                                   'module_uoa':muoa,
                                   'data_uoa':bb})
-                    if rb['return']>0: 
+                    if rb['return']>0:
                        return {'return':1, 'error':'can\'t find sub-entry '+bb}
 
                     sf=sf[b2+3:]
@@ -1385,7 +1385,7 @@ def process_in_dir(i):
              # Add md5sum
              if meta.get('skip_md5sum','')!='yes':
                 x='<'
-#                if hplat=='win':x='' 
+#                if hplat=='win':x=''
                 sb+='\n'+no+md5sum+' '+x+' '+target_exe+'.dump '+stro+' '+target_exe+'.md5'+'\n'
 
              # Add git hash (if supported)
@@ -1668,7 +1668,7 @@ def process_in_dir(i):
        vcmd=run_cmds[kcmd]
        misc['cmd_key']=kcmd
 
-       # Check run-time deps 
+       # Check run-time deps
        rx=update_run_time_deps({'host_os':hos,
                                 'target_os':tos,
                                 'target_id':tdid,
@@ -1782,7 +1782,7 @@ def process_in_dir(i):
            ix.update(apk)
 
            r=ck.access(ix)
-           if r['return']>0: 
+           if r['return']>0:
                if r['return']==16:
                    misc['run_success']='no'
                    misc['run_success_bool']=False
@@ -1900,7 +1900,7 @@ def process_in_dir(i):
              lst=rx['lst']
 
              if len(lst)==0:
-                return {'return':1, 'error':'no related datasets found (tags='+tags+')'}  
+                return {'return':1, 'error':'no related datasets found (tags='+tags+')'}
              elif len(lst)==1:
                 dduoa=lst[0].get('data_uid','')
              else:
@@ -1931,7 +1931,7 @@ def process_in_dir(i):
                 dduoa=zz[x]
 
           if dduoa=='':
-             return {'return':1, 'error':'dataset is not specified'}  
+             return {'return':1, 'error':'dataset is not specified'}
 
        misc['dataset_uoa']=dduoa
 
@@ -2308,7 +2308,7 @@ def process_in_dir(i):
 
           srx=os.system(y)
 
-          if sca!='yes' and os.path.isfile(fn): 
+          if sca!='yes' and os.path.isfile(fn):
              os.remove(fn)
 
           # If error code > 0, set as the error code of the main program and quit
@@ -2343,7 +2343,7 @@ def process_in_dir(i):
           te1=te[2:]
        sb=sb.replace('$#ONLY_BIN_FILE#$', te1)
 
-       # Calibrate execution time (to make it longer and minimize system variation, 
+       # Calibrate execution time (to make it longer and minimize system variation,
        #   if supported)
        csb=sb
        orepeat=repeat
@@ -2391,7 +2391,7 @@ def process_in_dir(i):
 
                        ry=os.system(y)
 
-                 if os.path.isfile(df): 
+                 if os.path.isfile(df):
                     os.remove(df)
 
              # Delete global directories locally (needed for ARM WA)
@@ -2417,7 +2417,7 @@ def process_in_dir(i):
 
           # Check sudo init
           if isd=='yes':
-             if o=='con': 
+             if o=='con':
                 ck.out(sep)
                 ck.out('  (preparing sudo - may ask password ...)')
              if remote!='yes':
@@ -2459,7 +2459,7 @@ def process_in_dir(i):
              # Prepare command line for remote device
              y=''
 
-             if isd=='yes': 
+             if isd=='yes':
                 y+=sudo_init+' '+envtsep
                 y+=sudo_pre+' '+envtsep
 
@@ -2476,7 +2476,7 @@ def process_in_dir(i):
              eifsx1=eifsx
              if rs.endswith('"'):
                  eifsx1=''
-             elif eifsx!='': 
+             elif eifsx!='':
                  y=y.replace('"','\\"')
 
              yrdir=rdir
@@ -2754,7 +2754,7 @@ def process_in_dir(i):
                        return {'return':0, 'tmp_dir':rcdir, 'misc':misc, 'characteristics':ccc, 'deps':deps}
 
           # If script failed, exit
-          if srx>0: 
+          if srx>0:
 #              break
               return {'return':0, 'tmp_dir':rcdir, 'misc':misc, 'characteristics':ccc, 'deps':deps}
 
@@ -2766,7 +2766,7 @@ def process_in_dir(i):
                 ck.out('')
 
              rq=ck.load_json_file({'json_file':fgtf})
-             if rq['return']>0: 
+             if rq['return']>0:
                 misc['run_success']='no'
                 misc['run_success_bool']=False
                 misc['fail_reason']=rq['error']
@@ -2801,10 +2801,10 @@ def process_in_dir(i):
 
           orepeat=repeat
           if exec_time<0.5: repeat*=10
-          elif 0.8<(calibrate_time/exec_time)<1.4: 
+          elif 0.8<(calibrate_time/exec_time)<1.4:
              calibrate_success=True
              break
-          else: 
+          else:
              repeat*=float(calibrate_time/exec_time)
              if repeat<1: repeat=1
           repeat=int(repeat)
@@ -2938,7 +2938,7 @@ def process_in_dir(i):
                     import filecmp
                     vx=filecmp.cmp(p1,p2)
 
-                    if not vx: 
+                    if not vx:
                        vfail=True
 
                        vr='exact match failed'
@@ -3121,7 +3121,7 @@ def pipeline(i):
               (skip_device_init)     - if 'yes', skip device init
               (skip_info_collection) - if 'yes', skip info collection
 
-              (skip_device_info)     - if 'yes', skip any device info - 
+              (skip_device_info)     - if 'yes', skip any device info -
                                        useful to prepare experiment crowdsourcing packs for remote devices
 
                  Pipeline sections' settings:
@@ -3132,12 +3132,12 @@ def pipeline(i):
               (no_platform_features)    - if 'yes', do not collect full platform features
               (no_dataset_features)     - if 'yes', do not search and extract data set features
               (no_clean)                - if 'yes', do not clean directory before compile/run
-              (no_compile)              - if 'yes', do not compile program (useful when running the same program 
+              (no_compile)              - if 'yes', do not compile program (useful when running the same program
                                            under different system state conditions: CPU/GPU freq, cache/bus contentions, etc)
               (compile_only_once)       - if 'yes', compile only at first iteration
               (no_compiler_description) - if 'yes', do not search for most close compiler description with flags ...
               (no_run)                  - if 'yes', do not run program
-                                             useful when using autotuning to find bugs in compiler, 
+                                             useful when using autotuning to find bugs in compiler,
                                              or find differently generated code sequencies, etc ...
               (no_state_check)          - do not check system/CPU state (frequency) over iterations ...
 
@@ -3157,7 +3157,7 @@ def pipeline(i):
               (dataset_file)         - dataset filename (if more than one inside one entry - suggest to have a UID in name)
               (extra_dataset_tags)   - list of extra data set tags (useful to set "small" during mobile phone crowdtuning)
 
-              (compiler_env_uoa)     - env of a compiler  
+              (compiler_env_uoa)     - env of a compiler
 
               (compile_type)         - static or dynamic (dynamic by default;
                                          however takes compiler default_compile_type into account)
@@ -3168,7 +3168,7 @@ def pipeline(i):
                                               if not set, there will be an attempt to detect the most close
                                               by version
 
-              (compiler_vars)        - dict with set up compiler flags (-Dvar=value) -> 
+              (compiler_vars)        - dict with set up compiler flags (-Dvar=value) ->
                                        they will update the ones defined as default in program description ...
 
               (no_vars)              - skip compiler vars (if you want to use default ones from the sources) ...
@@ -3204,7 +3204,7 @@ def pipeline(i):
               (extra_run_cmd)        - extra CMD (can use $#key#$ for autotuning)
               (run_cmd_substitutes)  - dict with substs ($#key#$=value) in run CMD (useful for CMD autotuning)
 
-              (sudo)                 - if 'yes', force using sudo 
+              (sudo)                 - if 'yes', force using sudo
                                        (otherwise, can use ${CK_SUDO_INIT}, ${CK_SUDO_PRE}, ${CK_SUDO_POST})
 
               (affinity)             - set processor affinity for tihs program run (if supported by OS - see "affinity" in OS)
@@ -3219,17 +3219,17 @@ def pipeline(i):
               (statistical_repetition_number) - current statistical repetition of experiment
                                                 (for example, may be used to skip compilation, if >0)
               (autotuning_iteration)          - (int) current autotuning iteration (automatically updated during pipeline tuning)
-              (the_same_dataset)              - if 'yes', the dataset stays the same across iterations 
+              (the_same_dataset)              - if 'yes', the dataset stays the same across iterations
                                                    so skip copying dataset to remote from 2nd iteration
 
               (repeat_compilation)   - if 'yes', force compilation, even if "statistical_repetition_number">0
 
-              (cpu_freq)             - set CPU frequency, if supported (using SUDO, if also supported) 
+              (cpu_freq)             - set CPU frequency, if supported (using SUDO, if also supported)
                                          using script ck-set-cpu-online-and-frequency
                                        if "max" - try to set to maximum using script ck-set-cpu-performance
                                        if "min" - try to set to minimum using scrupt ck-set-cpu-powersave
 
-              (gpu_freq)             - set GPU frequency, if supported (using SUDO, if also supported) 
+              (gpu_freq)             - set GPU frequency, if supported (using SUDO, if also supported)
                                          using script ck-set-gpu-online-and-frequency
                                        if "max" - try to set to maximum using script ck-set-gpu-performance
                                        if "min" - try to set to minimum using scrupt ck-set-gpu-powersave
@@ -3256,7 +3256,7 @@ def pipeline(i):
               (force_resolve_deps)   - if 'yes', force resolve deps (useful for crowd-tuning)
 
               (choices)              - exposed choices (if any)
-              (choices_order)        - vector of flattened choices (useful if optimizations need order 
+              (choices_order)        - vector of flattened choices (useful if optimizations need order
                                         such as LLVM or using our GCC plugin iterface to reorder passes,
                                         since 'choices' dict does not have order)
 
@@ -3266,23 +3266,23 @@ def pipeline(i):
 
               (state)                - kept across pipeline iterations (for example, during autotuning/exploration)
 
-                                       (tmp_dir)    - if temporal directory is used, return it 
+                                       (tmp_dir)    - if temporal directory is used, return it
                                                       (useful if randomly generated, to be reused for run or further iterations)
                                        (repeat)     - kernel repeat ...
-                                       (features.platform.cpu) - CPU features/properties obtained during iterations 
+                                       (features.platform.cpu) - CPU features/properties obtained during iterations
                                                                  to check that state didn't change ...
 
-              (skip_output_validation)        - skip validation of output (dangerous during auto-tuning - 
+              (skip_output_validation)        - skip validation of output (dangerous during auto-tuning -
                                                   some optimizations may break semantics or change accuracy)
               (output_validation_repo)        - output validation repo UOA (when recording new output)
 
               (overwrite_reference_output)    - if 'yes', overwrite reference output (useful if broken)
 
-              (quiet)                - if 'yes', automatically provide default answer to all questions when resolving dependencies ... 
+              (quiet)                - if 'yes', automatically provide default answer to all questions when resolving dependencies ...
 
               (last_md5)             - if !='', check if MD5 and fail if didn't change!
-              (last_md5_fail_text)   - to recognize that pipeline failure is not really a failure, 
-                                       but MD5 is the same (useful when pruning compiler flags found 
+              (last_md5_fail_text)   - to recognize that pipeline failure is not really a failure,
+                                       but MD5 is the same (useful when pruning compiler flags found
                                        during collaborative autotuning, particularly via mobile devices
                                        (less time to prune results))
 
@@ -3296,7 +3296,7 @@ def pipeline(i):
               (safe)                 - safe mode when searching packages first instead of detecting already installed soft
                                        (to have more deterministic build)
 
-              (skip_exec)            - if 'yes', do not clean output files and skip exec to be able to continue 
+              (skip_exec)            - if 'yes', do not clean output files and skip exec to be able to continue
                                        post-processing during debuging
             }
 
@@ -3396,7 +3396,7 @@ def pipeline(i):
     ruoa=ck.get_from_dicts(i, 'repo_uoa', '', None)
     duoa=ck.get_from_dicts(i, 'data_uoa', '', choices)
     puoa=ck.get_from_dicts(i, 'program_uoa', '', None)
-    if puoa!='': 
+    if puoa!='':
        duoa=puoa
        choices['data_uoa']=duoa
     ptags=ck.get_from_dicts(i, 'program_tags', '', choices)
@@ -3483,7 +3483,7 @@ def pipeline(i):
 
     if i.get('do_not_reuse_repeat','')=='yes' and srn==0:
        repeat=''
-    else: 
+    else:
        repeat=ck.get_from_dicts(i,'repeat','',choices)
        if repeat=='': repeat=state.get('repeat','')
 
@@ -3512,7 +3512,7 @@ def pipeline(i):
     compute_device_id=ck.get_from_dicts(i, 'compute_device_id','',choices)
 
     ###############################################################################################################
-    # PIPELINE SECTION: PROGRAM AND DIRECTORY SELECTION 
+    # PIPELINE SECTION: PROGRAM AND DIRECTORY SELECTION
     #                   (either as CID or CK descrpition from current directory or return that should be selected)
 
     # First, if duoa is not defined, try to get from current directory
@@ -3556,7 +3556,7 @@ def pipeline(i):
                 if r['return']==0:
                    xdesc=r['dict']
 
-    # Second, if duoa is not detected or defined, prepare selection 
+    # Second, if duoa is not detected or defined, prepare selection
     duid=''
     if len(meta)==0:
        if duoa=='': duoa='*'
@@ -3606,7 +3606,7 @@ def pipeline(i):
                      'data_uoa':duoa,
                      'repo_uoa':ruoa})
        if rx['return']>0: return rx
-       if len(meta)==0: 
+       if len(meta)==0:
           meta=rx['dict']
        if len(desc)==0:
           desc=rx.get('desc',{})
@@ -3628,7 +3628,7 @@ def pipeline(i):
 
     if pdir=='': pdir=state['cur_dir']
 
-    if duid=='': 
+    if duid=='':
         # Write program meta and desc only if no program UID, otherwise can restore from program entry
        i['program_meta']=meta
        i['program_desc']=desc
@@ -3637,7 +3637,7 @@ def pipeline(i):
 
     if duoa!='': choices['data_uoa']=duoa
     if muoa!='': choices['module_uoa']=muoa
-    # we are not recording repo_uoa for reproducibility (can be different across users) ...   
+    # we are not recording repo_uoa for reproducibility (can be different across users) ...
 
     if o=='con':
        ck.out('  Selected program:          '+duoa+' ('+duid+')')
@@ -3655,7 +3655,7 @@ def pipeline(i):
           ck.out('')
 
        target=i.get('target','')
-       if target=='': 
+       if target=='':
           target=choices.get('target','')
           i['target']=target
        device_cfg=i.get('device_cfg',{})
@@ -3722,7 +3722,7 @@ def pipeline(i):
                 ck.out('')
                 rx=ck.inp({'text':'Select UOA (or press Enter for 0): '})
                 x=rx['string'].strip()
-                if x=='': x='0' 
+                if x=='': x='0'
 
                 if x not in zz:
                    return {'return':1, 'error':'choice is not recognized ('+str(x)+')'}
@@ -3779,7 +3779,7 @@ def pipeline(i):
         'out':ox}
     if si=='yes': ii['return_multi_devices']='yes'
     r=ck.access(ii)
-    if r['return']>0: 
+    if r['return']>0:
        if r['return']==32:
           choices_desc['##device_id']={'type':'text',
                                        'has_choice':'yes',
@@ -3868,7 +3868,7 @@ def pipeline(i):
     sudo_pre=tosd.get('sudo_pre','')
     if sudo_pre=='': sudo_pre=svarb+svarb1+'CK_SUDO_PRE'+svare1+svare
 #    sudo_post=tosd.get('sudo_post','')
-#    if sudo_post=='': 
+#    if sudo_post=='':
     sudo_post=svarb+svarb1+'CK_SUDO_POST'+svare1+svare
 
     isd=ck.get_from_dicts(i, 'sudo', '', choices)
@@ -3879,7 +3879,7 @@ def pipeline(i):
     if i.get('static','')=='yes': ctype='static'
     if i.get('dynamic','')=='yes': ctype='dynamic'
 
-    # On default Android-32, use static by default 
+    # On default Android-32, use static by default
     # (old platforms has problems with dynamic)
     if ctype=='':
        if tosd.get('default_compile_type','')!='':
@@ -3902,7 +3902,7 @@ def pipeline(i):
     # PIPELINE SECTION: Load deps
 
     if no_compile!='yes':
-       if len(cdeps)==0 or ceuoa!='' or frd=='yes': 
+       if len(cdeps)==0 or ceuoa!='' or frd=='yes':
           if len(cdeps)==0:
              cdeps=meta.get('compile_deps',{})
           elif frd=='yes':
@@ -3915,7 +3915,7 @@ def pipeline(i):
            cdeps[q]['uoa']=preset_deps[q]
 
     ###############################################################################################################
-    # PIPELINE SECTION: Command line selection 
+    # PIPELINE SECTION: Command line selection
 
     run_cmds=meta.get('run_cmds',{})
     if len(run_cmds)==0:
@@ -3993,7 +3993,7 @@ def pipeline(i):
     i['dependencies']=cdeps
 
     ###############################################################################################################
-    # PIPELINE SECTION: dataset selection 
+    # PIPELINE SECTION: dataset selection
 
     dtags=vcmd.get('dataset_tags',[])
 
@@ -4069,7 +4069,7 @@ def pipeline(i):
        dduid=rx['data_uid']
        dduoa=rx['data_uoa']
 
-    if dduoa!='': 
+    if dduoa!='':
        choices['dataset_uoa']=dduoa
 
        if o=='con':
@@ -4115,7 +4115,7 @@ def pipeline(i):
        ck.out('  Selected dataset file:     '+ddfile)
 
     ###############################################################################################################
-    # PIPELINE SECTION: resolve compile dependencies 
+    # PIPELINE SECTION: resolve compile dependencies
     if ceuoa!='':
        rx=ck.access({'action':'load',
                      'module_uoa':cfg['module_deps']['env'],
@@ -4124,7 +4124,7 @@ def pipeline(i):
        ceuoa=rx['data_uid']
 
     if no_compile!='yes':
-       if len(cdeps)==0 or ceuoa!='' or frd=='yes': 
+       if len(cdeps)==0 or ceuoa!='' or frd=='yes':
           if len(cdeps)>0:
              if o=='con':
                 ck.out(sep)
@@ -4346,7 +4346,7 @@ def pipeline(i):
     eefc=ck.get_from_dicts(i,'extra_env_for_compilation',{},choices)
 
     ###############################################################################################################
-    # PIPELINE SECTION: compute device if needed 
+    # PIPELINE SECTION: compute device if needed
 
     # Check if need to select GPGPU
     ngd=vcmd.get('run_time',{}).get('need_compute_device','')
@@ -4551,7 +4551,7 @@ def pipeline(i):
            'module_uoa':cfg['module_deps']['dataset.features'],
            'data_uoa':dduid}
        r=ck.access(ii)
-       if r['return']>0: 
+       if r['return']>0:
           if r['return']==16:
              # Try to extract
              if o=='con':
@@ -4656,8 +4656,8 @@ def pipeline(i):
        # Set milepost tag to compiler deps
        mcdeps=copy.deepcopy(cdeps)
        mcdeps['compiler']={
-        "local": "yes", 
-        "sort": 1, 
+        "local": "yes",
+        "sort": 1,
         "tags": "compiler,lang-c,ctuning-cc"}
 
        mflags=flags
@@ -4709,7 +4709,7 @@ def pipeline(i):
           tdir=misc.get('tmp_dir','')
 
           cs=misc.get('compilation_success','')
-          if cs=='no': 
+          if cs=='no':
              x='MILEPOST feature extraction failed'
              if misc.get('fail_reason','')!='': x+=' - '+misc['fail_reason']
              i['fail_reason']=x
@@ -4821,7 +4821,7 @@ def pipeline(i):
           xos=cch.get('obj_size',-1)
 
           cs=misc.get('compilation_success','')
-          if cs=='no': 
+          if cs=='no':
              x='compilation failed'
              if misc.get('fail_reason','')!='': x+=' - '+misc['fail_reason']
              i['fail_reason']=x
@@ -4859,7 +4859,7 @@ def pipeline(i):
        if perf_tmp not in rof: rof.append(perf_tmp)
 
     ###############################################################################################################
-    # PIPELINE SECTION: Intel vTune 
+    # PIPELINE SECTION: Intel vTune
     vtune_tmp=''
     vtune_tmp1=''
     if vtune=='yes':
@@ -4998,7 +4998,7 @@ def pipeline(i):
        rsf=misc.get('fail_reason','')
 
        repeat=rch.get('repeat','')
-       if repeat!='': 
+       if repeat!='':
           state['repeat']=repeat
           choices['repeat']=repeat
 
@@ -5071,10 +5071,10 @@ def pipeline(i):
           ck.out('')
 
        if os.path.isfile(perf_tmp):
-          ii={'text_file':perf_tmp, 
-              'split_to_list':'yes', 
+          ii={'text_file':perf_tmp,
+              'split_to_list':'yes',
               'encoding':sys.stdin.encoding}
-#          if sca!='yes': 
+#          if sca!='yes':
 #             ii['delete_after_read']='yes'
 
           rx=ck.load_text_file(ii)
@@ -5129,10 +5129,10 @@ def pipeline(i):
           ck.out('')
 
        if os.path.isfile(cfg['gprof_file']):
-          ii={'text_file':gprof_tmp, 
-              'split_to_list':'yes', 
+          ii={'text_file':gprof_tmp,
+              'split_to_list':'yes',
               'encoding':sys.stdin.encoding}
-          if sca!='yes': 
+          if sca!='yes':
              ii['delete_after_read']='yes'
 
           rx=ck.load_text_file(ii)
@@ -5289,7 +5289,7 @@ def substitute_some_ck_keys(i):
                                          >  0, if error
               (error)      - error text if return > 0
 
-              string       - 
+              string       -
               path         - if substitute ck_take_from_{
             }
 
@@ -5308,7 +5308,7 @@ def substitute_some_ck_keys(i):
        bb=s[b1+16:b2]
 
        rx=ck.parse_cid({'cid':bb})
-       if rx['return']==0: 
+       if rx['return']==0:
           ruoa=rx.get('repo_uoa','')
           muoa=rx.get('module_uoa','')
           duoa=rx.get('data_uoa','')
@@ -5674,7 +5674,7 @@ def benchmark(i):
     return r
 
 ##############################################################################
-# Update run-time deps 
+# Update run-time deps
 
 def update_run_time_deps(i):
     """
