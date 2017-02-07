@@ -5190,6 +5190,8 @@ def pipeline(i):
 
         # Parse profiler output.
         chars['run']['dvdt_prof']=prof_parse(r['string'])
+        with open('tmp-dvdt-prof.json', 'w') as f:
+            json.dump(chars['run']['dvdt_prof'], f, indent=2)
 
     ###############################################################################################################
     # Deinit remote device, if needed
