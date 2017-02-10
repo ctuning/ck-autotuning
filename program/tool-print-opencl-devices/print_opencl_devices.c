@@ -27,6 +27,7 @@ int main(int argc, char *argv[]) {
 
     cl_uint addressBits;
     cl_uint maxComputeUnits;
+    cl_uint maxWorkItemDimensions;
 
     FILE* fout=NULL;
 
@@ -147,6 +148,15 @@ int main(int argc, char *argv[]) {
                 assert(CL_SUCCESS == err);
                 printf("Parallel compute units: %d\n", maxComputeUnits);
                 if (fout!=NULL) fprintf(fout, "      \"parallel_compute_units\":\"%d\"\n", maxComputeUnits);
+            }
+
+            // print max work-item dimensions
+            {
+                err = clGetDeviceInfo(devices[d], CL_DEVICE_MAX_WORK_ITEM_DIMENSIONS,
+                        sizeof(maxWorkItemDimensions), &maxWorkItemDimensions, NULL);
+                assert(CL_SUCCESS == err);
+                printf("Work-item dimensions: %d\n", maxWorkItemDimensions);
+                if (fout!=NULL) fprintf(fout, "      \"max_work_item_dimensions\":\"%d\"\n", maxWorkItemDimensions);
             }
 
             printf("\n");
