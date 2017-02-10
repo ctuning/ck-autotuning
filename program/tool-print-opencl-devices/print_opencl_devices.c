@@ -9,6 +9,7 @@
 #endif
 
 #define MAX_NUM_PLATFORMS (0xF)
+#define MAX_WORK_ITEM_DIMENSIONS (0x3)
 
 int main(int argc, char *argv[]) {
 
@@ -28,6 +29,7 @@ int main(int argc, char *argv[]) {
     cl_uint addressBits;
     cl_uint maxComputeUnits;
     cl_uint maxWorkItemDimensions;
+    size_t maxWorkItemSizes[MAX_WORK_ITEM_DIMENSIONS];
 
     FILE* fout=NULL;
 
@@ -157,6 +159,19 @@ int main(int argc, char *argv[]) {
                 assert(CL_SUCCESS == err);
                 printf("Work-item dimensions: %d\n", maxWorkItemDimensions);
                 if (fout!=NULL) fprintf(fout, "      \"max_work_item_dimensions\":\"%d\"\n", maxWorkItemDimensions);
+                assert(MAX_WORK_ITEM_DIMENSIONS == maxWorkItemDimensions);
+            }
+
+            // print max work-item sizes
+            {
+                err = clGetDeviceInfo(devices[d], CL_DEVICE_MAX_WORK_ITEM_SIZES,
+                        sizeof(maxWorkItemSizes), &maxWorkItemSizes, NULL);
+                assert(CL_SUCCESS == err);
+                for (cl_uint dim = 0; dim < maxWorkItemDimensions; ++dim)
+                {
+                    printf("- max work-item size #%d: %d\n", dim, maxWorkItemSizes[dim]);
+                    if (fout!=NULL) fprintf(fout, "      \"max_work_item_size_%d\":\"%d\"\n", dim, maxWorkItemSizes[dim]);
+                }
             }
 
             printf("\n");
