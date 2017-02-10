@@ -11,9 +11,9 @@
 #define MAX_NUM_PLATFORMS (0xF)
 
 int main(int argc, char *argv[]) {
- 
+
     cl_int err = CL_SUCCESS;
-    
+
     char* value;
     size_t valueSize;
 
@@ -25,6 +25,7 @@ int main(int argc, char *argv[]) {
     cl_device_id* devices;
     cl_uint d;
 
+    cl_uint addressBits;
     cl_uint maxComputeUnits;
 
     FILE* fout=NULL;
@@ -36,7 +37,7 @@ int main(int argc, char *argv[]) {
     }
 
     // get all platforms
-    
+
     // platformCount = min(number of available platforms, MAX_NUM_PLATFORMS)
     err = clGetPlatformIDs(MAX_NUM_PLATFORMS, NULL, &platformCount);
     assert(CL_SUCCESS == err && platformCount <= MAX_NUM_PLATFORMS);
@@ -44,9 +45,9 @@ int main(int argc, char *argv[]) {
     assert(platforms);
     err = clGetPlatformIDs(platformCount, platforms, NULL);
     assert(CL_SUCCESS == err);
- 
+
     for (p = 0; p < platformCount; p++) {
- 
+
         if (fout!=NULL) fprintf(fout, "  \"%u\":{\n", p);
 
         // get all devices
@@ -56,10 +57,10 @@ int main(int argc, char *argv[]) {
         assert(devices);
         err = clGetDeviceIDs(platforms[p], CL_DEVICE_TYPE_ALL, deviceCount, devices, NULL);
         assert(CL_SUCCESS == err);
- 
+
         // for each device print critical attributes
         for (d = 0; d < deviceCount; d++) {
- 
+
             if (fout!=NULL) fprintf(fout, "    \"%u\":{\n", d);
 
             printf("Platform ID: %u\n", p);
@@ -90,7 +91,7 @@ int main(int argc, char *argv[]) {
                 if (fout!=NULL) fprintf(fout, "      \"device_vendor\":\"%s\",\n", value);
                 free(value);
             }
- 
+
             // print hardware device version
             {
                 err = clGetDeviceInfo(devices[d], CL_DEVICE_VERSION, 0, NULL, &valueSize);
@@ -103,7 +104,7 @@ int main(int argc, char *argv[]) {
                 if (fout!=NULL) fprintf(fout, "      \"hardware_version\":\"%s\",\n", value);
                 free(value);
             }
- 
+
             // print software driver version
             {
                 err = clGetDeviceInfo(devices[d], CL_DRIVER_VERSION, 0, NULL, &valueSize);
@@ -116,7 +117,7 @@ int main(int argc, char *argv[]) {
                 if (fout!=NULL) fprintf(fout, "      \"software_version\":\"%s\",\n", value);
                 free(value);
             }
- 
+
             // print c version supported by compiler for device
             {
                 err = clGetDeviceInfo(devices[d], CL_DEVICE_OPENCL_C_VERSION, 0, NULL, &valueSize);
@@ -129,7 +130,16 @@ int main(int argc, char *argv[]) {
                 if (fout!=NULL) fprintf(fout, "      \"opencl_c_version\":\"%s\",\n", value);
                 free(value);
             }
- 
+
+            // print address bits
+            {
+                err = clGetDeviceInfo(devices[d], CL_DEVICE_ADDRESS_BITS,
+                        sizeof(addressBits), &addressBits, NULL);
+                assert(CL_SUCCESS == err);
+                printf("Address bits: %d\n", addressBits);
+                if (fout!=NULL) fprintf(fout, "      \"address_bits\":\"%d\"\n", addressBits);
+            }
+
             // print parallel compute units
             {
                 err = clGetDeviceInfo(devices[d], CL_DEVICE_MAX_COMPUTE_UNITS,
@@ -153,7 +163,7 @@ int main(int argc, char *argv[]) {
            if (p!=(platformCount-1)) fprintf(fout, ",");
            fprintf(fout, "\n");
         }
- 
+
         free(devices);
     }
 
@@ -161,7 +171,7 @@ int main(int argc, char *argv[]) {
        fprintf(fout, "}\n");
        fclose(fout);
     }
- 
+
     free(platforms);
     return 0;
 }
