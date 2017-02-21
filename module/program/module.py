@@ -14,6 +14,9 @@ ck=None # Will be updated by CK (initialized CK kernel)
 # Local settings
 sep='***************************************************************************************'
 
+# Common CMD keys in program to pass to pipeline
+common_cmd_keys=['dvdt_prof', 'speed']
+
 ##############################################################################
 # Initialize module
 
@@ -2886,9 +2889,6 @@ def process_in_dir(i):
           ck.out('')
           ck.out('  (checking output correctness ...)')
 
-#          print (p)
-#          exit(1)
-
           # Prepare directory with output files
           po=kcmd+'-'+dduoa
           if dfile!='':
@@ -5623,6 +5623,12 @@ def benchmark(i):
     for k in i:
         if k not in ik:
            up[k]=i[k]
+
+    # Check other specific keys
+    for k in common_cmd_keys:
+        if i.get(k,'')!='':
+           up[k]=i[k]
+           del(i[k])
 
     if len(up)>0:
        i['pipeline_update']=up

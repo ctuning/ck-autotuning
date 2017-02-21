@@ -1,3 +1,5 @@
+* 2017.02.21 - improving ck benchmark program (passing more CMD params)
+
 * 2017.01.09 - added LLVM 3.9.0 package for Mac OS
 
 * 2017.01.29 - added "XOPENME_TIME_FILE" var to change tmp-ck-timer.json output file
