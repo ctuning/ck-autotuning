@@ -14,9 +14,6 @@ ck=None # Will be updated by CK (initialized CK kernel)
 # Local settings
 sep='***************************************************************************************'
 
-# Common CMD keys in program to pass to pipeline
-common_cmd_keys=['dvdt_prof', 'speed']
-
 ##############################################################################
 # Initialize module
 
@@ -3423,6 +3420,8 @@ def pipeline(i):
     for q in list(i.keys()):
         if q.startswith('params.'):
            params[q[7:]]=i[q]
+           if 'params' not in choices: choices['params']={}
+           choices['parmas'][q[7:]]=i[q]
            del(i[q])
 
     espeed=ck.get_from_dicts(i, 'env_speed', '', choices)
@@ -3472,6 +3471,8 @@ def pipeline(i):
     for q in list(i.keys()):
         if q.startswith('env.'):
            env[q[4:]]=i[q]
+           if 'env' not in choices: choices['env']={}
+           choices['env'][q[4:]]=i[q]
            del(i[q])
         elif q.startswith('deps.'):
            preset_deps[q[5:]]=i[q]
@@ -5623,12 +5624,6 @@ def benchmark(i):
     for k in i:
         if k not in ik:
            up[k]=i[k]
-
-    # Check other specific keys
-    for k in common_cmd_keys:
-        if i.get(k,'')!='':
-           up[k]=i[k]
-           del(i[k])
 
     if len(up)>0:
        i['pipeline_update']=up
