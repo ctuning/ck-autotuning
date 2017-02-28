@@ -32,9 +32,9 @@
     "print_opencl_devices.c"
   ], 
   "tags": [
+    "tool",
     "print-devices", 
-    "tool", 
-    "open-cl", 
+    "opencl",
     "lang-c"
   ], 
   "target_file": "ck-show-opencl-devices"
