@@ -16,6 +16,7 @@
     }
   }, 
   "compiler_env": "CK_CC", 
+  "compiler_flags_as_env": "$<<CK_COMPILER_FLAG_STD99>>$",
   "data_name": "tool-print-opencl-devices", 
   "main_language": "c", 
   "process_in_tmp": "yes", 
