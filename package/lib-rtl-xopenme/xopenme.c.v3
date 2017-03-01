@@ -360,16 +360,6 @@ extern
 #ifdef WINDOWS
 __declspec(dllexport) 
 #endif
-double xopenme_get_timer(int timer)
-{
-  return secs[timer];
-}
-
-/*****************************************************************/
-extern 
-#ifdef WINDOWS
-__declspec(dllexport) 
-#endif
 void xopenme_finish(void)
 {
   int timer;

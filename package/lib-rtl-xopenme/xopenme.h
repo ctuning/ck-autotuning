@@ -99,6 +99,12 @@ extern
 #ifdef WINDOWS
 __declspec(dllexport) 
 #endif
+double xopenme_get_timer(int timer);
+
+extern 
+#ifdef WINDOWS
+__declspec(dllexport) 
+#endif
 void xopenme_finish(void);
 
 #ifdef __cplusplus
