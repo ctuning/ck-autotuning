@@ -1155,6 +1155,11 @@ def process_in_dir(i):
 
           bcv.update(cv)
 
+          bcv['CK_HOST_OS_NAME_'+hosd.get('ck_name','').upper()]='1'
+          bcv['CK_HOST_OS_NAME2_'+hosd.get('ck_name2','').upper()]='1'
+          bcv['CK_TARGET_OS_NAME_'+tosd.get('ck_name','').upper()]='1'
+          bcv['CK_TARGET_OS_NAME2_'+tosd.get('ck_name2','').upper()]='1'
+
           # Update env if energy meter
           if me=='yes':
              bcv['CK_MONITOR_ENERGY']='1'

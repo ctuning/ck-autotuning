@@ -1,4 +1,5 @@
 * 2017.03.01 - added xopenme_get_timer function to xOpenME
+             - added compile -D vars with host and target OS (-DCK_HOST_OS_NAME_{CK OS name} -DCK_HOST_OS_NAME2_{CK OS name 2} -DCK_TARGET_OS_NAME_{CK OS name} -DCK_TARGET_OS_NAME2_{CK OS name2})
 
 * 2017.02.21 - improving ck benchmark program (passing more CMD params)
 
