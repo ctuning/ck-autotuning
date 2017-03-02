@@ -1,3 +1,6 @@
+* 2017.03.02 - when running program added support to add env vars from deps by OS tag 
+             - useful to set up vars for Android such as VIENNACL_CACHE_PATH
+
 * 2017.03.01 - added xopenme_get_timer function to xOpenME
              - added compile -D vars with host and target OS (-DCK_HOST_OS_NAME_{CK OS name} -DCK_HOST_OS_NAME2_{CK OS name 2} -DCK_TARGET_OS_NAME_{CK OS name} -DCK_TARGET_OS_NAME2_{CK OS name2})
 

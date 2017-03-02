@@ -475,6 +475,7 @@ def process_in_dir(i):
     tosd=r['os_dict']
 
     tplat=tosd.get('ck_name','')
+    tplat2=tosd.get('ck_name2','')
 
     host_add_path_string=r.get('host_add_path_string','')
     target_add_path_string=r.get('target_add_path_string','')
@@ -1804,6 +1805,12 @@ def process_in_dir(i):
 #           for kkd1 in deps[kkd].get('dict',{}).get('env',{}):
 #               if kkd1 not in env:
 #                  env[kkd1]=deps[kkd]['dict']['env'][kkd1]
+
+       # Check specialized env by OS from deps
+       for k in deps:
+           xenv=deps[k].get('cus',{}).get('env_by_os',{}).get(tplat2,{})
+           if len(xenv)>0:
+              env.update(xenv)
 
        # Add compiler dep again, if there (otherwise some libs can set another compiler)
        x=deps.get('compiler',{}).get('bat','')
