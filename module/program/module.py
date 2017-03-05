@@ -1810,7 +1810,9 @@ def process_in_dir(i):
        for k in deps:
            xenv=deps[k].get('cus',{}).get('env_by_os',{}).get(tplat2,{})
            if len(xenv)>0:
-              env.update(xenv)
+              for k1 in xenv:
+                  if env.get(k1,'')=='':
+                     env[k1]=xenv[k1]
 
        # Add compiler dep again, if there (otherwise some libs can set another compiler)
        x=deps.get('compiler',{}).get('bat','')
