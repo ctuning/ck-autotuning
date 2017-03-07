@@ -1,22 +1,37 @@
 Universal, customizable and multi-objective software and hardware autotuning
 ============================================================================
 
-Status
-======
 This is a stable repository for universal, customizable, 
 multi-dimensional, multi-objective SW/HW autotuning 
-across Linux, Android, MacOS and Windows-based machines
-via Collective Knowledge Framework.
+with JSON API across Linux, Android, MacOS and Windows-based machines
+using [Collective Knowledge Framework](https://github.com/ctuning/ck).
 
-See related [Android app](https://play.google.com/store/apps/details?id=openscience.crowdsource.experiments)
-to let you participate in GCC/LLVM crowd-tuning using
-spare Android mobile phones, tables and other devices.
+![logo](https://github.com/ctuning/ck-guide-images/blob/master/image-pipelines2.png)
 
-Further details are available at [CK wiki](https://github.com/ctuning/ck/wiki).
+Please, check out examples in this [demo directory](https://github.com/ctuning/ck-autotuning/tree/master/demo)
+and notes about [CK portable and customizable workflows](https://github.com/ctuning/ck/wiki/Portable-workflows).
+
+These reusable and customizable modules are now used in various common 
+experimental scenarios include universal,
+customizable, multi-dimensional, multi-objective 
+[DNN crowd-benchmarking](http://cKnowledge.org/ai) 
+and [compiler crowd-tuning](http://github.com/ctuning/ck-autotuning).
+
+See continuously aggregated public results results and
+unexpected behavior in the [CK live repository](http://cKnowledge.org/repo)!
+
+Also check out our related Android apps to let you participate in our experiment crowdsourcing using
+spare Android mobile phones, tables and other devices:
+* [collaborative deep learning optimization app](https://github.com/dividiti/crowdsource-video-experiments-on-android)
+* [compiler tuning using small kernels](https://play.google.com/store/apps/details?id=openscience.crowdsource.experiments)
+* [CK crowd-scenarios](https://github.com/ctuning/ck-crowd-scenarios)
+
+Further details are available at [CK wiki](https://github.com/ctuning/ck/wiki)
+and our [open research challenges](https://github.com/ctuning/ck/wiki/Enabling-open-science).
 
 Prerequisites
 =============
-* Collective Knowledge Framework: http://github.com/ctuning/ck
+* [Collective Knowledge Framework](http://github.com/ctuning/ck)
 
 Description
 ===========
@@ -42,21 +57,11 @@ Modules from this repository will be used to unify:
 * machine learning to predict optimizations and run-time adaptation
 * reproducibility of experimental results
 
-Please, check out [CK Getting Started Guide](https://github.com/ctuning/ck/wiki) for more details!
-
-Publications
-============
-* http://hal.inria.fr/hal-01054763
-* http://arxiv.org/abs/1506.06256
-* http://bit.ly/ck-date16
-* https://hal.inria.fr/inria-00436029
-* http://arxiv.org/abs/1407.4075
-
 Authors
 =======
 
-* Grigori Fursin, cTuning foundation (France) / dividiti (UK)
-* Anton Lokhmotov, dividiti (UK)
+* [Grigori Fursin](http://fursin.net/research.html), dividiti/cTuning foundation
+* [Anton Lokhmotov](https://www.hipeac.net/~anton), dividiti (UK)
 
 License
 =======
@@ -156,4 +161,3 @@ via the following mailing lists:
 * https://groups.google.com/forum/#!forum/collective-knowledge
 * https://groups.google.com/forum/#!forum/ctuning-discussions
 
-![logo](https://github.com/ctuning/ck-guide-images/blob/master/logo-validated-by-the-community-simple.png)
