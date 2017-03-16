@@ -19,6 +19,12 @@ set LIB_NAME=librtlxopenme
 set CK_COMPILER_FLAGS_MISC=%CK_FLAG_PREFIX_INCLUDE%. %CK_COMPILER_FLAGS_MISC%
 
 
+echo.
+echo Copying include files ...
+echo.
+
+mkdir %INSTALL_DIR%\include
+copy /B %CK_INCLUDE_FILE% %INSTALL_DIR%\include
 
 
 echo.
@@ -90,9 +96,6 @@ copy /B %CK_TARGET_FILE_D% %INSTALL_DIR%\lib
 
 
 :skip
-
-mkdir %INSTALL_DIR%\include
-copy /B %CK_INCLUDE_FILE% %INSTALL_DIR%\include
 
 exit /b 0
 
