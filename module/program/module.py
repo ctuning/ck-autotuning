@@ -1964,7 +1964,7 @@ def process_in_dir(i):
              if r['return']>0: return r
 
           # Try to create directories
-          x=rs+' '+tosd['make_dir']+rdir+rse
+          x=rs+' '+tosd['make_dir']+rdir+' '+rse
 
           if o=='con':
              ck.out('')
@@ -5862,7 +5862,10 @@ def copy_file_to_remote(i):
     # Try to create directories
     x=rs+' ls -l '+file2+rse
 
-    ry=ck.run_and_get_stdout({'cmd':x, 'shell':'no'})
+    shell='no'
+    if x.startswith('ck'): shell='yes'
+
+    ry=ck.run_and_get_stdout({'cmd':x, 'shell':'yes'})
     if ry['return']>0: return ry
 
     so=ry['stdout'].lower()
