@@ -36,6 +36,7 @@ and our [open research challenges](https://github.com/ctuning/ck/wiki/Enabling-o
 Prerequisites
 =============
 * [Collective Knowledge Framework](http://github.com/ctuning/ck)
+* [Compilers for your target machine (Linux, Windows, MacOS, Android)](https://github.com/ctuning/ck/wiki/Compiler-autotuning#Installing_compilers)
 
 Description
 ===========
