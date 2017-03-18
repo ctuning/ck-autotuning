@@ -161,7 +161,6 @@ The concepts have been described in the following publications:
 Feedback
 ========
 
-If you have problems, questions or suggestions, do not hesitate to get in touch
-via the following mailing lists:
+If you have problems, questions or suggestions, do not hesitate to get in touch via the following mailing lists:
 * https://groups.google.com/forum/#!forum/collective-knowledge
 * https://groups.google.com/forum/#!forum/ctuning-discussions
