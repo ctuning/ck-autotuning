@@ -1,3 +1,5 @@
+* 2017.03.18 - added package:tool-cmake-3.5.2-universal (for backwards compatibility with Android on Windows)
+
 * 2017.03.16 - added package:tool-cmake-3.7.2-universal
 
 * 2017.03.02 - when running program added support to add env vars from deps by OS tag 
