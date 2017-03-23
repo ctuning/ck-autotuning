@@ -2237,7 +2237,6 @@ def process_in_dir(i):
                                          'file2':dfy,
                                          'out':oo})
                  if ry['return']>0: return ry
-       exit(1)
 
        # Check if has unparsed
        if sunparsed!='':
