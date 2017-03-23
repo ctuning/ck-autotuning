@@ -1844,6 +1844,9 @@ def process_in_dir(i):
 
        # Command line preparation
        c=rt.get('run_cmd_main','')
+       if remote=='yes' and rt.get('run_cmd_main_remote','')!='':
+          c=rt['run_cmd_main_remote']
+
        if c=='':
           return {'return':1, 'error':'cmd is not defined'}
        if remote=='yes':
