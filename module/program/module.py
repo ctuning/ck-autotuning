@@ -1689,6 +1689,8 @@ def process_in_dir(i):
                                 'quiet':quiet})
        if rx['return']>0: return rx
 
+       aenv=rx.get('aggregated_env',{})
+
        if rx.get('resolve',{}).get('bat','')!='':
           if remote!='yes':
              sb+=no+rx['resolve']['bat']
@@ -2198,13 +2200,23 @@ def process_in_dir(i):
              return {'return':0, 'tmp_dir':rcdir, 'misc':misc, 'characteristics':ccc, 'deps':deps}
 
        # If remote and target exe
-       if remote=='yes' and target_exe!='':
+       if remote=='yes' and (target_exe!='' or meta.get('force_copy_input_files_to_remote','')=='yes'):
           if sdi!='yes' and srn==0 or ati==0:
              # Copy explicit input files, if first time
              for df in rif:
-                 if df.startswith('$<<') and df.endswith('>>$'):
-                    df=env.get(df[3:-3],'')
-                    rifo[df]='yes'
+                 # Update if has env
+                 j1=df.find('$<<')
+                 j2=df.find('>>$')
+                 if j2>0:
+                    dfk=df[j1+3:j2]
+
+                    dfx=env.get(dfk,'')
+                    if dfx=='': dfx=aenv.get(dfk,'')
+
+                    if dfx!='':
+                       df=df[:j1]+dfx+df[j2+3:]
+
+                       rifo[df]='yes'
 
                  df0, df1 = os.path.split(df)
 
@@ -5717,11 +5729,13 @@ def update_run_time_deps(i):
             }
 
     Output: {
-              return       - return code =  0, if successful
-                                         >  0, if error
-              (error)      - error text if return > 0
+              return           - return code =  0, if successful
+                                             >  0, if error
+              (error)          - error text if return > 0
 
-              (resolve)    - output from 'resolve env' for run-time deps if used
+              (resolve)        - output from 'resolve env' for run-time deps if used
+
+              (aggregated_env) - aggregated environment from all deps
             }
     """
 
@@ -5810,6 +5824,13 @@ def update_run_time_deps(i):
        for kd in rdeps:
            deps[kd]=rdeps[kd]
            deps[kd]['for_run_time']='yes'
+
+    # Assemble environment from all deps
+    xenv={}
+    for kd in sorted(deps, key=lambda kk: deps[kk].get('sort',0)):
+        xenv.update(deps[kd].get('dict',{}).get('env',{}))
+
+    rr['aggregated_env']=xenv
 
     return rr
 
