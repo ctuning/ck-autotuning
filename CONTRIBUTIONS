@@ -78,3 +78,8 @@ O: Xored, Russia
 C: suggesting to add --deps.KEY=UOA
 W:
 
+N: Flavio Vella
+E:
+O: dividiti, UK
+C: improving execution of programs like clblast_tune on Android via CK
+W:
