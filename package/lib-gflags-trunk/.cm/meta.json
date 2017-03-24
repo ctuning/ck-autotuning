@@ -24,12 +24,14 @@
       "name": "cmake",
       "force_target_as_host": "yes",
       "sort": 5,
+      "skip_from_bat":"yes",
       "tags": "tool,cmake"
     },
     "compiler": {
       "local": "yes",
       "name": "C++ compiler",
       "sort": 10,
+      "skip_from_bat":"yes",
       "tags": "compiler,lang-cpp"
     }
   },
