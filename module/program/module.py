@@ -2220,6 +2220,8 @@ def process_in_dir(i):
                        df=df[:j1]+dfx+df[j2+3:]
 
                        rifo[df]='yes'
+                    else:
+                       return {'return':1, 'error':'environment variable "'+dfk+'" was not found in environment from dependencies'}
 
                  df0, df1 = os.path.split(df)
 
