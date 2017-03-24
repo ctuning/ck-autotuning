@@ -58,9 +58,6 @@ def setup(i):
     o=i.get('out','')
 
     ck=i['ck_kernel']
-    del(i['ck_kernel'])
-    ck.save_json_to_file({'json_file':'d:\\xyz.json','dict':i})
-    exit(1)
 
     hos=i['host_os_uoa']
     tos=i['target_os_uoa']
@@ -74,6 +71,10 @@ def setup(i):
     hname=hosd.get('ck_name','')    # win, linux
     hname2=hosd.get('ck_name2','')  # win, mingw, linux, android
     macos=hosd.get('macos','')      # yes/no
+
+    hft=i.get('features',{}) # host platform features
+    habi=hft.get('os',{}).get('abi','') # host ABI (only for ARM-based); if you want to get target ABI, use tosd ...
+                                        # armv7l, etc...
 
     p=i['path']
 
@@ -94,22 +95,27 @@ def setup(i):
           f+='-x64.dmg'
        else:
           return {'return':1, 'error':'this package doesn\'t support non 64-bit MacOS'}
+
     elif hname=='win':
        f+='windows'
        if hbits=='64':
           f+='-x64.exe'
        else:
           f+='-i586.exe'
+
     else:
        f+='linux'
        if hbits=='64':
-          f+='-x64.tar.gz'
+          if habi.startswith('arm'):
+             f+='-arm64-vfp-hflt.tar.gz'
+          else:
+             f+='-x64.tar.gz'
        else:
-          f+='-i586.tar.gz'
+          if habi.startswith('arm'):
+             f+='-arm32-vfp-hflt.tar.gz'
+          else:
+             f+='-i586.tar.gz'
 
     nie['PACKAGE_NAME']=f
-
-    print (f)
-    exit(1)
 
     return {'return':0, 'install_env':nie}
