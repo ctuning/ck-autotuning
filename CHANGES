@@ -1,3 +1,5 @@
+* 2017.03.25 - added package:jdk-8u121-universal (Linux, Windows, partially MacOS)
+
 * 2017.03.23 - moved package:jdk-8u111-linux , lib-libjpeg , tool-bazel-0.4.1 , tool-bazel-0.4.2 from ck-tensorflow repo here
 
 * 2017.03.18 - added package:tool-cmake-3.5.2-universal (for backwards compatibility with Android on Windows)
