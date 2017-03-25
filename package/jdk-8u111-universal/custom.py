@@ -95,6 +95,7 @@ def setup(i):
           f+='-x64.dmg'
        else:
           return {'return':1, 'error':'this package doesn\'t support non 64-bit MacOS'}
+       return {'return':1, 'error':'we do not know how to install .dmg packages - please help us!'}
 
     elif hname=='win':
        f+='windows'
@@ -102,6 +103,10 @@ def setup(i):
           f+='-x64.exe'
        else:
           f+='-i586.exe'
+
+       nie['PACKAGE_WGET_EXTRA']=ie['PACKAGE_WGET_EXTRA']+' -O '+f
+       nie['PACKAGE_RUN']='YES'
+       nie['PACKAGE_CMD']='/s INSTALLDIR="'+pi+'"'
 
     else:
        f+='linux'
@@ -115,6 +120,9 @@ def setup(i):
              f+='-arm32-vfp-hflt.tar.gz'
           else:
              f+='-i586.tar.gz'
+
+       nie['PACKAGE_UNGZIP']='YES'
+       nie['PACKAGE_UNTAR']='YES'
 
     nie['PACKAGE_NAME']=f
 

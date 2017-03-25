@@ -13,7 +13,7 @@
   "end_full_path": {
     "android": "jdk1.8.0_111/bin/javac",
     "linux": "jdk1.8.0_111/bin/javac",
-    "win": "jdk1.8.0_111\\bin\\javac.exe"
+    "win": "bin\\javac.exe"
   },
   "need_cpu_info": "yes",
   "process_script": "install",
