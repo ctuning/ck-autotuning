@@ -112,17 +112,21 @@ def setup(i):
        f+='linux'
        if hbits=='64':
           if habi.startswith('arm'):
-             f+='-arm64-vfp-hflt.tar.gz'
+             f+='-arm64-vfp-hflt.tar'
           else:
-             f+='-x64.tar.gz'
+             f+='-x64.tar'
        else:
           if habi.startswith('arm'):
-             f+='-arm32-vfp-hflt.tar.gz'
+             f+='-arm32-vfp-hflt.tar'
           else:
-             f+='-i586.tar.gz'
+             f+='-i586.tar'
 
        nie['PACKAGE_UNGZIP']='YES'
        nie['PACKAGE_UNTAR']='YES'
+       nie['PACKAGE_SKIP_LINUX_MAKE']='YES'
+
+       nie['PACKAGE_NAME1']=f
+       f+='.gz'
 
     nie['PACKAGE_NAME']=f
 
