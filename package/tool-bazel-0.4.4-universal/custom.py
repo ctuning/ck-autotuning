@@ -96,6 +96,8 @@ def setup(i):
        f+='installer-darwin-x86_64.sh'
 
        nie['PACKAGE_SKIP_LINUX_MAKE']='YES'
+       nie['PACKAGE_RUN']='YES'
+       nie['PACKAGE_CMD']='--prefix='+pi+' --bazelrc='+pi
 
     elif hname=='win':
        if hbits!='64':
@@ -113,7 +115,10 @@ def setup(i):
        f+='installer-linux-x86_64.sh'
 
        nie['PACKAGE_SKIP_LINUX_MAKE']='YES'
+       nie['PACKAGE_RUN']='YES'
+       nie['PACKAGE_CMD']='--prefix='+pi+' --bazelrc='+pi
 
     nie['PACKAGE_NAME']=f
+#    nie['PACKAGE_WGET_EXTRA']=ie['PACKAGE_WGET_EXTRA']+' -O '+f
 
     return {'return':0, 'install_env':nie}
