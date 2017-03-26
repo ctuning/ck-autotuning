@@ -1,3 +1,5 @@
+* 2017.03.26 - added package:tool-bazel-*-universal (Linux, Windows, possibly MacOS)
+
 * 2017.03.25 - added package:jdk-8u121-universal (Linux, Windows, partially MacOS)
 
 * 2017.03.23 - moved package:jdk-8u111-linux , lib-libjpeg , tool-bazel-0.4.1 , tool-bazel-0.4.2 from ck-tensorflow repo here
