@@ -4,7 +4,7 @@
     "extra_dir": "",
     "install_env": {
       "PACKAGE_NAME_TEMPLATE": "bazel-0.4.5-",
-      "PACKAGE_RUN_EXTRA_WINDOWS": "pacman -Syuu gcc git curl zip unzip zlib-devel",
+      "PACKAGE_RUN_EXTRA_WINDOWS": "pacman -S gcc git curl zip unzip zlib-devel",
       "PACKAGE_URL": "https://github.com/bazelbuild/bazel/releases/download/0.4.5",
       "PACKAGE_WGET": "YES",
       "PACKAGE_WGET_EXTRA": "--no-cookies"

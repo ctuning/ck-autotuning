@@ -7,8 +7,7 @@
       "PACKAGE_URL": "http://repo.msys2.org/distrib/x86_64",
       "PACKAGE_WGET": "YES",
       "PACKAGE_RUN": "YES"
-    },
-    "version":"20161025"
+    }
   },
   "end_full_path": {
     "win": "C:\\msys64\\usr\\bin\\bash.exe"
@@ -19,7 +18,7 @@
   "need_cpu_info": "yes",
   "process_script": "install",
   "soft_uoa": "ddf344c4ac044203",
-  "suggested_path": "env-msys2",
+  "suggested_path": "env-msys2-20161025",
   "tags": [
     "env",
     "msys2",
