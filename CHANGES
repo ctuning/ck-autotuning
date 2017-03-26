@@ -1,4 +1,5 @@
 * 2017.03.26 - added package:tool-bazel-*-universal (Linux, Windows, possibly MacOS)
+             - added package:env-msys2-20161025 (Windows)
 
 * 2017.03.25 - added package:jdk-8u121-universal (Linux, Windows, partially MacOS)
 
