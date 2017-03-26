@@ -106,12 +106,6 @@ def setup(i):
        nie['PACKAGE_WGET_EXTRA']=ie['PACKAGE_WGET_EXTRA']+' -O '+f
        nie['PACKAGE_UNZIP']='YES'
 
-       ck.out('')
-       ck.out('WARNING: bazel is not yet properly supported on Windows via CK - you need to add MSYS2 libs to CK')
-       ck.out('')
-       ck.inp({'text':'Press Enter to continue ...'})
-       ck.out('')
-
     else:
        if hbits!='64':
           return {'return':1, 'error':'this package doesn\'t support non 64-bit MacOS'}
