@@ -37,7 +37,7 @@
   },
   "end_full_path": {
     "android": "install$#sep#$lib$#sep#$libjpeg.a",
-    "linux": "install/lib/libjpeg.a",
+    "linux": "install/lib/libjpeg.so",
     "win": "install\\lib\\jpeg.lib"
   },
   "need_cpu_info": "yes",
