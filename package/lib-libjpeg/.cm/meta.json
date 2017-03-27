@@ -1,0 +1,69 @@
+{
+  "customize": {
+    "extra_dir": "",
+    "git_src_dir": "src", 
+    "install_env": {
+      "PACKAGE_BUILD_TYPE": "cmake",
+      "PACKAGE_CONFIGURE_FLAGS": "", 
+      "PACKAGE_CONFIGURE_FLAGS_WINDOWS": "-DBUILD_STATIC=ON", 
+      "PACKAGE_CONFIGURE_FLAGS_LINUX": "", 
+      "PACKAGE_CONFIGURE_FLAGS_ANDROID": "-DBUILD_STATIC=ON",
+      "PACKAGE_GIT": "YES",
+      "PACKAGE_SUB_DIR": "src", 
+      "PACKAGE_SUB_DIR1":"src",
+      "PACKAGE_URL": "https://github.com/LuaDist/libjpeg",
+      "PACKAGE_SKIP_CLEAN_SRC_DIR":"YES",
+      "CMAKE_CONFIG":"Release"
+    }, 
+    "use_git_revision": "yes",
+    "version": "master"
+  },
+  "deps": {
+    "cmake": {
+      "local": "yes",
+      "name": "cmake",
+      "force_target_as_host": "yes",
+      "sort": 5,
+      "skip_from_bat":"yes",
+      "tags": "tool,cmake"
+    },
+    "compiler": {
+      "local": "yes",
+      "name": "C++ compiler",
+      "sort": 10,
+      "skip_from_bat":"yes",
+      "tags": "compiler,lang-cpp"
+    }
+  },
+  "end_full_path": {
+    "android": "install$#sep#$lib$#sep#$libjpeg.a",
+    "linux": "install/lib/libjpeg.a",
+    "win": "install\\lib\\jpeg.lib"
+  },
+  "need_cpu_info": "yes",
+  "only_for_host_os_tags": [
+    "linux",
+    "windows"
+  ],
+  "only_for_target_os_tags": [
+    "linux",
+    "windows",
+    "android"
+  ],
+  "process_script": "install",
+  "soft_uoa": "4471f44a1ca9be9c",
+  "suggested_path": "lib-libjpeg",
+  "tags": [
+    "lib",
+    "libjpeg",
+    "jpeg"
+  ],
+  "use_scripts_from_another_entry": {
+    "data_uoa": "cd9ccc74060b3d18", 
+    "module_uoa": "script"
+  },
+  "use_preprocess_scripts_from_another_entry": {
+    "module_uoa": "84e27ad9dd12e734",
+    "data_uoa": "fd44428fbc77f77f"
+  }
+}
