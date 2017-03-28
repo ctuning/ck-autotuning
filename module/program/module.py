@@ -1209,6 +1209,11 @@ def process_in_dir(i):
              cfev=cfev.replace('$<<',svarb).replace('>>$',svare)
              sbcv+=' '+cfev
 
+          # Check if has customization scripts
+          scus=os.path.join(cdir,'..','customize'+sext)
+          if os.path.isfile(scus):
+             sb+='\n'+scall+' '+scus+'\n\n'
+
           # Prepare compilation
           sb+='\n'
 
