@@ -1,3 +1,5 @@
+* 2017.03.28 - improved processing of env vars via progrma meta
+
 * 2017.03.26 - added package:tool-bazel-*-universal (Linux, Windows, possibly MacOS)
              - added package:env-msys2-20161025 (Windows)
 

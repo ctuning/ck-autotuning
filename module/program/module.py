@@ -1086,15 +1086,39 @@ def process_in_dir(i):
           # Check if includes as environment var (we search in env settings,
           #    not in real env, otherwise, can have problems, when concatenating -I with empty string)
           line=meta.get('compiler_add_include_as_env_from_deps',[])
-          if len(line)>0:
-             for q in line:
-                 for g1 in deps:
-                     gg=deps[g1]
-                     gge=gg.get('dict',{}).get('env',{})
-                     xgge=gge.get(q,'')
-                     if xgge!='':
-                        if sin!='': sin+=' '
-                        sin+=svarb+svarb1+'CK_FLAG_PREFIX_INCLUDE'+svare1+svare+eifsc+xgge+eifsc
+          xline=[]
+
+          for qq in line:
+              if qq.find('$<<')<0 and qq.find('>>$')<0:
+                 qq='$<<'+qq+'>>$'
+
+              jq1=qq.find('$<<')
+              while jq1>=0:
+                 jq2=qq.find('>>$')
+                 if jq2>0:
+                    q=qq[jq1+3:jq2]
+
+                    qx=''
+                    for g1 in deps:
+                        gg=deps[g1]
+                        gge=gg.get('dict',{}).get('env',{})
+                        xgge=gge.get(q,'')
+                        if xgge!='':
+                           qx=xgge
+                           break
+
+                    qq=qq[:jq1]+qx+qq[jq2+3:]
+                    jq1=qq.find('$<<')
+
+                 else:
+                    return {'return':1, 'error':'inconsistency in "compiler_add_include_as_env_from_deps" key in program meta'}
+
+              xline.append(qq)
+
+          for xgge in xline:
+              if xgge!='':
+                 if sin!='': sin+=' '
+                 sin+=svarb+svarb1+'CK_FLAG_PREFIX_INCLUDE'+svare1+svare+eifsc+xgge+eifsc
 
           # Obtaining compile CMD (first from program entry, then default from this module)
           ccmds=meta.get('compile_cmds',{})
