@@ -184,6 +184,8 @@ def autotune(i):
                (pause_if_fail)                    - if pipeline fails, ask to press Enter
                                                     (useful to analyze which flags fail during compiler flag autotuning)
 
+               (pause)                            - if 'yes', pause after each iteration
+
                (aggregate_failed_cases)           - if pipeline fails, aggregate failed cases (to produce report 
                                                     during crowdtuning or automatic compiler bug detection)
 
@@ -963,7 +965,7 @@ def autotune(i):
                                 'characteristics':rr.get('characteristics',{}),
                                 'pipeline_state':dd.get('pipeline_state',{})})
 
-        if fail_bool and pifail=='yes':
+        if i.get('pause','')=='yes' or (fail_bool and pifail=='yes'):
            ck.out('')
            ck.inp({'text':'Press Enter to continue ...'})
 

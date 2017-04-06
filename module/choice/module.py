@@ -251,9 +251,9 @@ def make(i):
                                dvsame=r1+(y*rs)
                        dv=dvsame
 
-                  elif tp=='parallel-loop' or tp=='loop':
+                  elif tp=='parallel-loop' or tp=='loop' or tp=='loop-with-next' or tp=='parallel-loop-with-next':
                        dv=dcc
-                       if tp=='parallel-loop' or c==len(cc)-1 or xupdate:
+                       if (tp=='parallel-loop' or tp=='parallel-loop-with-next') or c==len(cc)-1 or xupdate:
                           if yestart!='':
                              dv=dcc+rs
                              if dv>r2:
@@ -284,6 +284,9 @@ def make(i):
                                 else:
                                    ci=0
                                    update=True
+
+                       if tp=='loop-with-next' or tp=='parallel-loop-with-next':
+                          nupdate=True
 
                   # Machine learning based probabilistic adaptive sampling of multi-dimensional 
                   # design and optimization speaces via external plugin
