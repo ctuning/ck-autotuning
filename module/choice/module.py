@@ -264,15 +264,23 @@ def make(i):
                                    update=True
                              else:
                                 xupdate=False
-                          else: # normally choice
+                          else: 
+                             # Here we process choices instead of ranges)
+                             ln=t.get('tmp_choice_position',0)
                              if dv=='':
                                 ln=0
                              else:
-                                if dv in yhc:
-                                   ln=yhc.index(dv)
+                                if tp=='loop-with-next' or tp=='parallel-loop-with-next':
                                    ln+=1
                                 else:
-                                   ln=0
+                                   if dv in yhc:
+                                      ln=yhc.index(dv)
+                                      ln+=1
+                                   else:
+                                      ln=0
+
+                             t['tmp_choice_position']=ln
+
                              if ln<lcqx:
                                 dv=yhc[ln]
                                 xupdate=False

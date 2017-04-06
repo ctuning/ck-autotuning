@@ -1,0 +1,26 @@
+{
+  "pipeline": {
+    "ready": "yes", 
+    "cmd": "echo \"--m=$#m#$ --n=$#n#$ --k=$#k#$\""
+  }, 
+  "choices_order": [
+    [
+      "##m"
+    ],
+    [
+      "##n"
+    ],
+    [
+      "##k"
+    ]
+  ], 
+  "choices_selection": [
+   {"type":"loop-with-next", "choice":["128", "512", "256"], "default":"128"},
+   {"type":"loop-with-next", "choice":["128", "128", "256"], "default":"128"},
+   {"type":"loop-with-next", "choice":["1", "64", "256"], "default":"1"}
+  ], 
+  "repetitions": 1, 
+  "seed": 12345, 
+  "iterations": -1,
+  "sleep":0
+}
