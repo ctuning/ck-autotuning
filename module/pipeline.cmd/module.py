@@ -51,6 +51,8 @@ def pipeline(i):
 
     import json
     import os
+    import time
+    import sys
 
     o=i.get('out','')
 
@@ -108,7 +110,19 @@ def pipeline(i):
        ck.out('Executing ...')
        ck.out('')
 
+    start_time=time.time()
+
+    sys.stdout.flush()
+
     for c in pcmd:
         os.system(c.strip())
 
-    return {'return':0}
+    run_time=time.time()-start_time
+
+    if o=='con':
+       ck.out('')
+       ck.out('Execution time: '+('%.3f'%run_time)+' sec.')
+       ck.out('')
+
+
+    return {'return':0, 'run_time':run_time}
