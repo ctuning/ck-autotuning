@@ -1,3 +1,6 @@
+* 2017.04.06 - updated pipeline.cmd to create customizable autotuning scenarios 
+               and execute external command lines (CK just updates autotuning variables)
+
 * 2017.03.28 - improved processing of env vars via progrma meta
              - added customization scripts before compilation
 

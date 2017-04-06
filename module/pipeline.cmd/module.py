@@ -36,7 +36,7 @@ def init(i):
 def pipeline(i):
     """
     Input:  {
-               (cmd)            - cmd
+               (cmd)            - cmd string or list
                (compiler_vars)  - will substitute dummies $#VAR#$ in cmd
                (compiler_flags) - assemble into string and substitute $#compiler_flags#$
             }
@@ -56,22 +56,12 @@ def pipeline(i):
 
     cmd=i.get('cmd','')
 
-    cpu_freq=str(i.get('cpu_freq',''))
-    gpu_freq=str(i.get('gpu_freq',''))
+    if type(cmd)!=list:
+       cmd=[cmd]
 
+    # Checking some known vars 
     cv=i.get('compiler_vars',{})
     cf=i.get('compiler_flags',{})
-
-    if o=='con':
-       ck.out('')
-       ck.out('         Pipeline started')
-       ck.out('')
-       ck.out('         Input "compiler_vars"  ='+json.dumps(cv))
-       ck.out('         Input "compiler_vars"  ='+json.dumps(cv))
-       ck.out('         Input "cpu_freq"       ='+cpu_freq)
-       ck.out('         Input "gpu_freq"       ='+gpu_freq)
-       ck.out('         Original CMD           ='+cmd)
-       ck.out('')
 
     cflags=''
     for c in cf:
@@ -81,26 +71,44 @@ def pipeline(i):
            if cflags!='': cflags+=' '
            cflags+=str(cc)
 
-    cmd=cmd.replace('$#cflags#$', cflags)
+    # Parsing special vars $#var#$
+    pcmd=[]
+    for c in cmd:
+        j=c.find('$#')
+        while j>=0:
+           j1=c.find('#$',j+1)
+           if j1<0:
+              return {'return':1, 'error':'inconsistent CK vars $# #$ in cmd ('+c+')'}
 
-    cmd=cmd.replace('$#cpu_freq#$', cpu_freq)
-    cmd=cmd.replace('$#gpu_freq#$', gpu_freq)
+           k=c[j+2:j1]
+ 
+           # Check special keys
+           if k=='cflags':
+              v=cflags
+           else:
+              v=cv.get(k,'') # for backwards compatibility 
+              if v=='':
+                 v=i.get(k,'')
 
-    for q in cv:
-        qq=cv[q]
-        cmd=cmd.replace('$#'+q+'#$', str(qq)) 
+           c=c[:j]+v+c[j1+2:]
+
+           j=c.find('$#')
+           
+        pcmd.append(c)
+
+    # Print
 
     if o=='con':
-       ck.out('Prepared CMD:')
+       ck.out('Updated command line in the pipeline:')
        ck.out('')
-       ck.out(cmd)
+       for c in pcmd:
+           ck.out('  '+c)
 
        ck.out('')
-       ck.out('Executing:')
+       ck.out('Executing ...')
        ck.out('')
 
-    lcmd=cmd.split('\n')
-    for l in lcmd:
-        os.system(l.strip())
+    for c in pcmd:
+        os.system(c.strip())
 
     return {'return':0}
