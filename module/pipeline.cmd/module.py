@@ -92,7 +92,7 @@ def pipeline(i):
               if v=='':
                  v=i.get(k,'')
 
-           c=c[:j]+v+c[j1+2:]
+           c=c[:j]+str(v)+c[j1+2:]
 
            j=c.find('$#')
            
