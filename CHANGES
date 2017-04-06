@@ -2,6 +2,7 @@
                and execute external command lines (CK just updates autotuning variables)
              - added 'loop-with-next' and 'parallel-loop-with-next' autotuning modes
                (thanks to Flavio Vella)
+             - fix detection of OpenCL on ARM32 devices (-pie flag missing)
 
 * 2017.03.28 - improved processing of env vars via progrma meta
              - added customization scripts before compilation

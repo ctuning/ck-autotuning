@@ -93,6 +93,7 @@ def setup(i):
                      'data_uoa':'tool-print-opencl-devices',
                      'host_os':hos,
                      'target_os':tos,
+                     'flags':'-fPIE -pie',
                      'out':o})
         if r['return']>0: return r
 
