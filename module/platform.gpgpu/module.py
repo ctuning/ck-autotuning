@@ -202,6 +202,7 @@ def detect(i):
             'host_os':hos,
             'target_os':tos,
             'device_id':tdid,
+            "skip_default": "yes",
             'tags':tags,
             'out':oo}
         r=ck.access(ii)
