@@ -3724,7 +3724,7 @@ def pipeline(i):
        tos=i.get('target_os','')
        if tos=='': i['target_os']=choices.get('target_os','')
        tdid=i.get('device_id','')
-       if tdid=='': i['device_id']=choices.get('tdid','')
+       if tdid=='': i['device_id']=choices.get('device_id','')
 
        r=ck.search({'module_uoa':cfg['module_deps']['machine'], 'data_uoa':target, 'add_meta':'yes'})
        if r['return']>0: return r
