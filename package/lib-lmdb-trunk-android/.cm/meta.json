@@ -3,7 +3,11 @@
     "extra_dir": "",
     "git_src_dir": "src",
     "install_env": {
-      "PACKAGE_URL": "https://github.com/LMDB/lmdb"
+      "PACKAGE_URL": "https://github.com/LMDB/lmdb",
+      "PACKAGE_GIT": "YES",
+      "PACKAGE_SUB_DIR": "src",
+      "PACKAGE_SKIP_CLEAN_SRC_DIR":"YES",
+      "PACKAGE_SKIP_LINUX_MAKE":"YES"
     },
     "use_git_revision": "yes",
     "version": "development"
@@ -40,5 +44,9 @@
     "lib",
     "lmdb",
     "vtrunk"
-  ]
+  ],
+  "use_scripts_from_another_entry": {
+    "data_uoa": "cd9ccc74060b3d18",
+    "module_uoa": "script"
+  }
 }
