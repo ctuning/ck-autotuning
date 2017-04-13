@@ -7,7 +7,9 @@
       "PACKAGE_GIT": "YES",
       "PACKAGE_SUB_DIR": "src",
       "PACKAGE_SKIP_CLEAN_SRC_DIR":"YES",
-      "PACKAGE_SKIP_LINUX_MAKE":"YES"
+      "PACKAGE_SKIP_LINUX_MAKE":"YES",
+      "skip_file_check": "yes"
+       
     },
     "use_git_revision": "yes",
     "version": "development"
@@ -28,14 +30,18 @@
     }
   },
   "end_full_path": {
-    "android": "install$#sep#$lib$#sep#$liblmdb.a"
+    "android": "install$#sep#$lib$#sep#$liblmdb.a",
+    "linux": "install$#sep#$lib$#sep#$liblmdb.a"
   },
   "need_cpu_info": "yes",
   "only_for_host_os_tags": [
-    "linux"
+    "linux",
+    "windows"
   ],
   "only_for_target_os_tags": [
-    "android"
+    "android",
+    "linux",
+    "windows"
   ],
   "process_script": "install",
   "soft_uoa": "a249f58927ceefa5",
