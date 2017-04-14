@@ -6,7 +6,11 @@
       "PACKAGE_URL": "https://github.com/LMDB/lmdb",
       "PACKAGE_GIT": "YES",
       "PACKAGE_SUB_DIR": "src",
-      "PACKAGE_SKIP_CLEAN_SRC_DIR":"YES",
+      "PACKAGE_SUB_DIR1": "src",
+      "PACKAGE_SKIP_BUILD_ERROR": "YES",
+      "PACKAGE_SKIP_CLEAN_INSTALL": "NO",
+      "PACKAGE_SKIP_CLEAN_OBJ": "NO",
+      "PACKAGE_SKIP_CLEAN_SRC_DIR": "NO",
       "PACKAGE_SKIP_LINUX_MAKE":"YES",
       "skip_file_check": "yes"
        
@@ -31,7 +35,8 @@
   },
   "end_full_path": {
     "android": "install$#sep#$lib$#sep#$liblmdb.a",
-    "linux": "install$#sep#$lib$#sep#$liblmdb.a"
+    "linux": "install$#sep#$lib$#sep#$liblmdb.a",
+    "win": "install$#sep#$lib$#sep#$liblmdb.a"
   },
   "need_cpu_info": "yes",
   "only_for_host_os_tags": [
