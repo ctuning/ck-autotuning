@@ -1,3 +1,0 @@
-Do not change 'host-compiler' key to 'compiler' in deps in this package meta, 
-otherwise CK will try to substitute global compiler name, and this will cause
-a failure for Android target...

@@ -1,3 +1,5 @@
+* 2017.04.15 - moved many generic packages to ck-env repo
+
 * 2017.04.06 - updated pipeline.cmd to create customizable autotuning scenarios 
                and execute external command lines (CK just updates autotuning variables)
              - added 'loop-with-next' and 'parallel-loop-with-next' autotuning modes
