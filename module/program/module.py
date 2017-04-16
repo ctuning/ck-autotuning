@@ -3038,6 +3038,9 @@ def process_in_dir(i):
                  p1=os.path.join(cdir,fz)
                  p2=os.path.join(pd,po,fz)
 
+                 if not os.path.isfile(p1):
+                    return {'return':1, 'error':'reference output file '+fz+' not found!'}
+
                  shutil.copyfile(p1,p2)
 
           # Update stats with output check
