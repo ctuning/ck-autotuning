@@ -1,0 +1,125 @@
+    "##mfloat-abi=softfp": {
+      "can_omit": "yes",
+      "choice": [
+        "-mfloat-abi=softfp",
+        ""
+      ],
+      "default": "",
+      "desc": "compiler flag: -mfloat-abi=softfp",
+      "sort": 10530,
+      "tags": [
+        "basic",
+        "boolean",
+        "optimization"
+      ],
+      "type": "text"
+    },
+    "##mregparm": {
+      "can_omit": "yes",
+      "default": "",
+      "desc": "compiler flag: -mregparm",
+      "explore_prefix": "-mregparm=",
+      "explore_start": 0,
+      "explore_step": 1,
+      "explore_stop": 32,
+      "sort": 30030,
+      "tags": [
+        "basic",
+        "parametric",
+        "optimization"
+      ],
+      "type": "integer"
+    },
+    "##momit-leaf-frame-pointer": {
+      "can_omit": "yes",
+      "choice": [
+        "-momit-leaf-frame-pointer",
+        ""
+      ],
+      "default": "",
+      "desc": "compiler flag: -momit-leaf-frame-pointer",
+      "sort": 10560,
+      "tags": [
+        "basic",
+        "boolean",
+        "optimization"
+      ],
+      "type": "text"
+    },
+    "##mrestrict-it": {
+      "can_omit": "yes",
+      "choice": [
+        "-mrestrict-it",
+        ""
+      ],
+      "default": "",
+      "desc": "compiler flag: -mrestrict-it",
+      "sort": 10570,
+      "tags": [
+        "basic",
+        "boolean",
+        "optimization"
+      ],
+      "type": "text"
+    },
+    "##mtune=native": {
+      "can_omit": "yes",
+      "choice": [
+        "-mtune=native",
+        ""
+      ],
+      "default": "",
+      "desc": "compiler flag: -mtune=native",
+      "sort": 10600,
+      "tags": [
+        "basic",
+        "boolean",
+        "optimization"
+      ],
+      "type": "text"
+    },
+    "##munaligned-access": {
+      "can_omit": "yes",
+      "choice": [
+        "-munaligned-access",
+        ""
+      ],
+      "default": "",
+      "desc": "compiler flag: -munaligned-access",
+      "sort": 10610,
+      "tags": [
+        "basic",
+        "boolean",
+        "optimization"
+      ],
+      "type": "text"
+    }
+
+  -munaligned-access      Allow memory accesses to be unaligned (AArch32/AArch64 only)
+  -mno-unaligned-access   Force all memory accesses to be aligned (AArch32/AArch64 only)
+
+  -mcrc                   Allow use of CRC instructions (ARM only)
+  -mnocrc                 Disallow use of CRC instructions (ARM only)
+
+
+  -mno-movt               Disallow use of movt/movw pairs (ARM only)
+  -ffixed-r9              Reserve the r9 register (ARM only)
+
+
+  -mno-restrict-it        Allow generation of deprecated IT blocks for ARMv8. It is off by default for ARMv8 Thumb mode
+
+
+  -mhvx-double            Enable Hexagon Double Vector eXtensions
+  -mno-hvx-double         Disable Hexagon Double Vector eXtensions
+
+  -mhvx                   Enable Hexagon Vector eXtensions
+  -mno-hvx                Disable Hexagon Vector eXtensions
+
+  -meabi <value>          Set EABI type, e.g. 4, 5 or gnu (default depends on triple)
+
+  -mfix-cortex-a53-835769 Workaround Cortex-A53 erratum 835769 (AArch64 only)
+  -mgeneral-regs-only     Generate code which only uses the general purpose registers (AArch64 only)
+  -mno-fix-cortex-a53-835769 Don't workaround Cortex-A53 erratum 835769 (AArch64 only)
+  -ffixed-x18             Reserve the x18 register (AArch64 only)
+
+  -mstack-probe-size=<value> Set the stack probe size
