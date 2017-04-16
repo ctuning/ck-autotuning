@@ -1,3 +1,5 @@
+* 2017.04.16 - fixed program crowdtuning when multiple target machines are connected
+
 * 2017.04.15 - moved many generic packages to ck-env repo
 
 * 2017.04.06 - updated pipeline.cmd to create customizable autotuning scenarios 

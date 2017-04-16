@@ -3753,11 +3753,12 @@ def pipeline(i):
        elif len(lst)==1:
           i['target']=lst[0]['data_uoa']
        else:
-          if random=='yes':
-             rb=randint(0,len(lst)-1)
-
-             i['target']=lst[rb]['data_uoa']
-          elif quiet=='yes':
+#          FGG remarked it since when many target machines are registered but not connected, often fail ...
+#          if random=='yes':
+#             rb=randint(0,len(lst)-1)
+#
+#             i['target']=lst[rb]['data_uoa']
+          if quiet=='yes':
              i['target']=lst[0]['data_uoa']
           else:
              # SELECTOR *************************************
