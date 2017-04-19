@@ -975,6 +975,8 @@ def process_in_dir(i):
        csd=deps.get('compiler',{}).get('dict',{})
        csuoa=csd.get('soft_uoa','')
        fp=csd.get('customize',{}).get('full_path','')
+       uloc=csd.get('customize',{}).get('use_locale_for_version','')
+
        cver=''
        if csuoa!='':
           r=ck.access({'action':'internal_detect',
@@ -982,6 +984,7 @@ def process_in_dir(i):
                        'tool':fp,
                        'uoa':csuoa,
                        'env':cb,
+                       'use_locale':uloc,
                        'con':o})
           if r['return']==0:
              cver=r['version_str']
