@@ -2147,7 +2147,7 @@ def process_in_dir(i):
        pvck=rt.get('pre_process_via_ck',{})
        if len(pvck)>0:
 
-          pvckp=src_path
+          pvckp=src_path_local
 
           pvckm=pvck.get('module_uoa','')
           if pvckm=='': pvckm=work['self_module_uid']
