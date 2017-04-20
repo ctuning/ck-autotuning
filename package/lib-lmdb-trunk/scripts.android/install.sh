@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 #
 # See CK LICENSE for licensing details.
@@ -12,29 +12,8 @@
 # PACKAGE_DIR
 # INSTALL_DIR
 
-cd ${INSTALL_DIR}
-
-############################################################
-echo ""
-echo "Cloning package from '${PACKAGE_URL}' ..."
-
-rm -rf src
-
-git clone ${PACKAGE_URL} src
-if [ "${?}" != "0" ] ; then
-  echo "Error: cloning package failed!"
-  exit 1
-fi
-
-############################################################
-echo ""
-echo "Cleaning ..."
-
-cd ${INSTALL_DIR}
-
-rm -rf install
-
 cd ${INSTALL_DIR}/src/libraries/liblmdb
+
 
 ############################################################
 echo ""
