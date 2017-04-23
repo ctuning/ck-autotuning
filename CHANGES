@@ -1,3 +1,5 @@
+* 2017.04.24 - fixed minor bug during Caffe autotuning on Android devices
+
 * 2017.04.20 - moved LMDB package to ck-env repo
              - fixed bug with pre-processing script when running on remote device (should run on host)
 

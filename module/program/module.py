@@ -3812,7 +3812,7 @@ def pipeline(i):
        if r['return']>0: return r
 
     target=ck.get_from_dicts(i, 'target', '', choices)
-    device_cfg=ck.get_from_dicts(i, 'device_cfg', '', choices)
+    device_cfg=ck.get_from_dicts(i, 'device_cfg', {}, choices)
 
     hos=ck.get_from_dicts(i, 'host_os', '', choices)
     tos=ck.get_from_dicts(i, 'target_os', '', choices)
