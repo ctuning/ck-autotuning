@@ -957,7 +957,6 @@ def process_in_dir(i):
 #              if kkd1 not in env:
 #                 env[kkd1]=deps['compiler']['dict']['env'][kkd1]
 
-
        # Add env
        for k in sorted(env):
            v=str(env[k])
@@ -1856,6 +1855,11 @@ def process_in_dir(i):
 #          for kkd1 in deps['compiler'].get('dict',{}).get('env',{}):
 #              if kkd1 not in env:
 #                 env[kkd1]=deps['compiler']['dict']['env'][kkd1]
+
+       # Check if need to remove some env before run (useful for remote devices)
+       for k in meta.get('remove_env_before_run',[]):
+           if k in env:
+              del(env[k])
 
        # Add env
        sb+='\n'
@@ -4245,6 +4249,7 @@ def pipeline(i):
 
     ###############################################################################################################
     # PIPELINE SECTION: Detect compiler version
+
     if no_compile!='yes' and i.get('no_detect_compiler_version','')!='yes' and len(features.get('compiler_version',{}))==0:
        if no_compile!='yes':
           ii={'sub_action':'get_compiler_version',
@@ -4975,6 +4980,13 @@ def pipeline(i):
        if o=='con':
           ck.out(sep)
           ck.out('Running program ...')
+
+       # Remove some keys from env
+       if meta.get('skip_remove_run_env_keys','')!='yes':
+          for k in list(env.keys()):
+              if k.startswith('CK_AR_') or k.startswith('CK_CC_') or \
+                 k.startswith('CK_CXX_') or k.startswith('CK_CMAKE_'):
+                 del(env[k])
 
        # Check run cmd keys subst
        for k in choices:
