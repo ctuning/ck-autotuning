@@ -4985,7 +4985,8 @@ def pipeline(i):
        if meta.get('skip_remove_run_env_keys','')!='yes':
           for k in list(env.keys()):
               if k.startswith('CK_AR_') or k.startswith('CK_CC_') or \
-                 k.startswith('CK_CXX_') or k.startswith('CK_CMAKE_'):
+                 k.startswith('CK_CXX_') or k.startswith('CK_CMAKE_') or \
+                 k.startswith('CK_COMPILER_') or k.startswith('CK_LINKER_'):
                  del(env[k])
 
        # Check run cmd keys subst
