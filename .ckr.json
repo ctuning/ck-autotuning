@@ -13,6 +13,12 @@
       }
     ], 
     "url": "https://github.com/ctuning/ck-autotuning", 
-    "shared": "git"
+    "shared": "git",
+    "checkouts":{
+      "stable":{
+        "branch":"master",
+        "checkout":"1c84411"
+      }
+    }
   }
 }
