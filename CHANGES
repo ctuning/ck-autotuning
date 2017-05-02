@@ -1,3 +1,5 @@
+* 2017.05.02 - added description of MILEPOST program features
+
 * 2017.04.24 - fixed minor bug during Caffe autotuning on Android devices
              - removing unnecessary compilation env during workload run
 
