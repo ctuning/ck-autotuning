@@ -72,7 +72,7 @@
         "use_for_euclidean_distance":"yes"
       },
       "14": {
-        "desc": "Number of basic blocks with number of instructions in the interval [15},},, 500]", 
+        "desc": "Number of basic blocks with number of instructions in the interval [15, 500]", 
         "normalized": "no",
         "use_for_euclidean_distance":"yes"
       },
@@ -147,7 +147,7 @@
         "use_for_euclidean_distance":"yes"
       },
       "29": {
-        "desc": "Number of basic blocks with phi nodes in the interval [0},},, 3]", 
+        "desc": "Number of basic blocks with phi nodes in the interval [0, 3]", 
         "normalized": "no",
         "use_for_euclidean_distance":"yes"
       },
@@ -162,7 +162,7 @@
         "use_for_euclidean_distance":"yes"
       },
       "32": {
-        "desc": "Number of basic block where total number of arguments for all phi-nodes is in the interval [1}}, 5]", 
+        "desc": "Number of basic block where total number of arguments for all phi-nodes is in the interval [1, 5]", 
         "normalized": "no",
         "use_for_euclidean_distance":"yes"
       },
