@@ -147,3 +147,64 @@ def extract(i):
               if ry['return']>0: return ry
 
     return {'return':0, 'dict':{'features':feat1}}
+
+##############################################################################
+# Calculate similarity between programs based on features
+#
+# FGG: For now just simple Euclidean distance, however it has many drawbacks
+# since it doesn't take into account "importance" of different features, etc
+# We plan to use more SVN, decision trees, etc (see our papers) ...
+
+def calculate_similarity(i):
+    """
+    Input:  {
+              features1 - MILEPOST features for program 1
+              features2 - MILEPOST features for program 2
+            }
+
+    Output: {
+              return       - return code =  0, if successful
+                                         >  0, if error
+              (error)      - error text if return > 0
+
+              distance     - basic Euclidean distance (can be > 1)
+            }
+
+    """
+
+    import math
+
+    prog1=i['features1']
+    prog2=i['features2']
+
+    # Check which feature to use for normalization
+    fd=cfg['milepost_features_description']
+    ftn=cfg['milepost_normalization_feature']
+
+    # Check that in vectors
+    distance=None # if error
+
+    if ftn in prog1 and ftn in prog2:
+
+       ftnp1=float(prog1[ftn])
+       ftnp2=float(prog2[ftn])
+
+       distance=0.0
+       
+       for q2 in fd:
+           q=fd[q2]
+
+           ftp1=float(prog1.get(q2,0))
+           ftp2=float(prog2.get(q2,0))
+
+           if q.get('use_for_euclidean_distance','')=='yes':
+              if q.get('normalized','')!='yes':
+                 ftp1/=ftnp1
+                 ftp2/=ftnp2
+
+              distance+=(ftp1-ftp2)*(ftp1-ftp2)
+
+       if distance!=0.0:
+          distance=math.sqrt(distance)
+
+    return {'return':0, 'distance':distance}
