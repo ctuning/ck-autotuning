@@ -186,25 +186,29 @@ def calculate_similarity(i):
 
     if ftn in prog1 and ftn in prog2:
 
-       ftnp1=float(prog1[ftn])
-       ftnp2=float(prog2[ftn])
+       x1=prog1.get(ftn,None)
+       x2=prog2.get(ftn,None)
 
-       distance=0.0
-       
-       for q2 in fd:
-           q=fd[q2]
+       if x1!=None and x1!='' and x2!=None and x2!='':
+          ftnp1=float(x1)
+          ftnp2=float(x2)
 
-           ftp1=float(prog1.get(q2,0))
-           ftp2=float(prog2.get(q2,0))
+          distance=0.0
+          
+          for q2 in fd:
+              q=fd[q2]
 
-           if q.get('use_for_euclidean_distance','')=='yes':
-              if q.get('normalized','')!='yes':
-                 ftp1/=ftnp1
-                 ftp2/=ftnp2
+              ftp1=float(prog1.get(q2,0))
+              ftp2=float(prog2.get(q2,0))
 
-              distance+=(ftp1-ftp2)*(ftp1-ftp2)
+              if q.get('use_for_euclidean_distance','')=='yes':
+                 if q.get('normalized','')!='yes':
+                    ftp1/=ftnp1
+                    ftp2/=ftnp2
 
-       if distance!=0.0:
-          distance=math.sqrt(distance)
+                 distance+=(ftp1-ftp2)*(ftp1-ftp2)
+
+          if distance!=0.0:
+             distance=math.sqrt(distance)
 
     return {'return':0, 'distance':distance}
