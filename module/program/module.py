@@ -310,6 +310,7 @@ def process_in_dir(i):
               (overwrite_reference_output)    - if 'yes', overwrite reference output (useful if broken)
 
               (quiet)                         - if 'yes', automatically provide default answer to all questions when resolving dependencies ...
+              (random)                        - if 'yes', select deps randomly (useful for quite crowd-tuning / DNN classification)
 
               (install_to_env)       - install dependencies to env instead of CK-TOOLS (to keep it clean)!
 
@@ -358,6 +359,7 @@ def process_in_dir(i):
     grtd=i.get('generate_rnd_tmp_dir','')
 
     quiet=i.get('quiet','')
+    ran=i.get('random','')
 
     iev=i.get('install_to_env','')
     safe=i.get('safe','')
@@ -826,6 +828,7 @@ def process_in_dir(i):
            'device_id':tdid,
            'deps':deps,
            'add_customize':'yes',
+           'random':ran,
            'quiet':quiet,
            'install_to_env':iev,
            'safe':safe}
@@ -1716,6 +1719,7 @@ def process_in_dir(i):
                                 'out':oo,
                                 'install_to_env':iev,
                                 'preset_deps':preset_deps,
+                                'random':ran,
                                 'safe':safe,
                                 'quiet':quiet})
        if rx['return']>0: return rx
@@ -5773,6 +5777,7 @@ def update_run_time_deps(i):
 
               (out)      - where to output
               (quiet)    - quiet mode
+              (random)   - if 'yes', select deps randomly (useful for quite crowd-tuning / DNN classification)
 
               (install_to_env)       - install dependencies to env instead of CK-TOOLS (to keep it clean)!
 
@@ -5804,6 +5809,7 @@ def update_run_time_deps(i):
     tdid=i.get('target_id','')
 
     quiet=i.get('quiet','')
+    ran=i.get('random','')
 
     iev=i.get('install_to_env','')
     safe=i.get('safe','')
@@ -5866,6 +5872,7 @@ def update_run_time_deps(i):
            'deps':rdeps,
            'add_customize':'yes',
            'quiet':quiet,
+           'random':ran,
            'install_to_env':iev,
            'safe':safe,
            'out':oo}
