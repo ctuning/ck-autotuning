@@ -1,0 +1,25 @@
+{
+  "experiment_1_pipeline_update": {
+    "choices_order": [
+      [
+        "##env#CK_CUSTOM_TUNE_M"
+      ],
+      [
+        "##env#CK_CUSTOM_TUNE_N"
+      ],
+      [
+        "##env#CK_CUSTOM_TUNE_K"
+      ]
+    ], 
+    "choices_selection": [
+     {"type":"loop", "choice":["256", "512", "1024" ], "default":"256"},
+     {"type":"loop", "choice":["256", "512" ], "default":"256"},
+     {"type":"loop", "choice":["128", "256" ], "default":"256"}
+    ] 
+  },
+
+  "repetitions": 1, 
+  "seed": 12345, 
+  "iterations": -1,
+  "sleep":0
+}
