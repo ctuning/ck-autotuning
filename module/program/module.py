@@ -3224,6 +3224,8 @@ def pipeline(i):
                                           (usually for testing/demos)
 
               (cmd_key)              - CMD key
+              (cmd_keys)             - Select only from this list of available CMD keys
+
               (dataset_uoa)          - UOA of a dataset
               (dataset_file)         - dataset filename (if more than one inside one entry - suggest to have a UID in name)
               (extra_dataset_tags)   - list of extra data set tags (useful to set "small" during mobile phone crowdtuning)
@@ -3472,6 +3474,7 @@ def pipeline(i):
        choices['data_uoa']=duoa
     ptags=ck.get_from_dicts(i, 'program_tags', '', choices)
     kcmd=ck.get_from_dicts(i, 'cmd_key', '', choices)
+    kcmds=ck.get_from_dicts(i, 'cmd_keys', [], None)
     dduoa=ck.get_from_dicts(i, 'dataset_uoa', '', choices)
     ddfile=ck.get_from_dicts(i, 'dataset_file', '', choices)
     edtags=ck.get_from_dicts(i, 'extra_dataset_tags', [], choices)
@@ -3998,6 +4001,9 @@ def pipeline(i):
        return {'return':1, 'error':'no CMD for run'}
 
     krun_cmds=sorted(list(run_cmds.keys()))
+    if len(kcmds)>0:
+       krun_cmds=kcmds
+
     zrt={}
     if kcmd=='':
        if len(krun_cmds)>1:
