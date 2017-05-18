@@ -1,0 +1,22 @@
+{
+  "experiment_1_pipeline_update": {
+    "choices_order": [
+      [
+        "##compiler_flags#base_opt"
+      ]
+    ],
+    "choices_selection": [
+      {
+        "notags": "",
+        "choice": ["-Os","-O0","-O1","-O2","-O3"],
+        "default": "-O3",
+        "type": "loop"
+      }
+    ]
+  },
+
+  "repetitions": 1, 
+  "seed": 12345, 
+  "iterations": -1,
+  "sleep":0
+}

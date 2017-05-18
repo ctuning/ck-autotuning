@@ -1,0 +1,14 @@
+{
+  "experiment_1_pipeline_update": {
+    "choices_order": [
+      [
+        "##compiler_flags#base_opt"
+      ]
+    ]
+  },
+
+  "repetitions": 1, 
+  "seed": 12345, 
+  "iterations": -1,
+  "sleep":0
+}
