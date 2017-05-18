@@ -1,4 +1,5 @@
 * 2017.05.18 - allow sub-set of command line keys (useful for DNN autotuning)
+             - added program:custom-autotuning-wrapper as a dummy wrapper for customized autotuning plugins
 
 * 2017.05.04 - added description of GCC 6.3.0, 7.0.0, 7.1.0
 

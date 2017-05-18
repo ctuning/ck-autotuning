@@ -1,0 +1,9 @@
+{
+  "run_cmds": {
+    "default": {
+      "run_time": {
+        "run_cmd_main": "$<<CK_CUSTOM_AUTOTUNER_SCRIPT>>$"
+      }
+    }
+  } 
+}
