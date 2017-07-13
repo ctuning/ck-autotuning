@@ -580,6 +580,7 @@ def autotune(i):
 
     removing_key=''
     removing_value=''
+    cur_md5=''
     last_md5=''
     last_md5_fail_text='compilation returned object file with the same MD5'
     pruned_influence={}
@@ -914,8 +915,10 @@ def autotune(i):
             if pdafr=='yes' and m==0 and sr==0:
                # Preserve resolved deps (useful for replay)
                pipeline['dependencies']=copy.deepcopy(pipeline1.get('dependencies',{}))
+               pipelinec['dependencies']=copy.deepcopy(pipeline1.get('dependencies',{}))
 
-            cur_md5=pipeline1.get('characteristics',{}).get('compile',{}).get('md5_sum','')
+            xcur_md5=pipeline1.get('characteristics',{}).get('compile',{}).get('md5_sum','')
+            if sr==0 and xcur_md5!='': cur_md5=xcur_md5
 
             state=rr.get('state',{})
 

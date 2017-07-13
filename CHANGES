@@ -1,3 +1,5 @@
+* 2017.07.14 * fixed complexity reduction of solutions (pruning)
+
 * 2017.05.18 - allow sub-set of command line keys (useful for DNN autotuning)
              - added program:custom-autotuning-wrapper as a dummy wrapper for customized autotuning plugins
 
