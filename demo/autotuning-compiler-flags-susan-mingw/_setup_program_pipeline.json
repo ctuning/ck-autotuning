@@ -4,7 +4,6 @@
  "data_uoa":"cbench-automotive-susan",
  "cmd_key":"edges",
  "target_os":"mingw-64",
- "no_state_check":"yes",
- "choices":{"env":{"XYZ":111}}
+ "no_state_check":"yes"
 }
 
