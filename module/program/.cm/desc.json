@@ -20,6 +20,10 @@
       "desc": "Code size improvement", 
       "type": "float"
     }, 
+    "##characteristics#compile#binary_size#min": {
+      "desc": "Total binary size (bytes)", 
+      "type": "integer"
+    }, 
     "##characteristics#run#execution_time_kernel_0#exp": {
       "desc": "Main kernel execution time (sec.) [exp]", 
       "type": "float"
