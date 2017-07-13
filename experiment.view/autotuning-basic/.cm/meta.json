@@ -15,6 +15,7 @@
     "##characteristics#run#run_time_state#energy_a15_mem_gpu", 
     "##characteristics#run#run_time_state#energy_a7_mem_gpu", 
     "##characteristics#compile#obj_size", 
+    "##characteristics#compile#binary_size", 
     "##features#platform#cpu#current_freq#0", 
     "##choices#gpu_freq", 
     "##characteristics#run#accuracy", 
@@ -75,6 +76,9 @@
     }, 
     {
       "desc": "Object size (bytes)"
+    }, 
+    {
+      "desc": "Binary size (bytes)"
     }, 
     {
       "desc": "CPU freq (MHz)"
