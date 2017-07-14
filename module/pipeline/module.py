@@ -1076,7 +1076,11 @@ def autotune(i):
 
         ##########################################################################################
         # Check conditions
-        if len(result_conditions)>0:
+        if prune!='yes' and len(result_conditions)>0:
+           if o=='con':
+              ck.out('')
+              ck.out('Check extra conditions on results ...')
+
            # Check conditions
            ii={'action':'check',
                'module_uoa':cfg['module_deps']['math.conditions'],
@@ -1331,7 +1335,7 @@ def autotune(i):
            # Filtering ...
            if o=='con':
               ck.out(sep)
-              ck.out('Filtering multiple characteristics on Pareto frontier for multi-objective autotuning')
+              ck.out('Filtering multiple characteristics on frontier (not necessarily Pareto) for multi-objective autotuning')
               ck.out('')
 
            # Save originals to know which ones to delete if recording ...
@@ -1408,7 +1412,7 @@ def autotune(i):
 
        report='\n  Final pruned choices ('+x+') :\n'
 
-       report+='        Characteristic changes (in brackets):\n'
+       report+='        Characteristics\' changes (in brackets):\n'
        for q in range(0, len(pruned_chars)):
            report+='           '+str(q)+' = '+pruned_chars[q]+'\n'
        report+='\n'
