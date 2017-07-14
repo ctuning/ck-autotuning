@@ -200,7 +200,10 @@ def autotune(i):
                (prune_invert_add_iters)           - if 'yes', add extra needed iterations
                (prune_result_conditions)          - list of extra conditions to accept result (variation, performance/energy/code size constraints, etc)
 
+               (print_keys_after_each_iteration)  - print values of keys from flat dict after each iteration (to monitor characteristics)
+
                (result_conditions)                - check results for condition
+               (condition_objective)              - how to check results (#min,#max,#exp ...)
 
                (collect_all)                      - collect all experiments and record to 
 
@@ -270,6 +273,13 @@ def autotune(i):
     prune_invert=ck.get_from_dicts(ic, 'prune_invert', [], None) # Prune existing solutions
     prune_invert_add_iters=ck.get_from_dicts(ic, 'prune_invert_add_iters', '', None)
     prune_result_conditions=ck.get_from_dicts(ic, 'prune_result_conditions', [], None)
+
+    print_keys_after_each_iteration=ck.get_from_dicts(ic, 'print_keys_after_each_iteration', [], None)
+    lprint_keys_after_each_iteration=-1
+    if len(print_keys_after_each_iteration)>0:
+       for k in print_keys_after_each_iteration:
+           if lprint_keys_after_each_iteration==-1 or len(k)>lprint_keys_after_each_iteration:
+              lprint_keys_after_each_iteration=len(k)
 
     number_of_original_choices=0
     started_prune_invert=False
@@ -499,6 +509,7 @@ def autotune(i):
 
     ref_stat_dict={} # if check with reference, save it
     ref_stat_out={}  # last iteration output for the reference
+    ref_rrr={}       # ref characteristics
     keys=[]          # keys to check for conditions or during pruning
 
     # most likely just one iteration - then set defaults
@@ -605,10 +616,11 @@ def autotune(i):
            break
 
         mm=m+1
-        ck.out(sep1)
+
         x='Pipeline iteration: '+str(mm)
         if ni!=-1: x+=' of '+str(ni) 
 
+        ck.out(sep1)
         ck.out(x)
 
         time.sleep(0.5)
@@ -645,7 +657,7 @@ def autotune(i):
                     if len(pccur)>0:
                        if o=='con':
                           ck.out('')
-                          ck.out('  Pruning solution ...')
+                          ck.out('  Pruning solution (iteratively reducing complexity of the found solution) ...')
 
                        # Check non-zero ones:
                        if not started_prune_invert:
@@ -901,7 +913,10 @@ def autotune(i):
             pipeline1['statistical_repetition_number']=sr
             pipeline1['tmp_dir']=tmp_dir
 
-            if prune_md5=='yes':
+#            if prune_md5=='yes':
+
+            # If last pruning iteration, compile and run code (to get all last characteristics)
+            if prune_md5=='yes' and (len(nz)!=0 or len(prune_check_all)!=0):
                if o=='con' and last_md5!='':
                   ck.out('')
                   ck.out('      Checking MD5: '+last_md5)
@@ -1056,11 +1071,13 @@ def autotune(i):
                  ck.out('Recorded successfully in '+('%.2f'%tt)+' secs.')
 
         ##########################################################################################
-        # If was not performed via recording, perform statistical analysis  here
+        # If was not performed via recording, perform statistical analysis here
         if ssa!='yes' and fail!='yes' and len(stat_dict)==0:
            if o=='con':
               ck.out('')
               ck.out('Performing explicit statistical analysis of experiments ...')
+
+           if prune=='yes': sfd={}
 
            ii={'action':'multi_stat_analysis',
                'module_uoa':cfg['module_deps']['experiment'],
@@ -1075,8 +1092,26 @@ def autotune(i):
            stat_dict=rrr['dict_flat']
 
         ##########################################################################################
+        # Print various values to monitor iterations (if needed)
+        if o=='con' and fail!='yes' and len(print_keys_after_each_iteration)>0:
+
+           ck.out('')
+           ck.out('Monitoring characteristics:')
+           ck.out('')
+
+           for k in print_keys_after_each_iteration:
+               v=stat_dict.get(k,None)
+               x='  * '+(' '*(lprint_keys_after_each_iteration-len(k)))+str(k)+' = '+str(v)
+
+               vr=ref_stat_dict.get(k,None)
+               if v!=None and vr!=None:
+                  x+=' ('+str(vr)+')'
+
+               ck.out(x)
+
+        ##########################################################################################
         # Check conditions
-        if prune!='yes' and len(result_conditions)>0:
+        if current_point!='' and len(result_conditions)>0 and (prune!='yes' or m>0) and fail!='yes':
            if o=='con':
               ck.out('')
               ck.out('Check extra conditions on results ...')
@@ -1093,7 +1128,7 @@ def autotune(i):
            if ry['return']>0: return ry 
 
            xdpoints=ry['points_to_delete']
-           if len(xdpoints)>0 and current_point!='':
+           if len(xdpoints)>0:
               if o=='con':
                  ck.out('')
                  ck.out('    WARNING: conditions on characteristics were not met!')
@@ -1187,25 +1222,33 @@ def autotune(i):
                     result_the_same=True
 
                  if not result_the_same and fail!='yes':
-                    # Check conditions
-                    ii={'action':'check',
-                        'module_uoa':cfg['module_deps']['math.conditions'],
-                        'new_points':['0'],
-                        'results':[{'point_uid':'0', 'flat':stat_dict}],
-                        'conditions':prune_result_conditions,
-                        'middle_key':condition_objective,
-                        'out':oo}
-                    ry=ck.access(ii)
-                    if ry['return']>0: return ry 
-
-                    gpoints=ry['good_points']
-                    dpoints=ry['points_to_delete']
-                    pruned_chars=ry['keys']
-
-                    if len(dpoints)==0:
+                    if len(prune_result_conditions)==0:
                        result_the_same=True
+                    else:
+                       ck.out('')
+                       ck.out('Check extra pruning conditions on results ...')
+                       ck.out('')
+
+                       # Check conditions
+                       ii={'action':'check',
+                           'module_uoa':cfg['module_deps']['math.conditions'],
+                           'new_points':['0'],
+                           'results':[{'point_uid':'0', 'flat':stat_dict}],
+                           'conditions':prune_result_conditions,
+                           'middle_key':condition_objective,
+                           'out':oo}
+                       ry=ck.access(ii)
+                       if ry['return']>0: return ry 
+
+                       gpoints=ry['good_points']
+                       dpoints=ry['points_to_delete']
+                       pruned_chars=ry['keys']
+
+                       if len(dpoints)==0:
+                          result_the_same=True
 
                  if o=='con':
+                    ck.out('')
                     if result_the_same:
                        ck.out('    *** Result did not change!')
                     else:
@@ -1255,6 +1298,7 @@ def autotune(i):
                        if not (fail=='yes' and fail_reason==last_md5_fail_text):
                           ref_stat_dict=copy.deepcopy(stat_dict)
                           ref_stat_out=copy.deepcopy(rr)
+                          ref_rrr=copy.deepcopy(rrr)
                           fdfi=ref_stat_dict
                           last_md5=cur_md5 #stat_dict.get('##characteristics#compile#md5_sum#min',None)
 
@@ -1268,6 +1312,9 @@ def autotune(i):
                           ck.out('    Keeping key "'+removing_key+'" ...')
 
                        pccur[removing_key]=removing_value
+
+                       stat_dict=copy.deepcopy(ref_stat_dict)
+                       rrr=copy.deepcopy(ref_rrr)
 
                  # Record influential optimization
                  if not result_the_same:
@@ -1414,7 +1461,8 @@ def autotune(i):
 
        report+='        Characteristics\' changes (in brackets):\n'
        for q in range(0, len(pruned_chars)):
-           report+='           '+str(q)+' = '+pruned_chars[q]+'\n'
+           pc=pruned_chars[q]
+           report+='           '+str(q)+' = '+pc+'\n'
        report+='\n'
 
        keys=[]
@@ -1432,9 +1480,15 @@ def autotune(i):
            if k not in keys:
               keys.append(k)
 
+       compiler_flags=''
+
        for k in keys:
+
            v=pccur.get(k,None)
            v1=pruned_influence.get(k,None)
+
+           if v!=None and k.startswith('##compiler_flags#'): 
+              compiler_flags+=' '+v.strip()
 
            j=ll-len(k)
 
@@ -1449,8 +1503,13 @@ def autotune(i):
                   v2=float(v1x)
                   y+=('%1.3f' % v2)
            else:
-              y='                 '
+              y='           '
            report+='    '+k+x+' ('+y+') : '+str(v)+'\n'
+
+       compiler_flags=compiler_flags.strip()
+       if compiler_flags!='':
+          report+='\n        Compiler flags: '+compiler_flags+'\n'
+          report+='\n'
 
        if o=='con':
           ck.out(report)
