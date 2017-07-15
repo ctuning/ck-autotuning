@@ -3260,6 +3260,7 @@ def pipeline(i):
 
               (best_base_flag)       - if 'yes', try to select best flag if available ...
               (speed)                - the same as above
+              (skip_best_base_flag)  - if 'yes', do not use best base flag (useful for exploration of other levels -O2,-O1,etc)
               (env_speed)            - use environment flag for best optimization (CK_OPT_SPEED)
 
               (select_best_base_flag_for_first_iteration) - if 'yes' and autotuning_iteration=0
@@ -3432,6 +3433,7 @@ def pipeline(i):
 
     ai=ck.get_from_dicts(i, 'autotuning_iteration', '', None)
     sbbf=ck.get_from_dicts(i, 'select_best_base_flag_for_first_iteration','', None)
+
     if sbbf=='yes' and ai!='' and ai==0:
        i['best_base_flag']='yes'
 
@@ -3537,6 +3539,8 @@ def pipeline(i):
 
     flags=ck.get_from_dicts(i, 'flags', '', choices)
     lflags=ck.get_from_dicts(i, 'lflags', '', choices)
+
+    sbbf=ck.get_from_dicts(i, 'skip_best_base_flag', '', choices)
 
     no_compile=ck.get_from_dicts(i, 'no_compile', '', choices)
     compile_only_once=ck.get_from_dicts(i, 'compile_only_once', '', choices)
@@ -4491,15 +4495,18 @@ def pipeline(i):
     compiler_flags=ck.get_from_dicts(i, 'compiler_flags', {}, choices)
 
     # Check if use best base flag
-    bbf=ck.get_from_dicts(i, 'best_base_flag', '', None)
-    if bbf=='':
-       bbf=ck.get_from_dicts(i, 'speed', '', None)
-    if bbf=='yes':
-       qx=choices_desc.get('##compiler_flags#base_opt',{}).get('choice',[])
-       if len(qx)>0:
-          compiler_flags['base_opt']=qx[0]
-          if '##compiler_flags#base_opt' not in choices_order:
-             choices_order.insert(0,'##compiler_flags#base_opt')
+    bbf=''
+
+    if sbbf!='yes':
+       bbf=ck.get_from_dicts(i, 'best_base_flag', '', None)
+       if bbf=='':
+          bbf=ck.get_from_dicts(i, 'speed', '', None)
+       if bbf=='yes':
+          qx=choices_desc.get('##compiler_flags#base_opt',{}).get('choice',[])
+          if len(qx)>0:
+             compiler_flags['base_opt']=qx[0]
+             if '##compiler_flags#base_opt' not in choices_order:
+                choices_order.insert(0,'##compiler_flags#base_opt')
 
     for q in compiler_flags:
         if '##compiler_flags#'+q not in choices_order:
