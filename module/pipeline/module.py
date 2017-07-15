@@ -1254,6 +1254,7 @@ def autotune(i):
                     else:
                        ck.out('    *** Result changed!')
 
+                 restore_stats=False
                  if started_prune_invert:
                     # We are in inverting mode ######################################################
                     if result_the_same:
@@ -1313,8 +1314,7 @@ def autotune(i):
 
                        pccur[removing_key]=removing_value
 
-                       stat_dict=copy.deepcopy(ref_stat_dict)
-                       rrr=copy.deepcopy(ref_rrr)
+                       restore_stats=True
 
                  # Record influential optimization
                  if not result_the_same:
@@ -1323,6 +1323,11 @@ def autotune(i):
                        for q in pruned_chars:
                            kky[q]=stat_dict.get(q,None)
                     pruned_influence[removing_key]=kky
+
+                 # Restore stat dict (for comparison)
+                 if restore_stats:
+                    stat_dict=copy.deepcopy(ref_stat_dict)
+                    rrr=copy.deepcopy(ref_rrr)
 
         if prune!='yes' and (len(fk)>0 or only_filter=='yes'):
            # If data was recorded to repo, reload all points 
