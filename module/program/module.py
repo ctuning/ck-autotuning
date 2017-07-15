@@ -1494,6 +1494,7 @@ def process_in_dir(i):
                 ccc['program_git_hash']=git_hash
 
           ofs=0
+          tbs=0
           md5=''
           if rry==8:
              misc['compilation_success']='no'
@@ -1521,6 +1522,7 @@ def process_in_dir(i):
              if os.path.isfile(target_exe):
                 ccc['binary_size']=os.path.getsize(target_exe)
                 ofs=ccc['binary_size']
+                tbs=ofs
 
                 # Try to read md5 file
                 if os.path.isfile(target_exe+'.md5'):
@@ -1553,7 +1555,7 @@ def process_in_dir(i):
                 s='Compilation time: '+('%.3f'%comp_time)+' sec.'
 
                 if meta.get('no_target_file','')!='yes':
-                   s+='; Object size: '+str(ofs)+'; MD5: '+md5
+                   s+='; Object size: '+str(ofs)+'; Total binary size: '+str(tbs)+'; MD5: '+md5
 
              ck.out(sep)
              ck.out(s)
