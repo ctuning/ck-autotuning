@@ -5673,6 +5673,7 @@ def xcrowdtune(i):
 def benchmark(i):
     """
     Input:  {
+              See ck run pipeline --data_uoa=program --help
             }
 
     Output: {
