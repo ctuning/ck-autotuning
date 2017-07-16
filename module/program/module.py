@@ -5728,8 +5728,33 @@ def benchmark(i):
     if len(up)>0:
        i['pipeline_update']=up
 
+    # If pruning flags from command line, need to prepare in universal CK format (choices and order)
+    iters=i.get('iterations','')
+
+    if i.get('prune','')=='yes' and i.get('flags','')!='':
+       pruned_choices_order=[]
+       pruned_choices={}
+
+       x=i['flags'].strip().split(' ')
+       for q in range(0,len(x)):
+           v=x[q].strip()
+           k='##compiler_flags#from_cmd_'+str(q+1)
+           pruned_choices_order.append(k)
+           pruned_choices[k]=v
+
+       i['solutions']=[{'points':[{
+           'pruned_choices_order':pruned_choices_order,
+           'pruned_choices':pruned_choices}]
+          }]
+
+       iters=-1
+
+    i['iterations']=iters
+
     r=ck.access(i)
     if r['return']>0: return r
+
+    ck.save_json_to_file({'json_file':'d:\\xyz4.json','dict':r})
 
     if o=='con':
        ck.out(sep)
@@ -5745,7 +5770,8 @@ def benchmark(i):
        if fail=='yes':
           ck.out('* Reason: '+fail_reason)
 
-       flat=r.get('last_stat_analysis',{}).get('dict_flat',{})
+       flat=r.get('last_stat_analysis',{})
+       if 'dict_flat' in flat: flat=flat.get('dict_flat',{}) # Stange incompatibility (not sure where it comes from)
 
        bs=flat.get('##characteristics#compile#binary_size#min',0)
        os=flat.get('##characteristics#compile#obj_size#min',0)
