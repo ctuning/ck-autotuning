@@ -513,6 +513,7 @@ def autotune(i):
     ref_stat_dict={} # if check with reference, save it
     ref_stat_out={}  # last iteration output for the reference
     ref_rrr={}       # ref characteristics
+    ref_rr={}        # ref last iteration output
     keys=[]          # keys to check for conditions or during pruning
 
     # most likely just one iteration - then set defaults
@@ -1315,6 +1316,7 @@ def autotune(i):
                           ref_stat_dict=copy.deepcopy(stat_dict)
                           ref_stat_out=copy.deepcopy(rr)
                           ref_rrr=copy.deepcopy(rrr)
+                          ref_rr=copy.deepcopy(rr)
                           fdfi=ref_stat_dict
                           last_md5=cur_md5 #stat_dict.get('##characteristics#compile#md5_sum#min',None)
 
@@ -1343,6 +1345,7 @@ def autotune(i):
                  if restore_stats:
                     stat_dict=copy.deepcopy(ref_stat_dict)
                     rrr=copy.deepcopy(ref_rrr)
+                    rr=copy.deepcopy(ref_rr)
 
         if prune!='yes' and (len(fk)>0 or only_filter=='yes'):
            # If data was recorded to repo, reload all points 
