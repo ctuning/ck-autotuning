@@ -1275,6 +1275,8 @@ def autotune(i):
                        if not (fail=='yes' and fail_reason==last_md5_fail_text):
                           ref_stat_dict=copy.deepcopy(stat_dict)
                           ref_stat_out=copy.deepcopy(rr)
+                          ref_rrr=copy.deepcopy(rrr)
+                          ref_rr=copy.deepcopy(rr)
                           fdfi=ref_stat_dict
                           last_md5=cur_md5
 
@@ -1298,7 +1300,7 @@ def autotune(i):
 
                        pccur[removing_key]=prx2
 
-                       pruned_inversed_flags[removing_key]=removing_value
+                       pruned_inversed_flags[removing_key]=prx2
 
                  else:
                     # We are in standard pruning mode ###############################################
