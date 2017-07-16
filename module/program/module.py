@@ -5754,8 +5754,6 @@ def benchmark(i):
     r=ck.access(i)
     if r['return']>0: return r
 
-    ck.save_json_to_file({'json_file':'d:\\xyz4.json','dict':r})
-
     if o=='con':
        ck.out(sep)
        ck.out('Some statistics:')
