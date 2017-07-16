@@ -198,6 +198,7 @@ def autotune(i):
                (prune_md5)                        - if 'yes', check if MD5 doesn't change
                (prune_invert)                     - if 'yes', prune all (switch off even unused - useful for collaborative machine learning)
                (prune_invert_add_iters)           - if 'yes', add extra needed iterations
+               (prune_invert_do_not_remove_key)   - if 'yes', keep both on and off keys (to know exact solution)
                (prune_result_conditions)          - list of extra conditions to accept result (variation, performance/energy/code size constraints, etc)
 
                (print_keys_after_each_iteration)  - print values of keys from flat dict after each iteration (to monitor characteristics)
@@ -273,6 +274,7 @@ def autotune(i):
     prune_invert=ck.get_from_dicts(ic, 'prune_invert', [], None) # Prune existing solutions
     prune_invert_add_iters=ck.get_from_dicts(ic, 'prune_invert_add_iters', '', None)
     prune_result_conditions=ck.get_from_dicts(ic, 'prune_result_conditions', [], None)
+    prune_invert_do_not_remove_key=ck.get_from_dicts(ic, 'prune_invert_do_not_remove_key', [], None)
 
     print_keys_after_each_iteration=ck.get_from_dicts(ic, 'print_keys_after_each_iteration', [], None)
     lprint_keys_after_each_iteration=-1
@@ -503,6 +505,7 @@ def autotune(i):
     # Check choices descriptions and dimensions
     cdesc=pipeline.get('choices_desc',{})
     corder=copy.deepcopy(i.get('choices_order',[]))
+
     csel=i.get('choices_selection',{})
     ccur=[]
     pccur={} # pruned choices, if needed
@@ -591,6 +594,7 @@ def autotune(i):
 
     removing_key=''
     removing_value=''
+    default_removing_value=''
     cur_md5=''
     last_md5=''
     last_md5_fail_text='compilation returned object file with the same MD5'
@@ -657,7 +661,7 @@ def autotune(i):
                     if len(pccur)>0:
                        if o=='con':
                           ck.out('')
-                          ck.out('  Pruning solution (iteratively reducing complexity of the found solution) ...')
+                          ck.out('  Pruning or inverting solution (iteratively reducing complexity of the found solution) ...')
 
                        # Check non-zero ones:
                        if not started_prune_invert:
@@ -679,7 +683,7 @@ def autotune(i):
 
                           if not started_prune_invert:
                              ck.out('  ***')
-                             ck.out('  Starting pruning all possible choices ...')
+                             ck.out('  Starting iteratively inverting all possible choices ...')
 
                              for q in ocorder[0]:
                                  if q not in corder1:
@@ -709,8 +713,10 @@ def autotune(i):
                           cccx=cddx.get('choice',[])
 
                           v=''
+                          default_removing_value=''
                           if len(cccx)>0:
                              v=cccx[len(cccx)-1]
+                             default_removing_value=cccx[0]
 
                           removing_value=v
                           pccur[removing_key]=v
@@ -1276,11 +1282,20 @@ def autotune(i):
                              ck.out('         NEW REFERENCE POINT (MD5='+last_md5+')!')
 
                     else:
+                       if prune_invert_do_not_remove_key=='yes':
+                          prx1='Adding'
+                          prx1a='to'
+                          prx2=default_removing_value
+                       else:
+                          prx1='Removing'
+                          prx1a='from'
+                          prx2=''
+
                        if o=='con':
                           ck.out('')
-                          ck.out('    Removing key "'+removing_key+'" from choices ...')
+                          ck.out('    '+prx1+' key "'+removing_key+'" '+prx1a+' choices ...')
 
-                       pccur[removing_key]=''
+                       pccur[removing_key]=prx2
 
                        pruned_inversed_flags[removing_key]=removing_value
 
