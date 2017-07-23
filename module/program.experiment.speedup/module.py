@@ -196,23 +196,26 @@ def reproduce(i):
 
             'module_uoa':cfg['module_deps']['pipeline'],
             'data_uoa':cfg['module_deps']['program'],
-            'program_uoa':puoa,
 
             'host_os':hos,
             'target_os':tos,
             'device_id':tdid,
 
-            'flags':cf,
-
             'repetitions': 1,
 
-            'no_run':'yes',
+            'force_pipeline_update':'yes',
 
             'out':'con'}
 
-        if len(ap)>0: ii.update(ap)
+        pipeline={'data_uoa':puoa,
+                  'flags':cf,
+                  'no_run':'yes'}
 
-        if len(deps)>0: ii['dependencies']=deps
+        if len(ap)>0: pipeline.update(ap)
+
+        if len(deps)>0: pipeline['dependencies']=deps
+
+        ii['pipeline']=pipeline
 
         r=ck.access(ii)
         if r['return']>0: return r
@@ -243,8 +246,8 @@ def reproduce(i):
         lsa=r.get('last_stat_analysis',{})
         fresults=lsa.get('dict_flat',{})
 
-        os=fresults.get('##characteristics#compile#obj_size#min',0)
-        md5=fresults.get('##characteristics#compile#obj_size#md5_sum','')
+        os=fresults.get('##characteristics#compile#binary_size#min',0)
+        md5=fresults.get('##characteristics#compile#md5_sum#min','')
 
         t.append(os)
         t.append(md5)
@@ -272,15 +275,22 @@ def reproduce(i):
 
                 'repetitions': srepeat,
 
-                'cmd_key':cmd_key,
-                'dataset_uoa':duid,
-                'no_compile':'yes',
+                'force_pipeline_update':'yes',
 
                 'out':'con'}
 
-            if len(ap)>0: ij.update(ap)
+            pipeline={'data_uoa':puoa,
+                      'cmd_key':cmd_key,
+                      'dataset_uoa':duid,
+                      'no_compile':'yes'}
 
-            if repeat>0: ij['repeat']=repeat
+            if len(ap)>0: pipeline.update(ap)
+
+            if len(deps)>0: pipeline['dependencies']=deps
+
+            if repeat>0: pipeline['repeat']=repeat
+
+            ij['pipeline']=pipeline
 
             r=ck.access(ij)
             if r['return']>0: return r
@@ -351,10 +361,15 @@ def reproduce(i):
        r1d0=otable[1][dlist[0]['data_uoa']]
        r1d1=otable[1][dlist[1]['data_uoa']]
 
-       t0d0=r0d0['##characteristics#run#execution_time_kernel_0#exp']/repeat
-       t0d1=r0d1['##characteristics#run#execution_time_kernel_0#exp']/repeat
-       t1d0=r1d0['##characteristics#run#execution_time_kernel_0#exp']/repeat
-       t1d1=r1d1['##characteristics#run#execution_time_kernel_0#exp']/repeat
+#       t0d0=r0d0['##characteristics#run#execution_time_kernel_0#exp']/repeat
+#       t0d1=r0d1['##characteristics#run#execution_time_kernel_0#exp']/repeat
+#       t1d0=r1d0['##characteristics#run#execution_time_kernel_0#exp']/repeat
+#       t1d1=r1d1['##characteristics#run#execution_time_kernel_0#exp']/repeat
+
+       t0d0=r0d0['##characteristics#run#execution_time_kernel_0#min']/repeat
+       t0d1=r0d1['##characteristics#run#execution_time_kernel_0#min']/repeat
+       t1d0=r1d0['##characteristics#run#execution_time_kernel_0#min']/repeat
+       t1d1=r1d1['##characteristics#run#execution_time_kernel_0#min']/repeat
 
        sd0=t0d0/t1d0
        sd1=t0d1/t1d1
