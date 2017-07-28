@@ -1,0 +1,14 @@
+{
+  "prune_ignore_choices": [
+     "##compiler_flags#from_cmd_1"
+  ],
+  "prune_print_keys":[
+     "##characteristics#run#execution_time_kernel_0#min",
+     "##characteristics#compile#binary_size#min",
+     "##characteristics#compile#md5_sum#min"
+  ],
+  "prune_conditions": [
+    ["##characteristics#run#execution_time_kernel_0$#objective#$", "_imp", ">", 0.99], 
+    ["##characteristics#compile#binary_size$#objective#$", "_imp", ">=", 1]
+  ]
+}

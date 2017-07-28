@@ -1,3 +1,5 @@
+* 2017.07.28 * added demo to reduce solution complexity (pruning compiler flags)
+
 * 2017.07.15 * improved iterative complexity reduction
              * added skip_best_base_flag to program pipeline (to allow exploration of different base optimization levels with replay)
 
