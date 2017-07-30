@@ -1,3 +1,6 @@
+* 2017.07.30 * added prepare_table_with_results program 
+               (generate HTML and Tex with optimization results - useful for interactive optimization reports)
+
 * 2017.07.28 * added demo to reduce solution complexity (pruning compiler flags)
 
 * 2017.07.15 * improved iterative complexity reduction

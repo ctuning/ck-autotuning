@@ -6030,3 +6030,151 @@ def copy_file_to_remote(i):
           return {'return':1, 'error':'copying to remote device failed'}
 
     return {'return':0}
+
+##############################################################################
+# prepare HTML/TEX table with results
+
+def prepare_table_with_results(i):
+    """
+    Input:  {
+               table_header
+               entries
+               
+               (force_round)
+
+               (out_html_file)
+               (out_tex_file)
+
+               (skip_stats) - if 'yes', do not show stats (useful to show reduced flags)
+
+               (tex_wide) - if 'yes' create wide table
+            }
+
+    Output: {
+              return       - return code =  0, if successful
+                                         >  0, if error
+              (error)      - error text if return > 0
+            }
+
+    """
+
+    import ck.kernel as ck
+    import os
+
+    html_file=i.get('out_html_file','')
+    tex_file=i.get('out_tex_file','')
+
+    force_round=i.get('force_round',None)
+
+    table_header=i['table_header']
+    table=[]
+    table_custom=[]
+
+    entries=i['entries']
+
+    cwd=os.getcwd()
+
+    fh=os.path.join(cwd, html_file)
+    ft=os.path.join(cwd, tex_file)
+
+    # Processing data (filling in table)
+    for e in entries:
+        duid=e['data_uid']
+        duoa=e['data_uoa']
+        puid=e['point']
+        note=e['note']
+        ef=e['extra_field']
+        custom=e.get('custom',{})
+
+        ck.out('Processing '+duoa+' ('+puid+') ...')
+
+        r=ck.access({'action':'get',
+                     'module_uoa':cfg['module_deps']['experiment'],
+                     'data_uoa':duid,
+                     'point':puid,
+                     'load_json_files':['flat']})
+        if r['return']>0: return r
+
+        points=r.get('points',[])
+        if len(points)==0:
+           return {'return':1, 'error':'can\'t find data'}
+
+        p0=points[0]
+
+        pf=p0.get('flat',{})
+        if len(pf)==0:
+           return {'return':1, 'error':'can\'t find stats in entry'}
+
+        # Execution time
+        et_min=pf.get('##characteristics#run#execution_time_kernel_0#min',None)
+        et_exp=pf.get('##characteristics#run#execution_time_kernel_0#exp',None)
+        et_mean=pf.get('##characteristics#run#execution_time_kernel_0#mean',None)
+        et_range=pf.get('##characteristics#run#execution_time_kernel_0#range',None)
+        et_range_percent=pf.get('##characteristics#run#execution_time_kernel_0#range_percent',None)
+
+        # Make proper +- string
+        r=ck.access({'action':'process_plus_minus',
+                     'module_uoa':cfg['module_deps']['math.variation'],
+                     'var_mean':et_mean,
+                     'var_range':et_range,
+                     'force_round':force_round})
+        if r['return']>0: return r
+
+        et_mean=r['var_mean']
+        et_range=r['var_range']
+
+        et_h=r['html']
+        et_t=r['tex']
+
+        custom['field_2_html']=et_h
+        custom['field_2_tex']=et_t
+
+        # Total binary size (not object file size)
+        bs=pf.get('##characteristics#compile#binary_size#min',None)
+
+        # Flags
+        flags=pf.get('##characteristics#compile#joined_compiler_flags#min','')
+
+        # Check if need to bold them
+        if e.get('bold_flags','')=='yes':
+           flags1=flags.split(' ')
+           hflags=''
+           tflags=''
+
+           for fl in flags1:
+               tfl=fl
+               if not fl.startswith('-fno-'):
+                  fl='<b>'+fl+'</b>'
+                  tfl='\\textbf{'+tfl+'}'
+
+               if hflags!='': hflags+=' '
+               hflags+=fl
+
+               if tflags!='': tflags+=' '
+               tflags+=tfl
+
+           custom['field_4_html']=hflags
+           custom['field_4_tex']=tflags
+
+        tb=[note]
+        if i.get('skip_stats','')!='yes':
+           tb+=[ef, et_mean, bs]
+        tb.append(flags)
+
+        table.append(tb)
+        table_custom.append(custom)
+
+    # Preparing table
+    r=ck.access({'action':'prepare',
+                 'module_uoa':cfg['module_deps']['table'],
+                 'table':table,
+                 'table_custom':table_custom,
+                 'table_header':table_header,
+                 'table_style':'border="1" cellpadding="5" cellspacing="0"',
+                 'header_style':'style="background-color:#cfcfcf;"',
+                 'element_style':'valign="top"',
+                 'header_element_style':'valign="top"',
+                 'tex_wide':i.get('tex_wide',''),
+                 'record_html':fh,
+                 'record_tex':ft})
+    return r
