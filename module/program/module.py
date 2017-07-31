@@ -6091,13 +6091,16 @@ def prepare_table_with_results(i):
         r=ck.access({'action':'get',
                      'module_uoa':cfg['module_deps']['experiment'],
                      'data_uoa':duid,
-                     'point':puid,
+                     'prune_points':[puid],
                      'load_json_files':['flat']})
         if r['return']>0: return r
+        ck.save_json_to_file({'json_file':'d:\\xyz1.json','dict':r})
 
         points=r.get('points',[])
         if len(points)==0:
            return {'return':1, 'error':'can\'t find data'}
+        if len(points)>1:
+           return {'return':1, 'error':'ambiguity - more than one point found'}
 
         p0=points[0]
 
@@ -6153,8 +6156,12 @@ def prepare_table_with_results(i):
                if tflags!='': tflags+=' '
                tflags+=tfl
 
-           custom['field_4_html']=hflags
-           custom['field_4_tex']=tflags
+           j='1'
+           if i.get('skip_stats','')!='yes':
+              j='4'
+
+           custom['field_'+j+'_html']=hflags
+           custom['field_'+j+'_tex']=tflags
 
         tb=[note]
         if i.get('skip_stats','')!='yes':
