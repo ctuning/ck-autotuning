@@ -6165,19 +6165,20 @@ def prepare_table_with_results(i):
         duid=e['data_uid']
         duoa=e['data_uoa']
         puid=e['point']
+        puidi=e.get('point_improvement','')
         note=e['note']
         ef=e['extra_field']
         custom=e.get('custom',{})
 
         ck.out('Processing '+duoa+' ('+puid+') ...')
 
+        # Point 1
         r=ck.access({'action':'get',
                      'module_uoa':cfg['module_deps']['experiment'],
                      'data_uoa':duid,
                      'prune_points':[puid],
                      'load_json_files':['flat']})
         if r['return']>0: return r
-        ck.save_json_to_file({'json_file':'d:\\xyz1.json','dict':r})
 
         points=r.get('points',[])
         if len(points)==0:
@@ -6198,28 +6199,78 @@ def prepare_table_with_results(i):
         et_range=pf.get('##characteristics#run#execution_time_kernel_0#range',None)
         et_range_percent=pf.get('##characteristics#run#execution_time_kernel_0#range_percent',None)
 
-        # Make proper +- string
-        r=ck.access({'action':'process_plus_minus',
-                     'module_uoa':cfg['module_deps']['math.variation'],
-                     'var_mean':et_mean,
-                     'var_range':et_range,
-                     'force_round':force_round})
-        if r['return']>0: return r
-
-        et_mean=r['var_mean']
-        et_range=r['var_range']
-
-        et_h=r['html']
-        et_t=r['tex']
-
-        custom['field_2_html']=et_h
-        custom['field_2_tex']=et_t
-
         # Total binary size (not object file size)
         bs=pf.get('##characteristics#compile#binary_size#min',None)
 
-        # Flags
-        flags=pf.get('##characteristics#compile#joined_compiler_flags#min','')
+        # Point Improvement
+        imp_et=0
+        imp_bs=0
+
+        if puidi!='':
+           r=ck.access({'action':'get',
+                        'module_uoa':cfg['module_deps']['experiment'],
+                        'data_uoa':duid,
+                        'prune_points':[puidi],
+                        'load_json_files':['flat']})
+           if r['return']>0: return r
+
+           ipoints=r.get('points',[])
+           if len(ipoints)==0:
+              return {'return':1, 'error':'can\'t find data'}
+           if len(ipoints)>1:
+              return {'return':1, 'error':'ambiguity - more than one point found'}
+
+           ip0=ipoints[0]
+
+           ipf=ip0.get('flat',{})
+           if len(ipf)==0:
+              return {'return':1, 'error':'can\'t find stats in entry'}
+
+           # Execution time
+           iet_min=ipf.get('##characteristics#run#execution_time_kernel_0#min',None)
+           iet_exp=ipf.get('##characteristics#run#execution_time_kernel_0#exp',None)
+           iet_mean=ipf.get('##characteristics#run#execution_time_kernel_0#mean',None)
+           iet_range=ipf.get('##characteristics#run#execution_time_kernel_0#range',None)
+           iet_range_percent=ipf.get('##characteristics#run#execution_time_kernel_0#range_percent',None)
+
+           # Total binary size (not object file size)
+           ibs=ipf.get('##characteristics#compile#binary_size#min',None)
+
+           # Flags
+           flags=ipf.get('##characteristics#compile#joined_compiler_flags#min','')
+
+           # Calcluating improvements (should check relative error later)
+           imp_et=float(et_min)/float(iet_min)
+           imp_bs=float(bs)/float(ibs)
+
+           simp_et='~ %.2f' % imp_et
+           simp_bs='~ %.2f' % imp_bs
+
+           custom['field_2_html']=simp_et
+           custom['field_2_tex']=simp_et
+
+           custom['field_3_html']=simp_bs
+           custom['field_3_tex']=simp_bs
+        else:
+           # Make proper +- string
+           r=ck.access({'action':'process_plus_minus',
+                        'module_uoa':cfg['module_deps']['math.variation'],
+                        'var_mean':et_mean,
+                        'var_range':et_range,
+                        'force_round':force_round})
+           if r['return']>0: return r
+
+           et_mean=r['var_mean']
+           et_range=r['var_range']
+
+           et_h=r['html']
+           et_t=r['tex']
+
+           custom['field_2_html']=et_h
+           custom['field_2_tex']=et_t
+
+           # Flags
+           flags=ipf.get('##characteristics#compile#joined_compiler_flags#min','')
 
         # Check if need to bold them
         if e.get('bold_flags','')=='yes':
@@ -6248,7 +6299,10 @@ def prepare_table_with_results(i):
 
         tb=[note]
         if i.get('skip_stats','')!='yes':
-           tb+=[ef, et_mean, bs]
+           if puidi!='':
+              tb+=[ef, imp_et, imp_bs]
+           else:
+              tb+=[ef, et_mean, bs]
         tb.append(flags)
 
         table.append(tb)
