@@ -1,3 +1,5 @@
+* 2017.08.13 * added --shared_solution_cid= (-Ocid-uid1-uid2) to reuse shared solutions in program pipelines
+
 * 2017.07.30 * added prepare_table_with_results program 
                (generate HTML and Tex with optimization results - useful for interactive optimization reports)
 

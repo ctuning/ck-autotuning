@@ -3263,6 +3263,14 @@ def pipeline(i):
               (skip_best_base_flag)  - if 'yes', do not use best base flag (useful for exploration of other levels -O2,-O1,etc)
               (env_speed)            - use environment flag for best optimization (CK_OPT_SPEED)
 
+              (shared_solution_cid)  - CID-UID1-UID2 of the shared optimization solution at cKnowledge.org/repo
+                                       You can find it by clicking on a "Copy CID to clipboard" button of a given solution.
+                                       See example at http://cknowledge.org/repo/web.php?wcid=8289e0cf24346aa7:79bca2b76876b5c6
+                                       27bc42ee449e880e:79bca2b76876b5c6-8289e0cf24346aa7-f49649288ab0accd
+
+              (Ocid-uid1-uid2)         Substituting compiler -Ox levels with shared solutions in above format
+                                       (-O27bc42ee449e880e:79bca2b76876b5c6-8289e0cf24346aa7-f49649288ab0accd)
+
               (select_best_base_flag_for_first_iteration) - if 'yes' and autotuning_iteration=0
 
 
@@ -4483,13 +4491,88 @@ def pipeline(i):
 #    env=ck.get_from_dicts(i,'env',{},choices)
 
     ###############################################################################################################
+    # PIPELINE SECTION: Check remote solution
+    for k in i:
+        if k.startswith('O'):
+           i['shared_solution_cid']=k[1:]
+           del(i[k])
+           break
+    scid=ck.get_from_dicts(i, 'shared_solution_cid', '', choices)
+
+    if scid!='':
+       if o=='con':
+          ck.out(sep)
+          ck.out('Attempting to load shared solution ('+scid+') ...')
+          ck.out('')
+
+       xsuid1=''
+       xsuid2=''
+       j=scid.find('-')
+       if j>0:
+          xscid=scid[j+1:].split('-')
+          xsuid1=xscid[0]
+          if len(xscid)>1:
+             xsuid2=xscid[1]
+
+          scid=scid[:j]
+
+       rx=ck.parse_cid({'cid':scid})
+       if rx['return']>0: return rx
+
+       xsruoa=rx.get('repo_uoa','')
+       xsmuoa=rx.get('module_uoa','')
+       xsduoa=rx.get('data_uoa','')
+
+       if xsruoa=='': xsruoa=ck.cfg['default_exchange_repo_uoa']
+
+       ii={'action':'get',
+           'module_uoa':xsmuoa,
+           'repo_uoa':xsruoa,
+           'scenario_module_uoa':xsuid1,
+           'solution_uid':xsuid2,
+           'data_uoa':xsduoa}
+       rz=ck.access(ii)
+       if rz['return']>0: return rz
+
+       sols=rz['solutions']
+
+       if len(sols)==0:
+          return {'return':1, 'error':'no shared solutions found'}
+
+       if len(sols)>1:
+          return {'return':1, 'error':'ambiguity - more than 1 shared solution found'}
+  
+       xsp=sols[0].get('points',[])
+
+       if len(xsp)==0:
+          return {'return':1, 'error':'no optimization points found in a shared solution'}
+
+       if len(xsp)>1:
+          return {'return':1, 'error':'ambiguity - more than 1 optimization point found in a shared solution'}
+
+       xpruned_choices=xsp[0].get('pruned_choices',{})
+       xpruned_choices_order=xsp[0].get('pruned_choices_order',[])
+
+       # Rebuild choices!
+       for k in xpruned_choices_order:
+           if k in xpruned_choices:
+              if k not in choices_order:
+                 choices_order.append(k)
+              v=xpruned_choices[k]
+
+              rx=ck.set_by_flat_key({'dict':choices, 'key':k, 'value':v})
+              if rx['return']>0: return rx
+
+       ck.out('')
+       ck.out('Successfully pre-loaded solution choices and orders to program pipeline!')
+
+    ###############################################################################################################
     # Pipeline ready for compile/run
     i['ready']='yes'
     if pr=='yes':
        return finalize_pipeline(i)
 
     ###############################################################################################################
-
     # Restore compiler flag selection with order for optimization reordering (!)
     # Simplified - needs to be improved for more complex cases (dict of dict)
     compiler_flags=ck.get_from_dicts(i, 'compiler_flags', {}, choices)
