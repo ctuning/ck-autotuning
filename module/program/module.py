@@ -6131,6 +6131,8 @@ def prepare_table_with_results(i):
                (skip_stats) - if 'yes', do not show stats (useful to show reduced flags)
 
                (tex_wide) - if 'yes' create wide table
+
+               (url_prefix) - add URL to index
             }
 
     Output: {
@@ -6160,12 +6162,15 @@ def prepare_table_with_results(i):
     fh=os.path.join(cwd, html_file)
     ft=os.path.join(cwd, tex_file)
 
+    url_prefix=i.get('url_prefix','')
+
     # Processing data (filling in table)
     for e in entries:
         duid=e['data_uid']
         duoa=e['data_uoa']
         puid=e['point']
         puidi=e.get('point_improvement','')
+        no_imp=e.get('no_improvement','')
         note=e['note']
         ef=e['extra_field']
         custom=e.get('custom',{})
@@ -6202,9 +6207,23 @@ def prepare_table_with_results(i):
         # Total binary size (not object file size)
         bs=pf.get('##characteristics#compile#binary_size#min',None)
 
+        # Flags
+        flags=pf.get('##characteristics#compile#joined_compiler_flags#min','')
+
         # Point Improvement
         imp_et=0
         imp_bs=0
+
+        # Get URL
+        url=''
+        if url_prefix!='':
+           px=puid
+           if puidi!='': px=puidi
+           url1=url_prefix+'wcid=experiment:'+duid+'&subpoint='+px
+           url2=url_prefix+'wcid=experiment:'+duid+'\&subpoint='+px
+
+           custom['field_0_html']='<a href="'+url1+'">'+note+'</a>'
+           custom['field_0_tex']='\href{'+url2+'}{'+note+'}'
 
         if puidi!='':
            r=ck.access({'action':'get',
@@ -6239,6 +6258,20 @@ def prepare_table_with_results(i):
            # Flags
            flags=ipf.get('##characteristics#compile#joined_compiler_flags#min','')
 
+           # Make proper +- string
+           r=ck.access({'action':'process_plus_minus',
+                        'module_uoa':cfg['module_deps']['math.variation'],
+                        'var_mean':et_mean,
+                        'var_range':et_range,
+                        'force_round':force_round})
+           if r['return']>0: return r
+
+           iet_mean=r['var_mean']
+           iet_range=r['var_range']
+
+           iet_h=r['html']
+           iet_t=r['tex']
+
            # Calcluating improvements (should check relative error later)
            imp_et=float(et_min)/float(iet_min)
            imp_bs=float(bs)/float(ibs)
@@ -6246,11 +6279,11 @@ def prepare_table_with_results(i):
            simp_et='~ %.2f' % imp_et
            simp_bs='~ %.2f' % imp_bs
 
-           custom['field_2_html']=simp_et
-           custom['field_2_tex']=simp_et
+           custom['field_2_html']=simp_et+' <i>('+iet_h+')</i>'
+           custom['field_2_tex']=simp_et+' ('+iet_t+')'
 
-           custom['field_3_html']=simp_bs
-           custom['field_3_tex']=simp_bs
+           custom['field_3_html']=simp_bs+' <i>('+str(bs)+')</i>'
+           custom['field_3_tex']=simp_bs+' ('+str(bs)+')'
         else:
            # Make proper +- string
            r=ck.access({'action':'process_plus_minus',
@@ -6266,11 +6299,15 @@ def prepare_table_with_results(i):
            et_h=r['html']
            et_t=r['tex']
 
+           if no_imp=='yes':
+              et_h='no <i>('+et_h+')</i>'
+              et_t='no ('+et_t+')'
+
+              custom['field_3_html']='no <i>('+str(bs)+')</i>'
+              custom['field_3_tex']='no ('+str(bs)+')'
+
            custom['field_2_html']=et_h
            custom['field_2_tex']=et_t
-
-           # Flags
-           flags=ipf.get('##characteristics#compile#joined_compiler_flags#min','')
 
         # Check if need to bold them
         if e.get('bold_flags','')=='yes':
