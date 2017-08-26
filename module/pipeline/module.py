@@ -125,7 +125,8 @@ def autotune(i):
                                                      architecture failures, etc)
                (record_only_failed)               - if 'yes', record only failed experiments
                                                     (useful to crowdsource experiments when searching only 
-                                                     for compiler/program/architecture bugs)...
+                                                     for compiler/program/architecture bugs  
+                                                     (for example fuzzing via random compiler flags))...
                (record_permanent)                 - if 'yes', mark recorded points as permanent (will not be deleted by Pareto filter)
                (record_ignore_update)             - (default=yes), if 'yes', skip recording date/author info for each update
                (tags)                             - record these tags to the entry description
