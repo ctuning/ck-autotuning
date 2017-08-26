@@ -322,8 +322,6 @@ def autotune(i):
        record_repo=rx.get('repo_uoa','')
     record_failed=ck.get_from_dicts(ic, 'record_failed','', None)
     record_only_failed=ck.get_from_dicts(ic, 'record_only_failed','', None)
-    print (record_only_failed)
-    exit(1)
     record_ignore_update=ic.get('record_ignore_update','')
     if record_ignore_update=='': record_ignore_update='yes'
     if 'record_ignore_update' in ic: del(ic['record_ignore_update'])
