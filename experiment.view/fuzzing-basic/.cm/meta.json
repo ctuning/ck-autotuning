@@ -1,0 +1,103 @@
+{
+  "flat_keys": [
+    "##choices#host_os",
+    "##choices#target_os",
+    "##features#platform#cpu#name",
+    "##features#platform#cpu#sub_name",
+    "##features#platform#cpu#num_proc",
+    "##features#compiler_version#raw@0",
+    "##choices#data_uoa",
+    "##choices#cmd_key",
+    "##choices#dataset_uoa",
+    "##choices#dataset_file",
+    "##characteristics#run#repeat",
+    "##characteristics#run#execution_time_kernel_0",
+    "##characteristics#run#run_time_state#energy_a15_mem_gpu",
+    "##characteristics#run#run_time_state#energy_a7_mem_gpu",
+    "##characteristics#compile#obj_size",
+    "##characteristics#compile#binary_size",
+    "##features#platform#cpu#current_freq#0",
+    "##choices#gpu_freq",
+    "##characteristics#run#accuracy",
+    "##characteristics#run#faults",
+    "##choices#compiler_flags#*",
+    "##choices#compiler_vars#*"
+  ],
+  "flat_keys_desc": [
+    {
+      "desc": "Host OS",
+      "module_uoa": "0440cb72c2bc5cc6",
+      "type": "uoa"
+    },
+    {
+      "desc": "Target OS",
+      "module_uoa": "0440cb72c2bc5cc6",
+      "type": "uoa"
+    },
+    {
+      "desc": "CPU name"
+    },
+    {
+      "desc": "CPU sub-name"
+    },
+    {
+      "desc": "Number of logical cores"
+    },
+    {
+      "desc": "Raw compiler name"
+    },
+    {
+      "desc": "Program UOA",
+      "module_uoa": "b0ac08fe1d3c2615",
+      "type": "uoa"
+    },
+    {
+      "desc": "CMD key"
+    },
+    {
+      "desc": "Dataset UOA",
+      "module_uoa": "8a7141c59cd335f5",
+      "type": "uoa"
+    },
+    {
+      "desc": "Dataset file"
+    },
+    {
+      "desc": "Calibration"
+    },
+    {
+      "desc": "Execution time (sec.)"
+    },
+    {
+      "desc": "Energy total (A15, joules)"
+    },
+    {
+      "desc": "Energy total (A7, joules)"
+    },
+    {
+      "desc": "Object size (bytes)"
+    },
+    {
+      "desc": "Binary size (bytes)"
+    },
+    {
+      "desc": "CPU freq (MHz)"
+    },
+    {
+      "desc": "GPU freq (MHz)"
+    },
+    {
+      "desc": "Algorithm accuracy"
+    },
+    {
+      "desc": "Faults"
+    },
+    {
+      "desc": "Compiler flags"
+    },
+    {
+      "desc": "Compiler vars",
+      "view_add_key": "yes"
+    }
+  ]
+}
