@@ -3737,25 +3737,34 @@ def pipeline(i):
     ###############################################################################################################
     # PIPELINE SECTION: Host and target platform selection
     # Check via --target first (however, for compatibility, check that module exists first)
+    local_platform=i.get('local_platform','')
+
     r=ck.access({'action':'find',
                  'module_uoa':cfg['module_deps']['module'],
                  'data_uoa':cfg['module_deps']['machine']})
-    if r['return']==0 and i.get('skip_target','')!='yes':
+    if r['return']==0 and i.get('skip_target','')!='yes' and local_platform!='yes':
        if o=='con':
           ck.out(sep)
           ck.out('Obtaining platform parameters and checking other obligatory choices for the pipeline ...')
           ck.out('')
 
+#       Original code which was not allowing to reply on a different machine (host/target was overwrited by recorded pipeline)
+#       target=i.get('target','')
+#       if target=='':
+#          target=choices.get('target','')
+#          i['target']=target
+#       device_cfg=i.get('device_cfg',{})
+#       if len(device_cfg)==0: i['device_cfg']=choices.get('device_cfg',{})
+#       tos=i.get('target_os','')
+#       if tos=='': i['target_os']=choices.get('target_os','')
+#       tdid=i.get('device_id','')
+#       if tdid=='': i['device_id']=choices.get('device_id','')
+
        target=i.get('target','')
+
        if target=='':
           target=choices.get('target','')
           i['target']=target
-       device_cfg=i.get('device_cfg',{})
-       if len(device_cfg)==0: i['device_cfg']=choices.get('device_cfg',{})
-       tos=i.get('target_os','')
-       if tos=='': i['target_os']=choices.get('target_os','')
-       tdid=i.get('device_id','')
-       if tdid=='': i['device_id']=choices.get('device_id','')
 
        r=ck.search({'module_uoa':cfg['module_deps']['machine'], 'data_uoa':target, 'add_meta':'yes'})
        if r['return']>0: return r
@@ -3820,7 +3829,8 @@ def pipeline(i):
                 if x not in zz:
                    return {'return':1, 'error':'choice is not recognized ('+str(x)+')'}
 
-                i['target']=zz[x]
+                target=zz[x]
+                i['target']=target
 
                 ck.out('')
              else:
@@ -3836,6 +3846,25 @@ def pipeline(i):
        r=ck.access(ii)
        if r['return']>0: return r
 
+       # Update choices if external change in target
+       if target!='' and choices.get('target','')!=target: 
+          choices['target']=target
+
+          device_cfg=i.get('device_cfg',{})
+          if len(device_cfg)!=0: choices['device_cfg']=device_cfg
+
+       hos=i.get('host_os','')
+       if hos!='' and choices.get('host_os','')!=hos:
+          choices['host_os']=hos
+
+       tos=i.get('target_os','')
+       if tos!='' and choices.get('target_os','')!=tos:
+          choices['target_os']=tos
+
+       tdid=i.get('device_id','')
+       if tdid!='' and choices.get('target_id','')!=tdid:
+          choices['target_id']=tdid
+
     target=ck.get_from_dicts(i, 'target', '', choices)
     device_cfg=ck.get_from_dicts(i, 'device_cfg', {}, choices)
 
@@ -3845,11 +3874,10 @@ def pipeline(i):
     tdid=ck.get_from_dicts(i, 'device_id', '', choices)
 
     # Useful when replaying experiments, to retarget them to a local platform
-    if i.get('local_platform','')=='yes':
+    if local_platform=='yes':
        target=''
        hos=''
        tos=''
-       tbits=''
        tdid=''
 
     # Get some info about platforms

@@ -517,7 +517,7 @@ def autotune(i):
     ref_rr={}        # ref last iteration output
     keys=[]          # keys to check for conditions or during pruning
 
-    # most likely just one iteration - then set defaults
+    # most likely just one iteration - then set defaults to generate random solutions
     if len(corder)==1 and len(csel)==0:
        csel=[{"type":"random"}]
 

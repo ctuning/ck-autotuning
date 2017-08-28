@@ -1,3 +1,5 @@
+* 2017.08.28 * fixing ck replay experiment (proper rebuilding of choices)!
+
 * 2017.08.27 * added experiment.view:fuzzing-basic to view results from crowd-fuzzing various SW such as compilers
 
 * 2017.08.13 * added --shared_solution_cid= (-Ocid-uid1-uid2) to reuse shared solutions in program pipelines
