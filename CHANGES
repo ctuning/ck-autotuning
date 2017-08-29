@@ -1,3 +1,5 @@
+* 2017.08.29 * added reduce_bug option to localize bugs during compiler fuzzing (reducing complexity)
+
 * 2017.08.28 * fixing ck replay experiment (proper rebuilding of choices)!
 
 * 2017.08.27 * added experiment.view:fuzzing-basic to view results from crowd-fuzzing various SW such as compilers

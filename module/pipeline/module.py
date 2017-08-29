@@ -195,6 +195,8 @@ def autotune(i):
                (internal_ref)                     - if 'yes', try internal reference before checking solutions ...
 
                (prune)                            - prune solution (find minimal choices that give the same result)
+               (reduce)                           - the same as above
+               (reduce_bug)                       - reduce choices to localize bug (pipeline fail)
                (prune_ignore_choices)             - list of choices to ignore (such as base flag, for example)
                (prune_md5)                        - if 'yes', check if MD5 doesn't change
                (prune_invert)                     - if 'yes', prune all (switch off even unused - useful for collaborative machine learning)
@@ -270,6 +272,12 @@ def autotune(i):
     pdafr=ck.get_from_dicts(ic, 'preserve_deps_after_first_run', '', None)
 
     prune=ck.get_from_dicts(ic, 'prune', '', None) # Prune existing solutions
+
+    reduce=ck.get_from_dicts(ic, 'reduce', '', None) # Prune existing solutions
+    if prune=='': prune=reduce
+
+    reduce_bug=ck.get_from_dicts(ic, 'reduce_bug', '', None) # if 'yes', reduce choices to localize bugs (pipeline fail)
+
     prune_md5=ck.get_from_dicts(ic, 'prune_md5', '', None) # if 'yes', prune if MD5 doesn't change
     prune_ignore_choices=ck.get_from_dicts(ic, 'prune_ignore_choices', [], None) # Prune existing solutions
     prune_invert=ck.get_from_dicts(ic, 'prune_invert', [], None) # Prune existing solutions
@@ -935,10 +943,17 @@ def autotune(i):
             rr=ck.access(pipeline1)
             if rr['return']>0: return rr
 
+            fail=rr.get('fail','')
+            fail_reason=rr.get('fail_reason','')
+
             if pdafr=='yes' and m==0 and sr==0:
                # Preserve resolved deps (useful for replay)
                pipeline['dependencies']=copy.deepcopy(pipeline1.get('dependencies',{}))
                pipelinec['dependencies']=copy.deepcopy(pipeline1.get('dependencies',{}))
+
+               # Check if reduce bug but pipeline didn't fail
+               if reduce_bug=='yes' and fail!='yes':
+                  return {'return':1, 'error':'trying to reduce bug but pipeline didn\'t fail'}
 
             xcur_md5=pipeline1.get('characteristics',{}).get('compile',{}).get('md5_sum','')
             if sr==0 and xcur_md5!='': cur_md5=xcur_md5
@@ -947,8 +962,6 @@ def autotune(i):
 
             last_orders_from_pipeline=rr.get('choices_order',[])
 
-            fail=rr.get('fail','')
-            fail_reason=rr.get('fail_reason','')
             if (fail!='yes' and record_only_failed!='yes') or (fail=='yes' and (record_failed=='yes' or record_only_failed=='yes')):
                ddcl.append(pipeline1.get('characteristics',{}))
 
@@ -1226,8 +1239,9 @@ def autotune(i):
                  ck.out('')
 
                  result_the_same=False
-                 if fail=='yes' and fail_reason==last_md5_fail_text:
-                    result_the_same=True
+                 if fail=='yes':
+                    if reduce_bug=='yes' or (fail_reason==last_md5_fail_text):
+                       result_the_same=True
 
                  if not result_the_same and fail!='yes':
                     if len(prune_result_conditions)==0:

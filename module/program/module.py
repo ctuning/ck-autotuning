@@ -3548,7 +3548,7 @@ def pipeline(i):
     flags=ck.get_from_dicts(i, 'flags', '', choices)
     lflags=ck.get_from_dicts(i, 'lflags', '', choices)
 
-    sbbf=ck.get_from_dicts(i, 'skip_best_base_flag', '', choices)
+    sbbfx=ck.get_from_dicts(i, 'skip_best_base_flag', '', choices)
 
     no_compile=ck.get_from_dicts(i, 'no_compile', '', choices)
     compile_only_once=ck.get_from_dicts(i, 'compile_only_once', '', choices)
@@ -4608,7 +4608,7 @@ def pipeline(i):
     # Check if use best base flag
     bbf=''
 
-    if sbbf!='yes':
+    if sbbfx!='yes':
        bbf=ck.get_from_dicts(i, 'best_base_flag', '', None)
        if bbf=='':
           bbf=ck.get_from_dicts(i, 'speed', '', None)
