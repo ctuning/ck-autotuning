@@ -105,12 +105,21 @@ def extract(i):
             'skip_info_collection':'yes',
             'no_run':'yes'}
         r=ck.access(ii)
+
+        finish=False
         if r['return']>0:
+           finish=True
            if o=='con':
               ck.out('')
               ck.out('CK WARNING: pipeline failed ('+r['error']+')')
               ck.out('')
-        else:
+
+              rx=ck.inp({'text':'Would you still like to record some extracted features (Y/n)? '})
+              x=rx['string'].strip()
+              if x!='n' and x!='N':
+                 finish=False
+
+        if not finish:
            feat=r.get('features',{}).get('program_static_milepost_features',{})
 
            if len(feat)>0:
