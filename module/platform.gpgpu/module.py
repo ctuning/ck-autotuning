@@ -279,7 +279,7 @@ def detect(i):
                      if ex=='yes':
                         if o=='con':
                            ck.out('')
-                           ck.out('Exchanging information with repository ...')
+                           ck.out('Exchanging information with '+er+' repository ...')
 
                         ii={'action':'exchange',
                             'module_uoa':cfg['module_deps']['platform'],

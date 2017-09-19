@@ -1,3 +1,5 @@
+* 2017.09.19 * minor output improvement
+
 * 2017.08.29 * added reduce_bug option to localize bugs during compiler fuzzing (reducing complexity)
 
 * 2017.08.28 * fixing ck replay experiment (proper rebuilding of choices)!
