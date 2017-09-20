@@ -5589,6 +5589,7 @@ def cp(i):
 
     i['common_func']='yes'
     r=ck.access(i)
+    if r['return']>0: return r
 
     ruid=r['repo_uid']
     muid=r['module_uid']

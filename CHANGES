@@ -1,5 +1,6 @@
 * 2017.09.20 * added support to load dataset files to run_envs (for example to specify tensorshape via env)
              * added support to validate output depending on env vars (batch size, randomize, etc)
+             * fixing error when copying program to a non-existen repo
 
 * 2017.09.19 * minor output improvement
 
