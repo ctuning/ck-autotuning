@@ -1867,22 +1867,6 @@ def process_in_dir(i):
            if k in env:
               del(env[k])
 
-       # Add env
-       sb+='\n'
-       sbenv=''
-       for k in sorted(env):
-           v=str(env[k])
-           v=v.replace('$<<',tsvarb).replace('>>$',tsvare)
-
-           if eifsx!='' and wb!='yes':
-              if v.find(' ')>=0 and not v.startswith(eifsx):
-                 v=eifsx+v+eifsx
-
-           sbenv+=no+etset+' '+k+'='+str(v)+'\n'
-       sb+=sbenv+'\n'
-
-       if tosd.get('extra_env','')!='':
-          sb+=no+tosd['extra_env']+'\n'
 
        # Command line preparation
        c=rt.get('run_cmd_main','')
@@ -1935,6 +1919,9 @@ def process_in_dir(i):
 
        # Check if takes datasets from CK
        dtags=vcmd.get('dataset_tags',[])
+
+       # Check if need to add dataset file as JSON to run_vars
+       adfe=vcmd.get('add_datatset_file_to_env','')
 
        edtags=i.get('extra_dataset_tags', [])
        if len(dtags)>0 and len(edtags)>0:
@@ -2085,12 +2072,25 @@ def process_in_dir(i):
                    dfile=r['choice']
 
              if dfile!='':
-                sb+='\n'+no+eset+' CK_DATASET_FILENAME='+dfile+'\n'
+                env['CK_DATASET_FILENAME']=dfile
+#                sb+='\n'+no+eset+' CK_DATASET_FILENAME='+dfile+'\n'
                 dset['file']=dfile
+
+                # Check if need to add to env
+                if adfe=='yes':
+                   jdfile=os.path.join(xdp,os.path.splitext(dfile)[0]+'.json')
+
+                   # Attempt to load json data sets file
+                   rk=ck.load_json_file({'json_file':jdfile})
+                   if rk['return']>0: return rk
+                   xxd=rk['dict']
+
+                   env.update(xxd)
 
              for k in range(0, len(dfiles)):
                  df=dfiles[k]
-                 if dfile!='' and k==0: df=dfile
+                 if dfile!='' and k==0: 
+                    df=dfile
 
                  kk='$#dataset_filename'
                  if k>0: kk+='_'+str(k)
@@ -2146,6 +2146,23 @@ def process_in_dir(i):
               c=c.replace('$#'+k+'#$',kv)
 
           misc['dataset_uoa']=dduoa
+
+       # Add env to batch
+       sb+='\n'
+       sbenv=''
+       for k in sorted(env):
+           v=str(env[k])
+           v=v.replace('$<<',tsvarb).replace('>>$',tsvare)
+
+           if eifsx!='' and wb!='yes':
+              if v.find(' ')>=0 and not v.startswith(eifsx):
+                 v=eifsx+v+eifsx
+
+           sbenv+=no+etset+' '+k+'='+str(v)+'\n'
+       sb+=sbenv+'\n'
+
+       if tosd.get('extra_env','')!='':
+          sb+=no+tosd['extra_env']+'\n'
 
        # Check if need to add env with current path
        if remote=='yes' and len(tosd.get('remote_env_set',[]))>0:
@@ -2955,6 +2972,8 @@ def process_in_dir(i):
        if len(rcof)==0:
           rcof=meta.get('run_correctness_output_files',[])
 
+       rcvars=rt.get('run_correctness_vars',[])
+
        if ccc['run_success_bool'] and len(rcof)>0 and i.get('skip_output_validation','')!='yes':
           ck.out('')
           ck.out('  (checking output correctness ...)')
@@ -2965,6 +2984,11 @@ def process_in_dir(i):
              po+='-'+dfile
           if rt.get('output_invariant_of_repeat','')!='yes':
              po+='-'+str(xrepeat)
+
+          # Check if output depends on extra vars
+          if len(rcvars)>0:
+             for q in rcvars:
+                 po+='-'+str(env.get(q,''))
 
           oruoa=i.get('output_validation_repo','')
           pox=''
@@ -3017,6 +3041,9 @@ def process_in_dir(i):
                           ck.out('       - check failed on "'+fz+'" ('+vr+')')
 
                        vo[fz]={'fail_reason':vr}
+
+             if not vfail and o=='con':
+                ck.out('       Validated successfully!')
 
              # If at least one failed, fail pipeline
              if vfail:
