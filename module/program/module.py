@@ -253,6 +253,8 @@ def process_in_dir(i):
               (post_process_params)     - (string) add params to CMD
 
               (deps)                 - already resolved deps (useful for auto-tuning)
+              (deps_cache)           - list of already resolved deps (useful to automate crowd-benchmarking and crowd-tuning)
+              (reuse_deps)           - if 'yes', reuse deps by keys
 
               (cmd_key)              - CMD key
               (dataset_uoa)          - UOA of a dataset
@@ -369,7 +371,10 @@ def process_in_dir(i):
     ccc=i.get('characteristics',{})
     env=i.get('env',{})
     xparams=i.get('params',{})
+
     deps=i.get('deps',{})
+    reuse_deps=i.get('reuse_deps','')
+    deps_cache=i.get('deps_cache',[])
 
     # Check user-friendly env and params
     preset_deps=i.get('preset_deps', {})
@@ -827,6 +832,8 @@ def process_in_dir(i):
            'target_os':tos,
            'device_id':tdid,
            'deps':deps,
+           'deps_cache':deps_cache,
+           'reuse_deps':reuse_deps,
            'add_customize':'yes',
            'random':ran,
            'quiet':quiet,
@@ -1715,6 +1722,8 @@ def process_in_dir(i):
                                 'target_os':tos,
                                 'target_id':tdid,
                                 'deps':deps,
+                                'deps_cache':deps_cache,
+                                'reuse_deps':reuse_deps,
                                 'meta':meta,
                                 'cmd_key':kcmd,
                                 'cmd_meta':vcmd,
@@ -3364,6 +3373,8 @@ def pipeline(i):
 
 
               (dependencies)         - compilation dependencies
+              (deps_cache)           - cache with resolved dependencies for reuse (if needed)
+              (reuse_deps)           - if 'yes' reuse dependencies
               (force_resolve_deps)   - if 'yes', force resolve deps (useful for crowd-tuning)
 
               (choices)              - exposed choices (if any)
@@ -3465,6 +3476,9 @@ def pipeline(i):
 
     if 'dependencies' not in i: i['dependencies']={}
     cdeps=i['dependencies']
+
+    deps_cache=i.get('deps_cache',[])
+    reuse_deps=i.get('reuse_deps','')
 
     ai=ck.get_from_dicts(i, 'autotuning_iteration', '', None)
     sbbf=ck.get_from_dicts(i, 'select_best_base_flag_for_first_iteration','', None)
@@ -4131,6 +4145,8 @@ def pipeline(i):
                              'target_os':tos,
                              'target_id':tdid,
                              'deps':cdeps,
+                             'deps_cache':deps_cache,
+                             'reuse_deps':reuse_deps,
                              'meta':meta,
                              'cmd_key':kcmd,
                              'cmd_meta':vcmd,
@@ -4296,6 +4312,8 @@ def pipeline(i):
                  'target_os':tos,
                  'device_id':tdid,
                  'deps':cdeps,
+                 'deps_cache':deps_cache,
+                 'reuse_deps':reuse_deps,
                  'add_customize':'yes',
                  'quiet':quiet,
                  'install_to_env':iev,
@@ -4326,6 +4344,7 @@ def pipeline(i):
                  y=dpx.get('uoa','')
                  ck.out('      '+dp+' env = '+y+'; tags = '+x)
 
+
     ###############################################################################################################
     # PIPELINE SECTION: Detect compiler version
 
@@ -4339,6 +4358,8 @@ def pipeline(i):
               'path':pdir,
               'meta':meta,
               'deps':cdeps,
+              'deps_cache':deps_cache,
+              'reuse_deps':reuse_deps,
               'generate_rnd_tmp_dir':grtd,
               'tmp_dir':tdir,
               'skip_clean_after':sca,
@@ -4596,7 +4617,7 @@ def pipeline(i):
 
        if len(sols)>1:
           return {'return':1, 'error':'ambiguity - more than 1 shared solution found'}
-  
+
        xsp=sols[0].get('points',[])
 
        if len(xsp)==0:
@@ -4910,6 +4931,8 @@ def pipeline(i):
               'path':pdir,
               'meta':meta,
               'deps':mcdeps,
+              'deps_cache':deps_cache,
+              'reuse_deps':reuse_deps,
               'generate_rnd_tmp_dir':grtd,
               'tmp_dir':tdir,
               'clean':cl,
@@ -5160,6 +5183,8 @@ def pipeline(i):
            'console':cons,
            'meta':meta,
            'deps':cdeps,
+           'deps_cache':deps_cache,
+           'reuse_deps':reuse_deps,
            'cmd_key':kcmd,
            'dataset_uoa':dduoa,
            'dataset_file':ddfile,
@@ -5949,14 +5974,17 @@ def update_run_time_deps(i):
               (target_os)
               (target_id)
 
-              (deps)     - possibly resolved deps
-              (meta)     - program meta
-              (cmd_key)  - command line key
-              (cmd_meta) - meta for a given command line key
+              (deps)       - possibly resolved deps
+              (deps_cache) - deps cache (to reuse deps if needed)
+              (reuse_deps) - if 'yes', always attempt to reuse deps from above cache
 
-              (out)      - where to output
-              (quiet)    - quiet mode
-              (random)   - if 'yes', select deps randomly (useful for quite crowd-tuning / DNN classification)
+              (meta)       - program meta
+              (cmd_key)    - command line key
+              (cmd_meta)   - meta for a given command line key
+
+              (out)        - where to output
+              (quiet)      - quiet mode
+              (random)     - if 'yes', select deps randomly (useful for quite crowd-tuning / DNN classification)
 
               (install_to_env)       - install dependencies to env instead of CK-TOOLS (to keep it clean)!
 
@@ -5992,6 +6020,9 @@ def update_run_time_deps(i):
 
     iev=i.get('install_to_env','')
     safe=i.get('safe','')
+
+    deps_cache=i.get('deps_cache','')
+    reuse_deps=i.get('reuse_deps','')
 
     o=i.get('out','')
     oo=''
@@ -6049,6 +6080,8 @@ def update_run_time_deps(i):
            'target_os':tos,
            'device_id':tdid,
            'deps':rdeps,
+           'deps_cache':deps_cache,
+           'reuse_deps':reuse_deps,
            'add_customize':'yes',
            'quiet':quiet,
            'random':ran,
