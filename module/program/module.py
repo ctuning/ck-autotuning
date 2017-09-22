@@ -2094,7 +2094,10 @@ def process_in_dir(i):
                    if rk['return']>0: return rk
                    xxd=rk['dict']
 
-                   env.update(xxd)
+                   # Smart update - if already there, do not update
+                   for k in xxd:
+                       if env.get(k,'')=='':
+                          env[k]=xxd[k]
 
              for k in range(0, len(dfiles)):
                  df=dfiles[k]
