@@ -1876,7 +1876,6 @@ def process_in_dir(i):
            if k in env:
               del(env[k])
 
-
        # Command line preparation
        c=rt.get('run_cmd_main','')
        if remote=='yes' and rt.get('run_cmd_main_remote','')!='':
@@ -1940,6 +1939,7 @@ def process_in_dir(i):
        dmuoa=cfg['module_deps']['dataset']
        dduoa=i.get('dataset_uoa','')
        dfile=''
+       dfile_keys=[]
        if dduoa!='' or len(dtags)>0:
           if dduoa=='':
              misc['dataset_tags']=dtags
@@ -2095,6 +2095,7 @@ def process_in_dir(i):
                    xxd=rk['dict']
 
                    # Smart update - if already there, do not update
+                   dfile_keys=list(xxd.keys())
                    for k in xxd:
                        if env.get(k,'')=='':
                           env[k]=xxd[k]
@@ -2992,8 +2993,13 @@ def process_in_dir(i):
 
           # Prepare directory with output files
           po=kcmd+'-'+dduoa
+
           if dfile!='':
-             po+='-'+dfile
+             if rt.get('run_correctness_extra_keys_from_dataset_file_json','')=='yes':
+                for q in sorted(dfile_keys):
+                    po+='-'+str(env.get(q,''))
+             else:
+                po+='-'+dfile
           if rt.get('output_invariant_of_repeat','')!='yes':
              po+='-'+str(xrepeat)
 

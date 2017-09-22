@@ -1,3 +1,5 @@
+* 2017.09.22 - fixed output check if dataset json file present but keys are overloaded from cmd via env ...
+
 * 2017.09.21 - added support to cache and reuse dependencies by tags (for automating crowdbenchmarking)
 
 * 2017.09.20 * added support to load dataset files to run_envs (for example to specify tensorshape via env)
