@@ -2043,11 +2043,13 @@ def process_in_dir(i):
        dset={}
        dp=''
        dfiles=[]
+       ddalias=''
        if dduoa!='':
           rx=ck.access({'action':'load',
                         'module_uoa':dmuoa,
                         'data_uoa':dduoa})
           if rx['return']>0: return rx
+          ddalias=rx['data_alias']
           dd=rx['dict']
           dp=rx['path']
           xdp=dp+sdirs
@@ -2997,7 +2999,9 @@ def process_in_dir(i):
           ck.out('  (checking output correctness ...)')
 
           # Prepare directory with output files
-          po=kcmd+'-'+dduoa
+          x=dalias
+          if x=='': x=dduoa
+          po=kcmd+'-'+x
 
           if dfile!='':
              if rt.get('run_correctness_extra_keys_from_dataset_file_json','')=='yes':
