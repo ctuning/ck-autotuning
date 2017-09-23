@@ -2431,6 +2431,8 @@ def process_in_dir(i):
        ppc=rt.get('post_process_cmd','')
        if ppc!='': lppc.append(ppc)
 
+       ck_check_output=None # detect customized output comparison plugin
+
        fgtf=rt.get('fine_grain_timer_file','')
        if env.get('XOPENME_TIME_FILE','')!='':
           fgtf=env['XOPENME_TIME_FILE']
@@ -2792,6 +2794,9 @@ def process_in_dir(i):
 
                           os.chdir(cdd) # restore current dir from above operation
 
+                          if cs!=None and 'ck_check_output' in dir(cs):
+                             ck_check_output=cs.ck_check_output
+
                           if cs!=None and 'ck_postprocess' in dir(cs):
                              as_cmd=False
 
@@ -3047,14 +3052,29 @@ def process_in_dir(i):
                     shutil.copyfile(p1,p2)
 
                  else:
-                    import filecmp
-                    vx=filecmp.cmp(p1,p2)
+                    vr=''
 
-                    if not vx:
-                       vfail=True
+                    if ck_check_output!=None:
+                       r=ck_check_output({'ck_kernel':ck,
+                                          'file1':p1,
+                                          'file2':p2,
+                                          'meta':meta,
+                                          'env':env})
+                       if r['return']>0:
+                          vr=r['error']
+                          vfail=True
+                       elif r['failed']:
+                          vr=r['fail_reason']
+                          vfail=True
+                    else:
+                       import filecmp
+                       vx=filecmp.cmp(p1,p2)
 
-                       vr='exact match failed'
+                       if not vx:
+                          vr='exact match failed'
+                          vfail=True
 
+                    if vr!='':
                        if o=='con':
                           ck.out('       - check failed on "'+fz+'" ('+vr+')')
 
@@ -3067,7 +3087,7 @@ def process_in_dir(i):
              if vfail:
                 misc['run_success']='no'
                 misc['run_success_bool']=False
-                misc['fail_reason']='output is not matching with the reference one: '+str(vo)
+                misc['fail_reason']='output is not matching with the reference one: '+json.dumps(vo,indent=2)
 
                 ccc['run_success']=misc['run_success']
                 ccc['run_success_bool']=misc['run_success_bool']
@@ -5555,7 +5575,7 @@ def finalize_pipeline(i):
 def substitute_some_ck_keys(i):
     """
     Input:  {
-              string
+              string       - string to process
             }
 
     Output: {

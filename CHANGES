@@ -1,3 +1,6 @@
+* 2017.09.23 - added comparison of numerical outputs with thresholds 
+               (to collaboratively check numerical stability)
+
 * 2017.09.22 - fixed output check if dataset json file present but keys are overloaded from cmd via env ...
 
 * 2017.09.21 - added support to cache and reuse dependencies by tags (for automating crowdbenchmarking)
