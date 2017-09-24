@@ -3096,6 +3096,8 @@ def process_in_dir(i):
 
              # If at least one failed, fail pipeline
              if vfail:
+                import json
+
                 misc['run_success']='no'
                 misc['run_success_bool']=False
                 misc['fail_reason']='output is not matching with the reference one: '+json.dumps(vo,indent=2)
