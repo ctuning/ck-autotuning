@@ -135,6 +135,7 @@ def process(i):
         ruid=ll['repo_uid']
         muid=ll['module_uid']
         duid=ll['data_uid']
+        dalias=ll['data_uoa']
 
         r=ck.access({'action':'load',
                      'repo_uoa':ruid,
@@ -165,6 +166,7 @@ def process(i):
         ii['repo_uoa']=ruid
         ii['module_uoa']=muid
         ii['data_uoa']=duid
+        ii['data_alias']=dalias
         r=process_in_dir(ii)
         if r['return']>0: return r
 
@@ -568,6 +570,7 @@ def process_in_dir(i):
     ruoa=i.get('repo_uoa', '')
     muoa=i.get('module_uoa', '')
     duoa=i.get('data_uoa', '') # There will be data UID (not alias) from 'process' function from this module!
+    dalias=i.get('data_alias','') 
 
     ########################################################################
     # Check if correct target OS
@@ -3106,11 +3109,16 @@ def process_in_dir(i):
                 ck.out('     * Recording rerefence output ...')
 
              # First create / update entry
+             potags=meta.get('tags',[])
+             if dalias!='': 
+                potags.append(dalias)
              ii={'action':'update',
                  'module_uoa':cfg['module_deps']['program.output'],
                  'data_uoa':'program-uid-'+duoa,
+                 'data_name':dalias,
                  'repo_uoa':oruoa,
-                 'ignore_update':'yes'}
+                 'ignore_update':'yes',
+                 'tags':potags}
              r=ck.access(ii)
              if r['return']>0: return r
              pd=r['path']

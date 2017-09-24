@@ -1,3 +1,6 @@
+* 2017.09.24 - added program tags to program.output and user-friendly name to entry 
+               (can be viewed via ck search program.output --print_name)
+
 * 2017.09.23 - added comparison of numerical outputs with thresholds 
                (to collaboratively check numerical stability)
 
