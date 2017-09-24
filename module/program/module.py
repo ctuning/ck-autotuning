@@ -3047,42 +3047,46 @@ def process_in_dir(i):
                 ck.out('     * Reference output found - validating ...')
 
              for fz in rcof:
+                 vr=''
+
                  p1=os.path.join(cdir,fz)
-                 p2=os.path.join(pox,fz)
 
-                 # If reference file doesn't exist (for example, we later updated meta),
-                 # copy it to the reference ..
-                 if not os.path.isfile(p2):
-                    shutil.copyfile(p1,p2)
-
+                 if not os.path.isfile(p1):
+                    vr='file not found'
+                    vrfail=True
                  else:
-                    vr=''
+                    p2=os.path.join(pox,fz)
 
-                    if ck_check_output!=None:
-                       r=ck_check_output({'ck_kernel':ck,
-                                          'file1':p1,
-                                          'file2':p2,
-                                          'meta':meta,
-                                          'env':env})
-                       if r['return']>0:
-                          vr=r['error']
-                          vfail=True
-                       elif r['failed']:
-                          vr=r['fail_reason']
-                          vfail=True
+                    # If reference file doesn't exist (for example, we later updated meta),
+                    # copy it to the reference ..
+                    if not os.path.isfile(p2):
+                       shutil.copyfile(p1,p2)
                     else:
-                       import filecmp
-                       vx=filecmp.cmp(p1,p2)
+                       if ck_check_output!=None:
+                          r=ck_check_output({'ck_kernel':ck,
+                                             'file1':p1,
+                                             'file2':p2,
+                                             'meta':meta,
+                                             'env':env})
+                          if r['return']>0:
+                             vr=r['error']
+                             vfail=True
+                          elif r['failed']:
+                             vr=r['fail_reason']
+                             vfail=True
+                       else:
+                          import filecmp
+                          vx=filecmp.cmp(p1,p2)
 
-                       if not vx:
-                          vr='exact match failed'
-                          vfail=True
+                          if not vx:
+                             vr='exact match failed'
+                             vfail=True
 
-                    if vr!='':
-                       if o=='con':
-                          ck.out('       - check failed on "'+fz+'" ('+vr+')')
+                 if vr!='':
+                    if o=='con':
+                       ck.out('       - check failed on "'+fz+'" ('+vr+')')
 
-                       vo[fz]={'fail_reason':vr}
+                    vo[fz]={'fail_reason':vr}
 
              if not vfail and o=='con':
                 ck.out('       Validated successfully!')
