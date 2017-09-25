@@ -255,7 +255,7 @@ def make(i):
                        dv=dcc
                        if (tp=='parallel-loop' or tp=='parallel-loop-with-next') or c==len(cc)-1 or xupdate:
                           if yestart!='':
-                             dv=dcc+rs
+                             dv=dcc+str(rs)
                              if dv>r2:
                                 dv=r1
                                 if tp=='loop': xupdate=True
