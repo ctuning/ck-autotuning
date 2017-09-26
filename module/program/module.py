@@ -3056,7 +3056,7 @@ def process_in_dir(i):
 
                  if not os.path.isfile(p1):
                     vr='file not found'
-                    vrfail=True
+                    vfail=True
                  else:
                     p2=os.path.join(pox,fz)
 
