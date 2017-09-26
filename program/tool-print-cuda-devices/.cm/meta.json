@@ -32,5 +32,5 @@
     "lang-c-cuda", 
     "cuda"
   ], 
-  "target_file": "ck-show-cuda-devices"
+  "target_file": "print_cuda_devices"
 }
