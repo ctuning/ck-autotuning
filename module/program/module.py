@@ -1025,6 +1025,7 @@ def process_in_dir(i):
 
               for pl3 in pl3ll:
                   if pl3!='':
+                     if pl3.endswith('\\'): pl3=pl3[:-1] # otherwise can be problems on Windows ...
                      if sin!='': sin+=' '
                      sin+=svarb+svarb1+'CK_FLAG_PREFIX_INCLUDE'+svare1+svare+eifsc+pl3+eifsc
 
@@ -1067,6 +1068,7 @@ def process_in_dir(i):
                         pl2x=os.path.splitext(pl2)[0]
                         if pl2x.startswith('lib'): pl2x=pl2x[3:]
                         if not path_added:
+                           if pl1d.endswith('\\'): pl1d=pl1d[:-1] # otherwise can be problems on Windows ...
                            sll+=' '+svarb+svarb1+'CK_FLAG_PREFIX_LIB_DIR'+svare1+svare+eifsc+pl1d+eifsc
                            path_added=True
                         sll+=' -l'+pl2x
@@ -1132,6 +1134,7 @@ def process_in_dir(i):
 
           for xgge in xline:
               if xgge!='':
+                 if xgge.endswith('\\'): xgge=xgge[:-1] # otherwise can be problems on Windows ...
                  if sin!='': sin+=' '
                  sin+=svarb+svarb1+'CK_FLAG_PREFIX_INCLUDE'+svare1+svare+eifsc+xgge+eifsc
 
@@ -3389,27 +3392,28 @@ def pipeline(i):
               (the_same_dataset)              - if 'yes', the dataset stays the same across iterations
                                                    so skip copying dataset to remote from 2nd iteration
 
-              (repeat_compilation)   - if 'yes', force compilation, even if "statistical_repetition_number">0
+              (repeat_compilation)     - if 'yes', force compilation, even if "statistical_repetition_number">0
 
-              (cpu_freq)             - set CPU frequency, if supported (using SUDO, if also supported)
-                                         using script ck-set-cpu-online-and-frequency
-                                       if "max" - try to set to maximum using script ck-set-cpu-performance
-                                       if "min" - try to set to minimum using scrupt ck-set-cpu-powersave
+              (cpu_freq)               - set CPU frequency, if supported (using SUDO, if also supported)
+                                           using script ck-set-cpu-online-and-frequency
+                                         if "max" - try to set to maximum using script ck-set-cpu-performance
+                                         if "min" - try to set to minimum using scrupt ck-set-cpu-powersave
 
-              (gpu_freq)             - set GPU frequency, if supported (using SUDO, if also supported)
-                                         using script ck-set-gpu-online-and-frequency
-                                       if "max" - try to set to maximum using script ck-set-gpu-performance
-                                       if "min" - try to set to minimum using scrupt ck-set-gpu-powersave
+              (gpu_freq)               - set GPU frequency, if supported (using SUDO, if also supported)
+                                           using script ck-set-gpu-online-and-frequency
+                                         if "max" - try to set to maximum using script ck-set-gpu-performance
+                                         if "min" - try to set to minimum using scrupt ck-set-gpu-powersave
 
-              (energy)               - if 'yes', start energy monitoring (if supported) using script ck-set-power-sensors
+              (energy)                  - if 'yes', start energy monitoring (if supported) using script ck-set-power-sensors
 
               (gprof)                   - if 'yes', use gprof to collect profile info
               (perf)                    - if 'yes', use perf to collect hardware counters
               (vtune)                   - if 'yes', use Intel vtune to collect hardware counters
+              (sim)                     - if 'yes', use architecture simulator (found by tags "arch","sim")
 
               (milepost)                - if 'yes', attempt to extract static program features using Milepost GCC and cTuning CC
 
-              (dvdt_prof)            - if 'yes', run program under dividiti's OpenCL profiler
+              (dvdt_prof)               - if 'yes', run program under dividiti's OpenCL profiler
 
               (compile_timeout)         - (sec.) - kill compile job if too long
               (run_timeout)             - (sec.) - kill run job if too long
@@ -3587,6 +3591,7 @@ def pipeline(i):
     sme=ck.get_from_dicts(i, 'energy', '', choices)
 
     gprof=ck.get_from_dicts(i, 'gprof', '', choices)
+    sim=ck.get_from_dicts(i, 'sim', '', choices)
     perf=ck.get_from_dicts(i, 'perf', '', choices)
     vtune=ck.get_from_dicts(i, 'vtune', '', choices)
     milepost=ck.get_from_dicts(i, 'milepost', '', choices)
@@ -4010,6 +4015,9 @@ def pipeline(i):
     tosd=r['os_dict']
     tbits=tosd.get('bits','')
 
+    tplat=tosd.get('ck_name','')
+    tplat2=tosd.get('ck_name2','')
+
     hosz=hosd.get('base_uoa','')
     if hosz=='': hosz=hos
     tosz=tosd.get('base_uoa','')
@@ -4327,6 +4335,16 @@ def pipeline(i):
 
     if ddfile!='' and o=='con':
        ck.out('  Selected dataset file:     '+ddfile)
+
+    ###############################################################################################################
+    # PIPELINE SECTION: Architecture simulator
+    if sim=='yes':
+       if o=='con':
+          ck.out(sep)
+          ck.out('Adding architecture simulator ...')
+
+       if 'arch-sim' not in cdeps:
+          cdeps['arch-sim']={'local':'yes', 'tags':'arch,sim'}
 
     ###############################################################################################################
     # PIPELINE SECTION: resolve compile dependencies
@@ -5154,7 +5172,7 @@ def pipeline(i):
        if rx['return']>0: return rx
        perf_tmp=rx['file_name']
 
-       prcmd='perf stat -x, -o '+perf_tmp
+       prcmd+='perf stat -x, -o '+perf_tmp
 
        if perf_tmp not in rof: rof.append(perf_tmp)
 
@@ -5175,7 +5193,7 @@ def pipeline(i):
        else:
           eenv='\nrm -rf r000\n'+eenv
 
-       prcmd='amplxe-runss -r r000 -event-based-counts --'
+       prcmd+='amplxe-runss -r r000 -event-based-counts --'
 
        rx=ck.gen_tmp_file({'prefix':'tmp-', 'remove_dir':'yes'})
        if rx['return']>0: return rx
@@ -5199,6 +5217,19 @@ def pipeline(i):
 
        fodp='tmp-dvdt-prof-output.json'
        if os.path.isfile(fodp): os.remove(fodp)
+
+    ###############################################################################################################
+    # PIPELINE SECTION: Architecture simulator
+    if sim=='yes':
+       if o=='con':
+          ck.out(sep)
+          ck.out('Adding architecture simulator ...')
+
+       x=cdeps['arch-sim'].get('cus',{}).get('cmd_prefix',{}).get(tplat,'')
+       if x=='':
+          return {'return':1, 'error':'command line for architecture simulator is not defined'}
+
+       prcmd+=x
 
     ###############################################################################################################
     # PIPELINE SECTION: Run program
