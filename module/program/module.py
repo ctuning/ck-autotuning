@@ -1935,7 +1935,7 @@ def process_in_dir(i):
        dtags=vcmd.get('dataset_tags',[])
 
        # Check if need to add dataset file as JSON to run_vars
-       adfe=vcmd.get('add_datatset_file_to_env','')
+       adfe=vcmd.get('add_dataset_file_to_env','')
 
        edtags=i.get('extra_dataset_tags', [])
        if len(dtags)>0 and len(edtags)>0:
