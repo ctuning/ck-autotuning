@@ -1,3 +1,6 @@
+* 2017.09.27 - important fix in autotuning to merge env + choices.env 
+               may break things - need to be more tested
+
 * 2017.09.24 - added program tags to program.output and user-friendly name to entry 
                (can be viewed via ck search program.output --print_name)
 

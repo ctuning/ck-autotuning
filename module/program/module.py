@@ -3648,20 +3648,27 @@ def pipeline(i):
     no_run=ck.get_from_dicts(i, 'no_run', '', choices)
     no_state_check=ck.get_from_dicts(i, 'no_state_check', '', choices)
 
-    env=ck.get_from_dicts(i,'env',{},choices)
+#    env=ck.get_from_dicts(i,'env',{},choices)
+#   New handling of env vs choices to merge the properly!
+    env=i.get('choices',{}).get('env',{})
+
+    env.update(i.get('env',{}))
+    if 'env' in i: del(i['env'])
 
     # Check user-friendly env and deps
     preset_deps=ck.get_from_dicts(i, 'preset_deps', {}, choices)
     for q in list(i.keys()):
         if q.startswith('env.'):
            env[q[4:]]=i[q]
-           if 'env' not in choices: choices['env']={}
-           choices['env'][q[4:]]=i[q]
+#           if 'env' not in choices: choices['env']={}
+#           choices['env'][q[4:]]=i[q]
            del(i[q])
         elif q.startswith('deps.'):
            preset_deps[q[5:]]=i[q]
            del(i[q])
 
+    choices['env']=env
+    
     eenv=ck.get_from_dicts(i, 'extra_env','',choices)
     ercmd=ck.get_from_dicts(i, 'extra_run_cmd','',choices)
     rcsub=ck.get_from_dicts(i, 'run_cmd_substitutes',{},choices)
