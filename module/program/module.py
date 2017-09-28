@@ -6038,14 +6038,29 @@ def benchmark(i):
        ntmax=flat.get('##characteristics#run#execution_time#max',0)
 
        ck.out('')
-       ck.out('* Normalized time in sec. (min): '+str(ntmin))
-       ck.out('* Normalized time in sec. (max): '+str(ntmax))
+       ck.out('* Normalized time in sec. (min .. max): '+str(ntmin)+' .. '+str(ntmax))
 
        ck.out('')
-       ck.out('* Total time in sec. (min): '+str(tmin))
-       ck.out('* Total time in sec. (max): '+str(tmax))
+       ck.out('* Total time in sec. (min .. max): '+str(tmin)+' .. '+str(tmax))
 
        ck.out('')
+       # Check if OpenCL kernel
+       found=False
+       for k in sorted(flat):
+           if k.startswith('##characteristics#run#execution_time_opencl_s') and k.endswith('#min'):
+              tmin=flat[k]
+              k1=k[:-3]+'max'
+              tmax=flat.get(k1,tmin)
+
+              kernel=k[46:-4]
+
+              if not found:
+                 found=True
+
+                 ck.out('* OpenCL kernel times in ms. (min .. max):')
+                 ck.out('')
+
+              ck.out('  '+kernel+' : '+str(tmin)+' .. '+str(tmax))
 
     return r
 
