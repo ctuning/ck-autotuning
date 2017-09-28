@@ -1,4 +1,5 @@
 * 2017.09.28 - print OpenCL kernel timing from DVDT prof after "ck benchmark program --dvdt_prof"
+             - added support to collect Mali GPU hardware counters if available
 
 * 2017.09.27 - important fix in autotuning to merge env + choices.env 
                may break things - need to be more tested

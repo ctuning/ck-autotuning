@@ -3414,6 +3414,7 @@ def pipeline(i):
               (milepost)                - if 'yes', attempt to extract static program features using Milepost GCC and cTuning CC
 
               (dvdt_prof)               - if 'yes', run program under dividiti's OpenCL profiler
+              (mali_hwc)                - if 'yes', attempt to extract MALI GPU hardware counters
 
               (compile_timeout)         - (sec.) - kill compile job if too long
               (run_timeout)             - (sec.) - kill run job if too long
@@ -3690,6 +3691,7 @@ def pipeline(i):
     tsd=ck.get_from_dicts(i, 'the_same_dataset', '', choices)
 
     odp=ck.get_from_dicts(i, 'dvdt_prof','',choices)
+    mali_hwc=ck.get_from_dicts(i, 'mali_hwc','',choices)
 
     xcto=ck.get_from_dicts(i, 'compile_timeout','',choices)
     xrto=ck.get_from_dicts(i, 'run_timeout','',choices)
@@ -5226,6 +5228,18 @@ def pipeline(i):
        if os.path.isfile(fodp): os.remove(fodp)
 
     ###############################################################################################################
+    # PIPELINE SECTION: Set MALI HWC counter collector
+    if mali_hwc=='yes':
+       # Call process output vector
+       r=ck.access({'action':'run', 
+                    'module_uoa':cfg['module_deps']['script'], 
+                    'data_uoa': cfg['data_deps']['mali_hwc'], #'mali-hwc', 
+                    'code':'process', 
+                    'func':'config'})
+       if r['return']>0: 
+          return {'return':r['return'], 'error':'Problem with MALI HWC script ('+r['error']+')'}
+
+    ###############################################################################################################
     # PIPELINE SECTION: Architecture simulator
     if sim=='yes':
        if o=='con':
@@ -5518,28 +5532,43 @@ def pipeline(i):
           ck.out('')
 
     ###############################################################################################################
+    # PIPELINE SECTION: Post-process MALI HWC counters
+    if mali_hwc=='yes':
+       # Call process output vector
+       r=ck.access({'action':'run', 
+                    'module_uoa':cfg['module_deps']['script'], 
+                    'data_uoa': cfg['data_deps']['mali_hwc'], #'mali-hwc', 
+                    'code':'process', 
+                    'func':'read'})
+       if r['return']>0: 
+          return {'return':r['return'], 'error':'Problem with MALI HWC script ('+r['error']+')'}
+
+    ###############################################################################################################
     # PIPELINE SECTION: Post-process output from dividiti's OpenCL profiler.
     if odp=='yes':
-        dvdt_prof=xdeps.get('dvdt_prof',{})
-        with open('tmp-dvdt-prof-deps.json', 'w') as f:
-            json.dump(dvdt_prof, f, indent=2)
-        # Load output.
-        r=ck.load_text_file({
-            'text_file':vcmd.get('run_time',{}).get('run_cmd_out1',''),
-            'split_to_list':'no'
-        })
-        if r['return']>0: return r
+        # Check that not processed yet by postprocessing program scripts
+        # TBD: this code should be converted to CK canonical form ...
+        if not os.path.isfile(fodp):
+           dvdt_prof=xdeps.get('dvdt_prof',{})
+           with open('tmp-dvdt-prof-deps.json', 'w') as f:
+               json.dump(dvdt_prof, f, indent=2)
+           # Load output.
+           r=ck.load_text_file({
+               'text_file':vcmd.get('run_time',{}).get('run_cmd_out1',''),
+               'split_to_list':'no'
+           })
+           if r['return']>0: return r
 
-        # Locate profiler parser.
-        dvdt_prof_dir=dvdt_prof['dict']['env']['CK_ENV_TOOL_DVDT_PROF']
-        dvdt_prof_src_python=os.path.join(dvdt_prof_dir,'src','python')
-        sys.path.append(dvdt_prof_src_python)
-        from prof_parser import prof_parse
+           # Locate profiler parser.
+           dvdt_prof_dir=dvdt_prof['dict']['env']['CK_ENV_TOOL_DVDT_PROF']
+           dvdt_prof_src_python=os.path.join(dvdt_prof_dir,'src','python')
+           sys.path.append(dvdt_prof_src_python)
+           from prof_parser import prof_parse
 
-        # Parse profiler output.
-        chars['run']['dvdt_prof']=prof_parse(r['string'])
-        with open('tmp-dvdt-prof.json', 'w') as f:
-            json.dump(chars['run']['dvdt_prof'], f, indent=2)
+           # Parse profiler output.
+           chars['run']['dvdt_prof']=prof_parse(r['string'])
+           with open('tmp-dvdt-prof.json', 'w') as f:
+               json.dump(chars['run']['dvdt_prof'], f, indent=2)
 
     ###############################################################################################################
     # Deinit remote device, if needed

@@ -73,6 +73,9 @@
     }
   },
   "copyright": "See CK COPYRIGHT.txt for copyright details",
+  "data_deps": {
+    "mali_hwc":"4065ab1b40dbe027"
+  },
   "deps_file": "tmp-deps.json",
   "desc": "program compilation and execution workflow (pipeline)",
   "developer": "Grigori Fursin",
