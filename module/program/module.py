@@ -3508,7 +3508,7 @@ def pipeline(i):
         x=os.getcwd()
     except OSError:
         os.chdir('..')
-        xr=os.getcwd()
+        x=os.getcwd()
 
     state['cur_dir']=x
 
@@ -3668,7 +3668,7 @@ def pipeline(i):
            del(i[q])
 
     choices['env']=env
-    
+
     eenv=ck.get_from_dicts(i, 'extra_env','',choices)
     ercmd=ck.get_from_dicts(i, 'extra_run_cmd','',choices)
     rcsub=ck.get_from_dicts(i, 'run_cmd_substitutes',{},choices)
