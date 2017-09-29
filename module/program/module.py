@@ -147,6 +147,9 @@ def process(i):
 
         if o=='con':
            ck.out('')
+           ck.out('* '+dalias+' ('+duid+')')
+           ck.out('')
+
 
         ii=copy.deepcopy(ic)
         ii['meta']=d
