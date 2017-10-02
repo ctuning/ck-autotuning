@@ -1,3 +1,6 @@
+* 2017.10.02 - fixing minor bug when sending multiple data set files to Android device
+             - allow to send only one data set file out of many
+
 * 2017.09.28 - print OpenCL kernel timing from DVDT prof after "ck benchmark program --dvdt_prof"
              - added support to collect Mali GPU hardware counters if available
 

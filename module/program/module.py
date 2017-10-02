@@ -2113,10 +2113,19 @@ def process_in_dir(i):
                        if env.get(k,'')=='':
                           env[k]=xxd[k]
 
-             for k in range(0, len(dfiles)):
+             xdfiles=[] # put selected file first
+             if dfile=='':
+                xdfiles=dfiles
+             else:
+                xdfiles.append(dfile)
+                for df in dfiles:
+                    if df!=dfile:
+                       xdfiles.append(df)
+
+             for k in range(0, len(xdfiles)):
                  df=dfiles[k]
-                 if dfile!='' and k==0: 
-                    df=dfile
+#                 if dfile!='' and k==0: 
+#                    df=dfile
 
                  kk='$#dataset_filename'
                  if k>0: kk+='_'+str(k)
@@ -2125,6 +2134,10 @@ def process_in_dir(i):
                  c=c.replace(kk, df)
 
                  if remote=='yes' and srn==0 and sdi!='yes' and sdc!='yes':
+                    # Check if only selected to send
+                    if vcmd.get('send_only_selected_file','')=='yes' and dfile!=df:
+                       continue
+
                     # check if also extra files
                     dfx=[df]
 
