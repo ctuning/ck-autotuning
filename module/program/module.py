@@ -3043,6 +3043,11 @@ def process_in_dir(i):
           pox=''
           found=False
 
+          # Check if output from another program
+          program_output_uoa=duoa
+          if rt.get('program_output_uoa','')!='':
+             program_output_uoa=rt['program_output_uoa']
+
           if i.get('overwrite_reference_output','')!='yes':
 
              if o=='con':
@@ -3051,7 +3056,7 @@ def process_in_dir(i):
              # Search related entries
              rx=ck.access({'action':'search',
                            'module_uoa':cfg['module_deps']['program.output'],
-                           'data_uoa':'program-uid-'+duoa})
+                           'data_uoa':'program-uid-'+program_output_uoa})
              if rx['return']>0: return rx
              dslst=rx['lst']
 
@@ -3135,7 +3140,7 @@ def process_in_dir(i):
                 potags.append(dalias)
              ii={'action':'update',
                  'module_uoa':cfg['module_deps']['program.output'],
-                 'data_uoa':'program-uid-'+duoa,
+                 'data_uoa':'program-uid-'+program_output_uoa,
                  'data_name':dalias,
                  'repo_uoa':oruoa,
                  'ignore_update':'yes',
