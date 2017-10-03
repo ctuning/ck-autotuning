@@ -3127,7 +3127,7 @@ def process_in_dir(i):
 
           else:
              if o=='con':
-                ck.out('     * Recording rerefence output ...')
+                ck.out('     * Recording reference output ...')
 
              # First create / update entry
              potags=meta.get('tags',[])
