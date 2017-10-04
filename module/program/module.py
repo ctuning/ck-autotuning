@@ -5241,7 +5241,7 @@ def pipeline(i):
           return {'return':1, 'error':'dividiti\'s OpenCL profiler is currently not supported under Windows'}
 
        if 'dvdt_prof' not in cdeps:
-          cdeps['dvdt_prof']={'local':'yes', 'tags':'tool,opencl,dvdt,prof'}
+          cdeps['dvdt_prof']={'local':'yes', 'tags':'tool,opencl,dvdt,prof,dvdt-prof2'}
 
        eenv='export LD_PRELOAD="${CK_ENV_TOOL_DVDT_PROF_DYNAMIC_NAME_FULL}"; '+eenv
 
