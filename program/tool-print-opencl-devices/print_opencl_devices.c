@@ -26,6 +26,7 @@ int main(int argc, char *argv[]) {
     cl_device_id* devices;
     cl_uint d;
 
+    cl_bool unifiedMemory; // Grigori added on 20171004 to support recompilation of Caffe and other frameworks with OpenCL support
     cl_uint addressBits;
     cl_uint maxComputeUnits;
     cl_uint maxWorkItemDimensions;
@@ -132,6 +133,15 @@ int main(int argc, char *argv[]) {
                 printf("OpenCL C version: %s\n", value);
                 if (fout!=NULL) fprintf(fout, "      \"opencl_c_version\":\"%s\",\n", value);
                 free(value);
+            }
+
+            // print CL_DEVICE_HOST_UNIFIED_MEMORY
+            {
+                err = clGetDeviceInfo(devices[d], CL_DEVICE_HOST_UNIFIED_MEMORY,
+                        sizeof(unifiedMemory), &unifiedMemory, NULL);
+                assert(CL_SUCCESS == err);
+                printf("Unified memory: %s\n", unifiedMemory ? "yes" : "no");
+                if (fout!=NULL) fprintf(fout, "      \"unified_memory\":\"%s\"\n", unifiedMemory ? "yes" : "no");
             }
 
             // print address bits

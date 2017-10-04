@@ -1,3 +1,5 @@
+* 2017.10.04 - added unified_memory check when detecting OpenCL
+
 * 2017.10.03 - asking for dvdt-prof2
 
 * 2017.10.02 - fixing minor bug when sending multiple data set files to Android device
