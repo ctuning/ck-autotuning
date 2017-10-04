@@ -6097,7 +6097,7 @@ def benchmark(i):
        # Check if OpenCL kernel
        found=False
        for k in sorted(flat):
-           if k.startswith('##characteristics#run#execution_time_opencl_s') and k.endswith('#min'):
+           if k.startswith('##characteristics#run#execution_time_opencl_us') and k.endswith('#min'):
               tmin=flat[k]
               k1=k[:-3]+'max'
               tmax=flat.get(k1,tmin)
@@ -6107,7 +6107,7 @@ def benchmark(i):
               if not found:
                  found=True
 
-                 ck.out('* OpenCL kernel times in ms. (min .. max):')
+                 ck.out('* OpenCL kernel times in us. (min .. max):')
                  ck.out('')
 
               ck.out('  '+kernel+' : '+str(tmin)+' .. '+str(tmax))
