@@ -3431,11 +3431,12 @@ def pipeline(i):
               (perf)                    - if 'yes', use perf to collect hardware counters
               (vtune)                   - if 'yes', use Intel vtune to collect hardware counters
               (sim)                     - if 'yes', use architecture simulator (found by tags "arch","sim")
-
-              (milepost)                - if 'yes', attempt to extract static program features using Milepost GCC and cTuning CC
+              (valgrind)                - if 'yes', add valgrind
 
               (dvdt_prof)               - if 'yes', run program under dividiti's OpenCL profiler
               (mali_hwc)                - if 'yes', attempt to extract MALI GPU hardware counters
+
+              (milepost)                - if 'yes', attempt to extract static program features using Milepost GCC and cTuning CC
 
               (compile_timeout)         - (sec.) - kill compile job if too long
               (run_timeout)             - (sec.) - kill run job if too long
@@ -3443,7 +3444,6 @@ def pipeline(i):
               (post_process_script_uoa) - run script from this UOA
               (post_process_subscript)  - subscript name
               (post_process_params)     - (string) add params to CMD
-
 
               (dependencies)         - compilation dependencies
               (deps_cache)           - cache with resolved dependencies for reuse (if needed)
@@ -3616,6 +3616,7 @@ def pipeline(i):
     sim=ck.get_from_dicts(i, 'sim', '', choices)
     perf=ck.get_from_dicts(i, 'perf', '', choices)
     vtune=ck.get_from_dicts(i, 'vtune', '', choices)
+    valgrind=ck.get_from_dicts(i, 'valgrind', '', choices)
     milepost=ck.get_from_dicts(i, 'milepost', '', choices)
 
     params=ck.get_from_dicts(i, 'params',{},choices)
@@ -4375,6 +4376,16 @@ def pipeline(i):
 
        if 'arch-sim' not in cdeps:
           cdeps['arch-sim']={'local':'yes', 'tags':'arch,sim'}
+
+    ###############################################################################################################
+    # PIPELINE SECTION: Valgrind
+    if valgrind=='yes':
+       if o=='con':
+          ck.out(sep)
+          ck.out('Adding valgrind ...')
+
+       if 'tool-valgrind' not in cdeps:
+          cdeps['tool-valgrind']={'local':'yes', 'tags':'tool,valgrind'}
 
     ###############################################################################################################
     # PIPELINE SECTION: resolve compile dependencies
@@ -5259,6 +5270,19 @@ def pipeline(i):
                     'func':'config'})
        if r['return']>0: 
           return {'return':r['return'], 'error':'Problem with MALI HWC script ('+r['error']+')'}
+
+    ###############################################################################################################
+    # PIPELINE SECTION: Valgrind
+    if valgrind=='yes':
+       if o=='con':
+          ck.out(sep)
+          ck.out('Adding valgrind ...')
+
+       x=cdeps['tool-valgrind'].get('cus',{}).get('cmd_prefix',{}).get(tplat,'')
+       if x=='':
+          return {'return':1, 'error':'command line for architecture simulator is not defined'}
+
+       prcmd+=x
 
     ###############################################################################################################
     # PIPELINE SECTION: Architecture simulator
