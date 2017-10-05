@@ -141,7 +141,7 @@ int main(int argc, char *argv[]) {
                         sizeof(unifiedMemory), &unifiedMemory, NULL);
                 assert(CL_SUCCESS == err);
                 printf("Unified memory: %s\n", unifiedMemory ? "yes" : "no");
-                if (fout!=NULL) fprintf(fout, "      \"unified_memory\":\"%s\"\n", unifiedMemory ? "yes" : "no");
+                if (fout!=NULL) fprintf(fout, "      \"unified_memory\":\"%s\"\n", unifiedMemory==CL_TRUE ? "yes" : "no");
             }
 
             // print address bits
