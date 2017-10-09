@@ -313,6 +313,8 @@ def process_in_dir(i):
               (skip_output_validation)        - skip validation of output (dangerous during auto-tuning -
                                                   some optimizations may break semantics or change accuracy)
               (output_validation_repo)        - output validation repo UOA (when recording new output)
+              (program_output_uoa)            - use this UOA to check/record program output 
+                                                (to have the same output entry for groups of similar programs)
 
               (overwrite_reference_output)    - if 'yes', overwrite reference output (useful if broken)
 
@@ -3045,13 +3047,24 @@ def process_in_dir(i):
 
           # Check if output from another program
           program_output_uoa=duoa
+
           if rt.get('program_output_uoa','')!='':
              program_output_uoa=rt['program_output_uoa']
+
+          if i.get('program_output_uoa','')!='':
+             program_output_uoa=i['program_output_uoa']
 
           if i.get('overwrite_reference_output','')!='yes':
 
              if o=='con':
                 ck.out('     * Searching directory with reference output "'+po+'" ...')
+
+             # Check UID of program_output_uoa
+             rx=ck.access({'action':'find',
+                           'module_uoa':work['self_module_uid'],
+                           'data_uoa':program_output_uoa})
+             if rx['return']>0: return rx
+             program_output_uoa=rx['data_uid']
 
              # Search related entries
              rx=ck.access({'action':'search',
@@ -3470,6 +3483,8 @@ def pipeline(i):
               (skip_output_validation)        - skip validation of output (dangerous during auto-tuning -
                                                   some optimizations may break semantics or change accuracy)
               (output_validation_repo)        - output validation repo UOA (when recording new output)
+              (program_output_uoa)            - use this UOA to check/record program output 
+                                                (to have the same output entry for groups of similar programs)
 
               (overwrite_reference_output)    - if 'yes', overwrite reference output (useful if broken)
 
@@ -3723,6 +3738,7 @@ def pipeline(i):
     vout_skip=ck.get_from_dicts(i, 'skip_output_validation','',choices)
     vout_repo=ck.get_from_dicts(i, 'output_validation_repo','',choices)
     vout_over=ck.get_from_dicts(i, 'overwrite_reference_output','',choices)
+    program_output_uoa=ck.get_from_dicts(i, 'program_output_uoa','',choices)
 
     compute_platform_id=ck.get_from_dicts(i, 'compute_platform_id','',choices)
     compute_device_id=ck.get_from_dicts(i, 'compute_device_id','',choices)
@@ -5358,6 +5374,7 @@ def pipeline(i):
            'compute_device_id':compute_device_id,
            'skip_output_validation':vout_skip,
            'output_validation_repo':vout_repo,
+           'program_output_uoa':program_output_uoa,
            'overwrite_reference_output':vout_over,
            'skip_dataset_copy':sdc,
            'skip_exec':skip_exec,

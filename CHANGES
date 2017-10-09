@@ -1,3 +1,7 @@
+* 2017.10.09 - added flag --program_output_uoa to "ck run program" and "ck pipeline program"
+               to be able to check output from a different program 
+               (i.e. create reference output for similar groups of programs)
+
 * 2017.10.05 - added ck pipeline program:xyz --valgrind
 
 * 2017.10.04 - added unified_memory check when detecting OpenCL
