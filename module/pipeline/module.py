@@ -90,6 +90,8 @@ def autotune(i):
 
                (pipeline_update)      - update pipeline with this dict (useful to update already prepared pipeline from file)
 
+               (pipeline_flags)       - update pipeline directly from the CMD flags (will be parsed by CK)
+
                (iterations)           - limit number of iterations, otherwise infinite (default=10)
                                         if -1, infinite (or until all choices are explored)
                (start_from_iteration) - skip all iterations before this number
@@ -410,6 +412,20 @@ def autotune(i):
        force_pipeline_update=True
 
     pipeline['tmp_dir']=tmp_dir
+
+    # Check if pipeline flags (to update pipeline directly)
+    pipeline_flags=i.get('pipeline_flags','')
+    if pipeline_flags!='':
+       import shlex
+       lpipeline_flags=shlex.split('dummy '+pipeline_flags)
+
+       rr=ck.convert_ck_list_to_dict(lpipeline_flags)
+       if rr['return']==0:
+          dpipeline_flags=rr.get('ck_dict',{})
+          if 'cids' in dpipeline_flags: del(dpipeline_flags['cids'])
+          if 'action' in dpipeline_flags: del(dpipeline_flags['action'])
+
+          pipeline.update(dpipeline_flags)
 
     call=ck.get_from_dicts(ic, 'collect_all', {}, None) # Collect all experiemnts
     ae=[]
