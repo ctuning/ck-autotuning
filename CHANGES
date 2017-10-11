@@ -1,3 +1,6 @@
+* 2017.10.11 - improved program.output validation recording - new outputs are recoded to local
+               unless specified explicitly by --output_validation_repo to avoid polluting existing project repos
+
 * 2017.10.10 - added flag --pipeline_flags to directly update pipeline in "ck autotune pipeline"
 
 * 2017.10.09 - added flag --program_output_uoa to "ck run program" and "ck pipeline program"
