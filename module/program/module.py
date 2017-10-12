@@ -2086,12 +2086,21 @@ def process_in_dir(i):
                 if len(dfiles)==1:
                    dfile=dfiles[0]
                 else:
+                   # Check if has description:
+                   desc_dfiles=[]
+                   desc_dfiles1=dd.get('desc_dataset_files',[])
+                   for q in dfiles:
+                       x=desc_dfiles1.get(q,{}).get('name','')
+                       if x=='': x=q
+                       desc_dfiles.append(x)
+
                    ck.out('************ Selecting dataset file ...')
                    ck.out('')
+
                    r=ck.access({'action':'select_list',
                                 'module_uoa':cfg['module_deps']['choice'],
                                 'choices':dfiles,
-                                'desc':dfiles})
+                                'desc':desc_dfiles})
                    if r['return']>0: return r
                    dfile=r['choice']
 
@@ -4366,12 +4375,21 @@ def pipeline(i):
              ddfile=ddfiles[0]
           else:
              if o=='con' and si!='yes':
+                # Check if has description:
+                desc_ddfiles=[]
+                desc_ddfiles1=ddmeta.get('desc_dataset_files',[])
+                for q in ddfiles:
+                    x=desc_ddfiles1.get(q,{}).get('name','')
+                    if x=='': x=q
+                    desc_ddfiles.append(x)
+
                 ck.out('************ Selecting dataset file ...')
                 ck.out('')
+
                 r=ck.access({'action':'select_list',
                              'module_uoa':cfg['module_deps']['choice'],
                              'choices':ddfiles,
-                             'desc':ddfiles})
+                             'desc':desc_ddfiles})
                 if r['return']>0: return r
                 ddfile=r['choice']
                 ck.out('')

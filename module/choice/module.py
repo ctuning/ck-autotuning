@@ -374,7 +374,8 @@ def select_list(i):
     Input:  {
               choices      - simple text list of choices
               (skip_enter) - if 'yes', do not select 0 when entering 0
-              (desc)       - description for each choices entry
+              (desc)       - description for each choices entry (list of the same size as choices)
+              (swap_name)  - if 'yes' show desc first and real name in brackets
             }
 
     Output: {
@@ -388,6 +389,8 @@ def select_list(i):
     """
 
     se=i.get('skip_enter','')
+
+    sn=(i.get('swap_name','')=='yes')
 
     lst=i.get('choices',[])
     dsc=i.get('desc',[])
@@ -403,7 +406,10 @@ def select_list(i):
         if iz<len(dsc):
            zd=dsc[iz]
            if zd!='': 
-              z+=' ('+zd+')'
+              if sn:
+                 z=zd+' ('+z+')'
+              else:
+                 z+=' ('+zd+')'
 
         ck.out(zs+') '+z)
 
