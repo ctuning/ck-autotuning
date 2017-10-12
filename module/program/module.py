@@ -3057,25 +3057,24 @@ def process_in_dir(i):
           # Check if output from another program
           program_output_uoa=duoa
 
-          if rt.get('program_output_uoa','')!='':
-             program_output_uoa=rt['program_output_uoa']
-
           if i.get('program_output_uoa','')!='':
              program_output_uoa=i['program_output_uoa']
 
-          if i.get('overwrite_reference_output','')!='yes':
+          if rt.get('program_output_uoa','')!='':
+             program_output_uoa=rt['program_output_uoa']
 
+          # Check UID of program_output_uoa
+          rx=ck.access({'action':'find',
+                        'module_uoa':work['self_module_uid'],
+                        'data_uoa':program_output_uoa})
+          if rx['return']>0: return rx
+          program_output_uoa=rx['data_uid']
+
+          if i.get('overwrite_reference_output','')!='yes':
              if o=='con':
                 ck.out('     * Searching directory with reference output "'+po+'" ...')
 
-             # Check UID of program_output_uoa
-             rx=ck.access({'action':'find',
-                           'module_uoa':work['self_module_uid'],
-                           'data_uoa':program_output_uoa})
-             if rx['return']>0: return rx
-             program_output_uoa=rx['data_uid']
-
-             # Search related entries
+             # Search related entries with outputs (can be multiple - in local and project repos!)
              rx=ck.access({'action':'search',
                            'module_uoa':cfg['module_deps']['program.output'],
                            'data_uoa':'program-uid-'+program_output_uoa})
@@ -3160,6 +3159,10 @@ def process_in_dir(i):
              potags=meta.get('tags',[])
              if dalias!='': 
                 potags.append(dalias)
+
+             if oruoa=='': oruoa='local' # avoid recording to existing repositories rather than local
+                                         # unless explictly specified (to avoid pulluting shared project repos)
+
              ii={'action':'update',
                  'module_uoa':cfg['module_deps']['program.output'],
                  'data_uoa':'program-uid-'+program_output_uoa,
