@@ -475,7 +475,7 @@ def select_uoa(i):
         zz[zs]=z
 
         x=z
-        if zname!='' and zname!=zu: x=zname+' , '+x
+        if zname!='' and zname!=zu: x=zname+', '+x
 
         ck.out(zs+') '+zu+' ('+x+')')
 
