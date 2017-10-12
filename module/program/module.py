@@ -1962,7 +1962,8 @@ def process_in_dir(i):
 
              rx=ck.access({'action':'search',
                            'module_uoa':dmuoa,
-                           'tags':tags})
+                           'tags':tags,
+                           'add_info':'yes'})
              if rx['return']>0: return rx
 
              lst=rx['lst']
@@ -1975,28 +1976,36 @@ def process_in_dir(i):
                 ck.out('')
                 ck.out('More than one dataset entry is found for this program:')
                 ck.out('')
-                zz={}
-                iz=0
-                for z1 in sorted(lst, key=lambda v: v['data_uoa']):
-                    z=z1['data_uid']
-                    zu=z1['data_uoa']
 
-                    zs=str(iz)
-                    zz[zs]=z
+#                zz={}
+#                iz=0
+#                for z1 in sorted(lst, key=lambda v: v['data_uoa']):
+#                    z=z1['data_uid']
+#                    zu=z1['data_uoa']
+#
+#                    zs=str(iz)
+#                    zz[zs]=z
+#
+#                    ck.out(zs+') '+zu+' ('+z+')')
+#
+#                    iz+=1
+#
+#                ck.out('')
+#                rx=ck.inp({'text':'Select dataset UOA (or Enter to select 0): '})
+#                x=rx['string'].strip()
+#                if x=='': x='0'
+#
+#                if x not in zz:
+#                   return {'return':1, 'error':'dataset number is not recognized'}
+#
+#                dduoa=zz[x]
 
-                    ck.out(zs+') '+zu+' ('+z+')')
-
-                    iz+=1
-
+                r=ck.access({'action':'select_uoa',
+                             'module_uoa':cfg['module_deps']['choice'],
+                             'choices':lst})
+                if r['return']>0: return r
+                dduoa=r['choice']
                 ck.out('')
-                rx=ck.inp({'text':'Select dataset UOA (or Enter to select 0): '})
-                x=rx['string'].strip()
-                if x=='': x='0'
-
-                if x not in zz:
-                   return {'return':1, 'error':'dataset number is not recognized'}
-
-                dduoa=zz[x]
 
           if dduoa=='':
              return {'return':1, 'error':'dataset is not specified'}
@@ -4295,7 +4304,8 @@ def pipeline(i):
           rx=ck.access({'action':'search',
                         'dataset_repo_uoa':druoa,
                         'module_uoa':dmuoa,
-                        'tags':xdtags})
+                        'tags':xdtags,
+                        'add_info':'yes'})
           if rx['return']>0: return rx
 
           lst=rx['lst']
@@ -4329,7 +4339,9 @@ def pipeline(i):
                 if o=='con' and si!='yes':
                    ck.out('************ Selecting data set ...')
                    ck.out('')
-                   r=ck.select_uoa({'choices':lst})
+                   r=ck.access({'action':'select_uoa',
+                                'module_uoa':cfg['module_deps']['choice'],
+                                'choices':lst})
                    if r['return']>0: return r
                    dduoa=r['choice']
                    ck.out('')

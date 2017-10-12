@@ -430,3 +430,69 @@ def select_list(i):
     dduoa=zz[x]
 
     return {'return':0, 'choice':dduoa, 'position':x}
+
+##############################################################################
+# improved version of UOA selector over the version from CK kernel
+
+##############################################################################
+# Universal UOA selector
+
+def select_uoa(i):
+    """
+    Input:  {
+              choices      - list from search function
+              (skip_enter) - if 'yes', do not select 0 when user presses Enter
+              (skip_sort)  - if 'yes', do not sort array
+            }
+
+    Output: {
+              return  - return code =  0, if successful
+                                    >  0, if error
+              (error) - error text if return > 0
+              choice  - data UOA
+            }
+
+    """
+
+    se=i.get('skip_enter','')
+
+    lst=i.get('choices',[])
+
+    if i.get('skip_sort','')!='yes':
+       klst=sorted(lst, key=lambda v: v['data_uoa'])
+    else:
+       klst=lst
+
+    zz={}
+    iz=0
+
+    for z1 in klst:
+        z=z1['data_uid']
+        zu=z1['data_uoa']
+        zname=z1.get('info',{}).get('data_name','')
+
+        zs=str(iz)
+        zz[zs]=z
+
+        x=z
+        if zname!='' and zname!=zu: x=zname+' , '+x
+
+        ck.out(zs+') '+zu+' ('+x+')')
+
+        iz+=1
+
+    ck.out('')
+    y='Select UOA'
+    if se!='yes': y+=' (or press Enter for 0)'
+    y+=': '
+
+    rx=ck.inp({'text':y})
+    x=rx['string'].strip()
+    if x=='' and se!='yes': x='0' 
+
+    if x not in zz:
+       return {'return':1, 'error':'number is not recognized'}
+
+    dduoa=zz[x]
+
+    return {'return':0, 'choice':dduoa}
