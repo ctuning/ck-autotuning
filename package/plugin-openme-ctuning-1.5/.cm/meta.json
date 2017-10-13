@@ -23,6 +23,7 @@
     "plugin", 
     "openme", 
     "ctuning", 
-    "auto-tuning"
+    "auto-tuning",
+    "channel-stable"
   ]
 }

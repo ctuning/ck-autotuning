@@ -23,6 +23,7 @@
     "lib", 
     "rtl", 
     "milepost", 
-    "codelet"
+    "codelet",
+    "channel-stable"
   ]
 }

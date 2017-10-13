@@ -22,6 +22,7 @@
     "lib", 
     "plugins", 
     "openme", 
-    "lang-java"
+    "lang-java",
+    "channel-stable"
   ]
 }

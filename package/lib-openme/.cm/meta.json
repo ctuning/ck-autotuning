@@ -34,6 +34,7 @@
     "lang-cpp", 
     "lang-f77", 
     "lang-f90", 
-    "lang-f95"
+    "lang-f95",
+    "channel-stable"
   ]
 }
