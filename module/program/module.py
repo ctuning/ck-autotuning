@@ -2097,7 +2097,7 @@ def process_in_dir(i):
                 else:
                    # Check if has description:
                    desc_dfiles=[]
-                   desc_dfiles1=dd.get('desc_dataset_files',[])
+                   desc_dfiles1=dd.get('desc_dataset_files',{})
                    for q in dfiles:
                        x=desc_dfiles1.get(q,{}).get('name','')
                        if x=='': x=q
@@ -4392,7 +4392,7 @@ def pipeline(i):
              if o=='con' and si!='yes':
                 # Check if has description:
                 desc_ddfiles=[]
-                desc_ddfiles1=ddmeta.get('desc_dataset_files',[])
+                desc_ddfiles1=ddmeta.get('desc_dataset_files',{})
                 for q in ddfiles:
                     x=desc_ddfiles1.get(q,{}).get('name','')
                     if x=='': x=q
