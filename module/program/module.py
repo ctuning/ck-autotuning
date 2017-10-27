@@ -975,6 +975,14 @@ def process_in_dir(i):
 #              if kkd1 not in env:
 #                 env[kkd1]=deps['compiler']['dict']['env'][kkd1]
 
+       # Add other deps at the end if needed
+       for q in deps:
+           x=deps[q]
+           if x.get('add_to_the_end_of_bat','')=='yes' and x.get('bat','')!='':
+              y=x['bat']
+              if not sb.endswith(y):
+                 sb+='\n'+no+y.strip()+' 1\n' # We set 1 to tell environment that it should set again even if it was set before
+
        # Add env
        for k in sorted(env):
            v=str(env[k])
