@@ -6173,10 +6173,9 @@ def benchmark(i):
        ck.out('* Normalized time in sec. (min .. max): '+str(ntmin)+' .. '+str(ntmax))
 
        ck.out('')
-       ck.out('* Total time in sec. (min .. max): '+str(tmin)+' .. '+str(tmax))
+       ck.out('* Total time in us (min .. max): '+str(tmin)+' .. '+str(tmax))
 
-       ck.out('')
-       # Check if OpenCL kernel
+       # Check if aggregated OpenCL kernel time
        found=False
        for k in sorted(flat):
            if k.startswith('##characteristics#run#execution_time_opencl_us') and k.endswith('#min'):
@@ -6184,15 +6183,50 @@ def benchmark(i):
               k1=k[:-3]+'max'
               tmax=flat.get(k1,tmin)
 
-              kernel=k[46:-4]
+              kernel=k[47:-4]
 
               if not found:
                  found=True
 
-                 ck.out('* OpenCL kernel times in us. (min .. max):')
+                 ck.out('')
+                 ck.out('* OpenCL aggregated kernel times in us. (min .. max):')
                  ck.out('')
 
               ck.out('  '+kernel+' : '+str(tmin)+' .. '+str(tmax))
+
+       # Check if sequence of OpenCL kernel time and rebuild sequence
+       kernels={}
+       for k in flat:
+           if k.startswith('##characteristics#run#execution_time_list_opencl') and k.endswith('#min'):
+              v=flat[k]
+
+              j=k.find('#',49)
+              if j>0:
+                 num=k[49:j]
+
+                 j=k.find('#',49)
+                 if j>0:
+                    x=k[j+1:-4]
+
+                    if num not in kernels:
+                       kernels[num]={}
+
+                    kernels[num][x]=v
+
+       if len(kernels)>0:
+          ck.out('')
+          ck.out('* OpenCL kernel sequence with time in us.:')
+          ck.out('')
+
+          for q in sorted(kernels, key=lambda v: kernels[v]['sequence']):
+              qq=kernels[q]
+
+              kernel=qq['kernel_name']
+              tm=qq['kernel_time']*1e-3
+              sec=qq['sequence']
+
+              ck.out('  '+str(sec)+') '+kernel+' : '+str(tm))
+
 
     return r
 

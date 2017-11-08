@@ -85,11 +85,12 @@ def process(i):
 
         seq=0
         for nq in nqs:
-            seq+=1
             kernel_name=nq['name']
             kernel_time=nq['profiling']['end']-nq['profiling']['start']
 
             d['execution_time_list_opencl'].append({'kernel_name':kernel_name, 'kernel_time':kernel_time, 'sequence':seq})
+
+            seq+=1
 
     return {'return':0}
 
