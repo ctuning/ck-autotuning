@@ -81,22 +81,15 @@ def process(i):
         d['execution_time_opencl_ms']={ nq['name'] : (nq['profiling']['end']-nq['profiling']['start'])*1e-6 for nq in nqs }
         d['execution_time_opencl_s' ]={ nq['name'] : (nq['profiling']['end']-nq['profiling']['start'])*1e-9 for nq in nqs }
 
-        d['execution_time_list_opencl_us']={}
-        d['execution_time_list_opencl_ms']={}
-        d['execution_time_list_opencl_s' ]={}
+        d['execution_time_list_opencl']=[]
 
+        seq=0
         for nq in nqs:
+            seq+=1
             kernel_name=nq['name']
             kernel_time=nq['profiling']['end']-nq['profiling']['start']
 
-            if kernel_name not in d['execution_time_list_opencl_us']:
-               d['execution_time_list_opencl_us']=[]
-               d['execution_time_list_opencl_ms']=[]
-               d['execution_time_list_opencl_s']=[]
-
-            d['execution_time_list_opencl_us'].append(kernel_time*1e-3)
-            d['execution_time_list_opencl_ms'].append(kernel_time*1e-6)
-            d['execution_time_list_opencl_s'].append(kernel_time*1e-9)
+            d['execution_time_list_opencl'].append({'kernel_name':kernel_name, 'kernel_time':kernel_time, 'sequence':seq})
 
     return {'return':0}
 
