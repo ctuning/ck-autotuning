@@ -69,7 +69,6 @@ def process(i):
         # Parse profiler output.
         dvdt_prof=prof_parse(r['string'])
 
-
         r=ck.save_json_to_file({'json_file':dvdt_prof_file, 'dict':dvdt_prof, 'sort_keys':'yes'})
         if r['return']>0: return r
 
@@ -81,6 +80,23 @@ def process(i):
         d['execution_time_opencl_us']={ nq['name'] : (nq['profiling']['end']-nq['profiling']['start'])*1e-3 for nq in nqs }
         d['execution_time_opencl_ms']={ nq['name'] : (nq['profiling']['end']-nq['profiling']['start'])*1e-6 for nq in nqs }
         d['execution_time_opencl_s' ]={ nq['name'] : (nq['profiling']['end']-nq['profiling']['start'])*1e-9 for nq in nqs }
+
+        d['execution_time_list_opencl_us']={}
+        d['execution_time_list_opencl_ms']={}
+        d['execution_time_list_opencl_s' ]={}
+
+        for nq in nqs:
+            kernel_name=nq['name']
+            kernel_time=nq['profiling']['end']-nq['profiling']['start']
+
+            if kernel_name not in d['execution_time_list_opencl_us']:
+               d['execution_time_list_opencl_us']=[]
+               d['execution_time_list_opencl_ms']=[]
+               d['execution_time_list_opencl_s']=[]
+
+            d['execution_time_list_opencl_us'].append(kernel_time*1e-3)
+            d['execution_time_list_opencl_ms'].append(kernel_time*1e-6)
+            d['execution_time_list_opencl_s'].append(kernel_time*1e-9)
 
     return {'return':0}
 
