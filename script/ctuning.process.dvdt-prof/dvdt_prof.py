@@ -77,9 +77,13 @@ def process(i):
 
         nqs=[ call for call in dvdt_prof if call['call'] in ['clEnqueueNDRangeKernel'] ]
 
-        d['execution_time_opencl_us']={ nq['name'] : (nq['profiling']['end']-nq['profiling']['start'])*1e-3 for nq in nqs }
-        d['execution_time_opencl_ms']={ nq['name'] : (nq['profiling']['end']-nq['profiling']['start'])*1e-6 for nq in nqs }
-        d['execution_time_opencl_s' ]={ nq['name'] : (nq['profiling']['end']-nq['profiling']['start'])*1e-9 for nq in nqs }
+#        d['execution_time_opencl_us']={ nq['name'] : (nq['profiling']['end']-nq['profiling']['start'])*1e-3 for nq in nqs }
+#        d['execution_time_opencl_ms']={ nq['name'] : (nq['profiling']['end']-nq['profiling']['start'])*1e-6 for nq in nqs }
+#        d['execution_time_opencl_s' ]={ nq['name'] : (nq['profiling']['end']-nq['profiling']['start'])*1e-9 for nq in nqs }
+
+        d['execution_time_opencl_us']={}
+        d['execution_time_opencl_ms']={}
+        d['execution_time_opencl_s' ]={}
 
         d['execution_time_list_opencl']=[]
 
@@ -89,6 +93,15 @@ def process(i):
             kernel_time=nq['profiling']['end']-nq['profiling']['start']
 
             d['execution_time_list_opencl'].append({'kernel_name':kernel_name, 'kernel_time':kernel_time, 'sequence':seq})
+
+            if kernel_name not in d['execution_time_opencl_us']:
+               d['execution_time_opencl_us'][kernel_name]=0.0
+               d['execution_time_opencl_ms'][kernel_name]=0.0
+               d['execution_time_opencl_s' ][kernel_name]=0.0
+
+            d['execution_time_opencl_us'][kernel_name]+=kernel_time*1e-3
+            d['execution_time_opencl_ms'][kernel_name]+=kernel_time*1e-6
+            d['execution_time_opencl_s' ][kernel_name]+=kernel_time*1e-9
 
             seq+=1
 
