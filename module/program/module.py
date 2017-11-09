@@ -6235,45 +6235,71 @@ def benchmark(i):
               ck.out('  '+kernel+' : '+str(tmin)+' .. '+str(tmax))
 
        # Check if sequence of OpenCL kernel time and rebuild sequence
-       kernels_min={}
-       kernels_max={}
+       kernels={}
        for k in flat:
            if k.startswith('##characteristics#run#execution_time_list_opencl') and k.endswith('#min'):
-              tmin=flat[k]
-              k1=k[:-3]+'max'
-              tmax=flat.get(k1,tmin)
-
               j=k.find('#',49)
               if j>0:
                  num=k[49:j]
+
+                 if num not in kernels:
+                    kernels[num]={'lws':{},'gws':{}}
 
                  j=k.find('#',49)
                  if j>0:
                     x=k[j+1:-4]
 
-                    if num not in kernels_min:
-                       kernels_min[num]={}
-                       kernels_max[num]={}
+                    v=flat[k]
 
-                    kernels_min[num][x]=tmin
-                    kernels_max[num][x]=tmax
+                    if x=='kernel_time':
+                       kernels[num]['kernel_time_min']=v
 
-       if len(kernels_min)>0:
+                       k1=k[:-3]+'max'
+                       kernels[num]['kernel_time_max']=flat.get(k1,v)
+
+                    elif x.startswith('lws@') or x.startswith('gws@'):
+                       x1=x[4:]
+                       kernels[num][x[:3]][x1]=v
+                    else:
+                       kernels[num][x]=v
+
+       if len(kernels)>0:
           ck.out('')
           ck.out('* OpenCL aggregated kernel times in us. (min .. max):')
           ck.out('')
 
-          for q in sorted(kernels_min, key=lambda v: kernels_min[v]['sequence']):
-              qmin=kernels_min[q]
-              qmax=kernels_max[q]
+          for q in sorted(kernels, key=lambda v: kernels[v]['sequence']):
+              qq=kernels[q]
 
-              kernel=qmin['kernel_name']
-              sec=qmin['sequence']
+              kernel=qq['kernel_name']
+              sec=qq['sequence']
 
-              tmin=qmin['kernel_time']*1e-3
-              tmax=qmax['kernel_time']*1e-3
+              tmin=qq['kernel_time_min']*1e-3
+              tmax=qq['kernel_time_max']*1e-3
 
-              ck.out('  '+str(sec)+') '+kernel+' : '+str(tmin)+' .. '+str(tmax))
+              lws=qq['lws']
+              gws=qq['gws']
+
+              xlws=''
+              for j in sorted(lws):
+                  if xlws!='': xlws+=','
+                  xlws+=str(lws[j])
+
+              xgws=''
+              for j in sorted(gws):
+                  if xgws!='': xgws+=','
+                  xgws+=str(gws[j])
+
+              x=''
+              if xlws!='': x+='LWS='+xlws
+              if xgws!='': 
+                 if x!='': x+=' '
+                 x+='GWS='+xgws
+              if x!='': x=' ('+x+')'
+
+              ck.out('  '+str(sec)+') '+kernel+' : '+str(tmin)+' .. '+str(tmax)+x)
+
+       ck.out('')
 
     return r
 

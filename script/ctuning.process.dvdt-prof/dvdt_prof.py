@@ -92,7 +92,11 @@ def process(i):
             kernel_name=nq['name']
             kernel_time=nq['profiling']['end']-nq['profiling']['start']
 
-            d['execution_time_list_opencl'].append({'kernel_name':kernel_name, 'kernel_time':kernel_time, 'sequence':seq})
+            d['execution_time_list_opencl'].append({'kernel_name':kernel_name, 
+                                                    'kernel_time':kernel_time, 
+                                                    'sequence':seq, 
+                                                    'lws':nq.get('lws',[]),
+                                                    'gws':nq.get('gws',[])})
 
             if kernel_name not in d['execution_time_opencl_us']:
                d['execution_time_opencl_us'][kernel_name]=0.0
