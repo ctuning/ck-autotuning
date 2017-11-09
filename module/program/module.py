@@ -6229,7 +6229,7 @@ def benchmark(i):
                  found=True
 
                  ck.out('')
-                 ck.out('* OpenCL aggregated kernel times in us. (min .. max):')
+                 ck.out('* OpenCL aggregated kernel times in us. (min .. max), local work size, global work size:')
                  ck.out('')
 
               ck.out('  '+kernel+' : '+str(tmin)+' .. '+str(tmax))
