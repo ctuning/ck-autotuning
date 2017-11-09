@@ -6229,7 +6229,7 @@ def benchmark(i):
                  found=True
 
                  ck.out('')
-                 ck.out('* OpenCL aggregated kernel times in us. (min .. max), local work size, global work size:')
+                 ck.out('* OpenCL aggregated kernel times in us. (min .. max):')
                  ck.out('')
 
               ck.out('  '+kernel+' : '+str(tmin)+' .. '+str(tmax))
@@ -6265,7 +6265,7 @@ def benchmark(i):
 
        if len(kernels)>0:
           ck.out('')
-          ck.out('* OpenCL aggregated kernel times in us. (min .. max):')
+          ck.out('* OpenCL kernel sequence with times in us. (min .. max), local work size, global work size:')
           ck.out('')
 
           for q in sorted(kernels, key=lambda v: kernels[v]['sequence']):
