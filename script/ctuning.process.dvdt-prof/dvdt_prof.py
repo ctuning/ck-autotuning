@@ -81,6 +81,17 @@ def process(i):
         d['execution_time_opencl_ms']={ nq['name'] : (nq['profiling']['end']-nq['profiling']['start'])*1e-6 for nq in nqs }
         d['execution_time_opencl_s' ]={ nq['name'] : (nq['profiling']['end']-nq['profiling']['start'])*1e-9 for nq in nqs }
 
+        d['execution_time_list_opencl']=[]
+
+        seq=0
+        for nq in nqs:
+            kernel_name=nq['name']
+            kernel_time=nq['profiling']['end']-nq['profiling']['start']
+
+            d['execution_time_list_opencl'].append({'kernel_name':kernel_name, 'kernel_time':kernel_time, 'sequence':seq})
+
+            seq+=1
+
     return {'return':0}
 
 def read_dvdt_prof(dvdt_prof_path='tmp-dvdt-prof.json'):
