@@ -69,7 +69,6 @@ def process(i):
         # Parse profiler output.
         dvdt_prof=prof_parse(r['string'])
 
-
         r=ck.save_json_to_file({'json_file':dvdt_prof_file, 'dict':dvdt_prof, 'sort_keys':'yes'})
         if r['return']>0: return r
 

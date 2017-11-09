@@ -1,3 +1,6 @@
+* 2017.11.09 - added ondemand CPU/GPU freq setting after experiments to "calm" system
+               to avoid overheating on embedded/IoT devices
+
 * 2017.11.08 - added script:ctuning.process.dvdt-prof to process raw OpenCL stats from dvdt prof
 
 * 2017.10.12 - added dataset file description

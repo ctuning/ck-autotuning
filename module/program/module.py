@@ -5474,6 +5474,46 @@ def pipeline(i):
           i['fail']='yes'
 
     ###############################################################################################################
+    # PIPELINE SECTION: set CPU frequency to ondemand to "calm" system (if supported)
+    if o=='con':
+       ck.out(sep)
+       ck.out('Attempting to set CPU frequency to ondemand to "calm" system (if supported) ...')
+       ck.out('')
+
+    ii={'action':'set_freq',
+        'module_uoa':cfg['module_deps']['platform.cpu'],
+        'value':'ondemand',
+        'host_os':hos,
+        'target_os':tos,
+        'device_id':tdid,
+        'skip_print_os':'yes',
+        'skip_device_init':sdi,
+        'skip_info_collection':sic,
+        'out':oo}
+    r=ck.access(ii)
+    if r['return']>0: return r
+
+    ###############################################################################################################
+    # PIPELINE SECTION: set GPU frequency to ondemand to "calm" system (if supported)
+    if o=='con':
+       ck.out(sep)
+       ck.out('Attempting to set GPU frequency to ondemand to "calm" system (if supported) ...')
+       ck.out('')
+
+    ii={'action':'set_freq',
+        'module_uoa':cfg['module_deps']['platform.gpu'],
+        'value':'ondemand',
+        'host_os':hos,
+        'target_os':tos,
+        'device_id':tdid,
+        'skip_print_os':'yes',
+        'skip_device_init':sdi,
+        'skip_info_collection':sic,
+        'out':oo}
+    r=ck.access(ii)
+    if r['return']>0: return r
+
+    ###############################################################################################################
     # PIPELINE SECTION: finish vtune
     if vtune=='yes':
        if o=='con':
