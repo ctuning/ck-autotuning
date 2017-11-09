@@ -6195,10 +6195,13 @@ def benchmark(i):
               ck.out('  '+kernel+' : '+str(tmin)+' .. '+str(tmax))
 
        # Check if sequence of OpenCL kernel time and rebuild sequence
-       kernels={}
+       kernels_min={}
+       kernels_max={}
        for k in flat:
            if k.startswith('##characteristics#run#execution_time_list_opencl') and k.endswith('#min'):
-              v=flat[k]
+              tmin=flat[k]
+              k1=k[:-3]+'max'
+              tmax=flat.get(k1,tmin)
 
               j=k.find('#',49)
               if j>0:
@@ -6208,25 +6211,29 @@ def benchmark(i):
                  if j>0:
                     x=k[j+1:-4]
 
-                    if num not in kernels:
-                       kernels[num]={}
+                    if num not in kernels_min:
+                       kernels_min[num]={}
+                       kernels_max[num]={}
 
-                    kernels[num][x]=v
+                    kernels_min[num][x]=tmin
+                    kernels_max[num][x]=tmax
 
-       if len(kernels)>0:
+       if len(kernels_min)>0:
           ck.out('')
-          ck.out('* OpenCL kernel sequence with time in us.:')
+          ck.out('* OpenCL aggregated kernel times in us. (min .. max):')
           ck.out('')
 
-          for q in sorted(kernels, key=lambda v: kernels[v]['sequence']):
-              qq=kernels[q]
+          for q in sorted(kernels_min, key=lambda v: kernels_min[v]['sequence']):
+              qmin=kernels_min[q]
+              qmax=kernels_max[q]
 
-              kernel=qq['kernel_name']
-              tm=qq['kernel_time']*1e-3
-              sec=qq['sequence']
+              kernel=qmin['kernel_name']
+              sec=qmin['sequence']
 
-              ck.out('  '+str(sec)+') '+kernel+' : '+str(tm))
+              tmin=qmin['kernel_time']*1e-3
+              tmax=qmax['kernel_time']*1e-3
 
+              ck.out('  '+str(sec)+') '+kernel+' : '+str(tmin)+' .. '+str(tmax))
 
     return r
 
