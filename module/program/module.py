@@ -2754,7 +2754,7 @@ def process_in_dir(i):
                  ck.out('    * '+q)
                  ck.out('')
 
-                 rz=ck.load_text_file({'text_file':q, 'split_to_list':'yes'})
+                 rz=ck.load_text_file({'text_file':q, 'split_to_list':'yes', 'encoding':sys.stdout.encoding})
                  if rz['return']==0:
                     lxx=rz['lst']
                     for q1 in lxx:
