@@ -3110,6 +3110,7 @@ def process_in_dir(i):
           if found:
              if o=='con':
                 ck.out('     * Reference output found - validating ...')
+                ck.out('     * File: '+pox)
 
              for fz in rcof:
                  vr=''
@@ -3190,6 +3191,9 @@ def process_in_dir(i):
              r=ck.access(ii)
              if r['return']>0: return r
              pd=r['path']
+
+             if o=='con':
+                ck.out('     * Directory with output: '+pd)
 
              # Create sub-directory to hold correct output
              pd1=os.path.join(pd,po)
@@ -6786,4 +6790,48 @@ def prepare_table_with_results(i):
                  'tex_wide':i.get('tex_wide',''),
                  'record_html':fh,
                  'record_tex':ft})
+    return r
+
+##############################################################################
+# find program output entry
+
+def find_output(i):
+    """
+    Input:  {
+              data_uoa
+            }
+
+    Output: {
+              return       - return code =  0, if successful
+                                         >  0, if error
+              (error)      - error text if return > 0
+            }
+
+    """
+
+    o=i.get('out','')
+
+    duoa=i.get('data_uoa','')
+    if duoa=='':
+       return {'return':1, 'error':'please, specify program UOA'}
+
+    # Find program UID
+    r=ck.access({'action':'load',
+                 'module_uoa':work['self_module_uid'],
+                 'data_uoa':duoa})
+    if r['return']>0: return r
+    duid=r['data_uid']
+
+    puoa='program-uid-'+duid
+
+    # Search output
+    r=ck.access({'action':'search',
+                 'module_uoa':cfg['module_deps']['program.output'],
+                 'data_uoa':puoa})
+    if r['return']>0: return r
+
+    if o=='con':
+       for q in r['lst']:
+           ck.out(q['path'])
+
     return r
