@@ -6099,6 +6099,8 @@ def benchmark(i):
     """
     Input:  {
               See ck run pipeline --data_uoa=program --help
+
+              (console) - print to console rather than to files
             }
 
     Output: {
@@ -6136,6 +6138,8 @@ def benchmark(i):
     gf=i.get('gpu_freq','')
     if gf=='': gf='max'
     up['gpu_freq']=gf
+
+    up['console']=i.get('console','')
 
     nsc=i.get('no_state_check','')
     if nsc=='': nsc='yes'
