@@ -1092,6 +1092,11 @@ def process_in_dir(i):
                         sll+=pl2
                         sll+=eifsc
 
+              evr=depsk.get('extra_ld_vars','')
+              if evr!='':
+                 evr=evr.replace('$<<',svarb).replace('>>$',svare)
+                 sll+=' '+evr
+
           # Check if local includes
           linc=meta.get('include_dirs',[])
           if len(linc)>0:

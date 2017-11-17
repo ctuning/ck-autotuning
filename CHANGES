@@ -1,3 +1,5 @@
+* 2017.11.17 - added extra_ld_vars to deps to be able to add multiple libs for linking during program compilation
+
 * 2017.11.13 - now reading program output with console encoding rather than UTF-8
              - added "ck find_output program:{some program UOA}" to find all outputs for validation
 
