@@ -4903,6 +4903,7 @@ def pipeline(i):
            'skip_print_os':'yes',
            'skip_device_init':sdi,
            'skip_info_collection':sic,
+           'env':env,
            'out':oo}
        r=ck.access(ii)
        if r['return']>0: return r
@@ -4926,6 +4927,7 @@ def pipeline(i):
            'skip_print_os':'yes',
            'skip_device_init':sdi,
            'skip_info_collection':sic,
+           'env':env,
            'out':oo}
        r=ck.access(ii)
        if r['return']>0: return r
