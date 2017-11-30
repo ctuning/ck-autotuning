@@ -221,3 +221,70 @@ def calculate_similarity(i):
              distance=math.sqrt(distance)
 
     return {'return':0, 'distance':distance}
+
+##############################################################################
+# show features in HTML
+
+def show(i):
+    """
+    Input:  {
+            }
+
+    Output: {
+              return       - return code =  0, if successful
+                                         >  0, if error
+              (error)      - error text if return > 0
+            }
+
+    """
+
+    h='<h2>Static MILEPOST features</h2>\n'
+
+    h+='<i>See <a href="http://cTuning.org/project-milepost">MILEPOST project webpage</a> and <a href="https://github.com/ctuning/reproduce-milepost-project">GitHub CK repository to reproduce MILEPOST project</a> for more details</i><br><br>\n'
+
+    h+='<table class="ck_table" border="0">\n'
+
+    # Check host URL prefix and default module/action
+    rx=ck.access({'action':'form_url_prefix',
+                  'module_uoa':'wfe',
+                  'host':i.get('host',''), 
+                  'port':i.get('port',''), 
+                  'template':i.get('template','')})
+    if rx['return']>0: return rx
+    url0=rx['url']
+
+    h+=' <tr style="background-color:#cfcfff;">\n'
+    h+='  <td><b>\n'
+    h+='   Feature number\n'
+    h+='  </b></td>\n'
+    h+='  <td><b>\n'
+    h+='   Meaning\n'
+    h+='  </b></td>\n'
+    h+=' </tr>\n'
+
+    mf=cfg['milepost_features_description']
+
+    for ft in range(1,1000):
+        sft=str(ft)
+        if sft not in mf: break
+
+        desc=mf[sft]['desc']
+
+        if ft>56 and ft<66: desc+=' (*)'
+
+        h+=' <tr>\n'
+        h+='  <td valign="top">\n'
+        h+='   ft'+sft+'\n'
+        h+='  </td>\n'
+        h+='  <td valign="top">\n'
+        h+='   '+desc+'\n'
+        h+='  </td>\n'
+        h+=' </tr>\n'
+
+    h+='</table><br>\n'
+
+    h+='<i>* these features were added to MILEPOST feature extractor'
+    h+=' by <a href="http://www.dcs.gla.ac.uk/~jsinger">Jeremy Singer</a></i><br><br>'
+
+
+    return {'return':0, 'html':h}

@@ -5,6 +5,10 @@
     },
     "extract": {
       "desc": "extract program static milepost features"
+    },
+    "show": {
+      "desc": "show features in HTML",
+      "for_web": "yes"
     }
   },
   "copyright": "See CK COPYRIGHT.txt for copyright details",
