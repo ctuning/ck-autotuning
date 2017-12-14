@@ -1,3 +1,5 @@
+* 2017.12.14 - fixed minor issue with CT_REPEAT_MAIN (env is not updated in some cases)
+
 * 2017.11.20 - added possibility to turn on/off specific cores during crowd-tuning
 
 * 2017.11.17 - added extra_ld_vars to deps to be able to add multiple libs for linking during program compilation

@@ -2578,6 +2578,7 @@ def process_in_dir(i):
           sb=csb
           if sc!='yes' and 'CT_REPEAT_MAIN' in env1 and repeat!=-1:
              sb=sb.replace('$#repeat#$', str(repeat))
+             env['CT_REPEAT_MAIN']=str(repeat)
 
           # Check sudo init
           if isd=='yes':

@@ -30,8 +30,9 @@ spare Android mobile phones, tables and other devices:
 * [compiler tuning using small kernels](https://play.google.com/store/apps/details?id=openscience.crowdsource.experiments)
 * [CK crowd-scenarios](https://github.com/ctuning/ck-crowd-scenarios)
 
-Further details are available at [CK wiki](https://github.com/ctuning/ck/wiki)
-and our [open research challenges](https://github.com/ctuning/ck/wiki/Enabling-open-science).
+Further details are available at [CK wiki](https://github.com/ctuning/ck/wiki),
+[open research challenges wiki](https://github.com/ctuning/ck/wiki/Enabling-open-science)
+and [reproducible and CK-powered AI/SW/HW co-design competitions at ACM/IEEE conferences](http://cKnowledge.org/request).
 
 Prerequisites
 =============
