@@ -1342,7 +1342,10 @@ def process_in_dir(i):
 
                  # Check if source from another entry (species)
                  full_path=''
-                 if sf.startswith('$#ck_take_from_{'):
+                 if sf.startswith('$<<'):
+                    full_path=sf.replace('$<<',svarb).replace('>>$',svare)
+
+                 elif sf.startswith('$#ck_take_from_{'):
                     b2=sf.find('}#$')
                     if b2=='':
                        return {'return':1, 'error':'can\'t parse source file '+sf+' ...'}
@@ -1356,9 +1359,10 @@ def process_in_dir(i):
 
                     sf=sf[b2+3:]
 
-                    full_path=rb['path']
+                    full_path=os.path.join(rb['path'],sf)
+
                  else:
-                    full_path=sfprefix
+                    full_path=os.path.join(sfprefix,sf)
 
                  sf0,sf1=os.path.splitext(sf)
 
@@ -1374,7 +1378,7 @@ def process_in_dir(i):
                     xcfa+=' '+svarb+svarb1+'CK_FLAGS_OUTPUT'+svare1+svare+sfobj
 
                  cc=sccmd
-                 cc=cc.replace('$#source_file#$', os.path.join(full_path,sf))
+                 cc=cc.replace('$#source_file#$', full_path)
 
                  cc=cc.replace('$#compiler#$', svarb+compiler_env+svare)
 
