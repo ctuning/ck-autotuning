@@ -5729,6 +5729,9 @@ def pipeline(i):
            with open('tmp-dvdt-prof.json', 'w') as f:
                json.dump(chars['run']['dvdt_prof'], f, indent=2)
 
+           with open('tmp-dvdt-prof-'+str(statistical_repetition_number)+'.json', 'w') as f:
+               json.dump(chars['run']['dvdt_prof'], f, indent=2)
+
     ###############################################################################################################
     # Deinit remote device, if needed
     ndi=i.get('no_deinit_remote_device','')

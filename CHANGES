@@ -1,3 +1,6 @@
+* 2018.02.09 - dumping tmp-dvdt-prof-<stat repetition number>.json - Flavio needs it 
+               to show better statistics during DNN optimization
+
 * 2018.01.01 - added possibility to add $<< to program sources
 
 * 2017.12.14 - fixed minor issue with CT_REPEAT_MAIN (env is not updated in some cases)
