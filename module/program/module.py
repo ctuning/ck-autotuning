@@ -5729,7 +5729,7 @@ def pipeline(i):
            with open('tmp-dvdt-prof.json', 'w') as f:
                json.dump(chars['run']['dvdt_prof'], f, indent=2)
 
-           with open('tmp-dvdt-prof-'+str(statistical_repetition_number)+'.json', 'w') as f:
+           with open('tmp-dvdt-prof-'+str(srn)+'.json', 'w') as f:
                json.dump(chars['run']['dvdt_prof'], f, indent=2)
 
     ###############################################################################################################
