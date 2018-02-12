@@ -1,3 +1,7 @@
+* 2018.02.12 - fixed error reporting in program pipeline 
+               if there is a problem loading pre/post processing python scripts
+               (noted for some ReQuEST submissions)
+
 * 2018.02.09 - dumping tmp-dvdt-prof-<stat repetition number>.json - Flavio needs it 
                to show better statistics during DNN optimization
 

@@ -2284,7 +2284,7 @@ def process_in_dir(i):
           cs=rxx.get('code', None)
           if cs==None:
              rxx['return']=1
-             rxx['error']='no python code found'
+             rxx['error']='problem loading python code: '+rxx['error']
 
           if rxx['return']==0:
              os.chdir(cdd) # restore current dir from above operation
