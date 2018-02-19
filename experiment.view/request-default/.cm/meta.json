@@ -1,93 +1,71 @@
 {
   "flat_keys": [
-    "##choices#host_os",
-    "##choices#target_os",
-    "##features#platform#cpu#name",
-    "##features#platform#cpu#sub_name",
-    "##features#platform#cpu#num_proc",
-    "##features#compiler_version#raw@0",
+    "##features#platform#platform#name", 
+    "##choices#data_uoa",
     "##choices#dataset_uoa",
-    "##characteristics#run#repeat",
-    "##characteristics#run#dim_cpu",
-    "##characteristics#run#dim_gpu_only",
-    "##characteristics#run#dim_gpu_with_mem",
-    "##characteristics#run#run_time_state#energy_a15_mem_gpu",
-    "##characteristics#run#run_time_state#energy_a7_mem_gpu",
-    "##characteristics#compile#obj_size",
-    "##characteristics#current_freq#0",
-    "##choices#gpu_freq",
-    "##characteristics#run#accuracy",
-    "##characteristics#run#faults",
-    "##choices#compiler_flags#*",
-    "##choices#compiler_vars#*"
-  ],
+    "##choices#dataset_file",
+    "##characteristics#compile#compilation_success_bool", 
+    "##characteristics#run#run_success_bool", 
+    "##characteristics#run#output_check_failed_bool",
+    "##characteristics#run#execution_time",
+    "##characteristics#run#run_time_state#time_setup",
+    "##characteristics#run#run_time_state#time_test",
+    "##choices#env#*"
+  ], 
   "flat_keys_desc": [
     {
-      "desc": "Host OS",
-      "module_uoa": "0440cb72c2bc5cc6",
+      "desc": "Platform" 
+    }, 
+    {
+      "desc": "Test", 
+      "module_uoa": "b0ac08fe1d3c2615", 
       "type": "uoa"
-    },
+    }, 
     {
-      "desc": "Target OS",
-      "module_uoa": "0440cb72c2bc5cc6",
+      "desc": "Dataset", 
+      "module_uoa": "8a7141c59cd335f5", 
       "type": "uoa"
-    },
+    }, 
     {
-      "desc": "CPU name"
-    },
+      "desc": "Dataset file" 
+    }, 
     {
-      "desc": "CPU sub-name"
-    },
+      "desc": "Successful<br>compile?",
+      "convert_none_to_false":"yes",
+      "bg_color_if_true": "#4fcf4f",
+      "bg_color_if_false": "#cf4f4f"
+    }, 
     {
-      "desc": "Number of logical cores"
-    },
+      "desc": "Successful<br>run?",
+      "convert_none_to_false":"yes",
+      "bg_color_if_true": "#4fcf4f",
+      "bg_color_if_false": "#cf4f4f"
+    }, 
     {
-      "desc": "Raw compiler name"
-    },
+      "desc": "Output<br>correct?",
+      "convert_none_to_false":"yes",
+      "invert_bool":"yes",
+      "bg_color_if_true": "#4fcf4f",
+      "bg_color_if_false": "#cf4f4f"
+    }, 
     {
-      "desc": "Dataset UOA",
-      "module_uoa": "8a7141c59cd335f5",
-      "type": "uoa"
-    },
+      "desc": "Total test time<br>(sec.)",
+      "format":"%.6f"
+    }, 
     {
-      "desc": "Calibration"
-    },
+      "desc": "Setup time<br>(sec.)",
+      "format":"%.6f"
+    }, 
     {
-      "desc": "CPU time (sec.)"
-    },
+      "desc": "Test time<br>(sec.)",
+      "format":"%.6f"
+    }, 
     {
-      "desc": "GPU only time (sec.)"
-    },
-    {
-      "desc": "GPU with mem time (sec.)"
-    },
-    {
-      "desc": "Energy total (A15, joules)"
-    },
-    {
-      "desc": "Energy total (A7, joules)"
-    },
-    {
-      "desc": "Object size (bytes)"
-    },
-    {
-      "desc": "CPU freq (MHz)"
-    },
-    {
-      "desc": "GPU freq (MHz)"
-    },
-    {
-      "desc": "Algorithm accuracy"
-    },
-    {
-      "desc": "Faults"
-    },
-    {
-      "desc": "Compiler flags"
-    },
-    {
-      "desc": "Compiler vars",
-      "view_add_key": "yes"
-    }
+      "desc": "Environment",
+      "view_add_key":"yes",
+      "add_br":"yes",
+      "align":"left",
+      "show_all":"yes"
+    } 
   ]
 }
