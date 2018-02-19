@@ -1,0 +1,21 @@
+{
+  "backup_data_uid": "4b8bbc192ec57f63",
+  "backup_module_uid": "1702c3e426ca54c5",
+  "backup_module_uoa": "program.species",
+  "control": {
+    "author": "Grigori Fursin",
+    "author_email": "Grigori.Fursin@cTuning.org",
+    "author_webpage": "http://fursin.net",
+    "copyright": "See CK COPYRIGHT.txt for copyright details",
+    "engine": "CK",
+    "iso_datetime": "2018-02-19T09:56:28.326621",
+    "license": "See CK LICENSE.txt for licensing details",
+    "version": [
+      "1",
+      "9",
+      "4",
+      "1"
+    ]
+  },
+  "data_name": "image.classification"
+}

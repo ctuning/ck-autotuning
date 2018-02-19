@@ -1,5 +1,7 @@
 * 2018.02.19 - added experiment.view:request-default to visualize 
                raw experiments from ReQuEST tournaments
+             - added program.species:image.classification
+               for image classification ReQuEST @ ASPLOS'18 tournament
 
 * 2018.02.12 - fixed error reporting in program pipeline 
                if there is a problem loading pre/post processing python scripts
