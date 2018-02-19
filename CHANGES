@@ -1,3 +1,6 @@
+* 2018.02.19 - added experiment.view:request-default to visualize 
+               raw experiments from ReQuEST tournaments
+
 * 2018.02.12 - fixed error reporting in program pipeline 
                if there is a problem loading pre/post processing python scripts
                (noted for some ReQuEST submissions)
