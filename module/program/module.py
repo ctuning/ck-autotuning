@@ -1229,15 +1229,16 @@ def process_in_dir(i):
              ck.out(sep)
              ck.out('Compiler vars:')
 
-          for k in sorted(bcv):
-              kv=bcv[k]
+          if meta.get('skip_compiler_vars','')!='yes':
+             for k in sorted(bcv):
+                 kv=bcv[k]
 
-              if sbcv!='': sbcv+=' '
-              sbcv+=svarb+svarb1+'CK_FLAG_PREFIX_VAR'+svare1+svare+k
-              if kv!='': sbcv+='='+str(kv)
+                 if sbcv!='': sbcv+=' '
+                 sbcv+=svarb+svarb1+'CK_FLAG_PREFIX_VAR'+svare1+svare+k
+                 if kv!='': sbcv+='='+str(kv)
 
-              if o=='con':
-                 ck.out('  '+k+'='+str(kv))
+                 if o=='con':
+                    ck.out('  '+k+'='+str(kv))
 
           # Check if compiler flags as environment variable
           cfev=meta.get('compiler_flags_as_env','')
