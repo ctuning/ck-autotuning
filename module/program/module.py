@@ -1179,6 +1179,7 @@ def process_in_dir(i):
           # Source files
           sfs=meta.get('source_files',[])
 
+          compiler_env=''
           if hplat=='win':
              compiler_env=meta.get('compiler_env_win','')
           if compiler_env=='':
@@ -1245,6 +1246,7 @@ def process_in_dir(i):
                     ck.out('  '+k+'='+str(kv))
 
           # Check if compiler flags as environment variable
+          cfev=''
           if hplat=='win':
              cfev=meta.get('compiler_flags_as_env_win','')
           if cfev=='':
@@ -1299,6 +1301,7 @@ def process_in_dir(i):
 
           if sll!='': slfa+=' '+sll
 
+          evr=''
           if hplat=='win':
              evr=meta.get('extra_ld_vars_win','')
           if evr=='':
@@ -1441,6 +1444,7 @@ def process_in_dir(i):
 
                 if sll!='': slfa+=' '+sll
 
+                evr=''
                 if hplat=='win':
                    evr=meta.get('extra_ld_vars_win','')
                 if evr=='':
