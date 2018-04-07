@@ -503,6 +503,15 @@ def process_in_dir(i):
 
     tbits=tosd.get('bits','')
 
+    # Update env for host from host/target OS desc if needed (for example for RPC)
+    x=hosd.get('preset_host_env',{})
+   
+    if len(x)>0:
+       env.update(x)
+    x=tosd.get('preset_host_env',{})
+    if len(x)>0:
+       env.update(x)
+
     # update misc
     misc['host_os_uoa']=hosx
     misc['target_os_uoa']=tosx
