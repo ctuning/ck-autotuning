@@ -505,12 +505,17 @@ def process_in_dir(i):
 
     # Update env for host from host/target OS desc if needed (for example for RPC)
     x=hosd.get('preset_host_env',{})
-   
+
     if len(x)>0:
        env.update(x)
     x=tosd.get('preset_host_env',{})
     if len(x)>0:
        env.update(x)
+
+    # Add path to CK target entry if used (to get machine specific files if needed)
+    x=device_cfg.get('path_to_ck_target_entry','')
+    if x!='':
+       env['CK_TARGET_PATH']=x
 
     # update misc
     misc['host_os_uoa']=hosx

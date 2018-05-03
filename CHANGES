@@ -1,3 +1,6 @@
+* 2018.05.03 - added env (CK_TARGET_PATH) to program to get an access to machine specific files
+               (to support ReQuEST AI benchmark submission with Apache AVRO)
+
 * 2018.04.07 - added support for RPC remote machine (ck add machine) - useful for accessing TVM/MXNET
 
 * 2018.03.09 - improved cross-compilation for Windows for programs
