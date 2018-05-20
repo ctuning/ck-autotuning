@@ -2825,7 +2825,6 @@ def process_in_dir(i):
                 ck.out('  (post processing from script '+pp_uoa+' / '+pp_name+' ... )"')
                 ck.out('')
 
-
           # Check if post-processing script from CMD
           if pp_uoa!='':
              if o=='con':
@@ -2992,6 +2991,8 @@ def process_in_dir(i):
                 misc['run_success']='no'
                 misc['run_success_bool']=False
                 misc['fail_reason']=rq['error']
+
+                ccc['return_code']=rx
 
                 if o=='con':
                     ck.out('')
