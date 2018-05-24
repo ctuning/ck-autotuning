@@ -6947,6 +6947,12 @@ def add(i):
     if dname=='': dname=duoa
 
     if 'template' in dd: del(dd['template'])
+
+    tags=[]
+    for k in dd.get('tags',[]):
+        if k!='template': tags.append(k)
+    dd['tags']=tags
+
     dd['backup_data_uid']=duid
     dd['data_name']=dname
 
