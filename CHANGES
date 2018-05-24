@@ -1,3 +1,5 @@
+* 2018.05.24 - [FGG] provided prototype of templates when adding new programs (ck add program --template)
+
 * 2018.05.20 - added "image classification (simulation)" program.species to differentiate 
                benchmarking on real image classification vs random values 
                (needed for some ASPLOS'18 ReQuEST submissions)

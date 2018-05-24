@@ -1,5 +1,8 @@
 {
   "actions": {
+    "add": {
+      "desc": "add program with templates"
+    },
     "autotune": {
       "desc": "universal, multi-objective, multi-dimensional software/hardware autotuning"
     },
@@ -118,6 +121,7 @@
     "experiment": "bc0409fb61f0aa82",
     "machine": "84be34883a81b2a9",
     "math.variation": "d3b13388e6152da7",
+    "misc": "cddc5e04b0da610e",
     "module": "032630d041b4fd8a",
     "pipeline": "db25414b48b4ffb3",
     "platform": "707ccdfe444cafac",

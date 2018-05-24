@@ -6905,3 +6905,59 @@ def find_output(i):
            ck.out(q['path'])
 
     return r
+
+##############################################################################
+# add program with templates
+# suggested here: https://github.com/ctuning/ck-autotuning/issues/28
+
+def add(i):
+    """
+    Input:  {
+              (template) - if !='', use this program as template!
+            }
+
+    Output: {
+              return       - return code =  0, if successful
+                                         >  0, if error
+              (error)      - error text if return > 0
+            }
+
+    """
+
+    # Redirect to universal template ...
+
+    muoa=i['module_uoa']
+
+    i['original_module_uoa']=muoa
+    i['module_uoa']=cfg['module_deps']['misc']
+    i['action']='prepare_entry_template'
+    if 'cid' in i: del(i['cid'])
+
+    r=ck.access(i)
+    if r['return']>0: return r
+
+    # Update newly created entry with special keys
+    duid=r['data_uid']
+    duoa=r['data_uoa']
+    ruid=r['repo_uid']
+
+    dd=r['dict']
+
+    dname=i.get('data_name','')
+    if dname=='': dname=duoa
+
+    if 'template' in dd: del(dd['template'])
+    dd['backup_data_uid']=duid
+    dd['data_name']=dname
+
+    ii={'action':'update',
+        'module_uoa':muoa,
+        'data_uoa':duid,
+        'repo_uoa':ruid,
+        'dict':dd,
+        'substitute':'yes',
+        'sort_keys':'yes',
+        'ignore_update':'yes'
+       }
+
+    return ck.access(ii)
