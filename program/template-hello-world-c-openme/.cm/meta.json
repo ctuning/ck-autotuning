@@ -1,0 +1,60 @@
+{
+  "backup_data_uid": "687b07c78763721d",
+  "build_compiler_vars": {
+    "XOPENME": ""
+  }, 
+  "compile_deps": {
+    "compiler": {
+      "local": "yes",
+      "name": "C compiler",
+      "sort": 10, 
+      "tags": "compiler,lang-c"
+    },
+    "xopenme": {
+      "local": "yes", 
+      "name": "xOpenME library", 
+      "sort": 20, 
+      "tags": "lib,xopenme"
+    }
+  },
+  "compiler_env": "CK_CC",
+  "data_name": "template-hello-world-c-openme",
+  "extra_ld_vars": "$<<CK_EXTRA_LIB_M>>$",
+  "main_language": "c",
+  "print_files_after_run": [
+    "stderr.log",
+    "stdout.log"
+  ],
+  "process_in_tmp": "yes",
+  "program": "yes",
+  "run_cmds": {
+    "default": {
+      "ignore_return_code": "no",
+      "run_time": {
+        "fine_grain_timer_file": "tmp-ck-timer.json", 
+        "run_cmd_main": "$#BIN_FILE#$ \"$#src_path#$\"",
+        "run_cmd_out1": "stdout.log",
+        "run_cmd_out2": "stderr.log",
+        "run_output_files": [
+          "stdout.log",
+          "stderr.log",
+          "tmp-ck-timer.json"
+        ]
+      }
+    }
+  },
+  "run_vars": {
+    "CK_VAR1": 123,
+    "CK_VAR2": 666
+  },
+  "source_files": [
+    "hello-world.c"
+  ],
+  "tags": [
+    "template",
+    "program",
+    "lang-c"
+  ],
+  "target_file": "a",
+  "template": "yes"
+}
