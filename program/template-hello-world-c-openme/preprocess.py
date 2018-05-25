@@ -17,6 +17,12 @@ def ck_preprocess(i):
     rt=i['run_time']
     deps=i['deps']
 
+    ck.out('***********************************')
+    ck.out('Resolved deps via CK:')
+    ck.out('')
+    ck.out(json.dumps(deps, indent=2))
+    ck.out('***********************************')
+
     env=i['env']
     nenv={} # new environment to be added to the run script
 
