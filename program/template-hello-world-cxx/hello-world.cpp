@@ -5,7 +5,6 @@
  See CK COPYRIGHT.txt for copyright details
 
  Developer: Grigori Fursin, 2018, Grigori.Fursin@cTuning.org, http://fursin.net
-
 */
 
 #include <stdio.h>

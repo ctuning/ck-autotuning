@@ -1,0 +1,65 @@
+{
+  "backup_data_uid": "9d4c3aa036b29852", 
+  "build_compiler_vars": {}, 
+  "compile_cmds": {
+    "default": {
+      "cmd": "$#compiler#$ $#flags_before#$ $#source_file#$ $#flags_after#$ -d ."
+    }
+  }, 
+  "compile_deps": {
+    "compiler": {
+      "local": "yes", 
+      "name": "java compiler", 
+      "only_for_host_os_tags": [], 
+      "only_for_target_os_tags": [], 
+      "tags": "compiler,lang-java"
+    }
+  }, 
+  "compiler_env": "CK_JAVAC", 
+  "data_name": "template-hello-world-java", 
+  "link_cmds": {
+    "default": {
+      "cmd": ""
+    }
+  }, 
+  "main_language": "java", 
+  "print_files_after_run": [
+    "stderr.log", 
+    "stdout.log"
+  ], 
+  "process_in_tmp": "yes", 
+  "program": "yes", 
+  "run_cmds": {
+    "default": {
+      "ignore_return_code": "no", 
+      "run_time": {
+        "run_cmd_main": "$#env1#$CK_JAVA_RT$#env2#$ $#BIN_FILE#$ ", 
+        "run_cmd_out1": "stdout.log", 
+        "run_cmd_out2": "stderr.log", 
+        "run_output_files": [
+          "stdout.log", 
+          "stderr.log"
+        ]
+      }
+    }
+  }, 
+  "run_vars": {
+    "CK_VAR1": 123, 
+    "CK_VAR2": 666
+  }, 
+  "skip_add_prefix_for_target_file": "yes", 
+  "skip_compiler_vars":"yes",
+  "skip_bin_ext": "yes", 
+  "skip_md5sum": "yes", 
+  "skip_objdump": "yes", 
+  "source_files": [
+    "hello_world.java"
+  ], 
+  "tags": [
+    "template", 
+    "program", 
+    "lang-java"
+  ], 
+  "target_file": "hello_world", 
+  "template": "yes"
+}
