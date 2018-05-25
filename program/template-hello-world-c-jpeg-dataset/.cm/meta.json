@@ -1,0 +1,54 @@
+{
+  "backup_data_uid": "42ae94021ab42570", 
+  "build_compiler_vars": {}, 
+  "compile_deps": {
+    "compiler": {
+      "local": "yes", 
+      "name": "C compiler", 
+      "tags": "compiler,lang-c"
+    }
+  }, 
+  "compiler_env": "CK_CC", 
+  "data_name": "template-hello-world-c-jpeg-dataset", 
+  "extra_ld_vars": "$<<CK_EXTRA_LIB_M>>$", 
+  "main_language": "c", 
+  "print_files_after_run": [
+    "stderr.log", 
+    "stdout.log"
+  ], 
+  "process_in_tmp": "yes", 
+  "program": "yes", 
+  "run_cmds": {
+    "default": {
+      "dataset_tags": [
+        "dataset",
+        "image",
+        "jpeg"
+      ], 
+      "ignore_return_code": "no", 
+      "run_time": {
+        "run_cmd_main": "$#BIN_FILE#$ \"$#dataset_path#$$#dataset_filename#$\"", 
+        "run_cmd_out1": "stdout.log", 
+        "run_cmd_out2": "stderr.log", 
+        "run_output_files": [
+          "stdout.log", 
+          "stderr.log"
+        ]
+      }
+    }
+  }, 
+  "run_vars": {
+    "CK_VAR1": 123, 
+    "CK_VAR2": 666
+  }, 
+  "source_files": [
+    "hello-world.c"
+  ], 
+  "tags": [
+    "template", 
+    "program", 
+    "lang-c"
+  ], 
+  "target_file": "a", 
+  "template": "yes"
+}
