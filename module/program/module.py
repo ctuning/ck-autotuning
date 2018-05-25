@@ -1949,6 +1949,7 @@ def process_in_dir(i):
           c=c.replace('$<<',svarb+svarb1).replace('>>$',svare1+svare)
 
        c=c.replace('$#script_ext#$',sext)
+       c=c.replace('$#dir_sep#$',stdirs)
 
        up_dir=''
        if remote!='yes': up_dir='../'
