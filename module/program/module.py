@@ -6924,6 +6924,8 @@ def add(i):
 
     """
 
+    o=i.get('out','')
+
     # Redirect to universal template ...
 
     muoa=i['module_uoa']
@@ -6965,5 +6967,11 @@ def add(i):
         'sort_keys':'yes',
         'ignore_update':'yes'
        }
+
+    if o=='con':
+       ck.out('')
+       ck.out('Further details about adding new CK programs and workflows:')
+       ck.out('')
+       ck.out(' * https://github.com/ctuning/ck/wiki/Adding-new-workflows')
 
     return ck.access(ii)
