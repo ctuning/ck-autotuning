@@ -1,0 +1,57 @@
+{
+  "backup_data_uid": "d5bdb76f9ed48e0b", 
+  "build_compiler_vars": {}, 
+  "compile_deps": {
+    "compiler": {
+      "local": "yes", 
+      "name": "C++ compiler", 
+      "tags": "compiler,lang-cpp"
+    }
+  }, 
+  "compiler_add_include_as_env_from_deps": [
+    "CK_ENV_LIB_STDCPP_INCLUDE",
+    "CK_ENV_LIB_STDCPP_INCLUDE_EXTRA"
+  ], 
+  "compiler_env": "CK_CXX", 
+  "data_name": "template-hello-world-cxx", 
+  "compiler_flags_as_env": "$<<CK_COMPILER_FLAG_CPP11>>$", 
+  "main_language": "cpp", 
+  "linker_add_lib_as_env": [
+    "CK_CXX_EXTRA", 
+    "CK_ENV_LIB_STDCPP_STATIC"
+  ], 
+  "print_files_after_run": [
+    "stderr.log", 
+    "stdout.log"
+  ], 
+  "process_in_tmp": "yes", 
+  "program": "yes", 
+  "run_cmds": {
+    "default": {
+      "ignore_return_code": "no", 
+      "run_time": {
+        "run_cmd_main": "$#BIN_FILE#$ \"$#src_path#$\"", 
+        "run_cmd_out1": "stdout.log", 
+        "run_cmd_out2": "stderr.log", 
+        "run_output_files": [
+          "stdout.log", 
+          "stderr.log"
+        ]
+      }
+    }
+  }, 
+  "run_vars": {
+    "CK_VAR1": 123, 
+    "CK_VAR2": 666
+  }, 
+  "source_files": [
+    "hello-world.cpp"
+  ], 
+  "tags": [
+    "template", 
+    "program", 
+    "lang-cpp"
+  ], 
+  "target_file": "a", 
+  "template": "yes"
+}
