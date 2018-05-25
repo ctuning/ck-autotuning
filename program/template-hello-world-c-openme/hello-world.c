@@ -20,7 +20,7 @@ int main(int argc, char* argv[])
   char* env;
 
 #ifdef XOPENME
-  xopenme_init(1,2);
+  xopenme_init(1,3);
 #endif
 
   printf("Hello world!\n\n");
@@ -40,6 +40,15 @@ int main(int argc, char* argv[])
 
 #ifdef XOPENME
     xopenme_add_var_i(1, "  \"ck_var2\":%u", atoi(env));
+#endif
+  }
+
+  env=getenv("CK_VAR3");
+  if (env!=NULL) {
+    printf("CK_VAR3=%s\n",env);
+
+#ifdef XOPENME
+    xopenme_add_var_i(2, "  \"ck_var3\":%u", atoi(env));
 #endif
   }
 

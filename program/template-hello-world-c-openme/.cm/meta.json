@@ -32,6 +32,12 @@
       "ignore_return_code": "no",
       "run_time": {
         "fine_grain_timer_file": "tmp-ck-timer.json", 
+        "post_process_via_ck": {
+          "script_name": "postprocess"
+        }, 
+        "pre_process_via_ck": {
+          "script_name": "preprocess"
+        }, 
         "run_cmd_main": "$#BIN_FILE#$ \"$#src_path#$\"",
         "run_cmd_out1": "stdout.log",
         "run_cmd_out2": "stderr.log",

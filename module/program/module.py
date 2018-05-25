@@ -2820,11 +2820,6 @@ def process_in_dir(i):
                     for q1 in lxx:
                         ck.out('      '+q1)
 
-             if o=='con':
-                ck.out('')
-                ck.out('  (post processing from script '+pp_uoa+' / '+pp_name+' ... )"')
-                ck.out('')
-
           # Check if post-processing script from CMD
           if pp_uoa!='':
              if o=='con':
@@ -2843,6 +2838,111 @@ def process_in_dir(i):
 
           # Check if post-processing script
           srx=0 # script exit code
+
+          # Newer variant (more consistent with pre_process_via_ck
+#xyz
+          if type(lppcvc)==dict:
+             pvck=lppcvc
+
+             pvckp=src_path_local
+
+             pvckm=pvck.get('module_uoa','')
+             if pvckm=='': pvckm=work['self_module_uid']
+             pvckd=pvck.get('data_uoa','')
+
+             if pvckd!='':
+                rp=ck.access({'action':'find',
+                              'module_uoa':pvckm,
+                              'data_uoa':pvckd})
+                if rp['return']>0: return rp
+                pvckp=rp['path']
+
+             pvckc=pvck.get('script_name','')
+             if pvckc=='': pvckc='postprocess'
+
+             if o=='con':
+                ck.out('')
+                ck.out('  (post processing via CK ('+pvckp+', '+pvckc+')')
+                ck.out('')
+
+             # Check if has custom script
+             try:
+                 cdd=os.getcwd()
+             except OSError:
+                 os.chdir('..')
+                 cdd=os.getcwd()
+
+             cs=None
+             rxx=ck.load_module_from_path({'path':pvckp, 'module_code_name':pvckc, 'skip_init':'yes'})
+
+             cs=rxx.get('code', None)
+             if cs==None:
+                rxx['return']=1
+                rxx['error']='problem loading python code: '+rxx['error']
+
+                misc['run_success']='no'
+                misc['run_success_bool']=False
+                misc['fail_reason']=rxx['error']
+
+                return {'return':0, 'tmp_dir':rcdir, 'misc':misc, 'characteristics':ccc, 'deps':deps}
+
+             if rxx['return']==0:
+                os.chdir(cdd) # restore current dir from above operation
+
+                if cs!=None and 'ck_check_output' in dir(cs):
+                   ck_check_output=cs.ck_check_output
+
+                if cs!=None and 'ck_postprocess' in dir(cs):
+                   as_cmd=False
+
+                   # Call customized script
+                   ii={"host_os_uoa":hosx,
+                       "host_os_uid":hos,
+                       "host_os_dict":hosd,
+                       "target_os_uoa":tosx,
+                       "target_os_uid":tos,
+                       "target_os_dict":tosd,
+                       "target_device_id":tdid,
+                       "ck_kernel":ck,
+                       "misc":misc,
+                       "meta":meta,
+                       "deps":deps,
+                       "env":env,
+                       "dataset_uoa":dduoa,
+                       "dataset_file":dfile,
+                       "dataset_path":dp,
+                       "dataset_meta":dset,
+                       "run_time":rt,
+                       "params":params,
+                       "device_cfg":device_cfg,
+                       "out":oo
+                      }
+
+                   rxx=cs.ck_postprocess(ii)
+                   srx=rxx['return']
+                   if srx==0:
+                      xchars=rxx.get('characteristics',{})
+                      if len(xchars)>0:
+                         et=xchars.get('execution_time','')
+                         if et!='':
+                            exec_time=float(et)
+                         ccc.update(xchars)
+
+                      if len(rxx.get('misc',{}))>0:
+                         misc.update(rxx['misc'])
+
+                   else:
+                      if o=='con':
+                         ck.out('  (post processing script failed: '+rxx['error']+'!)')
+
+                      misc['run_success']='no'
+                      misc['run_success_bool']=False
+                      misc['fail_reason']=rxx['error']
+
+#                                break
+                      return {'return':0, 'tmp_dir':rcdir, 'misc':misc, 'characteristics':ccc, 'deps':deps}
+
+          # Older variant
           if len(lppc)>0:
              for ppc in lppc:
                  while ppc.find('$<<')>=0:
