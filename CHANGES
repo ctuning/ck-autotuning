@@ -1,3 +1,5 @@
+* 2018.05.27 - [sztaylor] propogate "target" to platform-specific modules (detect info, set freq, etc) - see issue #12.
+
 * 2018.05.24 - [FGG] provided prototype of templates when adding new programs (ck add program --template)
 
 * 2018.05.20 - added "image classification (simulation)" program.species to differentiate 
