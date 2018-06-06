@@ -1,3 +1,5 @@
+* 2018.06.06 - [FGG] automatically generate list of all programs for http://cknowledge.org/shared-programs.html
+
 * 2018.05.27 - [sztaylor] propogate "target" to platform-specific modules (detect info, set freq, etc) - see issue #12.
 
 * 2018.05.24 - [FGG] provided prototype of templates when adding new programs (ck add program --template)

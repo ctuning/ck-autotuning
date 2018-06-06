@@ -45,6 +45,10 @@
     "select_uoa": {
       "desc": "select program UOA in console mode"
     },
+    "show": {
+      "desc": "show all programs (workflows)",
+      "for_web": "yes"
+    },
     "substitute_some_ck_keys": {
       "desc": "substitute some CK reserved keys"
     },

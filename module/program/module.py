@@ -7082,3 +7082,282 @@ def add(i):
        ck.out(' * https://github.com/ctuning/ck/wiki/Adding-new-workflows')
 
     return ck.access(ii)
+
+##############################################################################
+# show available programs
+
+def show(i):
+    """
+    Input:  {
+               (the same as list; can use wildcards)
+               (out_file) - output to file
+            }
+
+    Output: {
+              return       - return code =  0, if successful
+                                         >  0, if error
+              (error)      - error text if return > 0
+            }
+
+    """
+
+    import os
+
+    o=i.get('out','')
+
+    of=i.get('out_file','')
+    if of!='':
+       xof=os.path.splitext(of)
+
+    html=False
+    if o=='html' or i.get('web','')=='yes':
+       html=True
+
+    h=''
+
+    unique_repo=False
+    if i.get('repo_uoa','')!='': unique_repo=True
+
+    import copy
+    list_action_dict=copy.deepcopy(i)
+
+    list_action_dict['out']=''
+    list_action_dict['action']='list'
+    list_action_dict['add_meta']='yes'
+
+    rx=ck.access(list_action_dict)
+    if rx['return']>0: return rx
+
+    ll=sorted(rx['lst'], key=lambda k: k['data_uoa'])
+
+    if html:
+       h+='You can obtain repository with a given program (workflow) as follows:\n'
+       h+='<pre>\n'
+       h+=' ck pull repo:{Repo UOA - see below}\n'
+       h+='</pre>\n'
+
+       h+='You can then compile this program if necessary (CK will automatically detect\n'
+       h+='  <a href="http://cKnowledge.org/shared-soft-detection-plugins.html">software dependencies</a>\n'
+       h+='  or install missing <a href="http://cKnowledge.org/shared-packages.html">packages</a>) as follows:\n'
+       h+='<pre>\n'
+       h+=' ck compile program:{Program UOA - see below}\n'
+       h+='</pre>\n'
+
+       h+='You can run this program as follows:\n'
+       h+='<pre>\n'
+       h+=' ck run program:{Program UOA - see below}\n'
+       h+='</pre>\n'
+
+       h+='You can execute program pipeline which chains together various plugins to set up and monitor frequency, prepare data sets, compile program and run it several times, etc:\n'
+       h+='<pre>\n'
+       h+=' ck pipeline program:{Program UOA - see below} ...\n'
+       h+='</pre>\n'
+
+       h+='You can check extra options to customize above pipeline as follows:\n'
+       h+='<pre>\n'
+       h+=' ck pipeline program:{Program UOA - see below} --help\n'
+       h+='</pre>\n'
+
+       h+='You can customize pipeline execution via variables:\n'
+       h+='<pre>\n'
+       h+=' ck pipeline program:{Program UOA - see below} --env.VAR1=PARAM1 ...\n'
+       h+='</pre>\n'
+
+       h+='You can also benchmark a given program which includes executing this program several times, performing statistical analysis, unifying I/O, etc:\n'
+       h+='<pre>\n'
+       h+=' ck benchmark program:{Program UOA - see below}\n'
+       h+='</pre>\n'
+
+       h+='<p>\n'
+       h+='See <a href="https://github.com/ctuning/ck/wiki">CK documentation</a> for further details.\n'
+
+       h+='<p>\n'
+       h+='<table cellpadding="4" border="1" style="border-collapse: collapse; border: 1px solid black;">\n'
+
+       h+=' <tr>\n'
+       h+='  <td nowrap><b>Program UOA:</b></td>\n'
+       h+='  <td nowrap><b>Repo UOA</b></td>\n'
+       h+='  <td><b>Tags:</b></td>\n'
+       h+='  <td><b>Host OS:</b></td>\n'
+       h+='  <td><b>Target OS:</b></td>\n'
+       h+='  <td><b>Notes:</b></td>\n'
+       h+=' </tr>\n'
+
+    repo_url={}
+    repo_private={}
+
+    size=0
+    isize=1
+
+    private=''
+    for l in ll:
+        ln=l['data_uoa']
+        lr=l['repo_uoa']
+
+        lr_uid=l['repo_uid']
+        url=''
+        if lr=='default':
+           url='' #'http://github.com/ctuning/ck'
+        elif lr_uid in repo_url:
+           url=repo_url[lr_uid]
+        else:
+           rx=ck.load_repo_info_from_cache({'repo_uoa':lr_uid})
+           if rx['return']>0: return rx
+           url=rx.get('dict',{}).get('url','')
+           repo_private[lr_uid]=rx.get('dict',{}).get('private','')
+           repo_url[lr_uid]=url
+
+        private=repo_private.get(lr_uid,'')
+
+        if lr not in cfg.get('skip_repos',[]) and private!='yes' and url!='':
+           lm=l['meta']
+           ld=lm.get('desc','')
+
+           name=lm.get('soft_name','')
+
+           cus=lm.get('customize',{})
+
+           ver=cus.get('version','')
+
+           xhos=lm.get('only_for_host_os_tags',[])
+           xtos=lm.get('only_for_target_os_tags',[])
+
+           tags=lm.get('tags',[])
+           ytags=','.join(tags)
+
+           yhos=''
+           ytos=''
+
+           for q in xhos:
+               if yhos!='': yhos+=','
+               yhos+=q
+
+           for q in xtos:
+               if ytos!='': ytos+=','
+               ytos+=q
+
+           if yhos=='':
+              yhos='any'
+           else:
+              yhos=yhos.replace('linux','linux,macos')
+
+           if ytos=='':
+              ytos='any'
+           else:
+              ytos=ytos.replace('linux','linux,macos')
+
+           if lr=='default':
+              to_get=''
+           elif url.find('github.com/ctuning/')>0:
+              to_get='ck pull repo:'+lr
+           else:
+              to_get='ck pull repo --url='+url
+
+           x=lr
+           y=''
+           yh=''
+           if url!='':
+              yh=url+'/tree/master/program/'+ln
+              x='['+url+' '+lr+']'
+              y='['+yh+' link]'
+
+           ###############################################################
+           if html:
+              h+=' <tr>\n'
+
+              x1=''
+              x2=''
+              z1=''
+              z11=''
+              if url!='':
+                 x1='<a href="'+url+'">'
+                 x2='</a>'
+                 z1='<a href="'+yh+'">'
+                 z11='<a href="'+yh+'/.cm/meta.json">'
+
+              h+='  <td nowrap valign="top">'+z1+ln+x2+'</b> <i>('+z11+'CK meta'+x2+')</i></td>\n'
+
+              h+='  <td nowrap valign="top">'+x1+lr+x2+'</td>\n'
+
+              h+='  <td valign="top">'+ytags+'\n'
+
+              h+='  <td valign="top">'+yhos+'\n'
+              h+='  <td valign="top">'+ytos+'\n'
+
+              h1=''
+              if ld!='':
+                 h1+='<p>\n'+ld
+
+              h+='  <td valign="top">'+h1+'\n'
+
+              h+='</td>\n'
+
+              h+=' </tr>\n'
+
+           ###############################################################
+           elif o=='mediawiki':
+              s=''
+
+              x=lr
+              y=''
+              if url!='':
+                 x='['+url+' '+lr+']'
+                 y='['+url+'/tree/master/package/'+ln+' link]'
+
+              s='\n'
+              s+='=== '+ln+' ('+ver+') ===\n'
+              s+='\n'
+              s+='Tags: <i>'+ytags+'</i>\n'
+              s+='<br>Host OS tags: <i>'+yhos+'</i>\n'
+              s+='<br>Target OS tags: <i>'+ytos+'</i>\n'
+              if y!='':
+                 s+='\n'
+                 s+='Package entry with meta: <i>'+y+'</i>\n'
+              s+='\n'
+              s+='Which CK repo: '+x+'\n'
+              if to_get!='':
+                 s+='<br>How to get: <i>'+to_get+'</i>\n'
+              if to_get!='':
+                 s+='\n'
+                 s+='How to install: <i>ck install package:'+ln+' (--target_os={CK OS UOA})</i>'
+
+              s+='\n'
+
+              if of=='':
+                 ck.out(s)
+              else:
+                 with open(of, "a") as ff:
+                      ff.write(s)
+                 
+                 size+=len(s)
+                 if size>=100000:
+                    isize+=1
+                    of=xof[0]+str(isize)+xof[1]
+                    size=0 
+
+           ###############################################################
+           elif o=='con' or o=='txt':
+              if unique_repo:
+                 ck.out('')
+                 s=ln+' - '+ld
+
+              else:
+                 ss=''
+                 if len(ln)<35: ss=' '*(35-len(ln))
+
+                 ss1=''
+                 if len(lr)<30: ss1=' '*(30-len(lr))
+
+                 s=ln+ss+'  ('+lr+')'
+                 if ld!='': s+=ss1+'  '+ld
+
+              ck.out(s)
+
+    if html:
+       h+='</table>\n'
+
+       if of!='':
+          r=ck.save_text_file({'text_file':of, 'string':h})
+          if r['return']>0: return r
+
+    return {'return':0, 'html':h}
