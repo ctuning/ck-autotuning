@@ -6304,13 +6304,19 @@ def benchmark(i):
 
     up['program_uoa']=duoa
 
-    cf=i.get('cpu_freq','')
-    if cf=='': cf='max'
-    up['cpu_freq']=cf
+    if i.get('skip_freq','')=='yes':
+       i['cpu_freq']=''
+       up['cpu_freq']=''
+       i['gpu_freq']=''
+       up['gpu_freq']=''
+    else:
+       cf=i.get('cpu_freq','')
+       if cf=='': cf='max'
+       up['cpu_freq']=cf
 
-    gf=i.get('gpu_freq','')
-    if gf=='': gf='max'
-    up['gpu_freq']=gf
+       gf=i.get('gpu_freq','')
+       if gf=='': gf='max'
+       up['gpu_freq']=gf
 
     up['console']=i.get('console','')
 
