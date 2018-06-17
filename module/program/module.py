@@ -268,6 +268,7 @@ def process_in_dir(i):
               (extra_env)            - extra environment before running code as string
               (pre_run_cmd)          - pre CMD for binary
               (extra_run_cmd)        - extra CMD (can use $#key#$ for autotuning)
+              (debug_run_cmd)        - substitute CMD with this one - usually useful for debugging to pre-set env for all deps
               (run_cmd_substitutes)  - dict with substs ($#key#$=value) in run CMD (useful for CMD autotuning)
 
               (console)              - if 'yes', output to console
@@ -409,6 +410,8 @@ def process_in_dir(i):
 
     ee=i.get('extra_env','')
     ercmd=i.get('extra_run_cmd','')
+    drcmd=i.get('debug_run_cmd','')
+
     prcmd=i.get('pre_run_cmd','')
     rcsub=i.get('run_cmd_substitutes','')
 
@@ -1940,6 +1943,8 @@ def process_in_dir(i):
        c=rt.get('run_cmd_main','')
        if remote=='yes' and rt.get('run_cmd_main_remote','')!='':
           c=rt['run_cmd_main_remote']
+       if drcmd!='':
+          c=drcmd
 
        if c=='':
           return {'return':1, 'error':'cmd is not defined'}
@@ -2841,7 +2846,6 @@ def process_in_dir(i):
           srx=0 # script exit code
 
           # Newer variant (more consistent with pre_process_via_ck
-#xyz
           if type(lppcvc)==dict:
              pvck=lppcvc
 
@@ -3601,6 +3605,7 @@ def pipeline(i):
 
               (extra_env)            - extra environment as string
               (extra_run_cmd)        - extra CMD (can use $#key#$ for autotuning)
+              (debug_run_cmd)        - substitute CMD with this one - usually useful for debugging to pre-set env for all deps
               (run_cmd_substitutes)  - dict with substs ($#key#$=value) in run CMD (useful for CMD autotuning)
 
               (sudo)                 - if 'yes', force using sudo
@@ -3904,6 +3909,7 @@ def pipeline(i):
 
     eenv=ck.get_from_dicts(i, 'extra_env','',choices)
     ercmd=ck.get_from_dicts(i, 'extra_run_cmd','',choices)
+    drcmd=ck.get_from_dicts(i, 'debug_run_cmd','',choices)
     rcsub=ck.get_from_dicts(i, 'run_cmd_substitutes',{},choices)
 
     if i.get('do_not_reuse_repeat','')=='yes' and srn==0:
@@ -5594,6 +5600,7 @@ def pipeline(i):
            'env':env,
            'extra_env':eenv,
            'extra_run_cmd':ercmd,
+           'debug_run_cmd':drcmd,
            'extra_post_process_cmd':eppc,
            'run_cmd_substitutes':rcsub,
            'compiler_vars':cv,
@@ -6317,6 +6324,9 @@ def benchmark(i):
        gf=i.get('gpu_freq','')
        if gf=='': gf='max'
        up['gpu_freq']=gf
+
+    if i.get('debug_run_cmd','')!='':
+       up['debug_run_cmd']=i['debug_run_cmd']
 
     up['console']=i.get('console','')
 
