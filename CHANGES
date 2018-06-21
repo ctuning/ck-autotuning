@@ -1,5 +1,5 @@
 * 2018.06.21 - [FGG] when adding new dataset CK will now ask for tags and a file 
-               [FGG] merged patch from Stuart (see issue #12).
+               [FGG] merged patch from Stuart (see issue #30).
 
 * 2018.06.17 - [FGG] added --debug_run_cmd to substitute original command line in program with a user one
 
