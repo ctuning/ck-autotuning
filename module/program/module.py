@@ -176,7 +176,7 @@ def process(i):
     return r
 
 ##############################################################################
-# compile program  (called from universal function here)
+# compile, run and clean a given CK program (called from universal functions here)
 
 def process_in_dir(i):
     """
@@ -1850,7 +1850,7 @@ def process_in_dir(i):
               ck.out('Detecting GPGPU targets ...')
               ck.out('')
 
-           r=ck.access({'action':'detect',
+           ii={'action':'detect',
                         'module_uoa':cfg['module_deps']['platform.gpgpu'],
                         'host_os':hos,
                         'target_os':tos,
@@ -1862,7 +1862,10 @@ def process_in_dir(i):
                         'select':'yes',
                         'sudo':isd,
                         'out':oo,
-                        'quiet':quiet})
+                        'quiet':quiet}
+           target=i.get('target','')
+           if target!='': ii['target']=target
+           r=ck.access(ii)
            if r['return']>0: return r
 
            compute_platform_id=r.get('choices',{}).get('compute_platform_id','')
@@ -4865,7 +4868,7 @@ def pipeline(i):
               ck.out('')
 
            xdeps=copy.deepcopy(cdeps)
-           r=ck.access({'action':'detect',
+           ii={'action':'detect',
                         'module_uoa':cfg['module_deps']['platform.gpgpu'],
                         'host_os':hos,
                         'target_os':tos,
@@ -4875,7 +4878,9 @@ def pipeline(i):
                         'select':'yes',
                         'sudo':isd,
                         'out':oo,
-                        'quiet':quiet})
+                        'quiet':quiet}
+           if target!='': ii['target']=target
+           r=ck.access(ii)
            if r['return']>0: return r
 
            gpgpu_num=r.get('choices',{}).get('compute_number',0)
