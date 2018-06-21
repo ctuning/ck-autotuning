@@ -303,3 +303,78 @@ def add_file_to(i):
     if r['return']>0: return r
 
     return {'return':0}
+
+##############################################################################
+# add dataset 
+
+def add(i):
+    """
+    Input:  {
+               (tags) - use tags (string; tags separated by comma)
+               (file) - add file
+            }
+
+    Output: {
+              return       - return code =  0, if successful
+                                         >  0, if error
+              (error)      - error text if return > 0
+            }
+
+    """
+    import os
+    import shutil
+
+    o=i.get('out','')
+
+    duoa=i.get('data_uoa','')
+
+    d=i.get('dict',{})
+
+    # Check tags
+    xtags=d.get('tags',[])
+    if len(xtags)==0:
+       tags=i.get('tags','').strip()
+       if tags=='':
+          if o=='con':
+             rx=ck.inp({'text':'Enter tags for your data set separated by comma (such as image,jpeg): '})
+             if rx['return']>0: return rx
+             tags=rx['string'].strip()
+
+       xtags=['dataset']
+       for t in tags.split(','):
+           t1=t.strip()
+           if t1!='':
+              if t1 not in xtags:
+                 xtags.append(t1)
+
+    d['tags']=xtags
+
+    # Check files
+    fn=i.get('file','')
+    fn1=os.path.basename(fn)
+
+    df=d.get('dataset_files',[])
+    if fn1 not in df: 
+       df.append(fn1)
+    d['dataset_files']=df
+
+    # Create entry
+    i['dict']=d
+
+    i['common_func']='yes'
+    i['sort_keys']='yes'
+
+    r=ck.access(i)
+    if r['return']>0: return r
+    p=r['path']
+
+    # Copy file
+    pn=os.path.join(p,fn1)
+
+    if o=='con':
+       ck.out('')
+       ck.out('Copying file '+fn+' to '+pn+' ...')
+
+    shutil.copyfile(fn,pn)
+
+    return r

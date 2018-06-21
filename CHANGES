@@ -1,3 +1,5 @@
+* 2018.06.21 - [FGG] when adding new dataset CK will now ask for tags and a file 
+
 * 2018.06.17 - [FGG] added --debug_run_cmd to substitute original command line in program with a user one
 
 * 2018.06.06 - [FGG] automatically generate list of all programs for http://cknowledge.org/shared-programs.html

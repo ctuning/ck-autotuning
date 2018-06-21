@@ -1,5 +1,8 @@
 {
   "actions": {
+    "add": {
+      "desc": "add program with templates"
+    },
     "add_file_to": {
       "desc": "add file to a given dataset"
     },
