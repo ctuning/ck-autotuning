@@ -30,5 +30,6 @@
     "lang-f90", 
     "lang-f95",
     "channel-stable"
-  ]
+  ],
+  "template":"yes"
 }
