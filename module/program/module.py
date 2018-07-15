@@ -3653,6 +3653,7 @@ def pipeline(i):
               (mali_hwc)                - if 'yes', attempt to extract MALI GPU hardware counters
 
               (milepost)                - if 'yes', attempt to extract static program features using Milepost GCC and cTuning CC
+              (milepost_out_file)       - if !='', record extracted MILEPOST features to this JSON file
 
               (compile_timeout)         - (sec.) - kill compile job if too long
               (run_timeout)             - (sec.) - kill run job if too long
@@ -3836,6 +3837,7 @@ def pipeline(i):
     vtune=ck.get_from_dicts(i, 'vtune', '', choices)
     valgrind=ck.get_from_dicts(i, 'valgrind', '', choices)
     milepost=ck.get_from_dicts(i, 'milepost', '', choices)
+    milepost_out_file=ck.get_from_dicts(i, 'milepost_out_file', '', None)
 
     params=ck.get_from_dicts(i, 'params',{},choices)
 
@@ -5242,6 +5244,7 @@ def pipeline(i):
     ###############################################################################################################
     # PIPELINE SECTION: Extract cTuning/MILEPOST static program features
     cs='yes'
+    extracted_milepost_features=False
     if i.get('fail','')!='yes' and milepost=='yes' and \
        (compile_only_once!='yes' or ai==0) and \
        (srn==0 or (srn>0 and i.get('repeat_compilation','')=='yes')):
@@ -5343,6 +5346,8 @@ def pipeline(i):
 
           features['program_static_milepost_features']=feat
 
+          extracted_milepost_features=True
+
     ###############################################################################################################
     # PIPELINE SECTION: Compile program
     cs='yes'
@@ -5434,6 +5439,12 @@ def pipeline(i):
 
           texe=misc.get('target_exe','')
           state['target_exe']=texe
+
+    ###############################################################################################################
+    # PIPELINE SECTION: check if record MILEPOST features (after clean)
+    if extracted_milepost_features and milepost_out_file!='':
+       r=ck.save_json_to_file({'json_file':milepost_out_file, 'dict':feat})
+       if r['return']>0: return r
 
     ###############################################################################################################
     # PIPELINE SECTION: Check if dataset is the same
