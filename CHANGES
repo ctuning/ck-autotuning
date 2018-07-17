@@ -1,3 +1,5 @@
+* 2018.07.17 - [FGG] added support for new website when generating lists of components
+
 * 2018.07.15 - [FGG] added recording of MILEPOST features to JSON file: 
                      ck pipeline program:{program_name} --speed --no_run --milepost --milepost_out_file=milepost-features.json
 
