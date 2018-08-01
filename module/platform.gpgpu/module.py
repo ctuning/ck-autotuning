@@ -63,8 +63,8 @@ def detect(i):
               (select)               - if 'yes', select specific platform and device (only when one type, i.e. opencl or cuda)
               (deps)                 - pre-set dependencies when used inside 'program' module (to reuse already selected compilers and libs)
 
-              (compute_platform_id') - pre-select platform ID
-              (compute_device_id')   - pre-select device ID
+              (compute_platform_id)  - pre-select platform ID
+              (compute_device_id)    - pre-select device ID
 
               (sudo)                 - force SUDO use ...
             }
