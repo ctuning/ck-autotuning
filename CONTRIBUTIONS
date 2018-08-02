@@ -83,3 +83,9 @@ E:
 O: dividiti, UK
 C: improving execution of programs like clblast_tune on Android via CK
 W:
+
+N: Wen Yang
+E: GitHub: @w-simon
+O: 
+C: improving autotuning documentation
+W:
