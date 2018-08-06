@@ -5895,25 +5895,29 @@ def pipeline(i):
            with open('tmp-dvdt-prof-deps.json', 'w') as f:
                json.dump(dvdt_prof, f, indent=2)
            # Load output.
-           r=ck.load_text_file({
-               'text_file':vcmd.get('run_time',{}).get('run_cmd_out1',''),
-               'split_to_list':'no'
-           })
-           if r['return']>0: return r
+           stdout_file = vcmd.get('run_time',{}).get('run_cmd_out1','')
+           if not os.path.isfile(stdout_file):
+               ck.out('\n  Warning: unable to invoke dvdt_prof, program output file not found\n')
+           else:
+               r=ck.load_text_file({
+                   'text_file':stdout_file,
+                   'split_to_list':'no'
+               })
+               if r['return']>0: return r
 
-           # Locate profiler parser.
-           dvdt_prof_dir=dvdt_prof['dict']['env']['CK_ENV_TOOL_DVDT_PROF']
-           dvdt_prof_src_python=os.path.join(dvdt_prof_dir,'src','python')
-           sys.path.append(dvdt_prof_src_python)
-           from prof_parser import prof_parse
+               # Locate profiler parser.
+               dvdt_prof_dir=dvdt_prof['dict']['env']['CK_ENV_TOOL_DVDT_PROF']
+               dvdt_prof_src_python=os.path.join(dvdt_prof_dir,'src','python')
+               sys.path.append(dvdt_prof_src_python)
+               from prof_parser import prof_parse
 
-           # Parse profiler output.
-           chars['run']['dvdt_prof']=prof_parse(r['string'])
-           with open('tmp-dvdt-prof.json', 'w') as f:
-               json.dump(chars['run']['dvdt_prof'], f, indent=2)
+               # Parse profiler output.
+               chars['run']['dvdt_prof']=prof_parse(r['string'])
+               with open('tmp-dvdt-prof.json', 'w') as f:
+                   json.dump(chars['run']['dvdt_prof'], f, indent=2)
 
-           with open('tmp-dvdt-prof-'+str(srn)+'.json', 'w') as f:
-               json.dump(chars['run']['dvdt_prof'], f, indent=2)
+               with open('tmp-dvdt-prof-'+str(srn)+'.json', 'w') as f:
+                   json.dump(chars['run']['dvdt_prof'], f, indent=2)
 
     ###############################################################################################################
     # Deinit remote device, if needed
