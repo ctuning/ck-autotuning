@@ -1,4 +1,5 @@
 Linux & MacOS: [![Travis Build Status](https://travis-ci.org/ctuning/ck-autotuning.svg?branch=master)](https://travis-ci.org/ctuning/ck-autotuning)
+Windows: [![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/github/ctuning/ck-autotuning?branch=master&svg=true)](https://ci.appveyor.com/project/ens-lg4/ck-autotuning)
 
 Universal, customizable and multi-objective software and hardware autotuning
 ============================================================================
