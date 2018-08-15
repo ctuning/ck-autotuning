@@ -1,3 +1,5 @@
+Linux & MacOS: [![Travis Build Status](https://travis-ci.org/ctuning/ck-autotuning.svg?branch=master)](https://travis-ci.org/ctuning/ck-autotuning)
+
 Universal, customizable and multi-objective software and hardware autotuning
 ============================================================================
 
