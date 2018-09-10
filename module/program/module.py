@@ -4460,6 +4460,7 @@ def pipeline(i):
                              'cmd_meta':vcmd,
                              'out':oo,
                              'install_to_env':iev,
+                             'env_for_resolve':env,
                              'preset_deps':preset_deps,
                              'safe':safe,
                              'quiet':quiet})
@@ -6646,6 +6647,12 @@ def update_run_time_deps(i):
            'install_to_env':iev,
            'safe':safe,
            'out':oo}
+
+       ## FIXME: this behaviour is to become default after sufficient testing (2018/09/10)
+       #
+       if meta.get('pass_env_to_resolve', '')=='yes':
+            ii.update({ 'install_env': i.get('env_for_resolve',{}) })
+
        rx=ck.access(ii)
        if rx['return']>0: return rx
 
