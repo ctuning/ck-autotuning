@@ -754,9 +754,9 @@ def extract_opts_new(i):
               }
 
     # Prepare CK entry
+    v=vstr.split('.')
     duoa=i.get('data_uoa','')
     if duoa=='':
-       v=vstr.split('.')
        duoa='gcc-'+v[0]+v[1]+'x'
 
     if o=='con':
