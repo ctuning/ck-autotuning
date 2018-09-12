@@ -1,0 +1,35 @@
+build: false
+
+image: Visual Studio 2017
+
+environment:
+  matrix:
+    - PYTHON: C:\Python36-x64
+      PYTHON_VERSION: 3.6
+    - PYTHON: C:\Python27-x64
+      PYTHON_VERSION: 2.7
+
+# commands to run before main repo cloning:
+init:
+    - "ECHO %PYTHON% %PYTHON_VERSION%"
+    - set PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%
+    - python --version
+    - "python -c \"import struct; print(struct.calcsize('P') * 8)\""
+
+install:
+    - python -m pip install -U pip
+    - python -m easy_install -U setuptools
+    - python -m pip install -r requirements.txt
+    - ck version
+    - ck pull repo:ck-env
+    - ck detect platform.os --update_platform_init
+    - ck detect soft:compiler.python --full_path=%PYTHON%\\python.exe
+    - echo Version 10| ck detect soft:sdk.microsoft
+    - echo Version 19.0| ck detect soft:compiler.microsoft
+    - ck pull repo:ctuning-programs
+    - ck compile program:cbench-automotive-susan --speed
+
+test_script:
+    - ck show env
+    - ck run program:cbench-automotive-susan --cmd_key=corners --dataset_uoa=image-pgm-0001 --dataset_file=data.pgm --repeat=100
+

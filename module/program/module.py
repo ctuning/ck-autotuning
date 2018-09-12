@@ -3653,6 +3653,7 @@ def pipeline(i):
               (mali_hwc)                - if 'yes', attempt to extract MALI GPU hardware counters
 
               (milepost)                - if 'yes', attempt to extract static program features using Milepost GCC and cTuning CC
+              (milepost_out_file)       - if !='', record extracted MILEPOST features to this JSON file
 
               (compile_timeout)         - (sec.) - kill compile job if too long
               (run_timeout)             - (sec.) - kill run job if too long
@@ -3836,6 +3837,7 @@ def pipeline(i):
     vtune=ck.get_from_dicts(i, 'vtune', '', choices)
     valgrind=ck.get_from_dicts(i, 'valgrind', '', choices)
     milepost=ck.get_from_dicts(i, 'milepost', '', choices)
+    milepost_out_file=ck.get_from_dicts(i, 'milepost_out_file', '', None)
 
     params=ck.get_from_dicts(i, 'params',{},choices)
 
@@ -4458,6 +4460,7 @@ def pipeline(i):
                              'cmd_meta':vcmd,
                              'out':oo,
                              'install_to_env':iev,
+                             'env_for_resolve':env,
                              'preset_deps':preset_deps,
                              'safe':safe,
                              'quiet':quiet})
@@ -5242,6 +5245,7 @@ def pipeline(i):
     ###############################################################################################################
     # PIPELINE SECTION: Extract cTuning/MILEPOST static program features
     cs='yes'
+    extracted_milepost_features=False
     if i.get('fail','')!='yes' and milepost=='yes' and \
        (compile_only_once!='yes' or ai==0) and \
        (srn==0 or (srn>0 and i.get('repeat_compilation','')=='yes')):
@@ -5343,6 +5347,8 @@ def pipeline(i):
 
           features['program_static_milepost_features']=feat
 
+          extracted_milepost_features=True
+
     ###############################################################################################################
     # PIPELINE SECTION: Compile program
     cs='yes'
@@ -5434,6 +5440,12 @@ def pipeline(i):
 
           texe=misc.get('target_exe','')
           state['target_exe']=texe
+
+    ###############################################################################################################
+    # PIPELINE SECTION: check if record MILEPOST features (after clean)
+    if extracted_milepost_features and milepost_out_file!='':
+       r=ck.save_json_to_file({'json_file':milepost_out_file, 'dict':feat})
+       if r['return']>0: return r
 
     ###############################################################################################################
     # PIPELINE SECTION: Check if dataset is the same
@@ -5659,45 +5671,47 @@ def pipeline(i):
 
     ###############################################################################################################
     # PIPELINE SECTION: set CPU frequency to ondemand to "calm" system (if supported)
-    if o=='con':
-       ck.out(sep)
-       ck.out('Attempting to set CPU frequency to ondemand to "calm" system (if supported) ...')
-       ck.out('')
+    if scpuf!='' and sic!='yes':
+        if o=='con':
+           ck.out(sep)
+           ck.out('Attempting to set CPU frequency to ondemand to "calm" system (if supported) ...')
+           ck.out('')
 
-    ii={'action':'set_freq',
-        'module_uoa':cfg['module_deps']['platform.cpu'],
-        'value':'ondemand',
-        'target':target,
-        'host_os':hos,
-        'target_os':tos,
-        'device_id':tdid,
-        'skip_print_os':'yes',
-        'skip_device_init':sdi,
-        'skip_info_collection':sic,
-        'out':oo}
-    r=ck.access(ii)
-    if r['return']>0: return r
+        ii={'action':'set_freq',
+            'module_uoa':cfg['module_deps']['platform.cpu'],
+            'value':'ondemand',
+            'target':target,
+            'host_os':hos,
+            'target_os':tos,
+            'device_id':tdid,
+            'skip_print_os':'yes',
+            'skip_device_init':sdi,
+            'skip_info_collection':sic,
+            'out':oo}
+        r=ck.access(ii)
+        if r['return']>0: return r
 
     ###############################################################################################################
     # PIPELINE SECTION: set GPU frequency to ondemand to "calm" system (if supported)
-    if o=='con':
-       ck.out(sep)
-       ck.out('Attempting to set GPU frequency to ondemand to "calm" system (if supported) ...')
-       ck.out('')
+    if sgpuf!='' and sic!='yes':
+        if o=='con':
+           ck.out(sep)
+           ck.out('Attempting to set GPU frequency to ondemand to "calm" system (if supported) ...')
+           ck.out('')
 
-    ii={'action':'set_freq',
-        'module_uoa':cfg['module_deps']['platform.gpu'],
-        'value':'ondemand',
-        'target':target,
-        'host_os':hos,
-        'target_os':tos,
-        'device_id':tdid,
-        'skip_print_os':'yes',
-        'skip_device_init':sdi,
-        'skip_info_collection':sic,
-        'out':oo}
-    r=ck.access(ii)
-    if r['return']>0: return r
+        ii={'action':'set_freq',
+            'module_uoa':cfg['module_deps']['platform.gpu'],
+            'value':'ondemand',
+            'target':target,
+            'host_os':hos,
+            'target_os':tos,
+            'device_id':tdid,
+            'skip_print_os':'yes',
+            'skip_device_init':sdi,
+            'skip_info_collection':sic,
+            'out':oo}
+        r=ck.access(ii)
+        if r['return']>0: return r
 
     ###############################################################################################################
     # PIPELINE SECTION: finish vtune
@@ -5882,25 +5896,29 @@ def pipeline(i):
            with open('tmp-dvdt-prof-deps.json', 'w') as f:
                json.dump(dvdt_prof, f, indent=2)
            # Load output.
-           r=ck.load_text_file({
-               'text_file':vcmd.get('run_time',{}).get('run_cmd_out1',''),
-               'split_to_list':'no'
-           })
-           if r['return']>0: return r
+           stdout_file = vcmd.get('run_time',{}).get('run_cmd_out1','')
+           if not os.path.isfile(stdout_file):
+               ck.out('\n  Warning: unable to invoke dvdt_prof, program output file not found\n')
+           else:
+               r=ck.load_text_file({
+                   'text_file':stdout_file,
+                   'split_to_list':'no'
+               })
+               if r['return']>0: return r
 
-           # Locate profiler parser.
-           dvdt_prof_dir=dvdt_prof['dict']['env']['CK_ENV_TOOL_DVDT_PROF']
-           dvdt_prof_src_python=os.path.join(dvdt_prof_dir,'src','python')
-           sys.path.append(dvdt_prof_src_python)
-           from prof_parser import prof_parse
+               # Locate profiler parser.
+               dvdt_prof_dir=dvdt_prof['dict']['env']['CK_ENV_TOOL_DVDT_PROF']
+               dvdt_prof_src_python=os.path.join(dvdt_prof_dir,'src','python')
+               sys.path.append(dvdt_prof_src_python)
+               from prof_parser import prof_parse
 
-           # Parse profiler output.
-           chars['run']['dvdt_prof']=prof_parse(r['string'])
-           with open('tmp-dvdt-prof.json', 'w') as f:
-               json.dump(chars['run']['dvdt_prof'], f, indent=2)
+               # Parse profiler output.
+               chars['run']['dvdt_prof']=prof_parse(r['string'])
+               with open('tmp-dvdt-prof.json', 'w') as f:
+                   json.dump(chars['run']['dvdt_prof'], f, indent=2)
 
-           with open('tmp-dvdt-prof-'+str(srn)+'.json', 'w') as f:
-               json.dump(chars['run']['dvdt_prof'], f, indent=2)
+               with open('tmp-dvdt-prof-'+str(srn)+'.json', 'w') as f:
+                   json.dump(chars['run']['dvdt_prof'], f, indent=2)
 
     ###############################################################################################################
     # Deinit remote device, if needed
@@ -6629,6 +6647,12 @@ def update_run_time_deps(i):
            'install_to_env':iev,
            'safe':safe,
            'out':oo}
+
+       ## FIXME: this behaviour is to become default after sufficient testing (2018/09/10)
+       #
+       if meta.get('pass_env_to_resolve', '')=='yes':
+            ii.update({ 'install_env': i.get('env_for_resolve',{}) })
+
        rx=ck.access(ii)
        if rx['return']>0: return rx
 
@@ -7123,6 +7147,7 @@ def show(i):
     """
 
     import os
+    import copy
 
     o=i.get('out','')
 
@@ -7135,11 +7160,21 @@ def show(i):
        html=True
 
     h=''
+    h2=''
+    if i.get('new','')=='yes':
+       ii=copy.deepcopy(i)
+       ii['action']='preload_html_for_lists'
+       ii['module_uoa']=cfg['module_deps']['misc']
+       ii['ck_title']='Shared CK programs'
+       r=ck.access(ii)
+       if r['return']>0: return r
+
+       h=r['html_start']+'\n'
+       h2=r['html_stop']+'\n'
 
     unique_repo=False
     if i.get('repo_uoa','')!='': unique_repo=True
 
-    import copy
     list_action_dict=copy.deepcopy(i)
 
     list_action_dict['out']=''
@@ -7283,6 +7318,10 @@ def show(i):
            y=''
            yh=''
            if url!='':
+              url2=url
+              if url2.endswith('.git'):
+                 url2=url2[:-4]
+
               yh=url+'/tree/master/program/'+ln
               x='['+url+' '+lr+']'
               y='['+yh+' link]'
@@ -7301,7 +7340,7 @@ def show(i):
                  z1='<a href="'+yh+'">'
                  z11='<a href="'+yh+'/.cm/meta.json">'
 
-              h+='  <td nowrap valign="top">'+str(num)+'</b></td>\n'
+              h+='  <td nowrap valign="top"><a name="'+ln+'">'+str(num)+'</b></td>\n'
 
               h+='  <td nowrap valign="top">'+z1+ln+x2+'</b> <i>('+z11+'CK meta'+x2+')</i></td>\n'
 
@@ -7383,6 +7422,7 @@ def show(i):
 
     if html:
        h+='</table>\n'
+       h+=h2
 
        if of!='':
           r=ck.save_text_file({'text_file':of, 'string':h})

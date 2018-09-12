@@ -1,3 +1,8 @@
+* 2018.07.17 - [FGG] added support for new website when generating lists of components
+
+* 2018.07.15 - [FGG] added recording of MILEPOST features to JSON file: 
+                     ck pipeline program:{program_name} --speed --no_run --milepost --milepost_out_file=milepost-features.json
+
 * 2018.06.21 - [FGG] when adding new dataset CK will now ask for tags and a file 
                [FGG] merged patch from Stuart (see issue #30).
 

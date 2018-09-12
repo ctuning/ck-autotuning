@@ -1,3 +1,6 @@
+Linux & MacOS: [![Travis Build Status](https://travis-ci.org/ctuning/ck-autotuning.svg?branch=master)](https://travis-ci.org/ctuning/ck-autotuning)
+Windows: [![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/github/ctuning/ck-autotuning?branch=master&svg=true)](https://ci.appveyor.com/project/ens-lg4/ck-autotuning)
+
 Universal, customizable and multi-objective software and hardware autotuning
 ============================================================================
 
@@ -26,8 +29,8 @@ unexpected behavior in the [CK live repository](http://cKnowledge.org/repo)!
 
 Also check out our related Android apps to let you participate in our experiment crowdsourcing using
 spare Android mobile phones, tables and other devices:
-* [collaborative deep learning optimization app](https://play.google.com/store/apps/details?id=openscience.crowdsource.video.experiments&hl=en)
-* [compiler tuning using small kernels](https://play.google.com/store/apps/details?id=openscience.crowdsource.experiments)
+* [collaborative deep learning optimization app](http://cKnowledge.org/android-apps.html)
+* [compiler tuning using small kernels](http://cKnowledge.org/android-apps.html)
 * [CK crowd-scenarios](https://github.com/ctuning/ck-crowd-scenarios)
 
 Further details are available at [CK wiki](https://github.com/ctuning/ck/wiki),
