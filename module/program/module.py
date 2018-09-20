@@ -1792,6 +1792,7 @@ def process_in_dir(i):
                                 'cmd_meta':vcmd,
                                 'out':oo,
                                 'install_to_env':iev,
+                                'env_for_resolve':env,
                                 'preset_deps':preset_deps,
                                 'random':ran,
                                 'safe':safe,
