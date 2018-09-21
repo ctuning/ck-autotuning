@@ -1655,42 +1655,16 @@ def process_in_dir(i):
        if xcalibrate_time=='': xcalibrate_time=cfg['calibration_time']
        calibrate_time=float(xcalibrate_time)
 
-       # Update environment
-       env1=meta.get('run_vars',{})
-       for q in env1:
-           if q not in env:
-              x=env1[q]
-              try:
-                 x=x.replace('$#src_path#$', src_path)
-              except Exception as e: # need to detect if not string (not to crash)
-                 pass
-              env[q]=x
 
-       # Update env if repeat
-       if sc!='yes' and 'CT_REPEAT_MAIN' in env1:
-          if repeat!=-1:
-             if 'CT_REPEAT_MAIN' not in env1:
-                return {'return':1, 'error':'this program is not supporting execution time calibration'}
-             env['CT_REPEAT_MAIN']=str(repeat) # it is fixed by user
-             sc='yes'
-          else:
-             repeat=int(env1.get('CT_REPEAT_MAIN','1'))
-             env['CT_REPEAT_MAIN']='$#repeat#$' # find later
-
-       # Update env if energy meter
-       if me=='yes':
-          env['CK_MONITOR_ENERGY']='1'
-          env['XOPENME_FILES']=svarb+svarb1+'CK_ENERGY_FILES'+svare1+svare
-
-       # Check cmd key
+       # Figure out the "active" cmd key
        run_cmds=meta.get('run_cmds',{})
        if len(run_cmds)==0:
           return {'return':1, 'error':'no CMD for run'}
 
-       krun_cmds=sorted(list(run_cmds.keys()))
-
        kcmd=i.get('cmd_key','')
        if kcmd=='':
+          krun_cmds=sorted(list(run_cmds.keys()))
+
           if len(krun_cmds)>1:
              zz={}
              iz=0
@@ -1779,6 +1753,38 @@ def process_in_dir(i):
        # Command line key is set
        vcmd=run_cmds[kcmd]
        misc['cmd_key']=kcmd
+
+
+       # Update environment with defaults (env1 are runtime environment defaults)
+
+       env1 = copy.deepcopy( meta.get('run_vars',{}) )  # first load ground-level-precedence defaults for all commands
+       env1.update( vcmd.get('run_vars',{}) )           # then override with higher-precedence defaults for this specific command
+
+       for q in env1:
+           if q not in env:
+              x=env1[q]
+              try:
+                 x=x.replace('$#src_path#$', src_path)
+              except Exception as e: # need to detect if not string (not to crash)
+                 pass
+              env[q]=x
+
+       # Update env if repeat
+       if sc!='yes' and 'CT_REPEAT_MAIN' in env1:
+          if repeat!=-1:
+             if 'CT_REPEAT_MAIN' not in env1:
+                return {'return':1, 'error':'this program is not supporting execution time calibration'}
+             env['CT_REPEAT_MAIN']=str(repeat) # it is fixed by user
+             sc='yes'
+          else:
+             repeat=int(env1.get('CT_REPEAT_MAIN','1'))
+             env['CT_REPEAT_MAIN']='$#repeat#$' # find later
+
+       # Update env if energy meter
+       if me=='yes':
+          env['CK_MONITOR_ENERGY']='1'
+          env['XOPENME_FILES']=svarb+svarb1+'CK_ENERGY_FILES'+svare1+svare
+
 
        # Check run-time deps
        rx=update_run_time_deps({'host_os':hos,
