@@ -1662,9 +1662,8 @@ def process_in_dir(i):
           return {'return':1, 'error':'no CMD for run'}
 
        kcmd=i.get('cmd_key','')
+       krun_cmds=sorted(list(run_cmds.keys()))
        if kcmd=='':
-          krun_cmds=sorted(list(run_cmds.keys()))
-
           if len(krun_cmds)>1:
              zz={}
              iz=0
