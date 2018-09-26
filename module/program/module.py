@@ -967,10 +967,10 @@ def process_in_dir(i):
              env.update(new_env)
 
        # Process compile vars
-       env1=meta.get('compile_vars',{})
-       for q in env1:
+       compile_vars=meta.get('compile_vars',{})
+       for q in compile_vars:
            if q not in env:
-              x=env1[q]
+              x=compile_vars[q]
               try:
                  x=x.replace('$#src_path#$', src_path)
               except Exception as e: # need to detect if not string (not to crash)
@@ -1754,14 +1754,14 @@ def process_in_dir(i):
        misc['cmd_key']=kcmd
 
 
-       # Update environment with defaults (env1 are runtime environment defaults)
+       # Update environment with defaults (run_vars are runtime environment defaults)
 
-       env1 = copy.deepcopy( meta.get('run_vars',{}) )  # first load ground-level-precedence defaults for all commands
-       env1.update( vcmd.get('run_vars',{}) )           # then override with higher-precedence defaults for this specific command
+       run_vars = meta.get('run_vars',{}).copy()        # first load ground-level-precedence defaults for all commands
+       run_vars.update( vcmd.get('run_vars',{}) )       # then override with higher-precedence defaults for this specific command
 
-       for q in env1:
+       for q in run_vars:
            if q not in env:
-              x=env1[q]
+              x=run_vars[q]
               try:
                  x=x.replace('$#src_path#$', src_path)
               except Exception as e: # need to detect if not string (not to crash)
@@ -1769,14 +1769,14 @@ def process_in_dir(i):
               env[q]=x
 
        # Update env if repeat
-       if sc!='yes' and 'CT_REPEAT_MAIN' in env1:
+       if sc!='yes' and 'CT_REPEAT_MAIN' in run_vars:
           if repeat!=-1:
-             if 'CT_REPEAT_MAIN' not in env1:
+             if 'CT_REPEAT_MAIN' not in run_vars:
                 return {'return':1, 'error':'this program is not supporting execution time calibration'}
              env['CT_REPEAT_MAIN']=str(repeat) # it is fixed by user
              sc='yes'
           else:
-             repeat=int(env1.get('CT_REPEAT_MAIN','1'))
+             repeat=int(run_vars.get('CT_REPEAT_MAIN','1'))
              env['CT_REPEAT_MAIN']='$#repeat#$' # find later
 
        # Update env if energy meter
@@ -2640,13 +2640,13 @@ def process_in_dir(i):
 
           if o=='con': ck.out('')
 
-          if sc!='yes' and 'CT_REPEAT_MAIN' in env1:
+          if sc!='yes' and 'CT_REPEAT_MAIN' in run_vars:
              if o=='con':
                 ck.out(sep)
                 ck.out('### Calibration '+str(cn)+' out of '+xcn_max+' ; Kernel repeat number = '+str(repeat))
 
           sb=csb
-          if sc!='yes' and 'CT_REPEAT_MAIN' in env1 and repeat!=-1:
+          if sc!='yes' and 'CT_REPEAT_MAIN' in run_vars and repeat!=-1:
              sb=sb.replace('$#repeat#$', str(repeat))
              env['CT_REPEAT_MAIN']=str(repeat)
 
@@ -3132,7 +3132,7 @@ def process_in_dir(i):
              break
 
           # Check calibration
-          if sc=='yes' or repeat==-1 or 'CT_REPEAT_MAIN' not in env1:
+          if sc=='yes' or repeat==-1 or 'CT_REPEAT_MAIN' not in run_vars:
              calibrate_success=True
              break
 
@@ -3168,7 +3168,7 @@ def process_in_dir(i):
 
           cn+=1
 
-       if sc!='yes' and repeat!=-1 and 'CT_REPEAT_MAIN' in env1:
+       if sc!='yes' and repeat!=-1 and 'CT_REPEAT_MAIN' in run_vars:
           if calibrate_success==False:
              misc['run_success']='no'
              misc['run_success_bool']=False
@@ -4452,6 +4452,10 @@ def pipeline(i):
 
     vcmd=run_cmds[kcmd]
 
+    run_vars = meta.get('run_vars',{}).copy()       # first load ground-level-precedence defaults for all commands
+    run_vars.update( vcmd.get('run_vars',{}) )      # then override with higher-precedence defaults for this specific command
+    run_vars.update( env )                          # NB: mixing them in only to use as env_to_resolve in this function
+
     ###############################################################################################################
     # PIPELINE SECTION: expose and resolve run-time deps if needed
 
@@ -4466,7 +4470,7 @@ def pipeline(i):
                              'cmd_meta':vcmd,
                              'out':oo,
                              'install_to_env':iev,
-                             'env_for_resolve':env,
+                             'env_for_resolve':run_vars,    # the whole stack (program-wide, command-wide and execution-specific)
                              'preset_deps':preset_deps,
                              'safe':safe,
                              'quiet':quiet})
