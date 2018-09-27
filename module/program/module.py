@@ -722,15 +722,12 @@ def process_in_dir(i):
 
        return {'return':0}
 
-    # Check tmp dir ...
-    x=i.get('process_in_tmp','').lower()
-    if x=='': x='yes'
-
-    if x!='yes':
-       x=meta.get('process_in_tmp','').lower()
+    # shall we process_in_tmp or not?
+    #
+    process_in_tmp = i.get('process_in_tmp', meta.get('process_in_tmp', 'yes') ).lower() == 'yes'
 
     td=''
-    if x=='yes':
+    if process_in_tmp:
        tdx=i.get('tmp_dir','')
        td=tdx
        if td=='': td='tmp'
