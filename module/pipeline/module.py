@@ -322,8 +322,9 @@ def autotune(i):
     fdfi=ck.get_from_dicts(ic, 'flat_dict_for_improvements', {}, None)
 
     record=ck.get_from_dicts(ic, 'record', '', None)
-    if record=='yes' and len(meta)==0:
-       return {'return':1, 'error':'meta is not defined - can\'t aggregate'}
+#    We experienced problems with this patch - the problem is somewhere else ...
+#    if record=='yes' and len(meta)==0:
+#       return {'return':1, 'error':'meta is not defined - can\'t aggregate'}
 
     record_uoa=ck.get_from_dicts(ic, 'record_uoa', '', None)
     record_repo=ck.get_from_dicts(ic, 'record_repo', '', None)
