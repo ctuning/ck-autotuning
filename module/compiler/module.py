@@ -663,6 +663,10 @@ def extract_opts_new(i):
         if add and opt!='':
            iopt+=1
 
+           opt=opt[1:]
+           if opt.startswith('fno-'):
+              opt=opt[4:]
+
            ck.out('Adding opt '+str(iopt)+' "'+opt+'" - '+desc)
 
            dd['##'+opt]={
