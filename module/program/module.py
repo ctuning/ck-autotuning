@@ -2005,8 +2005,7 @@ def process_in_dir(i):
 
        edtags=i.get('extra_dataset_tags', [])
        if len(dtags)>0 and len(edtags)>0:
-          for q in edtags:
-              dtags.append(q)
+          dtags += edtags
 
        dmuoa=cfg['module_deps']['dataset']
        dduoa=i.get('dataset_uoa','')
@@ -2016,21 +2015,18 @@ def process_in_dir(i):
           if dduoa=='':
              misc['dataset_tags']=dtags
 
-             tags=''
-             for q in dtags:
-                 if tags!='': tags+=','
-                 tags+=q
+             dtags_csv = ','.join(dtags)
 
              rx=ck.access({'action':'search',
                            'module_uoa':dmuoa,
-                           'tags':tags,
+                           'tags':dtags_csv,
                            'add_info':'yes'})
              if rx['return']>0: return rx
 
              lst=rx['lst']
 
              if len(lst)==0:
-                return {'return':1, 'error':'no related datasets found (tags='+tags+')'}
+                return {'return':1, 'error':'no related datasets found (tags='+dtags_csv+')'}
              elif len(lst)==1:
                 dduoa=lst[0].get('data_uid','')
              else:
@@ -4481,31 +4477,25 @@ def pipeline(i):
     dtags=vcmd.get('dataset_tags',[])
 
     if len(dtags)>0 and len(edtags)>0:
-       for q in edtags:
-           dtags.append(q)
+       dtags += edtags
 
     dmuoa=cfg['module_deps']['dataset']
     dduid=''
 
-    xdtags=''
-    for q in dtags:
-        if xdtags!='': xdtags+=','
-        xdtags+=q
+    dtags_csv=','.join(dtags)
 
     if no_run!='yes' and (dduoa!='' or len(dtags)>0):
        if dduoa=='':
           rx=ck.access({'action':'search',
                         'dataset_repo_uoa':druoa,
                         'module_uoa':dmuoa,
-                        'tags':xdtags,
+                        'tags':dtags_csv,
                         'add_info':'yes'})
           if rx['return']>0: return rx
 
           lst=rx['lst']
 
-          xchoices=[]
-          for z in lst:
-              xchoices.append(z['data_uid'])
+          dataset_choices=[z['data_uid'] for z in lst]
 
           if len(lst)==0:
              duoa=''
@@ -4525,7 +4515,7 @@ def pipeline(i):
                 # SELECTOR *************************************
                 choices_desc['##dataset_uoa']={'type':'uoa',
                                                'has_choice':'yes',
-                                               'choices':xchoices,
+                                               'choices':dataset_choices,
                                                'tags':['setup', 'dataset'],
                                                'sort':1200}
 
@@ -5165,7 +5155,7 @@ def pipeline(i):
                 ck.out('Trying to extract dataset features ...')
                 ck.out('')
 
-             ii['tags']=xdtags
+             ii['tags']=dtags_csv
              ii['action']='extract'
              ii['out']=oo
              r=ck.access(ii)
