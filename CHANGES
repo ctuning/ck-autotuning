@@ -1,3 +1,6 @@
+* 2018.10.31 - [FGG] minor fix when redirecting git revision to null on Linux 
+                     (see https://github.com/ctuning/reproduce-milepost-project/issues/8).
+
 * 2018.07.17 - [FGG] added support for new website when generating lists of components
 
 * 2018.07.15 - [FGG] added recording of MILEPOST features to JSON file: 
