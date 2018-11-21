@@ -3441,18 +3441,7 @@ def clean(i):
 
 def compile(i):
     """
-    Input:  {
-               See "process_in_dir" (i.e. ck process_in_dir program --help)
-            }
-
-    Output: {
-              return       - return code =  0, if successful
-                                         >  0, if error
-              (error)      - error text if return > 0
-
-              Output of the last compile from function 'process_in_dir'
-            }
-
+    See "process_in_dir" API
     """
 
     i['sub_action']='compile'
@@ -3463,16 +3452,7 @@ def compile(i):
 
 def run(i):
     """
-    Input:  {
-               See "process_in_dir" (i.e. ck process_in_dir program --help)
-            }
-
-    Output: {
-              return       - return code =  0, if successful
-                                         >  0, if error
-              (error)      - error text if return > 0
-            }
-
+    See "process_in_dir" API
     """
 
     i['sub_action']='run'

@@ -1,3 +1,5 @@
+* 2018.11.21 - [FGG] added automatic redirect of some APIs
+
 * 2018.10.31 - [FGG] minor fix when redirecting git revision to null on Linux 
                      (see https://github.com/ctuning/reproduce-milepost-project/issues/8).
 
