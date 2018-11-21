@@ -6045,6 +6045,8 @@ def substitute_some_ck_keys(i):
 def cp(i):
     """
     Input:  {
+               CID1
+               CID2
             }
 
     Output: {
@@ -6084,8 +6086,7 @@ def cp(i):
 
 def copy(i):
     """
-    Input:  { See 'cp' function }
-    Output: { See 'cp' function }
+    See "cp" API
 
     """
 
@@ -6096,15 +6097,7 @@ def copy(i):
 
 def crowdtune(i):
     """
-    Input:  {
-               See 'crowdsource program.optimization'
-            }
-
-    Output: {
-              return       - return code =  0, if successful
-                                         >  0, if error
-              (error)      - error text if return > 0
-            }
+    See 'crowdsource program.optimization'
 
     """
 

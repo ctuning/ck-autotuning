@@ -1605,18 +1605,7 @@ def autotune(i):
 
 def run(i):
     """
-    Input:  {
-              See 'autotune' with iterations=1 (to reuse statistical analysis and recoring to repo)
-
-              (iterations) - default =1
-            }
-
-    Output: {
-              return       - return code =  0, if successful
-                                         >  0, if error
-              (error)      - error text if return > 0
-            }
-
+    See "autotune" API with iterations=1
     """
 
     if i.get('iterations','')=='': i['iterations']=1
