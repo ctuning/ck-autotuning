@@ -2814,7 +2814,7 @@ def process_in_dir(i):
                        return {'return':1, 'error':'pulling from remote device failed'}
 
           # Check if print files
-          pfar=rt.get('print_files_after_run',[])
+          pfar=vcmd.get('print_files_after_run',[])
           if len(pfar)==0:
              pfar=meta.get('print_files_after_run',[])
 
