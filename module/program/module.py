@@ -3397,7 +3397,7 @@ def process_in_dir(i):
              ccc['output_check_failures']=vo
 
        # Output final execution time
-       if o=='con':
+       if o=='con' and rt.get('skip_print_execution_time','')!='yes':
           ck.out('')
           x='Execution time: '+('%.3f'%exec_time)+' sec.'
           if repeat>1:
