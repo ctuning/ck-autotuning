@@ -2814,7 +2814,10 @@ def process_in_dir(i):
                        return {'return':1, 'error':'pulling from remote device failed'}
 
           # Check if print files
-          pfar=meta.get('print_files_after_run',[])
+          pfar=rt.get('print_files_after_run',[])
+          if len(pfar)==0:
+             pfar=meta.get('print_files_after_run',[])
+
           if len(pfar)>0 and sfp!='yes' and o=='con':
              ck.out('')
              ck.out(' (printing output files) ')
