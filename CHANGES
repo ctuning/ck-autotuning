@@ -1,3 +1,5 @@
+* 2018.11.26 - Added APIs to listed modules
+
 * 2018.11.21 - [FGG] added automatic redirect of some APIs
 
 * 2018.10.31 - [FGG] minor fix when redirecting git revision to null on Linux 

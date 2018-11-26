@@ -7155,6 +7155,7 @@ def show(i):
     list_action_dict['out']=''
     list_action_dict['action']='list'
     list_action_dict['add_meta']='yes'
+    list_action_dict['time_out']=-1
 
     rx=ck.access(list_action_dict)
     if rx['return']>0: return rx
@@ -7200,7 +7201,8 @@ def show(i):
        h+='</pre>\n'
 
        h+='<p>\n'
-       h+='See <a href="https://github.com/ctuning/ck/wiki">CK documentation</a>\n'
+       h+='See <a href="https://github.com/ctuning/ck/wiki">CK documentation</a>,\n'
+       h+=' <a href="https://github.com/ctuning/ck/wiki#contributing">"how to contribute" guide</a>,\n'
        h+=' and the latest <a href="http://cKnowledge.org/rpi-crowd-tuning">CK paper</a> for further details.\n'
 
        h+='<p>\n'
@@ -7394,6 +7396,10 @@ def show(i):
                  if ld!='': s+=ss1+'  '+ld
 
               ck.out(s)
+
+    ck.out('')
+    ck.out('  Total programs: '+str(num))
+    ck.out('')
 
     if html:
        h+='</table>\n'
