@@ -5920,6 +5920,9 @@ def pipeline(i):
 
     ###############################################################################################################
     # PIPELINE SECTION: finalize PIPELINE
+    if i.get('fail','')=='yes':
+       print_warning({'data_uoa':duoa, 'repo_uoa':ruoa})
+
     i['out']=o
     return finalize_pipeline(i)
 
