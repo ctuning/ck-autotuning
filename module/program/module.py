@@ -32,7 +32,8 @@ def init(i):
     return {'return':0}
 
 ##############################################################################
-# compile program
+# clean, compile and run program(s) - can be with wildcards
+# (afterwards will call "process_in_dir" to clean, compile and run specific programs)
 
 def process(i):
     """
@@ -171,6 +172,8 @@ def process(i):
         ii['data_uoa']=duid
         ii['data_alias']=dalias
         r=process_in_dir(ii)
+        if r['return']>0 or r.get('misc',{}).get('fail_reason','')!='':
+           print_warning({'data_uoa':dalias, 'repo_uoa':ruid})
         if r['return']>0: return r
 
     return r
@@ -1629,6 +1632,7 @@ def process_in_dir(i):
              ck.out(sep)
              ck.out(s)
              if misc.get('compilation_success','')=='no':
+                ck.out('')
                 ck.out('Warning: compilation failed!')
 
     ##################################################################################################################
@@ -1912,6 +1916,7 @@ def process_in_dir(i):
                    misc['run_success']='no'
                    misc['run_success_bool']=False
                    misc['fail_reason']=r['error']
+
                    return {'return':0, 'tmp_dir':rcdir, 'misc':misc, 'characteristics':ccc, 'deps':deps}
 
                return r
@@ -7410,3 +7415,81 @@ def show(i):
           if r['return']>0: return r
 
     return {'return':0, 'html':h}
+
+##############################################################################
+# internal: print community warning when program fails
+
+def print_warning(i):
+    """
+    Input:  {
+              data_uoa
+              repo_uoa
+            }
+
+    Output: {
+              return       - return code =  0, if successful
+                                         >  0, if error
+              (error)      - error text if return > 0
+            }
+
+    """
+
+    # Check if this warning is disabled in CK kernel
+    pduoa=i['data_uoa']
+    if pduoa!='' and ck.cfg.get('skip_message_when_program_fails')!='yes':
+       pruoa=i['repo_uoa']
+
+       ck.out('')
+       ck.out('***************************************************************')
+       ck.out('***************************************************************')
+       ck.out('***************************************************************')
+
+       ck.out('The community develops, shares and improves CK program workflows')
+       ck.out('to be portable and customizable across many evolving platforms:')
+       ck.out('* http://cKnowledge.org/shared-programs.html')
+
+       ck.out('')
+       ck.out('Therefore, they may sometimes fail with newer code versions,')
+       ck.out('under new settings or in previously unseen environments.')
+
+       ck.out('')
+       ck.out('In such case, please help the community by fixing the problem')
+       ck.out('and/or reporting it via CK mailing list and related repository:')
+       ck.out('(please provide all details about how to reproduce it):')
+
+       ck.out('')
+       ck.out('* https://groups.google.com/forum/#!forum/collective-knowledge')
+
+       ck.out('')
+       ck.out('You can turn off this message as follows:')
+       ck.out('$ ck set kernel --var.skip_message_when_program_fails=yes')
+
+       if pduoa!='' or pruoa!='':
+          ck.out('')
+          ck.out('Failed(?) CK program: '+pduoa)
+
+          if pruoa!='':
+             # Attempt to read info about this repo
+             r=ck.access({'action':'load',
+                          'module_uoa':cfg['module_deps']['repo'],
+                          'data_uoa':pruoa})
+             if r['return']==0:
+                d=r['dict']
+                pruoa=r['data_uoa']
+
+                ck.out('CK repo:              '+pruoa)
+
+                url=d.get('url','')
+                if url!='':
+                   url1=url+'/tree/master/program/'+pduoa
+                   url2=url+'/issues'
+                   ck.out('CK repo URL:          '+url)
+                   ck.out('CK program URL:       '+url1)
+                   ck.out('Issues URL:           '+url2)
+
+       ck.out('***************************************************************')
+       ck.out('***************************************************************')
+       ck.out('***************************************************************')
+       ck.out('')
+
+    return {}
