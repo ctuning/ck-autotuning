@@ -7212,6 +7212,7 @@ def show(i):
        h+='  <td nowrap><b>#</b></td>\n'
        h+='  <td nowrap><b>Program UOA</b></td>\n'
        h+='  <td nowrap><b>Repo UOA</b></td>\n'
+       h+='  <td nowrap><b>Available command lines</b></td>\n'
        h+='  <td><b>Tags</b></td>\n'
        h+='  <td><b>Host OS</b></td>\n'
        h+='  <td><b>Target OS</b></td>\n'
@@ -7317,11 +7318,18 @@ def show(i):
                  z1='<a href="'+yh+'">'
                  z11='<a href="'+yh+'/.cm/meta.json">'
 
+              cmds=''
+              run_cmds=lm.get('run_cmds',[])
+              for rc in run_cmds:
+                  cmds+='&#8226;&nbsp;'+rc+'<br>'
+
               h+='  <td nowrap valign="top"><a name="'+ln+'">'+str(num)+'</b></td>\n'
 
               h+='  <td nowrap valign="top">'+z1+ln+x2+'</b> <i>('+z11+'CK meta'+x2+')</i></td>\n'
 
               h+='  <td nowrap valign="top">'+x1+lr+x2+'</td>\n'
+
+              h+='  <td nowrap valign="top">'+cmds+'</td>\n'
 
               h+='  <td valign="top"><small>'+ytags+'</small>\n'
 
