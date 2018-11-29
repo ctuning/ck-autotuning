@@ -69,7 +69,6 @@ before_install:
             export WANTED_PYTHON_VERSION=$TRAVIS_PYTHON_VERSION                 # since Python is supported in Linux, get it from Travis
             export CK_PLATFORM_CHOICE="generic-linux "                          # used later by CK (note the trailing space to make the choice unique)
             export PYTHON_EXE=python
-            export TRAVIS_CK_COMPILER_CHOICE="Version 6"
         fi
 
 install:
