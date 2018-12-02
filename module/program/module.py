@@ -1670,7 +1670,7 @@ def process_in_dir(i):
           if len(krun_cmds)>1:
              zz={}
              iz=0
-             for z in sorted(krun_cmds):
+             for z in sorted(run_cmds, key=lambda rcmds:run_cmds[rcmds].get('sort',0)):
                  add=True
 
                  # Check if skip by deps tags
@@ -4395,7 +4395,7 @@ def pipeline(i):
           else:
              xchoices=[]
              dchoices=[]
-             for z in sorted(krun_cmds):
+             for z in sorted(run_cmds, key=lambda rcmds:run_cmds[rcmds].get('sort',0)):
                  xchoices.append(z)
 
                  zrt=run_cmds[z].get('run_time',{})

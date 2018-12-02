@@ -1,3 +1,5 @@
+* 2018.12.02 - [FGG] added sorting of run_cmds in program meta (using integer "sort")
+
 * 2018.11.28 - [FGG] added info about failed program workflows (how to report)
 
 * 2018.11.26 - Added APIs to listed modules
