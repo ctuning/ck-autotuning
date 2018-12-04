@@ -479,7 +479,7 @@ def process_in_dir(i):
        x='no'
        if i.get('skip_info_collection','')!='': x=i['skip_info_collection']
        ii['skip_info_collection']=x
-       ii['out']=o
+       ii['out']=oo
     else:
        ii['skip_info_collection']='yes'
 
@@ -2087,7 +2087,7 @@ def process_in_dir(i):
                           'module_uoa':cfg['module_deps']['platform'],
                           'os_dict':tosd,
                           'device_id':tdid,
-                          'out':o})
+                          'out':oo})
              if r['return']>0: return r
 
           # Try to create directories
