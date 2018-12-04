@@ -3464,7 +3464,13 @@ def run(i):
     """
 
     i['sub_action']='run'
-    return process(i)
+    run_output_dict = process(i)
+
+    if i.get('treat_return_code_as_exit_code', '')=='yes':
+        run_output_dict['return']   = run_output_dict['characteristics']['return_code']
+        run_output_dict['error']    = run_output_dict['characteristics'].get('fail_reason')
+
+    return run_output_dict
 
 ##############################################################################
 # prepare and run program pipeline (clean, compile, run, etc)
