@@ -7177,6 +7177,8 @@ def show(i):
     ll=sorted(rx['lst'], key=lambda k: k['data_uoa'])
 
     if html:
+       h+='<b>List of portable and customizable program workflows</b>\n'
+
        h+='You can obtain repository with a given program (workflow) as follows:\n'
        h+='<pre>\n'
        h+=' ck pull repo:{Repo UOA - see below}\n'
@@ -7225,6 +7227,7 @@ def show(i):
        h+=' <tr>\n'
        h+='  <td nowrap><b>#</b></td>\n'
        h+='  <td nowrap><b>Program UOA</b></td>\n'
+       h+='  <td nowrap><b>Template?</b></td>\n'
        h+='  <td nowrap><b>Repo UOA</b></td>\n'
        h+='  <td nowrap><b>Available command lines</b></td>\n'
        h+='  <td><b>Tags</b></td>\n'
@@ -7274,6 +7277,11 @@ def show(i):
 
            xhos=lm.get('only_for_host_os_tags',[])
            xtos=lm.get('only_for_target_os_tags',[])
+
+           tmpl=lm.get('template','')
+           template=lm.get('template_type','')
+           if tmpl=='yes' and template=='':
+              template='yes'
 
            tags=lm.get('tags',[])
            ytags=','.join(tags)
@@ -7340,6 +7348,8 @@ def show(i):
               h+='  <td nowrap valign="top"><a name="'+ln+'">'+str(num)+'</b></td>\n'
 
               h+='  <td nowrap valign="top">'+z1+ln+x2+'</b> <i>('+z11+'CK meta'+x2+')</i></td>\n'
+
+              h+='  <td nowrap valign="top">'+template+'</td>\n'
 
               h+='  <td nowrap valign="top">'+x1+lr+x2+'</td>\n'
 

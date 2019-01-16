@@ -1,58 +1,59 @@
 {
-  "backup_data_uid": "08ef407b9ce82e10", 
-  "build_compiler_vars": {}, 
+  "backup_data_uid": "08ef407b9ce82e10",
+  "build_compiler_vars": {},
   "compile_deps": {
     "compiler": {
-      "local": "yes", 
-      "name": "C compiler", 
+      "local": "yes",
+      "name": "C compiler",
       "tags": "compiler,lang-c"
     }
-  }, 
-  "compiler_env": "CK_CC", 
-  "data_name": "template-hello-world-c-output-validation", 
-  "extra_ld_vars": "$<<CK_EXTRA_LIB_M>>$", 
-  "main_language": "c", 
+  },
+  "compiler_env": "CK_CC",
+  "data_name": "template-hello-world-c-output-validation",
+  "extra_ld_vars": "$<<CK_EXTRA_LIB_M>>$",
+  "main_language": "c",
   "print_files_after_run": [
-    "stderr.log", 
+    "stderr.log",
     "stdout.log"
-  ], 
-  "process_in_tmp": "yes", 
-  "program": "yes", 
+  ],
+  "process_in_tmp": "yes",
+  "program": "yes",
   "run_cmds": {
     "default": {
-      "ignore_return_code": "no", 
+      "ignore_return_code": "no",
       "run_time": {
-        "output_invariant_of_repeat": "yes", 
+        "output_invariant_of_repeat": "yes",
         "post_process_via_ck": {
           "script_name": "process"
-        }, 
-        "run_cmd_main": "$#BIN_FILE#$ \"$#src_path#$\"", 
-        "run_cmd_out1": "stdout.log", 
-        "run_cmd_out2": "stderr.log", 
+        },
+        "run_cmd_main": "$#BIN_FILE#$ \"$#src_path#$\"",
+        "run_cmd_out1": "stdout.log",
+        "run_cmd_out2": "stderr.log",
         "run_correctness_output_files": [
           "tmp-ck-output.json"
-        ], 
+        ],
         "run_output_files": [
-          "tmp-ck-output.json", 
-          "stdout.log", 
+          "tmp-ck-output.json",
+          "stdout.log",
           "stderr.log"
         ]
       }
     }
-  }, 
+  },
   "run_vars": {
-    "CK_ABS_DIFF_THRESHOLD": 0.1, 
-    "CK_VAR1": 123, 
+    "CK_ABS_DIFF_THRESHOLD": 0.1,
+    "CK_VAR1": 123,
     "CK_VAR2": 666
-  }, 
+  },
   "source_files": [
     "hello-world.c"
-  ], 
+  ],
   "tags": [
-    "template", 
-    "program", 
+    "template",
+    "program",
     "lang-c"
-  ], 
-  "target_file": "a", 
-  "template": "yes"
+  ],
+  "target_file": "a",
+  "template": "yes",
+  "template_type": "C program workflow"
 }

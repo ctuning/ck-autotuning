@@ -1,51 +1,52 @@
 {
-  "backup_data_uid": "bee44fc49e6dc289", 
-  "build_compiler_vars": {}, 
+  "backup_data_uid": "bee44fc49e6dc289",
+  "build_compiler_vars": {},
   "compile_cmds": {
     "default": {
       "cmd": "bash ../ck_compile$#script_ext#$"
     }
-  }, 
+  },
   "compile_deps": {
     "compiler": {
-      "local": "yes", 
-      "name": "C compiler", 
+      "local": "yes",
+      "name": "C compiler",
       "tags": "compiler,lang-c"
     }
-  }, 
-  "data_name": "template-hello-world-c-compile-run-via-scripts", 
-  "extra_ld_vars": "$<<CK_EXTRA_LIB_M>>$", 
-  "main_language": "c", 
+  },
+  "data_name": "template-hello-world-c-compile-run-via-scripts",
+  "extra_ld_vars": "$<<CK_EXTRA_LIB_M>>$",
+  "main_language": "c",
   "print_files_after_run": [
-    "stderr.log", 
+    "stderr.log",
     "stdout.log"
-  ], 
-  "process_in_tmp": "yes", 
-  "program": "yes", 
+  ],
+  "process_in_tmp": "yes",
+  "program": "yes",
   "run_cmds": {
     "default": {
-      "ignore_return_code": "no", 
+      "ignore_return_code": "no",
       "run_time": {
-        "run_cmd_main": "..$#dir_sep#$ck_run$#script_ext#$", 
-        "run_cmd_out1": "stdout.log", 
-        "run_cmd_out2": "stderr.log", 
+        "run_cmd_main": "..$#dir_sep#$ck_run$#script_ext#$",
+        "run_cmd_out1": "stdout.log",
+        "run_cmd_out2": "stderr.log",
         "run_output_files": [
-          "stdout.log", 
+          "stdout.log",
           "stderr.log"
         ]
       }
     }
-  }, 
+  },
   "run_vars": {
-    "CK_VAR1": 123, 
+    "CK_VAR1": 123,
     "CK_VAR2": 666
-  }, 
+  },
   "tags": [
-    "template", 
-    "program", 
+    "template",
+    "program",
     "lang-c"
-  ], 
-  "target_file": "a", 
+  ],
+  "target_file": "a",
   "template": "yes",
+  "template_type": "C program workflow",
   "use_compile_script": "yes"
 }

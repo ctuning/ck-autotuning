@@ -45,5 +45,6 @@
     "lang-c"
   ],
   "target_file": "a",
-  "template": "yes"
+  "template": "yes",
+  "template_type": "C program workflow"
 }

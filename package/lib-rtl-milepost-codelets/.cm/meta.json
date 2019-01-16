@@ -1,28 +1,28 @@
 {
   "customize": {
-    "extra_dir": "", 
+    "extra_dir": "",
     "version": "2009"
-  }, 
+  },
   "deps": {
     "compiler": {
-      "local": "yes", 
-      "name": "C compiler", 
+      "local": "yes",
+      "name": "C compiler",
       "tags": "compiler,lang-c"
     }
-  }, 
+  },
   "end_full_path": {
-    "android": "lib$#sep#$librtlmilepostcodelet.a", 
-    "linux": "lib/librtlmilepostcodelet.a", 
-    "mingw": "lib\\librtlmilepostcodelet.a", 
+    "android": "lib$#sep#$librtlmilepostcodelet.a",
+    "linux": "lib/librtlmilepostcodelet.a",
+    "mingw": "lib\\librtlmilepostcodelet.a",
     "win": "lib\\librtlmilepostcodelet.lib"
-  }, 
-  "process_script": "process", 
-  "soft_uoa": "4a0ba606d7cee653", 
-  "suggested_path": "lib-rtl-milepost-codelet", 
+  },
+  "process_script": "process",
+  "soft_uoa": "4a0ba606d7cee653",
+  "suggested_path": "lib-rtl-milepost-codelet",
   "tags": [
-    "lib", 
-    "rtl", 
-    "milepost", 
+    "lib",
+    "rtl",
+    "milepost",
     "codelet",
     "channel-stable"
   ]

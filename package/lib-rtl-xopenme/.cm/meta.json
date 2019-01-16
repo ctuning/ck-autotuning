@@ -1,35 +1,36 @@
 {
   "customize": {
-    "extra_dir": "", 
+    "extra_dir": "",
     "version": "0.3"
-  }, 
+  },
   "deps": {
     "compiler": {
-      "local": "yes", 
-      "name": "C compiler", 
-      "sort": 10, 
+      "local": "yes",
+      "name": "C compiler",
+      "sort": 10,
       "tags": "compiler,lang-c"
     }
-  }, 
+  },
   "end_full_path": {
-    "android": "lib$#sep#$librtlxopenme.a", 
-    "linux": "lib/librtlxopenme.a", 
-    "mingw": "lib\\librtlxopenme.a", 
+    "android": "lib$#sep#$librtlxopenme.a",
+    "linux": "lib/librtlxopenme.a",
+    "mingw": "lib\\librtlxopenme.a",
     "win": "lib\\librtlxopenme.lib"
-  }, 
-  "process_script": "process", 
-  "soft_uoa": "673507878d649b4a", 
-  "suggested_path": "lib-rtl-xopenme", 
+  },
+  "process_script": "process",
+  "soft_uoa": "673507878d649b4a",
+  "suggested_path": "lib-rtl-xopenme",
   "tags": [
-    "lib", 
-    "rtl", 
-    "xopenme", 
-    "lang-c", 
-    "lang-cpp", 
-    "lang-f77", 
-    "lang-f90", 
+    "lib",
+    "rtl",
+    "xopenme",
+    "lang-c",
+    "lang-cpp",
+    "lang-f77",
+    "lang-f90",
     "lang-f95",
     "channel-stable"
   ],
-  "template":"yes"
+  "template": "yes",
+  "template_type": "Reduced OpenME run-time library"
 }

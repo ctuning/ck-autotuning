@@ -141,5 +141,7 @@
   },
   "module_program_optimization": "program.optimization",
   "pipeline": "yes",
-  "target_file": "a"
+  "target_file": "a",
+  "workflow": "yes",
+  "workflow_type": "program compilation, execution and validation pipeline (workflow)"
 }

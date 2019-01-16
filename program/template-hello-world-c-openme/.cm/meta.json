@@ -2,18 +2,18 @@
   "backup_data_uid": "687b07c78763721d",
   "build_compiler_vars": {
     "XOPENME": ""
-  }, 
+  },
   "compile_deps": {
     "compiler": {
       "local": "yes",
       "name": "C compiler",
-      "sort": 10, 
+      "sort": 10,
       "tags": "compiler,lang-c"
     },
     "xopenme": {
-      "local": "yes", 
-      "name": "xOpenME library", 
-      "sort": 20, 
+      "local": "yes",
+      "name": "xOpenME library",
+      "sort": 20,
       "tags": "lib,xopenme"
     }
   },
@@ -31,13 +31,13 @@
     "default": {
       "ignore_return_code": "no",
       "run_time": {
-        "fine_grain_timer_file": "tmp-ck-timer.json", 
+        "fine_grain_timer_file": "tmp-ck-timer.json",
         "post_process_via_ck": {
           "script_name": "postprocess"
-        }, 
+        },
         "pre_process_via_ck": {
           "script_name": "preprocess"
-        }, 
+        },
         "run_cmd_main": "$#BIN_FILE#$ \"$#src_path#$\"",
         "run_cmd_out1": "stdout.log",
         "run_cmd_out2": "stderr.log",
@@ -62,5 +62,6 @@
     "lang-c"
   ],
   "target_file": "a",
-  "template": "yes"
+  "template": "yes",
+  "template_type": "C program workflow"
 }

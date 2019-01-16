@@ -1,28 +1,28 @@
 {
   "customize": {
-    "extra_dir": "", 
+    "extra_dir": "",
     "version": "1.5"
-  }, 
+  },
   "deps": {
     "compiler": {
-      "local": "yes", 
-      "name": "C compiler", 
+      "local": "yes",
+      "name": "C compiler",
       "tags": "compiler,lang-c"
     }
-  }, 
+  },
   "end_full_path": {
-    "android": "lib$#sep#$plugin-openme-ctuning-1.5.so", 
-    "linux": "lib/plugin-openme-ctuning-1.5.so", 
-    "mingw": "lib\\plugin-openme-ctuning-1.5.so", 
+    "android": "lib$#sep#$plugin-openme-ctuning-1.5.so",
+    "linux": "lib/plugin-openme-ctuning-1.5.so",
+    "mingw": "lib\\plugin-openme-ctuning-1.5.so",
     "win": "lib\\plugin-openme-ctuning-1.5.dll"
-  }, 
-  "process_script": "process", 
-  "soft_uoa": "77a2104b4b828802", 
-  "suggested_path": "plugin-openme-ctuning", 
+  },
+  "process_script": "process",
+  "soft_uoa": "77a2104b4b828802",
+  "suggested_path": "plugin-openme-ctuning",
   "tags": [
-    "plugin", 
-    "openme", 
-    "ctuning", 
+    "plugin",
+    "openme",
+    "ctuning",
     "auto-tuning",
     "channel-stable"
   ]
