@@ -7467,33 +7467,40 @@ def print_warning(i):
        pruoa=i['repo_uoa']
 
        ck.out('')
-       ck.out('***************************************************************')
-       ck.out('***************************************************************')
-       ck.out('***************************************************************')
+       ck.out('   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
 
-       ck.out('The community develops, shares and improves CK program workflows')
-       ck.out('to be portable and customizable across many evolving platforms:')
-       ck.out('* http://cKnowledge.org/shared-programs.html')
+       ck.out('   CK detected a PROBLEM in the third-party CK program workflow:')
 
-       ck.out('')
-       ck.out('Therefore, they may sometimes fail with newer code versions,')
-       ck.out('under new settings or in previously unseen environments.')
+#       ck.out('The community develops, shares and improves CK program workflows')
+#       ck.out('to be portable and customizable across many evolving platforms:')
+#       ck.out('* http://cKnowledge.org/shared-programs.html')
 
-       ck.out('')
-       ck.out('In such case, please help the community by fixing the problem')
-       ck.out('and/or reporting it via CK mailing list and related repository:')
-       ck.out('(please provide all details about how to reproduce it):')
+#       ck.out('')
+#       ck.out('Therefore, they may sometimes fail with newer code versions,')
+#       ck.out('under new settings or in previously unseen environments.')
 
-       ck.out('')
-       ck.out('* https://groups.google.com/forum/#!forum/collective-knowledge')
+#       ck.out('')
+#       ck.out('In such case, please help the community by fixing the problem')
+#       ck.out('and/or reporting it via CK mailing list and related repository:')
+#       ck.out('(please provide all details about how to reproduce it):')
 
-       ck.out('')
-       ck.out('You can turn off this message as follows:')
-       ck.out('$ ck set kernel --var.skip_message_when_program_fails=yes')
+#       ck.out('')
+#       ck.out('* https://groups.google.com/forum/#!forum/collective-knowledge')
+
+#       ck.out('')
+#       ck.out('You can turn off this message as follows:')
+#       ck.out('$ ck set kernel --var.skip_message_when_program_fails=yes')
+
+       # sometimes pruoa can still be UID -> check
+       r=ck.access({'action':'load', 'module_uoa':work['self_module_uid'], 'data_uoa':pduoa})
+       if r['return']==0:
+          pduoa=r['data_uoa']
+
+       url2=''
 
        if pduoa!='' or pruoa!='':
           ck.out('')
-          ck.out('Failed(?) CK program: '+pduoa)
+          ck.out('   Failed(?) CK program: '+pduoa)
 
           if pruoa!='':
              # Attempt to read info about this repo
@@ -7504,19 +7511,25 @@ def print_warning(i):
                 d=r['dict']
                 pruoa=r['data_uoa']
 
-                ck.out('CK repo:              '+pruoa)
+                ck.out('   CK repo:              '+pruoa)
 
                 url=d.get('url','')
                 if url!='':
                    url1=url+'/tree/master/program/'+pduoa
                    url2=url+'/issues'
-                   ck.out('CK repo URL:          '+url)
-                   ck.out('CK program URL:       '+url1)
-                   ck.out('Issues URL:           '+url2)
+                   ck.out('   CK repo URL:          '+url)
+                   ck.out('   CK program URL:       '+url1)
+                   ck.out('   Issues URL:           '+url2)
 
-       ck.out('***************************************************************')
-       ck.out('***************************************************************')
-       ck.out('***************************************************************')
+       ck.out('   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+
+       x1='the community'
+       x2='https://groups.google.com/forum/#!forum/collective-knowledge'
+       if url2!='':
+          x1='the authors'
+          x2=url2
+
+       ck.out('   Please, submit the log to '+x1+' of this external CK program workflow at "'+x2+'" to collaboratively fix this problem!')
        ck.out('')
 
-    return {}
+    return {'return':0}
