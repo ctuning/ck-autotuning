@@ -866,6 +866,9 @@ def process_in_dir(i):
            'safe':safe}
        if o=='con': ii['out']='con'
 
+       if meta.get('pass_env_to_resolve', '')=='yes':
+           ii.update({ 'install_env': env })
+
        rx=ck.access(ii)
        if rx['return']>0: return rx
 
