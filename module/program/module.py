@@ -7180,8 +7180,12 @@ def show(i):
     ll=sorted(rx['lst'], key=lambda k: k['data_uoa'])
 
     if html:
-       h+='<b>List of portable and customizable program workflows</b>\n'
+       h+='<h2>Please check our new <a href="http://ReuseResearch.com/c.php?c=program">beta browser</a> for CK components!</h2>\n'
 
+       h+='<br>\n'
+       h+='<b>List of portable and customizable program workflows:</b><br>\n'
+
+       h+='<p>\n'
        h+='You can obtain repository with a given program (workflow) as follows:\n'
        h+='<pre>\n'
        h+=' ck pull repo:{Repo UOA - see below}\n'
