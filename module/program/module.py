@@ -228,6 +228,8 @@ def process_in_dir(i):
                   or
               (static or dynamic)
 
+              (use_clang_opt)        - use Clang opt optimizer
+
               (repeat)               - repeat kernel via environment CT_REPEAT_MAIN if supported
 
               (sudo)                 - if 'yes', force using sudo
@@ -383,6 +385,8 @@ def process_in_dir(i):
     env=i.get('env',{})
     xparams=i.get('params',{})
 
+    uco=i.get('use_clang_opt','')=='yes'
+
     deps=i.get('deps',{})
     reuse_deps=i.get('reuse_deps','')
     deps_cache=i.get('deps_cache',[])
@@ -421,6 +425,9 @@ def process_in_dir(i):
     cons=i.get('console','')
 
     flags=i.get('flags','')
+    if uco:
+       split_flags=flags.split(' ')
+
     lflags=i.get('lflags','')
     cv=i.get('compiler_vars',{})
     ncv=i.get('no_vars',{})
@@ -1298,7 +1305,11 @@ def process_in_dir(i):
 
           if sbcv!='': xcfb+=' '+sbcv
           if sin!='': xcfb+=' '+sin
-          xcfb+=' '+flags
+
+          if uco:
+             xcfb+=' -emit-llvm'
+          else:
+             xcfb+=' '+flags
 
           # Linking flags
           slfb=svarb+'CK_COMPILER_FLAGS_OBLIGATORY'+svare
@@ -1403,7 +1414,10 @@ def process_in_dir(i):
                  sf00=os.path.basename(sf)
                  sf00a,sf00b=os.path.splitext(sf00)
 
-                 sfobj=sf00a+sobje
+                 if uco:
+                    sfobj=sf00a+'.bc'
+                 else:
+                    sfobj=sf00a+sobje
                  if sofs!='': sofs+=' '
                  sofs+=sfobj
                  xsofs.append(sfobj)
@@ -1426,6 +1440,17 @@ def process_in_dir(i):
                  sb+=no+sqie+'\n'
 
                  sb+='\n'
+
+                 # Check if clang opt
+                 if uco:
+                    for clang_opt_flag in split_flags:
+                        sb+='\necho "\nopt '+clang_opt_flag+' -o '+sfobj+' '+sfobj+'"\n'
+                        sb+='opt '+clang_opt_flag+' -o '+sfobj+' '+sfobj+'\n'
+
+          # Convert Clang BC to .o
+          if uco:
+             sb+='\necho "\nllc -filetype=obj '+sfobj+'"\n'
+             sb+='llc -filetype=obj '+sfobj+'\n\n'
 
           # Obtaining link CMD (first from program entry, then default from this module)
           if sofs!='':

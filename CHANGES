@@ -1,3 +1,5 @@
+* 2019.03.08 - [FGG] added prototype of a flag --use_clang_opt to ck compile program
+
 * 2019.03.05 - [FGG] added link to http://ReuseResearch.com
 
 * 2019.02.08 - [FGG] improved problem reporting in third-party program workflows (pipelines)

@@ -89,3 +89,9 @@ E: GitHub: @w-simon
 O: 
 C: improving autotuning documentation and fixing bugs
 W:
+
+N: David Fernadez Lobon & Guillermo Vigueras
+E:
+O:
+C: suggesting how to add clang/opt compilation
+W:
