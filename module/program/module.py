@@ -2321,31 +2321,51 @@ def process_in_dir(i):
                sb+=q+'\n'
            sb+='\n'
 
-       ## Check if pre-processing is required,
-       # whether via CK (faster) or externally (supports dependencies)
-       #
-       if 'pre_process_via_ck' in rt:
-            pvck=rt['pre_process_via_ck']
-            extra_call_parameters = {
-                'action':           'run',
-            }
-       elif 'pre_process_with_deps' in rt:
-            pvck=rt['pre_process_with_deps']
-            extra_call_parameters = {
-                'action':           '_run_external',
-                'prewrapper_lines': [ sb ],
-            }
-            ## If 'python' dependency exists, we run the external CK with it:
-            #
-            python_path = deps.get('python', {}).get('dict', {}).get('env', {}).get('CK_ENV_COMPILER_PYTHON_FILE')
-            if python_path:
-                extra_call_parameters['prewrapper_lines'].append( 'export CK_PYTHON="{}"'.format(python_path) )   # FIXME: Windows support
-       else:
-            pvck = None
+       # Check if pre-processing script via CK
+       pvck=rt.get('pre_process_via_ck',{})
+       if len(pvck)>0:
 
-       if pvck:
-            preprocessor_input_data = {
-                 "host_os_uoa":hosx,
+          pvckp=src_path_local
+
+          pvckm=pvck.get('module_uoa','')
+          if pvckm=='': pvckm=work['self_module_uid']
+          pvckd=pvck.get('data_uoa','')
+
+          if pvckd!='':
+             rp=ck.access({'action':'find',
+                           'module_uoa':pvckm,
+                           'data_uoa':pvckd})
+             if rp['return']>0: return rp
+             pvckp=rp['path']
+
+          pvckc=pvck.get('script_name','')
+          if pvckc=='': pvckc='preprocess'
+
+          if o=='con':
+             ck.out('')
+             ck.out('  (pre processing via CK ('+pvckp+', '+pvckc+')')
+             ck.out('')
+
+          # Check if has custom script
+          try:
+              cdd=os.getcwd()
+          except OSError:
+              os.chdir('..')
+              cdd=os.getcwd()
+
+          cs=None
+          rxx=ck.load_module_from_path({'path':pvckp, 'module_code_name':pvckc, 'skip_init':'yes'})
+
+          cs=rxx.get('code', None)
+          if cs==None:
+             rxx['return']=1
+             rxx['error']='problem loading python code: '+rxx['error']
+
+          if rxx['return']==0:
+             os.chdir(cdd) # restore current dir from above operation
+
+             # Call customized script
+             ii={"host_os_uoa":hosx,
                  "host_os_uid":hos,
                  "host_os_dict":hosd,
                  "target_os_uoa":tosx,
@@ -2365,24 +2385,11 @@ def process_in_dir(i):
                  "params":params,
                  "device_cfg":device_cfg,
                  "out":oo
-            }
-            preprocessor_call_parameters = {
-                'module_uoa':           'script',
-                'script_module_uoa':    pvck.get('module_uoa', work['self_module_uid']),
-                'data_uoa':             pvck.get('data_uoa',''),
-                'code':                 pvck.get('script_name', 'preprocess'),
-                'func':                 pvck.get('function_name', 'ck_preprocess'),
-                'dict':                 preprocessor_input_data,
-            }
-            if o=='con':
-                ck.out('')
-                ck.out('  (pre processing by calling  {cp[script_module_uoa]}:{cp[data_uoa]}/{cp[code]}.{cp[func]}() )'.format(cp=preprocessor_call_parameters) )
-                ck.out('')
+                }
 
-            preprocessor_call_parameters.update( extra_call_parameters )
-            rxx=ck.access( preprocessor_call_parameters )
+             rxx=cs.ck_preprocess(ii)
 
-            if rxx['return']==0:
+             if rxx['return']==0:
                 nenv=rxx.get('new_env',{})
                 for zk in nenv:
                     zv=str(nenv[zk])
@@ -2414,15 +2421,15 @@ def process_in_dir(i):
                         if df not in rof:
                             rof.append(df)
 
-            else:
-                misc['run_success']='no'
-                misc['run_success_bool']=False
-                misc['fail_reason']='pre-processing script via CK failed ('+rxx['error']+')'
+          if rxx['return']>0:
+             misc['run_success']='no'
+             misc['run_success_bool']=False
+             misc['fail_reason']='pre-processing script via CK failed ('+rxx['error']+')'
 
-                if o=='con':
-                    ck.out('  (pre processing script via CK failed: '+rxx['error']+')')
+             if o=='con':
+                ck.out('  (pre processing script via CK failed: '+rxx['error']+')')
 
-                return {'return':0, 'tmp_dir':rcdir, 'misc':misc, 'characteristics':ccc, 'deps':deps}
+             return {'return':0, 'tmp_dir':rcdir, 'misc':misc, 'characteristics':ccc, 'deps':deps}
 
        # If remote and target exe
        if remote=='yes' and (target_exe!='' or meta.get('force_copy_input_files_to_remote','')=='yes'):
@@ -2882,19 +2889,21 @@ def process_in_dir(i):
           if type(lppcvc)==dict:
              pvck=lppcvc
 
+             pvckp=src_path_local
+
+             pvckm=pvck.get('module_uoa','')
+             if pvckm=='': pvckm=work['self_module_uid']
              pvckd=pvck.get('data_uoa','')
-             pvckc=pvck.get('script_name', 'postprocess')
-             pvckf=pvck.get('function_name', 'ck_postprocess')
 
              if pvckd!='':
-                pvckm=pvck.get('module_uoa', work['self_module_uid'])
                 rp=ck.access({'action':'find',
                               'module_uoa':pvckm,
                               'data_uoa':pvckd})
                 if rp['return']>0: return rp
                 pvckp=rp['path']
-             else:
-                pvckp=src_path_local
+
+             pvckc=pvck.get('script_name','')
+             if pvckc=='': pvckc='postprocess'
 
              if o=='con':
                 ck.out('')
@@ -2928,7 +2937,8 @@ def process_in_dir(i):
                 if cs!=None and 'ck_check_output' in dir(cs):
                    ck_check_output=cs.ck_check_output
 
-                if cs!=None and pvckf in dir(cs):
+                if cs!=None and 'ck_postprocess' in dir(cs):
+                   as_cmd=False
 
                    # Call customized script
                    ii={"host_os_uoa":hosx,
@@ -2953,8 +2963,7 @@ def process_in_dir(i):
                        "out":oo
                       }
 
-                   rxx=getattr(cs, pvckf)(ii)
-
+                   rxx=cs.ck_postprocess(ii)
                    srx=rxx['return']
                    if srx==0:
                       xchars=rxx.get('characteristics',{})
@@ -3047,6 +3056,7 @@ def process_in_dir(i):
                              ck_check_output=cs.ck_check_output
 
                           if cs!=None and 'ck_postprocess' in dir(cs):
+                             as_cmd=False
 
                              # Call customized script
                              ii={"host_os_uoa":hosx,
