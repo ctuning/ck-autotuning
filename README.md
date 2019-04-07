@@ -68,6 +68,10 @@ Modules from this repository will be used to unify:
 * machine learning to predict optimizations and run-time adaptation
 * reproducibility of experimental results
 
+Maintainers
+===========
+* [dividiti](http://dividiti.com)
+
 Authors
 =======
 
