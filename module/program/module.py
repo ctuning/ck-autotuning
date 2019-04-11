@@ -399,7 +399,7 @@ def process_in_dir(i):
         elif q.startswith('params.'):
            xparams[q[7:]]=i[q]
         elif q.startswith('deps.'):
-           preset_deps[q[5:]]=i[q]
+           preset_deps[q[5:]]=i[q].split(':')[-1]
 
     are=i.get('add_rnd_extension_to_bin','')
     ase=i.get('add_save_extension_to_bin','')
