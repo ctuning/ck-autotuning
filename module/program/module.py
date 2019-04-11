@@ -266,6 +266,8 @@ def process_in_dir(i):
               (deps_cache)           - list of already resolved deps (useful to automate crowd-benchmarking and crowd-tuning)
               (reuse_deps)           - if 'yes', reuse deps by keys
 
+              (dep_add_tags.{KEY})   - extra tags added to specific subdictionary of deps{} for this particular resolution session
+
               (cmd_key)              - CMD key
               (dataset_uoa)          - UOA of a dataset
               (dataset_file)         - dataset filename (if more than one inside one entry - suggest to have a UID in name)
@@ -393,6 +395,7 @@ def process_in_dir(i):
 
     # Check user-friendly env and params
     preset_deps=i.get('preset_deps', {})
+    dep_add_tags = i.get('dep_add_tags', {})
     for q in i:
         if q.startswith('env.'):
            env[q[4:]]=i[q]
@@ -400,6 +403,10 @@ def process_in_dir(i):
            xparams[q[7:]]=i[q]
         elif q.startswith('deps.'):
            preset_deps[q[5:]]=i[q].split(':')[-1]
+        elif q.startswith('dep_add_tags.'):
+           _ , dep_name    = q.split('.')
+           dep_add_tags[dep_name] = i[q]
+
 
     are=i.get('add_rnd_extension_to_bin','')
     ase=i.get('add_save_extension_to_bin','')
@@ -870,6 +877,7 @@ def process_in_dir(i):
            'random':ran,
            'quiet':quiet,
            'install_to_env':iev,
+           'dep_add_tags': dep_add_tags,
            'safe':safe}
        if o=='con': ii['out']='con'
 
@@ -1829,6 +1837,7 @@ def process_in_dir(i):
                                 'out':oo,
                                 'install_to_env':iev,
                                 'env_for_resolve':env,
+                                'dep_add_tags':dep_add_tags,
                                 'preset_deps':preset_deps,
                                 'random':ran,
                                 'safe':safe,
@@ -3795,6 +3804,12 @@ def pipeline(i):
     deps_cache=i.get('deps_cache',[])
     reuse_deps=i.get('reuse_deps','')
 
+    dep_add_tags = i.get('dep_add_tags', {})
+    for q in i:
+        if q.startswith('dep_add_tags.'):
+            _ , dep_name    = q.split('.')
+            dep_add_tags[dep_name] = i[q]
+
     ai=ck.get_from_dicts(i, 'autotuning_iteration', '', None)
     sbbf=ck.get_from_dicts(i, 'select_best_base_flag_for_first_iteration','', None)
 
@@ -4488,6 +4503,7 @@ def pipeline(i):
                              'out':oo,
                              'install_to_env':iev,
                              'env_for_resolve':run_vars,    # the whole stack (program-wide, command-wide and execution-specific)
+                             'dep_add_tags':dep_add_tags,
                              'preset_deps':preset_deps,
                              'safe':safe,
                              'quiet':quiet})
@@ -4679,6 +4695,7 @@ def pipeline(i):
                  'add_customize':'yes',
                  'quiet':quiet,
                  'install_to_env':iev,
+                 'dep_add_tags': dep_add_tags,
                  'safe':safe,
                  'out':oo}
 
@@ -6600,6 +6617,8 @@ def update_run_time_deps(i):
     deps_cache=i.get('deps_cache','')
     reuse_deps=i.get('reuse_deps','')
 
+    dep_add_tags=i.get('dep_add_tags', {})
+
     o=i.get('out','')
     oo=''
     if o=='con': oo=o
@@ -6662,6 +6681,7 @@ def update_run_time_deps(i):
            'quiet':quiet,
            'random':ran,
            'install_to_env':iev,
+           'dep_add_tags': dep_add_tags,
            'safe':safe,
            'out':oo}
 
