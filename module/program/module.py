@@ -5292,6 +5292,28 @@ def pipeline(i):
           ck.out('Extract MILEPOST/cTuning static program features ...')
           ck.out('')
 
+       # Check that milepost repo exists
+       rmil=ck.access({'action':'load',
+                       'module_uoa':cfg['module_deps']['repo'],
+                       'data_uoa':cfg['repo_deps']['reproduce-milepost-project']})
+       if rmil['return']>0:
+          if rmil['return']!=16: return rmil
+
+          # Suggest to install MILEPOST repo
+          if o=='con':
+             rx=ck.inp({'text':'You need CK repo "reproduce-milepost-project" to extract static features. Install (Y/n)? '})
+             x=rx['string'].strip().lower()
+             ck.out('')
+
+             if x!='n':
+                ck.out(sep)
+                rmil=ck.access({'action':'pull',
+                                'module_uoa':cfg['module_deps']['repo'],
+                                'data_uoa':'reproduce-milepost-project',
+                                'out':'con'})
+                if rmil['return']>0: return rmil
+                ck.out(sep)
+
        # Set milepost tag to compiler deps
        mcdeps=copy.deepcopy(cdeps)
        mcdeps['compiler']={
@@ -5344,6 +5366,9 @@ def pipeline(i):
               'out':oo}
 
           r=process_in_dir(ii)
+
+          print ('xyz')
+
           if r['return']>0: return r
 
           misc=r['misc']

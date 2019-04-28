@@ -141,6 +141,9 @@
   },
   "module_program_optimization": "program.optimization",
   "pipeline": "yes",
+  "repo_deps": {
+    "reproduce-milepost-project":"9482c22d7601b0df"
+  },
   "target_file": "a",
   "workflow": "yes",
   "workflow_type": "program compilation, execution and validation pipeline (workflow)"

@@ -1,3 +1,6 @@
+* 2019.04.28 - [FGG] added automatic installation of MILEPOST repo
+               (see https://github.com/ctuning/ck/issues/100)
+
 * 2019.03.30 - [FGG] changed -lm to %CK_EXTRA_LIB_M% in package:lib-rtl-xopenme
 
 * 2019.03.08 - [FGG] added prototype of a flag --use_clang_opt to ck compile program
