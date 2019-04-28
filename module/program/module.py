@@ -5366,9 +5366,6 @@ def pipeline(i):
               'out':oo}
 
           r=process_in_dir(ii)
-
-          print ('xyz')
-
           if r['return']>0: return r
 
           misc=r['misc']
