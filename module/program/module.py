@@ -1856,7 +1856,7 @@ def process_in_dir(i):
        rt=vcmd.get('run_time',{})
 
        rif=rt.get('run_input_files',[])
-       rifo={}
+       treat_input_file_path_as_absolute={}
 
        # Check if dynamic and remote to copy .so to devices (but for the 1st autotuning and statistical iteration!)
        #  unless explicitly forbidden (such as libOpenCL ...)
@@ -1872,12 +1872,12 @@ def process_in_dir(i):
                          qq1=os.path.join(qpl,qdl)
                          if os.path.isfile(qq1) and not qq1.endswith('.a'):
                             rif.append(qq1)
-                            rifo[qq1]='yes' # if pushing to external, do not use current path
+                            treat_input_file_path_as_absolute[qq1]='yes' # if pushing to external, do not use current path
 
                      aef=qq.get('adb_extra_files',[])
                      for qq1 in aef:
                          rif.append(qq1)
-                         rifo[qq1]='yes' # if pushing to external, do not use current path
+                         treat_input_file_path_as_absolute[qq1]='yes' # if pushing to external, do not use current path
 
        # Check if run_time env is also defined
        rte=rt.get('run_set_env2',{})
@@ -2449,32 +2449,32 @@ def process_in_dir(i):
                  j1=df.find('$<<')
                  j2=df.find('>>$')
                  if j2>0:
-                    dfk=df[j1+3:j2]
+                    df_envar_key=df[j1+3:j2]
 
-                    dfx=env.get(dfk,'')
-                    if dfx=='': dfx=aenv.get(dfk,'')
+                    df_envar_value=env.get(df_envar_key,'')
+                    if df_envar_value=='': df_envar_value=aenv.get(df_envar_key,'')
 
-                    if dfx!='':
-                       df=df[:j1]+dfx+df[j2+3:]
+                    if df_envar_value!='':
+                       df=df[:j1]+df_envar_value+df[j2+3:]
 
-                       rifo[df]='yes'
+                       treat_input_file_path_as_absolute[df]='yes'
                     else:
-                       return {'return':1, 'error':'environment variable "'+dfk+'" was not found in environment from dependencies'}
+                       return {'return':1, 'error':'environment variable "'+df_envar_key+'" was not found in environment from dependencies'}
 
-                 df0, df1 = os.path.split(df)
+                 df_basename = os.path.basename(df)
 
-                 if df in rifo:
-                    dfx=df
-                    dfy=rdir+stdirs+df1
+                 if df in treat_input_file_path_as_absolute:
+                    df_host_path=df
+                    df_target_path=rdir+stdirs+df_basename
                  else:
-                    dfx=os.path.join(p,df)
-                    dfy=rdir+stdirs+df
+                    df_host_path=os.path.join(p,df)
+                    df_target_path=rdir+stdirs+df
 
                  ry=copy_file_to_remote({'target_os_dict':tosd,
                                          'device_id':tdid,
-                                         'file1':dfx,
-                                         'file1s':df1,
-                                         'file2':dfy,
+                                         'file1':df_host_path,
+                                         'file1s':df_basename,
+                                         'file2':df_target_path,
                                          'out':oo})
                  if ry['return']>0: return ry
 
