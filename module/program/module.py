@@ -6770,7 +6770,7 @@ def copy_file_to_remote(i):
     if file1=='':
        return {'return':1, 'error':'file to be sent to remote device is not specified'}
 
-    if not os.path.isfile(file1):
+    if not os.path.exists(file1):
        return {'return':1, 'error':'file to be sent to remote device ('+file1+') is not found'}
 
     # Check params of remote file
