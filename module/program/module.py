@@ -2675,6 +2675,8 @@ def process_in_dir(i):
 
                  if os.path.isfile(df):
                     os.remove(df)
+                 elif os.path.isdir(df):
+                    shutil.rmtree(df,ignore_errors=True)
 
              # Delete global directories locally (needed for ARM WA)
              for df in meta.get('clean_dirs',[]):
