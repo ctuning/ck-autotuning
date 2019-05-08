@@ -2275,7 +2275,7 @@ def process_in_dir(i):
                         if y!='':
                            y=y.replace('$#file1#$', os.path.join(dp,dfz))
                            y=y.replace('$#file1s#$', df1)
-                           y=y.replace('$#file2#$', rdir+stdirs+dfz)
+                           y=y.replace('$#file2#$', rdir+dfz)
 
                            if o=='con':
                               ck.out(sep)
@@ -2290,7 +2290,7 @@ def process_in_dir(i):
                         y=tosd['remote_push'].replace('$#device#$',xtdid)
                         y=y.replace('$#file1#$', os.path.join(dp,dfz))
                         y=y.replace('$#file1s#$', df1)
-                        y=y.replace('$#file2#$', rdir+stdirs+dfz)
+                        y=y.replace('$#file2#$', rdir+dfz)
                         if o=='con':
                            ck.out(sep)
                            ck.out(y)
@@ -2465,10 +2465,10 @@ def process_in_dir(i):
 
                  if df in treat_input_file_path_as_absolute:
                     df_host_path=df
-                    df_target_path=rdir+stdirs+df_basename
+                    df_target_path=rdir+df_basename
                  else:
                     df_host_path=os.path.join(p,df)
-                    df_target_path=rdir+stdirs+df
+                    df_target_path=rdir+df
 
                  ry=copy_file_to_remote({'target_os_dict':tosd,
                                          'device_id':tdid,
@@ -2645,7 +2645,7 @@ def process_in_dir(i):
 
                  if remote=='yes' and meta.get('run_via_third_party','')!='yes':
                     # Clean data files on device
-                    y=rs+' '+tosd['delete_file']+ ' '+rdir+stdirs+df+' '+rse
+                    y=rs+' '+tosd['delete_file']+ ' '+rdir+df+' '+rse
                     if o=='con':
                        ck.out('')
                        ck.out(y)
@@ -2830,7 +2830,7 @@ def process_in_dir(i):
 
                  # Push data files to device
                  y=tosd['remote_pull'].replace('$#device#$',xtdid)
-                 y=y.replace('$#file1#$', rdir+stdirs+df)
+                 y=y.replace('$#file1#$', rdir+df)
                  y=y.replace('$#file1s#$', df1)
                  y=y.replace('$#file2#$', df)
                  if o=='con':
@@ -2842,7 +2842,7 @@ def process_in_dir(i):
 
                  y=tosd.get('remote_pull_post','').replace('$#device#$',xtdid)
                  if y!='':
-                    y=y.replace('$#file1#$', rdir+stdirs+df)
+                    y=y.replace('$#file1#$', rdir+df)
                     y=y.replace('$#file1s#$', df1)
                     y=y.replace('$#file2#$', df)
 
