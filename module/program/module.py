@@ -2454,11 +2454,10 @@ def process_in_dir(i):
                  # Update if has env
                  j1=df.find('$<<')
                  j2=df.find('>>$')
-                 if j2>0:
+                 if -1<j1 and j1<j2:
                     df_envar_key=df[j1+3:j2]
 
-                    df_envar_value=env.get(df_envar_key,'')
-                    if df_envar_value=='': df_envar_value=aenv.get(df_envar_key,'')
+                    df_envar_value=env.get(df_envar_key, aenv.get(df_envar_key, ''))
 
                     if df_envar_value!='':
                        df=df[:j1]+df_envar_value+df[j2+3:]
@@ -2466,6 +2465,9 @@ def process_in_dir(i):
                        treat_input_file_path_as_absolute[df]='yes'
                     else:
                        return {'return':1, 'error':'environment variable "'+df_envar_key+'" was not found in environment from dependencies'}
+
+                 else:
+                    df_envar_key=None
 
                  df_basename = os.path.basename(df)
 
@@ -2475,6 +2477,9 @@ def process_in_dir(i):
                  else:
                     df_host_path=os.path.join(p,df)
                     df_target_path=rdir+df
+
+                 if df_envar_key: # if it was a substitution...
+                    sb += etset+' '+df_envar_key+'='+str(df_target_path)+'\n'   # ...remapping the original variable
 
                  ry=copy_file_to_remote({'target_os_dict':tosd,
                                          'device_id':tdid,
