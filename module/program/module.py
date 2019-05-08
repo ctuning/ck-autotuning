@@ -2330,6 +2330,12 @@ def process_in_dir(i):
                sb+=q+'\n'
            sb+='\n'
 
+       if remote=='yes':
+            cetr = rt.get('copy_env_to_remote', [])
+            for etr_key in cetr:
+                etr_value = aenv.get(etr_key, '')
+                sb += etset+' '+etr_key+'='+str(etr_value)+'\n'
+
        # Check if pre-processing script via CK
        pvck=rt.get('pre_process_via_ck',{})
        if len(pvck)>0:
