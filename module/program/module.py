@@ -4752,6 +4752,7 @@ def pipeline(i):
               'deps':cdeps,
               'deps_cache':deps_cache,
               'reuse_deps':reuse_deps,
+              'dep_add_tags': dep_add_tags,
               'generate_rnd_tmp_dir':grtd,
               'tmp_dir':tdir,
               'skip_clean_after':sca,
@@ -4763,6 +4764,7 @@ def pipeline(i):
               'extra_env':eenv,
               'out':oo}
           r=process_in_dir(ii)
+
           if r['return']>0: return r
 
           misc=r['misc']
