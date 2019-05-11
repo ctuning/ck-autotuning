@@ -2459,7 +2459,7 @@ def process_in_dir(i):
                     df_envar_key    = df[j1+3:j2]
                     df_suffix       = df[j2+3:]
 
-                    if df_envar_key=='':
+                    if df_envar_key=='':    # $<<>>$abcde.txt means it's in the program's tmp/ directory
                         df = df_suffix
                         treat_input_file_path_as_absolute[df]='yes'
                     else:
