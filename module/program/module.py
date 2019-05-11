@@ -2450,21 +2450,27 @@ def process_in_dir(i):
        if remote=='yes' and (target_exe!='' or meta.get('force_copy_input_files_to_remote','')=='yes'):
           if sdi!='yes' and srn==0 or ati==0:
              # Copy explicit input files, if first time
+             remapped_env_path = {}
              for df in rif:
                  # Update if has env
                  j1=df.find('$<<')
                  j2=df.find('>>$')
                  if -1<j1 and j1<j2:
-                    df_envar_key=df[j1+3:j2]
+                    df_envar_key    = df[j1+3:j2]
+                    df_suffix       = df[j2+3:]
 
-                    df_envar_value=env.get(df_envar_key, aenv.get(df_envar_key, ''))
-
-                    if df_envar_value!='':
-                       df=df[:j1]+df_envar_value+df[j2+3:]
-
-                       treat_input_file_path_as_absolute[df]='yes'
+                    if df_envar_key=='':
+                        df = df_suffix
+                        treat_input_file_path_as_absolute[df]='yes'
                     else:
-                       return {'return':1, 'error':'environment variable "'+df_envar_key+'" was not found in environment from dependencies'}
+                        df_envar_value=env.get(df_envar_key, aenv.get(df_envar_key, ''))
+
+                        if df_envar_value!='':
+                            df=df[:j1]+df_envar_value+df_suffix
+
+                            treat_input_file_path_as_absolute[df]='yes'
+                        else:
+                            return {'return':1, 'error':'environment variable "'+df_envar_key+'" was not found in environment from dependencies'}
 
                  else:
                     df_envar_key=None
@@ -2479,7 +2485,7 @@ def process_in_dir(i):
                     df_target_path=rdir+df
 
                  if df_envar_key: # if it was a substitution...
-                    sb += etset+' '+df_envar_key+'='+str(df_target_path)+'\n'   # ...remapping the original variable
+                    remapped_env_path[df_envar_key] = df_target_path if df_suffix=='' else rdir # ...remapping the original variable
 
                  ry=copy_file_to_remote({'target_os_dict':tosd,
                                          'device_id':tdid,
@@ -2488,6 +2494,10 @@ def process_in_dir(i):
                                          'file2':df_target_path,
                                          'out':oo})
                  if ry['return']>0: return ry
+
+             # delayed for later to only record each remapping once:
+             for df_envar_key in remapped_env_path:
+                sb += etset+' '+df_envar_key+'='+str(remapped_env_path[df_envar_key])+'\n'
 
        # Check if has unparsed
        if sunparsed!='':
