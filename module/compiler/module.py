@@ -729,6 +729,8 @@ def extract_opts_new(i):
                jj=exp[j].strip()
                if jj.find('*')>0 or jj.find('_')>0:
                   skip=True
+               elif jj.rfind('\"') != -1:
+                  continue
                else:
                   jj=int(exp[j].strip())
                   exp[j]=jj
