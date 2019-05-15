@@ -349,7 +349,9 @@ def extract_opts(i):
                                e2=0
 
                                exp=line[:-1].split(',')
-                               exp = list(filter(lambda x: x.rfind('\"') == -1, exp))
+                               for x in exp[:]:
+                                   if (x.rfind('\"') != -1):
+                                      exp.remove(x)
 
                                skip=False
                                for j in range(0, len(exp)):
@@ -722,7 +724,9 @@ def extract_opts_new(i):
            e2=0
 
            exp=line[:-1].split(',')
-           exp = list(filter(lambda x: x.rfind('\"') == -1, exp))
+           for x in exp[:]:
+               if (x.rfind('\"') != -1):
+                  exp.remove(x)
 
            skip=False
            for j in range(0, len(exp)):
