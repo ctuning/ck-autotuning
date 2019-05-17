@@ -2698,6 +2698,23 @@ def process_in_dir(i):
 
                     shutil.rmtree(df,ignore_errors=True)
 
+          new_directories = rt.get('run_make_directories',[]);
+          if len(new_directories)>0:
+                if o=='con':
+                    ck.out('  Creating new directories:')
+
+                for new_dir in new_directories:
+                    if remote=='yes':
+                        x=rs+' '+tosd['make_dir']+rdir+new_dir+' '+rse
+
+                        if o=='con':
+                            ck.out('')
+                            ck.out('Executing: '+x)
+
+                        r=os.system(x)
+                    else:
+                        os.mkdir(new_dir)
+
           if o=='con': ck.out('')
 
           if sc!='yes' and 'CT_REPEAT_MAIN' in run_vars:
