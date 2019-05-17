@@ -351,12 +351,13 @@ def add(i):
 
     # Check files
     fn=i.get('file','')
-    fn1=os.path.basename(fn)
+    if fn!='':
+       fn1=os.path.basename(fn)
 
-    df=d.get('dataset_files',[])
-    if fn1 not in df: 
-       df.append(fn1)
-    d['dataset_files']=df
+       df=d.get('dataset_files',[])
+       if fn1 not in df: 
+          df.append(fn1)
+       d['dataset_files']=df
 
     # Create entry
     i['dict']=d
