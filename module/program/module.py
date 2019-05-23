@@ -2713,6 +2713,7 @@ def process_in_dir(i):
 
                         r=os.system(x)
                     else:
+                        shutil.rmtree(new_dir,ignore_errors=True)
                         os.mkdir(new_dir)
 
           if o=='con': ck.out('')
