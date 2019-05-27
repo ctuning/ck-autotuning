@@ -203,8 +203,11 @@ def process_in_dir(i):
               path                   - path
               meta                   - program description
 
+              (tmp_dir)              - if !='', use it instead of 'tmp' dir to compile and run code
               (generate_rnd_tmp_dir) - if 'yes', generate random tmp directory to compile and run program
                                        (useful during crowd-tuning)
+
+              (run_batch_name)       - if !='', use this batch name instead of randomly generated one
 
               (compiler_vars)        - dict with set up compiler flags (-D var)
                                        they will update the ones defined as default in program description ...
@@ -335,7 +338,8 @@ def process_in_dir(i):
                                        (to have more deterministic build)
 
               (skip_exec)            - if 'yes', do not clean output files and skip exec to be able to continue
-                                       post-processing during debuging
+
+              (record_deps)          - if !='', record dependencies to this file
             }
 
     Output: {
@@ -378,9 +382,12 @@ def process_in_dir(i):
     quiet=i.get('quiet','')
     ran=i.get('random','')
 
+    rbn=i.get('run_batch_name','')
+
     iev=i.get('install_to_env','')
     safe=i.get('safe','')
     skip_exec=i.get('skip_exec','')
+    record_deps=i.get('record_deps','')
 
     misc=i.get('misc',{})
     ccc=i.get('characteristics',{})
@@ -1844,6 +1851,11 @@ def process_in_dir(i):
                                 'quiet':quiet})
        if rx['return']>0: return rx
 
+       # Record deps if needed
+       if record_deps!='':
+          r9=ck.save_json_to_file({'json_file':record_deps, 'dict':deps})
+          if r9['return']>0: return r9
+
        aenv=rx.get('aggregated_env',{})
 
        if rx.get('resolve',{}).get('bat','')!='':
@@ -2739,9 +2751,12 @@ def process_in_dir(i):
           if o=='con':  ck.out(sep)
 
           # Prepare tmp batch file with run instructions
-          rx=ck.gen_tmp_file({'prefix':'tmp-', 'suffix':sext, 'remove_dir':'yes'})
-          if rx['return']>0: return rx
-          fn=rx['file_name']
+          if rbn=='':
+             rx=ck.gen_tmp_file({'prefix':'tmp-', 'suffix':sext, 'remove_dir':'yes'})
+             if rx['return']>0: return rx
+             fn=rx['file_name']
+          else:
+             fn=rbn
 
           xbbp=bbp
           if remote=='yes':

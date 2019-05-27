@@ -1,3 +1,8 @@
+* 2019.05.26 - [FGG] added 2 flags to ck run program
+                 --record_deps={file to record resolved dependencies}
+                 --run_batch_name={use this filename instead of randomly generated one 
+                   to run a workload}
+
 * 2019.04.28 - [FGG] added automatic installation of MILEPOST repo
                (see https://github.com/ctuning/ck/issues/100)
 
