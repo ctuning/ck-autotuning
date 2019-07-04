@@ -122,7 +122,7 @@ def process(i):
           return {'return':1, 'error':'data UOA is not defined'}
 
     # Check wildcards
-    r=ck.list_data({'repo_uoa':a, 'module_uoa':m, 'data_uoa':duoa})
+    r=ck.search({'action':'search', 'repo_uoa':a, 'module_uoa':m, 'data_uoa':duoa})
     if r['return']>0: return r
 
     lst=r['lst']
