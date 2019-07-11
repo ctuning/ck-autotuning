@@ -3741,7 +3741,6 @@ def pipeline(i):
               (mali_hwc)                - if 'yes', attempt to extract MALI GPU hardware counters
 
               (milepost)                - if 'yes', attempt to extract static program features using Milepost GCC and cTuning CC
-              (milepost_compiler_tags)  - if !='', add those tags to resolve a compiler
               (milepost_out_file)       - if !='', record extracted MILEPOST features to this JSON file
 
               (compile_timeout)         - (sec.) - kill compile job if too long
@@ -3860,7 +3859,7 @@ def pipeline(i):
 
     deps_cache=i.get('deps_cache',[])
     reuse_deps=i.get('reuse_deps','')
-
+    ctags = ctags=i.get('compiler_tags','')
     dep_add_tags = i.get('dep_add_tags', {})
     for q in i:
         if q.startswith('dep_add_tags.'):
@@ -3932,7 +3931,6 @@ def pipeline(i):
     vtune=ck.get_from_dicts(i, 'vtune', '', choices)
     valgrind=ck.get_from_dicts(i, 'valgrind', '', choices)
     milepost=ck.get_from_dicts(i, 'milepost', '', choices)
-    milepost_compiler_tags=ck.get_from_dicts(i, 'milepost_compiler_tags', '', choices)
     milepost_out_file=ck.get_from_dicts(i, 'milepost_out_file', '', None)
 
     params=ck.get_from_dicts(i, 'params',{},choices)
@@ -4802,6 +4800,7 @@ def pipeline(i):
               'tmp_dir':tdir,
               'skip_clean_after':sca,
               'compile_type':ctype,
+              'compiler_tags':ctags,
               'flags':flags,
               'lflags':lflags,
               'console':cons,
@@ -5416,7 +5415,6 @@ def pipeline(i):
               'env':env,
               'extra_env':eenv,
               'compiler_vars':cv,
-              'compiler_tags':milepost_compiler_tags,
               'no_vars':ncv,
               'remove_compiler_vars':rcv,
               'extra_env_for_compilation':eefc,

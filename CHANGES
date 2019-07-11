@@ -1,4 +1,4 @@
-* 2019.07.09 - [FGG] added flag --milepost_compiler_tags based on request here: 
+* 2019.07.09 - propagate compiler_tags specifically for "get_compiler_version" subaction based on request here: 
                      https://groups.google.com/forum/#!topic/collective-knowledge/Lu-kQCSrhIE
 
 * 2019.05.26 - [FGG] added 2 flags to ck run program
