@@ -3960,7 +3960,7 @@
       "default": "", 
       "desc": "compiler flag: --param selsched-max-sched-times= (Maximum number of times that an insn could be scheduled)", 
       "explore_prefix": "--param selsched-max-sched-times=", 
-      "explore_start": 0, 
+      "explore_start": 1, 
       "explore_step": 1, 
       "explore_stop": 4, 
       "sort": 31020, 
