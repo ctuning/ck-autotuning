@@ -6855,7 +6855,7 @@ def copy_file_to_remote(i):
           if fsize!=-1 and fsize==os.path.getsize(file1):
              if o=='con':
                 ck.out(sep)
-                ck.out('Skiped copying file '+file1+' to remote (the same size)')
+                ck.out('Skipped copying file '+file1+' to remote (the same size)')
              skip=True
 
     if not skip:
