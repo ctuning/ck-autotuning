@@ -6842,7 +6842,7 @@ def copy_file_to_remote(i):
     shell='no'
     if x.startswith('ck'): shell='yes'
 
-    ry=ck.run_and_get_stdout({'cmd':x, 'shell':'yes'})
+    ry=ck.run_and_get_stdout({'cmd':x, 'shell': shell})
     if ry['return']>0: return ry
 
     so=ry['stdout'].lower()
