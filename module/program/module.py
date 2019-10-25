@@ -40,9 +40,10 @@ def process(i):
     Input:  {
               sub_action   - clean, compile, run
 
-              (repo_uoa)   - program repo UOA
-              (module_uoa) - program module UOA
-              data_uoa     - program data UOA
+              (repo_uoa)        - program repo UOA
+              (module_uoa)      - program module UOA
+              (data_uoa)        - program data UOA
+              (program_tags)    - an alternative mechanism for finding a program by a unique combination of tags
 
               (host_os)        - host OS (detect, if omitted)
               (target_os)      - OS module to check (if omitted, analyze host)
@@ -77,86 +78,91 @@ def process(i):
 
     o=i.get('out','')
 
-    a=i.get('repo_uoa','')
-    m=i.get('module_uoa','')
+    ruoa=i.get('repo_uoa','')
+    muoa=i.get('module_uoa','')
     duoa=i.get('data_uoa','')
+    program_tags = i.get('program_tags','')
 
     lst=[]
 
-    if duoa=='':
-       # First, try to detect CID in current directory
-       r=ck.cid({})
-       if r['return']==0:
-          xruoa=r.get('repo_uoa','')
-          xmuoa=r.get('module_uoa','')
-          xduoa=r.get('data_uoa','')
+    if duoa!='':
+        # Potentially fill wildcards:
+        r=ck.search({'action':'search',
+                    'repo_uoa':ruoa,
+                    'module_uoa':muoa,
+                    'data_uoa':duoa,
+                    'add_meta':'yes',
+        })  # contains path and meta.json in 'meta'
+        if r['return']>0: return r
+        lst=r['lst']
 
-          rx=ck.access({'action':'load',
-                        'module_uoa':xmuoa,
-                        'data_uoa':xduoa,
-                        'repo_uoa':xruoa})
-          if rx['return']==0 and rx['dict'].get('program','')=='yes':
-             duoa=xduoa
-             m=xmuoa
-             a=xruoa
+    elif program_tags:
+        r=ck.access({'action':           'search_in_variations',
+                    'module_uoa':        'misc',
+                    'query_module_uoa':  work['self_module_uid'],
+                    'tags':              program_tags,
+        })  # contains path and meta.json in 'meta'
+        if r['return']>0: return r
+        lst=r['lst']
 
-       if duoa=='':
-          # Attempt to load configuration from the current directory
-          try:
-              p=os.getcwd()
-          except OSError:
-              os.chdir('..')
-              p=os.getcwd()
+    else:
+        # First, try to detect CID in current directory
+        r=ck.cid({})
+        if r['return']==0:
+            ruoa=r.get('repo_uoa','')
+            muoa=r.get('module_uoa','')
+            duoa=r.get('data_uoa','')
 
-          pc=os.path.join(p, ck.cfg['subdir_ck_ext'], ck.cfg['file_meta'])
-          if os.path.isfile(pc):
-             r=ck.load_json_file({'json_file':pc})
-             if r['return']==0 and r['dict'].get('program','')=='yes':
-                d=r['dict']
+            rx=ck.access({'action':'load',
+                        'module_uoa':muoa,
+                        'data_uoa':duoa,
+                        'repo_uoa':ruoa,
+            })  # contains path and meta.json in 'dict'
+            if rx['return']==0 and rx['dict'].get('program','')=='yes':
+                rx['meta'] = rx.pop('dict')     # enforcing 'meta'/'dict' output format compatibility
+                lst = [ rx ]
 
-                ii=copy.deepcopy(ic)
-                ii['path']=p
-                ii['meta']=d
-                return process_in_dir(ii)
+        if duoa=='':
+            # Attempt to load configuration from the current directory
+            try:
+                p=os.getcwd()
+            except OSError:
+                os.chdir('..')
+                p=os.getcwd()
 
-          return {'return':1, 'error':'data UOA is not defined'}
+            pc=os.path.join(p, ck.cfg['subdir_ck_ext'], ck.cfg['file_meta'])
+            if os.path.isfile(pc):
+                r=ck.load_json_file({'json_file':pc})
+                if r['return']==0 and r['dict'].get('program','')=='yes':
+                    d=r['dict']
 
-    # Check wildcards
-    r=ck.search({'action':'search', 'repo_uoa':a, 'module_uoa':m, 'data_uoa':duoa})
-    if r['return']>0: return r
+                    ii=copy.deepcopy(ic)
+                    ii['path']=p
+                    ii['meta']=d
+                    return process_in_dir(ii)
 
-    lst=r['lst']
+            return {'return':1, 'error':'data UOA is not defined'}
+
     if len(lst)==0:
        return {'return':1, 'error':'no program(s) found'}
 
     r={'return':0}
     for ll in lst:
-        p=ll['path']
 
+        path=ll['path']
         ruid=ll['repo_uid']
         muid=ll['module_uid']
         duid=ll['data_uid']
         dalias=ll['data_uoa']
-
-        r=ck.access({'action':'load',
-                     'repo_uoa':ruid,
-                     'module_uoa':muid,
-                     'data_uoa':duid})
-        if r['return']>0: return r
-
-        d=r['dict']
+        meta_dict=ll['meta']
 
         if o=='con':
            ck.out('')
            ck.out('* '+dalias+' ('+duid+')')
            ck.out('')
 
-
-        ii=copy.deepcopy(ic)
-        ii['meta']=d
-
         # Check if base_uoa suggests to use another program path
-        buoa=d.get('base_uoa','')
+        buoa=meta_dict.get('base_uoa','')
         if buoa!='':
            rx=ck.access({'action':'find',
                          'module_uoa':muid,
@@ -164,14 +170,17 @@ def process(i):
            if rx['return']>0:
               return {'return':1, 'error':'problem finding base entry '+buoa+' ('+rx['error']+')'}
 
-           p=rx['path']
+           path=rx['path']
 
-        ii['path']=p
+        ii=copy.deepcopy(ic)
+        ii['meta']=meta_dict
+        ii['path']=path
         ii['repo_uoa']=ruid
         ii['module_uoa']=muid
         ii['data_uoa']=duid
         ii['data_alias']=dalias
         r=process_in_dir(ii)
+
         if r['return']>0 or r.get('misc',{}).get('fail_reason','')!='':
            print_warning({'data_uoa':dalias, 'repo_uoa':ruid})
         if r['return']>0: return r
