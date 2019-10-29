@@ -2480,17 +2480,26 @@ def process_in_dir(i):
                  if -1<j1 and j1<j2:
                     df_envar_key    = df[j1+3:j2]
                     df_suffix       = df[j2+3:]
+                    skip_if_missing = False
 
                     if df_envar_key=='':    # $<<>>$abcde.txt means it's in the program's tmp/ directory
                         df = df_suffix
                         treat_input_file_path_as_absolute[df]='yes'
                     else:
+                        if df_envar_key[0]=='?':
+                            skip_if_missing = True
+                            df_envar_key = df_envar_key[1:]
+
                         df_envar_value=env.get(df_envar_key, aenv.get(df_envar_key, ''))
 
                         if df_envar_value!='':
                             df=df[:j1]+df_envar_value+df_suffix
-
                             treat_input_file_path_as_absolute[df]='yes'
+
+                        elif skip_if_missing:
+                            if o=='con':
+                              ck.out('Skipping copying a file to remote, because '+df_envar_key+' conditional variable path mapped to an empty value')
+                            continue
                         else:
                             return {'return':1, 'error':'environment variable "'+df_envar_key+'" was not found in environment from dependencies'}
 
