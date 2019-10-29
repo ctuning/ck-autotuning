@@ -2161,7 +2161,8 @@ def process_in_dir(i):
        if remote=='yes' and target_exe!='' and srn==0:
           if srn==0:
              # Copy exe to remote
-             ry=copy_file_to_remote({'target_os_dict':tosd,
+             ry=copy_file_to_remote({'host_os_dict':hosd,
+                                     'target_os_dict':tosd,
                                      'device_id':tdid,
                                      'file1':target_exe,
                                      'file2':rdir+target_exe,
@@ -2508,7 +2509,8 @@ def process_in_dir(i):
                  if df_envar_key: # if it was a substitution...
                     remapped_env_path[df_envar_key] = df_target_path if df_suffix=='' else rdir # ...remapping the original variable
 
-                 ry=copy_file_to_remote({'target_os_dict':tosd,
+                 ry=copy_file_to_remote({'host_os_dict':hosd,
+                                         'target_os_dict':tosd,
                                          'device_id':tdid,
                                          'file1':df_host_path,
                                          'file1s':df_basename,
@@ -6805,6 +6807,7 @@ def update_run_time_deps(i):
 def copy_file_to_remote(i):
     """
     Input:  {
+              host_os_dict
               target_os_dict
               device_id
               file1
@@ -6822,6 +6825,9 @@ def copy_file_to_remote(i):
     import os
 
     o=i.get('out','')
+
+    hosd=i['host_os_dict']
+    host_hash_cmd = hosd.get('md5sum', 'md5sum')
 
     tosd=i['target_os_dict']
 
@@ -6845,27 +6851,28 @@ def copy_file_to_remote(i):
     rs=tosd['remote_shell'].replace('$#device#$',xtdid)
     rse=tosd.get('remote_shell_end','')+' '
 
-    # Try to create directories
-    x=rs+' ls -l '+file2+rse
+    x = rs + ' md5sum ' + file2 + rse
 
     shell='no'
     if x.startswith('ck'): shell='yes'
 
     ry=ck.run_and_get_stdout({'cmd':x, 'shell': shell})
     if ry['return']>0: return ry
-
     so=ry['stdout'].lower()
 
     skip=False
     if 'no such file or directory' not in so:
-       sso=so.strip().strip('\t').split(' ')
-       if len(sso)>4:
-          fsize=ck.safe_int(sso[-4],-1)
-          if fsize!=-1 and fsize==os.path.getsize(file1):
-             if o=='con':
+        remote_hash = so.split(' ')[0]
+
+        rz=ck.run_and_get_stdout({'cmd': host_hash_cmd+' '+file1 , 'shell': 'no'})
+        if rz['return']>0: return rz
+        local_hash = rz['stdout'].lower().split(' ')[0]
+
+        if remote_hash==local_hash:
+            if o=='con':
                 ck.out(sep)
-                ck.out('Skipped copying file '+file1+' to remote (the same size)')
-             skip=True
+                ck.out('Skipped copying file '+file1+' to remote (the same hash)')
+            skip=True
 
     if not skip:
        y=tosd.get('remote_push_pre','').replace('$#device#$',xtdid)
