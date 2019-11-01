@@ -2671,23 +2671,20 @@ def process_in_dir(i):
        if xcn_max=='': xcn_max=cfg['calibration_max']
        cn_max=int(xcn_max)
 
-       for g in rt.get('run_output_files',[]):
-           rof.append(g)
+       rof += rt.get('run_output_files',[])
 
        cn=1
        while True:
           # Clean output files
-          rofx=[]
-          if rco1!='': rofx.append(rco1)
-          if rco2!='': rofx.append(rco2)
-          for df in rof:
-              rofx.append(df)
+          files_to_delete = rt.get('run_delete_files',[]) + rof
+          if rco1!='': files_to_delete.append(rco1)
+          if rco2!='': files_to_delete.append(rco2)
 
-          if o=='con' and len(rofx)>0:
-             ck.out('  Cleaning output files and directories:')
+          if o=='con' and len(files_to_delete)>0:
+             ck.out('  Cleaning files and directories:')
 
           if skip_exec!='yes':
-             for df in rofx:
+             for df in files_to_delete:
                  if o=='con': ck.out('    '+df)
 
                  if remote=='yes' and meta.get('run_via_third_party','')!='yes':
