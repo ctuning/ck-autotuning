@@ -2943,7 +2943,7 @@ def process_in_dir(i):
                         ck.out('      '+q1)
 
           # Check if post-processing script from CMD
-          if pp_uoa!='':
+          if pp_uoa!='' and skip_exec!='yes':
              if o=='con':
                 ck.out('')
                 ck.out('  (post processing from script '+pp_uoa+' / '+pp_name+' ... )"')
@@ -2962,7 +2962,7 @@ def process_in_dir(i):
           srx=0 # script exit code
 
           # Newer variant (more consistent with pre_process_via_ck
-          if type(lppcvc)==dict:
+          if type(lppcvc)==dict and skip_exec!='yes':
              pvck=lppcvc
 
              pvckp=src_path_local
@@ -3064,7 +3064,7 @@ def process_in_dir(i):
                       return {'return':0, 'tmp_dir':rcdir, 'misc':misc, 'characteristics':ccc, 'deps':deps}
 
           # Older variant
-          if len(lppc)>0:
+          if len(lppc)>0 and skip_exec!='yes':
              for ppc in lppc:
                  while ppc.find('$<<')>=0:
                     j1=ppc.find('$<<')
@@ -3201,7 +3201,7 @@ def process_in_dir(i):
               return {'return':0, 'tmp_dir':rcdir, 'misc':misc, 'characteristics':ccc, 'deps':deps}
 
           # Check if fine-grain time
-          if fgtf!='':
+          if fgtf!='' and skip_exec!='yes':
              if o=='con':
                 ck.out('')
                 ck.out('  (reading fine grain timers from '+fgtf+' ...)')
