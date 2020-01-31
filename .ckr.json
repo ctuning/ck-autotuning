@@ -1,24 +1,25 @@
 {
-  "data_name": "CK (machine learning based) multi-objective autotuning", 
-  "data_alias": "ck-autotuning", 
-  "data_uid": "a4328ba99679e0d1", 
-  "data_uoa": "ck-autotuning", 
+  "data_alias": "ck-autotuning",
+  "data_name": "CK (machine learning based) multi-objective autotuning",
+  "data_uid": "a4328ba99679e0d1",
+  "data_uoa": "ck-autotuning",
   "dict": {
+    "checkouts": {
+      "stable": {
+        "branch": "master",
+        "checkout": "5efde26"
+      }
+    },
+    "desc": "Portable and customizable CK workflow for multi-dimensional and multi-objective benchmarking, autotuning and co-design (see real use cases: <a href=\"http://cKnowledge.org/rpi-crowd-tuning\">1</a> and <a href=\"https://github.com/dividiti/ck-request-asplos18-mobilenets-armcl-opencl\">2</a>).",
     "repo_deps": [
       {
         "repo_uoa": "ck-env"
-      }, 
+      },
       {
         "repo_uoa": "ck-analytics"
       }
-    ], 
-    "url": "https://github.com/ctuning/ck-autotuning", 
+    ],
     "shared": "git",
-    "checkouts":{
-      "stable":{
-        "branch":"master",
-        "checkout":"5efde26"
-      }
-    }
+    "url": "https://github.com/ctuning/ck-autotuning"
   }
 }

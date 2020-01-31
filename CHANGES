@@ -1,48 +1,50 @@
-* 2019.07.09 - propagate compiler_tags specifically for "get_compiler_version" subaction based on request here: 
+* 2020.01.31 - [gfursin] improved error message in program module.
+
+* 2019.07.09 - [gfursin] propagate compiler_tags specifically for "get_compiler_version" subaction based on request here: 
                      https://groups.google.com/forum/#!topic/collective-knowledge/Lu-kQCSrhIE
 
-* 2019.05.26 - [FGG] added 2 flags to ck run program
+* 2019.05.26 - [gfursin] added 2 flags to ck run program
                  --record_deps={file to record resolved dependencies}
                  --run_batch_name={use this filename instead of randomly generated one 
                    to run a workload}
 
-* 2019.04.28 - [FGG] added automatic installation of MILEPOST repo
+* 2019.04.28 - [gfursin] added automatic installation of MILEPOST repo
                (see https://github.com/ctuning/ck/issues/100)
 
-* 2019.03.30 - [FGG] changed -lm to %CK_EXTRA_LIB_M% in package:lib-rtl-xopenme
+* 2019.03.30 - [gfursin] changed -lm to %CK_EXTRA_LIB_M% in package:lib-rtl-xopenme
 
-* 2019.03.08 - [FGG] added prototype of a flag --use_clang_opt to ck compile program
+* 2019.03.08 - [gfursin] added prototype of a flag --use_clang_opt to ck compile program
 
-* 2019.03.05 - [FGG] added link to http://ReuseResearch.com
+* 2019.03.05 - [gfursin] added link to http://ReuseResearch.com
 
-* 2019.02.08 - [FGG] improved problem reporting in third-party program workflows (pipelines)
+* 2019.02.08 - [gfursin] improved problem reporting in third-party program workflows (pipelines)
 
-* 2018.12.02 - [FGG] added sorting of run_cmds in program meta (using integer "sort")
+* 2018.12.02 - [gfursin] added sorting of run_cmds in program meta (using integer "sort")
 
-* 2018.11.28 - [FGG] added info about failed program workflows (how to report)
+* 2018.11.28 - [gfursin] added info about failed program workflows (how to report)
 
 * 2018.11.26 - Added APIs to listed modules
 
-* 2018.11.21 - [FGG] added automatic redirect of some APIs
+* 2018.11.21 - [gfursin] added automatic redirect of some APIs
 
-* 2018.10.31 - [FGG] minor fix when redirecting git revision to null on Linux 
+* 2018.10.31 - [gfursin] minor fix when redirecting git revision to null on Linux 
                      (see https://github.com/ctuning/reproduce-milepost-project/issues/8).
 
-* 2018.07.17 - [FGG] added support for new website when generating lists of components
+* 2018.07.17 - [gfursin] added support for new website when generating lists of components
 
-* 2018.07.15 - [FGG] added recording of MILEPOST features to JSON file: 
+* 2018.07.15 - [gfursin] added recording of MILEPOST features to JSON file: 
                      ck pipeline program:{program_name} --speed --no_run --milepost --milepost_out_file=milepost-features.json
 
-* 2018.06.21 - [FGG] when adding new dataset CK will now ask for tags and a file 
-               [FGG] merged patch from Stuart (see issue #30).
+* 2018.06.21 - [gfursin] when adding new dataset CK will now ask for tags and a file 
+               [gfursin] merged patch from Stuart (see issue #30).
 
-* 2018.06.17 - [FGG] added --debug_run_cmd to substitute original command line in program with a user one
+* 2018.06.17 - [gfursin] added --debug_run_cmd to substitute original command line in program with a user one
 
-* 2018.06.06 - [FGG] automatically generate list of all programs for http://cknowledge.org/shared-programs.html
+* 2018.06.06 - [gfursin] automatically generate list of all programs for http://cknowledge.org/shared-programs.html
 
 * 2018.05.27 - [sztaylor] propogate "target" to platform-specific modules (detect info, set freq, etc) - see issue #12.
 
-* 2018.05.24 - [FGG] provided prototype of templates when adding new programs (ck add program --template)
+* 2018.05.24 - [gfursin] provided prototype of templates when adding new programs (ck add program --template)
 
 * 2018.05.20 - added "image classification (simulation)" program.species to differentiate 
                benchmarking on real image classification vs random values 
