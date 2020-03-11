@@ -49,7 +49,6 @@ Shared CK modules with actions
 * [pipeline](https://codereef.ai/portal/c/module/pipeline)
 * [pipeline.cmd](https://codereef.ai/portal/c/module/pipeline.cmd)
 * [platform.gpgpu](https://codereef.ai/portal/c/module/platform.gpgpu)
-
 * [algorithm](https://codereef.ai/portal/c/module/algorithm)
 * [choice](https://codereef.ai/portal/c/module/choice)
 * [compiler](https://codereef.ai/portal/c/module/compiler)
