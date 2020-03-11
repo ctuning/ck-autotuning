@@ -41,8 +41,8 @@ Contributors
 ============
 * See the list of [contributors](https://github.com/ctuning/ck-autotuning/blob/master/CONTRIBUTIONS)
 
-Shared modules with actions
-===========================
+Shared CK modules with actions
+==============================
 
 * [program](https://codereef.ai/portal/c/module/program)
 * [program.output](https://codereef.ai/portal/c/module/program.output)
