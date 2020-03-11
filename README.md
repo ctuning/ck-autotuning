@@ -44,19 +44,20 @@ Contributors
 Shared modules with actions
 ===========================
 
+* [program](https://codereef.ai/portal/c/module/program)
+* [program.output](https://codereef.ai/portal/c/module/program.output)
+* [pipeline](https://codereef.ai/portal/c/module/pipeline)
+* [pipeline.cmd](https://codereef.ai/portal/c/module/pipeline.cmd)
+* [platform.gpgpu](https://codereef.ai/portal/c/module/platform.gpgpu)
+
 * [algorithm](https://codereef.ai/portal/c/module/algorithm)
 * [choice](https://codereef.ai/portal/c/module/choice)
 * [compiler](https://codereef.ai/portal/c/module/compiler)
 * [dataset](https://codereef.ai/portal/c/module/dataset)
 * [dataset.features](https://codereef.ai/portal/c/module/dataset.features)
-* [pipeline](https://codereef.ai/portal/c/module/pipeline)
-* [pipeline.cmd](https://codereef.ai/portal/c/module/pipeline.cmd)
-* [platform.gpgpu](https://codereef.ai/portal/c/module/platform.gpgpu)
-* [program](https://codereef.ai/portal/c/module/program)
 * [program.behavior](https://codereef.ai/portal/c/module/program.behavior)
 * [program.dynamic.features](https://codereef.ai/portal/c/module/program.dynamic.features)
 * [program.experiment.speedup](https://codereef.ai/portal/c/module/program.experiment.speedup)
-* [program.output](https://codereef.ai/portal/c/module/program.output)
 * [program.species](https://codereef.ai/portal/c/module/program.species)
 * [program.static.features](https://codereef.ai/portal/c/module/program.static.features)
 
