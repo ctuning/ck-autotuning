@@ -33,13 +33,32 @@ Further info:
 * [Documentation about portable CK workflows](https://github.com/ctuning/ck/wiki/Portable-workflows)
 * [Related CK publications](https://github.com/ctuning/ck/wiki/Publications)
 
-Maintainers
-===========
-* [dividiti](http://dividiti.com)
+Author
+======
+* [Grigori Fursin](https://fursin.net)
 
 Contributors
 ============
 * See the list of [contributors](https://github.com/ctuning/ck-autotuning/blob/master/CONTRIBUTIONS)
+
+Shared modules with actions
+===========================
+
+* [algorithm](https://codereef.ai/portal/c/module/algorithm)
+* [choice](https://codereef.ai/portal/c/module/choice)
+* [compiler](https://codereef.ai/portal/c/module/compiler)
+* [dataset](https://codereef.ai/portal/c/module/dataset)
+* [dataset.features](https://codereef.ai/portal/c/module/dataset.features)
+* [pipeline](https://codereef.ai/portal/c/module/pipeline)
+* [pipeline.cmd](https://codereef.ai/portal/c/module/pipeline.cmd)
+* [platform.gpgpu](https://codereef.ai/portal/c/module/platform.gpgpu)
+* [program](https://codereef.ai/portal/c/module/program)
+* [program.behavior](https://codereef.ai/portal/c/module/program.behavior)
+* [program.dynamic.features](https://codereef.ai/portal/c/module/program.dynamic.features)
+* [program.experiment.speedup](https://codereef.ai/portal/c/module/program.experiment.speedup)
+* [program.output](https://codereef.ai/portal/c/module/program.output)
+* [program.species](https://codereef.ai/portal/c/module/program.species)
+* [program.static.features](https://codereef.ai/portal/c/module/program.static.features)
 
 Installation
 ============
