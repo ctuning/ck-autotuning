@@ -29,7 +29,7 @@ This repository included CK modules, actions and components for unified
 Further info:
 * [Shared portable CK program workflows](https://cKnowledge.io/programs)
 * [Open CK platform to publish and download stable CK components](https://cKnowledge.io/docs)
-* [MLPerf crowd-benchmarking demo](https://cknowledge.io/solution/demo-obj-detection-coco-tf-cpu-benchmark-linux-portable-workflows)
+* [MLPerf crowd-benchmarking demo](https://cknowledge.io/demo)
 * [Documentation about portable CK workflows](https://github.com/ctuning/ck/wiki/Portable-workflows)
 * [Related CK publications](https://github.com/ctuning/ck/wiki/Publications)
 
