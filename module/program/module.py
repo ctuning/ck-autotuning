@@ -7677,7 +7677,7 @@ def print_warning(i):
                    if crurl!='':
                       crurl+='program/'+pduoa
                       ck.out('')
-                      ck.out('   CodeReef stable package URL: '+crurl)
+                      ck.out('   CK stable package URL: '+crurl)
 
        ck.out('   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
 

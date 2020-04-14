@@ -27,9 +27,9 @@ This repository included CK modules, actions and components for unified
 * reproducibility of experimental results
 
 Further info:
-* [Shared portable CK program workflows](https://codereef.ai/portal/c/program)
-* [Open CodeReef platform to publish and download stable CK components](https://CodeReef.ai/portal/static/docs)
-* [MLPerf crowd-benchmarking demo](https://CodeReef.ai/demo)
+* [Shared portable CK program workflows](https://cKnowledge.io/programs)
+* [Open CK platform to publish and download stable CK components](https://cKnowledge.io/docs)
+* [MLPerf crowd-benchmarking demo](https://cknowledge.io/solution/demo-obj-detection-coco-tf-cpu-benchmark-linux-portable-workflows)
 * [Documentation about portable CK workflows](https://github.com/ctuning/ck/wiki/Portable-workflows)
 * [Related CK publications](https://github.com/ctuning/ck/wiki/Publications)
 
@@ -44,21 +44,21 @@ Contributors
 Shared CK modules with actions
 ==============================
 
-* [program](https://codereef.ai/portal/c/module/program)
-* [program.output](https://codereef.ai/portal/c/module/program.output)
-* [pipeline](https://codereef.ai/portal/c/module/pipeline)
-* [pipeline.cmd](https://codereef.ai/portal/c/module/pipeline.cmd)
-* [platform.gpgpu](https://codereef.ai/portal/c/module/platform.gpgpu)
-* [algorithm](https://codereef.ai/portal/c/module/algorithm)
-* [choice](https://codereef.ai/portal/c/module/choice)
-* [compiler](https://codereef.ai/portal/c/module/compiler)
-* [dataset](https://codereef.ai/portal/c/module/dataset)
-* [dataset.features](https://codereef.ai/portal/c/module/dataset.features)
-* [program.behavior](https://codereef.ai/portal/c/module/program.behavior)
-* [program.dynamic.features](https://codereef.ai/portal/c/module/program.dynamic.features)
-* [program.experiment.speedup](https://codereef.ai/portal/c/module/program.experiment.speedup)
-* [program.species](https://codereef.ai/portal/c/module/program.species)
-* [program.static.features](https://codereef.ai/portal/c/module/program.static.features)
+* [program](https://cKnowledge.io/c/module/program)
+* [program.output](https://cKnowledge.io/c/module/program.output)
+* [pipeline](https://cKnowledge.io/c/module/pipeline)
+* [pipeline.cmd](https://cKnowledge.io/c/module/pipeline.cmd)
+* [platform.gpgpu](https://cKnowledge.io/c/module/platform.gpgpu)
+* [algorithm](https://cKnowledge.io/c/module/algorithm)
+* [choice](https://cKnowledge.io/c/module/choice)
+* [compiler](https://cKnowledge.io/c/module/compiler)
+* [dataset](https://cKnowledge.io/c/module/dataset)
+* [dataset.features](https://cKnowledge.io/c/module/dataset.features)
+* [program.behavior](https://cKnowledge.io/c/module/program.behavior)
+* [program.dynamic.features](https://cKnowledge.io/c/module/program.dynamic.features)
+* [program.experiment.speedup](https://cKnowledge.io/c/module/program.experiment.speedup)
+* [program.species](https://cKnowledge.io/c/module/program.species)
+* [program.static.features](https://cKnowledge.io/c/module/program.static.features)
 
 Installation
 ============
@@ -72,7 +72,7 @@ Then install this CK repository as follows:
 
 ```
 
-You can now browse and reuse program workflows shared at the [CodeReef portal](https://CodeReef.ai/portal/c/program).
+You can now browse and reuse program workflows shared at the [CK portal](https://cKnowledge.io/programs).
 
 Please refer to the [CK online guides](https://github.com/ctuning/ck/wiki)
 including [CK portable workflows](https://github.com/ctuning/ck/wiki/Portable-workflows)
