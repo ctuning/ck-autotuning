@@ -7618,7 +7618,7 @@ def print_warning(i):
        ck.out('')
        ck.out('   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
 
-       ck.out('   CK detected a PROBLEM in the third-party CK program workflow:')
+       ck.out('   CK detected a PROBLEM in the third-party CK program pipeline:')
 
 #       ck.out('The community develops, shares and improves CK program workflows')
 #       ck.out('to be portable and customizable across many evolving platforms:')
@@ -7647,6 +7647,7 @@ def print_warning(i):
 
        url2=''
 
+       crurl=''
        if pduoa!='' or pruoa!='':
           ck.out('')
           ck.out('   Failed(?) CK program: '+pduoa)
@@ -7676,20 +7677,28 @@ def print_warning(i):
                    crurl=ck.cfg.get('wiki_data_web','')
                    if crurl!='':
                       crurl+='program/'+pduoa
-                      ck.out('')
-                      ck.out('   CK stable package URL: '+crurl)
+#                      ck.out('')
+#                      ck.out('   CK stable package URL: '+crurl)
 
        ck.out('   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
 
        x1='the community'
        x2='https://groups.google.com/forum/#!forum/collective-knowledge'
-       if url2!='':
-          x1='the authors'
-          x2=url2
+       x3='https://github.com/ctuning/ck/issues'
+#       if url2!='':
+#          x1='the authors'
+#          x2=url2
 
-       ck.out('')
-       ck.out('   Please, submit the *full* log to '+x1+' of this external CK package')
-       ck.out('   at '+x2+' to collaboratively fix this problem!')
+       if crurl!='':
+          ck.out('')
+          ck.out('   Please, check that there is no discussion about this issue at '+crurl)
+          ck.out('')
+
+       ck.out('   Please, submit the *full* log to:')
+       ck.out('     * '+x2)
+       ck.out('     * '+x3)
+
+       ck.out('   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
        ck.out('')
 
     return {'return':0}
