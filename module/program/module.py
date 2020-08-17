@@ -6427,9 +6427,11 @@ def xcrowdtune(i):
 def benchmark(i):
     """
     Input:  {
-              See ck run pipeline --data_uoa=program --help
+              See "ck run pipeline --help" for all input keys
 
-              (console) - print to console rather than to files
+              Extra:
+               (repetititons) - number of statistical repetitions of a pipeline
+               (console) - print to console rather than to files
             }
 
     Output: {
