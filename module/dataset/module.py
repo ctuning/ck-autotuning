@@ -370,12 +370,13 @@ def add(i):
     p=r['path']
 
     # Copy file
-    pn=os.path.join(p,fn1)
+    if fn!='':
+       pn=os.path.join(p,fn1)
 
-    if o=='con':
-       ck.out('')
-       ck.out('Copying file '+fn+' to '+pn+' ...')
+       if o=='con':
+          ck.out('')
+          ck.out('Copying file '+fn+' to '+pn+' ...')
 
-    shutil.copyfile(fn,pn)
+       shutil.copyfile(fn,pn)
 
     return r
