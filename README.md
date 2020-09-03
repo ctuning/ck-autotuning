@@ -1,3 +1,6 @@
+Universal, customizable and multi-objective software and hardware autotuning
+============================================================================
+
 *This project is hosted by the [cTuning foundation (non-profit R&D organization)](https://cTuning.org)*
 
 [![compatibility](https://github.com/ctuning/ck-guide-images/blob/master/ck-compatible.svg)](https://github.com/ctuning/ck)
@@ -6,9 +9,6 @@
 
 Linux & MacOS: [![Travis Build Status](https://travis-ci.org/ctuning/ck-autotuning.svg?branch=master)](https://travis-ci.org/ctuning/ck-autotuning)
 Windows: [![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/github/ctuning/ck-autotuning?branch=master&svg=true)](https://ci.appveyor.com/project/ens-lg4/ck-autotuning)
-
-Universal, customizable and multi-objective software and hardware autotuning
-============================================================================
 
 This is a [CK repository](https://github.com/ctuning/ck) for the universal, customizable, 
 multi-dimensional and multi-objective SW/HW benchmarking, autotuning 
