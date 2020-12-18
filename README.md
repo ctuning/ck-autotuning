@@ -1,12 +1,16 @@
+Universal, customizable and multi-objective software and hardware autotuning
+============================================================================
+
+**All CK components for AI and ML are now collected in [one repository](https://github.com/ctuning/ai)!**
+
+*This project is hosted by the [cTuning foundation (non-profit R&D organization)](https://cTuning.org).*
+
 [![compatibility](https://github.com/ctuning/ck-guide-images/blob/master/ck-compatible.svg)](https://github.com/ctuning/ck)
 [![automation](https://github.com/ctuning/ck-guide-images/blob/master/ck-artifact-automated-and-reusable.svg)](http://cTuning.org/ae)
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 
 Linux & MacOS: [![Travis Build Status](https://travis-ci.org/ctuning/ck-autotuning.svg?branch=master)](https://travis-ci.org/ctuning/ck-autotuning)
 Windows: [![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/github/ctuning/ck-autotuning?branch=master&svg=true)](https://ci.appveyor.com/project/ens-lg4/ck-autotuning)
-
-Universal, customizable and multi-objective software and hardware autotuning
-============================================================================
 
 This is a [CK repository](https://github.com/ctuning/ck) for the universal, customizable, 
 multi-dimensional and multi-objective SW/HW benchmarking, autotuning 
