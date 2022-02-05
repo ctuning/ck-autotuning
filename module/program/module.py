@@ -2918,7 +2918,7 @@ def process_in_dir(i):
                     ck.out(y)
                     ck.out('')
 
-                 ry=os.system(y)
+                 ry2=os.system(y)
 
                  y=tosd.get('remote_pull_post','').replace('$#device#$',xtdid)
                  if y!='':
@@ -2931,8 +2931,8 @@ def process_in_dir(i):
                        ck.out(y)
                        ck.out('')
 
-                    ry=os.system(y)
-                    if ry>0:
+                    ry2=os.system(y)
+                    if ry2>0:
                        return {'return':1, 'error':'pulling from remote device failed'}
 
           # Check if print files
@@ -3318,7 +3318,7 @@ def process_in_dir(i):
           ccc['run_success']='no'
           ccc['run_success_bool']=False
           ccc['fail_reason']=ry['error']
-       if rx>0 and vcmd.get('ignore_return_code','').lower()!='yes':
+       elif rx>0 and vcmd.get('ignore_return_code','').lower()!='yes':
           misc['run_success']='no'
           misc['run_success_bool']=False
           misc['fail_reason']='return code '+str(rx)+' !=0 '
